@@ -9,12 +9,10 @@
 	],
 	"dependencies": {},
 	"devDependencies": {
-		"@babel/core": "^7.4.3",
 		"@storybook/addon-actions": "^5.0.8",
 		"@storybook/addon-links": "^5.0.8",
 		"@storybook/addons": "^5.0.8",
-		"@storybook/react": "^5.0.8",
-		"babel-loader": "^8.0.5"
+		"@storybook/react": "^5.0.8"
 	},
 	"scripts": {
 		"storybook": "start-storybook -p 6006",
