@@ -10,7 +10,7 @@ const props = {
     onClick: action("clicked")
 };
 
-storiesOf("Button", module)
+storiesOf("Atoms.Button", module)
     .add("Simple", () => (
         <>
             <EsButton {...props}>Default</EsButton>

@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 
 import EsSwitch from "./Switch";
 
-storiesOf("Switch", module)
+storiesOf("Atoms.Switch", module)
     .add("Simple", () => (
         <EsSwitch />
     ))

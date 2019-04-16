@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 
 import EsCheckbox from "./";
 
-storiesOf("Checkbox", module)
+storiesOf("Atoms.Checkbox", module)
     .add("Simple", () => (
         <>
             <EsCheckbox>Manter logado</EsCheckbox>

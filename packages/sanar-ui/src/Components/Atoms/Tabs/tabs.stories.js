@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import EsTabs from "./Tabs";
 import EsTabPane from "./TabPane";
 
-storiesOf("Tabs", module)
+storiesOf("Atoms.Tabs", module)
     .add("Simple", () => (
         <EsTabs defaultActiveKey="1">
             <EsTabPane tab="Dados cadastrais" key="1">Content Dados cadastrais</EsTabPane>

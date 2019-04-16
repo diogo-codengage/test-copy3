@@ -10,7 +10,7 @@ const props = {
     }
 }
 
-storiesOf("Grid", module)
+storiesOf("Atoms.Grid", module)
     .add("Simple", () => (
         <>
             <EsRow>

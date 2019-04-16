@@ -7,7 +7,7 @@ import EsItem from "./Item";
 import EsItemGroup from "./ItemGroup";
 import EsSubMenu from "./SubMenu";
 
-storiesOf("Menu", module)
+storiesOf("Atoms.Menu", module)
     .add("Simple", () => (
         <EsMenu mode="horizontal">
             <EsItem key="mail">

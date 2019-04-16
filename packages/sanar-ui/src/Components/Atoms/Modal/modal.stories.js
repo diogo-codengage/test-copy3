@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import EsModal from "./Modal";
 import EsIButton from "../Button";
 
-storiesOf("Modal", module)
+storiesOf("Atoms.Modal", module)
     .add("Simple", () => (
         <EsModal title="Basic Modal" visible={true}>
             <p>Some contents...</p>

@@ -6,7 +6,7 @@ import EsInput from "./Input";
 import EsInputSearch from './InputSearch'
 import EsIcon from '../Icon'
 
-storiesOf("Input", module)
+storiesOf("Atoms.Input", module)
     .add("Simple", () => (
         <>
             <EsInput placeholder="E-mail" prefix={<EsIcon type="mail" />} />

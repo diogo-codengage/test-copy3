@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 
 import EsIcon from "./Icon";
 
-storiesOf("Icon", module)
+storiesOf("Atoms.Icon", module)
     .add("Simple", () => (
         <>
             <EsIcon type="home" fontSize={25} />

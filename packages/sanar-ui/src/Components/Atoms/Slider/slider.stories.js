@@ -10,7 +10,7 @@ const marks = {
     100: 'Difícil'
 }
 
-storiesOf("Slider", module)
+storiesOf("Atoms.Slider", module)
     .add("Simple", () => (
         <EsSlider marks={marks} defaultValue={0} />
     ))

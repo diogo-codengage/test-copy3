@@ -14,7 +14,7 @@ const menu = (
     </EsMenu>
 );
 
-storiesOf("Dropdown", module)
+storiesOf("Atoms.Dropdown", module)
     .add("Simple", () => (
         <>
             <EsDropdown overlay={menu}>
