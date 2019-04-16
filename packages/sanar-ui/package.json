@@ -7,7 +7,7 @@
 	"scripts": {
 		"dev": "rollup -c -w",
 		"build": "rollup -c",
-		"storybook": "storybook"
+		"test": "jest --env=jsdom"
 	},
 	"files": [
 		"dist"
@@ -18,7 +18,13 @@
 		"@babel/preset-env": "^7.4.3",
 		"@babel/preset-react": "^7.0.0",
 		"@storybook/react": "^5.0.8",
+		"babel-jest": "^24.7.1",
 		"babel-loader": "^8.0.5",
+		"jest": "^24.7.1",
+		"jest-image-snapshot": "^2.8.1",
+		"jest-puppeteer": "^4.1.1",
+		"puppeteer": "^1.14.0",
+		"react-test-renderer": "^16.8.6",
 		"rollup": "^1.10.0",
 		"rollup-plugin-babel": "^4.3.2",
 		"rollup-plugin-less-modules": "^0.1.11",
@@ -26,6 +32,7 @@
 		"rollup-plugin-peer-deps-external": "^2.2.0"
 	},
 	"dependencies": {
-		"antd": "^3.16.3"
+		"antd": "^3.16.3",
+		"core-js": "2"
 	}
 }

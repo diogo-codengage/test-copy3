@@ -8,7 +8,10 @@ module.exports = function(api) {
 				"@babel/preset-env",
 				{
 					useBuiltIns: "entry",
-					loose: true
+					loose: true,
+					targets: {
+						node: "current"
+					}
 				}
 			]
 		],
