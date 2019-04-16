@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 const Divider = Menu.Divider
 
-const EsDivider = ({ className, ...props }) => {
+const ESDivider = ({ className, ...props }) => {
   const classes = classNames(
     'es-divider',
     className
@@ -15,4 +15,4 @@ const EsDivider = ({ className, ...props }) => {
   )
 }
 
-export default EsDivider
+export default ESDivider

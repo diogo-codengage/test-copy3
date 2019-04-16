@@ -2,7 +2,7 @@ import React from 'react'
 import { Icon } from 'antd'
 import classNames from 'classnames'
 
-const EsIcon = ({ className, fontSize, style, color, ...props }) => {
+const ESIcon = ({ className, fontSize, style, color, ...props }) => {
   const classes = classNames(
     'es-icon',
     className,
@@ -16,4 +16,4 @@ const EsIcon = ({ className, fontSize, style, color, ...props }) => {
   )
 }
 
-export default EsIcon
+export default ESIcon

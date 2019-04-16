@@ -1,8 +1,8 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 
-import EsCol from "./Col";
-import EsRow from "./Row";
+import ESCol from "./Col";
+import ESRow from "./Row";
 
 const props = {
     style: {
@@ -13,20 +13,20 @@ const props = {
 storiesOf("Atoms.Grid", module)
     .add("Simple", () => (
         <>
-            <EsRow>
-                <EsCol span={12}>col-12</EsCol>
-                <EsCol span={12}>col-12</EsCol>
-            </EsRow>
-            <EsRow>
-                <EsCol span={8}>col-8</EsCol>
-                <EsCol span={8}>col-8</EsCol>
-                <EsCol span={8}>col-8</EsCol>
-            </EsRow>
-            <EsRow>
-                <EsCol span={6}>col-6</EsCol>
-                <EsCol span={6}>col-6</EsCol>
-                <EsCol span={6}>col-6</EsCol>
-                <EsCol span={6}>col-6</EsCol>
-            </EsRow>
+            <ESRow>
+                <ESCol span={12}>col-12</ESCol>
+                <ESCol span={12}>col-12</ESCol>
+            </ESRow>
+            <ESRow>
+                <ESCol span={8}>col-8</ESCol>
+                <ESCol span={8}>col-8</ESCol>
+                <ESCol span={8}>col-8</ESCol>
+            </ESRow>
+            <ESRow>
+                <ESCol span={6}>col-6</ESCol>
+                <ESCol span={6}>col-6</ESCol>
+                <ESCol span={6}>col-6</ESCol>
+                <ESCol span={6}>col-6</ESCol>
+            </ESRow>
         </>
     ))

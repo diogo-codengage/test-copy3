@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 const TabPane = Tabs.TabPane
 
-const EsTabPane = ({ className, ...props }) => {
+const ESTabPane = ({ className, ...props }) => {
   const classes = classNames(
     'es-tab-pane',
     className
@@ -15,4 +15,4 @@ const EsTabPane = ({ className, ...props }) => {
   )
 }
 
-export default EsTabPane
+export default ESTabPane

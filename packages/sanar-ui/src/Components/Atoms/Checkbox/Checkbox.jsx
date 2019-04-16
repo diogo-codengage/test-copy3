@@ -2,7 +2,7 @@ import React from 'react'
 import { Checkbox  } from 'antd'
 import classNames from 'classnames'
 
-const EsButton = ({ className, ...props }) => {
+const ESButton = ({ className, ...props }) => {
   const classes = classNames(
     'es-checkbox',
     className
@@ -13,4 +13,4 @@ const EsButton = ({ className, ...props }) => {
   )
 }
 
-export default EsButton
+export default ESButton

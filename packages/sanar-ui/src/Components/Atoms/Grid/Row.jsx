@@ -2,7 +2,7 @@ import React from 'react'
 import { Row } from 'antd'
 import classNames from 'classnames'
 
-const EsRow = ({ className, ...props }) => {
+const ESRow = ({ className, ...props }) => {
   const classes = classNames(
     'es-row',
     className
@@ -13,4 +13,4 @@ const EsRow = ({ className, ...props }) => {
   )
 }
 
-export default EsRow
+export default ESRow

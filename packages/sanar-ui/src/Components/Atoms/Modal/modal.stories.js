@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
-import EsModal from "./Modal";
-import EsIButton from "../Button";
+import ESModal from "./Modal";
+import ESIButton from "../Button";
 
 storiesOf("Atoms.Modal", module)
     .add("Simple", () => (
-        <EsModal title="Basic Modal" visible={true}>
+        <ESModal title="Basic Modal" visible={true}>
             <p>Some contents...</p>
             <p>Some contents...</p>
             <p>Some contents...</p>
-        </EsModal>
+        </ESModal>
     ))
     

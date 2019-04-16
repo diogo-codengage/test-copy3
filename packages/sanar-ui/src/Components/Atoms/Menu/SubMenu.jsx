@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 const SubMenu = Menu.SubMenu
 
-const EsSubMenu = ({ className, ...props }) => {
+const ESSubMenu = ({ className, ...props }) => {
   const classes = classNames(
     'es-sub-menu',
     className
@@ -15,4 +15,4 @@ const EsSubMenu = ({ className, ...props }) => {
   )
 }
 
-export default EsSubMenu
+export default ESSubMenu

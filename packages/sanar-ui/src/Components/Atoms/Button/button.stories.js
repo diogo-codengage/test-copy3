@@ -2,9 +2,9 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
-import EsButton from "./Button";
-import EsButtonGroup  from "./ButtonGroup";
-import EsIcon from "../Icon";
+import ESButton from "./Button";
+import ESButtonGroup  from "./ButtonGroup";
+import ESIcon from "../Icon";
 
 const props = {
     onClick: action("clicked")
@@ -13,36 +13,36 @@ const props = {
 storiesOf("Atoms.Button", module)
     .add("Simple", () => (
         <>
-            <EsButton {...props}>Default</EsButton>
-            <EsButton {...props} type="primary">Primary</EsButton>
-            <EsButton {...props} type="dashed">Dashed</EsButton>
-            <EsButton {...props} type="danger">Danger</EsButton>
-            <EsButton {...props} clear>Clear</EsButton>
+            <ESButton {...props}>Default</ESButton>
+            <ESButton {...props} type="primary">Primary</ESButton>
+            <ESButton {...props} type="dashed">Dashed</ESButton>
+            <ESButton {...props} type="danger">Danger</ESButton>
+            <ESButton {...props} clear>Clear</ESButton>
         </>
     ))
     .add("Icon", () => (
         <>
-            <EsButton {...props} icon="search" type="primary" shape="circle" />
-            <EsButton {...props} icon="search" type="primary">Search</EsButton>
-            <EsButton {...props} icon="search" shape="circle" />
-            <EsButton {...props} icon="search" >Search</EsButton>
-            <EsButton {...props} type="primary" clear>
+            <ESButton {...props} icon="search" type="primary" shape="circle" />
+            <ESButton {...props} icon="search" type="primary">Search</ESButton>
+            <ESButton {...props} icon="search" shape="circle" />
+            <ESButton {...props} icon="search" >Search</ESButton>
+            <ESButton {...props} type="primary" clear>
                 Hello Button
-                <EsIcon type="arrow-right" />
-            </EsButton>
-            <EsButton {...props} clear>
+                <ESIcon type="arrow-right" />
+            </ESButton>
+            <ESButton {...props} clear>
                 Hello Button
-                <EsIcon type="arrow-right" />
-            </EsButton>
+                <ESIcon type="arrow-right" />
+            </ESButton>
         </>
     ))
     .add("Group", () => (
         <>
-            <EsButtonGroup>
-                <EsButton {...props}>Default</EsButton>
-                <EsButton {...props} type="primary">Primary</EsButton>
-                <EsButton {...props} type="dashed">Dashed</EsButton>
-                <EsButton {...props} type="danger">Danger</EsButton>
-            </EsButtonGroup>
+            <ESButtonGroup>
+                <ESButton {...props}>Default</ESButton>
+                <ESButton {...props} type="primary">Primary</ESButton>
+                <ESButton {...props} type="dashed">Dashed</ESButton>
+                <ESButton {...props} type="danger">Danger</ESButton>
+            </ESButtonGroup>
         </>
     ))

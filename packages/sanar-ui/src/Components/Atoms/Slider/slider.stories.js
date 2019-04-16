@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { storiesOf } from "@storybook/react";
 
-import EsSlider from "./Slider";
+import ESSlider from "./Slider";
 
 const marks = {
     0: 'Aleatório',
@@ -12,6 +12,6 @@ const marks = {
 
 storiesOf("Atoms.Slider", module)
     .add("Simple", () => (
-        <EsSlider marks={marks} defaultValue={0} />
+        <ESSlider marks={marks} defaultValue={0} />
     ))
     

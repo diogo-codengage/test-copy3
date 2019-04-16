@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from 'antd'
 import classNames from 'classnames'
 
-const EsButton = ({ className, clear, ...props }) => {
+const ESButton = ({ className, clear, ...props }) => {
   const classes = classNames(
     'es-button',
     className,
@@ -16,4 +16,4 @@ const EsButton = ({ className, clear, ...props }) => {
   )
 }
 
-export default EsButton
+export default ESButton

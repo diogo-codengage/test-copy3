@@ -2,7 +2,7 @@ import React from 'react'
 import { Dropdown } from 'antd'
 import classNames from 'classnames'
 
-const EsDropdown = ({ className, component, ...props }) => {
+const ESDropdown = ({ className, component, ...props }) => {
   const classes = classNames(
     'es-dropdown',
     className
@@ -13,4 +13,4 @@ const EsDropdown = ({ className, component, ...props }) => {
   )
 }
 
-export default EsDropdown
+export default ESDropdown

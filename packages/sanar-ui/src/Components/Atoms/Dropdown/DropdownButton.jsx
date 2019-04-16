@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 const DropdownButton = Dropdown.Button
 
-const EsDropdownButton = ({ className, ...props }) => {
+const ESDropdownButton = ({ className, ...props }) => {
   const classes = classNames(
     'es-dropdown-button',
     className
@@ -15,4 +15,4 @@ const EsDropdownButton = ({ className, ...props }) => {
   )
 }
 
-export default EsDropdownButton
+export default ESDropdownButton

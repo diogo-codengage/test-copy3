@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 const ItemGroup = Menu.ItemGroup
 
-const EsItemGroup = ({ className, ...props }) => {
+const ESItemGroup = ({ className, ...props }) => {
   const classes = classNames(
     'es-item-group',
     className
@@ -15,4 +15,4 @@ const EsItemGroup = ({ className, ...props }) => {
   )
 }
 
-export default EsItemGroup
+export default ESItemGroup

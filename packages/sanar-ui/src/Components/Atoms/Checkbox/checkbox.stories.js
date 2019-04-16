@@ -1,11 +1,11 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 
-import EsCheckbox from "./";
+import ESCheckbox from "./";
 
 storiesOf("Atoms.Checkbox", module)
     .add("Simple", () => (
         <>
-            <EsCheckbox>Manter logado</EsCheckbox>
+            <ESCheckbox>Manter logado</ESCheckbox>
         </>
     ))

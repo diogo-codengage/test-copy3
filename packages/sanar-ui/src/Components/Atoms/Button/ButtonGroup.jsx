@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 const ButtonGroup = Button.Group
 
-const EsButtonGroup = ({ className, clear, ...props }) => {
+const ESButtonGroup = ({ className, clear, ...props }) => {
   const classes = classNames(
     'es-button-group',
     className
@@ -15,4 +15,4 @@ const EsButtonGroup = ({ className, clear, ...props }) => {
   )
 }
 
-export default EsButtonGroup
+export default ESButtonGroup

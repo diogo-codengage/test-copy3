@@ -1,2 +1,2 @@
 export { default } from './Tabs'
-export { default as EsTabPane } from './TabPane'
+export { default as ESTabPane } from './TabPane'

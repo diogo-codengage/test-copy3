@@ -2,7 +2,7 @@ import React from 'react'
 import { Input } from 'antd'
 import classNames from 'classnames'
 
-const EsButton = ({ className, component, ...props }) => {
+const ESButton = ({ className, component, ...props }) => {
   const classes = classNames(
     'es-input',
     className
@@ -15,4 +15,4 @@ const EsButton = ({ className, component, ...props }) => {
   )
 }
 
-export default EsButton
+export default ESButton

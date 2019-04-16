@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal } from 'antd'
 import classNames from 'classnames'
 
-const EsModal = ({ className, ...props }) => {
+const ESModal = ({ className, ...props }) => {
   const classes = classNames(
     'es-modal',
     className
@@ -13,4 +13,4 @@ const EsModal = ({ className, ...props }) => {
   )
 }
 
-export default EsModal
+export default ESModal

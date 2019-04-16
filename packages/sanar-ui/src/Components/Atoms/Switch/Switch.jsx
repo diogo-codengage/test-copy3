@@ -2,15 +2,15 @@ import React from 'react'
 import { Switch } from 'antd'
 import classNames from 'classnames'
 
-import EsIcon from '../Icon'
+import ESIcon from '../Icon'
 
-const EsSwitch = ({ className, checkedChildren, ...props }) => {
+const ESSwitch = ({ className, checkedChildren, ...props }) => {
   const classes = classNames(
     'es-switch',
     className
   )
 
-  const icon = checkedChildren ? checkedChildren : <EsIcon type="check" />
+  const icon = checkedChildren ? checkedChildren : <ESIcon type="check" />
   
   return (
     <Switch
@@ -21,4 +21,4 @@ const EsSwitch = ({ className, checkedChildren, ...props }) => {
   )
 }
 
-export default EsSwitch
+export default ESSwitch

@@ -2,7 +2,7 @@ import React from 'react'
 import { Tabs  } from 'antd'
 import classNames from 'classnames'
 
-const EsTabs = ({ className, ...props }) => {
+const ESTabs = ({ className, ...props }) => {
   const classes = classNames(
     'es-tabs',
     className
@@ -13,4 +13,4 @@ const EsTabs = ({ className, ...props }) => {
   )
 }
 
-export default EsTabs
+export default ESTabs

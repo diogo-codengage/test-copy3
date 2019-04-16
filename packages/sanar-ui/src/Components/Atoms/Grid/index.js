@@ -1,2 +1,2 @@
-export { default as EsCol } from './Col'
-export { default as EsRow } from './Row'
+export { default as ESCol } from './Col'
+export { default as ESRow } from './Row'

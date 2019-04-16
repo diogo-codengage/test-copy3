@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 const Search = Input.Search
 
-const EsInputSearch = ({ className, ...props }) => {
+const ESInputSearch = ({ className, ...props }) => {
   const classes = classNames(
     'es-input-search',
     className
@@ -15,4 +15,4 @@ const EsInputSearch = ({ className, ...props }) => {
   )
 }
 
-export default EsInputSearch
+export default ESInputSearch

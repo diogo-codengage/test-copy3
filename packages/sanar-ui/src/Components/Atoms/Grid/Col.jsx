@@ -2,7 +2,7 @@ import React from 'react'
 import { Col } from 'antd'
 import classNames from 'classnames'
 
-const EsCol = ({ className, ...props }) => {
+const ESCol = ({ className, ...props }) => {
   const classes = classNames(
     'es-Col',
     className
@@ -13,4 +13,4 @@ const EsCol = ({ className, ...props }) => {
   )
 }
 
-export default EsCol
+export default ESCol
