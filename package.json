@@ -1,23 +1,23 @@
 {
-  "name": "sanar-monorepo",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "dependencies": {},
-  "devDependencies": {
-    "@storybook/react": "^5.0.8",
-    "@storybook/addon-actions": "^5.0.8",
-    "@storybook/addon-links": "^5.0.8",
-    "@storybook/addons": "^5.0.8",
-    "@babel/core": "^7.4.3",
-    "babel-loader": "^8.0.5"
-  },
-  "scripts": {
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
-  }
+	"name": "sanar-monorepo",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"private": true,
+	"workspaces": [
+		"packages/*"
+	],
+	"dependencies": {},
+	"devDependencies": {
+		"@babel/core": "^7.4.3",
+		"@storybook/addon-actions": "^5.0.8",
+		"@storybook/addon-links": "^5.0.8",
+		"@storybook/addons": "^5.0.8",
+		"@storybook/react": "^5.0.8",
+		"babel-loader": "^8.0.5"
+	},
+	"scripts": {
+		"storybook": "start-storybook -p 6006",
+		"build-storybook": "build-storybook"
+	}
 }
