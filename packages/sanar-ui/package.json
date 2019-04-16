@@ -1,0 +1,31 @@
+{
+	"name": "sanar-ui",
+	"version": "0.1.0",
+	"license": "MIT",
+	"main": "dist/bundle.js",
+	"style": "dist/bundle.less",
+	"scripts": {
+		"dev": "rollup -c -w",
+		"build": "rollup -c",
+		"storybook": "storybook"
+	},
+	"files": [
+		"dist"
+	],
+	"devDependencies": {
+		"@babel/core": "^7.4.3",
+		"@babel/plugin-proposal-export-default-from": "^7.2.0",
+		"@babel/preset-env": "^7.4.3",
+		"@babel/preset-react": "^7.0.0",
+		"@storybook/react": "^5.0.8",
+		"babel-loader": "^8.0.5",
+		"rollup": "^1.10.0",
+		"rollup-plugin-babel": "^4.3.2",
+		"rollup-plugin-less-modules": "^0.1.11",
+		"rollup-plugin-node-resolve": "^4.2.3",
+		"rollup-plugin-peer-deps-external": "^2.2.0"
+	},
+	"dependencies": {
+		"antd": "^3.16.3"
+	}
+}
