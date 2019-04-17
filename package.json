@@ -15,7 +15,8 @@
 		"@storybook/addon-links": "^5.0.8",
 		"@storybook/addon-viewport": "^5.0.8",
 		"@storybook/addons": "^5.0.8",
-		"@storybook/react": "^5.0.8"
+		"@storybook/react": "^5.0.8",
+		"@babel/plugin-proposal-export-default-from": "^7.2.0"
 	},
 	"scripts": {
 		"storybook": "start-storybook -p 6006",
