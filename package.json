@@ -19,6 +19,9 @@
 	},
 	"scripts": {
 		"storybook": "start-storybook -p 6006",
-		"build-storybook": "build-storybook"
+		"build-storybook": "build-storybook",
+		"esdemo:start": "cd ./packages/es-demo && yarn start",
+		"sanarui:dev": "cd ./packages/sanar-ui && yarn dev",
+		"sanarui:test": "cd ./packages/sanar-ui && yarn test"
 	}
 }
