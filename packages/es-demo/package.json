@@ -28,6 +28,8 @@
 		"customize-cra": "^0.2.12",
 		"less": "2.7.2",
 		"less-loader": "^4.1.0",
-		"react-app-rewired": "^2.1.1"
+		"react-app-rewired": "^2.1.1",
+		"jest": "23.6.0",
+		"webpack": "4.28.3"
 	}
 }

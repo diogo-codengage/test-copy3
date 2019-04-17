@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import { ESButton } from "sanar-ui";
+import ESButton from "sanar-ui/dist/Components/Atoms/Button";
 
 class App extends Component {
 	render() {
