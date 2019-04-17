@@ -5,8 +5,8 @@
 	"main": "dist/bundle.js",
 	"style": "dist/bundle.less",
 	"scripts": {
-		"dev": "rollup -c -w",
-		"build": "rollup -c",
+		"dev": "yarn build -w",
+		"build": "BABEL_ENV=build babel src -d dist --source-maps --delete-dir-on-start --config-file ./babel.config.js --no-comments",
 		"test": "jest --env=jsdom"
 	},
 	"files": [
@@ -24,11 +24,6 @@
 		"jest-puppeteer": "^4.1.1",
 		"puppeteer": "^1.14.0",
 		"react-test-renderer": "^16.8.6",
-		"rollup": "^1.10.0",
-		"rollup-plugin-babel": "^4.3.2",
-		"rollup-plugin-less-modules": "^0.1.11",
-		"rollup-plugin-node-resolve": "^4.2.3",
-		"rollup-plugin-peer-deps-external": "^2.2.0"
 	},
 	"dependencies": {
 		"antd": "^3.16.3",
