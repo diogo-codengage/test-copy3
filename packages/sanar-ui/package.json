@@ -7,23 +7,25 @@
 	"scripts": {
 		"dev": "yarn build -w",
 		"build": "BABEL_ENV=build babel src -d dist --source-maps --delete-dir-on-start --config-file ./babel.config.js --no-comments",
-		"test": "jest --env=jsdom"
+		"test": "jest --config ./jest.config.js --env=jsdom"
 	},
 	"files": [
 		"dist"
 	],
 	"devDependencies": {
+		"@babel/cli": "^7.4.3",
+		"@babel/core": "^7.4.3",
 		"@babel/plugin-proposal-export-default-from": "^7.2.0",
+		"@babel/plugin-proposal-object-rest-spread": "^7.4.3",
 		"@babel/preset-env": "^7.4.3",
 		"@babel/preset-react": "^7.0.0",
-		"@babel/core": "^7.4.3",
+		"jest": "^24.7.1",
 		"babel-jest": "^24.7.1",
 		"babel-loader": "^8.0.5",
-		"jest": "^24.7.1",
 		"jest-image-snapshot": "^2.8.1",
 		"jest-puppeteer": "^4.1.1",
 		"puppeteer": "^1.14.0",
-		"react-test-renderer": "^16.8.6",
+		"react-test-renderer": "^16.8.6"
 	},
 	"dependencies": {
 		"antd": "^3.16.3",

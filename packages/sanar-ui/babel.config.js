@@ -1,20 +1,3 @@
-module.exports = function(api) {
-	api.cache(true);
+const config = require("../../babel.config");
 
-	return {
-		presets: [
-			"@babel/preset-react",
-			[
-				"@babel/preset-env",
-				{
-					useBuiltIns: "entry",
-					loose: true,
-					targets: {
-						node: "current"
-					}
-				}
-			]
-		],
-		plugins: ["@babel/plugin-proposal-export-default-from"]
-	};
-};
+module.exports = config;
