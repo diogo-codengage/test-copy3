@@ -72,7 +72,7 @@ Nesta estrutura fora utilizado o [Yarn Workspaces](https://yarnpkg.com/lang/en/d
 # Sanar UI
 Esta biblioteca - localizada em: `/sanar/packages/sanar-ui` - possuirá todos os elementos visuais que serão compartilhados entre as demais aplicações do ecossistema Sanar.
 
-Para o seu desenvolvimento é utilizado os seguintes padrões:
+Para o seu desenvolvimento é utilizado os seguintes padrões e bibliotecas:
 + [Ang Design](https://ant.design/);
 + [Atomic Design](http://bradfrost.com/blog/post/atomic-web-design/);
 + [Storybook](https://storybook.js.org/);
