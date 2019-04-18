@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<label
+  className="es-checkbox ant-checkbox-wrapper"
+>
+  <span
+    className="ant-checkbox"
+    style={Object {}}
+  >
+    <input
+      checked={false}
+      className="ant-checkbox-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      type="checkbox"
+    />
+    <span
+      className="ant-checkbox-inner"
+    />
+  </span>
+  <span>
+    Manter logado
+  </span>
+</label>
+`;

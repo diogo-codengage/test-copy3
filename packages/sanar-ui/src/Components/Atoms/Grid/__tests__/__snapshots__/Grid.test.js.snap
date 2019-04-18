@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+Array [
+  <div
+    className="ant-row es-row"
+  >
+    <div
+      className="ant-col ant-col-12 es-Col"
+    >
+      col-12
+    </div>
+    <div
+      className="ant-col ant-col-12 es-Col"
+    >
+      col-12
+    </div>
+  </div>,
+  <div
+    className="ant-row es-row"
+  >
+    <div
+      className="ant-col ant-col-8 es-Col"
+    >
+      col-8
+    </div>
+    <div
+      className="ant-col ant-col-8 es-Col"
+    >
+      col-8
+    </div>
+    <div
+      className="ant-col ant-col-8 es-Col"
+    >
+      col-8
+    </div>
+  </div>,
+  <div
+    className="ant-row es-row"
+  >
+    <div
+      className="ant-col ant-col-6 es-Col"
+    >
+      col-6
+    </div>
+    <div
+      className="ant-col ant-col-6 es-Col"
+    >
+      col-6
+    </div>
+    <div
+      className="ant-col ant-col-6 es-Col"
+    >
+      col-6
+    </div>
+    <div
+      className="ant-col ant-col-6 es-Col"
+    >
+      col-6
+    </div>
+  </div>,
+]
+`;

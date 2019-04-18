@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<button
+  className="ant-btn es-button ant-dropdown-trigger es-dropdown"
+  onClick={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+  type="button"
+>
+  <span>
+    Dropdown
+  </span>
+</button>
+`;
+
+exports[`renders correctly 2`] = `
+<div
+  className="ant-btn-group ant-dropdown-button es-dropdown-button"
+>
+  <button
+    className="ant-btn ant-btn-default"
+    onClick={[Function]}
+    type="button"
+  >
+    <span>
+      Dropdown
+    </span>
+  </button>
+  <button
+    className="ant-btn ant-dropdown-trigger ant-btn-default ant-btn-icon-only"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    type="button"
+  >
+    <i
+      aria-label="icon: ellipsis"
+      className="anticon anticon-ellipsis"
+    >
+      <svg
+        aria-hidden="true"
+        className=""
+        data-icon="ellipsis"
+        fill="currentColor"
+        focusable="false"
+        height="1em"
+        viewBox="64 64 896 896"
+        width="1em"
+      >
+        <path
+          d="M176 511a56 56 0 1 0 112 0 56 56 0 1 0-112 0zm280 0a56 56 0 1 0 112 0 56 56 0 1 0-112 0zm280 0a56 56 0 1 0 112 0 56 56 0 1 0-112 0z"
+        />
+      </svg>
+    </i>
+  </button>
+</div>
+`;

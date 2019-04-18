@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { storiesOf } from "@storybook/react";
 
 import ESModal from "./Modal";
-import ESIButton from "../Button";
 
 storiesOf("Atoms.Modal", module)
     .add("Simple", () => (

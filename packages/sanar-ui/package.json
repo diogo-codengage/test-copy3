@@ -19,13 +19,14 @@
 		"@babel/plugin-proposal-object-rest-spread": "^7.4.3",
 		"@babel/preset-env": "^7.4.3",
 		"@babel/preset-react": "^7.0.0",
-		"jest": "^24.7.1",
 		"babel-jest": "^24.7.1",
 		"babel-loader": "^8.0.5",
+		"jest": "^24.7.1",
 		"jest-image-snapshot": "^2.8.1",
 		"jest-puppeteer": "^4.1.1",
 		"puppeteer": "^1.14.0",
-		"react-test-renderer": "^16.8.6"
+		"react-test-renderer": "^16.8.6",
+		"react-testing-library": "^6.1.2"
 	},
 	"dependencies": {
 		"antd": "^3.16.3",
