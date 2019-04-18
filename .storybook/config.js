@@ -1,14 +1,45 @@
-import React from "react";
-import { configure, addDecorator, addParameters } from "@storybook/react";
+import React from 'react'
+import { configure, addDecorator, addParameters } from '@storybook/react'
+import { withKnobs } from '@storybook/addon-knobs'
+import { withInfo } from '@storybook/addon-info'
 
-import "./styles.less";
+import './styles.less'
+import TableComponent from './TableComponent'
 
-addDecorator(story => <div style={{ padding: 20 }}>{story()}</div>);
+addDecorator(story => (
+    <div
+        style={{
+            marginTop: 20,
+            padding: 20,
+            display: 'flex',
+            justifyContent: 'center',
+            backgroundColor: '#edeff2',
+            border: '1px solid #e8e8e8'
+        }}
+    >
+        {story()}
+    </div>
+))
+addDecorator(withKnobs)
+addDecorator(
+    withInfo({
+        header: false,
+        TableComponent,
+        source: false,
+        inline: true
+    })
+)
+addParameters({
+    options: {
+        name: 'SANAR UI',
+        isFullscreen: false
+    }
+})
 
 // automatically import all files ending in *.stories.js
-const req = require.context("../packages/sanar-ui/src", true, /\.stories\.js$/);
+const req = require.context('../packages/sanar-ui/src', true, /\.stories\.js$/)
 function loadStories() {
-	req.keys().forEach(filename => req(filename));
+    req.keys().forEach(filename => req(filename))
 }
 
-configure(loadStories, module);
+configure(loadStories, module)

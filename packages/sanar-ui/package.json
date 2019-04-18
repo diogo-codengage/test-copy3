@@ -19,6 +19,7 @@
 		"@babel/plugin-proposal-object-rest-spread": "^7.4.3",
 		"@babel/preset-env": "^7.4.3",
 		"@babel/preset-react": "^7.0.0",
+		"@storybook/addon-info": "^5.0.10",
 		"babel-jest": "^24.7.1",
 		"babel-loader": "^8.0.5",
 		"jest": "^24.7.1",
