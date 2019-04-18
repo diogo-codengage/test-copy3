@@ -21,9 +21,10 @@
     "scripts": {
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
-        "esdemo:start": "yarn workspace esdemo start",
-        "sanarui:dev": "yarn workspace esdemo dev",
-        "sanarui:test": "yarn workspace esdemo test",
-        "sanarui:build": "yarn workspace esdemo build"
+        "esdemo:start": "yarn workspace es-demo start",
+        "esdemo:build": "yarn workspace es-demo build",
+        "sanarui:dev": "yarn workspace sanar-ui dev",
+        "sanarui:test": "yarn workspace sanar-ui test",
+        "sanarui:build": "yarn workspace sanar-ui build"
     }
 }
