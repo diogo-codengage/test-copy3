@@ -19,9 +19,15 @@ const typeOptions = {
 }
 
 const sizeOptions = {
-    Default: 'default ',
+    Default: 'default',
     Large: 'large',
     Small: 'small'
+}
+
+const shapeOptions = {
+    Default: '',
+    Round: 'round',
+    Circle: 'circle'
 }
 
 storiesOf('Atoms.Button', module)
@@ -33,34 +39,20 @@ storiesOf('Atoms.Button', module)
             ghost={boolean('Ghost', false)}
             block={boolean('Block', false)}
             loading={boolean('Loading', false)}
+            shape={select('Shape', shapeOptions, '')}
             type={select('Type', typeOptions, 'default')}
             size={select('Size', sizeOptions, 'default')}
+            icon={text(
+                'Icon',
+                'Veja todos o icons em: https://ant.design/components/icon/'
+            )}
         >
             {text('Label', 'Default')}
         </ESButton>
     ))
-    .add('Icon', () => (
-        <>
-            <ESButton {...props} icon='search' type='primary' shape='circle' />
-            <ESButton {...props} icon='search' type='primary'>
-                Search
-            </ESButton>
-            <ESButton {...props} icon='search' shape='circle' />
-            <ESButton {...props} icon='search'>
-                Search
-            </ESButton>
-            <ESButton {...props} type='primary' clear>
-                Hello Button
-                <ESIcon type='arrow-right' />
-            </ESButton>
-            <ESButton {...props} clear>
-                Hello Button
-                <ESIcon type='arrow-right' />
-            </ESButton>
-        </>
-    ))
-    .add('Group', () => (
-        <>
+    .add(
+        'Group',
+        () => (
             <ESButtonGroup>
                 <ESButton {...props}>Default</ESButton>
                 <ESButton {...props} type='primary'>
@@ -73,5 +65,10 @@ storiesOf('Atoms.Button', module)
                     Danger
                 </ESButton>
             </ESButtonGroup>
-        </>
-    ))
+        ),
+        {
+            info: {
+                propTablesExclude: [ESButton]
+            }
+        }
+    )
