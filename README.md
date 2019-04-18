@@ -22,7 +22,7 @@ Para a execução dos submódulos o arquivo `package.json` terá em sua seção 
 }
 ```
 
-##Estrutura (Monorepo)
+## Estrutura (Monorepo)
 Como citado, a Editora Sanar possui diversas plataformas - que seguem o mesmo padrão visual - com diversos conteúdos distintos. Avaliando esta necessidade, fora optado pela utilização de um **Monorepo** baseado na seguinte estrutura:
 
 ```
