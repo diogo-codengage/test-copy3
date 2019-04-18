@@ -1,8 +1,18 @@
 # [Sanar](https://www.editorasanar.com.br/)
 Este projeto foi desenvolvido para que seja atendido de forma ampla, eficiênte e produtiva todas as necessidades das diversas plataformas pertencentes à [**Editora Sanar**](https://www.editorasanar.com.br/).
 
-[TOC]
+- [SANAR](#)
+	- [Instalação](#instalacao);
+	- [Execução](#execucao);
+	- [Estrutura](#estrutura);
+	- [Construção](#construcao);
+	- [Observações](#observações);
+	- [Bibliotecas utilizadas](#bibliotecas-utilizadas);
+	- [Padrões utilizadas](#padrões-utilizadas);
+	- [Dicas e recomendações](#dicas-e-recomendações);
+- [Sanar UI](#sanar-ui)
 
+---
 ## Instalação
 Apesar de estar sendo executado na raíz da aplicação, este comando instalará também as dependências nos submódulos da aplicação (**/packages**):
 
@@ -50,7 +60,7 @@ Nesta estrutura fora utilizado o [Yarn Workspaces](https://yarnpkg.com/lang/en/d
 + Em casos onde será necessária a configuração de um *build* por meio do [Babel](https://babeljs.io/), deverá ser importada a configuração do arquivo da raíz da aplicação - como feito em `packages/sanar-ui/babel.config.js` - e alterado pontualmente as necessidades, deixando assim, a responsabilidade ao projeto `raíz`.
 
 ### Bibliotecas utilizadas
-+ [Ang Design](https://ant.design/)
++ [Ant Design](https://ant.design/)
 + [Babel](https://babeljs.io/)
 + [Jest](https://jestjs.io/)
 + [LESS](http://lesscss.org/)
@@ -73,7 +83,7 @@ Nesta estrutura fora utilizado o [Yarn Workspaces](https://yarnpkg.com/lang/en/d
 Esta biblioteca - localizada em: `/sanar/packages/sanar-ui` - possuirá todos os elementos visuais que serão compartilhados entre as demais aplicações do ecossistema Sanar.
 
 Para o seu desenvolvimento é utilizado os seguintes padrões e bibliotecas:
-+ [Ang Design](https://ant.design/);
++ [Ant Design](https://ant.design/);
 + [Atomic Design](http://bradfrost.com/blog/post/atomic-web-design/);
 + [Storybook](https://storybook.js.org/);
 	- Todos os componentes que serão adicionados ao Storybook deverão conter a extensão `*.stories.*` para que a adição seja automática;
@@ -90,7 +100,7 @@ Para o seu desenvolvimento é utilizado os seguintes padrões e bibliotecas:
 	- Seus diferentes tipos de aplicação deverão - quando necessário a criação de outro arquivo - conter alguma referência de que pertecem para aquele ecossistema;
 		- Ex.: `Button`, `ButtonIcon`, `Menu`, `SubMenu`;
 + Estilização:
-	- Seguirão seguinte processo para a importação:
+	- Seguirão o seguinte processo para a importação:
 		```
 		//Button/style.less
 		
