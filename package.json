@@ -1,28 +1,29 @@
 {
-	"name": "sanar-monorepo",
-	"version": "1.0.0",
-	"main": "index.js",
-	"license": "MIT",
-	"private": true,
-	"workspaces": [
-		"packages/*"
-	],
-	"dependencies": {},
-	"devDependencies": {
-		"@storybook/addon-actions": "^5.0.8",
-		"@storybook/addon-info": "^5.0.8",
-		"@storybook/addon-knobs": "^5.0.8",
-		"@storybook/addon-links": "^5.0.8",
-		"@storybook/addon-viewport": "^5.0.8",
-		"@storybook/addons": "^5.0.8",
-		"@storybook/react": "^5.0.8",
-		"@babel/plugin-proposal-export-default-from": "^7.2.0"
-	},
-	"scripts": {
-		"storybook": "start-storybook -p 6006",
-		"build-storybook": "build-storybook",
-		"esdemo:start": "cd ./packages/es-demo && yarn start",
-		"sanarui:dev": "cd ./packages/sanar-ui && yarn dev",
-		"sanarui:test": "cd ./packages/sanar-ui && yarn test"
-	}
+    "name": "sanar-monorepo",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "dependencies": {},
+    "devDependencies": {
+        "@storybook/addon-actions": "^5.0.8",
+        "@storybook/addon-info": "^5.0.8",
+        "@storybook/addon-knobs": "^5.0.8",
+        "@storybook/addon-links": "^5.0.8",
+        "@storybook/addon-viewport": "^5.0.8",
+        "@storybook/addons": "^5.0.8",
+        "@storybook/react": "^5.0.8",
+        "@babel/plugin-proposal-export-default-from": "^7.2.0"
+    },
+    "scripts": {
+        "storybook": "start-storybook -p 6006",
+        "build-storybook": "build-storybook",
+        "esdemo:start": "yarn workspace esdemo start",
+        "sanarui:dev": "yarn workspace esdemo dev",
+        "sanarui:test": "yarn workspace esdemo test",
+        "sanarui:build": "yarn workspace esdemo build"
+    }
 }
