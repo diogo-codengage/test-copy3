@@ -62,6 +62,7 @@ Nesta estrutura fora utilizado o [Yarn Workspaces](https://yarnpkg.com/lang/en/d
 	
 ### Padrões utilizados:
 + [Atomic Design](http://bradfrost.com/blog/post/atomic-web-design/);
++ [Git Flow](https://danielkummer.github.io/git-flow-cheatsheet/index.html).
 
 ### Dicas e Recomendações
 + Para usuários do [Visual Studio Code](https://code.visualstudio.com/):
