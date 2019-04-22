@@ -11,8 +11,7 @@ addDecorator(story => (
         style={{
             marginTop: 20,
             padding: 20,
-            display: 'flex',
-            justifyContent: 'center',
+            height: '200px',
             backgroundColor: '#edeff2',
             border: '1px solid #e8e8e8'
         }}
