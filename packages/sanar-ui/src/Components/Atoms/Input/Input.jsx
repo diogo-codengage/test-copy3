@@ -1,18 +1,23 @@
 import React from 'react'
-import { Input } from 'antd'
+import PropTypes from 'prop-types'
+import Input from 'antd/lib/input'
 import classNames from 'classnames'
 
-const ESButton = ({ className, component, ...props }) => {
-  const classes = classNames(
-    'es-input',
-    className
-  )
-  
-  const Comp = component ? component : Input
+const ESInput = ({ className, component, ...props }) => {
+    const classes = classNames('es-input', className)
 
-  return (
-    <Comp className={classes} {...props} />
-  )
+    const Comp = component ? component : Input
+
+    return <Comp className={classes} {...props} />
 }
 
-export default ESButton
+ESInput.propTypes = Object.assign(
+    { ...Input['propTypes'] },
+    {
+        className: PropTypes.string
+    }
+)
+
+ESInput.defaultProps = Input['defaultProps']
+
+export default ESInput
