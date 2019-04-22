@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { storiesOf } from '@storybook/react'
-import { select, boolean } from '@storybook/addon-knobs'
+import { select } from '@storybook/addon-knobs'
 
 import ESTabs from './Tabs'
 import ESTabPane from './TabPane'
