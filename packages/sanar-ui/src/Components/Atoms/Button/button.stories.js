@@ -25,7 +25,7 @@ const sizeOptions = {
 }
 
 const shapeOptions = {
-    Default: '',
+    Default: false,
     Round: 'round',
     Circle: 'circle'
 }
@@ -39,7 +39,7 @@ storiesOf('Atoms.Button', module)
             ghost={boolean('Ghost', false)}
             block={boolean('Block', false)}
             loading={boolean('Loading', false)}
-            shape={select('Shape', shapeOptions, '')}
+            shape={select('Shape', shapeOptions, false)}
             type={select('Type', typeOptions, 'default')}
             size={select('Size', sizeOptions, 'default')}
             icon={text(

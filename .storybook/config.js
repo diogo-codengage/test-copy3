@@ -31,8 +31,7 @@ addDecorator(
 )
 addParameters({
     options: {
-        name: 'SANAR UI',
-        isFullscreen: false
+        name: 'SANAR UI'
     }
 })
 
