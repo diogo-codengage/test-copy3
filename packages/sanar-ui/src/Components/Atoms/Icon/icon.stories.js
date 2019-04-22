@@ -1,16 +1,22 @@
-import React from "react";
-import { storiesOf } from "@storybook/react";
+import React from 'react'
+import { storiesOf } from '@storybook/react'
+import { select, color, boolean, number } from '@storybook/addon-knobs'
 
-import ESIcon from "./Icon";
+import ESIcon from './Icon'
 
-storiesOf("Atoms.Icon", module)
-    .add("Simple", () => (
-        <>
-            <ESIcon type="home" fontSize={25} />
-            <ESIcon type="setting" theme="filled" />
-            <ESIcon type="smile" theme="outlined" />
-            <ESIcon type="sync" spin />
-            <ESIcon type="smile" rotate={180} />
-            <ESIcon type="loading" />
-        </>
-    ))
+const themeOptions = {
+    Outlined: 'outlined',
+    Filled: 'filled',
+    TwoTone: 'twoTone'
+}
+
+storiesOf('Atoms.Icon', module).add('Simple', () => (
+    <ESIcon
+        type='home'
+        fontSize={number('Font size', 25)}
+        rotate={number('Rotate', 0)}
+        spin={boolean('Spin', false)}
+        theme={select('Theme', themeOptions, 'outlined')}
+        twoToneColor={color('Color', '#000')}
+    />
+))

@@ -1,6 +1,5 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
 import { select, text, boolean } from '@storybook/addon-knobs'
 
 import ESDropdown, { ESDropdownButton } from './'
@@ -41,7 +40,7 @@ storiesOf('Atoms.Dropdown', module)
                 trigger={select('Trigger', triggerOptions, ['hover'])}
                 placement={select('Placement', placementOptions, 'bottomLeft')}
             >
-                <ESButton>Dropdown</ESButton>
+                <ESButton>{text('Text', 'Dropdown')}</ESButton>
             </ESDropdown>
         ),
         {
