@@ -9,6 +9,9 @@
     ],
     "dependencies": {},
     "devDependencies": {
+        "@babel/plugin-proposal-export-default-from": "^7.2.0",
+        "@commitlint/cli": "^7.5.2",
+        "@commitlint/config-conventional": "^7.5.0",
         "@storybook/addon-actions": "^5.0.8",
         "@storybook/addon-info": "^5.0.8",
         "@storybook/addon-knobs": "^5.0.8",
@@ -16,15 +19,22 @@
         "@storybook/addon-viewport": "^5.0.8",
         "@storybook/addons": "^5.0.8",
         "@storybook/react": "^5.0.8",
-        "@babel/plugin-proposal-export-default-from": "^7.2.0"
+        "commitizen": "^3.1.1",
+        "husky": "^1.3.1"
     },
     "scripts": {
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
+        "commit": "git-cz",
         "esdemo:start": "yarn workspace es-demo start",
         "esdemo:build": "yarn workspace es-demo build",
         "sanarui:dev": "yarn workspace sanar-ui dev",
         "sanarui:test": "yarn workspace sanar-ui test",
         "sanarui:build": "yarn workspace sanar-ui build"
+    },
+    "husky": {
+        "hooks": {
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+        }
     }
 }
