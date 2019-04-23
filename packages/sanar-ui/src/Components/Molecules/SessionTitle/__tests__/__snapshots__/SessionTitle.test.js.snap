@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="ant-row-flex ant-row-flex-space-between ant-row-flex-bottom es-session-title"
+>
+  <div
+    className="ant-col"
+  >
+    <h4
+      aria-label={null}
+      className="ant-typography"
+      style={
+        Object {
+          "WebkitLineClamp": null,
+        }
+      }
+    >
+      Meu desenvolvimento
+    </h4>
+    <span
+      aria-label={null}
+      className="ant-typography"
+      style={
+        Object {
+          "WebkitLineClamp": null,
+        }
+      }
+    >
+      Vejas as indicações de como você está se saindo no seu aprendizado com seu curso
+    </span>
+  </div>
+</div>
+`;
