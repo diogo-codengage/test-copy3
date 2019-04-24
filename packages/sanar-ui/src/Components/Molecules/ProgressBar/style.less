@@ -1,0 +1,34 @@
+.es-progress-bar {
+    &__icon {
+        margin-right: @margin-xs;
+    }
+
+    &__title {
+        font-size: @font-size-sm !important;
+        font-weight: bold;
+    }
+
+    &__progress {
+        position: relative;
+        &--limit {
+            background-color: @normal-color;
+            position: absolute;
+            right: 0;
+            bottom: 5px;
+            height: @border-radius-sm * 2;
+            border-radius: @border-radius-sm;
+        }
+        & .ant-progress-inner {
+            background-color: lighten(@normal-color, 10);
+            & .ant-progress-bg {
+                height: @border-radius-sm * 2 !important;
+                background-color: @warning-color;
+                z-index: 2;
+            }
+        }
+    }
+
+    & h4.ant-typography {
+        margin-bottom: 0;
+    }
+}
