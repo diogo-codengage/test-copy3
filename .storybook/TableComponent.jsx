@@ -50,7 +50,11 @@ const TableComponent = ({ propDefinitions }) => {
                 <Td>
                     {typeof required !== 'undefined' && required.toString()}
                 </Td>
-                <Td>{defaultValue || '-'}</Td>
+                <Td>
+                    {defaultValue && Object.keys(defaultValue).length
+                        ? defaultValue
+                        : '-'}
+                </Td>
                 <Td>{description}</Td>
             </Tr>
         )
