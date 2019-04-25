@@ -16,10 +16,6 @@
     "files": [
         "dist"
     ],
-    "dependencies": {
-        "antd": "^3.16.3",
-        "core-js": "2"
-    },
     "devDependencies": {
         "@babel/cli": "^7.4.3",
         "@babel/core": "^7.4.3",
@@ -44,5 +40,10 @@
         "react-eva-icons": "^0.0.7",
         "react-test-renderer": "^16.8.6",
         "react-testing-library": "^6.1.2"
+    },
+    "dependencies": {
+        "antd": "^3.16.3",
+        "core-js": "2",
+        "react-eva-icons": "^0.0.7"
     }
 }
