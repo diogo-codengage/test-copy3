@@ -6,13 +6,18 @@
     "style": "dist/bundle.less",
     "scripts": {
         "dev": "yarn build -w",
-        "build": "BABEL_ENV=build babel src -d dist --source-maps --delete-dir-on-start --config-file ./babel.config.js --no-comments",
+        "build": "BABEL_ENV=build babel src -d dist --source-maps --delete-dir-on-start --config-file ./babel.config.js --no-comments && yarn build:less",
+        "build:less": "lessc --npm-import=\"prefix=~\" src/index.less dist/sanar-ui.css",
         "test": "jest --config ./jest.config.js --env=jsdom",
         "cli": "hygen sanar-ui"
     },
     "files": [
         "dist"
     ],
+    "dependencies": {
+        "antd": "^3.16.3",
+        "core-js": "2"
+    },
     "devDependencies": {
         "@babel/cli": "^7.4.3",
         "@babel/core": "^7.4.3",
@@ -26,13 +31,10 @@
         "jest": "^24.7.1",
         "jest-image-snapshot": "^2.8.1",
         "jest-puppeteer": "^4.1.1",
+        "less-plugin-npm-import": "^2.1.0",
         "puppeteer": "^1.14.0",
         "react-eva-icons": "^0.0.7",
         "react-test-renderer": "^16.8.6",
         "react-testing-library": "^6.1.2"
-    },
-    "dependencies": {
-        "antd": "^3.16.3",
-        "core-js": "2"
     }
 }
