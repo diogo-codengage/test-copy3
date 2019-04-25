@@ -25,7 +25,7 @@ const ESMetricCard = ({
             <div className='es-metric-card__content'>
                 <img src={img} alt={description} />
                 <MetricCardBadge status={status}>{badge}</MetricCardBadge>
-                <Typography.Text strong>{description}</Typography.Text>
+                <Typography.Text>{description}</Typography.Text>
             </div>
         </ESCard>
     )
