@@ -1,0 +1,41 @@
+{
+    "name": "sanar-monorepo",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "dependencies": {},
+    "devDependencies": {
+        "@babel/plugin-proposal-export-default-from": "^7.2.0",
+        "@commitlint/cli": "^7.5.2",
+        "@commitlint/config-conventional": "^7.5.0",
+        "commitizen": "^3.1.1",
+        "cz-conventional-changelog": "^2.1.0",
+        "husky": "^1.3.1",
+        "hygen": "^4.0.2"
+    },
+    "scripts": {
+        "storybook": "start-storybook -p 6006",
+        "commit": "git-cz",
+        "esdemo:start": "yarn workspace es-demo start",
+        "esdemo:build": "yarn workspace es-demo build",
+        "sanarui:build": "yarn workspace sanar-ui build",
+        "sanarui:cli": "yarn workspace sanar-ui cli",
+        "sanarui:dev": "yarn workspace sanar-ui dev",
+        "sanarui:storybook": "yarn workspace sanar-ui storybook",
+        "sanarui:test": "yarn workspace sanar-ui test"
+    },
+    "husky": {
+        "hooks": {
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+        }
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    }
+}

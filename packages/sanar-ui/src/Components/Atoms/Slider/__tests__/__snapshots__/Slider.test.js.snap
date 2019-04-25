@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="ant-slider ant-slider-with-marks es-slider"
+  onBlur={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  onMouseDown={[Function]}
+  onMouseUp={[Function]}
+  onTouchStart={[Function]}
+>
+  <div
+    className="ant-slider-rail"
+    style={Object {}}
+  />
+  <div
+    className="ant-slider-track"
+    style={
+      Object {
+        "left": "0%",
+        "width": "0%",
+      }
+    }
+  />
+  <div
+    className="ant-slider-step"
+  >
+    <span
+      className="ant-slider-dot ant-slider-dot-active"
+      style={
+        Object {
+          "left": "0%",
+        }
+      }
+    />
+    <span
+      className="ant-slider-dot"
+      style={
+        Object {
+          "left": "33%",
+        }
+      }
+    />
+    <span
+      className="ant-slider-dot"
+      style={
+        Object {
+          "left": "66%",
+        }
+      }
+    />
+    <span
+      className="ant-slider-dot"
+      style={
+        Object {
+          "left": "100%",
+        }
+      }
+    />
+  </div>
+  <div
+    aria-disabled={false}
+    aria-valuemax={100}
+    aria-valuemin={0}
+    aria-valuenow={0}
+    className="ant-slider-handle"
+    onBlur={[Function]}
+    onKeyDown={[Function]}
+    onMouseDown={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="slider"
+    style={
+      Object {
+        "left": "0%",
+      }
+    }
+    tabIndex={0}
+  />
+  <div
+    className="ant-slider-mark"
+  >
+    <span
+      className="ant-slider-mark-text ant-slider-mark-text-active"
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      style={
+        Object {
+          "left": "0%",
+          "msTransform": "translateX(-50%)",
+          "transform": "translateX(-50%)",
+        }
+      }
+    >
+      Aleatório
+    </span>
+    <span
+      className="ant-slider-mark-text"
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      style={
+        Object {
+          "left": "33%",
+          "msTransform": "translateX(-50%)",
+          "transform": "translateX(-50%)",
+        }
+      }
+    >
+      Fácil
+    </span>
+    <span
+      className="ant-slider-mark-text"
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      style={
+        Object {
+          "left": "66%",
+          "msTransform": "translateX(-50%)",
+          "transform": "translateX(-50%)",
+        }
+      }
+    >
+      Médio
+    </span>
+    <span
+      className="ant-slider-mark-text"
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      style={
+        Object {
+          "left": "100%",
+          "msTransform": "translateX(-50%)",
+          "transform": "translateX(-50%)",
+        }
+      }
+    >
+      Difícil
+    </span>
+  </div>
+</div>
+`;

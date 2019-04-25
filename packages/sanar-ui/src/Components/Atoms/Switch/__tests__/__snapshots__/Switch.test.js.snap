@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<button
+  aria-checked={false}
+  className="es-switch ant-switch"
+  defaultChecked={false}
+  onClick={[Function]}
+  onKeyDown={[Function]}
+  onMouseUp={[Function]}
+  role="switch"
+  type="button"
+>
+  <span
+    className="ant-switch-inner"
+  />
+</button>
+`;
