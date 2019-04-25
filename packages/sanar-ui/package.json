@@ -5,11 +5,13 @@
     "main": "dist/bundle.js",
     "style": "dist/bundle.less",
     "scripts": {
-        "dev": "yarn build -w",
         "build": "BABEL_ENV=build babel src -d dist --source-maps --delete-dir-on-start --config-file ./babel.config.js --no-comments && yarn build:less",
         "build:less": "lessc --npm-import=\"prefix=~\" src/index.less dist/sanar-ui.css",
-        "test": "jest --config ./jest.config.js --env=jsdom",
-        "cli": "hygen sanar-ui"
+        "build:storybook": "build-storybook",
+        "cli": "hygen sanar-ui",
+        "dev": "yarn build -w",
+        "storybook": "start-storybook",
+        "test": "jest --config ./jest.config.js --env=jsdom"
     },
     "files": [
         "dist"
@@ -25,7 +27,13 @@
         "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
         "@babel/preset-env": "^7.4.3",
         "@babel/preset-react": "^7.0.0",
-        "@storybook/addon-info": "^5.0.10",
+        "@storybook/addon-actions": "^5.0.8",
+        "@storybook/addon-info": "^5.0.8",
+        "@storybook/addon-knobs": "^5.0.8",
+        "@storybook/addon-links": "^5.0.8",
+        "@storybook/addon-viewport": "^5.0.8",
+        "@storybook/addons": "^5.0.8",
+        "@storybook/react": "^5.0.8",
         "babel-jest": "^24.7.1",
         "babel-loader": "^8.0.5",
         "jest": "^24.7.1",
