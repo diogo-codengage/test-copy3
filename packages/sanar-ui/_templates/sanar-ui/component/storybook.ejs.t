@@ -1,5 +1,5 @@
 ---
-to: src/Components/<%=h.inflection.pluralize(h.inflection.camelize(category))%>/<%=h.inflection.camelize(name)%>/<%=h.inflection.camelize(name)%>.stories.js
+to: src/Components/<%=h.inflection.pluralize(category)%>/<%=h.inflection.camelize(name)%>/<%=h.inflection.camelize(name)%>.stories.js
 ---
 
 import React from 'react'
