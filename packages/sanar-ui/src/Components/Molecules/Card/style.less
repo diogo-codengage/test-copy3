@@ -14,12 +14,12 @@
     &.ant-card-small {
         .ant-card-head {
             min-height: auto;
-            font-size: 10px;
+            font-size: @font-size-xs;
             text-transform: uppercase;
         }
 
         .ant-card-actions > li {
-            margin: 4px 0;
+            margin: @margin-xs / 2 0;
             border: none;
         }
     }
@@ -28,6 +28,9 @@
         position: absolute;
         right: 8px;
         top: 8px;
-        color: @card-head-color;
+
+        svg {
+            fill: rgba(17, 19, 23, 0.25);
+        }
     }
 }

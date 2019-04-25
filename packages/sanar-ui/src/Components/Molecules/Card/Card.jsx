@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import { Card, Tooltip, Icon } from 'antd'
+import ESEvaIcon from '../../Atoms/EvaIcon/EvaIcon'
 
 const ESCard = ({ className, children, doubt, ...props }) => {
     const classes = classNames('es-card', className)
@@ -15,7 +16,12 @@ const ESCard = ({ className, children, doubt, ...props }) => {
                     placement='left'
                     title={doubt}
                 >
-                    <Icon type='question-circle' />
+                    <span>
+                        <ESEvaIcon
+                            name='question-mark-circle-outline'
+                            size='small'
+                        />
+                    </span>
                 </Tooltip>
             )}
             {children}
