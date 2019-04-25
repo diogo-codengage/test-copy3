@@ -11,19 +11,31 @@
 .es-metric-card-badge {
     border-radius: 10px;
     max-width: fit-content;
-    padding: 5px 10px;
+    padding: 0 @margin-sm 0 @margin-md;
     color: @black;
-    margin: 4px auto;
+    margin: @margin-xs / 2 auto;
+    font-size: @font-size-lg;
 
     &--success {
-        background: #cafcb380;
+        background: rgba(202, 252, 179, 0.5);
+        background-image: url('../../../assets/images/metric-card/success.svg');
     }
 
     &--warning {
         background: rgba(255, 235, 194, 0.5);
+        background-image: url('../../../assets/images/metric-card/warning.svg');
     }
 
     &--danger {
         background: rgba(255, 189, 189, 0.5);
+        background-image: url('../../../assets/images/metric-card/danger.svg');
+    }
+
+    &--success,
+    &--warning,
+    &--danger {
+        background-repeat: no-repeat;
+        background-position: left;
+        background-size: 12px 26px;
     }
 }
