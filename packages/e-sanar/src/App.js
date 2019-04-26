@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
@@ -13,16 +13,26 @@ const client = new ApolloClient({
     uri: 'https://48p1r2roz4.sse.codesandbox.io'
 })
 
-const App = () => (
-    <ApolloProvider client={client}>
-        <Router>
-            <Route path='/' component={HomePage} />
-            <Route path='/signin' component={SigninPage} />
-            <Route path='/signup' component={SignupPage} />
-            <Route path='/password-recovery' component={PasswordRecoveryPage} />
-            <PrivateRoute path='/course' component={CoursePage} />
-        </Router>
-    </ApolloProvider>
-)
+function ESRouter() {
+    return (
+        <ApolloProvider client={client}>
+            <Router>
+                <Route path='/' component={HomePage} />
+                <Route path='/signin' component={SigninPage} />
+                <Route path='/signup' component={SignupPage} />
+                <Route path='/password-recovery' component={PasswordRecoveryPage} />
+                <PrivateRoute path='/course' component={CoursePage} />
+            </Router>
+        </ApolloProvider>
+    )
+}
 
-export default App
+const Loader = () => <div>loading...</div>
+
+export default function App() {
+    return (
+        <Suspense fallback={<Loader />}>
+            <ESRouter />
+        </Suspense>
+    )
+}
