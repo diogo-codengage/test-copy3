@@ -1,9 +1,6 @@
 .es-list-view-item {
     max-width: 100%;
-
-    > span {
-        display: block;
-    }
+    padding: @padding-md + 4 0;
 
     > div {
         width: 100%;
@@ -15,6 +12,10 @@
 
     &__content {
         overflow: hidden;
+
+        > div:first-child span {
+            display: block;
+        }
 
         &--category {
             font-size: @font-size-xs;
