@@ -1,0 +1,39 @@
+.es-list-view-item {
+    max-width: 100%;
+
+    > span {
+        display: block;
+    }
+
+    > div {
+        width: 100%;
+    }
+
+    &--avatar {
+        margin-top: @margin-xs / 2;
+    }
+
+    &__content {
+        overflow: hidden;
+
+        &--category {
+            font-size: @font-size-xs;
+        }
+
+        &--title {
+            max-width: 100%;
+        }
+    }
+
+    @media (min-width: @screen-md) {
+        &__container {
+            align-items: center;
+        }
+
+        &__content {
+            &--counter {
+                text-align: right;
+            }
+        }
+    }
+}
