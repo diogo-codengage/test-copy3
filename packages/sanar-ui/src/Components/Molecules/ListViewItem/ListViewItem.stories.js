@@ -5,7 +5,7 @@ import { text, number, boolean } from '@storybook/addon-knobs'
 import ESListView from '../../Atoms/ListView/ListView'
 
 storiesOf('Molecules.ListViewItem', module).add('Simple', () => (
-    <div style={{ background: '#FFF', padding: '0 16px', width: 300 }}>
+    <div style={{ background: '#FFF', padding: '0 16px' }}>
         <ESListView>
             <ESListViewItem
                 avatar={text(
