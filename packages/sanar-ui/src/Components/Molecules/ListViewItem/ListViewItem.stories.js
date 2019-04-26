@@ -1,12 +1,12 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import ESListViewItem from './ListViewItem'
-import { List } from 'antd'
 import { text, number, boolean } from '@storybook/addon-knobs'
+import ESListView from '../../Atoms/ListView/ListView'
 
 storiesOf('Molecules.ListViewItem', module).add('Simple', () => (
     <div style={{ background: '#FFF', padding: '0 16px', width: 300 }}>
-        <List>
+        <ESListView>
             <ESListViewItem
                 avatar={text(
                     'Avatar',
@@ -34,6 +34,6 @@ storiesOf('Molecules.ListViewItem', module).add('Simple', () => (
                 description={text('Descripition', 'Descripition')}
                 category={text('Category', 'AULA')}
             />
-        </List>
+        </ESListView>
     </div>
 ))
