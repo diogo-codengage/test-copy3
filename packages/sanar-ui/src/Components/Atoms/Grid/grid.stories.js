@@ -1,18 +1,17 @@
-import React from "react";
-import { storiesOf } from "@storybook/react";
+import React from 'react'
+import { storiesOf } from '@storybook/react'
 
-import ESCol from "./Col";
-import ESRow from "./Row";
+import ESCol from './Col'
+import ESRow from './Row'
 
 const props = {
-    style: {
-        
-    }
+    style: {}
 }
 
-storiesOf("Atoms.Grid", module)
-    .add("Simple", () => (
-        <>
+storiesOf('Atoms.Grid', module).add(
+    'Simple',
+    () => (
+        <div>
             <ESRow>
                 <ESCol span={12}>col-12</ESCol>
                 <ESCol span={12}>col-12</ESCol>
@@ -28,5 +27,11 @@ storiesOf("Atoms.Grid", module)
                 <ESCol span={6}>col-6</ESCol>
                 <ESCol span={6}>col-6</ESCol>
             </ESRow>
-        </>
-    ))
+        </div>
+    ),
+    {
+        info: {
+            propTablesExclude: ['div']
+        }
+    }
+)
