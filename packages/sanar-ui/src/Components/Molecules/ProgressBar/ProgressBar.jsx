@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Progress from 'antd/lib/progress'
 import Typography from 'antd/lib/typography'
-import Badge from 'antd/lib/badge'
 import { Row, Col } from 'antd'
 import classNames from 'classnames'
 
@@ -35,7 +34,11 @@ const ESProgressBar = ({ className, percent, title, limit }) => {
                             />
                         </Col>
                         <Col className='d-flex es-progress-bar__icon'>
-                            <ESEvaIcon size='small' name='award-outline' />
+                            <ESEvaIcon
+                                size='small'
+                                name='award-outline'
+                                color={percent >= limit && 'warning'}
+                            />
                         </Col>
                     </Row>
                 </Col>
