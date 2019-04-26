@@ -1,0 +1,41 @@
+.es-live-section {
+    &__player > div {
+        overflow: hidden;
+        height: 100%;
+        border-radius: @border-radius-base;
+    }
+
+    &__title {
+        font-size: @font-size-lg !important;
+    }
+
+    &__date {
+        font-size: @font-size-base - 2px;
+    }
+
+    &__description {
+        margin-top: @margin-lg;
+        margin-bottom: @margin-lg !important;
+    }
+
+    &__instructor {
+        &--linkedin {
+            padding: @padding-xs / 2;
+            border: 1px solid rgba(17, 19, 23, 0.15);
+            border-radius: @border-radius-base;
+            background-color: rgba(247, 249, 252, 1);
+        }
+        &--label {
+            font-size: @font-size-sm - 2px;
+            cursor: default;
+        }
+        &--label {
+            font-size: @font-size-sm - 2px;
+            cursor: default;
+        }
+        &--course {
+            font-size: @font-size-sm;
+            cursor: default;
+        }
+    }
+}

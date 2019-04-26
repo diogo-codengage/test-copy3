@@ -11,18 +11,18 @@
     &__progress {
         position: relative;
         &--limit {
-            background-color: @normal-color;
+            background-color: darken(@normal-color, 17);
             position: absolute;
             right: 0;
-            bottom: 5px;
-            height: @border-radius-sm * 2;
+            bottom: 5.5px;
+            height: @border-radius-sm * 2px;
             border-radius: @border-radius-sm;
         }
         & .ant-progress-inner {
-            background-color: lighten(@normal-color, 10);
+            background-color: lighten(@normal-color, 5);
             & .ant-progress-bg {
                 height: @border-radius-sm * 2 !important;
-                background-color: @warning-color;
+                background-color: fade(@warning-color, 60);
                 z-index: 2;
             }
         }
