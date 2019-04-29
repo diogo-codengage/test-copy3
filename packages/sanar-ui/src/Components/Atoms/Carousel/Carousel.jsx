@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Carousel } from 'antd'
@@ -6,8 +6,7 @@ import { Carousel } from 'antd'
 import ESButton from '../Button'
 import ESEvaIcon from '../EvaIcon'
 
-const ESCarousel = ({ className, style, ...props }) => {
-    const carouselRef = useRef()
+const ESCarousel = ({ className, style, ...props }, ref) => {
     const classes = classNames('es-carousel', className)
 
     const styles = {
@@ -15,14 +14,14 @@ const ESCarousel = ({ className, style, ...props }) => {
         ...(props.arrows && { width: 'calc(100% - 150px)' })
     }
 
-    const next = () => carouselRef.current.next()
+    const next = () => ref.current.next()
 
-    const prev = () => carouselRef.current.prev()
+    const prev = () => ref.current.prev()
 
     return (
         <div style={styles} className={classes}>
             <Carousel
-                ref={carouselRef}
+                ref={ref}
                 {...props}
                 nextArrow={
                     <ESButton onClick={next} shape='circle'>
@@ -82,4 +81,4 @@ ESCarousel.propTypes = Object.assign(
 
 ESCarousel.defaultProps = Carousel['defaultProps']
 
-export default ESCarousel
+export default forwardRef(ESCarousel)

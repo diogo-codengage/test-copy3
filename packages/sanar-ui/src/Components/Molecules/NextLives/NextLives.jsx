@@ -1,11 +1,7 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { Typography } from 'antd'
 
-import ESCard from '../Card'
 import ESCarousel from '../../Atoms/Carousel'
-
-const { Title, Text } = Typography
 
 const responsive = [
     {
@@ -35,24 +31,42 @@ const responsive = [
     {
         breakpoint: 700,
         settings: {
-            slidesToShow: 1
+            slidesToShow: 1,
+            arrows: false
         }
     }
 ]
 
-const ESNextLives = ({ className, children, responsive, ...props }) => (
-    <ESCarousel
-        {...props}
-        slidesToScroll={1}
-        slidesToShow={5}
-        infinite={false}
-        dots={false}
-        arrows={true}
-        responsive={responsive}
-    >
-        {children}
-    </ESCarousel>
-)
+const ESNextLives = ({ className, children, responsive, ...props }) => {
+    const ref = useRef(null)
+    const [arrows, setArrows] = useState(true)
+
+    const onReInit = () => {
+        if (ref.current) {
+            ref.current.slick.state.breakpoint === 700
+                ? setArrows(false)
+                : setArrows(true)
+        }
+    }
+
+    return (
+        <ESCarousel
+            {...props}
+            ref={ref}
+            slidesToScroll={1}
+            slidesToShow={5}
+            infinite={false}
+            dots={false}
+            arrows={arrows}
+            speed={3000}
+            responsive={responsive}
+            draggable
+            onReInit={onReInit}
+        >
+            {children}
+        </ESCarousel>
+    )
+}
 
 ESNextLives.propTypes = Object.assign(
     { ...ESCarousel['propTypes'] },
