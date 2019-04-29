@@ -3,12 +3,17 @@ import PropTypes from 'prop-types'
 import Button from 'antd/lib/button'
 import classNames from 'classnames'
 
-const ESButton = ({ className, clear, ...props }) => {
+const ESButton = ({ className, clear, fontSize, style, ...props }) => {
     const classes = classNames('es-button', className, {
         'es-button__clear': clear
     })
 
-    return <Button className={classes} {...props} />
+    const styles = {
+        ...style,
+        ...(fontSize && { fontSize })
+    }
+
+    return <Button style={styles} className={classes} {...props} />
 }
 
 ESButton.propTypes = Object.assign(
@@ -16,6 +21,7 @@ ESButton.propTypes = Object.assign(
     {
         clear: PropTypes.bool,
         href: PropTypes.string,
+        fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         target: PropTypes.string
     }
 )

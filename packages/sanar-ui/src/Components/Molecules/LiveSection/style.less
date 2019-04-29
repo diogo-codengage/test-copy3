@@ -10,12 +10,13 @@
     }
 
     &__date {
+        cursor: default;
         font-size: @font-size-base - 2px;
     }
 
     &__description {
-        margin-top: @margin-lg;
-        margin-bottom: @margin-lg !important;
+        margin-top: @margin-md;
+        margin-bottom: @margin-md !important;
     }
 
     &__instructor {
@@ -35,7 +36,9 @@
         }
         &--course {
             font-size: @font-size-sm;
-            cursor: default;
+            & span {
+                cursor: default !important;
+            }
         }
     }
 }

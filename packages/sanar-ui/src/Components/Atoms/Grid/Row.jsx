@@ -4,11 +4,9 @@ import { Row } from 'antd'
 import classNames from 'classnames'
 
 const ESRow = ({ className, direction, flex, style, height, ...props }) => {
-    const classes = classNames(
-        'es-row',
-        className,
-        `es-row__direction--${direction}`
-    )
+    const classes = classNames('es-row', className, {
+        [`es-row__direction--${direction}`]: direction
+    })
 
     const styles = {
         ...style,
