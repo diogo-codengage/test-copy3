@@ -1,4 +1,5 @@
 const { override, fixBabelImports, addLessLoader } = require('customize-cra')
+const theme = require('./theme.config')
 
 module.exports = override(
     fixBabelImports('import', {
@@ -7,6 +8,9 @@ module.exports = override(
         style: true
     }),
     addLessLoader({
+        modifyVars: {
+            ...theme
+        },
         javascriptEnabled: true
     })
 )

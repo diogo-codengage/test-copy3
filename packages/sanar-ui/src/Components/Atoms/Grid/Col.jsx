@@ -4,7 +4,9 @@ import { Col } from 'antd'
 import classNames from 'classnames'
 
 const ESCol = ({ className, flex, style, type, ...props }) => {
-    const classes = classNames('es-col', className, `es-col__${type}`)
+    const classes = classNames('es-col', className, {
+        [`es-col__${type}`]: type
+    })
 
     const styles = {
         ...style,

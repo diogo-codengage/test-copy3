@@ -5,17 +5,24 @@
         border-radius: @border-radius-base;
     }
 
+    @media (max-width: @screen-md) {
+        &__player {
+            margin-bottom: @margin-md;
+        }
+    }
+
     &__title {
         font-size: @font-size-lg !important;
     }
 
     &__date {
+        cursor: default;
         font-size: @font-size-base - 2px;
     }
 
     &__description {
-        margin-top: @margin-lg;
-        margin-bottom: @margin-lg !important;
+        margin-top: @margin-md;
+        margin-bottom: @margin-md !important;
     }
 
     &__instructor {
@@ -35,7 +42,13 @@
         }
         &--course {
             font-size: @font-size-sm;
-            cursor: default;
+            & span {
+                cursor: default !important;
+            }
         }
+    }
+
+    &__action {
+        margin-top: @margin-md;
     }
 }

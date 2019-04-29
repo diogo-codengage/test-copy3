@@ -9,7 +9,8 @@ import PasswordRecoveryPage from './Pages/Auth/PasswordRecovery'
 import SignupPage from './Pages/Auth/Signup'
 import { CoursePage } from './Pages/Portal/Course'
 
-import './App.less'
+// Import Sanar UI components library
+import 'sanar-ui/dist/index.less'
 
 const client = new ApolloClient({
     uri: 'https://48p1r2roz4.sse.codesandbox.io'

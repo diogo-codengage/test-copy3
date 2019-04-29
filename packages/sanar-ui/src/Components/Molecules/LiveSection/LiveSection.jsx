@@ -121,7 +121,9 @@ const ESLiveSection = ({
                             {...{ avatar, labelLive, labelCourses, name }}
                         />
                     </ESCol>
-                    <ESCol span={24}>{action}</ESCol>
+                    <ESCol className='es-live-section__action' span={24}>
+                        {action}
+                    </ESCol>
                 </ESRow>
             </ESCol>
         </ESRow>

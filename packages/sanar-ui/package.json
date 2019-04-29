@@ -5,8 +5,7 @@
     "main": "dist/bundle.js",
     "style": "dist/bundle.less",
     "scripts": {
-        "build": "BABEL_ENV=build babel src -d dist --source-maps --delete-dir-on-start --config-file ./babel.config.js --no-comments && yarn build:less",
-        "build:less": "lessc --npm-import=\"prefix=~\" src/index.less dist/sanar-ui",
+        "build": "cross-env BABEL_ENV=build babel src -d dist --source-maps --delete-dir-on-start --config-file ./babel.config.js --no-comments --copy-files",
         "build:storybook": "build-storybook",
         "cli": "hygen sanar-ui",
         "dev": "yarn build -w",
@@ -32,6 +31,7 @@
         "@storybook/react": "^5.0.8",
         "babel-jest": "24.7.1",
         "babel-loader": "^8.0.5",
+        "cross-env": "^5.2.0",
         "jest": "24.7.1",
         "jest-image-snapshot": "^2.8.1",
         "jest-puppeteer": "^4.1.1",
