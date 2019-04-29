@@ -5,6 +5,12 @@
         border-radius: @border-radius-base;
     }
 
+    @media (max-width: @screen-md) {
+        &__player {
+            margin-bottom: @margin-md;
+        }
+    }
+
     &__title {
         font-size: @font-size-lg !important;
     }
@@ -40,5 +46,9 @@
                 cursor: default !important;
             }
         }
+    }
+
+    &__action {
+        margin-top: @margin-md;
     }
 }
