@@ -6,7 +6,7 @@
     "style": "dist/bundle.less",
     "scripts": {
         "build": "BABEL_ENV=build babel src -d dist --source-maps --delete-dir-on-start --config-file ./babel.config.js --no-comments && yarn build:less",
-        "build:less": "lessc --npm-import=\"prefix=~\" src/index.less dist/sanar-ui.css",
+        "build:less": "lessc --npm-import=\"prefix=~\" src/index.less dist/sanar-ui",
         "build:storybook": "build-storybook",
         "cli": "hygen sanar-ui",
         "dev": "yarn build -w",
@@ -42,7 +42,6 @@
         "react-testing-library": "^6.1.2"
     },
     "dependencies": {
-        "antd": "^3.16.3",
         "core-js": "2",
         "react-eva-icons": "^0.0.7"
     }
