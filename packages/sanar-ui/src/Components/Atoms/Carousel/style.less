@@ -1,0 +1,30 @@
+@spacing-button: -32px;
+
+.es-carousel {
+    margin: 0 auto;
+
+    & .slick-prev {
+        left: @spacing-button;
+    }
+    & .slick-next {
+        right: @spacing-button;
+    }
+
+    & .es-button {
+        width: 24px;
+        height: 24px;
+        background-color: @normal-color;
+
+        &.slick-disabled {
+            opacity: 0.2;
+        }
+
+        &.slick-arrow:hover {
+            background-color: lighten(@normal-color, 5);
+        }
+
+        &.slick-arrow svg {
+            fill: darken(@normal-color, 65);
+        }
+    }
+}

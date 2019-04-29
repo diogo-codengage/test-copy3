@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="ant-card es-card ant-card-bordered ant-card-small"
+>
+  <div
+    className="ant-card-body"
+    style={Object {}}
+  >
+    <h4
+      aria-label={null}
+      className="ant-typography es-card-next-live__title"
+      style={
+        Object {
+          "WebkitLineClamp": null,
+        }
+      }
+    >
+      Live de Correção da prova SUS-SP 2019
+    </h4>
+    <span
+      aria-label={null}
+      className="ant-typography es-card-next-live__date ant-typography-disabled"
+      style={
+        Object {
+          "WebkitLineClamp": null,
+        }
+      }
+    >
+      27/04/2019 às 10h
+    </span>
+  </div>
+</div>
+`;

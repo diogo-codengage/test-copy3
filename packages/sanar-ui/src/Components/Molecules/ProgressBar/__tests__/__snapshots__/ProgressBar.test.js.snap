@@ -63,8 +63,8 @@ exports[`renders correctly 1`] = `
             }
           }
         >
-          <div
-            className="es-eva-icon es-eva-icon--small es-eva-icon--undefined"
+          <i
+            className="anticon es-eva-icon es-eva-icon--small es-eva-icon--default"
           >
             <i
               data-eva="award-outline"
@@ -72,7 +72,7 @@ exports[`renders correctly 1`] = `
               data-eva-height="18px"
               data-eva-width="18px"
             />
-          </div>
+          </i>
         </div>
       </div>
     </div>
