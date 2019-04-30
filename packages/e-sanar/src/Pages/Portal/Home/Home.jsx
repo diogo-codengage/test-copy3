@@ -10,9 +10,11 @@ function HomePage() {
 
     return (
         <div>
-            <span>{t('hello')}</span>
+            {/* <span>{t('hello')}</span>
             <button onClick={() => changeLng('en')}>Change for English</button>
-            <button onClick={() => changeLng('pt')}>Mudar para Português</button>
+            <button onClick={() => changeLng('pt')}>
+                Mudar para Português
+            </button> */}
         </div>
     )
 }

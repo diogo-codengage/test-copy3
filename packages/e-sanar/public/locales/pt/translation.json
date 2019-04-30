@@ -36,6 +36,12 @@
         "recentCommentsButton": "Ver todos os comentários",
         "recentlySavedTitle": "Salvos Recentemente",
         "recentlySavedSubtitle": "Veja os dois últimos itens salvos recentemente",
-        "recentlySavedButton": "Ver todos os itens salvos"
+        "recentlySavedButton": "Ver todos os itens salvos",
+
+        "certified": "Certificado",
+        "progressbarTitle": "Progresso do curso",
+        "tabGeneral": "Visão Geral",
+        "tabContent": "Conteúdo",
+        "tabComments": "Comentários"
     }
 }

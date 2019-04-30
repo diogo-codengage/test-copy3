@@ -3,7 +3,7 @@
         "contract": "signed",
         "progress_percentage": 6.62,
         "certificate": {
-            "available": true,
+            "available": false,
             "link": ""
         },
         "course": {
