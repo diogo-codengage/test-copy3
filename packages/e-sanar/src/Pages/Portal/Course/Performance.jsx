@@ -15,10 +15,9 @@ import praticaRegular from '../../../assets/images/pratica-regular.svg'
 import progresso from '../../../assets/images/progresso.svg'
 
 import low from '../../../assets/images/emoticon-low.svg'
-import mid from '../../../assets/images/emoticon-mid.svg'
-import nice from '../../../assets/images/emoticon-nice.svg'
 
 import Mock from './mock.json'
+import { SANPortalPagesContainer } from '../Layout'
 
 const CommitmentCard = ({ percent }) => {
     const { t } = useTranslation()
@@ -65,102 +64,113 @@ const Performance = () => {
 
     return (
         <div className='performance'>
-            <ESSessionTitle
-                extra={
-                    <ESButton size='small'>
-                        {t('courseDetails.viewMyPerformance')}
-                    </ESButton>
-                }
-                title={t('courseDetails.myDevelopment')}
-                subtitle={t('courseDetails.myDevelopmentSubtitle')}
-            />
-            <ESRow type='flex' gutter={20} justify='space-between' align='top'>
-                <ESCol
-                    xs={24}
-                    sm={24}
-                    lg={8}
-                    alignSelf='stretch'
-                    className='mb-md'
+            <SANPortalPagesContainer>
+                <ESSessionTitle
+                    extra={
+                        <ESButton size='small'>
+                            {t('courseDetails.viewMyPerformance')}
+                        </ESButton>
+                    }
+                    title={t('courseDetails.myDevelopment')}
+                    subtitle={t('courseDetails.myDevelopmentSubtitle')}
+                />
+                <ESRow
+                    type='flex'
+                    gutter={20}
+                    justify='space-between'
+                    align='top'
                 >
-                    <CommitmentCard
-                        percent={performance_indicators.commitment}
-                    />
-                </ESCol>
-                <ESCol
-                    xs={24}
-                    sm={12}
-                    lg={4}
-                    alignSelf='stretch'
-                    className='mb-md'
-                >
-                    <ESMetricCard
-                        title={t('courseDetails.cardConsistencyTitle')}
-                        doubt={t('courseDetails.cardConsistencyDoubt')}
-                        img={consistencia}
-                        badge={performance_indicators.uniformity}
-                        status='success'
-                        description={t(
-                            'courseDetails.cardConsistencyDescription'
-                        )}
-                    />
-                </ESCol>
-                <ESCol
-                    xs={24}
-                    sm={12}
-                    lg={4}
-                    alignSelf='stretch'
-                    className='mb-md'
-                >
-                    <ESMetricCard
-                        title={t('courseDetails.cardProgressTitle')}
-                        doubt={t('courseDetails.cardProgressDoubt')}
-                        img={progresso}
-                        badge={t('global.percentOf', {
-                            done: performance_indicators.progress.done,
-                            final: performance_indicators.progress.total
-                        })}
-                        status='success'
-                        description={t('courseDetails.cardProgressDescription')}
-                    />
-                </ESCol>
-                <ESCol
-                    xs={24}
-                    sm={12}
-                    lg={4}
-                    alignSelf='stretch'
-                    className='mb-md'
-                >
-                    <ESMetricCard
-                        title={t('courseDetails.cardPracticeTitle')}
-                        doubt={t('courseDetails.cardPracticeDoubt')}
-                        img={praticaRegular}
-                        badge={t('global.percentOf', {
-                            done: performance_indicators.tests.done,
-                            final: performance_indicators.tests.total
-                        })}
-                        status='warning'
-                        description={t('courseDetails.cardPracticeDescription')}
-                    />
-                </ESCol>
-                <ESCol
-                    xs={24}
-                    sm={12}
-                    lg={4}
-                    alignSelf='stretch'
-                    className='mb-md'
-                >
-                    <ESMetricCard
-                        title={t('courseDetails.cardInteractionTitle')}
-                        doubt={t('courseDetails.cardInteractionDoubt')}
-                        img={interacao}
-                        badge={performance_indicators.interatction}
-                        status='danger'
-                        description={t(
-                            'courseDetails.cardInteractionDescription'
-                        )}
-                    />
-                </ESCol>
-            </ESRow>
+                    <ESCol
+                        xs={24}
+                        sm={24}
+                        lg={8}
+                        alignSelf='stretch'
+                        className='mb-md'
+                    >
+                        <CommitmentCard
+                            percent={performance_indicators.commitment}
+                        />
+                    </ESCol>
+                    <ESCol
+                        xs={24}
+                        sm={12}
+                        lg={4}
+                        alignSelf='stretch'
+                        className='mb-md'
+                    >
+                        <ESMetricCard
+                            title={t('courseDetails.cardConsistencyTitle')}
+                            doubt={t('courseDetails.cardConsistencyDoubt')}
+                            img={consistencia}
+                            badge={performance_indicators.uniformity}
+                            status='success'
+                            description={t(
+                                'courseDetails.cardConsistencyDescription'
+                            )}
+                        />
+                    </ESCol>
+                    <ESCol
+                        xs={24}
+                        sm={12}
+                        lg={4}
+                        alignSelf='stretch'
+                        className='mb-md'
+                    >
+                        <ESMetricCard
+                            title={t('courseDetails.cardProgressTitle')}
+                            doubt={t('courseDetails.cardProgressDoubt')}
+                            img={progresso}
+                            badge={t('global.percentOf', {
+                                done: performance_indicators.progress.done,
+                                final: performance_indicators.progress.total
+                            })}
+                            status='success'
+                            description={t(
+                                'courseDetails.cardProgressDescription'
+                            )}
+                        />
+                    </ESCol>
+                    <ESCol
+                        xs={24}
+                        sm={12}
+                        lg={4}
+                        alignSelf='stretch'
+                        className='mb-md'
+                    >
+                        <ESMetricCard
+                            title={t('courseDetails.cardPracticeTitle')}
+                            doubt={t('courseDetails.cardPracticeDoubt')}
+                            img={praticaRegular}
+                            badge={t('global.percentOf', {
+                                done: performance_indicators.tests.done,
+                                final: performance_indicators.tests.total
+                            })}
+                            status='warning'
+                            description={t(
+                                'courseDetails.cardPracticeDescription'
+                            )}
+                        />
+                    </ESCol>
+                    <ESCol
+                        xs={24}
+                        sm={12}
+                        lg={4}
+                        alignSelf='stretch'
+                        className='mb-md'
+                    >
+                        <ESMetricCard
+                            title={t('courseDetails.cardInteractionTitle')}
+                            doubt={t('courseDetails.cardInteractionDoubt')}
+                            img={interacao}
+                            badge={performance_indicators.interatction}
+                            status='danger'
+                            description={t(
+                                'courseDetails.cardInteractionDescription'
+                            )}
+                        />
+                    </ESCol>
+                </ESRow>
+            </SANPortalPagesContainer>
         </div>
     )
 }
