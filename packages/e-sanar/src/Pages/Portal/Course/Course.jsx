@@ -6,7 +6,9 @@ import ESProgressBar from 'sanar-ui/dist/Components/Molecules/ProgressBar'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESTabs, { ESTabPane } from 'sanar-ui/dist/Components/Atoms/Tabs'
 
-import Performance from './Performance'
+import SANPerformance from './Performance'
+import SANInteractions from './Interactions'
+import SANLives from './Lives'
 
 import './style.less'
 
@@ -76,7 +78,7 @@ const SANCoursePage = () => {
                                     ghost
                                     type='primary'
                                     icon='download'
-                                    disabled={!enrollment.certificate}
+                                    disabled={!enrollment.certificate.available}
                                 >
                                     {t('courseDetails.certified')}
                                 </ESButton>
@@ -87,7 +89,9 @@ const SANCoursePage = () => {
             </PageHeader>
             <ESTabs defaultActiveKey='1' tabBarGutter={0}>
                 <ESTabPane tab={t('courseDetails.tabGeneral')} key='1'>
-                    <Performance />
+                    <SANPerformance />
+                    <SANInteractions />
+                    <SANLives />
                 </ESTabPane>
                 <ESTabPane tab={t('courseDetails.tabContent')} key='2'>
                     Conteúdo

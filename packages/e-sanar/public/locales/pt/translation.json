@@ -30,6 +30,16 @@
         "cardInteractionTitle": "INTERAÇÃO",
         "cardInteractionDoubt": "Indica o número de interações (pergunta, resposta ou comentário) que você fez na última semana. Interações auxiliam na construção de significados aos conceitos, melhorando a fixação do assunto",
         "cardInteractionDescription": "Perguntas e repostas realizadas",
+
+        "recentCommentsTitle": "Comentários Recentes",
+        "recentCommentsSubtitle": "Vejas as últimas perguntas feitas por seus colegas de curso",
+        "recentCommentsButton": "Ver todos os comentários",
+        "recentlySavedTitle": "Salvos Recentemente",
+        "recentlySavedSubtitle": "Veja os dois últimos itens salvos recentemente",
+        "recentlySavedButton": "Ver todos os itens salvos",
+
+        "seePreviousLives": "Ver lives anteriores",
+
         "certified": "Certificado",
         "progressbarTitle": "Progresso do curso",
         "tabGeneral": "Visão Geral",

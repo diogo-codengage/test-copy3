@@ -1,0 +1,28 @@
+.es-badge {
+    & > .ant-badge-count {
+        background-color: transparent;
+        border: 1px solid @normal-color;
+        color: darken(@normal-color, 20);
+        font-weight: bold;
+    }
+
+    &__success > .ant-badge-count {
+        border: 1px solid @success-color;
+        color: darken(@success-color, 20);
+    }
+
+    &__processing > .ant-badge-count {
+        border: 1px solid @processing-color;
+        color: darken(@processing-color, 20);
+    }
+
+    &__error > .ant-badge-count {
+        border: 1px solid @error-color;
+        color: darken(@error-color, 20);
+    }
+
+    &__warning > .ant-badge-count {
+        border: 1px solid @warning-color;
+        color: darken(@warning-color, 20);
+    }
+}

@@ -2,6 +2,18 @@
     max-width: 100%;
     padding: @padding-md + 4 0;
 
+    &:nth-child(1) {
+        padding: 0 0 @padding-lg - 4px 0;
+    }
+
+    &:nth-last-child(1) {
+        padding-bottom: 0;
+    }
+
+    &__container {
+        min-height: 59px;
+    }
+
     > div {
         width: 100%;
     }
@@ -19,6 +31,7 @@
 
         &--category {
             font-size: @font-size-xs;
+            cursor: default !important;
         }
 
         &--title {

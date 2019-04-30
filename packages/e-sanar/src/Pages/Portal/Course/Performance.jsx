@@ -56,7 +56,7 @@ const CommitmentCard = ({ percent }) => {
     )
 }
 
-const Performance = () => {
+const SANPerformance = () => {
     const { t } = useTranslation()
     const {
         enrollment: { performance_indicators }
@@ -67,7 +67,7 @@ const Performance = () => {
             <SANPortalPagesContainer>
                 <ESSessionTitle
                     extra={
-                        <ESButton size='small'>
+                        <ESButton size='small' fontSize={12}>
                             {t('courseDetails.viewMyPerformance')}
                         </ESButton>
                     }
@@ -175,4 +175,4 @@ const Performance = () => {
     )
 }
 
-export default Performance
+export default SANPerformance
