@@ -21,7 +21,12 @@ export const CoursePage = () => {
     return (
         <div className='course'>
             <PageHeader className='course__header'>
-                <ESRow className='course__header__container' gutter={20}>
+                <ESRow
+                    className='course__header__container'
+                    type='flex'
+                    align='middle'
+                    gutter={20}
+                >
                     <ESCol
                         xs={24}
                         md={10}
@@ -43,6 +48,7 @@ export const CoursePage = () => {
                                 <Typography.Text
                                     className='course__header__container__about-course--name'
                                     strong
+                                    ellipsis
                                 >
                                     {course.name}
                                 </Typography.Text>
