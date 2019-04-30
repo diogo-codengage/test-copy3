@@ -1,3 +1,34 @@
 {
-    "hello": "Olá página inicial"
+    "hello": "Olá página inicial",
+    "global": {
+        "percentOf": "{{done}} de {{final}}"
+    },
+    "courseDetails": {
+        "viewMyPerformance": "Ver meu desempenho",
+        "myDevelopment": "Meu desenvolvimento",
+        "myDevelopmentSubtitle": "Vejas as indicações de como você está se saindo no seu aprendizado com seu curso",
+
+        "cardCommitmentTitle": "NIVEL DE COMPROMETIMENTO",
+        "cardCommitmentDoubt": "Mede seu comprometimento em relação aos outros alunos",
+        "cardCommitmentDescription": "melhor do que outros estudantes",
+        "cardCommitmentLow": "Baixo",
+        "cardCommitmentMid": "Médio",
+        "cardCommitmentNice": "Incrível",
+
+        "cardConsistencyTitle": "Consistência",
+        "cardConsistencyDoubt": "Indica se você está estudando, pela plataforma, a mesma quantidade de horas semanais informada no início do curso",
+        "cardConsistencyDescription": "Horas estudadas na semana",
+
+        "cardProgressTitle": "Progresso",
+        "cardProgressDoubt": "Indica a quantidade de aulas assistidas em relação às aulas que você já deveria ter assistido nessa altura do curso",
+        "cardProgressDescription": "Aulas assistidas no total",
+
+        "cardPracticeTitle": "PRÁTICA REGULAR",
+        "cardPracticeDoubt": "Indica a quantidade de questões respondidas em relação às questões de aula que você já deveria ter respondido nessa altura do curso",
+        "cardPracticeDescription": "Atividades respondidas",
+
+        "cardInteractionTitle": "INTERAÇÃO",
+        "cardInteractionDoubt": "Indica o número de interações (pergunta, resposta ou comentário) que você fez na última semana. Interações auxiliam na construção de significados aos conceitos, melhorando a fixação do assunto",
+        "cardInteractionDescription": "Perguntas e repostas realizadas"
+    }
 }

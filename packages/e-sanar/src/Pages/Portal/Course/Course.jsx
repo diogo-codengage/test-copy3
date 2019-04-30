@@ -4,6 +4,8 @@ import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import ESProgressBar from 'sanar-ui/dist/Components/Molecules/ProgressBar'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 
+import Performance from './Performance'
+
 import './style.less'
 
 export const CoursePage = () => (
@@ -46,7 +48,7 @@ export const CoursePage = () => (
         </PageHeader>
         <Tabs defaultActiveKey='1' tabBarGutter={0}>
             <Tabs.TabPane tab='Visão Geral' key='1'>
-                Visão Geral
+                <Performance />
             </Tabs.TabPane>
             <Tabs.TabPane tab='Conteúdo' key='2'>
                 Conteúdo
