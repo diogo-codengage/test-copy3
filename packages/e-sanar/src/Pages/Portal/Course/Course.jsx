@@ -5,6 +5,7 @@ import ESProgressBar from 'sanar-ui/dist/Components/Molecules/ProgressBar'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 
 import Performance from './Performance'
+import Interactions from './Interactions'
 
 import './style.less'
 
@@ -49,6 +50,7 @@ export const CoursePage = () => (
         <Tabs defaultActiveKey='1' tabBarGutter={0}>
             <Tabs.TabPane tab='Visão Geral' key='1'>
                 <Performance />
+                <Interactions />
             </Tabs.TabPane>
             <Tabs.TabPane tab='Conteúdo' key='2'>
                 Conteúdo

@@ -67,7 +67,7 @@ const Performance = () => {
         <div className='performance'>
             <ESSessionTitle
                 extra={
-                    <ESButton size='small'>
+                    <ESButton size='small' fontSize={12}>
                         {t('courseDetails.viewMyPerformance')}
                     </ESButton>
                 }
