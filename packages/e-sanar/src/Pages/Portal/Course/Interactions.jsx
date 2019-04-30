@@ -13,7 +13,7 @@ import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 
 import Mock from './mock.json'
 
-const Interactions = () => {
+const SANInteractions = () => {
     const { t } = useTranslation()
     const {
         enrollment: { course }
@@ -93,4 +93,4 @@ const Interactions = () => {
     )
 }
 
-export default Interactions
+export default SANInteractions

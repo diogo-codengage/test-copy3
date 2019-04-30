@@ -57,7 +57,7 @@ const CommitmentCard = ({ percent }) => {
     )
 }
 
-const Performance = () => {
+const SANPerformance = () => {
     const { t } = useTranslation()
     const {
         enrollment: { performance_indicators }
@@ -165,4 +165,4 @@ const Performance = () => {
     )
 }
 
-export default Performance
+export default SANPerformance

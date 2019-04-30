@@ -9,7 +9,7 @@ import linkedinPng from '../../../assets/linkedin/linkedin.png'
 
 const { Title, Text, Paragraph } = Typography
 
-const ESInstructor = ({ avatar, labelLive, labelCourses, name }) => (
+const ESInstructor = ({ avatar, labelLive, labelCourses, courses, name }) => (
     <ESRow
         className='es-live-section__instructor'
         type='flex'
@@ -48,7 +48,7 @@ const ESInstructor = ({ avatar, labelLive, labelCourses, name }) => (
                         className='es-live-section__instructor--course'
                     >
                         <ESCol>
-                            <strong>4</strong>
+                            <strong>{courses}</strong>
                         </ESCol>
                         <ESCol>
                             <Text disabled>{labelCourses}</Text>
@@ -77,7 +77,8 @@ const ESLiveSection = ({
     description,
     avatar,
     name,
-    action
+    action,
+    courses
 }) => {
     const classes = classNames('es-live-section', className)
 
@@ -118,7 +119,13 @@ const ESLiveSection = ({
                             {description}
                         </Paragraph>
                         <ESInstructor
-                            {...{ avatar, labelLive, labelCourses, name }}
+                            {...{
+                                avatar,
+                                labelLive,
+                                labelCourses,
+                                courses,
+                                name
+                            }}
                         />
                     </ESCol>
                     <ESCol className='es-live-section__action' span={24}>
@@ -140,7 +147,8 @@ ESLiveSection.propTypes = {
     description: PropTypes.string,
     avatar: PropTypes.string,
     name: PropTypes.string,
-    action: PropTypes.node
+    action: PropTypes.node,
+    courses: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }
 ESLiveSection.defaultProps = {
     height: 400,

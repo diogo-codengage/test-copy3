@@ -6,8 +6,9 @@ import ESProgressBar from 'sanar-ui/dist/Components/Molecules/ProgressBar'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESTabs, { ESTabPane } from 'sanar-ui/dist/Components/Atoms/Tabs'
 
-import Performance from './Performance'
-import Interactions from './Interactions'
+import SANPerformance from './Performance'
+import SANInteractions from './Interactions'
+import SANLives from './Lives'
 
 import './style.less'
 
@@ -83,8 +84,9 @@ export const CoursePage = () => {
             </PageHeader>
             <ESTabs defaultActiveKey='1' tabBarGutter={0}>
                 <ESTabPane tab={t('courseDetails.tabGeneral')} key='1'>
-                    <Performance />
-                    <Interactions />
+                    <SANPerformance />
+                    <SANInteractions />
+                    <SANLives />
                 </ESTabPane>
                 <ESTabPane tab={t('courseDetails.tabContent')} key='2'>
                     Conteúdo
