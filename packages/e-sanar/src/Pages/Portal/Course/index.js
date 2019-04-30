@@ -1,1 +1,1 @@
-export { CoursePage } from './Course'
+export { default } from './Course'
