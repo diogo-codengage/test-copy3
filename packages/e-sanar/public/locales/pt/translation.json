@@ -29,6 +29,11 @@
 
         "cardInteractionTitle": "INTERAÇÃO",
         "cardInteractionDoubt": "Indica o número de interações (pergunta, resposta ou comentário) que você fez na última semana. Interações auxiliam na construção de significados aos conceitos, melhorando a fixação do assunto",
-        "cardInteractionDescription": "Perguntas e repostas realizadas"
+        "cardInteractionDescription": "Perguntas e repostas realizadas",
+        "certified": "Certificado",
+        "progressbarTitle": "Progresso do curso",
+        "tabGeneral": "Visão Geral",
+        "tabContent": "Conteúdo",
+        "tabComments": "Comentários"
     }
 }

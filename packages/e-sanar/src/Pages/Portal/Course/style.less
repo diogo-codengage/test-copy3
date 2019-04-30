@@ -1,10 +1,46 @@
 .course {
-    .ant-divider {
-        margin: 16px 0 !important;
-        height: 1px !important;
+    &__header {
+        border-bottom: 1px solid rgba(17, 19, 23, 0.1);
+
+        &__container {
+            &__about-course {
+                padding-bottom: @padding-md;
+                border-bottom: 1px solid rgba(17, 19, 23, 0.15);
+                margin-bottom: @margin-md;
+
+                &--name {
+                    color: #000 !important;
+                }
+
+                &--category {
+                    font-size: @font-size-xs;
+                    color: rgba(17, 19, 23, 0.5) !important;
+                    text-transform: uppercase;
+                }
+            }
+            &__progress {
+                .es-progress-bar {
+                    margin-bottom: @margin-md;
+                }
+
+                button {
+                    margin: 0 auto;
+                }
+            }
+        }
+
+        img {
+            width: 40px;
+        }
     }
-    .ant-page-header {
-        border-bottom: 1px solid rgba(17, 19, 23, 0.15);
+
+    .ant-tabs-nav-scroll {
+        display: flex;
+        justify-content: center;
+    }
+
+    .ant-tabs-bar {
+        margin-bottom: 0;
     }
 
     & .performance {
@@ -43,6 +79,38 @@
                 flex-direction: column;
                 justify-content: center;
             }
+        }
+    }
+
+    @media (min-width: @screen-sm) {
+        &__header {
+            &__container {
+                &__progress {
+                    .es-progress-bar {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (min-width: @screen-md) {
+        &__header {
+            &__container {
+                &__about-course {
+                    padding-bottom: 0;
+                    border-bottom: 0;
+                    border-right: 1px solid rgba(17, 19, 23, 0.15);
+                }
+
+                &__progress {
+                    padding-left: @padding-md * 2 !important;
+                }
+            }
+        }
+
+        .ant-tabs-tab {
+            margin-right: 16px !important;
         }
     }
 }

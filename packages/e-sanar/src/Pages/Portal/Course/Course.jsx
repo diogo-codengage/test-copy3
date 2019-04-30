@@ -1,61 +1,90 @@
 import React from 'react'
-import { PageHeader, Typography, Divider, Tabs } from 'antd'
+import { useTranslation } from 'react-i18next'
+import { PageHeader, Typography, Divider } from 'antd'
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import ESProgressBar from 'sanar-ui/dist/Components/Molecules/ProgressBar'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
+import ESTabs, { ESTabPane } from 'sanar-ui/dist/Components/Atoms/Tabs'
 
 import Performance from './Performance'
 
 import './style.less'
 
-export const CoursePage = () => (
-    <div className='course'>
-        <PageHeader>
-            <ESRow>
-                <ESCol xs={24} md={12}>
-                    <ESRow type='flex' align='middle' gutter={16}>
-                        <ESCol>
-                            <img
-                                alt=''
-                                src='https://freeiconshop.com/wp-content/uploads/edd/bulb-flat.png'
-                            />
-                        </ESCol>
-                        <ESCol flex={1}>
-                            <Typography.Text disabled>
-                                CURSO DE ENFERMAGEM
-                            </Typography.Text>{' '}
-                            <br />
-                            <Typography.Text strong>
-                                Trilha Sanar Fisioterapia
-                            </Typography.Text>
-                        </ESCol>
-                    </ESRow>
-                </ESCol>
-                <ESCol xs={24} md={12}>
-                    <Divider type='vertical' />
-                    <ESRow gutter={16}>
-                        <ESCol>
-                            <ESProgressBar percent={30} />
-                        </ESCol>
-                        <ESCol>
-                            <ESButton ghost icon='download' disabled>
-                                CERTIFICADO
+import Mock from './mock.json'
+
+export const CoursePage = () => {
+    const { t } = useTranslation()
+    const { enrollment } = Mock
+
+    const { course } = enrollment
+
+    return (
+        <div className='course'>
+            <PageHeader className='course__header'>
+                <ESRow className='course__header__container' gutter={20}>
+                    <ESCol
+                        xs={24}
+                        md={10}
+                        lg={12}
+                        className='course__header__container__about-course'
+                    >
+                        <ESRow type='flex' align='middle' gutter={16}>
+                            <ESCol>
+                                <img
+                                    alt=''
+                                    src='https://freeiconshop.com/wp-content/uploads/edd/bulb-flat.png'
+                                />
+                            </ESCol>
+                            <ESCol flex={1}>
+                                <Typography.Text className='course__header__container__about-course--category'>
+                                    {course.knowledge_area}
+                                </Typography.Text>
+                                <br />
+                                <Typography.Text
+                                    className='course__header__container__about-course--name'
+                                    strong
+                                >
+                                    {course.name}
+                                </Typography.Text>
+                            </ESCol>
+                        </ESRow>
+                    </ESCol>
+                    <ESCol
+                        xs={24}
+                        md={14}
+                        lg={12}
+                        className='course__header__container__progress'
+                    >
+                        <ESRow gutter={20}>
+                            <ESCol xs={24} sm={16} md={14} lg={16}>
+                                <ESProgressBar
+                                    title={t('courseDetails.progressbarTitle')}
+                                    percent={enrollment.progress_percentage}
+                                />
+                            </ESCol>
+                            <ESButton
+                                ghost
+                                type='primary'
+                                icon='download'
+                                disabled={!enrollment.certificate}
+                            >
+                                {t('courseDetails.certified')}
                             </ESButton>
-                        </ESCol>
-                    </ESRow>
-                </ESCol>
-            </ESRow>
-        </PageHeader>
-        <Tabs defaultActiveKey='1' tabBarGutter={0}>
-            <Tabs.TabPane tab='Visão Geral' key='1'>
-                <Performance />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab='Conteúdo' key='2'>
-                Conteúdo
-            </Tabs.TabPane>
-            <Tabs.TabPane tab='Comentários' key='3'>
-                Comentários
-            </Tabs.TabPane>
-        </Tabs>
-    </div>
-)
+                        </ESRow>
+                    </ESCol>
+                </ESRow>
+            </PageHeader>
+            <ESTabs defaultActiveKey='1' tabBarGutter={0}>
+                <ESTabPane tab={t('courseDetails.tabGeneral')} key='1'>
+                    <Performance />
+                </ESTabPane>
+                <ESTabPane tab={t('courseDetails.tabContent')} key='2'>
+                    Conteúdo
+                </ESTabPane>
+                <ESTabPane tab={t('courseDetails.tabComments')} key='3'>
+                    Comentários
+                </ESTabPane>
+            </ESTabs>
+        </div>
+    )
+}
