@@ -73,7 +73,7 @@ export const CoursePage = () => {
                                 ghost
                                 type='primary'
                                 icon='download'
-                                disabled={!enrollment.certificate}
+                                disabled={!enrollment.certificate.available}
                             >
                                 {t('courseDetails.certified')}
                             </ESButton>
