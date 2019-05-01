@@ -4,6 +4,7 @@ import classNames from 'classnames'
 
 import { Card, Tooltip, Icon } from 'antd'
 import ESEvaIcon from '../../Atoms/EvaIcon/EvaIcon'
+import ESTooltip from '../../Atoms/Tooltip/Tooltip'
 
 const ESCard = ({ className, children, doubt, ...props }) => {
     const classes = classNames('es-card', className)
@@ -11,7 +12,7 @@ const ESCard = ({ className, children, doubt, ...props }) => {
     return (
         <Card className={classes} {...props}>
             {doubt && (
-                <Tooltip
+                <ESTooltip
                     className='es-card__doubt'
                     placement='left'
                     title={doubt}
@@ -22,7 +23,7 @@ const ESCard = ({ className, children, doubt, ...props }) => {
                             size='small'
                         />
                     </span>
-                </Tooltip>
+                </ESTooltip>
             )}
             {children}
         </Card>
