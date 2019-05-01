@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { PageHeader, Typography, Divider } from 'antd'
+import { PageHeader as ANTPageHeader, Typography as ANTTypography } from 'antd'
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import ESProgressBar from 'sanar-ui/dist/Components/Molecules/ProgressBar'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
@@ -9,6 +9,7 @@ import ESTabs, { ESTabPane } from 'sanar-ui/dist/Components/Atoms/Tabs'
 import SANPerformance from './Performance'
 import SANInteractions from './Interactions'
 import SANLives from './Lives'
+import SANNextLives from './NextLives'
 
 import './style.less'
 
@@ -23,7 +24,7 @@ const SANCoursePage = () => {
 
     return (
         <div className='course'>
-            <PageHeader className='course__header'>
+            <ANTPageHeader className='course__header'>
                 <SANPortalPagesContainer>
                     <ESRow
                         className='course__header__container'
@@ -45,17 +46,17 @@ const SANCoursePage = () => {
                                     />
                                 </ESCol>
                                 <ESCol flex={1}>
-                                    <Typography.Text className='course__header__container__about-course--category'>
+                                    <ANTTypography.Text className='course__header__container__about-course--category'>
                                         {course.knowledge_area}
-                                    </Typography.Text>
+                                    </ANTTypography.Text>
                                     <br />
-                                    <Typography.Text
+                                    <ANTTypography.Text
                                         className='course__header__container__about-course--name'
                                         strong
                                         ellipsis
                                     >
                                         {course.name}
-                                    </Typography.Text>
+                                    </ANTTypography.Text>
                                 </ESCol>
                             </ESRow>
                         </ESCol>
@@ -86,12 +87,13 @@ const SANCoursePage = () => {
                         </ESCol>
                     </ESRow>
                 </SANPortalPagesContainer>
-            </PageHeader>
+            </ANTPageHeader>
             <ESTabs defaultActiveKey='1' tabBarGutter={0}>
                 <ESTabPane tab={t('courseDetails.tabGeneral')} key='1'>
                     <SANPerformance />
                     <SANInteractions />
                     <SANLives />
+                    <SANNextLives />
                 </ESTabPane>
                 <ESTabPane tab={t('courseDetails.tabContent')} key='2'>
                     Conteúdo

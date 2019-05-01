@@ -1,4 +1,4 @@
-@spacing-button: -32px;
+@spacing-button: -48px;
 
 .es-carousel {
     margin: 0 auto;
@@ -10,7 +10,7 @@
         right: @spacing-button;
     }
 
-    & .es-button {
+    & .es-button.slick-arrow {
         width: 24px;
         height: 24px;
         background-color: @normal-color;
@@ -25,6 +25,22 @@
 
         &.slick-arrow svg {
             fill: darken(@normal-color, 65);
+        }
+    }
+
+    & .slick-list {
+        & .slick-track {
+            & .slick-slide .es-card {
+                margin: 0 16px;
+            }
+
+            & .slick-slide.slick-active :last-of-type .es-card {
+                margin-right: 0;
+            }
+
+            & .slick-current .es-card {
+                margin-left: 0;
+            }
         }
     }
 }
