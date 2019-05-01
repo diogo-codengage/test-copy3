@@ -66,7 +66,7 @@ const SANCoursePage = () => {
                             className='course__header__container__progress'
                         >
                             <ESRow gutter={20} type='flex' align='middle'>
-                                <ESCol xs={24} sm={16} md={14} lg={16}>
+                                <ESCol xs={24} sm={16} md={14} lg={15}>
                                     <ESProgressBar
                                         title={t(
                                             'courseDetails.progressbarTitle'

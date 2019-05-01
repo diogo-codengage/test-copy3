@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Typography } from 'antd'
+import { Typography, Divider } from 'antd'
 
 import ESMetricCard from 'sanar-ui/dist/Components/Molecules/MetricCard'
 import ESCard from 'sanar-ui/dist/Components/Molecules/Card'
@@ -83,6 +83,7 @@ const SANPerformance = () => {
                     <ESCol
                         xs={24}
                         sm={24}
+                        md={16}
                         lg={8}
                         alignSelf='stretch'
                         className='mb-md'
@@ -94,6 +95,7 @@ const SANPerformance = () => {
                     <ESCol
                         xs={24}
                         sm={12}
+                        md={8}
                         lg={4}
                         alignSelf='stretch'
                         className='mb-md'
@@ -112,6 +114,7 @@ const SANPerformance = () => {
                     <ESCol
                         xs={24}
                         sm={12}
+                        md={8}
                         lg={4}
                         alignSelf='stretch'
                         className='mb-md'
@@ -133,6 +136,7 @@ const SANPerformance = () => {
                     <ESCol
                         xs={24}
                         sm={12}
+                        md={8}
                         lg={4}
                         alignSelf='stretch'
                         className='mb-md'
@@ -154,6 +158,7 @@ const SANPerformance = () => {
                     <ESCol
                         xs={24}
                         sm={12}
+                        md={8}
                         lg={4}
                         alignSelf='stretch'
                         className='mb-md'
