@@ -2,6 +2,11 @@ module.exports = {
     // Colors
     '@normal-color': '#d9d9d9',
     '@white': '#FFF',
+    '@normal-color': '#D9D9D9',
+
+    // Screen breakpoints
+    '@screen-lg': '1024px',
+    'screen-lg': '1024px',
 
     // Typography
     '@font-size-base': '14px',
