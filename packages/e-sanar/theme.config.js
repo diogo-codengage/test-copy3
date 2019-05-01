@@ -1,4 +1,7 @@
 module.exports = {
+    // Colors
+    '@white': '#FFF',
+
     // Typography
     '@font-size-base': '14px',
     '@font-size-xs': '@font-size-base - 4px',
