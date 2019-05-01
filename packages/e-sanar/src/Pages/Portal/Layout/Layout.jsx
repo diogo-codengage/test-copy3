@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Layout } from 'antd'
 
+import { Scrollbars } from 'react-custom-scrollbars'
+
 import SANFooter from './Footer'
 
 const SANPortalLayout = ({ children }) => {
@@ -19,10 +21,12 @@ const SANPortalLayout = ({ children }) => {
                 onBreakpoint={broken => collapse(broken)}
             />
             <Layout>
-                <Layout.Content className='san-portal-layout__content'>
-                    {children}
-                </Layout.Content>
-                <SANFooter />
+                <Scrollbars renderTrackHorizontal={() => <div />}>
+                    <Layout.Content className='san-portal-layout__content'>
+                        {children}
+                    </Layout.Content>
+                    <SANFooter />
+                </Scrollbars>
             </Layout>
         </Layout>
     )
