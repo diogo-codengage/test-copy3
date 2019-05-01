@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Layout } from 'antd'
 
+import SANFooter from './Footer'
+
 const SANPortalLayout = ({ children }) => {
     const [hasSider, collapse] = useState(!window.innerWidth >= 1200)
 
@@ -20,7 +22,7 @@ const SANPortalLayout = ({ children }) => {
                 <Layout.Content className='san-portal-layout__content'>
                     {children}
                 </Layout.Content>
-                <Layout.Footer />
+                <SANFooter />
             </Layout>
         </Layout>
     )

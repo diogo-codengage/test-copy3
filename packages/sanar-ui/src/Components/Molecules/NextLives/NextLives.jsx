@@ -7,7 +7,7 @@ const responsive = [
     {
         breakpoint: 1920,
         settings: {
-            slidesToShow: 5
+            slidesToShow: 4
         }
     },
     {
@@ -19,13 +19,15 @@ const responsive = [
     {
         breakpoint: 1280,
         settings: {
-            slidesToShow: 3
+            slidesToShow: 3,
+            arrows: false
         }
     },
     {
         breakpoint: 960,
         settings: {
-            slidesToShow: 2
+            slidesToShow: 2,
+            arrows: false
         }
     },
     {
@@ -54,11 +56,10 @@ const ESNextLives = ({ className, children, responsive, ...props }) => {
             {...props}
             ref={ref}
             slidesToScroll={1}
-            slidesToShow={5}
+            slidesToShow={4}
             infinite={false}
             dots={false}
             arrows={arrows}
-            speed={3000}
             responsive={responsive}
             draggable
             onReInit={onReInit}

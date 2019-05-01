@@ -8,7 +8,65 @@
         margin: 0 auto;
     }
 
+    &__footer,
     &__content {
         background: @white;
+    }
+
+    &__footer {
+        padding: 0;
+
+        &--contact {
+            &--help {
+                font-size: @font-size-sm;
+            }
+
+            &--email,
+            &--phone {
+                justify-content: center;
+                display: flex;
+                align-items: center;
+                font-size: @font-size-base;
+                & .es-eva-icon svg {
+                    fill: darken(@normal-color, 45);
+                }
+            }
+            &--attendance {
+                text-align: end;
+                font-size: @font-size-sm;
+            }
+        }
+
+        &--copyright {
+            margin: @margin-lg 0;
+        }
+    }
+
+    @media (max-width: @screen-md) {
+        &__footer {
+            &--contact {
+                &--logo,
+                &--attendance,
+                &--help,
+                &--email,
+                &--phone {
+                    margin-bottom: @margin-lg;
+                    text-align: center;
+                    justify-content: center;
+                }
+            }
+        }
+    }
+
+    @media (max-width: @screen-lg) {
+        &__footer {
+            &--contact {
+                &--logo {
+                    margin-bottom: @margin-lg;
+                    text-align: center;
+                    justify-content: center;
+                }
+            }
+        }
     }
 }
