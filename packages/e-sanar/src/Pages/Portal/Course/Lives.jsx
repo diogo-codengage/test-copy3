@@ -2,8 +2,6 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { format } from 'date-fns'
 
-import { Typography, Badge } from 'antd'
-
 import ESLiveSection from 'sanar-ui/dist/Components/Molecules/LiveSection'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
@@ -25,8 +23,8 @@ const SANLives = () => {
         <SANPortalPagesContainer>
             <div className='lives'>
                 <ESSessionTitle
-                    title={t('courseDetails.recentCommentsTitle')}
-                    subtitle={t('courseDetails.recentCommentsSubtitle')}
+                    title={t('courseDetails.livesTitle')}
+                    subtitle={t('courseDetails.livesSubtitle')}
                 />
                 <ESLiveSection
                     videoSrc={lives[0].link}

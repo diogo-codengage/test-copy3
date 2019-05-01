@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Carousel } from 'antd'
@@ -9,17 +9,12 @@ import ESEvaIcon from '../EvaIcon'
 const ESCarousel = ({ className, style, ...props }, ref) => {
     const classes = classNames('es-carousel', className)
 
-    const styles = {
-        ...style,
-        ...(props.arrows && { width: 'calc(100% - 150px)' })
-    }
-
     const next = () => ref.current.next()
 
     const prev = () => ref.current.prev()
 
     return (
-        <div style={styles} className={classes}>
+        <div style={style} className={classes}>
             <Carousel
                 ref={ref}
                 {...props}

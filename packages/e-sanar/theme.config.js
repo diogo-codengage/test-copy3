@@ -1,5 +1,6 @@
 module.exports = {
     // Colors
+    '@normal-color': '#d9d9d9',
     '@white': '#FFF',
 
     // Typography

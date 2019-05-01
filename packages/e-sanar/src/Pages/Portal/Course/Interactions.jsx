@@ -1,8 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Typography, Badge } from 'antd'
-
 import ESListView from 'sanar-ui/dist/Components/Atoms/ListView'
 import ESListViewItem from 'sanar-ui/dist/Components/Molecules/ListViewItem'
 import ESCard from 'sanar-ui/dist/Components/Molecules/Card'
@@ -11,14 +9,10 @@ import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESBadge from 'sanar-ui/dist/Components/Atoms/Badge'
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 
-import Mock from './mock.json'
 import { SANPortalPagesContainer } from '../Layout/index.js'
 
 const SANInteractions = () => {
     const { t } = useTranslation()
-    const {
-        enrollment: { course }
-    } = Mock
 
     return (
         <SANPortalPagesContainer>

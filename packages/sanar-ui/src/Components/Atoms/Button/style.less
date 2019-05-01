@@ -1,13 +1,17 @@
 .es-button {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
+    font-weight: bold !important;
     text-transform: uppercase;
 
+    &[disabled] i.es-eva-icon svg {
+        fill: @normal-color;
+    }
+
     &__clear {
-        border: none;
-        box-shadow: none;
+        border: none !important;
+        box-shadow: none !important;
         &[disabled] {
             background-color: @white;
         }
