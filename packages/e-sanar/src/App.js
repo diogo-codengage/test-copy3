@@ -6,6 +6,7 @@ import HomePage from './Pages/Portal/Home'
 import SigninPage from './Pages/Auth/Signin'
 import PasswordRecoveryPage from './Pages/Auth/PasswordRecovery'
 import SignupPage from './Pages/Auth/Signup'
+import PrivateRoute from './Pages/Portal/Private'
 
 // Import Sanar UI components library
 import 'sanar-ui/dist/index.less'
@@ -21,14 +22,13 @@ function ESRouter() {
     return (
         <ApolloProvider client={client}>
             <Router>
-                <Route path='/' component={HomePage} />
                 <Route path='/signin' component={SigninPage} />
                 <Route path='/signup' component={SignupPage} />
                 <Route
                     path='/password-recovery'
                     component={PasswordRecoveryPage}
                 />
-                <Route path='/portal' component={SANPortalRoutes} />
+                <PrivateRoute path='/' component={SANPortalRoutes} />
             </Router>
         </ApolloProvider>
     )
