@@ -1,10 +1,7 @@
 module.exports = {
     // Colors
-<<<<<<< HEAD
     '@normal-color': '#d9d9d9',
-=======
     '@white': '#FFF',
->>>>>>> b89251bcc88e7cfb310d5536ff66a2f69f764a11
 
     // Typography
     '@font-size-base': '14px',
