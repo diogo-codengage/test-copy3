@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
     Layout as ANTDLayout,
     Divider as ANTDivider,
@@ -33,7 +33,7 @@ const SANFooter = () => {
                         lg={3}
                         className='san-portal-layout__footer--contact--logo'
                     >
-                        <img src={logoSvg} />
+                        <img src={logoSvg} alt='' />
                     </ESCol>
                     <ESCol
                         xs={24}
@@ -94,11 +94,11 @@ const SANFooter = () => {
                 </ESCol>
                 <ESCol>
                     <ANTText strong>
-                        <a>Termos de Uso</a>
+                        <a href='foo'>Termos de Uso</a>
                     </ANTText>
                     {' | '}
                     <ANTText strong>
-                        <a>Política de Privacidade</a>
+                        <a href='foo'>Política de Privacidade</a>
                     </ANTText>
                 </ESCol>
             </ESRow>
