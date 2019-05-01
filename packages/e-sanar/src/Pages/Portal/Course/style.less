@@ -100,14 +100,26 @@
     }
 
     & .lives {
-        padding-bottom: 64px;
+        & .ant-divider {
+            margin-top: @margin-md * 4;
+            margin-bottom: 0;
+        }
     }
 
-    & .next-lives__card__action--remember {
-        color: darken(@normal-color, 22);
+    & .next-lives {
+        margin-bottom: 60px;
 
-        & .es-eva-icon svg {
-            fill: darken(@normal-color, 22);
+        &__title {
+            font-size: @font-size-lg;
+            margin-bottom: @margin-lg - 4;
+        }
+
+        &__card__action--remember {
+            color: darken(@normal-color, 22);
+
+            & .es-eva-icon svg {
+                fill: darken(@normal-color, 22);
+            }
         }
     }
 

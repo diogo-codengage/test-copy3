@@ -1,9 +1,9 @@
 import React from 'react'
+import { Typography as ANTTypography } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { format } from 'date-fns'
 
 import ESNextLives from 'sanar-ui/dist/Components/Molecules/NextLives'
-import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import ESCardNextLive from 'sanar-ui/dist/Components/Atoms/CardNextLive'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
@@ -60,8 +60,10 @@ const SANNextLives = () => {
     } = Mock
 
     return (
-        <SANPortalPagesContainer>
-            <ESSessionTitle title={t('courseDetails.nextLivesTitle')} />
+        <SANPortalPagesContainer className='next-lives'>
+            <ANTTypography.Paragraph strong className='next-lives__title'>
+                {t('courseDetails.nextLivesTitle')}
+            </ANTTypography.Paragraph>
             <ESNextLives>
                 {lives.map((live, i) => (
                     <SANLives key={i} {...live} />
