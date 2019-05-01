@@ -1,6 +1,5 @@
 import React from 'react'
-import { Switch } from 'react-router-dom'
-import PrivateRoute from './Private'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import SANCoursePage from './Course'
 import SANPortalLayout from './Layout'
 
@@ -8,7 +7,12 @@ const SANPortalRoutes = () => {
     return (
         <SANPortalLayout>
             <Switch>
-                <PrivateRoute path='/portal/course' component={SANCoursePage} />
+                <Route path='/course' component={SANCoursePage} />
+                <Redirect
+                    to={{
+                        pathname: '/course'
+                    }}
+                />
             </Switch>
         </SANPortalLayout>
     )

@@ -54,7 +54,13 @@ const SANInteractions = () => {
                         </ESListView>
                     </ESCard>
                 </ESCol>
-                <ESCol xs={24} sm={24} md={12} alignSelf='stretch'>
+                <ESCol
+                    xs={24}
+                    sm={24}
+                    md={12}
+                    alignSelf='stretch'
+                    className='interactions__column'
+                >
                     <ESSessionTitle
                         title={t('courseDetails.recentlySavedTitle')}
                         subtitle={t('courseDetails.recentlySavedSubtitle')}

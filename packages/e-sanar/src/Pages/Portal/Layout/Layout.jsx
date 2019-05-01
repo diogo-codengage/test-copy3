@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import { Layout } from 'antd'
 
-const { Sider, Footer } = Layout
-
 const SANPortalLayout = ({ children }) => {
-    const [hasSider, collapse] = useState(window.innerWidth >= 992)
+    const [hasSider, collapse] = useState(!window.innerWidth >= 1200)
 
     return (
         <Layout className='san-portal-layout'>
-            <Sider
+            <Layout.Sider
                 style={{
                     background: 'rgba(37, 90, 208, 1)'
                 }}
@@ -16,11 +14,13 @@ const SANPortalLayout = ({ children }) => {
                 collapsed={hasSider}
                 collapsedWidth={0}
                 breakpoint={'xl'}
-                onBreakpoint={() => collapse(!hasSider)}
+                onBreakpoint={broken => collapse(broken)}
             />
             <Layout>
-                {children}
-                <Footer />
+                <Layout.Content className='san-portal-layout__content'>
+                    {children}
+                </Layout.Content>
+                <Layout.Footer />
             </Layout>
         </Layout>
     )
