@@ -10,18 +10,24 @@
 
     &__progress {
         position: relative;
+        line-height: 0;
         &--limit {
             background-color: darken(@normal-color, 17);
             position: absolute;
             right: 0;
-            bottom: ~'calc(50% - 3.4px)';
-            height: @border-radius-sm * 2px;
-            border-radius: @border-radius-sm;
+            bottom: 0;
+            height: 6px;
+            border-radius: 3px;
         }
+
+        & .ant-progress {
+            line-height: 0;
+            margin-top: @margin-sm;
+        }
+
         & .ant-progress-inner {
             background-color: lighten(@normal-color, 5);
             & .ant-progress-bg {
-                height: @border-radius-sm * 2 !important;
                 background-color: fade(@warning-color, 60);
                 z-index: 2;
             }
