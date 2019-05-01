@@ -18,7 +18,7 @@ const { Text: ANTText } = ANTTypography
 const SANFooter = () => {
     return (
         <ANTDLayout.Footer className='san-portal-layout__footer'>
-            <ANTDivider />
+            <ANTDivider className='san-portal-layout__footer--divider' />
             <SANPortalPagesContainer>
                 <ESRow
                     type='flex'
@@ -30,7 +30,7 @@ const SANFooter = () => {
                         xs={24}
                         sm={24}
                         md={24}
-                        lg={4}
+                        lg={3}
                         className='san-portal-layout__footer--contact--logo'
                     >
                         <img src={logoSvg} />
@@ -43,7 +43,7 @@ const SANFooter = () => {
                         className='san-portal-layout__footer--contact--help'
                         type='flex'
                     >
-                        <ESButton size='small'>
+                        <ESButton size='small' fontSize={12}>
                             <ANTText>PRECISA DE AJUDA?</ANTText>
                         </ESButton>
                     </ESCol>
@@ -51,7 +51,7 @@ const SANFooter = () => {
                         xs={24}
                         sm={12}
                         md={4}
-                        lg={3}
+                        lg={4}
                         className='san-portal-layout__footer--contact--phone'
                     >
                         <ESEvaIcon name='phone-outline' />
