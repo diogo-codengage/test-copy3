@@ -10,6 +10,8 @@ module.exports = {
 
     // Typography
     '@font-size-base': '14px',
+    '@font-size-lg': '@font-size-base + 2px',
+    '@font-size-sm': '@font-size-base - 2px',
     '@font-size-xs': '@font-size-base - 4px',
     '@heading-4-size': 'ceil(@font-size-base * 1.42)',
 
