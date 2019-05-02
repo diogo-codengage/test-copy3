@@ -13,6 +13,7 @@ export const GET_ME = gql`
                 performance_indicators
                 course {
                     id
+                    name
                     knowledge_area
                     cover_pictures
                     comments {
