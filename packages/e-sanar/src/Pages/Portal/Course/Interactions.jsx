@@ -10,9 +10,24 @@ import ESBadge from 'sanar-ui/dist/Components/Atoms/Badge'
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 
 import { SANPortalPagesContainer } from '../Layout/index.js'
+import { useAuthContext } from '../../../Hooks/auth.js'
 
 const SANInteractions = () => {
     const { t } = useTranslation()
+
+    const { getEnrollment } = useAuthContext()
+
+    const {
+        course: { comments: commentsMock }
+    } = getEnrollment()
+
+    const comments = commentsMock
+
+    comments.forEach(comment => {
+        comment.user.profile_picture =
+            'https://www.domalberto.edu.br/wp-content/uploads/2017/02/joao.png'
+        comment.answers = comment.answers < 0 ? 0 : comment.answers
+    })
 
     return (
         <SANPortalPagesContainer>
@@ -37,20 +52,16 @@ const SANInteractions = () => {
                         ]}
                     >
                         <ESListView>
-                            <ESListViewItem
-                                avatar='https://www.domalberto.edu.br/wp-content/uploads/2017/02/joao.png'
-                                avatarSize='large'
-                                title='Proin ex ipsum, facilisis id tincidunt sed, vulputate in lacus…h'
-                                description='Paula Aguiar da Silva'
-                                counter={0}
-                            />
-                            <ESListViewItem
-                                avatar='https://www.domalberto.edu.br/wp-content/uploads/2017/02/joao.png'
-                                avatarSize='large'
-                                title='Donec pharetra faucibus leo, vitae vestibulum leo sceleris…h'
-                                description='José João Junior'
-                                counter={0}
-                            />
+                            {comments.map((comment, index) => (
+                                <ESListViewItem
+                                    key={index}
+                                    avatar={comment.user.profile_picture}
+                                    avatarSize='large'
+                                    title={comment.text}
+                                    description={comment.user.name}
+                                    counter={comment.answers}
+                                />
+                            ))}
                         </ESListView>
                     </ESCard>
                 </ESCol>

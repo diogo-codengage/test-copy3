@@ -96,7 +96,7 @@ const SANCourseHeader = () => {
                                     disabled={
                                         certificate && certificate.available
                                             ? false
-                                            : false
+                                            : true
                                     }
                                 >
                                     {t('courseDetails.certified')}
