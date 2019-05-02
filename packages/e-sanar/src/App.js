@@ -1,45 +1,30 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, lazy } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import ApolloClient from 'apollo-boost'
-import { ApolloProvider } from 'react-apollo'
-import HomePage from './Pages/Portal/Home'
-import SigninPage from './Pages/Auth/Signin'
-import PasswordRecoveryPage from './Pages/Auth/PasswordRecovery'
-import SignupPage from './Pages/Auth/Signup'
-import PrivateRoute from './Pages/Portal/Private'
 
-// Import Sanar UI components library
-import 'sanar-ui/dist/index.less'
+const SANPortalRoutes = lazy(() => import('./Pages/Portal'))
+const SANHomePage = lazy(() => import('./Pages/Portal/Home'))
+const SANSigninPage = lazy(() => import('./Pages/Auth/Signin'))
+const SANPasswordRecoveryPage = lazy(() =>
+    import('./Pages/Auth/PasswordRecovery')
+)
+const SANSignupPage = lazy(() => import('./Pages/Auth/Signup'))
+const SANPrivateRoute = lazy(() => import('./Pages/Portal/Private'))
 
-// Routes to Portal modules
-import SANPortalRoutes from './Pages/Portal'
+const SANRouter = () => (
+    <Router>
+        <Route path='/signin' component={SANSigninPage} />
+        <Route path='/signup' component={SANSignupPage} />
+        <Route path='/password-recovery' component={SANPasswordRecoveryPage} />
+        <SANPrivateRoute path='/' component={SANPortalRoutes} />
+    </Router>
+)
 
-const client = new ApolloClient({
-    uri: 'https://48p1r2roz4.sse.codesandbox.io'
-})
+const SANLoader = () => <div>loading...</div>
 
-function ESRouter() {
-    return (
-        <ApolloProvider client={client}>
-            <Router>
-                <Route path='/signin' component={SigninPage} />
-                <Route path='/signup' component={SignupPage} />
-                <Route
-                    path='/password-recovery'
-                    component={PasswordRecoveryPage}
-                />
-                <PrivateRoute path='/' component={SANPortalRoutes} />
-            </Router>
-        </ApolloProvider>
-    )
-}
+const SANApp = () => (
+    <Suspense fallback={<SANLoader />}>
+        <SANRouter />
+    </Suspense>
+)
 
-const Loader = () => <div>loading...</div>
-
-export default function App() {
-    return (
-        <Suspense fallback={<Loader />}>
-            <ESRouter />
-        </Suspense>
-    )
-}
+export default SANApp
