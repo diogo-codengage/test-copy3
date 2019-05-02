@@ -19,6 +19,7 @@ const ESButton = ({ className, clear, fontSize, style, ...props }) => {
 ESButton.propTypes = Object.assign(
     { ...Button['propTypes'] },
     {
+        className: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
         clear: PropTypes.bool,
         href: PropTypes.string,
         fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

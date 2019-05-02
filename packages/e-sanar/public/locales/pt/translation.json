@@ -48,6 +48,7 @@
 
         "certified": "Certificado",
         "progressbarTitle": "Progresso do curso",
+        "downloadTooltip": "Complete {{percent}} do curso para disponibilizar o seu certificado.",
         "tabGeneral": "Visão Geral",
         "tabContent": "Conteúdo",
         "tabComments": "Comentários"

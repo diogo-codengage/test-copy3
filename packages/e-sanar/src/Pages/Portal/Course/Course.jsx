@@ -5,6 +5,7 @@ import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import ESProgressBar from 'sanar-ui/dist/Components/Molecules/ProgressBar'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESTabs, { ESTabPane } from 'sanar-ui/dist/Components/Atoms/Tabs'
+import ESTooltip from 'sanar-ui/dist/Components/Atoms/Tooltip'
 
 import SANPerformance from './Performance'
 import SANInteractions from './Interactions'
@@ -75,14 +76,24 @@ const SANCoursePage = () => {
                                         percent={enrollment.progress_percentage}
                                     />
                                 </ESCol>
-                                <ESButton
-                                    ghost
-                                    type='primary'
-                                    icon='download'
-                                    disabled={!enrollment.certificate.available}
+
+                                <ESTooltip
+                                    title={t('courseDetails.downloadTooltip', {
+                                        percent: '80%'
+                                    })}
+                                    placement='bottom'
                                 >
-                                    {t('courseDetails.certified')}
-                                </ESButton>
+                                    <ESButton
+                                        ghost
+                                        type='primary'
+                                        icon='download'
+                                        disabled={
+                                            !enrollment.certificate.available
+                                        }
+                                    >
+                                        {t('courseDetails.certified')}
+                                    </ESButton>
+                                </ESTooltip>
                             </ESRow>
                         </ESCol>
                     </ESRow>

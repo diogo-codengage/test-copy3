@@ -87,7 +87,6 @@ const PropComponent = ({
 }) => (
     <Tr key={property} title={description}>
         <Td>{property}</Td>
-        {console.log(propType)}
         <Td>
             {propType && propType.name ? formatPropType(propType) : propType}
         </Td>
@@ -116,7 +115,6 @@ const TableComponent = ({ propDefinitions }) => {
                     <Th>Type</Th>
                     <Th>Required</Th>
                     <Th>Default</Th>
-                    <Th>Description</Th>
                 </tr>
             </thead>
             <tbody>{props}</tbody>
