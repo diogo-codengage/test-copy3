@@ -17,6 +17,7 @@ import { useAuthContext } from 'Hooks/auth'
 import './style.less'
 
 import { SANPortalPagesContainer } from '../Layout'
+import SANCourseHeader from './Header'
 
 const SANCoursePage = () => {
     const {
@@ -30,85 +31,7 @@ const SANCoursePage = () => {
 
     return (
         <div className='course'>
-            <ANTPageHeader className='course__header'>
-                <SANPortalPagesContainer>
-                    <ESRow
-                        className='course__header__container'
-                        type='flex'
-                        align='middle'
-                        gutter={20}
-                    >
-                        <ESCol
-                            xs={24}
-                            md={10}
-                            lg={12}
-                            className='course__header__container__about-course'
-                        >
-                            <ESRow type='flex' align='middle' gutter={16}>
-                                <ESCol>
-                                    <img
-                                        alt=''
-                                        src='https://freeiconshop.com/wp-content/uploads/edd/bulb-flat.png'
-                                    />
-                                </ESCol>
-                                <ESCol flex={1}>
-                                    <ANTTypography.Text className='course__header__container__about-course--category'>
-                                        {course.knowledge_area}
-                                    </ANTTypography.Text>
-                                    <br />
-                                    <ANTTypography.Text
-                                        className='course__header__container__about-course--name'
-                                        strong
-                                        ellipsis
-                                    >
-                                        {course.name}
-                                    </ANTTypography.Text>
-                                </ESCol>
-                            </ESRow>
-                        </ESCol>
-                        <ESCol
-                            xs={24}
-                            md={14}
-                            lg={12}
-                            className='course__header__container__progress'
-                        >
-                            <ESRow gutter={20} type='flex' align='middle'>
-                                <ESCol xs={24} sm={16} md={14} lg={15}>
-                                    <ESProgressBar
-                                        title={t(
-                                            'courseDetails.progressbarTitle'
-                                        )}
-                                        percent={enrollment.progress_percentage.toFixed(
-                                            2
-                                        )}
-                                    />
-                                </ESCol>
-
-                                <ESTooltip
-                                    title={t('courseDetails.downloadTooltip', {
-                                        percent: '80%'
-                                    })}
-                                    placement='bottom'
-                                >
-                                    <ESButton
-                                        ghost
-                                        type='primary'
-                                        icon='download'
-                                        disabled={
-                                            enrollment.certificate &&
-                                            enrollment.certificate.available
-                                                ? false
-                                                : true
-                                        }
-                                    >
-                                        {t('courseDetails.certified')}
-                                    </ESButton>
-                                </ESTooltip>
-                            </ESRow>
-                        </ESCol>
-                    </ESRow>
-                </SANPortalPagesContainer>
-            </ANTPageHeader>
+            <SANCourseHeader />
             <ESTabs defaultActiveKey='1' tabBarGutter={0}>
                 <ESTabPane tab={t('courseDetails.tabGeneral')} key='1'>
                     <SANPerformance />
