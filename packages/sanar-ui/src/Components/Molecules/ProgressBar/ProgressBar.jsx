@@ -57,7 +57,7 @@ const ESProgressBar = ({ className, percent, title, limit }) => {
 ESProgressBar.propTypes = {
     className: PropTypes.string,
     title: PropTypes.string,
-    percent: PropTypes.number,
+    percent: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     limit: PropTypes.number
 }
 
