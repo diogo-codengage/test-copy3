@@ -14,17 +14,23 @@ import { useAuthContext } from '../../../Hooks/auth'
 const SANCourseHeader = () => {
     const { t } = useTranslation()
 
-    const {
-        me: { enrollments }
-    } = useAuthContext()
+    const { getEnrollment } = useAuthContext()
 
-    const enrollment = enrollments[0]
-    const { course: courseMock } = enrollment
+    const {
+        course: courseMock,
+        certificate: certificateMock,
+        progress_percentage
+    } = getEnrollment()
 
     const course = {
         ...courseMock,
         cover_pictures:
             'https://freeiconshop.com/wp-content/uploads/edd/bulb-flat.png'
+    }
+
+    const certificate = {
+        ...certificateMock,
+        link: 'http://globo.com'
     }
 
     return (
@@ -71,9 +77,7 @@ const SANCourseHeader = () => {
                             <ESCol xs={24} sm={16} md={14} lg={15}>
                                 <ESProgressBar
                                     title={t('courseDetails.progressbarTitle')}
-                                    percent={enrollment.progress_percentage.toFixed(
-                                        2
-                                    )}
+                                    percent={progress_percentage.toFixed(0)}
                                 />
                             </ESCol>
 
@@ -87,11 +91,10 @@ const SANCourseHeader = () => {
                                     ghost
                                     type='primary'
                                     icon='download'
-                                    href='http://www.globo.com'
+                                    href={certificate.link}
                                     target='_blank'
                                     disabled={
-                                        enrollment.certificate &&
-                                        enrollment.certificate.available
+                                        certificate && certificate.available
                                             ? false
                                             : false
                                     }
