@@ -17,9 +17,9 @@ const ESSessionTitle = ({ className, title, subtitle, extra }) => {
             align={subtitle ? 'bottom' : 'top'}
             className={classes}
         >
-            <ESCol>
+            <ESCol className='es-session-title__texts'>
                 <Title level={4}>{title}</Title>
-                {subtitle && <Text>{subtitle}</Text>}
+                {subtitle && <Text ellipsis>{subtitle}</Text>}
             </ESCol>
             {extra && (
                 <ESCol className='es-session-title__extra'>{extra}</ESCol>
