@@ -18,7 +18,8 @@ ESBadge.propTypes = Object.assign(
         className: PropTypes.string,
         onClick: PropTypes.func,
         text: PropTypes.string,
-        title: PropTypes.string
+        title: PropTypes.string,
+        count: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
     }
 )
 ESBadge.defaultProps = {
