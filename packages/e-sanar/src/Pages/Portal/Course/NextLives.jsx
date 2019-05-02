@@ -8,8 +8,8 @@ import ESCardNextLive from 'sanar-ui/dist/Components/Atoms/CardNextLive'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 
-import Mock from './mock.json'
 import { SANPortalPagesContainer } from '../Layout'
+import { useAuthContext } from 'Hooks/auth'
 
 const SANLives = ({ title, release_date, scheduled }) => {
     const { t } = useTranslation()
@@ -52,12 +52,18 @@ const SANLives = ({ title, release_date, scheduled }) => {
 }
 
 const SANNextLives = () => {
-    const { t } = useTranslation()
+    const { getEnrollment } = useAuthContext()
     const {
-        enrollment: {
-            course: { lives }
-        }
-    } = Mock
+        course: { lives: livesProp }
+    } = getEnrollment()
+
+    const { t } = useTranslation()
+
+    const lives = livesProp.map(live => ({
+        ...live,
+        release_date: '2019-02-08T14:02:06.093Z',
+        scheduled: false
+    }))
 
     return (
         <SANPortalPagesContainer className='next-lives'>
