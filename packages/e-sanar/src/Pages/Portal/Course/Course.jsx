@@ -12,16 +12,21 @@ import SANInteractions from './Interactions'
 import SANLives from './Lives'
 import SANNextLives from './NextLives'
 
+import { useAuthContext } from 'Hooks/auth'
+
 import './style.less'
 
-import Mock from './mock.json'
 import { SANPortalPagesContainer } from '../Layout'
 
 const SANCoursePage = () => {
-    const { t } = useTranslation()
-    const { enrollment } = Mock
+    const {
+        me: { enrollments }
+    } = useAuthContext()
 
+    const enrollment = enrollments[0]
     const { course } = enrollment
+
+    const { t } = useTranslation()
 
     return (
         <div className='course'>
@@ -73,7 +78,9 @@ const SANCoursePage = () => {
                                         title={t(
                                             'courseDetails.progressbarTitle'
                                         )}
-                                        percent={enrollment.progress_percentage}
+                                        percent={enrollment.progress_percentage.toFixed(
+                                            2
+                                        )}
                                     />
                                 </ESCol>
 
@@ -88,7 +95,10 @@ const SANCoursePage = () => {
                                         type='primary'
                                         icon='download'
                                         disabled={
-                                            !enrollment.certificate.available
+                                            enrollment.certificate &&
+                                            enrollment.certificate.available
+                                                ? false
+                                                : true
                                         }
                                     >
                                         {t('courseDetails.certified')}
