@@ -16,12 +16,31 @@ const ESTooltip = ({ className, children, ...props }) => {
     )
 }
 
-ESTooltip.propTypes = {
-    className: PropTypes.string,
-    title: PropTypes.string,
-    placement: PropTypes.string,
-    title: PropTypes.string
-}
-ESTooltip.defaultProps = {}
+ESTooltip.propTypes = Object.assign(
+    { ...Tooltip['propTypes'] },
+    {
+        className: PropTypes.string,
+        arrowPointAtCenter: PropTypes.bool,
+        defaultVisible: PropTypes.bool,
+        visible: PropTypes.bool,
+        trigger: PropTypes.oneOf(['hover', 'focus', 'click', 'contextMenu']),
+        placement: PropTypes.oneOf([
+            'top',
+            'left',
+            'right',
+            'bottom',
+            'topLeft',
+            'topRight',
+            'bottomLeft',
+            'bottomRight',
+            'leftTop',
+            'leftBottom',
+            'rightTop',
+            'rightBottom'
+        ])
+    }
+)
+
+ESTooltip.defaultProps = Tooltip['defaultProps']
 
 export default ESTooltip

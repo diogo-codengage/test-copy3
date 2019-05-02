@@ -8,6 +8,7 @@
         margin: 0 auto;
     }
 
+    & .ant-layout,
     &__footer,
     &__content {
         background: @white;
@@ -16,9 +17,12 @@
     &__footer {
         padding: 0;
 
+        &--divider {
+            margin-top: 0;
+        }
+
         &--contact {
             &--help {
-                font-size: @font-size-sm;
                 & .es-button {
                     background-color: rgba(247, 249, 252, 1);
                     box-shadow: 0 1px 2px rgba(17, 19, 23, 0.15);
@@ -33,44 +37,47 @@
                 font-size: @font-size-base;
                 & .es-eva-icon svg {
                     fill: darken(@normal-color, 45);
+                    margin-right: @margin-xs / 2;
                 }
             }
             &--attendance {
+                font-size: @font-size-sm !important;
                 text-align: end;
-                font-size: @font-size-sm;
+                line-height: 1.8;
             }
         }
 
         &--copyright {
             margin: @margin-lg 0;
+            font-size: @font-size-sm !important;
+        }
+    }
+
+    @media (max-width: @screen-sm) {
+        &__footer--contact--attendance {
+            margin-bottom: 0 !important;
         }
     }
 
     @media (max-width: @screen-md) {
-        &__footer {
-            &--contact {
-                &--logo,
-                &--attendance,
-                &--help,
-                &--email,
-                &--phone {
-                    margin-bottom: @margin-lg;
-                    text-align: center;
-                    justify-content: center;
-                }
+        &__footer--contact {
+            &--logo,
+            &--attendance,
+            &--help,
+            &--email,
+            &--phone {
+                margin-bottom: @margin-lg;
+                text-align: center;
+                justify-content: center;
             }
         }
     }
 
     @media (max-width: @screen-lg) {
-        &__footer {
-            &--contact {
-                &--logo {
-                    margin-bottom: @margin-lg;
-                    text-align: center;
-                    justify-content: center;
-                }
-            }
+        &__footer--contact--logo {
+            margin-bottom: @margin-lg;
+            text-align: center;
+            justify-content: center;
         }
     }
 }

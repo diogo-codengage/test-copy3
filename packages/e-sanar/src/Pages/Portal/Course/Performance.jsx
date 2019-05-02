@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Typography, Divider } from 'antd'
+import { Typography } from 'antd'
 
 import ESMetricCard from 'sanar-ui/dist/Components/Molecules/MetricCard'
 import ESCard from 'sanar-ui/dist/Components/Molecules/Card'

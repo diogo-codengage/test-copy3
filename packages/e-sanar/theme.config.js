@@ -3,6 +3,8 @@ module.exports = {
     '@normal-color': '#d9d9d9',
     '@white': '#FFF',
     '@normal-color': '#D9D9D9',
+    '@tooltip-bg': '#ffebc2',
+    '@tooltip-color': '#000',
 
     // Screen breakpoints
     '@screen-lg': '1024px',

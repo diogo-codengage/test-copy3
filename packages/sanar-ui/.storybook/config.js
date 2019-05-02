@@ -25,7 +25,20 @@ addDecorator(
         header: false,
         TableComponent,
         source: false,
-        inline: true
+        inline: true,
+        propTablesExclude: ['div', 'span'],
+        styles: stylesheet => ({
+            ...stylesheet,
+            propTableHead: {
+                display: 'none'
+            },
+            infoBody: {
+                ...stylesheet.infoBody,
+                border: 'none',
+                margin: '30px 0 0 0',
+                padding: 0
+            }
+        })
     })
 )
 addParameters({

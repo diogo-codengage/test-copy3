@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
     Layout as ANTDLayout,
     Divider as ANTDivider,
@@ -18,7 +18,7 @@ const { Text: ANTText } = ANTTypography
 const SANFooter = () => {
     return (
         <ANTDLayout.Footer className='san-portal-layout__footer'>
-            <ANTDivider />
+            <ANTDivider className='san-portal-layout__footer--divider' />
             <SANPortalPagesContainer>
                 <ESRow
                     type='flex'
@@ -30,10 +30,10 @@ const SANFooter = () => {
                         xs={24}
                         sm={24}
                         md={24}
-                        lg={4}
+                        lg={3}
                         className='san-portal-layout__footer--contact--logo'
                     >
-                        <img src={logoSvg} />
+                        <img src={logoSvg} alt='' />
                     </ESCol>
                     <ESCol
                         xs={24}
@@ -43,7 +43,7 @@ const SANFooter = () => {
                         className='san-portal-layout__footer--contact--help'
                         type='flex'
                     >
-                        <ESButton size='small'>
+                        <ESButton size='small' fontSize={12}>
                             <ANTText>PRECISA DE AJUDA?</ANTText>
                         </ESButton>
                     </ESCol>
@@ -51,7 +51,7 @@ const SANFooter = () => {
                         xs={24}
                         sm={12}
                         md={4}
-                        lg={3}
+                        lg={4}
                         className='san-portal-layout__footer--contact--phone'
                     >
                         <ESEvaIcon name='phone-outline' />
@@ -94,11 +94,11 @@ const SANFooter = () => {
                 </ESCol>
                 <ESCol>
                     <ANTText strong>
-                        <a>Termos de Uso</a>
+                        <a href='foo'>Termos de Uso</a>
                     </ANTText>
                     {' | '}
                     <ANTText strong>
-                        <a>Política de Privacidade</a>
+                        <a href='foo'>Política de Privacidade</a>
                     </ANTText>
                 </ESCol>
             </ESRow>
