@@ -7,18 +7,29 @@ import ESLiveSection from 'sanar-ui/dist/Components/Molecules/LiveSection'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 
-import Mock from './mock.json'
-import { SANPortalPagesContainer } from '../Layout/index.js'
+import { SANPortalPagesContainer } from '../Layout'
+import { useAuthContext } from 'Hooks/auth'
 
 const SANLives = () => {
-    const { t } = useTranslation()
+    const { getEnrollment } = useAuthContext()
     const {
-        enrollment: {
-            course: { lives }
-        }
-    } = Mock
+        course: { lives: livesProp }
+    } = getEnrollment()
 
-    const date = format(lives[0].release_date, 'DD/MM/YYYY')
+    const { t } = useTranslation()
+
+    const live = {
+        ...livesProp[0],
+        link: 'https://www.youtube.com/embed/aG-Go8W-wcE',
+        release_date: '2019-02-08T14:02:06.093Z',
+        scheduled: false,
+        professor: {
+            ...livesProp[0].professor,
+            courses: 4
+        }
+    }
+
+    const date = format(live.release_date, 'DD/MM/YYYY')
 
     return (
         <SANPortalPagesContainer className='lives'>
@@ -27,12 +38,13 @@ const SANLives = () => {
                 subtitle={t('courseDetails.livesSubtitle')}
             />
             <ESLiveSection
-                videoSrc={lives[0].link}
-                description={lives[0].description}
-                title={lives[0].title}
+                videoSrc={live.link}
+                description={live.description}
+                title={live.title}
                 date={date}
-                name={lives[0].professor.name}
-                courses={lives[0].professor.courses}
+                avatar={live.professor.profile_picture}
+                name={live.professor.name}
+                courses={live.professor.courses}
                 action={
                     <ESButton size='small' block fontSize={12}>
                         {t('courseDetails.seePreviousLives')}
