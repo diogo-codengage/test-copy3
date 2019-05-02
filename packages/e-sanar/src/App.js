@@ -8,8 +8,7 @@ import PasswordRecoveryPage from './Pages/Auth/PasswordRecovery'
 import SignupPage from './Pages/Auth/Signup'
 import PrivateRoute from './Pages/Portal/Private'
 
-// Import Sanar UI components library
-import 'sanar-ui/dist/index.less'
+import './App.less'
 
 // Routes to Portal modules
 import SANPortalRoutes from './Pages/Portal'
