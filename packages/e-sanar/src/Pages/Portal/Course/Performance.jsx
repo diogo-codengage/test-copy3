@@ -9,15 +9,15 @@ import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 
-import consistencia from '../../../assets/images/consistencia.svg'
-import interacao from '../../../assets/images/interacao.svg'
-import praticaRegular from '../../../assets/images/pratica-regular.svg'
-import progresso from '../../../assets/images/progresso.svg'
+import consistencia from 'assets/images/consistencia.svg'
+import interacao from 'assets/images/interacao.svg'
+import praticaRegular from 'assets/images/pratica-regular.svg'
+import progresso from 'assets/images/progresso.svg'
 
-import low from '../../../assets/images/emoticon-low.svg'
+import low from 'assets/images/emoticon-low.svg'
 
-import Mock from './mock.json'
 import { SANPortalPagesContainer } from '../Layout'
+import { useAuthContext } from 'Hooks/auth'
 
 const CommitmentCard = ({ percent }) => {
     const { t } = useTranslation()
@@ -58,9 +58,24 @@ const CommitmentCard = ({ percent }) => {
 
 const SANPerformance = () => {
     const { t } = useTranslation()
+    const { getEnrollment } = useAuthContext()
     const {
-        enrollment: { performance_indicators }
-    } = Mock
+        performance_indicators: performance_indicatorsProp
+    } = getEnrollment()
+
+    const performance_indicators = {
+        commitment: 38,
+        uniformity: 24,
+        progress: {
+            done: 12,
+            total: 93
+        },
+        tests: {
+            done: 12,
+            total: 93
+        },
+        interatction: 123
+    }
 
     return (
         <div className='performance'>
