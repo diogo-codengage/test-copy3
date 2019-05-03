@@ -77,7 +77,9 @@ const SANCourseHeader = () => {
                             <ESCol xs={24} sm={16} md={14} lg={15}>
                                 <ESProgressBar
                                     title={t('courseDetails.progressbarTitle')}
-                                    percent={progress_percentage.toFixed(0)}
+                                    percent={Number(
+                                        progress_percentage.toFixed(0)
+                                    )}
                                 />
                             </ESCol>
 

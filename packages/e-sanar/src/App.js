@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import './App.less'
 
 const SANPortalRoutes = lazy(() => import('./Pages/Portal'))
-const SANHomePage = lazy(() => import('./Pages/Portal/Home'))
 const SANSigninPage = lazy(() => import('./Pages/Auth/Signin'))
 const SANPasswordRecoveryPage = lazy(() =>
     import('./Pages/Auth/PasswordRecovery')

@@ -10,7 +10,7 @@ import { GET_ME } from 'Apollo/Me/query'
 import { useAuthContext } from 'Hooks/auth'
 
 const SANPortalRoutes = () => {
-    const { me, setMe } = useAuthContext()
+    const { setMe } = useAuthContext()
 
     return (
         <Query query={GET_ME} onCompleted={({ me }) => setMe(me)}>
