@@ -1,6 +1,8 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+
 import ESTabs, { ESTabPane } from 'sanar-ui/dist/Components/Atoms/Tabs'
+
 import SANPerformance from './Performance'
 import SANInteractions from './Interactions'
 import SANLives from './Lives'

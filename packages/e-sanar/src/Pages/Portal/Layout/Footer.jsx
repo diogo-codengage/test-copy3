@@ -4,6 +4,7 @@ import {
     Divider as ANTDivider,
     Typography as ANTTypography
 } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
@@ -11,11 +12,13 @@ import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 
 import { SANPortalPagesContainer } from '../Layout'
 
-import logoSvg from '../../../assets/images/logo.svg'
+import logoSvg from 'assets/images/logo.svg'
 
 const { Text: ANTText } = ANTTypography
 
 const SANFooter = () => {
+    const { t } = useTranslation()
+
     return (
         <ANTDLayout.Footer className='san-portal-layout__footer'>
             <ANTDivider className='san-portal-layout__footer--divider' />
@@ -44,7 +47,7 @@ const SANFooter = () => {
                         type='flex'
                     >
                         <ESButton size='small' fontSize={12}>
-                            <ANTText>PRECISA DE AJUDA?</ANTText>
+                            <ANTText>{t('footer.helpButton')}</ANTText>
                         </ESButton>
                     </ESCol>
                     <ESCol
@@ -55,7 +58,7 @@ const SANFooter = () => {
                         className='san-portal-layout__footer--contact--phone'
                     >
                         <ESEvaIcon name='phone-outline' />
-                        <ANTText>71 3052-4831</ANTText>
+                        <ANTText>{t('footer.phone')}</ANTText>
                     </ESCol>
                     <ESCol
                         xs={24}
@@ -65,7 +68,7 @@ const SANFooter = () => {
                         className='san-portal-layout__footer--contact--email'
                     >
                         <ESEvaIcon name='email-outline' />
-                        <ANTText>atendimento@e-sanar.com.br</ANTText>
+                        <ANTText>{t('footer.email')}</ANTText>
                     </ESCol>
                     <ESCol
                         xs={24}
@@ -74,9 +77,7 @@ const SANFooter = () => {
                         lg={7}
                         className='san-portal-layout__footer--contact--attendance'
                     >
-                        <ANTText>
-                            Atendimento de Seg. a Sex. das 09h às 18h
-                        </ANTText>
+                        <ANTText>{t('footer.attendance')}</ANTText>
                     </ESCol>
                 </ESRow>
             </SANPortalPagesContainer>
@@ -88,17 +89,15 @@ const SANFooter = () => {
                 gutter={8}
             >
                 <ESCol>
-                    <ANTText type='secondary'>
-                        Copyright © E-sanar. Todos os direitos reservados.
-                    </ANTText>
+                    <ANTText type='secondary'>{t('footer.copyright')}</ANTText>
                 </ESCol>
                 <ESCol>
                     <ANTText strong>
-                        <a href='foo'>Termos de Uso</a>
+                        <a href='foo'>{t('footer.termsOfUse')}</a>
                     </ANTText>
                     {' | '}
                     <ANTText strong>
-                        <a href='foo'>Política de Privacidade</a>
+                        <a href='foo'>{t('footer.privacyPolicy')}</a>
                     </ANTText>
                 </ESCol>
             </ESRow>
