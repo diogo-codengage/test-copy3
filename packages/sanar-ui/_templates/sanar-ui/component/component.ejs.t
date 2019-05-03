@@ -7,7 +7,7 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 const ES<%=h.inflection.camelize(name)%> = ({ className }) => {
-    const classes = classNames(es-<%=h.changeCase.param( name ) %>, className)
+    const classes = classNames('es-<%=h.changeCase.param( name ) %>', className)
     return (
         <div className={classes}>
             <strong>ES<%=h.inflection.camelize(name)%></strong> works!

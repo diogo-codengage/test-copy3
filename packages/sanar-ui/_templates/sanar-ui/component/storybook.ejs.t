@@ -4,8 +4,8 @@ to: src/Components/<%=h.inflection.pluralize(category)%>/<%=h.inflection.cameliz
 
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import <%=h.inflection.camelize(name)%> from './<%=h.inflection.camelize(name)%>'
+import ES<%=h.inflection.camelize(name)%> from './<%=h.inflection.camelize(name)%>'
 
 storiesOf('<%=h.inflection.pluralize(h.inflection.camelize(category))%>.<%=h.inflection.camelize(name)%>', module).add('Simple', () => (
-    <<%=h.inflection.camelize(name)%> />
+    <ES<%=h.inflection.camelize(name)%> />
 ))
