@@ -26,7 +26,7 @@ addDecorator(
         TableComponent,
         source: false,
         inline: true,
-        propTablesExclude: ['div', 'span'],
+        propTablesExclude: [() => 'div', () => 'span'],
         styles: stylesheet => ({
             ...stylesheet,
             propTableHead: {
