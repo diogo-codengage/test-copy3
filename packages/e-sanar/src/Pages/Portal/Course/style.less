@@ -1,5 +1,17 @@
 .course {
-    &__header {
+    .ant-tabs {
+        &-nav-scroll {
+            display: flex;
+            justify-content: center;
+        }
+
+        &-bar {
+            margin-bottom: 0;
+            background: #fff;
+        }
+    }
+
+    & .header {
         border-bottom: 1px solid rgba(17, 19, 23, 0.1);
         padding: 0 !important;
 
@@ -40,8 +52,8 @@
                     margin-bottom: @margin-md;
                 }
 
-                button {
-                    margin: 0 auto;
+                .es-button {
+                    margin: 4px 0 0 @margin-md;
                 }
             }
         }
@@ -49,16 +61,6 @@
         img {
             width: 40px;
         }
-    }
-
-    .ant-tabs-nav-scroll {
-        display: flex;
-        justify-content: center;
-    }
-
-    .ant-tabs-bar {
-        margin-bottom: 0;
-        background: #fff;
     }
 
     & .performance {
@@ -139,17 +141,13 @@
                     .es-progress-bar {
                         margin-bottom: 0;
                     }
-
-                    button {
-                        margin: 0 0 0 @margin-md + 6;
-                    }
                 }
             }
         }
     }
 
     @media (min-width: @screen-md) {
-        &__header {
+        & .header {
             &__container {
                 &__about-course {
                     padding-bottom: 0;
@@ -165,13 +163,5 @@
                 }
             }
         }
-
-        .ant-tabs-tab {
-            margin-right: 16px !important;
-        }
     }
-}
-
-.mb-md {
-    margin-bottom: 16px;
 }

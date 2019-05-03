@@ -9,7 +9,7 @@ import ESTooltip from 'sanar-ui/dist/Components/Atoms/Tooltip'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 
 import { useTranslation } from 'react-i18next'
-import { useAuthContext } from '../../../Hooks/auth'
+import { useAuthContext } from 'Hooks/auth'
 
 const SANCourseHeader = () => {
     const { t } = useTranslation()
@@ -34,10 +34,10 @@ const SANCourseHeader = () => {
     }
 
     return (
-        <ANTPageHeader className='course__header'>
+        <ANTPageHeader className='header'>
             <SANPortalPagesContainer>
                 <ESRow
-                    className='course__header__container'
+                    className='header__container'
                     type='flex'
                     align='middle'
                     gutter={20}
@@ -46,19 +46,19 @@ const SANCourseHeader = () => {
                         xs={24}
                         md={10}
                         lg={12}
-                        className='course__header__container__about-course'
+                        className='header__container__about-course'
                     >
                         <ESRow type='flex' align='middle' gutter={16}>
                             <ESCol>
                                 <img alt='' src={course.cover_pictures} />
                             </ESCol>
                             <ESCol flex={1}>
-                                <ANTTypography.Text className='course__header__container__about-course--category'>
+                                <ANTTypography.Text className='header__container__about-course--category'>
                                     {course.knowledge_area}
                                 </ANTTypography.Text>
                                 <br />
                                 <ANTTypography.Text
-                                    className='course__header__container__about-course--name'
+                                    className='header__container__about-course--name'
                                     strong
                                     ellipsis
                                 >
@@ -71,9 +71,14 @@ const SANCourseHeader = () => {
                         xs={24}
                         md={14}
                         lg={12}
-                        className='course__header__container__progress'
+                        className='header__container__progress'
                     >
-                        <ESRow gutter={20} type='flex' align='middle'>
+                        <ESRow
+                            gutter={20}
+                            type='flex'
+                            // align='middle'
+                            justify='center'
+                        >
                             <ESCol xs={24} sm={16} md={14} lg={15}>
                                 <ESProgressBar
                                     title={t('courseDetails.progressbarTitle')}
