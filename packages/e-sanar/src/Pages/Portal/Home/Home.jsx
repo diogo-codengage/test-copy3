@@ -1,5 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 
 function HomePage() {
     const { t, i18n } = useTranslation()
