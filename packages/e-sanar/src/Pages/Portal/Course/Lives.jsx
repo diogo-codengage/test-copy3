@@ -25,7 +25,9 @@ const SANLives = () => {
         scheduled: false,
         professor: {
             ...livesProp[0].professor,
-            courses: 4
+            courses: 4,
+            profile_picture:
+                'https://www.domalberto.edu.br/wp-content/uploads/2017/02/joao.png'
         }
     }
 
