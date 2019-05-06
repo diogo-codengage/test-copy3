@@ -14,19 +14,6 @@ const SANCoursePage = () => {
 
     return (
         <div className='course'>
-            <div className='test'>
-                <div className='a' />
-                <div className='b' />
-                <div className='c' />
-                <div className='d' />
-                <div className='e' />
-                <div className='f' />
-                <div className='g' />
-                <div className='h' />
-                <div className='i' />
-                <div className='j' />
-                <div className='k' />
-            </div>
             <SANCourseHeader />
             <ESTabs defaultActiveKey='1' tabBarGutter={0}>
                 <ESTabPane tab={t('courseDetails.tabGeneral')} key='1'>
