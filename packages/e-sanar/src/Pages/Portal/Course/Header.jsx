@@ -52,13 +52,16 @@ const SANCourseHeader = () => {
                             <ESCol>
                                 <img alt='' src={course.cover_pictures} />
                             </ESCol>
-                            <ESCol flex={1}>
-                                <ANTTypography.Text className='header__container__about-course--category'>
+                            <ESCol
+                                className='header__container__about-course--descriptions'
+                                flex={1}
+                            >
+                                <ANTTypography.Text className='header__container__about-course--descriptions--category'>
                                     {course.knowledge_area}
                                 </ANTTypography.Text>
                                 <br />
                                 <ANTTypography.Text
-                                    className='header__container__about-course--name'
+                                    className='header__container__about-course--descriptions--name'
                                     strong
                                     ellipsis
                                 >
@@ -73,12 +76,7 @@ const SANCourseHeader = () => {
                         lg={12}
                         className='header__container__progress'
                     >
-                        <ESRow
-                            gutter={20}
-                            type='flex'
-                            // align='middle'
-                            justify='center'
-                        >
+                        <ESRow gutter={20} type='flex' justify='center'>
                             <ESCol xs={24} sm={16} md={14} lg={15}>
                                 <ESProgressBar
                                     title={t('courseDetails.progressbarTitle')}
@@ -94,20 +92,22 @@ const SANCourseHeader = () => {
                                 })}
                                 placement='bottom'
                             >
-                                <ESButton
-                                    ghost
-                                    type='primary'
-                                    icon='download'
-                                    href={certificate.link}
-                                    target='_blank'
-                                    disabled={
-                                        certificate && certificate.available
-                                            ? false
-                                            : true
-                                    }
-                                >
-                                    {t('courseDetails.certified')}
-                                </ESButton>
+                                <span className='header__container__progress__container-certify-button'>
+                                    <ESButton
+                                        ghost
+                                        type='primary'
+                                        icon='download'
+                                        href={certificate.link}
+                                        target='_blank'
+                                        disabled={
+                                            certificate && certificate.available
+                                                ? false
+                                                : true
+                                        }
+                                    >
+                                        {t('courseDetails.certified')}
+                                    </ESButton>
+                                </span>
                             </ESTooltip>
                         </ESRow>
                     </ESCol>
