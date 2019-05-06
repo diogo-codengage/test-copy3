@@ -35,16 +35,20 @@
                     flex-flow: row !important;
                 }
 
-                &--name {
-                    color: #000 !important;
-                    font-size: 24px;
-                    max-width: ~'calc(100% - 44px)';
-                }
+                &--descriptions {
+                    max-width: ~'calc(100% - 56px)';
 
-                &--category {
-                    font-size: @font-size-xs;
-                    color: rgba(17, 19, 23, 0.5) !important;
-                    text-transform: uppercase;
+                    &--name {
+                        color: #000 !important;
+                        font-size: 24px;
+                        max-width: 100%;
+                    }
+
+                    &--category {
+                        font-size: @font-size-xs;
+                        color: rgba(17, 19, 23, 0.5) !important;
+                        text-transform: uppercase;
+                    }
                 }
             }
             &__progress {
@@ -52,8 +56,12 @@
                     margin-bottom: @margin-md;
                 }
 
-                .es-button {
-                    margin: 4px 0 0 @margin-md;
+                &__container-certify-button {
+                    max-height: fit-content;
+
+                    .es-button {
+                        margin: 4px 0 0 @margin-md;
+                    }
                 }
             }
         }
@@ -65,7 +73,6 @@
 
     & .performance {
         padding-top: @padding-md;
-        padding-bottom: 32px;
         border-bottom: 0.5px solid rgba(17, 19, 23, 0.15);
         background-color: rgba(247, 249, 252, 1);
 
@@ -103,7 +110,7 @@
     }
 
     & .interactions {
-        padding-top: 48px;
+        padding-top: @padding-xs;
 
         &__column {
             margin-bottom: @margin-lg;
@@ -112,13 +119,13 @@
 
     & .lives {
         & .ant-divider {
-            margin-top: @margin-md * 4;
+            margin-top: @margin-lg * 2;
             margin-bottom: 0;
         }
     }
 
     & .next-lives {
-        margin-bottom: 60px;
+        margin-bottom: @margin-xs;
 
         &__title {
             font-size: @font-size-lg;
@@ -162,6 +169,14 @@
                     padding-left: @padding-md * 2 !important;
                 }
             }
+        }
+
+        & .performance {
+            padding-bottom: @padding-lg;
+        }
+
+        & .interactions {
+            padding-top: @padding-md * 2;
         }
     }
 }

@@ -74,6 +74,12 @@ const SANNextLives = () => {
                 {lives.map((live, i) => (
                     <SANLives key={i} {...live} />
                 ))}
+                {lives.map((live, i) => (
+                    <SANLives key={i} {...live} />
+                ))}
+                {lives.map((live, i) => (
+                    <SANLives key={i} {...live} />
+                ))}
             </ESNextLives>
         </SANPortalPagesContainer>
     )
