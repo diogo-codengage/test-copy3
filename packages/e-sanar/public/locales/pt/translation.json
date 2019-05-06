@@ -31,7 +31,7 @@
         "cardInteractionDoubt": "Indica o número de interações (pergunta, resposta ou comentário) que você fez na última semana. Interações auxiliam na construção de significados aos conceitos, melhorando a fixação do assunto",
         "cardInteractionDescription": "Perguntas e repostas realizadas",
 
-        "recentCommentsTitle": "Comentários Recentes",
+        "recentCommentsTitle": "Perguntas e Respostas Recentes",
         "recentCommentsSubtitle": "Vejas as últimas perguntas feitas por seus colegas de curso",
         "recentCommentsButton": "Ver todos os comentários",
         "recentlySavedTitle": "Salvos Recentemente",
@@ -51,7 +51,7 @@
         "downloadTooltip": "Complete {{percent}} do curso para disponibilizar o seu certificado.",
         "tabGeneral": "Visão Geral",
         "tabContent": "Conteúdo",
-        "tabComments": "Comentários"
+        "tabComments": "Perguntas e Respostas"
     },
     "footer": {
         "helpButton": "Precisa de ajuda?",
