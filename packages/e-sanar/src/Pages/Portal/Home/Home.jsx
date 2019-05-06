@@ -11,13 +11,11 @@ function HomePage() {
 
     return (
         <div>
-            <span>{t('hello')}</span>
-            <ESButton type='primary' onClick={() => changeLng('en')}>
-                Change for English
-            </ESButton>
-            <ESButton type='danger' onClick={() => changeLng('pt')}>
+            {/* <span>{t('hello')}</span>
+            <button onClick={() => changeLng('en')}>Change for English</button>
+            <button onClick={() => changeLng('pt')}>
                 Mudar para Português
-            </ESButton>
+            </button> */}
         </div>
     )
 }

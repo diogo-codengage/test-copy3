@@ -3,11 +3,11 @@
 exports[`renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="ant-row-flex es-row es-live-section es-row__direction--undefined"
+    class="ant-row-flex es-row es-live-section"
     style="margin-left: -24px; margin-right: -24px;"
   >
     <div
-      class="ant-col es-col es-live-section__player es-col__undefined ant-col-xs-24 ant-col-md-15 ant-col-lg-18"
+      class="ant-col es-col es-live-section__player ant-col-xs-24 ant-col-md-15 ant-col-lg-18"
       style="padding-left: 24px; padding-right: 24px; height: 400px;"
     >
       <div>
@@ -21,7 +21,7 @@ exports[`renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="ant-col es-col es-col__undefined ant-col-xs-24 ant-col-md-9 ant-col-lg-6"
+      class="ant-col es-col ant-col-xs-24 ant-col-md-9 ant-col-lg-6"
       style="padding-left: 24px; padding-right: 24px;"
     >
       <div
@@ -29,7 +29,7 @@ exports[`renders correctly 1`] = `
         style="height: 100%;"
       >
         <div
-          class="ant-col ant-col-24 es-col es-col__undefined"
+          class="ant-col ant-col-24 es-col"
         >
           <h4
             class="ant-typography es-live-section__title"
@@ -50,11 +50,11 @@ exports[`renders correctly 1`] = `
             por dia, quantas horas para cada matéria.
           </div>
           <div
-            class="ant-row-flex ant-row-flex-middle es-row es-live-section__instructor es-row__direction--undefined"
+            class="ant-row-flex ant-row-flex-middle es-row es-live-section__instructor"
             style="margin-left: -8px; margin-right: -8px;"
           >
             <div
-              class="ant-col es-col es-col__undefined"
+              class="ant-col es-col"
               style="padding-left: 8px; padding-right: 8px;"
             >
               <span
@@ -82,14 +82,14 @@ exports[`renders correctly 1`] = `
               </span>
             </div>
             <div
-              class="ant-col es-col es-col__undefined"
+              class="ant-col es-col"
               style="padding-left: 8px; padding-right: 8px; flex: 1;"
             >
               <div
                 class="ant-row-flex es-row es-row__direction--column"
               >
                 <div
-                  class="ant-col es-col es-col__undefined"
+                  class="ant-col es-col"
                 >
                   <span
                     class="ant-typography es-live-section__instructor--label ant-typography-disabled ant-typography-ellipsis ant-typography-ellipsis-single-line"
@@ -98,7 +98,7 @@ exports[`renders correctly 1`] = `
                   </span>
                 </div>
                 <div
-                  class="ant-col es-col es-col__undefined"
+                  class="ant-col es-col"
                 >
                   <span
                     class="ant-typography es-live-section__instructor--name ant-typography-ellipsis ant-typography-ellipsis-single-line"
@@ -109,14 +109,14 @@ exports[`renders correctly 1`] = `
                   </span>
                 </div>
                 <div
-                  class="ant-col es-col es-col__undefined"
+                  class="ant-col es-col"
                 >
                   <div
                     class="ant-row-flex ant-row-flex-middle es-row es-live-section__instructor--course es-row__direction--row"
                     style="margin-left: -2.5px; margin-right: -2.5px;"
                   >
                     <div
-                      class="ant-col es-col es-col__undefined"
+                      class="ant-col es-col"
                       style="padding-left: 2.5px; padding-right: 2.5px;"
                     >
                       <strong>
@@ -124,7 +124,7 @@ exports[`renders correctly 1`] = `
                       </strong>
                     </div>
                     <div
-                      class="ant-col es-col es-col__undefined"
+                      class="ant-col es-col"
                       style="padding-left: 2.5px; padding-right: 2.5px;"
                     >
                       <span
@@ -134,7 +134,7 @@ exports[`renders correctly 1`] = `
                       </span>
                     </div>
                     <div
-                      class="ant-col es-col es-col__undefined"
+                      class="ant-col es-col"
                       style="padding-left: 2.5px; padding-right: 2.5px;"
                     >
                       <img
@@ -149,7 +149,7 @@ exports[`renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="ant-col ant-col-24 es-col es-col__undefined"
+          class="ant-col ant-col-24 es-col"
         >
           <button
             class="ant-btn es-button ant-btn-sm ant-btn-block"

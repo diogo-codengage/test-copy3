@@ -1,0 +1,536 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="es-carousel"
+  style={
+    Object {
+      "width": "calc(100% - 150px)",
+    }
+  }
+>
+  <div
+    className="ant-carousel"
+  >
+    <div
+      className="slick-slider slick-initialized"
+      dir="ltr"
+    >
+      <button
+        className="ant-btn es-button slick-arrow slick-prev slick-disabled ant-btn-circle"
+        currentSlide={0}
+        data-role="none"
+        onClick={[Function]}
+        slideCount={7}
+        style={
+          Object {
+            "display": "block",
+          }
+        }
+        type="button"
+      >
+        <i
+          className="anticon es-eva-icon es-eva-icon--medium"
+        >
+          <i
+            data-eva="arrow-ios-back-outline"
+            data-eva-fill="#fff"
+            data-eva-height="18px"
+            data-eva-width="18px"
+          />
+        </i>
+      </button>
+      <div
+        className="slick-list"
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={null}
+        onMouseMove={null}
+        onMouseUp={[Function]}
+        onTouchCancel={null}
+        onTouchEnd={[Function]}
+        onTouchMove={null}
+        onTouchStart={[Function]}
+        style={Object {}}
+      >
+        <div
+          className="slick-track"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          style={
+            Object {
+              "WebkitTransform": "translate3d(0px, 0px, 0px)",
+              "WebkitTransition": "",
+              "msTransform": "translateX(0px)",
+              "opacity": 1,
+              "transform": "translate3d(0px, 0px, 0px)",
+              "transition": "",
+            }
+          }
+        >
+          <div
+            aria-hidden={false}
+            className="slick-slide slick-active slick-current"
+            data-index={0}
+            onClick={[Function]}
+            style={
+              Object {
+                "outline": "none",
+                "width": 0,
+              }
+            }
+            tabIndex="-1"
+          >
+            <div>
+              <div
+                style={
+                  Object {
+                    "display": "inline-block",
+                    "width": "100%",
+                  }
+                }
+                tabIndex={-1}
+              >
+                <div
+                  className="ant-card es-card ant-card-bordered ant-card-small"
+                  style={
+                    Object {
+                      "margin": "0 16px",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-card-body"
+                    style={Object {}}
+                  >
+                    <h4
+                      aria-label={null}
+                      className="ant-typography es-card-next-live__title"
+                      style={
+                        Object {
+                          "WebkitLineClamp": null,
+                        }
+                      }
+                    >
+                      Live de Correção da prova SUS-SP 2019
+                    </h4>
+                    <span
+                      aria-label={null}
+                      className="ant-typography es-card-next-live__date ant-typography-disabled"
+                      style={
+                        Object {
+                          "WebkitLineClamp": null,
+                        }
+                      }
+                    >
+                      27/04/2019 às 10h
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden={false}
+            className="slick-slide slick-active"
+            data-index={1}
+            onClick={[Function]}
+            style={
+              Object {
+                "outline": "none",
+                "width": 0,
+              }
+            }
+            tabIndex="-1"
+          >
+            <div>
+              <div
+                style={
+                  Object {
+                    "display": "inline-block",
+                    "width": "100%",
+                  }
+                }
+                tabIndex={-1}
+              >
+                <div
+                  className="ant-card es-card ant-card-bordered ant-card-small"
+                  style={
+                    Object {
+                      "margin": "0 16px",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-card-body"
+                    style={Object {}}
+                  >
+                    <h4
+                      aria-label={null}
+                      className="ant-typography es-card-next-live__title"
+                      style={
+                        Object {
+                          "WebkitLineClamp": null,
+                        }
+                      }
+                    >
+                      Live de Correção da prova SUS-SP 2019
+                    </h4>
+                    <span
+                      aria-label={null}
+                      className="ant-typography es-card-next-live__date ant-typography-disabled"
+                      style={
+                        Object {
+                          "WebkitLineClamp": null,
+                        }
+                      }
+                    >
+                      27/04/2019 às 10h
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden={false}
+            className="slick-slide slick-active"
+            data-index={2}
+            onClick={[Function]}
+            style={
+              Object {
+                "outline": "none",
+                "width": 0,
+              }
+            }
+            tabIndex="-1"
+          >
+            <div>
+              <div
+                style={
+                  Object {
+                    "display": "inline-block",
+                    "width": "100%",
+                  }
+                }
+                tabIndex={-1}
+              >
+                <div
+                  className="ant-card es-card ant-card-bordered ant-card-small"
+                  style={
+                    Object {
+                      "margin": "0 16px",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-card-body"
+                    style={Object {}}
+                  >
+                    <h4
+                      aria-label={null}
+                      className="ant-typography es-card-next-live__title"
+                      style={
+                        Object {
+                          "WebkitLineClamp": null,
+                        }
+                      }
+                    >
+                      Live de Correção da prova SUS-SP 2019
+                    </h4>
+                    <span
+                      aria-label={null}
+                      className="ant-typography es-card-next-live__date ant-typography-disabled"
+                      style={
+                        Object {
+                          "WebkitLineClamp": null,
+                        }
+                      }
+                    >
+                      27/04/2019 às 10h
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden={false}
+            className="slick-slide slick-active"
+            data-index={3}
+            onClick={[Function]}
+            style={
+              Object {
+                "outline": "none",
+                "width": 0,
+              }
+            }
+            tabIndex="-1"
+          >
+            <div>
+              <div
+                style={
+                  Object {
+                    "display": "inline-block",
+                    "width": "100%",
+                  }
+                }
+                tabIndex={-1}
+              >
+                <div
+                  className="ant-card es-card ant-card-bordered ant-card-small"
+                  style={
+                    Object {
+                      "margin": "0 16px",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-card-body"
+                    style={Object {}}
+                  >
+                    <h4
+                      aria-label={null}
+                      className="ant-typography es-card-next-live__title"
+                      style={
+                        Object {
+                          "WebkitLineClamp": null,
+                        }
+                      }
+                    >
+                      Live de Correção da prova SUS-SP 2019
+                    </h4>
+                    <span
+                      aria-label={null}
+                      className="ant-typography es-card-next-live__date ant-typography-disabled"
+                      style={
+                        Object {
+                          "WebkitLineClamp": null,
+                        }
+                      }
+                    >
+                      27/04/2019 às 10h
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden={false}
+            className="slick-slide slick-active"
+            data-index={4}
+            onClick={[Function]}
+            style={
+              Object {
+                "outline": "none",
+                "width": 0,
+              }
+            }
+            tabIndex="-1"
+          >
+            <div>
+              <div
+                style={
+                  Object {
+                    "display": "inline-block",
+                    "width": "100%",
+                  }
+                }
+                tabIndex={-1}
+              >
+                <div
+                  className="ant-card es-card ant-card-bordered ant-card-small"
+                  style={
+                    Object {
+                      "margin": "0 16px",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-card-body"
+                    style={Object {}}
+                  >
+                    <h4
+                      aria-label={null}
+                      className="ant-typography es-card-next-live__title"
+                      style={
+                        Object {
+                          "WebkitLineClamp": null,
+                        }
+                      }
+                    >
+                      Live de Correção da prova SUS-SP 2019
+                    </h4>
+                    <span
+                      aria-label={null}
+                      className="ant-typography es-card-next-live__date ant-typography-disabled"
+                      style={
+                        Object {
+                          "WebkitLineClamp": null,
+                        }
+                      }
+                    >
+                      27/04/2019 às 10h
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden={true}
+            className="slick-slide"
+            data-index={5}
+            onClick={[Function]}
+            style={
+              Object {
+                "outline": "none",
+                "width": 0,
+              }
+            }
+            tabIndex="-1"
+          >
+            <div>
+              <div
+                style={
+                  Object {
+                    "display": "inline-block",
+                    "width": "100%",
+                  }
+                }
+                tabIndex={-1}
+              >
+                <div
+                  className="ant-card es-card ant-card-bordered ant-card-small"
+                  style={
+                    Object {
+                      "margin": "0 16px",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-card-body"
+                    style={Object {}}
+                  >
+                    <h4
+                      aria-label={null}
+                      className="ant-typography es-card-next-live__title"
+                      style={
+                        Object {
+                          "WebkitLineClamp": null,
+                        }
+                      }
+                    >
+                      Live de Correção da prova SUS-SP 2019
+                    </h4>
+                    <span
+                      aria-label={null}
+                      className="ant-typography es-card-next-live__date ant-typography-disabled"
+                      style={
+                        Object {
+                          "WebkitLineClamp": null,
+                        }
+                      }
+                    >
+                      27/04/2019 às 10h
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden={true}
+            className="slick-slide"
+            data-index={6}
+            onClick={[Function]}
+            style={
+              Object {
+                "outline": "none",
+                "width": 0,
+              }
+            }
+            tabIndex="-1"
+          >
+            <div>
+              <div
+                style={
+                  Object {
+                    "display": "inline-block",
+                    "width": "100%",
+                  }
+                }
+                tabIndex={-1}
+              >
+                <div
+                  className="ant-card es-card ant-card-bordered ant-card-small"
+                  style={
+                    Object {
+                      "margin": "0 16px",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-card-body"
+                    style={Object {}}
+                  >
+                    <h4
+                      aria-label={null}
+                      className="ant-typography es-card-next-live__title"
+                      style={
+                        Object {
+                          "WebkitLineClamp": null,
+                        }
+                      }
+                    >
+                      Live de Correção da prova SUS-SP 2019
+                    </h4>
+                    <span
+                      aria-label={null}
+                      className="ant-typography es-card-next-live__date ant-typography-disabled"
+                      style={
+                        Object {
+                          "WebkitLineClamp": null,
+                        }
+                      }
+                    >
+                      27/04/2019 às 10h
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        className="ant-btn es-button slick-arrow slick-next ant-btn-circle"
+        currentSlide={0}
+        data-role="none"
+        onClick={[Function]}
+        slideCount={7}
+        style={
+          Object {
+            "display": "block",
+          }
+        }
+        type="button"
+      >
+        <i
+          className="anticon es-eva-icon es-eva-icon--medium"
+        >
+          <i
+            data-eva="arrow-ios-forward-outline"
+            data-eva-fill="#fff"
+            data-eva-height="18px"
+            data-eva-width="18px"
+          />
+        </i>
+      </button>
+    </div>
+  </div>
+</div>
+`;

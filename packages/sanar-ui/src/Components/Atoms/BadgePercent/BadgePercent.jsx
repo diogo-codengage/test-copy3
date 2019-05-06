@@ -24,7 +24,7 @@ const ESBadgePercent = ({
 
 ESBadgePercent.propTypes = {
     className: PropTypes.string,
-    count: PropTypes.number,
+    count: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     suffix: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     status: PropTypes.oneOf([

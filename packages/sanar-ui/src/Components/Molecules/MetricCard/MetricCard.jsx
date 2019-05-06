@@ -25,7 +25,9 @@ const ESMetricCard = ({
             <div className='es-metric-card__content'>
                 <img src={img} alt={description} />
                 <MetricCardBadge status={status}>{badge}</MetricCardBadge>
-                <Typography.Text>{description}</Typography.Text>
+                <Typography.Paragraph ellipsis={{ rows: 2 }}>
+                    {description}
+                </Typography.Paragraph>
             </div>
         </ESCard>
     )
@@ -35,7 +37,7 @@ ESMetricCard.propTypes = {
     title: PropTypes.string.isRequired,
     doubt: PropTypes.string,
     img: PropTypes.string.isRequired,
-    badge: PropTypes.string.isRequired,
+    badge: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     status: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     loading: PropTypes.bool

@@ -1,9 +1,23 @@
 .es-button {
-  &__clear {
-    border: none;
-    box-shadow: none;
-    &[disabled] {
-      background-color: @white;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold !important;
+    text-transform: uppercase;
+
+    &[disabled] i.es-eva-icon svg {
+        fill: @normal-color;
     }
-  }
+
+    &__clear {
+        border: none !important;
+        box-shadow: none !important;
+        &[disabled] {
+            background-color: @white;
+        }
+    }
+
+    & > .ant-badge {
+        margin-left: @margin-xs;
+    }
 }

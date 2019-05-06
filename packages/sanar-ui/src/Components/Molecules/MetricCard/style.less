@@ -1,6 +1,10 @@
 .es-metric-card {
     &__content {
         text-align: center;
+
+        & > .ant-typography {
+            margin-bottom: 0;
+        }
     }
 
     img {
@@ -15,20 +19,23 @@
     color: @black;
     margin: @margin-xs / 2 auto;
     font-size: @font-size-lg;
+    height: 20px;
+    display: flex;
+    align-items: center;
 
     &--success {
         background: rgba(202, 252, 179, 0.5);
-        background-image: url('../../../assets/images/metric-card/success.svg');
+        background-image: url('@{assetsPath}/images/metric-card/success.svg');
     }
 
     &--warning {
         background: rgba(255, 235, 194, 0.5);
-        background-image: url('../../../assets/images/metric-card/warning.svg');
+        background-image: url('@{assetsPath}/images/metric-card/warning.svg');
     }
 
     &--danger {
         background: rgba(255, 189, 189, 0.5);
-        background-image: url('../../../assets/images/metric-card/danger.svg');
+        background-image: url('@{assetsPath}/images/metric-card/danger.svg');
     }
 
     &--success,

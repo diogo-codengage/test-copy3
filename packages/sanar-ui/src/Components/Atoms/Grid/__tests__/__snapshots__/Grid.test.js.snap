@@ -3,69 +3,69 @@
 exports[`renders correctly 1`] = `
 Array [
   <div
-    className="ant-row es-row es-row__direction--undefined"
+    className="ant-row es-row"
     style={Object {}}
   >
     <div
-      className="ant-col ant-col-12 es-col es-col__undefined"
+      className="ant-col ant-col-12 es-col"
       style={Object {}}
     >
       col-12
     </div>
     <div
-      className="ant-col ant-col-12 es-col es-col__undefined"
+      className="ant-col ant-col-12 es-col"
       style={Object {}}
     >
       col-12
     </div>
   </div>,
   <div
-    className="ant-row es-row es-row__direction--undefined"
+    className="ant-row es-row"
     style={Object {}}
   >
     <div
-      className="ant-col ant-col-8 es-col es-col__undefined"
+      className="ant-col ant-col-8 es-col"
       style={Object {}}
     >
       col-8
     </div>
     <div
-      className="ant-col ant-col-8 es-col es-col__undefined"
+      className="ant-col ant-col-8 es-col"
       style={Object {}}
     >
       col-8
     </div>
     <div
-      className="ant-col ant-col-8 es-col es-col__undefined"
+      className="ant-col ant-col-8 es-col"
       style={Object {}}
     >
       col-8
     </div>
   </div>,
   <div
-    className="ant-row es-row es-row__direction--undefined"
+    className="ant-row es-row"
     style={Object {}}
   >
     <div
-      className="ant-col ant-col-6 es-col es-col__undefined"
+      className="ant-col ant-col-6 es-col"
       style={Object {}}
     >
       col-6
     </div>
     <div
-      className="ant-col ant-col-6 es-col es-col__undefined"
+      className="ant-col ant-col-6 es-col"
       style={Object {}}
     >
       col-6
     </div>
     <div
-      className="ant-col ant-col-6 es-col es-col__undefined"
+      className="ant-col ant-col-6 es-col"
       style={Object {}}
     >
       col-6
     </div>
     <div
-      className="ant-col ant-col-6 es-col es-col__undefined"
+      className="ant-col ant-col-6 es-col"
       style={Object {}}
     >
       col-6

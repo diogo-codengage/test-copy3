@@ -1,3 +1,65 @@
 {
-    "hello": "Olá página inicial"
+    "hello": "Olá página inicial",
+    "global": {
+        "percentOf": "{{done}} de {{final}}"
+    },
+    "courseDetails": {
+        "viewMyPerformance": "Ver meu desempenho",
+        "myDevelopment": "Meu desenvolvimento",
+        "myDevelopmentSubtitle": "Vejas as indicações de como você está se saindo no seu aprendizado com seu curso",
+
+        "cardCommitmentTitle": "NÍVEL DE COMPROMETIMENTO",
+        "cardCommitmentDoubt": "Mede seu comprometimento em relação aos outros alunos",
+        "cardCommitmentDescription": "melhor do que outros estudantes",
+        "cardCommitmentLow": "Baixo",
+        "cardCommitmentMid": "Médio",
+        "cardCommitmentNice": "Incrível",
+
+        "cardConsistencyTitle": "Consistência",
+        "cardConsistencyDoubt": "Indica se você está estudando, pela plataforma, a mesma quantidade de horas semanais informada no início do curso",
+        "cardConsistencyDescription": "Horas estudadas na semana",
+
+        "cardProgressTitle": "Progresso",
+        "cardProgressDoubt": "Indica a quantidade de aulas assistidas em relação às aulas que você já deveria ter assistido nessa altura do curso",
+        "cardProgressDescription": "Aulas assistidas no total",
+
+        "cardPracticeTitle": "PRÁTICA REGULAR",
+        "cardPracticeDoubt": "Indica a quantidade de questões respondidas em relação às questões de aula que você já deveria ter respondido nessa altura do curso",
+        "cardPracticeDescription": "Atividades respondidas",
+
+        "cardInteractionTitle": "INTERAÇÃO",
+        "cardInteractionDoubt": "Indica o número de interações (pergunta, resposta ou comentário) que você fez na última semana. Interações auxiliam na construção de significados aos conceitos, melhorando a fixação do assunto",
+        "cardInteractionDescription": "Perguntas e repostas realizadas",
+
+        "recentCommentsTitle": "Perguntas e Respostas Recentes",
+        "recentCommentsSubtitle": "Vejas as últimas perguntas feitas por seus colegas de curso",
+        "recentCommentsButton": "Ver todos os comentários",
+        "recentlySavedTitle": "Salvos Recentemente",
+        "recentlySavedSubtitle": "Veja os dois últimos itens salvos recentemente",
+        "recentlySavedButton": "Ver todos os itens salvos",
+
+        "seePreviousLives": "Ver lives anteriores",
+        "livesTitle": "Lives",
+        "livesSubtitle": "Veja as lives que ainda vão acontecer e as que já rolaram",
+        "nextLivesTitle": "Próximas lives",
+        "remembered": "Lembrado",
+        "remember": "Lembrar",
+        "viewLive": "Ver live",
+
+        "certified": "Certificado",
+        "progressbarTitle": "Progresso do curso",
+        "downloadTooltip": "Complete {{percent}} do curso para disponibilizar o seu certificado.",
+        "tabGeneral": "Visão Geral",
+        "tabContent": "Conteúdo",
+        "tabComments": "Perguntas e Respostas"
+    },
+    "footer": {
+        "helpButton": "Precisa de ajuda?",
+        "phone": "71 3052-4831",
+        "email": "atendimento@e-sanar.com.b",
+        "attendance": "Atendimento de Seg. a Sex. das 09h às 18h",
+        "copyright": "Copyright © E-sanar. Todos os direitos reservados.",
+        "termsOfUse": "Termos de Uso",
+        "privacyPolicy": "Política de Privacidade"
+    }
 }

@@ -37,7 +37,7 @@ const ESProgressBar = ({ className, percent, title, limit }) => {
                             <ESEvaIcon
                                 size='small'
                                 name='award-outline'
-                                color={percent >= limit && 'warning'}
+                                color={percent >= limit ? 'warning' : 'default'}
                             />
                         </Col>
                     </Row>
@@ -57,7 +57,7 @@ const ESProgressBar = ({ className, percent, title, limit }) => {
 ESProgressBar.propTypes = {
     className: PropTypes.string,
     title: PropTypes.string,
-    percent: PropTypes.number,
+    percent: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     limit: PropTypes.number
 }
 

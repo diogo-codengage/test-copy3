@@ -5,11 +5,11 @@ import { Avatar, Typography } from 'antd'
 
 import { ESRow, ESCol } from '../../Atoms/Grid'
 
-import linkedinPng from '../../../assets/linkedin/linkedin.png'
+import linkedinPng from '../../../assets/images/linkedin/linkedin.svg'
 
 const { Title, Text, Paragraph } = Typography
 
-const ESInstructor = ({ avatar, labelLive, labelCourses, name }) => (
+const ESInstructor = ({ avatar, labelLive, labelCourses, courses, name }) => (
     <ESRow
         className='es-live-section__instructor'
         type='flex'
@@ -48,7 +48,7 @@ const ESInstructor = ({ avatar, labelLive, labelCourses, name }) => (
                         className='es-live-section__instructor--course'
                     >
                         <ESCol>
-                            <strong>4</strong>
+                            <strong>{courses}</strong>
                         </ESCol>
                         <ESCol>
                             <Text disabled>{labelCourses}</Text>
@@ -77,7 +77,8 @@ const ESLiveSection = ({
     description,
     avatar,
     name,
-    action
+    action,
+    courses
 }) => {
     const classes = classNames('es-live-section', className)
 
@@ -114,14 +115,25 @@ const ESLiveSection = ({
                         <Text disabled className='es-live-section__date'>
                             {date}
                         </Text>
-                        <Paragraph className='es-live-section__description'>
+                        <Paragraph
+                            ellipsis={{ rows: 6 }}
+                            className='es-live-section__description'
+                        >
                             {description}
                         </Paragraph>
                         <ESInstructor
-                            {...{ avatar, labelLive, labelCourses, name }}
+                            {...{
+                                avatar,
+                                labelLive,
+                                labelCourses,
+                                courses,
+                                name
+                            }}
                         />
                     </ESCol>
-                    <ESCol span={24}>{action}</ESCol>
+                    <ESCol className='es-live-section__action' span={24}>
+                        {action}
+                    </ESCol>
                 </ESRow>
             </ESCol>
         </ESRow>
@@ -138,7 +150,8 @@ ESLiveSection.propTypes = {
     description: PropTypes.string,
     avatar: PropTypes.string,
     name: PropTypes.string,
-    action: PropTypes.node
+    action: PropTypes.node,
+    courses: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }
 ESLiveSection.defaultProps = {
     height: 400,

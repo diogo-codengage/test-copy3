@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Typography from 'antd/lib/typography'
-import { Row, Col } from 'antd'
 import classNames from 'classnames'
+
+import { ESRow, ESCol } from '../../Atoms/Grid'
 
 const { Title, Text } = Typography
 
@@ -10,18 +11,20 @@ const ESSessionTitle = ({ className, title, subtitle, extra }) => {
     const classes = classNames('es-session-title', className)
 
     return (
-        <Row
+        <ESRow
             type='flex'
             justify='space-between'
-            align='bottom'
+            align={subtitle ? 'bottom' : 'top'}
             className={classes}
         >
-            <Col>
+            <ESCol className='es-session-title__texts'>
                 <Title level={4}>{title}</Title>
-                <Text>{subtitle}</Text>
-            </Col>
-            {extra && <Col>{extra}</Col>}
-        </Row>
+                {subtitle && <Text ellipsis>{subtitle}</Text>}
+            </ESCol>
+            {extra && (
+                <ESCol className='es-session-title__extra'>{extra}</ESCol>
+            )}
+        </ESRow>
     )
 }
 

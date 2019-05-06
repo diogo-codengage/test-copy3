@@ -1,7 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import './index.less'
-import './i18n'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import SANApp from './App'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import SANGraphQLProvider from './Apollo/GraphQLService'
+import { SANAuthProvider } from './Hooks/auth'
+
+import './Config/i18n'
+
+const SANRootComponent = () => (
+    <SANGraphQLProvider>
+        <SANAuthProvider>
+            <SANApp />
+        </SANAuthProvider>
+    </SANGraphQLProvider>
+)
+
+ReactDOM.render(<SANRootComponent />, document.getElementById('root'))

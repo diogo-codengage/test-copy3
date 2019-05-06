@@ -1,0 +1,42 @@
+.es-badge {
+    border: 1px solid @normal-color;
+    border-radius: 10px;
+
+    & > .ant-badge-count {
+        background-color: transparent;
+        color: darken(@normal-color, 20);
+        font-weight: bold;
+        box-shadow: none;
+        border-radius: 0;
+        background-color: inherit;
+    }
+
+    &__success {
+        border-color: @success-color;
+        & .ant-badge-count {
+            color: darken(@success-color, 20);
+        }
+    }
+
+    &__processing {
+        border-color: @processing-color;
+        & .ant-badge-count {
+            color: darken(@processing-color, 20);
+        }
+    }
+
+    &__error {
+        border-color: @error-color;
+
+        & .ant-badge-count {
+            color: darken(@error-color, 20);
+        }
+    }
+
+    &__warning {
+        border-color: @warning-color;
+        & .ant-badge-count {
+            color: darken(@warning-color, 20);
+        }
+    }
+}
