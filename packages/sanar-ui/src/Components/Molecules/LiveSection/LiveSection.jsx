@@ -5,7 +5,7 @@ import { Avatar, Typography } from 'antd'
 
 import { ESRow, ESCol } from '../../Atoms/Grid'
 
-import linkedinPng from '../../../assets/linkedin/linkedin.png'
+import linkedinPng from '../../../assets/images/linkedin/linkedin.svg'
 
 const { Title, Text, Paragraph } = Typography
 
@@ -115,7 +115,10 @@ const ESLiveSection = ({
                         <Text disabled className='es-live-section__date'>
                             {date}
                         </Text>
-                        <Paragraph className='es-live-section__description'>
+                        <Paragraph
+                            ellipsis={{ rows: 6 }}
+                            className='es-live-section__description'
+                        >
                             {description}
                         </Paragraph>
                         <ESInstructor
