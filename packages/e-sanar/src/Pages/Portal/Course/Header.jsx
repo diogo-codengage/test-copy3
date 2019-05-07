@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { PageHeader as ANTPageHeader, Typography as ANTTypography } from 'antd'
+import { PageHeader as ANTPageHeader } from 'antd'
 import { SANPortalPagesContainer } from '../Layout'
 
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
