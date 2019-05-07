@@ -7,6 +7,7 @@ import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import ESProgressBar from 'sanar-ui/dist/Components/Molecules/ProgressBar'
 import ESTooltip from 'sanar-ui/dist/Components/Atoms/Tooltip'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
+import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 
 import { useTranslation } from 'react-i18next'
 import { useAuthContext } from 'Hooks/auth'
@@ -56,17 +57,20 @@ const SANCourseHeader = () => {
                                 className='header__container__about-course--descriptions'
                                 flex={1}
                             >
-                                <ANTTypography.Text className='header__container__about-course--descriptions--category'>
+                                <ESTypography
+                                    variant='overline'
+                                    className='mt-md'
+                                >
                                     {course.knowledge_area}
-                                </ANTTypography.Text>
-                                <br />
-                                <ANTTypography.Text
+                                </ESTypography>
+                                <ESTypography
                                     className='header__container__about-course--descriptions--name'
                                     strong
                                     ellipsis
+                                    level={3}
                                 >
                                     {course.name}
-                                </ANTTypography.Text>
+                                </ESTypography>{' '}
                             </ESCol>
                         </ESRow>
                     </ESCol>
