@@ -48,7 +48,7 @@ const SANInteractions = () => {
                             <ESButton
                                 variant='text'
                                 color='primary'
-                                size='large'
+                                size='xsmall'
                                 bold
                                 uppercase
                             >
@@ -87,7 +87,7 @@ const SANInteractions = () => {
                             <ESButton
                                 variant='text'
                                 color='primary'
-                                size='large'
+                                size='xsmall'
                                 bold
                                 uppercase
                             >

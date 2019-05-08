@@ -48,7 +48,13 @@ const SANLives = () => {
                 name={live.professor.name}
                 courses={live.professor.courses}
                 action={
-                    <ESButton size='xsmall' bold uppercase variant='outlined'>
+                    <ESButton
+                        size='xsmall'
+                        block
+                        bold
+                        uppercase
+                        variant='outlined'
+                    >
                         {t('courseDetails.seePreviousLives')}
                     </ESButton>
                 }

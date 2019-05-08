@@ -1,8 +1,8 @@
-.button-size(@height; @padding; @font-size; @border-radius) {
+.button-sizes(@height; @padding; @font-size; @line-height) {
     height: @height;
     padding: 0 @padding;
     font-size: @font-size;
-    border-radius: @border-radius;
+    line-height: @line-height;
 }
 
 .button-circle-size(@size) {
@@ -168,10 +168,7 @@
     }
 
     &__xsmall {
-        .button-size(
-            @btn-height-xs; @btn-padding-xs; @btn-font-size-xs;
-                @btn-border-radius-base
-        );
+        .button-sizes(@btn-height-xs; @btn-padding-xs; @btn-font-size-xs; 1);
         & i.anticon svg {
             font-size: @font-size-lg;
         }
@@ -181,10 +178,7 @@
     }
 
     &__small {
-        .button-size(
-            @btn-height-sm; @btn-padding-sm; @btn-font-size-sm;
-                @btn-border-radius-base
-        );
+        .button-sizes(@btn-height-sm; @btn-padding-sm; @btn-font-size-sm; 1.25);
         & i.anticon svg {
             font-size: @font-size-sm;
         }
@@ -193,9 +187,8 @@
         }
     }
     &__medium {
-        .button-size(
-            @btn-height-base; @btn-padding-base; @btn-font-size-base;
-                @btn-border-radius-base
+        .button-sizes(
+            @btn-height-base; @btn-padding-base; @btn-font-size-base; 1.25
         );
         & i.anticon svg {
             font-size: @font-size-lg + 4px;
@@ -205,10 +198,7 @@
         }
     }
     &__large {
-        .button-size(
-            @btn-height-lg; @btn-padding-lg; @btn-font-size-lg;
-                @btn-border-radius-base
-        );
+        .button-sizes(@btn-height-lg; @btn-padding-lg; @btn-font-size-lg; 1.5);
         & i.anticon svg {
             font-size: 24px;
         }

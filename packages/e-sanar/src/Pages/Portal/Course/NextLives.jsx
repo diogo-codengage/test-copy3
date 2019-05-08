@@ -21,9 +21,10 @@ const SANLives = ({ title, release_date, scheduled }) => {
             date={date}
             actions={[
                 <ESButton
+                    block
                     uppercase
                     bold
-                    size='large'
+                    size='xsmall'
                     variant='text'
                     color={scheduled ? 'primary' : 'default'}
                     className={
@@ -33,13 +34,20 @@ const SANLives = ({ title, release_date, scheduled }) => {
                     <ESEvaIcon
                         size='small'
                         name={scheduled ? 'bell' : 'bell-outline'}
-                        color='primary'
+                        color={scheduled ? 'primary' : 'default'}
                     />{' '}
                     {scheduled
                         ? t('courseDetails.remembered')
                         : t('courseDetails.remember')}
                 </ESButton>,
-                <ESButton uppercase bold variant='text' color='primary'>
+                <ESButton
+                    block
+                    uppercase
+                    bold
+                    size='xsmall'
+                    variant='text'
+                    color='primary'
+                >
                     {t('courseDetails.viewLive')}
                 </ESButton>
             ]}
