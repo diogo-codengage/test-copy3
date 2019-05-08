@@ -29,6 +29,8 @@ storiesOf('Atoms.Button', module)
         <ESButton
             disabled={boolean('Disabled', false)}
             block={boolean('Block', false)}
+            bold={boolean('Bold', false)}
+            uppercase={boolean('Uppercase', false)}
             variant={select('Variant', variantOptions, 'outlined')}
             color={select('Color', colorOptions, 'default')}
             size={select('Size', sizeOptions, 'small')}

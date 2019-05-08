@@ -45,7 +45,13 @@ const SANInteractions = () => {
                     />
                     <ESCard
                         actions={[
-                            <ESButton clear ghost type='primary' fontSize={12}>
+                            <ESButton
+                                variant='text'
+                                color='primary'
+                                size='large'
+                                bold
+                                uppercase
+                            >
                                 {t('courseDetails.recentCommentsButton')}
                                 <ESBadge count={31} />
                             </ESButton>
@@ -78,7 +84,13 @@ const SANInteractions = () => {
                     />
                     <ESCard
                         actions={[
-                            <ESButton clear ghost type='primary' fontSize={12}>
+                            <ESButton
+                                variant='text'
+                                color='primary'
+                                size='large'
+                                bold
+                                uppercase
+                            >
                                 {t('courseDetails.recentlySavedButton')}
                                 <ESBadge count={5} />
                             </ESButton>

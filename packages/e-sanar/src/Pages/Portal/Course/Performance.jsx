@@ -82,7 +82,7 @@ const SANPerformance = () => {
             <SANPortalPagesContainer>
                 <ESSessionTitle
                     extra={
-                        <ESButton size='small' fontSize={12}>
+                        <ESButton size='xsmall' bold uppercase>
                             {t('courseDetails.viewMyPerformance')}
                         </ESButton>
                     }

@@ -98,10 +98,9 @@ const SANCourseHeader = () => {
                             >
                                 <span className='header__container__progress__container-certify-button'>
                                     <ESButton
-                                        ghost
-                                        type='primary'
+                                        variant='outlined'
                                         icon='download'
-                                        href={certificate.link}
+                                        // href={certificate.link}
                                         target='_blank'
                                         disabled={
                                             certificate && certificate.available

@@ -19,12 +19,12 @@ const ESCarousel = ({ className, style, ...props }, ref) => {
                 ref={ref}
                 {...props}
                 nextArrow={
-                    <ESButton onClick={next} shape='circle'>
+                    <ESButton onClick={next} circle size='xsmall'>
                         <ESEvaIcon name='arrow-ios-forward-outline' />
                     </ESButton>
                 }
                 prevArrow={
-                    <ESButton onClick={prev} shape='circle'>
+                    <ESButton onClick={prev} circle size='xsmall'>
                         <ESEvaIcon name='arrow-ios-back-outline' />
                     </ESButton>
                 }

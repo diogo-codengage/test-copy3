@@ -21,10 +21,11 @@ const SANLives = ({ title, release_date, scheduled }) => {
             date={date}
             actions={[
                 <ESButton
-                    fontSize={12}
-                    clear
-                    ghost={scheduled}
-                    type={scheduled ? 'primary' : 'default'}
+                    uppercase
+                    bold
+                    size='large'
+                    variant='text'
+                    color={scheduled ? 'primary' : 'default'}
                     className={
                         !scheduled && 'next-lives__card__action--remember'
                     }
@@ -38,13 +39,8 @@ const SANLives = ({ title, release_date, scheduled }) => {
                         ? t('courseDetails.remembered')
                         : t('courseDetails.remember')}
                 </ESButton>,
-                <ESButton fontSize={12} clear ghost type='primary'>
+                <ESButton uppercase bold variant='text' color='primary'>
                     {t('courseDetails.viewLive')}
-                    <ESEvaIcon
-                        size='small'
-                        name='diagonal-arrow-right-up'
-                        color='primary'
-                    />
                 </ESButton>
             ]}
         />
@@ -59,10 +55,10 @@ const SANNextLives = () => {
 
     const { t } = useTranslation()
 
-    const lives = livesProp.map(live => ({
+    const lives = livesProp.map((live, idx) => ({
         ...live,
         release_date: '2019-02-08T14:02:06.093Z',
-        scheduled: false
+        scheduled: idx % 2 ? false : true
     }))
 
     return (

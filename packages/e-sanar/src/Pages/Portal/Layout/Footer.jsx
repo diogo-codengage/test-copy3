@@ -46,7 +46,12 @@ const SANFooter = () => {
                         className='san-portal-layout__footer--contact--help'
                         type='flex'
                     >
-                        <ESButton size='small' fontSize={12}>
+                        <ESButton
+                            size='xsmall'
+                            uppercase
+                            bold
+                            variant='outlined'
+                        >
                             <ANTText>{t('footer.helpButton')}</ANTText>
                         </ESButton>
                     </ESCol>

@@ -26,14 +26,10 @@ const ESProgressBar = ({ className, percent, title, limit }) => {
                         justify='space-between'
                         align='middle'
                     >
-                        <Col className='d-flex'>
-                            <ESBadgePercent
-                                fontSize={10}
-                                count={percent}
-                                status='warning'
-                            />
+                        <Col>
+                            <ESBadgePercent count={percent} status='warning' />
                         </Col>
-                        <Col className='d-flex es-progress-bar__icon'>
+                        <Col className='es-progress-bar__icon'>
                             <ESEvaIcon
                                 size='small'
                                 name='award-outline'
