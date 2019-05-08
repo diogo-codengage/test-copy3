@@ -27,14 +27,10 @@ const SANLives = ({ title, release_date, scheduled }) => {
                     size='xsmall'
                     variant='text'
                     color={scheduled ? 'primary' : 'default'}
-                    className={
-                        !scheduled && 'next-lives__card__action--remember'
-                    }
                 >
                     <ESEvaIcon
                         size='small'
                         name={scheduled ? 'bell' : 'bell-outline'}
-                        color={scheduled ? 'primary' : 'default'}
                     />{' '}
                     {scheduled
                         ? t('courseDetails.remembered')
