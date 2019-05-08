@@ -20,7 +20,7 @@ ESEvaIcon.propTypes = Object.assign(
     { ...Icon['propTypes'] },
     {
         className: PropTypes.string,
-        size: PropTypes.oneOf(['small', 'medium', 'large', 'xlarge']),
+        size: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large', 'xlarge']),
         color: PropTypes.oneOf([
             'primary',
             'secondary',

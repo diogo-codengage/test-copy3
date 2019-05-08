@@ -1,12 +1,13 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { select, color } from '@storybook/addon-knobs'
+import { select } from '@storybook/addon-knobs'
 
 import ESEvaIcon from './EvaIcon'
 
 const sizeOptions = {
-    Medium: 'medium',
+    Xsmall: 'xsmall',
     Small: 'small',
+    Medium: 'medium',
     Large: 'large',
     Xlarge: 'xlarge'
 }
@@ -24,7 +25,7 @@ const colorOptions = {
 storiesOf('Atoms.Eva icon', module).add('Simple', () => (
     <ESEvaIcon
         name='award-outline'
-        size={select('Size', sizeOptions, 'small')}
+        size={select('Size', sizeOptions, 'medium')}
         color={select('Color', colorOptions, 'default')}
     />
 ))
