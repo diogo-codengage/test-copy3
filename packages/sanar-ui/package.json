@@ -42,7 +42,6 @@
         "react-testing-library": "^6.1.2"
     },
     "dependencies": {
-        "core-js": "2",
         "react-eva-icons": "^0.0.7"
     }
 }

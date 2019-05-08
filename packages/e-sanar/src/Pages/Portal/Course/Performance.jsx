@@ -17,7 +17,7 @@ import progresso from 'assets/images/progresso.svg'
 import low from 'assets/images/emoticon-low.svg'
 
 import { SANPortalPagesContainer } from '../Layout'
-import { useAuthContext } from 'Hooks/auth'
+// import { useAuthContext } from 'Hooks/auth'
 
 const CommitmentCard = ({ percent }) => {
     const { t } = useTranslation()
@@ -58,10 +58,10 @@ const CommitmentCard = ({ percent }) => {
 
 const SANPerformance = () => {
     const { t } = useTranslation()
-    const { getEnrollment } = useAuthContext()
-    const {
-        performance_indicators: performance_indicatorsProp
-    } = getEnrollment()
+    // const { getEnrollment } = useAuthContext()
+    // const {
+    //     performance_indicators: performance_indicatorsProp
+    // } = getEnrollment()
 
     const performance_indicators = {
         commitment: 38,
