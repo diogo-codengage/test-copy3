@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { text, number } from '@storybook/addon-knobs'
+import { text } from '@storybook/addon-knobs'
 
 import ESLiveSection from './LiveSection'
 
@@ -15,7 +15,7 @@ storiesOf('Molecules.LiveSection', module).add('Simple', () => (
         title={text('Title', 'Live de Correção da prova SUS-SP 2019 - Parte 1')}
         date={text('Date', '27/04/2019')}
         name={text('Name', 'Camila Carla Gianna')}
-        courses={number('Courses', 4)}
+        formation={text('Formation', 'Enfermeira Mestra em São João')}
         description={text(
             'Description',
             `Essa é a oportunidade de você aprender como planejar

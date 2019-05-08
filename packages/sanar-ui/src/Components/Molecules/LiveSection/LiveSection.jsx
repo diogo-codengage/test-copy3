@@ -5,11 +5,11 @@ import { Avatar, Typography } from 'antd'
 
 import { ESRow, ESCol } from '../../Atoms/Grid'
 
-import linkedinPng from '../../../assets/images/linkedin/linkedin.svg'
+import linkedinSvg from '../../../assets/images/linkedin/linkedin.svg'
 
 const { Title, Text, Paragraph } = Typography
 
-const ESInstructor = ({ avatar, labelLive, labelCourses, courses, name }) => (
+const ESInstructor = ({ avatar, labelLive, formation, name }) => (
     <ESRow
         className='es-live-section__instructor'
         type='flex'
@@ -44,19 +44,21 @@ const ESInstructor = ({ avatar, labelLive, labelCourses, courses, name }) => (
                         type='flex'
                         direction='row'
                         align='middle'
+                        justify='space-between'
                         gutter={5}
-                        className='es-live-section__instructor--course'
                     >
-                        <ESCol>
-                            <strong>{courses}</strong>
+                        <ESCol span={21}>
+                            <Text
+                                className='es-live-section__instructor--formation'
+                                ellipsis
+                            >
+                                {formation}
+                            </Text>
                         </ESCol>
-                        <ESCol>
-                            <Text disabled>{labelCourses}</Text>
-                        </ESCol>
-                        <ESCol>
+                        <ESCol span={3} alignSelf='normal'>
                             <img
                                 className='es-live-section__instructor--linkedin'
-                                src={linkedinPng}
+                                src={linkedinSvg}
                             />
                         </ESCol>
                     </ESRow>
@@ -71,14 +73,13 @@ const ESLiveSection = ({
     videoSrc,
     height,
     labelLive,
-    labelCourses,
     title,
     date,
     description,
     avatar,
     name,
     action,
-    courses
+    formation
 }) => {
     const classes = classNames('es-live-section', className)
 
@@ -125,8 +126,7 @@ const ESLiveSection = ({
                             {...{
                                 avatar,
                                 labelLive,
-                                labelCourses,
-                                courses,
+                                formation,
                                 name
                             }}
                         />
