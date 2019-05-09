@@ -51,6 +51,7 @@ const SANInteractions = () => {
                                 size='xsmall'
                                 bold
                                 uppercase
+                                style={{ margin: '0 auto' }}
                             >
                                 {t('courseDetails.recentCommentsButton')}
                                 <ESBadge count={31} />
@@ -90,6 +91,7 @@ const SANInteractions = () => {
                                 size='xsmall'
                                 bold
                                 uppercase
+                                style={{ margin: '0 auto' }}
                             >
                                 {t('courseDetails.recentlySavedButton')}
                                 <ESBadge count={5} />
