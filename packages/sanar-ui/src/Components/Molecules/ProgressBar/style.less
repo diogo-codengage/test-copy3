@@ -10,6 +10,7 @@
     &__title {
         font-size: @font-size-sm !important;
         font-weight: bold;
+        color: @grey-8;
     }
 
     & .es-badge-percent {
@@ -20,11 +21,11 @@
         position: relative;
         line-height: 0;
         &--limit {
-            background-color: darken(@normal-color, 17);
+            background-color: darken(@grey-2, 90);
             position: absolute;
             right: 0;
             bottom: 0;
-            height: 6px;
+            height: 4px;
             border-radius: 3px;
         }
 
@@ -34,9 +35,12 @@
         }
 
         & .ant-progress-inner {
-            background-color: lighten(@normal-color, 5);
+            background-color: @grey-2;
+            height: 4px;
+
             & .ant-progress-bg {
-                background-color: fade(@warning-color, 60);
+                height: 4px !important;
+                background-color: fade(@yellow-2, 60);
                 z-index: 2;
             }
         }

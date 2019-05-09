@@ -7,8 +7,7 @@ import classNames from 'classnames'
 
 import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESBadgePercent from '../../Atoms/BadgePercent'
-
-const { Title } = Typography
+import ESTypography from '../../Atoms/Typography'
 
 const ESProgressBar = ({ className, percent, title, limit }) => {
     const classes = classNames('es-progress-bar', className)
@@ -17,7 +16,9 @@ const ESProgressBar = ({ className, percent, title, limit }) => {
         <div className={classes}>
             <Row type='flex' justify='space-between' align='middle'>
                 <Col>
-                    <Title className='es-progress-bar__title'>{title}</Title>
+                    <ESTypography level={6} className='es-progress-bar__title'>
+                        {title}
+                    </ESTypography>
                 </Col>
                 <Col>
                     <Row

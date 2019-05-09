@@ -59,7 +59,7 @@ const SANCourseHeader = () => {
                             >
                                 <ESTypography
                                     variant='overline'
-                                    className='mt-md'
+                                    className='mb-xs fc-grey-6'
                                 >
                                     {course.knowledge_area}
                                 </ESTypography>
@@ -67,7 +67,7 @@ const SANCourseHeader = () => {
                                     className='header__container__about-course--descriptions--name'
                                     strong
                                     ellipsis
-                                    level={3}
+                                    level={4}
                                 >
                                     {course.name}
                                 </ESTypography>{' '}

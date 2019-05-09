@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ESCard from '../Card'
-import { Typography } from 'antd'
 import MetricCardBadge from './MetricCardBadge'
+import ESTypography from '../../Atoms/Typography'
 
 const ESMetricCard = ({
     img,
@@ -25,9 +25,13 @@ const ESMetricCard = ({
             <div className='es-metric-card__content'>
                 <img src={img} alt={description} />
                 <MetricCardBadge status={status}>{badge}</MetricCardBadge>
-                <Typography.Paragraph ellipsis={{ rows: 2 }}>
+                <ESTypography
+                    className='es-metric-card__content--description'
+                    variant='caption'
+                    ellipsis={{ rows: 2 }}
+                >
                     {description}
-                </Typography.Paragraph>
+                </ESTypography>
             </div>
         </ESCard>
     )

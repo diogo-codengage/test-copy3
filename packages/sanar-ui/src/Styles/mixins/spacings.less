@@ -1,0 +1,40 @@
+// Margins
+@margin-xl: 32px;
+@margin-lg: 24px;
+@margin-md: 16px;
+@margin-sm: 12px;
+@margin-xs: 8px;
+
+@sizes: {
+    xs: @margin-xs;
+    sm: @margin-sm;
+    md: @margin-md;
+    lg: @margin-lg;
+    xl: @margin-xl;
+};
+
+.mixin-spaccings(@letter, @type) {
+  each(@sizes, {
+    .@{letter}t-@{key} {
+      @{type}-top: @value !important
+    }
+  });
+  
+  each(@sizes, {
+    .@{letter}l-@{key} {
+      @{type}-left: @value !important
+    }
+  });
+  
+  each(@sizes, {
+    .@{letter}r-@{key} {
+      @{type}-right: @value !important
+    }
+  });
+  
+  each(@sizes, {
+    .@{letter}b-@{key} {
+      @{type}-bottom: @value !important
+    }
+  });
+}

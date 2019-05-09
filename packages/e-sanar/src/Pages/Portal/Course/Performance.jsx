@@ -1,13 +1,12 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Typography } from 'antd'
-
 import ESMetricCard from 'sanar-ui/dist/Components/Molecules/MetricCard'
 import ESCard from 'sanar-ui/dist/Components/Molecules/Card'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
+import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 
 import consistencia from 'assets/images/consistencia.svg'
 import interacao from 'assets/images/interacao.svg'
@@ -36,20 +35,30 @@ const CommitmentCard = ({ percent }) => {
                 <ESCol className='performance__card-commitment__content--emoticon'>
                     <img src={low} alt={`${percent}% `} />
                     <div className='performance__card-commitment__content--emoticon--text'>
-                        <Typography.Text strong>
+                        <ESTypography strong>
                             {t('courseDetails.cardCommitmentLow')}
-                        </Typography.Text>
-                        <Typography.Text>
+                        </ESTypography>
+                        <ESTypography>
                             {t('courseDetails.cardCommitmentMid')}
-                        </Typography.Text>
-                        <Typography.Text>
+                        </ESTypography>
+                        <ESTypography>
                             {t('courseDetails.cardCommitmentNice')}
-                        </Typography.Text>
+                        </ESTypography>
                     </div>
                 </ESCol>
                 <ESCol>
-                    <Typography.Text strong>{`${percent}% `}</Typography.Text>
-                    {t('courseDetails.cardCommitmentDescription')}
+                    <ESRow type='flex'>
+                        <ESTypography
+                            className='fc-grey-7'
+                            variant='caption'
+                            strong
+                        >
+                            {`${percent}%`}&nbsp;
+                        </ESTypography>
+                        <ESTypography className='fc-grey-7' variant='caption'>
+                            {t('courseDetails.cardCommitmentDescription')}
+                        </ESTypography>
+                    </ESRow>
                 </ESCol>
             </ESRow>
         </ESCard>

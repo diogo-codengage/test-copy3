@@ -1,13 +1,25 @@
 .course {
     .ant-tabs {
-        &-nav-scroll {
-            display: flex;
-            justify-content: center;
+        color: @grey-5;
+
+        &-tab {
+            font-weight: bold;
+
+            &-active {
+                font-weight: bold;
+            }
         }
 
         &-bar {
             margin-bottom: 0;
             background: #fff;
+        }
+
+        @media (min-width: 385px) {
+            &-nav-scroll {
+                display: flex;
+                justify-content: center;
+            }
         }
     }
 
