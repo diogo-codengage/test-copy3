@@ -10,62 +10,38 @@ import linkedinSvg from '../../../assets/images/linkedin/linkedin.svg'
 const { Title, Text, Paragraph } = Typography
 
 const ESInstructor = ({ avatar, labelLive, formation, name }) => (
-    <ESRow
-        className='es-live-section__instructor'
-        type='flex'
-        align='middle'
-        gutter={16}
-    >
-        <ESCol>
-            <Avatar size='large' src={avatar} icon='user' />
-        </ESCol>
-        <ESCol flex={1}>
-            <ESRow type='flex' direction='column'>
-                <ESCol>
-                    <Text
-                        ellipsis
-                        disabled
-                        className='es-live-section__instructor--label'
-                    >
-                        {labelLive}
-                    </Text>
-                </ESCol>
-                <ESCol>
-                    <Text
-                        strong
-                        ellipsis
-                        className='es-live-section__instructor--name'
-                    >
-                        {name}
-                    </Text>
-                </ESCol>
-                <ESCol>
-                    <ESRow
-                        type='flex'
-                        direction='row'
-                        align='middle'
-                        justify='space-between'
-                        gutter={5}
-                    >
-                        <ESCol span={21}>
-                            <Text
-                                className='es-live-section__instructor--formation'
-                                ellipsis
-                            >
-                                {formation}
-                            </Text>
-                        </ESCol>
-                        <ESCol span={3} alignSelf='normal'>
-                            <img
-                                className='es-live-section__instructor--linkedin'
-                                src={linkedinSvg}
-                            />
-                        </ESCol>
-                    </ESRow>
-                </ESCol>
-            </ESRow>
-        </ESCol>
-    </ESRow>
+    <div className='es-live-section__instructor'>
+        <Avatar
+            size='large'
+            src={avatar}
+            icon={!avatar ? 'user' : undefined}
+            className='es-live-section__instructor--avatar'
+        />
+        <div className='lines'>
+            <Text
+                ellipsis
+                disabled
+                className='es-live-section__instructor--label'
+            >
+                {labelLive}
+            </Text>
+            <Text strong ellipsis className='es-live-section__instructor--name'>
+                {name}
+            </Text>
+            <div style={{ justifyContent: 'space-between', display: 'flex' }}>
+                <Text
+                    className='es-live-section__instructor--formation'
+                    ellipsis
+                >
+                    {formation}
+                </Text>
+                <img
+                    className='es-live-section__instructor--linkedin'
+                    src={linkedinSvg}
+                />
+            </div>
+        </div>
+    </div>
 )
 
 const ESLiveSection = ({

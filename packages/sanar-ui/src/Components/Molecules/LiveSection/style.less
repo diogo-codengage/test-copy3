@@ -26,25 +26,40 @@
     }
 
     &__instructor {
+        display: flex;
+        align-items: center;
+        &--avatar {
+            margin-right: @margin-sm;
+        }
+        &--name {
+            margin-bottom: @margin-xs - 2;
+        }
         &--linkedin {
             padding: 3px;
             border: 1px solid rgba(17, 19, 23, 0.15);
             border-radius: @border-radius-base;
             background-color: rgba(17, 19, 23, 0.05);
+            margin-left: @margin-xs;
         }
         &--label {
             font-size: @font-size-sm - 2px;
+            margin-bottom: @margin-xs - 2;
             cursor: default !important;
         }
         &--formation {
             font-size: @font-size-sm;
             color: rgba(17, 19, 23, 0.65);
             vertical-align: bottom;
-            width: ~'calc(100% - 1px)';
         }
     }
 
     &__action {
         margin-top: @margin-md;
+    }
+
+    & .lines {
+        width: ~'calc(100% - 52px)';
+        display: flex;
+        flex-direction: column;
     }
 }

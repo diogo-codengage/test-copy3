@@ -25,7 +25,7 @@ const SANLives = () => {
         scheduled: false,
         professor: {
             ...livesProp[0].professor,
-            courses: 4,
+            formation: 'Enfermeira Mestra em São João.',
             profile_picture:
                 'https://www.domalberto.edu.br/wp-content/uploads/2017/02/joao.png'
         }
@@ -46,7 +46,7 @@ const SANLives = () => {
                 date={date}
                 avatar={live.professor.profile_picture}
                 name={live.professor.name}
-                courses={live.professor.courses}
+                formation={live.professor.formation}
                 action={
                     <ESButton
                         size='xsmall'
