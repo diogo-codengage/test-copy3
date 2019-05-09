@@ -9,7 +9,7 @@ import SANPortalLayout from './Layout'
 import { GET_ME } from 'Apollo/Me/query'
 import { useAuthContext } from 'Hooks/auth'
 
-const SANPortalRoutes = () => {
+const SANPortalRoutes = ({ match: { url } }) => {
     const { setMe } = useAuthContext()
 
     return (
@@ -22,13 +22,16 @@ const SANPortalRoutes = () => {
                         <SANPortalLayout>
                             <Switch>
                                 <Route
-                                    path='/course'
+                                    path={`${url}/curso`}
+                                    strict
                                     component={SANCoursePage}
                                 />
-                                <Redirect
-                                    to={{
-                                        pathname: '/course'
-                                    }}
+                                <Route
+                                    exact
+                                    path={[`${url}/*`, `${url}`]}
+                                    render={() => (
+                                        <Redirect to={`${url}/curso`} />
+                                    )}
                                 />
                             </Switch>
                         </SANPortalLayout>

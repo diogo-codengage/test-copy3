@@ -1,29 +1,27 @@
 import React, { Suspense, lazy } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect
+} from 'react-router-dom'
 import './App.less'
 
+const SANAuth = lazy(() => import('./Pages/Auth'))
 const SANPortalRoutes = lazy(() => import('./Pages/Portal'))
-const SANSigninPage = lazy(() => import('./Pages/Auth/Signin'))
-const SANPasswordRecoveryPage = lazy(() =>
-    import('./Pages/Auth/PasswordRecovery')
-)
-const SANSignupPage = lazy(() => import('./Pages/Auth/Signup'))
 const SANPrivateRoute = lazy(() => import('./Pages/Portal/Private'))
-
-const SANRouter = () => (
-    <Router>
-        <Route path='/signin' component={SANSigninPage} />
-        <Route path='/signup' component={SANSignupPage} />
-        <Route path='/password-recovery' component={SANPasswordRecoveryPage} />
-        <SANPrivateRoute path='/' component={SANPortalRoutes} />
-    </Router>
-)
 
 const SANLoader = () => <div>loading...</div>
 
 const SANApp = () => (
     <Suspense fallback={<SANLoader />}>
-        <SANRouter />
+        <Router>
+            <Switch>
+                <Route path='/auth' component={SANAuth} />
+                <SANPrivateRoute path='/aluno' component={SANPortalRoutes} />
+                <Route exact path='*' render={() => <Redirect to='/aluno' />} />
+            </Switch>
+        </Router>
     </Suspense>
 )
 
