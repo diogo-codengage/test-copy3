@@ -72,11 +72,19 @@
         }
     }
 
+    &__primary,
+    &__primary *,
+    &__dark,
+    &__dark *,
+    &__light * {
+        transition: background-color 1s ease-in, box-shadow 1s ease-in;
+    }
+
     &__primary {
-        background-color: #0f44b8; //@primary-4;
+        background-color: @primary-4;
         & .es-button,
         & .es-typography {
-            color: rgba(255, 255, 255, 0.85); // @grey-2;
+            color: rgba(255, 255, 255, 0.85);
         }
     }
 
@@ -96,10 +104,10 @@
     }
 
     &__dark {
-        background-color: rgba(36, 41, 56, 1); //@grey-9;
+        background-color: rgba(36, 41, 56, 1);
         & .es-button,
         & .es-typography {
-            color: rgba(255, 255, 255, 0.85); // @grey-2;
+            color: rgba(255, 255, 255, 0.85);
         }
     }
 }
