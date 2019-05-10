@@ -1,8 +1,7 @@
-
 import React from 'react'
 import TestRenderer from 'react-test-renderer'
 
-import ESListViewItem from '../'
+import ESListViewItem from '../../ListViewItem'
 
 it('renders correctly', () => {
     const component = (

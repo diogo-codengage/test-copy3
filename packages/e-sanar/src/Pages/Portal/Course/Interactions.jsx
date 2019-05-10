@@ -2,7 +2,8 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import ESListView from 'sanar-ui/dist/Components/Atoms/ListView'
-import ESListViewItem from 'sanar-ui/dist/Components/Molecules/ListViewItem'
+import ESListViewItem from 'sanar-ui/dist/Components/Atoms/ListViewItem'
+import ESQuestionListItem from 'sanar-ui/dist/Components/Molecules/QuestionListItem'
 import ESCard from 'sanar-ui/dist/Components/Molecules/Card'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
@@ -27,6 +28,7 @@ const SANInteractions = () => {
         comment.user.profile_picture =
             'https://www.domalberto.edu.br/wp-content/uploads/2017/02/joao.png'
         comment.answers = comment.answers < 0 ? 0 : comment.answers
+        comment.last_update = 'Há 2 dias'
     })
 
     return (
@@ -60,13 +62,15 @@ const SANInteractions = () => {
                     >
                         <ESListView>
                             {comments.map((comment, index) => (
-                                <ESListViewItem
+                                <ESQuestionListItem
                                     key={index}
                                     avatar={comment.user.profile_picture}
-                                    avatarSize='large'
                                     title={comment.text}
-                                    description={comment.user.name}
-                                    counter={comment.answers}
+                                    author={comment.user.name}
+                                    responses={comment.answers}
+                                    interactionTime={comment.last_update}
+                                    badgeInfo={t('global.you')}
+                                    userIsAuthor={index === 0}
                                 />
                             ))}
                         </ESListView>
