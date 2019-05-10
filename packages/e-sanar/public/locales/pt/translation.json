@@ -1,7 +1,8 @@
 {
     "hello": "Olá página inicial",
     "global": {
-        "percentOf": "{{done}} de {{final}}"
+        "percentOf": "{{done}} de {{final}}",
+        "you": "Você"
     },
     "courseDetails": {
         "viewMyPerformance": "Ver meu desempenho",
