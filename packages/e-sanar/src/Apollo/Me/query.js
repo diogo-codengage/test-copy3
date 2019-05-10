@@ -5,7 +5,6 @@ export const GET_ME = gql`
         me {
             id
             name
-
             enrollments {
                 id
                 contract
@@ -14,28 +13,33 @@ export const GET_ME = gql`
                 course {
                     id
                     name
+                    status
                     knowledge_area
-                    cover_pictures
+                    cover_picture
+                    professors {
+                        id
+                        name
+                    }
                     comments {
                         id
                         text
                         answers
                         user {
                             id
-                            name
-                            profile_picture
                         }
                     }
                     lives {
                         id
                         title
-                        description
-                        release_date
+                        slug
                         link
-                        professor {
+                        description
+                        status
+                        online
+                        release_date
+                        professors {
                             id
                             name
-                            profile_picture
                         }
                     }
                 }
