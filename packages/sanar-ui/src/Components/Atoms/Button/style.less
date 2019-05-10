@@ -188,16 +188,17 @@
     &__small {
         .button-sizes(@btn-height-sm; @btn-padding-sm; @btn-font-size-sm; 1.25);
         & i.anticon svg {
-            font-size: @font-size-sm;
+            font-size: @font-size-lg;
         }
         &.circle {
-            .button-circle-size(@btn-height-xs);
+            .button-circle-size(@btn-height-sm);
         }
     }
     &__medium {
         .button-sizes(
             @btn-height-base; @btn-padding-base; @btn-font-size-base; 1.25
         );
+
         & i.anticon svg {
             font-size: @font-size-lg + 4px;
         }

@@ -6,19 +6,23 @@ import { withInfo } from '@storybook/addon-info'
 import './styles.less'
 import TableComponent from './TableComponent'
 
-addDecorator(story => (
+const DefaultDecotator = (story, { parameters }) => (
     <div
-        style={{
-            marginTop: 20,
-            padding: 20,
-            minHeight: '200px',
-            backgroundColor: '#edeff2',
-            border: '1px solid #e8e8e8'
-        }}
+        style={
+            parameters.style
+                ? parameters.style
+                : {
+                      padding: 20,
+                      minHeight: '200px',
+                      backgroundColor: '#edeff2'
+                  }
+        }
     >
         {story()}
     </div>
-))
+)
+
+addDecorator(DefaultDecotator)
 addDecorator(withKnobs)
 addDecorator(
     withInfo({
