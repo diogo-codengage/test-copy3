@@ -36,7 +36,7 @@ const InitalButton = ({ name = 'keypad-outline', ...props }) => (
     <SideButton name={name} {...props} />
 )
 
-const ESMainMenu = ({ className, title, theme: themeProp }) => {
+const ESMainMenu = ({ className, title, children, theme: themeProp }) => {
     const {
         position,
         theme,
@@ -84,6 +84,7 @@ const ESMainMenu = ({ className, title, theme: themeProp }) => {
 
             <div className={classesContent}>
                 <MainMenuContentHeader title={title} />
+                {children}
             </div>
         </div>
     )
