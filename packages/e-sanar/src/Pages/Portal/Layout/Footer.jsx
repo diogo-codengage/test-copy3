@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-    Layout as ANTDLayout,
-    Divider as ANTDivider,
-    Typography as ANTTypography
-} from 'antd'
+import { Layout as ANTDLayout, Divider as ANTDivider } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
@@ -14,7 +10,7 @@ import { SANPortalPagesContainer } from '../Layout'
 
 import logoSvg from 'assets/images/logo.svg'
 
-const { Text: ANTText } = ANTTypography
+import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 
 const SANFooter = () => {
     const { t } = useTranslation()
@@ -52,7 +48,9 @@ const SANFooter = () => {
                             bold
                             variant='outlined'
                         >
-                            <ANTText>{t('footer.helpButton')}</ANTText>
+                            <ESTypography>
+                                {t('footer.helpButton')}
+                            </ESTypography>
                         </ESButton>
                     </ESCol>
                     <ESCol
@@ -63,7 +61,7 @@ const SANFooter = () => {
                         className='san-portal-layout__footer--contact--phone'
                     >
                         <ESEvaIcon name='phone-outline' />
-                        <ANTText>{t('footer.phone')}</ANTText>
+                        <ESTypography>{t('footer.phone')}</ESTypography>
                     </ESCol>
                     <ESCol
                         xs={24}
@@ -73,7 +71,7 @@ const SANFooter = () => {
                         className='san-portal-layout__footer--contact--email'
                     >
                         <ESEvaIcon name='email-outline' />
-                        <ANTText>{t('footer.email')}</ANTText>
+                        <ESTypography>{t('footer.email')}</ESTypography>
                     </ESCol>
                     <ESCol
                         xs={24}
@@ -82,7 +80,9 @@ const SANFooter = () => {
                         lg={7}
                         className='san-portal-layout__footer--contact--attendance'
                     >
-                        <ANTText>{t('footer.attendance')}</ANTText>
+                        <ESTypography variant='caption'>
+                            {t('footer.attendance')}
+                        </ESTypography>
                     </ESCol>
                 </ESRow>
             </SANPortalPagesContainer>
@@ -94,16 +94,16 @@ const SANFooter = () => {
                 gutter={8}
             >
                 <ESCol>
-                    <ANTText type='secondary'>{t('footer.copyright')}</ANTText>
+                    <ESTypography type='secondary'>
+                        {t('footer.copyright')}
+                    </ESTypography>
                 </ESCol>
                 <ESCol>
-                    <ANTText strong>
+                    <ESTypography strong>
                         <a href='foo'>{t('footer.termsOfUse')}</a>
-                    </ANTText>
-                    {' | '}
-                    <ANTText strong>
+                        {' | '}
                         <a href='foo'>{t('footer.privacyPolicy')}</a>
-                    </ANTText>
+                    </ESTypography>
                 </ESCol>
             </ESRow>
         </ANTDLayout.Footer>

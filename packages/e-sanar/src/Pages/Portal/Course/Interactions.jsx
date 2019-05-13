@@ -2,8 +2,8 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import ESListView from 'sanar-ui/dist/Components/Atoms/ListView'
-import ESListViewItem from 'sanar-ui/dist/Components/Atoms/ListViewItem'
 import ESQuestionListItem from 'sanar-ui/dist/Components/Molecules/QuestionListItem'
+import ESRecentSavedListItem from 'sanar-ui/dist/Components/Molecules/RecentSavedListItem'
 import ESCard from 'sanar-ui/dist/Components/Molecules/Card'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
@@ -16,7 +16,10 @@ import { useAuthContext } from '../../../Hooks/auth.js'
 const SANInteractions = () => {
     const { t } = useTranslation()
 
-    const { getEnrollment } = useAuthContext()
+    const {
+        me: { id: idLoggedUser },
+        getEnrollment
+    } = useAuthContext()
 
     const {
         course: { comments: commentsMock }
@@ -61,18 +64,27 @@ const SANInteractions = () => {
                         ]}
                     >
                         <ESListView>
-                            {comments.map((comment, index) => (
-                                <ESQuestionListItem
-                                    key={index}
-                                    avatar={comment.user.profile_picture}
-                                    title={comment.text}
-                                    author={comment.user.name}
-                                    responses={comment.answers}
-                                    interactionTime={comment.last_update}
-                                    badgeInfo={t('global.you')}
-                                    userIsAuthor={index === 0}
-                                />
-                            ))}
+                            {comments.map(
+                                (comment, index) =>
+                                    index < 2 && (
+                                        <ESQuestionListItem
+                                            key={index}
+                                            avatar={
+                                                comment.user.profile_picture
+                                            }
+                                            title={comment.text}
+                                            author={comment.user.name}
+                                            responses={comment.answers}
+                                            interactionTime={
+                                                comment.last_update
+                                            }
+                                            badgeInfo={t('global.you')}
+                                            userIsAuthor={
+                                                comment.user.id === idLoggedUser
+                                            }
+                                        />
+                                    )
+                            )}
                         </ESListView>
                     </ESCard>
                 </ESCol>
@@ -103,19 +115,15 @@ const SANInteractions = () => {
                         ]}
                     >
                         <ESListView>
-                            <ESListViewItem
+                            <ESRecentSavedListItem
                                 avatar='https://www.domalberto.edu.br/wp-content/uploads/2017/02/joao.png'
-                                avatarSize='large'
                                 title='Legislação do Sistema Único de Saúde e Saúde Coletiva'
-                                description='Módulo EBSERH'
-                                category='AULA'
+                                description='Módulo 2, aula 5'
                             />
-                            <ESListViewItem
+                            <ESRecentSavedListItem
                                 avatar='https://www.domalberto.edu.br/wp-content/uploads/2017/02/joao.png'
-                                avatarSize='large'
                                 title='Legislação do Sistema Único de Saúde e Saúde Coletiva'
-                                description='Módulo EBSERH'
-                                category='QUESTÃO'
+                                description='Módulo 2, aula 5'
                             />
                         </ESListView>
                     </ESCard>

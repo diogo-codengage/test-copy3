@@ -1,45 +1,50 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { Avatar, Typography } from 'antd'
+import { Avatar } from 'antd'
 
 import { ESRow, ESCol } from '../../Atoms/Grid'
 
 import linkedinSvg from '../../../assets/images/linkedin/linkedin.svg'
+import ESTypography from '../../Atoms/Typography'
+import ESCounterLabel from '../../Atoms/CounterLabel'
 
-const { Title, Text, Paragraph } = Typography
-
-const ESInstructor = ({ avatar, labelLive, formation, name }) => (
+const ESInstructor = ({ avatar, labelLive, qtCourses, labelCourses, name }) => (
     <div className='es-live-section__instructor'>
         <Avatar
             size='large'
             src={avatar}
             icon={!avatar ? 'user' : undefined}
-            className='es-live-section__instructor--avatar'
+            className='mr-sm'
         />
         <div className='lines'>
-            <Text
+            <ESTypography
                 ellipsis
-                disabled
-                className='es-live-section__instructor--label'
+                type='muted'
+                variant='caption'
+                className='es-live-section__instructor--label mb-xs'
             >
                 {labelLive}
-            </Text>
-            <Text strong ellipsis className='es-live-section__instructor--name'>
+            </ESTypography>
+            <ESTypography
+                strong
+                ellipsis
+                className='es-live-section__instructor--name mb-xs'
+            >
                 {name}
-            </Text>
-            <div style={{ justifyContent: 'space-between', display: 'flex' }}>
-                <Text
-                    className='es-live-section__instructor--formation'
-                    ellipsis
-                >
-                    {formation}
-                </Text>
-                <img
-                    className='es-live-section__instructor--linkedin'
-                    src={linkedinSvg}
-                />
-            </div>
+            </ESTypography>
+            <ESRow type='flex' justify='space-between'>
+                <ESCol>
+                    <ESCounterLabel label={labelCourses} counter={qtCourses} />
+                </ESCol>
+
+                <ESCol>
+                    <img
+                        className='es-live-section__instructor--linkedin'
+                        src={linkedinSvg}
+                    />
+                </ESCol>
+            </ESRow>
         </div>
     </div>
 )
@@ -55,7 +60,8 @@ const ESLiveSection = ({
     avatar,
     name,
     action,
-    formation
+    qtCourses,
+    labelCourses
 }) => {
     const classes = classNames('es-live-section', className)
 
@@ -85,24 +91,33 @@ const ESLiveSection = ({
                     justify='space-between'
                     height='100%'
                 >
-                    <ESCol span={24}>
-                        <Title level={4} className='es-live-section__title'>
+                    <ESCol span={24} className='mb-lg'>
+                        <ESTypography
+                            level={6}
+                            className='es-live-section__title mb-xs'
+                        >
                             {title}
-                        </Title>
-                        <Text disabled className='es-live-section__date'>
+                        </ESTypography>
+                        <ESTypography
+                            type='muted'
+                            variant='caption'
+                            className='mb-md'
+                        >
                             {date}
-                        </Text>
-                        <Paragraph
+                        </ESTypography>
+                        <ESTypography
                             ellipsis={{ rows: 6 }}
-                            className='es-live-section__description'
+                            variant='body2'
+                            className='es-live-section__description mb-md'
                         >
                             {description}
-                        </Paragraph>
+                        </ESTypography>
                         <ESInstructor
                             {...{
                                 avatar,
                                 labelLive,
-                                formation,
+                                labelCourses,
+                                qtCourses,
                                 name
                             }}
                         />
@@ -126,13 +141,16 @@ ESLiveSection.propTypes = {
     description: PropTypes.string,
     avatar: PropTypes.string,
     name: PropTypes.string,
+    qtCourses: PropTypes.string,
     action: PropTypes.node,
     courses: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }
 ESLiveSection.defaultProps = {
     height: 400,
     labelLive: 'LIVE FACILITADA POR:',
-    labelCourses: 'Cursos'
+    labelCourses: 'Curso',
+    name: 'Francisco José',
+    qtCourses: 1
 }
 
 export default ESLiveSection

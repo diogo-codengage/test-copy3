@@ -1,11 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { Typography } from 'antd'
 
 import ESCard from '../../Molecules/Card'
-
-const { Title, Text } = Typography
+import ESTypography from '../Typography'
 
 const ESCardNextLive = ({ className, title, date, actions, ...props }) => {
     const classes = classNames('es-card-next-live', className)
@@ -13,12 +11,16 @@ const ESCardNextLive = ({ className, title, date, actions, ...props }) => {
     return (
         <ESCard actions={actions} {...props}>
             <>
-                <Title className='es-card-next-live__title' level={4}>
+                <ESTypography
+                    className='es-card-next-live__title mb-xs'
+                    variant='body2'
+                    strong
+                >
                     {title}
-                </Title>
-                <Text className='es-card-next-live__date' disabled>
+                </ESTypography>
+                <ESTypography type='muted' variant='caption'>
                     {date}
-                </Text>
+                </ESTypography>
             </>
         </ESCard>
     )

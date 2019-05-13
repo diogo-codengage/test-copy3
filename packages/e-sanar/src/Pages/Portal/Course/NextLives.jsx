@@ -1,5 +1,4 @@
 import React from 'react'
-import { Typography as ANTTypography } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { format } from 'date-fns'
 
@@ -7,6 +6,7 @@ import ESNextLives from 'sanar-ui/dist/Components/Molecules/NextLives'
 import ESCardNextLive from 'sanar-ui/dist/Components/Atoms/CardNextLive'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
+import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 
 import { SANPortalPagesContainer } from '../Layout'
 import { useAuthContext } from 'Hooks/auth'
@@ -67,9 +67,9 @@ const SANNextLives = () => {
 
     return (
         <SANPortalPagesContainer className='next-lives'>
-            <ANTTypography.Paragraph strong className='next-lives__title'>
+            <ESTypography strong className='next-lives__title fc-grey-8'>
                 {t('courseDetails.nextLivesTitle')}
-            </ANTTypography.Paragraph>
+            </ESTypography>
             <ESNextLives>
                 {lives.map((live, i) => (
                     <SANLives key={i} {...live} />

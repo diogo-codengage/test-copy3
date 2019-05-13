@@ -26,6 +26,7 @@ export const GET_ME = gql`
                         answers
                         user {
                             id
+                            name
                         }
                     }
                     lives {
