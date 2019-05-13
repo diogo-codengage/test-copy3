@@ -70,6 +70,7 @@ const ESQuestionListItem = ({
                         <ESCol
                             xs={0}
                             sm={4}
+                            lg={6}
                             className='es-question-list-item__content__subtitle--responses'
                         >
                             <ESCounterLabel

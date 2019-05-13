@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-import ListViewItem from '../../Atoms/ListView'
+import { ListViewItem } from '../../Atoms/ListView'
 import { ESRow, ESCol } from '../../Atoms/Grid'
 import { Avatar } from 'antd'
 
@@ -31,7 +31,7 @@ ESAvatarListItem.propTypes = {
     loading: PropTypes.bool
 }
 ESAvatarListItem.defaultProps = {
-    avatarSize: 'small'
+    avatarSize: 'medium'
 }
 
 export default ESAvatarListItem
