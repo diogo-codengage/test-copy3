@@ -17,6 +17,7 @@ storiesOf('Atoms.Badge', module).add('Simple', () => (
     <ESBadge
         count={number('Count', 5)}
         dot={boolean('Dot', false)}
+        border={boolean('Border', true)}
         text={text('Text', '')}
         status={select('Status', statusOptions, '')}
     />

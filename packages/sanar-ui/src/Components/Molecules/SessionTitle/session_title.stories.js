@@ -12,6 +12,10 @@ storiesOf('Molecules.Session Title', module).add('Simple', () => (
             'Subtitle',
             'Vejas as indicações de como você está se saindo no seu aprendizado com seu curso'
         )}
-        extra={<ESButton size='small'>VER MEU DESEMPENHO</ESButton>}
+        extra={
+            <ESButton size='xsmall' bold uppercase variant='outlined'>
+                VER MEU DESEMPENHO
+            </ESButton>
+        }
     />
 ))

@@ -3,9 +3,10 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { Badge } from 'antd'
 
-const ESBadge = ({ className, status, ...props }) => {
+const ESBadge = ({ className, status, border, ...props }) => {
     const classes = classNames('es-badge', className, {
-        [`es-badge__${status}`]: status
+        [`es-badge__${status}`]: status,
+        [`es-badge__border`]: border
     })
     return <Badge className={classes} {...props} />
 }
@@ -23,7 +24,8 @@ ESBadge.propTypes = Object.assign(
     }
 )
 ESBadge.defaultProps = {
-    status: 'default'
+    status: 'default',
+    border: true
 }
 
 export default ESBadge
