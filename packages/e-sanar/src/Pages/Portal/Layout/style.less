@@ -1,6 +1,7 @@
 .san-portal-layout {
     min-height: 100vh !important;
     flex-direction: row;
+    padding-bottom: 48px;
 
     &__container {
         width: 100%;
@@ -23,10 +24,14 @@
         }
 
         &--contact {
+            & .es-typography {
+                color: @grey-8;
+            }
+
             &--help {
                 & .es-button {
                     background-color: rgba(247, 249, 252, 1);
-                    box-shadow: 0 1px 2px rgba(17, 19, 23, 0.15);
+                    box-shadow: 0 1px 2px @grey-1;
                 }
             }
 
@@ -35,22 +40,23 @@
                 justify-content: center;
                 display: flex;
                 align-items: center;
-                font-size: @font-size-base;
+
                 & .es-eva-icon svg {
-                    fill: darken(@normal-color, 45);
+                    fill: @grey-8;
                     margin-right: @margin-xs / 2;
                 }
             }
             &--attendance {
-                font-size: @font-size-sm !important;
                 text-align: end;
-                line-height: 1.8;
             }
         }
 
         &--copyright {
             margin: @margin-lg 0 !important;
-            font-size: @font-size-sm !important;
+
+            & .es-typography {
+                color: @grey-8;
+            }
         }
     }
 

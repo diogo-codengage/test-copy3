@@ -31,6 +31,8 @@ const SANLives = () => {
         }
     }
 
+    console.log(live)
+
     const date = format(live.release_date, 'DD/MM/YYYY')
 
     return (
@@ -45,8 +47,7 @@ const SANLives = () => {
                 title={live.title}
                 date={date}
                 avatar={live.professor.profile_picture}
-                name={live.professor.name}
-                formation={live.professor.formation}
+                name={live.professors.name}
                 action={
                     <ESButton
                         size='xsmall'
