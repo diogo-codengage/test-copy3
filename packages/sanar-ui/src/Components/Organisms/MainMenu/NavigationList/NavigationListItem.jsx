@@ -5,21 +5,23 @@ import PropTypes from 'prop-types'
 import { ESItem } from '../../../Atoms/Menu'
 import ESEvaIcon from '../../../Atoms/EvaIcon'
 
-const ESNavigationListItem = ({ className, title, icon, ...props }) => {
+const ESNavigationListItem = ({ className, title, icon, arrow, ...props }) => {
     const classes = classNames('es-navigation-list-item', className)
 
     return (
         <ESItem className={classes} {...props}>
             <span>
-                {icon}
+                {icon && icon}
                 {title}
             </span>
-            <ESEvaIcon
-                size='xsmall'
-                color='default'
-                name='arrow-ios-forward-outline'
-                className='es-navigation-list-item__arrow'
-            />
+            {arrow && (
+                <ESEvaIcon
+                    size='xsmall'
+                    color='default'
+                    name='arrow-ios-forward-outline'
+                    className='es-navigation-list-item__arrow'
+                />
+            )}
         </ESItem>
     )
 }
@@ -27,9 +29,12 @@ const ESNavigationListItem = ({ className, title, icon, ...props }) => {
 ESNavigationListItem.propTypes = {
     className: PropTypes.string,
     title: PropTypes.string.isRequired,
-    icon: PropTypes.node.isRequired
+    icon: PropTypes.node,
+    arrow: PropTypes.bool
 }
 
-ESNavigationListItem.defaultProps = {}
+ESNavigationListItem.defaultProps = {
+    arrow: true
+}
 
 export default ESNavigationListItem

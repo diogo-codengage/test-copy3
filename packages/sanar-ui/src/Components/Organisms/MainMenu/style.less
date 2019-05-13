@@ -1,9 +1,14 @@
-@import './Initial/style.less';
+@import './LeftOff/style.less';
 @import './NavigationList/style.less';
+@import './Avatar/style.less';
 
 .es-main-menu {
     display: flex;
     z-index: 11;
+
+    & .es-divider {
+        background-color: @white-3;
+    }
 
     &__content {
         background-color: inherit;
@@ -87,7 +92,7 @@
         background-color: @primary-4;
         & .es-button,
         & .es-typography {
-            color: rgba(255, 255, 255, 0.85);
+            color: @white-9;
         }
     }
 
@@ -111,7 +116,7 @@
         background-color: rgba(36, 41, 56, 1);
         & .es-button,
         & .es-typography {
-            color: rgba(255, 255, 255, 0.85);
+            color: @white-9;
         }
     }
 }
