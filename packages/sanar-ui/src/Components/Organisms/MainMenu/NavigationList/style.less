@@ -1,0 +1,36 @@
+.es-navigation-list {
+    border: none;
+    margin-top: @margin-md;
+
+    &-item {
+        transition: none !important;
+        font-size: @font-size-sm !important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0;
+
+        & > span {
+            display: flex;
+            align-items: center;
+        }
+
+        &:hover,
+        &.ant-menu-item-active,
+        &.ant-menu-item-selected {
+            border-left: 2px solid @white;
+
+            & .es-eva-icon {
+                color: @white;
+            }
+        }
+
+        &.ant-menu-item-active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        &__arrow {
+            margin: 0 !important;
+        }
+    }
+}
