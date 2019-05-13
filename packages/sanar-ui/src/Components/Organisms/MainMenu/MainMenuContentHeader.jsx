@@ -18,7 +18,7 @@ const ESMainMenuContentHeader = ({ className, title }) => {
             {position === 'bottom' && (
                 <ESButton
                     onClick={() => setToggle(false)}
-                    size='small'
+                    size='medium'
                     variant='text'
                     circle
                 >

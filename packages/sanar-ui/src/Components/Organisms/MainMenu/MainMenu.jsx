@@ -16,7 +16,7 @@ const SideButton = ({ name, ...props }) => {
     return (
         <ESButton
             {...props}
-            size='small'
+            size='medium'
             variant='text'
             color={theme === 'light' ? 'default' : 'white'}
             circle
