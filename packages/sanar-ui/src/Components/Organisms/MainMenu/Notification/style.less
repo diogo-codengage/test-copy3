@@ -1,0 +1,76 @@
+.es-notification {
+    position: relative;
+    overflow: hidden;
+    background-color: @white-10;
+    width: 100%;
+    padding: @padding-sm @padding-sm @padding-sm @padding-sm + 32;
+    min-height: 60px;
+
+    &:first-child {
+        border-radius: @border-radius-base @border-radius-base 0 0;
+    }
+
+    &:last-child {
+        border-radius: 0 0 @border-radius-base @border-radius-base;
+    }
+
+    &:only-child {
+        border-radius: @border-radius-base;
+    }
+
+    &:not(:last-child) {
+        border-bottom: 1px solid @grey-3;
+    }
+
+    &::before {
+        content: '';
+        top: 0;
+        left: 0;
+        width: 20px;
+        position: absolute;
+        height: 100%;
+    }
+
+    & > .icon {
+        position: absolute;
+        top: 12px;
+        left: 8px;
+        color: @white;
+        padding: @padding-xs - 2;
+        display: inline-flex;
+        border-radius: 50vh;
+    }
+
+    &__react {
+        &::before {
+            background-color: @primary-1;
+        }
+        & > .icon {
+            background-color: @primary-2;
+        }
+    }
+    &__live {
+        &::before {
+            background-color: @red-1;
+        }
+        & > .icon {
+            background-color: @red-2;
+        }
+    }
+    &__late {
+        &::before {
+            background-color: @gold-1;
+        }
+        & > .icon {
+            background-color: @gold-2;
+        }
+    }
+    &__read {
+        &::before {
+            background-color: @grey-solid-4;
+        }
+        & > .icon {
+            background-color: @grey-solid-6;
+        }
+    }
+}
