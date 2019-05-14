@@ -1,9 +1,9 @@
 import React from 'react'
 import TestRenderer from 'react-test-renderer'
 
-import ESBadgePercent from '../'
+import ESCommonBadge from '..'
 it('renders correctly', () => {
-    const component = <ESBadgePercent count={50} />
+    const component = <ESCommonBadge count={50} />
 
     const tree = TestRenderer.create(component).toJSON()
     expect(tree).toMatchSnapshot()

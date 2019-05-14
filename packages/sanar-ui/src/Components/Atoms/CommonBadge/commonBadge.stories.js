@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { number, text, select } from '@storybook/addon-knobs'
 
-import ESBadgePercent from './BadgePercent'
+import ESCommonBadge from './CommonBadge'
 
 const statusOptions = {
     Default: 'default',
@@ -14,8 +14,8 @@ const statusOptions = {
     Error: 'error'
 }
 
-storiesOf('Atoms.Badge percent', module).add('Simple', () => (
-    <ESBadgePercent
+storiesOf('Atoms.Common badge', module).add('Simple', () => (
+    <ESCommonBadge
         fontSize={number('Font size', 10)}
         count={number('Count', 45)}
         suffix={text('Suffix', '%')}
