@@ -1,0 +1,86 @@
+.es-car-course-module {
+    width: 450px;
+
+    .ant-card-body {
+        padding-bottom: @padding-xs;
+    }
+
+    &--disabled {
+        .ant-card-body {
+            background: @grey-1;
+        }
+
+        &__badge {
+            display: flex;
+            align-items: center;
+            background: @yellow-3;
+            height: 24px;
+            color: @white;
+            border-radius: 4px;
+            padding: @padding-xs;
+            margin: @margin-xs 0;
+            text-transform: uppercase;
+            font-size: @font-size-xs;
+
+            .es-eva-icon {
+                margin-right: @margin-xs / 2;
+            }
+        }
+
+        &:hover {
+            .es-car-course-module__content__image-container {
+                background-size: 100% 100% !important;
+            }
+        }
+    }
+
+    &__content {
+        position: relative;
+        margin: -16px -16px 0 -16px;
+
+        &__module-data {
+            position: absolute;
+            left: 16px;
+            top: 16px;
+            z-index: 1;
+
+            .es-typography {
+                color: @white;
+            }
+        }
+
+        &__badge {
+            position: absolute;
+            bottom: 22px;
+            right: 16px;
+        }
+
+        &__image-container {
+            position: relative;
+            margin-bottom: -9px;
+            min-height: 128px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 100% 100%;
+            transition: background-size 0.125s ease-in;
+            border-radius: @card-radius @card-radius 0 0;
+
+            &::after {
+                content: '';
+                background: rgba(0, 0, 0, 0.35);
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                top: 0;
+                left: 0;
+                border-radius: @card-radius @card-radius 0 0;
+            }
+        }
+    }
+
+    &:hover {
+        .es-car-course-module__content__image-container {
+            background-size: 112.5% 112.5%;
+        }
+    }
+}

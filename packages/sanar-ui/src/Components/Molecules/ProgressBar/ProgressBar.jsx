@@ -6,8 +6,9 @@ import { Row, Col } from 'antd'
 import classNames from 'classnames'
 
 import ESEvaIcon from '../../Atoms/EvaIcon'
-import ESBadgePercent from '../../Atoms/BadgePercent'
+import ESCommonBadge from '../../Atoms/CommonBadge'
 import ESTypography from '../../Atoms/Typography'
+import ESProgress from '../../Atoms/Progress/Progress'
 
 const ESProgressBar = ({ className, percent, title, limit }) => {
     const classes = classNames('es-progress-bar', className)
@@ -28,7 +29,11 @@ const ESProgressBar = ({ className, percent, title, limit }) => {
                         align='middle'
                     >
                         <Col>
-                            <ESBadgePercent count={percent} status='warning' />
+                            <ESCommonBadge
+                                count={percent}
+                                status='warning'
+                                suffix='%'
+                            />
                         </Col>
                         <Col className='es-progress-bar__icon'>
                             <ESEvaIcon
@@ -40,13 +45,12 @@ const ESProgressBar = ({ className, percent, title, limit }) => {
                     </Row>
                 </Col>
             </Row>
-            <div className='es-progress-bar__progress'>
-                <Progress size='small' percent={percent} showInfo={false} />
-                <div
-                    className='es-progress-bar__progress--limit'
-                    style={{ width: `calc(100% - ${limit}%)` }}
-                />
-            </div>
+            <ESProgress
+                size='small'
+                status='warning'
+                percent={percent}
+                goal={limit}
+            />
         </div>
     )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-const ESBadgePercent = ({
+const ESCommonBadge = ({
     count,
     suffix,
     status,
@@ -11,8 +11,8 @@ const ESBadgePercent = ({
     className
 }) => {
     const classes = classNames(
-        'es-badge-percent',
-        `es-badge-percent--${status}`,
+        'es-common-badge',
+        `es-common-badge--${status}`,
         className
     )
     const styles = {
@@ -22,7 +22,7 @@ const ESBadgePercent = ({
     return <div style={styles} className={classes}>{`${count}${suffix}`}</div>
 }
 
-ESBadgePercent.propTypes = {
+ESCommonBadge.propTypes = {
     className: PropTypes.string,
     count: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -38,8 +38,8 @@ ESBadgePercent.propTypes = {
     ])
 }
 
-ESBadgePercent.defaultProps = {
-    suffix: '%'
+ESCommonBadge.defaultProps = {
+    suffix: ''
 }
 
-export default ESBadgePercent
+export default ESCommonBadge
