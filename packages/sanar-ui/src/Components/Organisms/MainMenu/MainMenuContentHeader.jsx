@@ -20,6 +20,7 @@ const ESMainMenuContentHeader = ({ className, title }) => {
                     onClick={() => setToggle(false)}
                     size='medium'
                     variant='text'
+                    color='white'
                     circle
                 >
                     <ESEvaIcon name='close-outline' />
