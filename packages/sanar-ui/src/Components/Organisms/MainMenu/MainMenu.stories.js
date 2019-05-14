@@ -14,6 +14,7 @@ import ESBadge from '../../Atoms/Badge'
 import ESButton from '../../Atoms/Button'
 import ESDivider from '../../Atoms/Divider'
 import ESTypography from '../../Atoms/Typography'
+import ESTabs, { ESTabPane } from '../../Atoms/Tabs'
 
 const { Content, Footer } = Layout
 const RadioGroup = Radio.Group
@@ -182,6 +183,60 @@ const MyAccount = () => (
     </>
 )
 
+const Notifications = () => (
+    <>
+        <div className='pl-md pr-md mb-md'>
+            <ESButton
+                className='mb-md'
+                size='xsmall'
+                variant='outlined'
+                color='white'
+                block
+            >
+                <ESEvaIcon name='arrow-back-outline' />
+                Voltar ao menu principal
+            </ESButton>
+        </div>
+
+        <ESTabs size='small' tabBarGutter={0} center defaultActiveKey='1'>
+            <ESTabPane
+                tab={
+                    <ESTypography strong variant='subtitle2'>
+                        Não lidas
+                    </ESTypography>
+                }
+                key='1'
+            >
+                <div className='pl-md pr-md pb-md d-flex align-items-center justify-content-between'>
+                    <div className='d-flex align-items-center'>
+                        <ESTypography
+                            className='mr-xs'
+                            strong
+                            variant='caption'
+                        >
+                            3
+                        </ESTypography>
+                        <ESTypography variant='caption'>Não lidas</ESTypography>
+                    </div>
+                    <ESButton size='xsmall' bold color='white' variant='text'>
+                        Marcar todas como lidas
+                    </ESButton>
+                </div>
+            </ESTabPane>
+            <ESTabPane
+                tab={
+                    <ESTypography strong variant='subtitle2'>
+                        Já lidos
+                    </ESTypography>
+                }
+                key='2'
+            >
+                Content Alterar senha
+            </ESTabPane>
+        </ESTabs>
+    </>
+)
+
 const DemoMainMenu = () => {
     const [theme, setTheme] = useState('primary')
 
@@ -189,7 +244,8 @@ const DemoMainMenu = () => {
         <Layout style={{ flexDirection: 'row', height: '100%' }}>
             <ESMainMenu title='Menu' theme={theme}>
                 {/* <Initial /> */}
-                <MyAccount />
+                {/* <MyAccount /> */}
+                <Notifications />
             </ESMainMenu>
             <LayoutExample {...{ theme, setTheme }} />
         </Layout>

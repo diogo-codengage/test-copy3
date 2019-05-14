@@ -9,13 +9,13 @@ import ESTypography from '../../Atoms/Typography'
 import { useMainMenuContext } from './context'
 
 const ESMainMenuContentHeader = ({ className, title }) => {
-    const { position, setToggle } = useMainMenuContext()
+    const { showClose, setToggle } = useMainMenuContext()
     const classes = classNames('es-main-menu__content--header', className)
 
     return (
         <div className={classes}>
             <ESTypography level={5}>{title}</ESTypography>
-            {position === 'bottom' && (
+            {showClose && (
                 <ESButton
                     onClick={() => setToggle(false)}
                     size='medium'

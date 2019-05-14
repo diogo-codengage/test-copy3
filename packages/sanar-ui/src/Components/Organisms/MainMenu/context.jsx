@@ -10,16 +10,19 @@ export const MainMenuProvider = ({ children }) => {
     const [toggle, setToggle] = useState(false)
     const [theme, setTheme] = useState('primary')
     const [position, setPosition] = useState('left')
+    const [showClose, setShowClose] = useState()
     const { width } = useWindowSize()
 
     useMemo(() => setPosition(width <= 1024 ? 'bottom' : 'left'), [width])
+    useMemo(() => setShowClose(width <= 1260), [width])
 
     const value = {
         position,
         theme,
         setTheme,
         toggle,
-        setToggle
+        setToggle,
+        showClose
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>
