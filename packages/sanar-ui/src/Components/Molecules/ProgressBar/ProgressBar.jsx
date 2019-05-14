@@ -8,6 +8,7 @@ import classNames from 'classnames'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESCommonBadge from '../../Atoms/CommonBadge'
 import ESTypography from '../../Atoms/Typography'
+import ESProgress from '../../Atoms/Progress/Progress'
 
 const ESProgressBar = ({ className, percent, title, limit }) => {
     const classes = classNames('es-progress-bar', className)
@@ -44,13 +45,12 @@ const ESProgressBar = ({ className, percent, title, limit }) => {
                     </Row>
                 </Col>
             </Row>
-            <div className='es-progress-bar__progress'>
-                <Progress size='small' percent={percent} showInfo={false} />
-                <div
-                    className='es-progress-bar__progress--limit'
-                    style={{ width: `calc(100% - ${limit}%)` }}
-                />
-            </div>
+            <ESProgress
+                size='small'
+                status='warning'
+                percent={percent}
+                goal={limit}
+            />
         </div>
     )
 }
