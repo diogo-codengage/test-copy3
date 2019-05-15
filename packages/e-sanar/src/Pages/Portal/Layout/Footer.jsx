@@ -94,9 +94,7 @@ const SANFooter = () => {
                 gutter={8}
             >
                 <ESCol>
-                    <ESTypography type='secondary'>
-                        {t('footer.copyright')}
-                    </ESTypography>
+                    <ESTypography>{t('footer.copyright')}</ESTypography>
                 </ESCol>
                 <ESCol>
                     <ESTypography strong>
