@@ -46,6 +46,7 @@ const SANFooter = () => {
                             size='xsmall'
                             uppercase
                             bold
+                            color='default'
                             variant='outlined'
                         >
                             <ESTypography>
