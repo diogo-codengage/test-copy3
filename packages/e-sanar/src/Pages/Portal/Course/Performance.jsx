@@ -122,8 +122,7 @@ const SANPerformance = () => {
                         />
                     </ESCol>
                     <ESCol
-                        xs={24}
-                        sm={12}
+                        xs={0}
                         md={8}
                         lg={4}
                         alignSelf='stretch'
@@ -141,8 +140,7 @@ const SANPerformance = () => {
                         />
                     </ESCol>
                     <ESCol
-                        xs={24}
-                        sm={12}
+                        xs={0}
                         md={8}
                         lg={4}
                         alignSelf='stretch'
@@ -163,8 +161,7 @@ const SANPerformance = () => {
                         />
                     </ESCol>
                     <ESCol
-                        xs={24}
-                        sm={12}
+                        xs={0}
                         md={8}
                         lg={4}
                         alignSelf='stretch'
@@ -185,8 +182,7 @@ const SANPerformance = () => {
                         />
                     </ESCol>
                     <ESCol
-                        xs={24}
-                        sm={12}
+                        xs={0}
                         md={8}
                         lg={4}
                         alignSelf='stretch'
