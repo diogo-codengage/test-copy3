@@ -33,7 +33,7 @@ const ESInstructor = ({ avatar, labelLive, qtCourses, labelCourses, name }) => (
             >
                 {name}
             </ESTypography>
-            <ESRow type='flex' justify='space-between'>
+            <ESRow type='flex'>
                 <ESCol>
                     <ESCounterLabel label={labelCourses} counter={qtCourses} />
                 </ESCol>
