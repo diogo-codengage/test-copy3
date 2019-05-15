@@ -38,7 +38,7 @@ ESCard.propTypes = Object.assign(
         bordered: PropTypes.bool,
         loading: PropTypes.bool,
         hoverable: PropTypes.bool,
-        children: PropTypes.element,
+        children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]),
         className: PropTypes.string,
         size: PropTypes.string,
         type: PropTypes.string,
