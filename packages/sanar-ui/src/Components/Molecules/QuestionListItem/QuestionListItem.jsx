@@ -19,12 +19,13 @@ const ESQuestionListItem = ({
 }) => {
     const classes = classNames('es-question-list-item', className)
     return (
-        <AvatarListItem avatar={avatar} loading={loading}>
+        <AvatarListItem className={classes} avatar={avatar} loading={loading}>
             <ESRow>
-                <ESCol className='mb-xs'>
+                <ESCol>
                     <ESTypography
                         ellipsis
                         strong
+                        variant='subtitle2'
                         className='es-question-list-item__content--title'
                     >
                         {title}
@@ -49,7 +50,7 @@ const ESQuestionListItem = ({
                                     <ESCol>
                                         <div className='es-question-list-item__content__subtitle--badge'>
                                             <ESTypography
-                                                variant='overline'
+                                                variant='caption'
                                                 strong
                                             >
                                                 {badgeInfo}
@@ -70,6 +71,7 @@ const ESQuestionListItem = ({
                         <ESCol
                             xs={0}
                             sm={4}
+                            md={8}
                             lg={6}
                             className='es-question-list-item__content__subtitle--responses'
                         >

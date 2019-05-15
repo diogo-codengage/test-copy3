@@ -1,12 +1,13 @@
 .es-question-list-item {
     width: 100%;
 
-    &--title {
-        color: @grey-8;
-    }
-
     &__content {
         overflow: hidden;
+
+        &--title {
+            color: @grey-8;
+            margin-bottom: @margin-xs / 2 !important;
+        }
 
         &__subtitle {
             &--author {
@@ -38,7 +39,7 @@
             }
 
             &--badge {
-                background: @grey-1;
+                background: @grey-solid-2;
                 border-radius: 4px;
                 padding: 2px @padding-xs / 2;
             }
