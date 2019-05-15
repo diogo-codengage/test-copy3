@@ -1,8 +1,45 @@
 .es-pagination {
-  & > .ant-pagination-item-active {
-    background-color: @primary-color;
-    & > a {
-      color: @white;
+    & > .ant-pagination-item {
+        &:hover,
+        &:focus {
+            border-color: @grey-5;
+
+            a {
+                color: @grey-7;
+            }
+        }
+
+        &-link-icon {
+            color: @grey-7 !important;
+        }
+
+        &-active {
+            background-color: @grey-1;
+            color: @grey-6;
+            border-color: @grey-3;
+
+            & > a {
+                color: @grey-6;
+            }
+        }
     }
-  }
+
+    .ant-pagination-jump-next
+        .ant-pagination-item-container
+        .ant-pagination-item-link-icon {
+        color: @grey-7 !important;
+    }
+
+    .ant-pagination-prev,
+    .ant-pagination-next {
+        a {
+            border: none;
+            font-weight: bold;
+
+            &:focus,
+            &:hover {
+                color: @grey-9 !important;
+            }
+        }
+    }
 }
