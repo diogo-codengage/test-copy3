@@ -34,7 +34,14 @@ ESProgress.propTypes = Object.assign(
     {
         className: PropTypes.string,
         square: PropTypes.bool,
-        goal: PropTypes.number
+        goal: PropTypes.number,
+        status: PropTypes.oneOf([
+            'normal',
+            'exception',
+            'active',
+            'success',
+            'warning'
+        ])
     }
 )
 ESProgress.defaultProps = {
