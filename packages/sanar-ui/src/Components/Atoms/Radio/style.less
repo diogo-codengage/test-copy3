@@ -1,0 +1,59 @@
+.es-radio {
+    &-group {
+        .es-radio-button {
+            font-weight: bold;
+
+            &:hover {
+                color: @grey-9;
+            }
+        }
+
+        &--blocks {
+            .es-radio-button {
+                border-radius: 4px;
+                margin-right: @margin-xs;
+                border: none;
+            }
+
+            .ant-radio-button-wrapper {
+                &-checked {
+                    &:not(.ant-radio-button-wrapper-disabled) {
+                        border: 1px solid @grey-3;
+                    }
+                }
+            }
+        }
+
+        .ant-radio-button-wrapper {
+            height: 32px;
+            line-height: 32px;
+
+            &:not(:first-child)::before {
+                display: none;
+            }
+
+            &-checked {
+                box-shadow: none;
+
+                &:hover {
+                    box-shadow: none;
+                }
+                &:not(.ant-radio-button-wrapper-disabled) {
+                    background: @grey-1;
+                    color: @grey-8;
+                    border-color: @grey-3;
+
+                    &:hover {
+                        background: @grey-2;
+                        border-color: @grey-4;
+                        color: @grey-9;
+                    }
+
+                    &:focus-within {
+                        outline: none;
+                    }
+                }
+            }
+        }
+    }
+}
