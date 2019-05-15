@@ -3,6 +3,10 @@
         background: @grey-1;
     }
 
+    .ant-progress-text {
+        font-weight: bold;
+    }
+
     &__goal {
         position: relative;
 
@@ -16,7 +20,12 @@
 
             &--small {
                 height: 6px;
+                right: 32px;
                 bottom: ~'calc(50% - 4px)';
+
+                .ant-progress-text {
+                    font-size: @font-size-xs;
+                }
             }
         }
     }
@@ -38,6 +47,10 @@
     &--warning {
         .ant-progress-bg {
             background: @warning-color;
+        }
+        .ant-progress-text {
+            color: @warning-color;
+            font-size: @font-size-xs;
         }
     }
 }

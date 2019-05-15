@@ -6,6 +6,7 @@ import { Layout, Radio } from 'antd'
 import ESMainMenu from './MainMenu'
 import ESLeftOff from './LeftOff/LeftOff'
 import ESAvatarMenu from './Avatar/Avatar'
+import ESNotification from './Notification/Notification'
 import ESNavigationList from './NavigationList/NavigationList'
 import ESNavigationListItem from './NavigationList/NavigationListItem'
 
@@ -14,6 +15,7 @@ import ESBadge from '../../Atoms/Badge'
 import ESButton from '../../Atoms/Button'
 import ESDivider from '../../Atoms/Divider'
 import ESTypography from '../../Atoms/Typography'
+import ESTabs, { ESTabPane } from '../../Atoms/Tabs'
 
 const { Content, Footer } = Layout
 const RadioGroup = Radio.Group
@@ -47,7 +49,7 @@ const LayoutExample = ({ theme, setTheme }) => (
     </Layout>
 )
 
-const Initial = () => (
+const Initial = ({ setIndex }) => (
     <>
         <div className='pl-md pr-md'>
             <ESLeftOff
@@ -57,14 +59,14 @@ const Initial = () => (
                 thumbnail='https://www.e-sanar.com.br/fotos/esanar_noticias/83/mg/esanar-avatar-matheus_jpeg.jpg'
             />
         </div>
-        <ESNavigationList onClick={action('clicked')}>
+        <ESNavigationList onClick={e => setIndex(Number(e.key))}>
             <ESNavigationListItem
-                key='0'
+                key={0}
                 title='INÍCIO'
                 icon={<ESEvaIcon name='home-outline' color='default' />}
             />
             <ESNavigationListItem
-                key='1'
+                key={1}
                 title='NOTIFICAÇÕES'
                 icon={
                     <ESBadge dot border={false} style={{ right: 10 }}>
@@ -73,32 +75,32 @@ const Initial = () => (
                 }
             />
             <ESNavigationListItem
-                key='2'
+                key={2}
                 title='CRONOGRAMA'
                 icon={<ESEvaIcon name='calendar-outline' color='default' />}
             />
             <ESNavigationListItem
-                key='3'
+                key={3}
                 title='SALVOS'
                 icon={<ESEvaIcon name='heart-outline' color='default' />}
             />
             <ESNavigationListItem
-                key='4'
+                key={4}
                 title='DESEMPENHO'
                 icon={<ESEvaIcon name='pie-chart-outline' color='default' />}
             />
             <ESNavigationListItem
-                key='5'
+                key={5}
                 title='QUESTÕES'
                 icon={<ESEvaIcon name='edit-outline' color='default' />}
             />
             <ESNavigationListItem
-                key='6'
+                key={6}
                 title='TROCAR DE CURSO'
                 icon={<ESEvaIcon name='swap-outline' color='default' />}
             />
             <ESNavigationListItem
-                key='7'
+                key={7}
                 title='MINHA CONTA'
                 icon={<ESEvaIcon name='person-outline' color='default' />}
             />
@@ -106,7 +108,7 @@ const Initial = () => (
     </>
 )
 
-const MyAccount = () => (
+const MyAccount = ({ setIndex }) => (
     <>
         <div className='pl-md pr-md mb-md'>
             <ESButton
@@ -115,6 +117,7 @@ const MyAccount = () => (
                 variant='outlined'
                 color='white'
                 block
+                onClick={() => setIndex(0)}
             >
                 <ESEvaIcon name='arrow-back-outline' />
                 Voltar ao menu principal
@@ -182,14 +185,136 @@ const MyAccount = () => (
     </>
 )
 
+const Notifications = ({ setIndex }) => (
+    <>
+        <div className='pl-md pr-md mb-md'>
+            <ESButton
+                className='mb-md'
+                size='xsmall'
+                variant='outlined'
+                color='white'
+                block
+                onClick={() => setIndex(0)}
+            >
+                <ESEvaIcon name='arrow-back-outline' />
+                Voltar ao menu principal
+            </ESButton>
+        </div>
+
+        <ESTabs size='small' tabBarGutter={0} center defaultActiveKey='1'>
+            <ESTabPane
+                tab={
+                    <ESTypography strong variant='subtitle2'>
+                        Não lidas
+                    </ESTypography>
+                }
+                key='1'
+            >
+                <div className='pl-md pr-md pb-md d-flex align-items-center justify-content-between'>
+                    <div className='d-flex align-items-center'>
+                        <ESTypography
+                            className='mr-xs'
+                            strong
+                            variant='caption'
+                        >
+                            3
+                        </ESTypography>
+                        <ESTypography variant='caption'>Não lidas</ESTypography>
+                    </div>
+                    <ESButton size='xsmall' bold color='white' variant='text'>
+                        Marcar todas como lidas
+                    </ESButton>
+                </div>
+                <div className='pl-md pr-md pb-md'>
+                    <ESNotification
+                        type='react'
+                        text={`Ensure your most important links are available at the high level, and links that are a level deeper are relevant and impactful to more niche users`}
+                        time='2 horas atrás'
+                        markAsRead={action('markAsRead')}
+                        markAsUnread={action('markAsUnread')}
+                        user='Adré Cabral'
+                    />
+                    <ESNotification
+                        type='live'
+                        text={`A live sobre Saúde pública já vai começar.`}
+                        time='2 horas atrás'
+                        markAsRead={action('markAsRead')}
+                        markAsUnread={action('markAsUnread')}
+                    />
+                    <ESNotification
+                        type='late'
+                        text={`Você está atrasado com suas atividades desta semana.`}
+                        time='2 horas atrás'
+                        markAsRead={action('markAsRead')}
+                        markAsUnread={action('markAsUnread')}
+                    />
+                </div>
+            </ESTabPane>
+            <ESTabPane
+                tab={
+                    <ESTypography strong variant='subtitle2'>
+                        Já lidos
+                    </ESTypography>
+                }
+                key='2'
+            >
+                <div className='pl-md pr-md pb-md d-flex align-items-center justify-content-between'>
+                    <div className='d-flex align-items-center'>
+                        <ESTypography
+                            className='mr-xs'
+                            strong
+                            variant='caption'
+                        >
+                            3
+                        </ESTypography>
+                        <ESTypography variant='caption'>Já lidos</ESTypography>
+                    </div>
+                    <ESButton size='xsmall' bold color='white' variant='text'>
+                        Excluir já lidos
+                    </ESButton>
+                </div>
+                <div className='pl-md pr-md pb-md'>
+                    <ESNotification
+                        read
+                        type='react'
+                        text={`Ensure your most important links are available at the high level, and links that are a level deeper are relevant and impactful to more niche users`}
+                        time='2 horas atrás'
+                        markAsRead={action('markAsRead')}
+                        markAsUnread={action('markAsUnread')}
+                        user='Adré Cabral'
+                    />
+                    <ESNotification
+                        read
+                        type='live'
+                        text={`A live sobre Saúde pública já vai começar.`}
+                        time='2 horas atrás'
+                        markAsRead={action('markAsRead')}
+                        markAsUnread={action('markAsUnread')}
+                    />
+                    <ESNotification
+                        read
+                        type='late'
+                        text={`Você está atrasado com suas atividades desta semana.`}
+                        time='2 horas atrás'
+                        markAsRead={action('markAsRead')}
+                        markAsUnread={action('markAsUnread')}
+                    />
+                </div>
+            </ESTabPane>
+        </ESTabs>
+    </>
+)
+
 const DemoMainMenu = () => {
     const [theme, setTheme] = useState('primary')
+    const [index, setIndex] = useState(0)
 
     return (
         <Layout style={{ flexDirection: 'row', height: '100%' }}>
             <ESMainMenu title='Menu' theme={theme}>
-                {/* <Initial /> */}
-                <MyAccount />
+                {index === 0 && <Initial {...{ setIndex }} />}
+                {index === 1 && <Notifications {...{ setIndex }} />}
+                {index === 7 && <MyAccount {...{ setIndex }} />}
             </ESMainMenu>
             <LayoutExample {...{ theme, setTheme }} />
         </Layout>

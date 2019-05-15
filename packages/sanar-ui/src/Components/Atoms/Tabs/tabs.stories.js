@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { storiesOf } from '@storybook/react'
-import { select } from '@storybook/addon-knobs'
+import { select, boolean, number } from '@storybook/addon-knobs'
 
 import ESTabs from './Tabs'
 import ESTabPane from './TabPane'
@@ -27,6 +27,8 @@ const positionOptions = {
 storiesOf('Atoms.Tabs', module).add('Simple', () => (
     <ESTabs
         defaultActiveKey='1'
+        center={boolean('Center', true)}
+        tabBarGutter={number('Gutter', 0)}
         size={select('Size', sizeOptions, 'default')}
         type={select('Type', typeOptions, 'line')}
         tabPosition={select('Tab position', positionOptions, 'top')}

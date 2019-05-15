@@ -1,6 +1,7 @@
 @import './LeftOff/style.less';
 @import './NavigationList/style.less';
 @import './Avatar/style.less';
+@import './Notification/style.less';
 
 .es-main-menu {
     display: flex;
@@ -39,6 +40,21 @@
             padding: @padding-md;
             display: flex;
             justify-content: space-between;
+            align-items: center;
+        }
+
+        & .ant-tabs-ink-bar {
+            background-color: @white;
+        }
+
+        & .ant-tabs-bar {
+            border: none;
+            box-shadow: 0px 1px 2px @grey-3;
+        }
+
+        & .ant-tabs-tab {
+            padding-right: 38px !important;
+            padding-left: 38px !important;
         }
     }
 
@@ -90,7 +106,6 @@
 
     &__primary {
         background-color: @primary-4;
-        & .es-button,
         & .es-typography {
             color: @white-9;
         }
