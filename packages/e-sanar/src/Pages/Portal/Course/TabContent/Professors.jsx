@@ -54,7 +54,7 @@ const SANCourseProfessors = () => {
                     size='small'
                     color='primary'
                     variant='outlined'
-                    className='mt-md'
+                    className='mt-md san-tab-course-content__professors--load-more'
                 >
                     Carregar mais
                 </ESButton>
