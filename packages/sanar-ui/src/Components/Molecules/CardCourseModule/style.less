@@ -1,6 +1,4 @@
 .es-car-course-module {
-    width: 450px;
-
     .ant-card-body {
         padding-bottom: @padding-xs;
     }
@@ -58,12 +56,16 @@
         &__image-container {
             position: relative;
             margin-bottom: -9px;
-            min-height: 128px;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 100% 100%;
-            transition: background-size 0.125s ease-in;
-            border-radius: @card-radius @card-radius 0 0;
+            overflow: hidden;
+
+            &--image {
+                border-radius: @card-radius @card-radius 0 0;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+                transition: transform 0.125s ease-in;
+                min-height: 128px;
+            }
 
             &::after {
                 content: '';
@@ -78,9 +80,17 @@
         }
     }
 
-    &:hover {
+    &:hover,
+    &:focus {
         .es-car-course-module__content__image-container {
-            background-size: 112.5% 112.5%;
+            &::after {
+                background: rgba(0, 0, 0, 0.5);
+            }
+            display: block;
+
+            &--image {
+                transform: scale(1.2);
+            }
         }
     }
 }

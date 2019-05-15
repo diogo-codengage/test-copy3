@@ -13,6 +13,7 @@ const ESCardCourseModule = ({
     className,
     image,
     moduleName,
+    title,
     badge,
     progress,
     redirectTo,
@@ -47,17 +48,21 @@ const ESCardCourseModule = ({
                         <ESTypography variant='overline' className='mb-xs'>
                             {moduleName}
                         </ESTypography>
-                        <ESTypography strong>{moduleName}</ESTypography>
+                        <ESTypography strong>{title}</ESTypography>
                     </div>
-                    <div
-                        className='es-car-course-module__content__image-container'
-                        style={{ backgroundImage: `url(${image})` }}
-                    />
-                    <ESCommonBadge
-                        className='es-car-course-module__content__badge'
-                        status='warning'
-                        count={badge}
-                    />
+                    <div className='es-car-course-module__content__image-container'>
+                        <div
+                            className='es-car-course-module__content__image-container--image'
+                            style={{ backgroundImage: `url(${image})` }}
+                        />
+                    </div>
+                    {!disabled && (
+                        <ESCommonBadge
+                            className='es-car-course-module__content__badge'
+                            status='warning'
+                            count={badge}
+                        />
+                    )}
                     <ESProgress
                         status='warning'
                         percent={progress}
@@ -67,7 +72,7 @@ const ESCardCourseModule = ({
                 </div>
                 <ESRow type='flex' align='middle' justify='space-between'>
                     <ESCol>
-                        <ESTypography variant='muted'>
+                        <ESTypography variant='caption' muted>
                             {moduleTime}
                         </ESTypography>
                     </ESCol>
@@ -88,7 +93,8 @@ ESCardCourseModule.propTypes = {
     actionName: PropTypes.string,
     moduleTime: PropTypes.string,
     disabledBadge: PropTypes.string,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    title: PropTypes.string
 }
 ESCardCourseModule.defaultProps = {
     actionName: 'Ver aulas',
