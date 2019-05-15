@@ -15,13 +15,13 @@
         background-color: inherit;
         width: 304px;
         height: 100%;
-        transition: width 1s ease-in;
+        transition: width 0.5s ease-in;
 
         &.open {
             width: 100%;
             position: absolute;
             & * {
-                transition: all 0.5s linear;
+                transition: all 0.3s linear;
                 visibility: visible;
             }
         }
@@ -94,14 +94,6 @@
                 margin-bottom: @margin-md;
             }
         }
-    }
-
-    &__primary,
-    &__primary *,
-    &__dark,
-    &__dark *,
-    &__light * {
-        transition: background-color 0.3s ease-in, box-shadow.3s ease-in;
     }
 
     &__primary {
