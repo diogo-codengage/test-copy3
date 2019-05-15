@@ -8,18 +8,20 @@ import ESTypography from '../../Atoms/Typography'
 const ESSessionTitle = ({ className, title, subtitle, extra }) => {
     const classes = classNames('es-session-title', className)
 
+    const titleClasses = classNames('es-session-title__texts--title', {
+        'mb-xs': subtitle
+    })
+
     return (
         <ESRow
             type='flex'
             justify='space-between'
-            align={subtitle ? 'bottom' : 'top'}
+            align={subtitle ? 'bottom' : extra ? 'middle' : 'top'}
             className={classes}
+            gutter={24}
         >
             <ESCol className='es-session-title__texts'>
-                <ESTypography
-                    className='es-session-title__texts--title mb-xs'
-                    level={5}
-                >
+                <ESTypography className={titleClasses} level={5}>
                     {title}
                 </ESTypography>
                 {subtitle && (
