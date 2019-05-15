@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 
@@ -16,6 +16,8 @@ import ESButton from '../../Atoms/Button'
 import ESDivider from '../../Atoms/Divider'
 import ESTypography from '../../Atoms/Typography'
 import ESTabs, { ESTabPane } from '../../Atoms/Tabs'
+import ESChangeCourse from '../../Molecules/ChangeCourse'
+import ESSelect, { ESOption } from '../../Atoms/Select'
 
 const { Content, Footer } = Layout
 const RadioGroup = Radio.Group
@@ -305,15 +307,81 @@ const Notifications = ({ setIndex }) => (
     </>
 )
 
+const CourseChange = ({ setIndex }) => (
+    <>
+        <div className='pl-md pr-md mb-md'>
+            <ESButton
+                className='mb-md'
+                size='xsmall'
+                variant='outlined'
+                color='white'
+                block
+                onClick={() => setIndex(0)}
+            >
+                <ESEvaIcon name='arrow-back-outline' />
+                Voltar ao menu principal
+            </ESButton>
+        </div>
+        <ESChangeCourse
+            title='Trilha Sanar Enfermagem'
+            date='23/05/2020'
+            percent={45}
+            coverPicture='http://sites.psu.edu/huangnutr360/files/2017/04/lesson-0-1ta118a.png'
+            icon='https://public-v2links.adobecc.com/708e2f04-215d-454f-6692-c1d3b53d580f/component?params=component_id:2eef4ded-78c2-4ef5-abe4-08b602aad71c&params=version:0&token=1558008652_da39a3ee_7a22c22a02018c4fd70f9f9f69150074add489ff&api_key=CometServer1'
+            onContinue={console.log}
+            module='Continuar no Módulo 2, aula 5'
+            description='Per aumento de cachacis, eu reclamis.'
+        />
+        <div className='pl-md pr-md pt-md pb-md'>
+            <ESTypography className='mb-md text-white-9' level={5}>
+                Trocar de curso
+            </ESTypography>
+
+            <ESSelect
+                style={{ width: '100%' }}
+                defaultValue='todas'
+                placeholder='Filtro'
+            >
+                <ESOption value='todas'>Todas as áreas</ESOption>
+            </ESSelect>
+            <ESTypography
+                className='mb-md mt-md text-white-8'
+                variant='caption'
+            >
+                Você tem <strong>2</strong> cursos em “Todas as áreas”
+            </ESTypography>
+            {[0, 1].map(i => (
+                <ESChangeCourse
+                    key={i}
+                    className='mb-md'
+                    title='Trilha Sanar Enfermagem'
+                    date='23/05/2020'
+                    percent={45}
+                    arrow
+                    round
+                    coverPicture='http://sites.psu.edu/huangnutr360/files/2017/04/lesson-0-1ta118a.png'
+                    icon='https://public-v2links.adobecc.com/708e2f04-215d-454f-6692-c1d3b53d580f/component?params=component_id:2eef4ded-78c2-4ef5-abe4-08b602aad71c&params=version:0&token=1558008652_da39a3ee_7a22c22a02018c4fd70f9f9f69150074add489ff&api_key=CometServer1'
+                    onChange={console.log}
+                />
+            ))}
+        </div>
+    </>
+)
+
 const DemoMainMenu = () => {
-    const [theme, setTheme] = useState('primary')
+    const [theme, setTheme] = useState('dark')
     const [index, setIndex] = useState(0)
+
+    useMemo(() => (index === 6 ? setTheme('dark') : setTheme('primary')), [
+        index
+    ])
 
     return (
         <Layout style={{ flexDirection: 'row', height: '100%' }}>
             <ESMainMenu title='Menu' theme={theme}>
                 {index === 0 && <Initial {...{ setIndex }} />}
                 {index === 1 && <Notifications {...{ setIndex }} />}
+                {index === 6 && <CourseChange {...{ setIndex }} />}
                 {index === 7 && <MyAccount {...{ setIndex }} />}
             </ESMainMenu>
             <LayoutExample {...{ theme, setTheme }} />
