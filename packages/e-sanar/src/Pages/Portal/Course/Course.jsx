@@ -8,6 +8,7 @@ import SANInteractions from './Interactions'
 import SANLives from './Lives'
 import SANNextLives from './NextLives'
 import SANCourseHeader from './Header'
+import SANCourseTabContent from './TabContent/Content'
 
 const SANCoursePage = () => {
     const { t } = useTranslation()
@@ -15,7 +16,7 @@ const SANCoursePage = () => {
     return (
         <div className='course'>
             <SANCourseHeader />
-            <ESTabs defaultActiveKey='1' tabBarGutter={0}>
+            <ESTabs defaultActiveKey='2' tabBarGutter={0}>
                 <ESTabPane tab={t('courseDetails.tabGeneral')} key='1'>
                     <SANPerformance />
                     <SANInteractions />
@@ -23,7 +24,7 @@ const SANCoursePage = () => {
                     <SANNextLives />
                 </ESTabPane>
                 <ESTabPane tab={t('courseDetails.tabContent')} key='2'>
-                    Conteúdo
+                    <SANCourseTabContent />
                 </ESTabPane>
                 <ESTabPane tab={t('courseDetails.tabComments')} key='3'>
                     Comentários
