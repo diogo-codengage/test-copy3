@@ -18,6 +18,7 @@ storiesOf('Atoms.Badge', module).add('Simple', () => (
         count={number('Count', 5)}
         dot={boolean('Dot', false)}
         border={boolean('Border', true)}
+        solid={boolean('Solid', false)}
         text={text('Text', '')}
         status={select('Status', statusOptions, '')}
     />

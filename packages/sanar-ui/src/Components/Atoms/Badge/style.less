@@ -27,12 +27,32 @@
         & .ant-badge-count {
             color: darken(@success-color, 20);
         }
+
+        &--solid {
+            border: none;
+
+            & .ant-badge-count {
+                background: @green-1;
+                color: black;
+                border-radius: 9px;
+            }
+        }
     }
 
     &__processing {
         border-color: @processing-color;
         & .ant-badge-count {
-            color: darken(@processing-color, 20);
+            color: blue-1darken(@processing-color, 20);
+        }
+
+        &--solid {
+            border: none;
+
+            & .ant-badge-count {
+                background: @blue-1;
+                color: black;
+                border-radius: 9px;
+            }
         }
     }
 
@@ -42,12 +62,32 @@
         & .ant-badge-count {
             color: darken(@error-color, 20);
         }
+
+        &--solid {
+            border: none;
+
+            & .ant-badge-count {
+                background: @red-1;
+                color: black;
+                border-radius: 9px;
+            }
+        }
     }
 
     &__warning {
         border-color: @warning-color;
         & .ant-badge-count {
             color: darken(@warning-color, 20);
+        }
+
+        &--solid {
+            border: none;
+
+            & .ant-badge-count {
+                background: @gold-1;
+                color: black;
+                border-radius: 9px;
+            }
         }
     }
 }

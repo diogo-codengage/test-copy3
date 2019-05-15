@@ -150,3 +150,44 @@ export const modules = [
         }
     }
 ]
+
+export const courseFeatures = [
+    {
+        image: '',
+        count: 100,
+        text: 'Carga horária',
+        suffix: 'h'
+    },
+    {
+        image: '',
+        count: 120,
+        text: 'Vídeos'
+    },
+    {
+        image: '',
+        count: 150,
+        limit: 140,
+        text: 'Materiais complementares'
+    },
+    {
+        image: '',
+        count: 150,
+        limit: 100,
+        text: 'Questões'
+    },
+    {
+        image: '',
+        count: 123,
+        text: 'Simulados'
+    },
+    {
+        image: '',
+        count: 1,
+        text: 'Certificado'
+    },
+    {
+        image: '',
+        count: 1,
+        text: 'Planner'
+    }
+]
