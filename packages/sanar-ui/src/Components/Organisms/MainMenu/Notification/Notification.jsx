@@ -7,17 +7,21 @@ import ESEvaIcon from '../../../Atoms/EvaIcon'
 import ESButton from '../../../Atoms/Button'
 
 const icons = {
-    react: 'message-circle-outline',
-    live: 'calendar-outline',
-    late: 'pie-chart-outline'
+    interaction: 'message-circle-outline',
+    new: 'star-outline',
+    update: 'refresh-outline',
+    performance: 'pie-chart-outline',
+    live: 'video-outline',
+    schedule: 'calendar-outline',
+    general: 'globe-2-outline'
 }
 
 const ESNotification = ({
     className,
     read,
     type,
-    user,
-    labelReact,
+    icon,
+    action,
     text,
     time,
     goToLive,
@@ -39,21 +43,30 @@ const ESNotification = ({
     return (
         <div className={classes}>
             <span className='icon'>
-                <ESEvaIcon name={icons[type]} />
+                <ESEvaIcon name={icons[icon]} />
             </span>
             <div className='d-flex flex-column'>
-                {type === 'react' && (
+                {action && (
                     <ESTypography
                         variant='caption'
                         className='mb-xs text-grey-10'
                     >
-                        <strong>{`${user} `}</strong>
-                        {labelReact}
+                        {action}
                     </ESTypography>
                 )}
-                <ESTypography variant='subtitle2' className='text-grey-7'>
+                <ESTypography
+                    ellipsis={
+                        icon === 'interaction'
+                            ? {
+                                  rows: 3
+                              }
+                            : false
+                    }
+                    variant='subtitle2'
+                    className='text-grey-7'
+                >
                     {text}
-                    {type === 'live' && (
+                    {icon === 'live' && (
                         <ESTypography
                             component='a'
                             onClick={goToLive}
@@ -98,8 +111,10 @@ const ESNotification = ({
 
 ESNotification.propTypes = {
     className: PropTypes.string,
-    type: PropTypes.oneOf(['react', 'live', 'late']),
+    type: PropTypes.oneOf(['default', 'medium', 'high']),
+    icon: PropTypes.oneOf(Object.keys(icons)),
     text: PropTypes.string,
+    action: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     read: PropTypes.bool,
     time: PropTypes.string,
     markAsRead: PropTypes.func,
@@ -113,10 +128,11 @@ ESNotification.propTypes = {
 }
 
 ESNotification.defaultProps = {
-    labelReact: 'reagiu ao seu comentário',
     labelMarkAsRead: 'Marcar como lida',
     labelMarkAsUnread: 'Marcar como não lida',
-    labelGoToLive: 'Ir para Live'
+    labelGoToLive: 'Ir para Live',
+    type: 'default',
+    icon: Object.keys(icons)[0]
 }
 
 export default ESNotification
