@@ -229,7 +229,8 @@ const Notifications = ({ setIndex }) => (
                 </div>
                 <div className='pl-md pr-md pb-md'>
                     <ESNotification
-                        type='react'
+                        icon='interaction'
+                        action='Adré Cabral reagiu ao seu comentário'
                         text={`Ensure your most important links are available at the high level, and links that are a level deeper are relevant and impactful to more niche users`}
                         time='2 horas atrás'
                         markAsRead={action('markAsRead')}
@@ -237,14 +238,18 @@ const Notifications = ({ setIndex }) => (
                         user='Adré Cabral'
                     />
                     <ESNotification
-                        type='live'
+                        action='Aula nova adicionada'
+                        icon='new'
+                        type='medium'
                         text={`A live sobre Saúde pública já vai começar.`}
                         time='2 horas atrás'
                         markAsRead={action('markAsRead')}
                         markAsUnread={action('markAsUnread')}
                     />
                     <ESNotification
-                        type='late'
+                        action='Mapa mental atualizado'
+                        icon='update'
+                        type='high'
                         text={`Você está atrasado com suas atividades desta semana.`}
                         time='2 horas atrás'
                         markAsRead={action('markAsRead')}
@@ -278,7 +283,8 @@ const Notifications = ({ setIndex }) => (
                 <div className='pl-md pr-md pb-md'>
                     <ESNotification
                         read
-                        type='react'
+                        action='Desempenho positivo'
+                        icon='performance'
                         text={`Ensure your most important links are available at the high level, and links that are a level deeper are relevant and impactful to more niche users`}
                         time='2 horas atrás'
                         markAsRead={action('markAsRead')}
@@ -287,7 +293,8 @@ const Notifications = ({ setIndex }) => (
                     />
                     <ESNotification
                         read
-                        type='live'
+                        action='Live programada'
+                        icon='live'
                         text={`A live sobre Saúde pública já vai começar.`}
                         time='2 horas atrás'
                         markAsRead={action('markAsRead')}
@@ -295,7 +302,17 @@ const Notifications = ({ setIndex }) => (
                     />
                     <ESNotification
                         read
-                        type='late'
+                        action='Atividade módulo 4'
+                        icon='schedule'
+                        text={`Você está atrasado com suas atividades desta semana.`}
+                        time='2 horas atrás'
+                        markAsRead={action('markAsRead')}
+                        markAsUnread={action('markAsUnread')}
+                    />
+                    <ESNotification
+                        read
+                        action='Termos legais atualizados'
+                        icon='general'
                         text={`Você está atrasado com suas atividades desta semana.`}
                         time='2 horas atrás'
                         markAsRead={action('markAsRead')}
