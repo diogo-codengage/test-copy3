@@ -23,7 +23,7 @@ const SANCoursePage = () => {
                     <SANLives />
                     <SANNextLives />
                 </ESTabPane>
-                <ESTabPane tab={t('courseDetails.tabContent')} key='2'>
+                <ESTabPane tab={t('courseDetails.tabContent.title')} key='2'>
                     <SANCourseTabContent />
                 </ESTabPane>
                 <ESTabPane tab={t('courseDetails.tabComments')} key='3'>

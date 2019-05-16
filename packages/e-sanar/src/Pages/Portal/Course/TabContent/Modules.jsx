@@ -13,6 +13,7 @@ import {
 } from 'sanar-ui/dist/Components/Atoms/Radio'
 
 import { modules, courseFeatures } from './mocks'
+import { useTranslation } from 'react-i18next'
 
 const responsive = [
     {
@@ -41,14 +42,20 @@ const responsive = [
 ]
 
 const SANCourseModules = () => {
+    const { t } = useTranslation()
+
     return (
         <div className='san-tab-course-content__modules pt-md pb-lg'>
             <SANPortalPagesContainer>
                 <ESRow type='flex' gutter={24}>
                     <ESCol xs={24} md={10} lg={24} xl={9} xxl={8}>
                         <ESSessionTitle
-                            title='O que esse curso possui'
-                            subtitle='Tudo o que você tem acesso na plataforma'
+                            title={t(
+                                'courseDetails.tabContent.modules.whatCourseHas'
+                            )}
+                            subtitle={t(
+                                'courseDetails.tabContent.modules.whatCourseHasSubtitle'
+                            )}
                         />
                     </ESCol>
                     <ESCol xs={24} md={14} lg={24} xl={15} xxl={16}>
@@ -75,16 +82,26 @@ const SANCourseModules = () => {
                 <ESDivider className='mb-xl mt-xl' />
 
                 <ESSessionTitle
-                    title='42 módulos'
+                    title={`42 ${t(
+                        'courseDetails.tabContent.modules.pluralName'
+                    )}`}
                     extraOnLeft
                     extra={
                         <ESRadioGroup defaultValue='all' blocks>
-                            <ESRadioButton value='all'>Todos</ESRadioButton>
+                            <ESRadioButton value='all'>
+                                {t(
+                                    'courseDetails.tabContent.modules.status.all'
+                                )}
+                            </ESRadioButton>
                             <ESRadioButton value='done'>
-                                Concluídos
+                                {t(
+                                    'courseDetails.tabContent.modules.status.done'
+                                )}
                             </ESRadioButton>
                             <ESRadioButton value='incomplete'>
-                                Incompleto
+                                {t(
+                                    'courseDetails.tabContent.modules.status.incomplete'
+                                )}
                             </ESRadioButton>
                         </ESRadioGroup>
                     }
@@ -96,15 +113,17 @@ const SANCourseModules = () => {
                             <ESCol key={index} xs={12} md={8} lg={8} xl={6}>
                                 <ESCardCourseModule
                                     className='san-tab-course-content__continue--card'
-                                    moduleName={`Módulo ${
-                                        item.module_reference
-                                    }`}
+                                    moduleName={`${t(
+                                        'courseDetails.tabContent.modules.singularName'
+                                    )} ${item.module_reference}`}
                                     title={item.title}
                                     badge={`${item.progress.done}/${
                                         item.progress.total
                                     }`}
                                     progress={item.workload}
-                                    actionName='Ver aulas'
+                                    actionName={t(
+                                        'courseDetails.tabContent.cardModuleAction'
+                                    )}
                                     moduleTime='30min'
                                     image={item.thumbnail}
                                 />
