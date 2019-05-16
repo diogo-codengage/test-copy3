@@ -36,10 +36,12 @@ export const GET_ME = gql`
                     progress {
                         done
                         total
+                        status
                     }
                     tests {
                         done
                         total
+                        status
                     }
                 }
                 course {

@@ -13,12 +13,26 @@ import interacao from 'assets/images/interacao.svg'
 import praticaRegular from 'assets/images/pratica-regular.svg'
 import progresso from 'assets/images/progresso.svg'
 
-import low from 'assets/images/emoticon-low.svg'
+import lowSvg from 'assets/images/emoticon-low.svg'
+import midSvg from 'assets/images/emoticon-mid.svg'
+import niceSvg from 'assets/images/emoticon-nice.svg'
 
 import { SANPortalPagesContainer } from '../Layout'
-// import { useAuthContext } from 'Hooks/auth'
+import { useAuthContext } from 'Hooks/auth'
 
-const CommitmentCard = ({ percent }) => {
+const statusColor = {
+    high: 'success',
+    avarage: 'warning',
+    low: 'danger'
+}
+
+const statusCommitment = {
+    high: niceSvg,
+    avarage: midSvg,
+    low: lowSvg
+}
+
+const CommitmentCard = ({ value, status }) => {
     const { t } = useTranslation()
 
     return (
@@ -33,15 +47,15 @@ const CommitmentCard = ({ percent }) => {
                 className='performance__card-commitment__content'
             >
                 <ESCol className='performance__card-commitment__content--emoticon'>
-                    <img src={low} alt={`${percent}% `} />
+                    <img src={statusCommitment[status]} alt={`${value}% `} />
                     <div className='performance__card-commitment__content--emoticon--text'>
-                        <ESTypography strong>
+                        <ESTypography strong={status === 'low'}>
                             {t('courseDetails.cardCommitmentLow')}
                         </ESTypography>
-                        <ESTypography>
+                        <ESTypography strong={status === 'avarage'}>
                             {t('courseDetails.cardCommitmentMid')}
                         </ESTypography>
-                        <ESTypography>
+                        <ESTypography strong={status === 'high'}>
                             {t('courseDetails.cardCommitmentNice')}
                         </ESTypography>
                     </div>
@@ -53,7 +67,7 @@ const CommitmentCard = ({ percent }) => {
                             variant='caption'
                             strong
                         >
-                            {`${percent}%`}&nbsp;
+                            {`${value}%`}&nbsp;
                         </ESTypography>
                         <ESTypography className='fc-grey-7' variant='caption'>
                             {t('courseDetails.cardCommitmentDescription')}
@@ -67,24 +81,8 @@ const CommitmentCard = ({ percent }) => {
 
 const SANPerformance = () => {
     const { t } = useTranslation()
-    // const { getEnrollment } = useAuthContext()
-    // const {
-    //     performance_indicators: performance_indicatorsProp
-    // } = getEnrollment()
-
-    const performance_indicators = {
-        commitment: 38,
-        uniformity: 24,
-        progress: {
-            done: 12,
-            total: 93
-        },
-        tests: {
-            done: 12,
-            total: 93
-        },
-        interatction: 123
-    }
+    const { getEnrollment } = useAuthContext()
+    const { performance } = getEnrollment()
 
     return (
         <div className='performance'>
@@ -117,9 +115,7 @@ const SANPerformance = () => {
                         alignSelf='stretch'
                         className='mb-md'
                     >
-                        <CommitmentCard
-                            percent={performance_indicators.commitment}
-                        />
+                        <CommitmentCard {...performance.commitment} />
                     </ESCol>
                     <ESCol
                         xs={0}
@@ -132,8 +128,8 @@ const SANPerformance = () => {
                             title={t('courseDetails.cardConsistencyTitle')}
                             doubt={t('courseDetails.cardConsistencyDoubt')}
                             img={consistencia}
-                            badge={performance_indicators.uniformity}
-                            status='success'
+                            badge={performance.uniformity.value}
+                            status={statusColor[performance.uniformity.status]}
                             description={t(
                                 'courseDetails.cardConsistencyDescription'
                             )}
@@ -151,10 +147,10 @@ const SANPerformance = () => {
                             doubt={t('courseDetails.cardProgressDoubt')}
                             img={progresso}
                             badge={t('global.percentOf', {
-                                done: performance_indicators.progress.done,
-                                final: performance_indicators.progress.total
+                                done: performance.progress.done,
+                                final: performance.progress.total
                             })}
-                            status='success'
+                            status={statusColor[performance.progress.status]}
                             description={t(
                                 'courseDetails.cardProgressDescription'
                             )}
@@ -172,10 +168,10 @@ const SANPerformance = () => {
                             doubt={t('courseDetails.cardPracticeDoubt')}
                             img={praticaRegular}
                             badge={t('global.percentOf', {
-                                done: performance_indicators.tests.done,
-                                final: performance_indicators.tests.total
+                                done: performance.tests.done,
+                                final: performance.tests.total
                             })}
-                            status='warning'
+                            status={statusColor[performance.tests.status]}
                             description={t(
                                 'courseDetails.cardPracticeDescription'
                             )}
@@ -192,8 +188,8 @@ const SANPerformance = () => {
                             title={t('courseDetails.cardInteractionTitle')}
                             doubt={t('courseDetails.cardInteractionDoubt')}
                             img={interacao}
-                            badge={performance_indicators.interatction}
-                            status='danger'
+                            badge={performance.interaction.value}
+                            status={statusColor[performance.interaction.status]}
                             description={t(
                                 'courseDetails.cardInteractionDescription'
                             )}
