@@ -9,6 +9,9 @@ import ESAvatarMenu from './Avatar/Avatar'
 import ESNotification from './Notification/Notification'
 import ESNavigationList from './NavigationList/NavigationList'
 import ESNavigationListItem from './NavigationList/NavigationListItem'
+import ESSearch from './Search/Search'
+import ESListSearch from './ListSearch/ListSearch'
+import ESListSearchItem from './ListSearch/ListSearchItem'
 
 import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESBadge from '../../Atoms/Badge'
@@ -385,8 +388,21 @@ const CourseChange = ({ setIndex }) => (
     </>
 )
 
+const Search = () => (
+    <>
+        <div className='pl-md pr-md mb-md'>
+            <ESSearch className='mb-lg' />
+        </div>
+        <ESListSearch>
+            {[0, 1, 2, 3, 4, 5, 6].map(i => (
+                <ESListSearchItem title='Ornare interdum maecenas' />
+            ))}
+        </ESListSearch>
+    </>
+)
+
 const DemoMainMenu = () => {
-    const [theme, setTheme] = useState('dark')
+    const [theme, setTheme] = useState('light')
     const [index, setIndex] = useState(0)
 
     useMemo(() => (index === 6 ? setTheme('dark') : setTheme('primary')), [
@@ -395,11 +411,17 @@ const DemoMainMenu = () => {
 
     return (
         <Layout style={{ flexDirection: 'row', height: '100%' }}>
-            <ESMainMenu title='Menu' theme={theme}>
+            <ESMainMenu
+                onSearchClick={() => setIndex(8)}
+                onInitialClick={() => setIndex(0)}
+                title='Menu'
+                theme={theme}
+            >
                 {index === 0 && <Initial {...{ setIndex }} />}
                 {index === 1 && <Notifications {...{ setIndex }} />}
                 {index === 6 && <CourseChange {...{ setIndex }} />}
                 {index === 7 && <MyAccount {...{ setIndex }} />}
+                {index === 8 && <Search />}
             </ESMainMenu>
             <LayoutExample {...{ theme, setTheme }} />
         </Layout>
