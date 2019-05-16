@@ -8,7 +8,7 @@ import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 
-import { SANPortalPagesContainer } from '../Layout'
+import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 import { useAuthContext } from 'Hooks/auth'
 
 const SANLives = ({ title, release_date, scheduled }) => {

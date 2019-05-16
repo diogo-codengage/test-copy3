@@ -10,8 +10,8 @@ import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESBadge from 'sanar-ui/dist/Components/Atoms/Badge'
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 
-import { SANPortalPagesContainer } from '../Layout/index.js'
-import { useAuthContext } from '../../../Hooks/auth.js'
+import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
+import { useAuthContext } from 'Hooks/auth.js'
 
 const SANInteractions = () => {
     const { t } = useTranslation()

@@ -17,7 +17,7 @@ import lowSvg from 'assets/images/emoticon-low.svg'
 import midSvg from 'assets/images/emoticon-mid.svg'
 import niceSvg from 'assets/images/emoticon-nice.svg'
 
-import { SANPortalPagesContainer } from '../Layout'
+import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 import { useAuthContext } from 'Hooks/auth'
 
 const statusColor = {

@@ -7,7 +7,7 @@ import ESLiveSection from 'sanar-ui/dist/Components/Molecules/LiveSection'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 
-import { SANPortalPagesContainer } from '../Layout'
+import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 import { useAuthContext } from 'Hooks/auth'
 
 const SANLives = () => {
