@@ -36,7 +36,14 @@ const InitalButton = ({ name = 'keypad-outline', ...props }) => (
     <SideButton name={name} {...props} />
 )
 
-const ESMainMenu = ({ className, title, children, theme: themeProp }) => {
+const ESMainMenu = ({
+    className,
+    title,
+    children,
+    onSearchClick,
+    onInitialClick,
+    theme: themeProp
+}) => {
     const {
         position,
         theme,
@@ -59,26 +66,41 @@ const ESMainMenu = ({ className, title, children, theme: themeProp }) => {
         setTheme(themeProp)
     }, [themeProp])
 
+    const initialClick = e => {
+        onInitialClick && onInitialClick(e)
+        setTheme('primary')
+    }
+
+    const searchClick = e => {
+        onSearchClick && onSearchClick(e)
+        setTheme('light')
+    }
+
+    const initialBottomClick = e => {
+        setToggle(true)
+        initialClick(e)
+    }
+
+    const searchBottomClick = e => {
+        setToggle(true)
+        searchClick(e)
+    }
+
     return (
         <div className={classes}>
             {position === 'left' ? (
                 <div className='es-main-menu__sidebar-left'>
                     <div className='es-main-menu__sidebar-left--actions'>
-                        <InitalButton onClick={() => setTheme('primary')} />
-                        <SearchButton onClick={() => setTheme('light')} />
+                        <InitalButton onClick={initialClick} />
+                        <SearchButton onClick={searchClick} />
                     </div>
                     <img src={logoSvg} />
                 </div>
             ) : (
                 <div className='es-main-menu__sidebar-bottom'>
                     <HomeButton onClick={() => setToggle(true)} />
-                    <SearchButton
-                        onClick={() => {
-                            setTheme('light')
-                            setToggle(true)
-                        }}
-                    />
-                    <InitalButton onClick={() => setToggle(true)} />
+                    <SearchButton onClick={searchBottomClick} />
+                    <InitalButton onClick={initialBottomClick} />
                 </div>
             )}
 
@@ -92,7 +114,9 @@ const ESMainMenu = ({ className, title, children, theme: themeProp }) => {
 
 ESMainMenu.propTypes = {
     className: PropTypes.string,
-    theme: PropTypes.oneOf(['primary', 'dark', 'light'])
+    theme: PropTypes.oneOf(['primary', 'dark', 'light']),
+    onInitialClick: PropTypes.func,
+    onSearchClick: PropTypes.func
 }
 ESMainMenu.defaultProps = {
     theme: 'primary'
