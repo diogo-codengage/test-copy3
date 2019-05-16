@@ -17,9 +17,19 @@ export const GET_ME = gql`
                         path
                     }
                 }
-                performance_indicators {
-                    commitment
-                    uniformity
+                performance {
+                    interaction {
+                        value
+                        status
+                    }
+                    commitment {
+                        value
+                        status
+                    }
+                    uniformity {
+                        value
+                        status
+                    }
                     progress {
                         done
                         total
@@ -28,7 +38,6 @@ export const GET_ME = gql`
                         done
                         total
                     }
-                    interaction
                 }
                 course {
                     id
@@ -41,6 +50,8 @@ export const GET_ME = gql`
                         id
                         name
                         profile_picture
+                        linkedin
+                        resume
                     }
                     comments {
                         id

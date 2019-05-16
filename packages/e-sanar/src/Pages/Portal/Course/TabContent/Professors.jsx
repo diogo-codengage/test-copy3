@@ -9,16 +9,15 @@ import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 import { useAuthContext } from 'Hooks/auth'
 import { useTranslation } from 'react-i18next'
 
-const linkedin = link => (
-    <ESButton
-        className='san-tab-course-content__professors--action'
-        variant='outlined'
-        size='xsmall'
-        color='default'
+const Linkedin = ({ link }) => (
+    <a
+        target='_blank'
         href={link}
+        rel='noopener noreferrer'
+        className='san-tab-course-content__professors--action'
     >
         <ESEvaIcon name='linkedin' size='xsmall' />
-    </ESButton>
+    </a>
 )
 
 const SANCourseProfessors = () => {
@@ -26,11 +25,7 @@ const SANCourseProfessors = () => {
 
     const { getEnrollment } = useAuthContext()
 
-    const { course: courseMock } = getEnrollment()
-
-    const course = {
-        ...courseMock
-    }
+    const { course } = getEnrollment()
 
     return (
         <div className='san-tab-course-content__professors'>
@@ -52,9 +47,11 @@ const SANCourseProfessors = () => {
                             >
                                 <ESCardAvatar
                                     name={professor.name}
-                                    formation={professor.titulation}
-                                    image={professor.thumbnail}
-                                    actions={linkedin(professor.resume)}
+                                    formation={professor.resume}
+                                    image={professor.profile_picture}
+                                    actions={
+                                        <Linkedin link={professor.linkedin} />
+                                    }
                                 />
                             </ESCol>
                         )
