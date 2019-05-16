@@ -2,6 +2,8 @@ import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
+import { Avatar } from 'antd'
+
 import ESCard from '../Card'
 import ESTypography from '../../Atoms/Typography'
 
@@ -22,10 +24,18 @@ const ESCardAvatar = ({
             >
                 {actions}
             </div>
-            <div
-                className='es-card-avatar--avatar'
-                style={{ backgroundImage: `url(${image})` }}
-            />
+            {image ? (
+                <div
+                    className='es-card-avatar--avatar'
+                    style={{ backgroundImage: `url(${image})` }}
+                />
+            ) : (
+                <Avatar
+                    className='es-card-avatar--avatar'
+                    icon='user'
+                    size={60}
+                />
+            )}
             <ESTypography ellipsis strong className='mb-xs'>
                 {name}
             </ESTypography>
@@ -40,7 +50,7 @@ ESCardAvatar.propTypes = {
     className: PropTypes.string,
     image: PropTypes.string,
     name: PropTypes.string.isRequired,
-    formation: PropTypes.string.isRequired,
+    formation: PropTypes.string,
     actions: PropTypes.element
 }
 ESCardAvatar.defaultProps = {}

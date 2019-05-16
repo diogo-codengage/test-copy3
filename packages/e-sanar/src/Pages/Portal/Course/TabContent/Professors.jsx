@@ -5,7 +5,6 @@ import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESCardAvatar from 'sanar-ui/dist/Components/Molecules/CardAvatar'
 
-import { professors } from './mocks'
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 import { useAuthContext } from 'Hooks/auth'
 import { useTranslation } from 'react-i18next'
@@ -18,7 +17,7 @@ const linkedin = link => (
         color='default'
         href={link}
     >
-        <ESEvaIcon name='linkedin' />
+        <ESEvaIcon name='linkedin' size='xsmall' />
     </ESButton>
 )
 
@@ -63,7 +62,8 @@ const SANCourseProfessors = () => {
                 </ESRow>
                 <ESButton
                     uppercase
-                    size='small'
+                    bold
+                    size='xsmall'
                     color='primary'
                     variant='outlined'
                     className='mt-md san-tab-course-content__professors--load-more'
