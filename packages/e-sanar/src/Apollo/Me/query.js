@@ -9,24 +9,45 @@ export const GET_ME = gql`
                 id
                 contract
                 progress_percentage
-                performance_indicators
+                saved_contents {
+                    resource_type
+                    resource {
+                        title
+                        path
+                    }
+                }
+                performance_indicators {
+                    commitment
+                    uniformity
+                    progress {
+                        done
+                        total
+                    }
+                    tests {
+                        done
+                        total
+                    }
+                    interaction
+                }
                 course {
                     id
                     name
+                    icon
                     status
                     knowledge_area
                     cover_picture
                     professors {
                         id
                         name
+                        profile_picture
                     }
                     comments {
                         id
                         text
+                        created_at
                         answers
                         user {
                             id
-                            name
                         }
                     }
                     lives {
@@ -41,6 +62,7 @@ export const GET_ME = gql`
                         professors {
                             id
                             name
+                            profile_picture
                         }
                     }
                 }
