@@ -10,12 +10,15 @@ export const GET_ME = gql`
                 id
                 contract
                 progress_percentage
-                saved_contents {
-                    resource_type
-                    resource {
-                        title
-                        path
+                bookmarks {
+                    data {
+                        resource_type
+                        resource {
+                            title
+                            path
+                        }
                     }
+                    count
                 }
                 performance {
                     interaction {
