@@ -4,6 +4,51 @@
         "percentOf": "{{done}} de {{final}}",
         "you": "Você"
     },
+    "mainMenu": {
+        "back": "Voltar ao menu principal",
+        "title": {
+            "menu": "Menu",
+            "notifications": "Notificações",
+            "studying": "Estou estudando",
+            "myAccount": "Minha conta",
+            "search": "Busca"
+        },
+        "initial": {
+            "init": "Início",
+            "notifications": "Notificações",
+            "schedule": "Cronograma",
+            "saved": "Salvos",
+            "performace": "Desempenho",
+            "questions": "Questões",
+            "changeCourse": "Trocar de curso",
+            "myAccount": "Minha conta"
+        },
+        "myAccount": {
+            "management": "Gerenciamento",
+            "myData": "Meus dados",
+            "changePassword": "Trocar minha senha",
+            "help": "Ajuda",
+            "sendFeedback": "Enviar feedback",
+            "helpCenter": "Central de ajuda",
+            "otherLinks": "Outros links",
+            "termsOfUse": "Termos de Uso",
+            "privacyPolicy": "Política de Privacidade",
+            "leaveAccount": "Sair da conta"
+        },
+        "changeCourse": {
+            "changeCourse": "Trocar de curso",
+            "message": "Você tem <strong>{{courses}}</strong> cursos em “{{filter}}”"
+        },
+        "notifications": {
+            "notRead": "Não lidas",
+            "read": "Já lidas",
+            "markAllRead": "Marcar todas como lidas",
+            "alreadyRead": "Já lidos",
+            "excludeRlreadyRead": "Excluir já lidos",
+            "markRead": "Marcar como lida",
+            "markUnread": "Marcar como não lida"
+        }
+    },
     "courseDetails": {
         "viewMyPerformance": "Ver meu desempenho",
         "myDevelopment": "Meu desenvolvimento",

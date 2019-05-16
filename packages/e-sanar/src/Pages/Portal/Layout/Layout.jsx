@@ -3,13 +3,12 @@ import { Layout } from 'antd'
 
 import { Scrollbars } from 'react-custom-scrollbars'
 
-import ESMainMenu from 'sanar-ui/dist/Components/Organisms/MainMenu'
-
 import SANFooter from './Footer'
+import SANMenu from './Menu'
 
 const SANPortalLayout = ({ children }) => (
     <Layout className='san-portal-layout'>
-        <ESMainMenu title='Menu' />
+        <SANMenu />
         <Layout>
             <Scrollbars renderTrackHorizontal={() => <div />}>
                 <Layout.Content className='san-portal-layout__content'>
