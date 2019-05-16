@@ -3,6 +3,7 @@ import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import SessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import ESCardCourseModule from 'sanar-ui/dist/Components/Molecules/CardCourseModule'
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
+import { useTranslation } from 'react-i18next'
 
 const mock = {
     image1:
@@ -12,32 +13,46 @@ const mock = {
 }
 
 const SANCourseContinue = () => {
+    const { t } = useTranslation()
+
     return (
         <div className='san-tab-course-content__continue'>
             <SANPortalPagesContainer>
                 <ESRow gutter={24}>
                     <ESCol xs={24} md={12}>
-                        <SessionTitle title='Onde você parou' />
+                        <SessionTitle
+                            title={t(
+                                'courseDetails.tabContent.continue.whereStopped'
+                            )}
+                        />
                         <ESCardCourseModule
                             className='san-tab-course-content__continue--card'
                             moduleName='Módulo 1'
                             title='Planner de estudo'
                             badge='25/30'
                             progress={75}
-                            actionName='Ver aulas'
+                            actionName={t(
+                                'courseDetails.tabContent.cardModuleAction'
+                            )}
                             moduleTime='30min'
                             image={mock.image1}
                         />
                     </ESCol>
                     <ESCol xs={24} md={12}>
-                        <SessionTitle title='Próximo módulo' />
+                        <SessionTitle
+                            title={t(
+                                'courseDetails.tabContent.continue.nextModule'
+                            )}
+                        />
                         <ESCardCourseModule
                             className='san-tab-course-content__continue--card'
                             moduleName='Módulo 1'
                             title='Planner de estudo'
                             badge='25/30'
                             progress={75}
-                            actionName='Ver aulas'
+                            actionName={t(
+                                'courseDetails.tabContent.cardModuleAction'
+                            )}
                             moduleTime='30min'
                             image={mock.image2}
                         />

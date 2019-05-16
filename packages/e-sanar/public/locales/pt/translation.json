@@ -96,7 +96,30 @@
         "progressbarTitle": "Progresso do curso",
         "downloadTooltip": "Complete {{percent}} do curso para disponibilizar o seu certificado.",
         "tabGeneral": "Visão Geral",
-        "tabContent": "Conteúdo",
+        "tabContent": {
+            "title": "Conteúdo",
+            "cardModuleAction": "Ver aulas",
+            "continue": {
+                "whereStopped": "Onde você parou",
+                "nextModule": "Próximo módulo"
+            },
+            "professors": {
+                "title": "Professores",
+                "subtitle": "Conheça os especialistas que vão te ajudar no seu aprendizado",
+                "buttonLoadMore": "Carregar mais"
+            },
+            "modules": {
+                "pluralName": "módulos",
+                "singularName": "Módulo",
+                "whatCourseHas": "O que esse curso possui",
+                "whatCourseHasSubtitle": "Tudo o que você tem acesso na plataforma",
+                "status": {
+                    "done": "Concluídas",
+                    "all": "Todas",
+                    "incomplete": "Incomplete"
+                }
+            }
+        },
         "tabComments": "Perguntas e Respostas"
     },
     "footer": {

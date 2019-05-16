@@ -7,6 +7,8 @@ import ESCardAvatar from 'sanar-ui/dist/Components/Molecules/CardAvatar'
 
 import { professors } from './mocks'
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
+import { useAuthContext } from 'Hooks/auth'
+import { useTranslation } from 'react-i18next'
 
 const linkedin = link => (
     <ESButton
@@ -21,16 +23,26 @@ const linkedin = link => (
 )
 
 const SANCourseProfessors = () => {
+    const { t } = useTranslation()
+
+    const { getEnrollment } = useAuthContext()
+
+    const { course: courseMock } = getEnrollment()
+
+    const course = {
+        ...courseMock
+    }
+
     return (
         <div className='san-tab-course-content__professors'>
             <SANPortalPagesContainer>
                 <SessionTitle
-                    title='Professores'
-                    subtitle='Conheça os especialistas que vão te ajudar no seu aprendizado'
+                    title={t('courseDetails.tabContent.professors.title')}
+                    subtitle={t('courseDetails.tabContent.professors.subtitle')}
                 />
 
-                <ESRow gutter={24}>
-                    {professors.map((professor, index) => {
+                <ESRow gutter={24} type='flex' justify='space-around'>
+                    {course.professors.map((professor, index) => {
                         return (
                             <ESCol
                                 className='mb-md'
@@ -56,7 +68,7 @@ const SANCourseProfessors = () => {
                     variant='outlined'
                     className='mt-md san-tab-course-content__professors--load-more'
                 >
-                    Carregar mais
+                    {t('courseDetails.tabContent.professors.buttonLoadMore')}
                 </ESButton>
             </SANPortalPagesContainer>
         </div>
