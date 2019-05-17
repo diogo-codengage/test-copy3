@@ -141,7 +141,7 @@ ESLiveSection.propTypes = {
     description: PropTypes.string,
     avatar: PropTypes.string,
     name: PropTypes.string,
-    qtCourses: PropTypes.string,
+    qtCourses: PropTypes.number,
     action: PropTypes.node,
     courses: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }
