@@ -5,10 +5,10 @@ import ESAvatarListItem from '../AvatarListItem'
 import ESTypography from '../../Atoms/Typography'
 import { ESRow, ESCol } from '../../Atoms/Grid'
 
-const ESRecentSavedListItem = ({ className, title, description }) => {
+const ESRecentSavedListItem = ({ className, title, description, avatar }) => {
     const classes = classNames('es-recent-saved-list-item', className)
     return (
-        <ESAvatarListItem className={classes}>
+        <ESAvatarListItem avatar={avatar} className={classes}>
             <ESTypography
                 className='mb-xs es-recent-saved-list-item--title'
                 variant='subtitle2'

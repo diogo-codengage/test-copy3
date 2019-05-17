@@ -59,13 +59,18 @@ export const GET_ME = gql`
                         resume
                     }
                     comments {
-                        id
-                        text
-                        created_at
-                        answers
-                        user {
+                        data {
                             id
+                            text
+                            created_at
+                            answers
+                            user {
+                                name
+                                id
+                                profile_picture
+                            }
                         }
+                        count
                     }
                     lives {
                         id
