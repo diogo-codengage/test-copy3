@@ -19,7 +19,7 @@ const ESEvaIcon = ({ className, style, size, color, ...props }) => {
 ESEvaIcon.propTypes = Object.assign(
     { ...Icon['propTypes'] },
     {
-        className: PropTypes.string,
+        className: PropTypes.any,
         size: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large', 'xlarge']),
         color: PropTypes.oneOf([
             'primary',

@@ -27,8 +27,8 @@ const ESNotification = ({
     goToLive,
     markAsRead,
     labelMarkAsRead,
-    markAsUnead,
-    labelMarkAsUnead,
+    markAsUnread,
+    labelMarkAsUnread,
     labelGoToLive
 }) => {
     const classes = classNames(
@@ -88,9 +88,9 @@ const ESNotification = ({
                             color='primary'
                             bold
                             size='xsmall'
-                            onClick={markAsUnead}
+                            onClick={markAsUnread}
                         >
-                            {labelMarkAsUnead}
+                            {labelMarkAsUnread}
                         </ESButton>
                     ) : (
                         <ESButton

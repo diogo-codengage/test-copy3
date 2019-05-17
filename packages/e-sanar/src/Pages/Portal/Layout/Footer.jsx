@@ -95,10 +95,12 @@ const SANFooter = () => {
                 gutter={8}
             >
                 <ESCol>
-                    <ESTypography>{t('footer.copyright')}</ESTypography>
+                    <ESTypography variant='caption' className='mb-xs'>
+                        {t('footer.copyright')}
+                    </ESTypography>
                 </ESCol>
                 <ESCol>
-                    <ESTypography strong>
+                    <ESTypography variant='caption' strong>
                         <a href='foo'>{t('footer.termsOfUse')}</a>
                         {' | '}
                         <a href='foo'>{t('footer.privacyPolicy')}</a>

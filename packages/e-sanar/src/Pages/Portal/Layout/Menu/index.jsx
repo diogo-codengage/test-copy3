@@ -46,6 +46,7 @@ const SANMenu = () => {
             onInitialClick={() => setTab(0)}
             title={title}
             theme={theme}
+            className='san-main-menu'
         >
             {index === 0 && <SANInitial {...{ setTab }} />}
             {index === 1 && <SANNotifications {...{ setTab }} />}
