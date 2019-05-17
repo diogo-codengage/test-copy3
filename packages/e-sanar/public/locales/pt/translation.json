@@ -79,7 +79,8 @@
 
         "recentCommentsTitle": "Perguntas e Respostas Recentes",
         "recentCommentsSubtitle": "Vejas as últimas perguntas feitas por seus colegas de curso",
-        "recentCommentsButton": "Ver todos os comentários",
+        "recentCommentsDays": "Há {{days}} dias",
+        "recentCommentsButton": "Ver todos as perguntas",
         "recentlySavedTitle": "Salvos Recentemente",
         "recentlySavedSubtitle": "Veja os dois últimos itens salvos recentemente",
         "recentlySavedButton": "Ver todos os itens salvos",
@@ -116,7 +117,7 @@
                 "status": {
                     "done": "Concluídas",
                     "all": "Todas",
-                    "incomplete": "Incomplete"
+                    "incomplete": "Incompleto"
                 }
             }
         },
