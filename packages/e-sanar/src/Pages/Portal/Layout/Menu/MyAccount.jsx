@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -14,15 +14,26 @@ import ESDivider from 'sanar-ui/dist/Components/Atoms/Divider'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 
 import { useAuthContext } from 'Hooks/auth'
+import SANLogout from 'Components/ModalLogout'
 
 const intlPath = 'mainMenu.myAccount.'
 
 const SANMyAccount = ({ setTab }) => {
     const { me } = useAuthContext()
     const { t } = useTranslation()
+    const [open, setOpen] = useState(false)
+
+    const handleOtherLinks = ({ key }) => {
+        setOpen(Number(key) === 2)
+    }
 
     return (
         <>
+            <SANLogout
+                visible={open}
+                onLeave={() => setOpen(false)}
+                onCancel={() => setOpen(false)}
+            />
             <div className='pl-md pr-md mb-md'>
                 <ESButton
                     className='mb-md'
@@ -95,19 +106,19 @@ const SANMyAccount = ({ setTab }) => {
             >
                 {t(`${intlPath}otherLinks`)}
             </ESTypography>
-            <ESNavigationList onClick={console.log}>
+            <ESNavigationList onClick={handleOtherLinks}>
                 <ESNavigationListItem
-                    key='0'
+                    key={0}
                     title={t(`${intlPath}termsOfUse`)}
                     arrow={false}
                 />
                 <ESNavigationListItem
-                    key='1'
+                    key={1}
                     title={t(`${intlPath}privacyPolicy`)}
                     arrow={false}
                 />
                 <ESNavigationListItem
-                    key='2'
+                    key={2}
                     title={t(`${intlPath}leaveAccount`)}
                     arrow={false}
                 />
