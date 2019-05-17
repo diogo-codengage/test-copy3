@@ -94,6 +94,7 @@ const SANPerformance = () => {
                             variant='outlined'
                             bold
                             uppercase
+                            blockOnlyMobile
                         >
                             {t('courseDetails.viewMyPerformance')}
                         </ESButton>
