@@ -17,7 +17,6 @@ const ESNavigationListItem = ({ className, title, icon, arrow, ...props }) => {
             {arrow && (
                 <ESEvaIcon
                     size='xsmall'
-                    color='default'
                     name='arrow-ios-forward-outline'
                     className='es-navigation-list-item__arrow'
                 />

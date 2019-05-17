@@ -21,7 +21,7 @@ const ESLeftOff = ({
             <ESTypography level={6} className='mb-xs'>
                 {title}
             </ESTypography>
-            <ESTypography variant='overline' className='overline mb-sm'>
+            <ESTypography variant='overline' className='text-white-6 mb-sm'>
                 {label}
             </ESTypography>
             <div className='es-left-off__class'>

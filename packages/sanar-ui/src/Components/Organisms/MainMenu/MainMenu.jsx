@@ -108,15 +108,12 @@ const ESMainMenu = ({
             )}
 
             <div className={classesContent}>
-                {staticToolbar && (
-                    <div
-                        onClick={() => setToggle(false)}
-                        className='backdrop'
-                    />
-                )}
                 <MainMenuContentHeader title={title} />
                 {children}
             </div>
+            {staticToolbar && (
+                <div onClick={() => setToggle(false)} className='backdrop' />
+            )}
         </div>
     )
 }
