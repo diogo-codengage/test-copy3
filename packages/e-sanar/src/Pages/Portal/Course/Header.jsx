@@ -17,22 +17,7 @@ const SANCourseHeader = () => {
 
     const { getEnrollment } = useAuthContext()
 
-    const {
-        course: courseMock,
-        certificate: certificateMock,
-        progress_percentage
-    } = getEnrollment()
-
-    const course = {
-        ...courseMock,
-        cover_pictures:
-            'https://freeiconshop.com/wp-content/uploads/edd/bulb-flat.png'
-    }
-
-    const certificate = {
-        ...certificateMock,
-        link: 'http://globo.com'
-    }
+    const { course, certificate, progress_percentage } = getEnrollment()
 
     return (
         <ANTPageHeader className='header'>
@@ -51,7 +36,7 @@ const SANCourseHeader = () => {
                     >
                         <ESRow type='flex' align='middle' gutter={16}>
                             <ESCol>
-                                <img alt='' src={course.cover_pictures} />
+                                <img alt='' src={course.icon} />
                             </ESCol>
                             <ESCol
                                 className='header__container__about-course--descriptions'
@@ -101,7 +86,7 @@ const SANCourseHeader = () => {
                                         variant='outlined'
                                         icon='download'
                                         size='small'
-                                        href={certificate.link}
+                                        href={certificate && certificate.link}
                                         target='_blank'
                                         disabled={
                                             certificate && certificate.available
