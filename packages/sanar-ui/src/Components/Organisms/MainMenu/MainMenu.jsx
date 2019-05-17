@@ -49,7 +49,8 @@ const ESMainMenu = ({
         theme,
         setTheme,
         toggle,
-        setToggle
+        setToggle,
+        staticToolbar
     } = useMainMenuContext()
 
     const classes = classNames(
@@ -58,8 +59,8 @@ const ESMainMenu = ({
         className
     )
     const classesContent = classNames('es-main-menu__content', {
-        open: position === 'bottom' && toggle,
-        close: position === 'bottom' && !toggle
+        open: (staticToolbar || position === 'bottom') && toggle,
+        close: (staticToolbar || position === 'bottom') && !toggle
     })
 
     useEffect(() => {
@@ -67,11 +68,13 @@ const ESMainMenu = ({
     }, [themeProp])
 
     const initialClick = e => {
+        setToggle(true)
         onInitialClick && onInitialClick(e)
         setTheme('primary')
     }
 
     const searchClick = e => {
+        setToggle(true)
         onSearchClick && onSearchClick(e)
         setTheme('light')
     }
@@ -105,6 +108,12 @@ const ESMainMenu = ({
             )}
 
             <div className={classesContent}>
+                {staticToolbar && (
+                    <div
+                        onClick={() => setToggle(false)}
+                        className='backdrop'
+                    />
+                )}
                 <MainMenuContentHeader title={title} />
                 {children}
             </div>

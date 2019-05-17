@@ -17,24 +17,58 @@
         background-color: inherit;
         width: 304px;
         height: 100%;
-        transition: width 0.5s ease-in;
+        transition: all 0.5s ease-in;
+
+        .backdrop {
+            transition: all 0.5s ease-in;
+            bottom: 0;
+            left: 56px;
+            background: rgba(0, 0, 0, 0.75);
+            top: 0;
+            right: 0;
+            opacity: 0;
+        }
 
         &.open {
             width: 100%;
             position: absolute;
-            & * {
-                transition: all 0.3s linear;
-                visibility: visible;
+
+            *:not(.backdrop) {
+                transition: all 0.7s linear;
+                transform: translateX(0);
+            }
+
+            .es-main-menu__content {
+                &__header {
+                    width: 200px;
+                }
+            }
+
+            .backdrop {
+                left: 360px;
+                position: fixed;
+                opacity: 1;
             }
         }
 
         &.close {
             width: 0;
             position: absolute;
-            & * {
-                transition: all 1.5s linear;
-                visibility: hidden;
-                opacity: 0;
+
+            *:not(.backdrop) {
+                transition: all 1.25s linear;
+                transform: translateX(-304px);
+            }
+        }
+
+        @media (min-width: 1025px) {
+            &.open {
+                width: 304px;
+            }
+
+            &.close,
+            &.open {
+                left: 56px;
             }
         }
 
