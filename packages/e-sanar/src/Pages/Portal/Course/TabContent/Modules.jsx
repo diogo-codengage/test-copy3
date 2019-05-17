@@ -17,6 +17,14 @@ import { useTranslation } from 'react-i18next'
 
 const responsive = [
     {
+        breakpoint: 2500,
+        settings: {
+            slidesToShow: 3,
+            variableWidth: true,
+            arrows: true
+        }
+    },
+    {
         breakpoint: 1920,
         settings: {
             slidesToShow: 3,
@@ -47,9 +55,10 @@ const SANCourseModules = () => {
     return (
         <div className='san-tab-course-content__modules pt-md pb-lg'>
             <SANPortalPagesContainer>
-                <ESRow type='flex' gutter={24}>
-                    <ESCol xs={24} md={10} lg={24} xl={9} xxl={8}>
+                <ESRow type='flex' align='middle' gutter={24}>
+                    <ESCol xs={24} md={10} lg={9} xxl={8}>
                         <ESSessionTitle
+                            className='san-tab-course-content__modules--module-feature'
                             title={t(
                                 'courseDetails.tabContent.modules.whatCourseHas'
                             )}
@@ -58,7 +67,7 @@ const SANCourseModules = () => {
                             )}
                         />
                     </ESCol>
-                    <ESCol xs={24} md={14} lg={24} xl={15} xxl={16}>
+                    <ESCol xs={24} md={14} lg={15} xxl={16}>
                         <ESCarousel
                             slidesToScroll={1}
                             infinite={false}
@@ -79,7 +88,7 @@ const SANCourseModules = () => {
                     </ESCol>
                 </ESRow>
 
-                <ESDivider className='mb-xl mt-xl' />
+                <ESDivider className='san-tab-course-content__modules--divider' />
 
                 <ESSessionTitle
                     title={`42 ${t(
@@ -121,9 +130,13 @@ const SANCourseModules = () => {
                                         item.progress.total
                                     }`}
                                     progress={item.workload}
-                                    actionName={t(
-                                        'courseDetails.tabContent.cardModuleAction'
-                                    )}
+                                    actionName={
+                                        <span className='san-tab-course-content__modules--card-action'>
+                                            {t(
+                                                'courseDetails.tabContent.cardModuleAction'
+                                            )}
+                                        </span>
+                                    }
                                     moduleTime='30min'
                                     image={item.thumbnail}
                                 />

@@ -13,6 +13,33 @@
         .es-pagination {
             text-align: center;
         }
+
+        &--divider {
+            margin: @margin-md 0 @margin-md 0;
+            // margin: @margin-xl + @margin-md 0;
+        }
+
+        &--module-feature {
+            margin-bottom: @margin-md !important;
+        }
+
+        &--card-action {
+            display: none !important;
+
+            @media (min-width: @screen-sm) {
+                display: inline-block !important;
+            }
+        }
+
+        @media (min-width: @screen-md) {
+            &--divider {
+                margin: @margin-xl + @margin-md 0;
+            }
+
+            &--module-feature {
+                margin-bottom: 0 !important;
+            }
+        }
     }
 
     &__professors {
