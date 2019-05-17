@@ -37,9 +37,7 @@ const ESProgressBar = ({ className, percent, title, limit }) => {
                             <ESEvaIcon
                                 size='small'
                                 name='award-outline'
-                                EScoLESColor={
-                                    percent >= limit ? 'warning' : 'default'
-                                }
+                                className={percent >= limit && 'warning'}
                             />
                         </ESCol>
                     </ESRow>
