@@ -22,9 +22,11 @@
         opacity: 0;
         left: 0;
         position: fixed;
+        visibility: hidden;
     }
 
     &__content.open + .backdrop {
+        visibility: visible;
         opacity: 1;
     }
 

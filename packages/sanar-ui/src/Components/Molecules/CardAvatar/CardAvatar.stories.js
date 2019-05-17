@@ -10,7 +10,7 @@ const mock = {
 
 storiesOf('Molecules.CardAvatar', module).add('Simple', () => (
     <ESCardAvatar
-        image={mock.image}
+        image={text('Image', mock.image)}
         name={text('Name', 'Jennifer Aniston')}
         formation={text('Formation', 'Enfermeira Mestra em Saúde Pública')}
     />

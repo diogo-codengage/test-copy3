@@ -12,6 +12,7 @@ const ESButton = ({
     variant,
     color,
     block,
+    blockOnlyMobile,
     children,
     bold,
     uppercase,
@@ -28,6 +29,7 @@ const ESButton = ({
             [`es-button__variant--${variant}`]: variant,
             [`${color}`]: color,
             'es-button__block': block,
+            'es-button__block--mobile': blockOnlyMobile,
             bold: bold,
             uppercase: uppercase,
             circle: circle
@@ -75,7 +77,8 @@ ESButton.propTypes = Object.assign(
         size: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large']),
         type: PropTypes.oneOf(['solid', 'outlined', 'text']),
         color: PropTypes.oneOf(['primary', 'white', 'default']),
-        bold: PropTypes.bool
+        bold: PropTypes.bool,
+        blockOnlyMobile: PropTypes.bool
     }
 )
 

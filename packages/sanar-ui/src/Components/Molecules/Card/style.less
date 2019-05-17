@@ -12,13 +12,17 @@
             text-transform: uppercase;
         }
 
-        .ant-card-actions > li {
-            margin: 0;
-            padding: @margin-xs / 2;
-            border: none;
-            height: 100%;
-            & > span {
-                width: 100%;
+        .ant-card-actions {
+            border-radius: 0 0 @card-radius @card-radius;
+
+            > li {
+                margin: 0;
+                padding: @margin-xs / 2;
+                border: none;
+                height: 100%;
+                & > span {
+                    width: 100%;
+                }
             }
         }
     }

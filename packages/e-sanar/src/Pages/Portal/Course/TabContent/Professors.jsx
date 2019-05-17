@@ -60,6 +60,7 @@ const SANCourseProfessors = () => {
                 <ESButton
                     uppercase
                     bold
+                    blockOnlyMobile
                     size='xsmall'
                     color='primary'
                     variant='outlined'

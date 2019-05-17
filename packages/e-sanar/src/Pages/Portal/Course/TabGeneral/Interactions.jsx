@@ -12,6 +12,11 @@ import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 import { useAuthContext } from 'Hooks/auth.js'
+import { differenceInDays } from 'date-fns'
+
+//assets
+import book from 'assets/images/book.svg'
+import video from 'assets/images/video.svg'
 
 const SANInteractions = () => {
     const { t } = useTranslation()
@@ -22,17 +27,27 @@ const SANInteractions = () => {
     } = useAuthContext()
 
     const {
-        course: { comments: commentsMock }
+        course: { comments },
+        bookmarks
     } = getEnrollment()
 
-    const comments = commentsMock
+    const calcDiffDays = date => {
+        const diff = differenceInDays(new Date(), date)
+        return t('courseDetails.recentCommentsDays', { days: diff })
+    }
 
-    comments.forEach(comment => {
-        comment.user.profile_picture =
-            'https://www.domalberto.edu.br/wp-content/uploads/2017/02/joao.png'
-        comment.answers = comment.answers < 0 ? 0 : comment.answers
-        comment.last_update = 'Há 2 dias'
-    })
+    const bookmarkAvatar = status => {
+        switch (status) {
+            case 'Question':
+                return book
+            case 'Video':
+                return video
+            case 'Complement':
+                return ''
+            default:
+                return ''
+        }
+    }
 
     return (
         <SANPortalPagesContainer>
@@ -59,12 +74,12 @@ const SANInteractions = () => {
                                 style={{ margin: '0 auto' }}
                             >
                                 {t('courseDetails.recentCommentsButton')}
-                                <ESBadge count={31} />
+                                <ESBadge count={comments.count} />
                             </ESButton>
                         ]}
                     >
                         <ESListView>
-                            {comments.map(
+                            {comments.data.map(
                                 (comment, index) =>
                                     index < 2 && (
                                         <ESQuestionListItem
@@ -75,9 +90,9 @@ const SANInteractions = () => {
                                             title={comment.text}
                                             author={comment.user.name}
                                             responses={comment.answers}
-                                            interactionTime={
-                                                comment.last_update
-                                            }
+                                            interactionTime={calcDiffDays(
+                                                comment.created_at
+                                            )}
                                             badgeInfo={t('global.you')}
                                             userIsAuthor={
                                                 comment.user.id === idLoggedUser
@@ -110,21 +125,24 @@ const SANInteractions = () => {
                                 style={{ margin: '0 auto' }}
                             >
                                 {t('courseDetails.recentlySavedButton')}
-                                <ESBadge count={5} />
+                                <ESBadge count={bookmarks.count} />
                             </ESButton>
                         ]}
                     >
                         <ESListView>
-                            <ESRecentSavedListItem
-                                avatar='https://www.domalberto.edu.br/wp-content/uploads/2017/02/joao.png'
-                                title='Legislação do Sistema Único de Saúde e Saúde Coletiva'
-                                description='Módulo 2, aula 5'
-                            />
-                            <ESRecentSavedListItem
-                                avatar='https://www.domalberto.edu.br/wp-content/uploads/2017/02/joao.png'
-                                title='Legislação do Sistema Único de Saúde e Saúde Coletiva'
-                                description='Módulo 2, aula 5'
-                            />
+                            {bookmarks.data.map(
+                                (bookmark, index) =>
+                                    index <= 1 && (
+                                        <ESRecentSavedListItem
+                                            key={index}
+                                            avatar={bookmarkAvatar(
+                                                bookmark.resource_type
+                                            )}
+                                            title={bookmark.resource.title}
+                                            description={bookmark.resource.path}
+                                        />
+                                    )
+                            )}
                         </ESListView>
                     </ESCard>
                 </ESCol>
