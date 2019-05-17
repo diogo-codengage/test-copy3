@@ -80,6 +80,8 @@ export const GET_ME = gql`
                             id
                             name
                             profile_picture
+                            linkedin
+                            resume
                         }
                     }
                 }

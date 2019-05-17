@@ -13,25 +13,12 @@ import { useAuthContext } from 'Hooks/auth'
 const SANLives = () => {
     const { getEnrollment } = useAuthContext()
     const {
-        course: { lives: livesProp }
+        course: { lives }
     } = getEnrollment()
 
     const { t } = useTranslation()
 
-    const live = {
-        ...livesProp[0],
-        link: 'https://www.youtube.com/embed/aG-Go8W-wcE',
-        release_date: '2019-02-08T14:02:06.093Z',
-        scheduled: false,
-        professor: {
-            ...livesProp[0].professor,
-            formation: 'Enfermeira Mestra em São João.',
-            profile_picture:
-                'https://www.domalberto.edu.br/wp-content/uploads/2017/02/joao.png'
-        }
-    }
-
-    console.log(live)
+    const live = lives[0]
 
     const date = format(live.release_date, 'DD/MM/YYYY')
 
@@ -46,8 +33,10 @@ const SANLives = () => {
                 description={live.description}
                 title={live.title}
                 date={date}
-                avatar={live.professor.profile_picture}
-                name={live.professors.name}
+                linkedin={live.professors[0].linkedin}
+                avatar={live.professors[0].profile_picture}
+                name={live.professors[0].name}
+                formation={live.professors[0].resume}
                 action={
                     <ESButton
                         size='xsmall'

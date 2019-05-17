@@ -61,7 +61,6 @@ const SANNextLives = () => {
 
     const lives = livesProp.map((live, idx) => ({
         ...live,
-        release_date: '2019-02-08T14:02:06.093Z',
         scheduled: idx % 2 ? false : true
     }))
 
