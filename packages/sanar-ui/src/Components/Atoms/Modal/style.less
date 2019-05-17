@@ -1,8 +1,17 @@
-.es-pagination {
-  & > .ant-pagination-item-active {
-    background-color: @primary-color;
-    & > a {
-      color: @white;
+.es-modal {
+    & .ant-modal-title {
+        font-size: 20px;
+        font-weight: bold;
     }
-  }
+
+    & .ant-modal-footer {
+        border: none;
+        padding: 0 @padding-lg @padding-lg @padding-lg;
+    }
+
+    &-footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
 }

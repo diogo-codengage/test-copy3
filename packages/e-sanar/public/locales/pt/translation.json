@@ -2,7 +2,12 @@
     "hello": "Olá página inicial",
     "global": {
         "percentOf": "{{done}} de {{final}}",
-        "you": "Você"
+        "you": "Você",
+        "back": "Voltar",
+        "leave": "Sair"
+    },
+    "logout": {
+        "message": "Tem certeza que deseja sair da conta agora?"
     },
     "mainMenu": {
         "back": "Voltar ao menu principal",
