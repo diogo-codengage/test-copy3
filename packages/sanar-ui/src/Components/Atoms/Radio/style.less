@@ -20,7 +20,8 @@
             .ant-radio-button-wrapper {
                 &-checked {
                     &:not(.ant-radio-button-wrapper-disabled) {
-                        border: 1px solid @grey-3;
+                        border: none;
+                        box-shadow: inset 0px 0px 0px 1px @grey-3 !important;
                     }
                 }
             }
@@ -35,7 +36,7 @@
             }
 
             &-checked {
-                box-shadow: none;
+                box-shadow: inset 0px 0px 0px 1px @grey-3;
 
                 &:hover {
                     box-shadow: none;
@@ -43,11 +44,9 @@
                 &:not(.ant-radio-button-wrapper-disabled) {
                     background: @grey-1;
                     color: @grey-8;
-                    border-color: @grey-3;
 
                     &:hover {
                         background: @grey-2;
-                        border-color: @grey-4;
                         color: @grey-9;
                     }
 
