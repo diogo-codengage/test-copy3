@@ -24,6 +24,7 @@ const ESSearch = ({ className, placeholder }) => {
                     uppercase
                     color='primary'
                     className='ml-md'
+                    disabled
                 >
                     BUSCAR
                 </ESButton>

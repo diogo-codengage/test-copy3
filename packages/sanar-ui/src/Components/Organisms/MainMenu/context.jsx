@@ -19,6 +19,11 @@ export const MainMenuProvider = ({ children }) => {
     useMemo(() => setStaticToolbar(width >= 1025 && width <= 1365), [width])
     useMemo(() => setShowClose(width <= 1365), [width])
 
+    const onClose = () => {
+        setToggle(false)
+        setTheme('primary')
+    }
+
     const value = {
         position,
         theme,
@@ -26,7 +31,8 @@ export const MainMenuProvider = ({ children }) => {
         toggle,
         setToggle,
         showClose,
-        staticToolbar
+        staticToolbar,
+        onClose
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>
