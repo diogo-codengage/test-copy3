@@ -50,7 +50,8 @@ const ESMainMenu = ({
         setTheme,
         toggle,
         setToggle,
-        staticToolbar
+        staticToolbar,
+        onClose
     } = useMainMenuContext()
 
     const classes = classNames(
@@ -97,7 +98,7 @@ const ESMainMenu = ({
                         <InitalButton onClick={initialClick} />
                         <SearchButton onClick={searchClick} />
                     </div>
-                    <img src={logoSvg} />
+                    <img className='logo' src={logoSvg} />
                 </div>
             ) : (
                 <div className='es-main-menu__sidebar-bottom'>
@@ -111,9 +112,7 @@ const ESMainMenu = ({
                 <MainMenuContentHeader title={title} />
                 {children}
             </div>
-            {staticToolbar && (
-                <div onClick={() => setToggle(false)} className='backdrop' />
-            )}
+            {staticToolbar && <div onClick={onClose} className='backdrop' />}
         </div>
     )
 }

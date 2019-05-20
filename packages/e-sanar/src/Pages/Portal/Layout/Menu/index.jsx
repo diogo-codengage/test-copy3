@@ -3,6 +3,8 @@ import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import ESMainMenu from 'sanar-ui/dist/Components/Organisms/MainMenu'
+import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
+import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 
 import SANInitial from './Initial'
 import SANNotifications from './Notifications'
@@ -11,6 +13,39 @@ import SANMyAccount from './MyAccount'
 import SANSearch from './Search'
 
 const intlPath = 'mainMenu.title.'
+
+const MenuContent = ({ index, setTab }) => {
+    const { t } = useTranslation()
+
+    switch (index) {
+        case 0:
+            return <SANInitial {...{ setTab }} />
+        case 1:
+            return <SANNotifications {...{ setTab }} />
+        case 6:
+            return <SANCourseChange {...{ setTab }} />
+        case 7:
+            return <SANMyAccount {...{ setTab }} />
+        case 8:
+            return <SANSearch />
+        default:
+            return (
+                <div className='pl-md pr-md mb-md'>
+                    <ESButton
+                        className='mb-md'
+                        size='xsmall'
+                        variant='outlined'
+                        color='white'
+                        block
+                        onClick={() => setTab(0)}
+                    >
+                        <ESEvaIcon name='arrow-back-outline' />
+                        {t('mainMenu.back')}
+                    </ESButton>
+                </div>
+            )
+    }
+}
 
 const SANMenu = () => {
     const { t } = useTranslation()
@@ -48,11 +83,7 @@ const SANMenu = () => {
             theme={theme}
             className='san-main-menu'
         >
-            {index === 0 && <SANInitial {...{ setTab }} />}
-            {index === 1 && <SANNotifications {...{ setTab }} />}
-            {index === 6 && <SANCourseChange {...{ setTab }} />}
-            {index === 7 && <SANMyAccount {...{ setTab }} />}
-            {index === 8 && <SANSearch />}
+            <MenuContent {...{ index, setTab }} />
         </ESMainMenu>
     )
 }

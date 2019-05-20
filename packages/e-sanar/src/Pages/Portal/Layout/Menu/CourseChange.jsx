@@ -32,8 +32,8 @@ const SANCourseChange = ({ setTab }) => {
                 title='Trilha Sanar Enfermagem'
                 date='23/05/2020'
                 percent={45}
-                coverPicture='http://sites.psu.edu/huangnutr360/files/2017/04/lesson-0-1ta118a.png'
-                icon='https://public-v2links.adobecc.com/708e2f04-215d-454f-6692-c1d3b53d580f/component?params=component_id:2eef4ded-78c2-4ef5-abe4-08b602aad71c&params=version:0&token=1558008652_da39a3ee_7a22c22a02018c4fd70f9f9f69150074add489ff&api_key=CometServer1'
+                coverPicture='https://public-v2links.adobecc.com/708e2f04-215d-454f-6692-c1d3b53d580f/component?params=component_id:899c6240-1561-47a3-b425-036d434af138&params=version:0&token=1558439368_da39a3ee_68fc0088bfa72e77be9860d55ddd139582a2974a&api_key=CometServer1'
+                icon='https://public-v2links.adobecc.com/708e2f04-215d-454f-6692-c1d3b53d580f/component?params=component_id:4bebafd6-cbae-4b0f-a8b3-9dcc45696d90&params=version:0&token=1558439368_da39a3ee_68fc0088bfa72e77be9860d55ddd139582a2974a&api_key=CometServer1'
                 onContinue={console.log}
                 module='Continuar no Módulo 2, aula 5'
                 description='Per aumento de cachacis, eu reclamis.'
@@ -68,8 +68,8 @@ const SANCourseChange = ({ setTab }) => {
                         percent={45}
                         arrow
                         round
-                        coverPicture='http://sites.psu.edu/huangnutr360/files/2017/04/lesson-0-1ta118a.png'
-                        icon='https://public-v2links.adobecc.com/708e2f04-215d-454f-6692-c1d3b53d580f/component?params=component_id:2eef4ded-78c2-4ef5-abe4-08b602aad71c&params=version:0&token=1558008652_da39a3ee_7a22c22a02018c4fd70f9f9f69150074add489ff&api_key=CometServer1'
+                        coverPicture='https://public-v2links.adobecc.com/708e2f04-215d-454f-6692-c1d3b53d580f/component?params=component_id:0350b44a-5d5b-4fc8-a46e-e69fbe91c118&params=version:0&token=1558439368_da39a3ee_68fc0088bfa72e77be9860d55ddd139582a2974a&api_key=CometServer1'
+                        icon='https://public-v2links.adobecc.com/708e2f04-215d-454f-6692-c1d3b53d580f/component?params=component_id:4bebafd6-cbae-4b0f-a8b3-9dcc45696d90&params=version:0&token=1558439368_da39a3ee_68fc0088bfa72e77be9860d55ddd139582a2974a&api_key=CometServer1'
                         onChange={console.log}
                     />
                 ))}
