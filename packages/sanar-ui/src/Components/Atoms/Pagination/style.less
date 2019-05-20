@@ -1,4 +1,59 @@
 .es-pagination {
+    &--arrow {
+        &--prev {
+            margin: 0 @margin-xs 0 0 !important;
+        }
+
+        &--next {
+            margin: 0 0 0 @margin-xs !important;
+        }
+
+        &--next,
+        &--prev {
+            padding: 0 @padding-sm;
+
+            height: auto;
+            min-height: 100% !important;
+            max-height: 100% !important;
+
+            .es-eva-icon {
+                color: @grey-6;
+            }
+
+            &:hover {
+                .es-eva-icon {
+                    color: @grey-7;
+                }
+            }
+        }
+    }
+
+    &--jumps {
+        width: 32px;
+        height: auto;
+        min-height: 100% !important;
+        max-height: 100% !important;
+
+        .es-eva-icon {
+            color: @grey-4;
+        }
+
+        &:hover {
+            .es-eva-icon {
+                color: @grey-5;
+            }
+        }
+    }
+
+    .ant-pagination-prev,
+    .ant-pagination-next {
+        display: none;
+
+        @media (min-width: @screen-sm) {
+            display: inline-block;
+        }
+    }
+
     & > .ant-pagination-item {
         &:hover,
         &:focus {
