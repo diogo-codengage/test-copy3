@@ -38,6 +38,12 @@
         transition: all 0.5s ease-in;
         overflow: hidden;
 
+        // Sempre que não houver espaço deixará "scrollavel", mesmo em desktop.
+        &--scrollable {
+            max-height: ~'calc(100% - 72px)';
+            overflow-y: auto;
+        }
+
         &.open {
             width: 100%;
             position: absolute;

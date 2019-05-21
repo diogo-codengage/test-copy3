@@ -110,7 +110,9 @@ const ESMainMenu = ({
 
             <div className={classesContent}>
                 <MainMenuContentHeader title={title} />
-                {children}
+                <div className='es-main-menu__content--scrollable'>
+                    {children}
+                </div>
             </div>
             {staticToolbar && <div onClick={onClose} className='backdrop' />}
         </div>
