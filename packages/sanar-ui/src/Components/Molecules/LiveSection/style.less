@@ -3,6 +3,17 @@
         overflow: hidden;
         height: 100%;
         border-radius: @border-radius-base;
+        position: relative;
+
+        & .aovivo {
+            padding: 4px 8px;
+            background-color: @error-color;
+            color: @white;
+            border-radius: 50vh;
+            bottom: 42px;
+            right: 16px;
+            position: absolute;
+        }
     }
 
     @media (max-width: @screen-sm-max) {
