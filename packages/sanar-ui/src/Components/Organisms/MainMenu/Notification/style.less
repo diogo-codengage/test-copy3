@@ -1,76 +1,104 @@
+.read {
+    &-exit {
+        opacity: 1;
+    }
+    &-exit-active {
+        opacity: 0;
+        transform: translateX(-100%);
+        transition: all 500ms ease-in;
+    }
+}
+
+.unread {
+    &-exit {
+        opacity: 1;
+    }
+    &-exit-active {
+        opacity: 0;
+        transform: translateX(100%);
+        transition: all 500ms ease-in;
+    }
+}
+
 .es-notification {
-    position: relative;
-    overflow: hidden;
-    background-color: @white-10;
-    width: 100%;
-    padding: @padding-sm @padding-sm @padding-sm @padding-sm + 32;
-    min-height: 60px;
-
-    &:first-child {
-        border-radius: @border-radius-base @border-radius-base 0 0;
+    &-list {
+        transition: all 0.3s ease-in;
     }
 
-    &:last-child {
-        border-radius: 0 0 @border-radius-base @border-radius-base;
-    }
+    &-item {
+        position: relative;
+        overflow: hidden;
+        background-color: @white-10;
+        width: 100%;
+        padding: @padding-sm @padding-sm @padding-sm @padding-sm + 32;
+        min-height: 60px;
 
-    &:only-child {
-        border-radius: @border-radius-base;
-    }
+        &:first-child {
+            border-radius: @border-radius-base @border-radius-base 0 0;
+        }
 
-    &:not(:last-child) {
-        border-bottom: 1px solid @grey-3;
-    }
+        &:last-child {
+            border-radius: 0 0 @border-radius-base @border-radius-base;
+        }
 
-    &::before {
-        content: '';
-        top: 0;
-        left: 0;
-        width: 20px;
-        position: absolute;
-        height: 100%;
-    }
+        &:only-child {
+            border-radius: @border-radius-base;
+        }
 
-    & > .icon {
-        position: absolute;
-        top: 12px;
-        left: 8px;
-        color: @white;
-        padding: @padding-xs - 2;
-        display: inline-flex;
-        border-radius: 50vh;
-    }
+        &:not(:last-child) {
+            border-bottom: 1px solid @grey-3;
+        }
 
-    &__default {
         &::before {
-            background-color: @primary-1;
+            content: '';
+            top: 0;
+            left: 0;
+            width: 20px;
+            position: absolute;
+            height: 100%;
         }
+
         & > .icon {
-            background-color: @primary-2;
+            position: absolute;
+            top: 12px;
+            left: 8px;
+            color: @white;
+            padding: @padding-xs - 2;
+            display: inline-flex;
+            border-radius: 50vh;
         }
-    }
-    &__medium {
-        &::before {
-            background-color: @red-1;
+
+        &__default {
+            &::before {
+                background-color: @primary-1;
+            }
+            & > .icon {
+                background-color: @primary-2;
+            }
         }
-        & > .icon {
-            background-color: @red-2;
+        &__medium {
+            &::before {
+                background-color: @red-1;
+            }
+            & > .icon {
+                background-color: @red-2;
+            }
         }
-    }
-    &__high {
-        &::before {
-            background-color: @gold-1;
+        &__high {
+            &::before {
+                background-color: @gold-1;
+            }
+            & > .icon {
+                background-color: @gold-2;
+            }
         }
-        & > .icon {
-            background-color: @gold-2;
-        }
-    }
-    &__read {
-        &::before {
-            background-color: @grey-solid-4;
-        }
-        & > .icon {
-            background-color: @grey-solid-6;
+        &__read {
+            &::before {
+                background-color: @grey-solid-4;
+            }
+            & > .icon {
+                background-color: @grey-solid-6;
+            }
         }
     }
 }
