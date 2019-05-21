@@ -15,6 +15,7 @@ import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 
 import { useAuthContext } from 'Hooks/auth'
 import SANLogout from 'Components/ModalLogout'
+import SANFeedback from 'Components/ModalFeedback'
 
 const intlPath = 'mainMenu.myAccount.'
 
@@ -22,9 +23,14 @@ const SANMyAccount = ({ setTab }) => {
     const { me } = useAuthContext()
     const { t } = useTranslation()
     const [open, setOpen] = useState(false)
+    const [openFeedback, setOpenFeedback] = useState(false)
 
     const handleOtherLinks = ({ key }) => {
         setOpen(Number(key) === 2)
+    }
+
+    const handleHelp = ({key}) => {
+        setOpenFeedback(Number(key) === 0)
     }
 
     return (
@@ -33,6 +39,12 @@ const SANMyAccount = ({ setTab }) => {
                 visible={open}
                 onLeave={() => setOpen(false)}
                 onCancel={() => setOpen(false)}
+            />
+            <SANFeedback
+                visible={openFeedback}
+                onLeave={() => setOpenFeedback(false)}
+                onCancel={() => setOpenFeedback(false)}
+                onSendEnd={() => setOpenFeedback(false)}
             />
             <div className='pl-md pr-md mb-md'>
                 <ESButton
@@ -80,7 +92,7 @@ const SANMyAccount = ({ setTab }) => {
             >
                 {t(`${intlPath}help`)}
             </ESTypography>
-            <ESNavigationList onClick={console.log}>
+            <ESNavigationList onClick={handleHelp}>
                 <ESNavigationListItem
                     key='0'
                     title={t(`${intlPath}sendFeedback`)}
