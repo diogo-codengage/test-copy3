@@ -20,7 +20,36 @@
     }
 }
 
+.opacity {
+    &-enter {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    &-enter-active {
+        opacity: 1;
+        transform: translateX(0);
+        transition: opacity 300ms, transform 300ms;
+    }
+    &-exit {
+        opacity: 1;
+    }
+    &-exit-active {
+        opacity: 0;
+        transform: scale(0.9);
+        transition: opacity 300ms, transform 300ms;
+    }
+}
+
 .es-notification {
+    &-empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        max-width: 210px;
+        margin: auto;
+    }
+
     &-list {
         transition: all 0.3s ease-in;
     }

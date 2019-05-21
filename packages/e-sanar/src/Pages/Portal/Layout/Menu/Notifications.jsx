@@ -5,7 +5,8 @@ import { CSSTransition } from 'react-transition-group'
 
 import {
     ESNotificationList,
-    ESNotificationItem
+    ESNotificationItem,
+    ESNotificationEmpty
 } from 'sanar-ui/dist/Components/Organisms/MainMenu'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
@@ -70,6 +71,17 @@ const notificationsUnread = [
     }
 ]
 
+const Notification = ({ ...props }) => {
+    const { t } = useTranslation()
+    return (
+        <ESNotificationItem
+            {...props}
+            labelMarkAsRead={t(`${intlPath}markRead`)}
+            labelMarkAsUnread={t(`${intlPath}markUnread`)}
+        />
+    )
+}
+
 const SANNotifications = ({ setTab }) => {
     const { t } = useTranslation()
     const [reads, setReads] = useState(notificationsRead)
@@ -91,131 +103,133 @@ const SANNotifications = ({ setTab }) => {
                 </ESButton>
             </div>
 
-            <ESTabs size='small' tabBarGutter={0} center defaultActiveKey='1'>
-                <ESTabPane
-                    tab={
-                        <ESTypography strong variant='subtitle2'>
-                            {t(`${intlPath}notRead`)}
-                        </ESTypography>
-                    }
-                    key='1'
+            {reads.length || unreads.length ? (
+                <ESTabs
+                    size='small'
+                    tabBarGutter={0}
+                    center
+                    defaultActiveKey='1'
                 >
-                    <div className='pl-md pr-md pb-md d-flex align-items-center justify-content-between'>
-                        <div className='d-flex align-items-center'>
-                            <ESTypography
-                                className='mr-xs'
-                                strong
-                                variant='caption'
-                            >
-                                3
-                            </ESTypography>
-                            <ESTypography variant='caption'>
+                    <ESTabPane
+                        tab={
+                            <ESTypography strong variant='subtitle2'>
                                 {t(`${intlPath}notRead`)}
                             </ESTypography>
-                        </div>
-                        <ESButton
-                            size='xsmall'
-                            bold
-                            color='white'
-                            variant='text'
-                            onClick={() => setReads([])}
-                        >
-                            {t(`${intlPath}markAllRead`)}
-                        </ESButton>
-                    </div>
-                    <div className='pl-md pr-md pb-md'>
-                        <ESNotificationList>
-                            {reads.map((e, i) => (
-                                <CSSTransition
-                                    timeout={500}
-                                    classNames='read'
-                                    key={e.icon}
+                        }
+                        key='1'
+                    >
+                        <div className='pl-md pr-md pb-md d-flex align-items-center justify-content-between'>
+                            <div className='d-flex align-items-center'>
+                                <ESTypography
+                                    className='mr-xs'
+                                    strong
+                                    variant='caption'
                                 >
-                                    <ESNotificationItem
-                                        {...e}
-                                        markAsRead={() => {
-                                            setUnreads([
-                                                ...unreads,
-                                                { ...e, read: true }
-                                            ])
-                                            setReads(
-                                                reads.filter((e, a) => i !== a)
-                                            )
-                                        }}
-                                        markAsUnread={console.log}
-                                        labelMarkAsRead={t(
-                                            `${intlPath}markRead`
-                                        )}
-                                        labelMarkAsUnread={t(
-                                            `${intlPath}markUnread`
-                                        )}
-                                    />
-                                </CSSTransition>
-                            ))}
-                        </ESNotificationList>
-                    </div>
-                </ESTabPane>
-                <ESTabPane
-                    tab={
-                        <ESTypography strong variant='subtitle2'>
-                            {t(`${intlPath}alreadyRead`)}
-                        </ESTypography>
-                    }
-                    key='2'
-                >
-                    <div className='pl-md pr-md pb-md d-flex align-items-center justify-content-between'>
-                        <div className='d-flex align-items-center'>
-                            <ESTypography
-                                className='mr-xs'
-                                strong
-                                variant='caption'
+                                    3
+                                </ESTypography>
+                                <ESTypography variant='caption'>
+                                    {t(`${intlPath}notRead`)}
+                                </ESTypography>
+                            </div>
+                            <ESButton
+                                size='xsmall'
+                                bold
+                                color='white'
+                                variant='text'
+                                onClick={() => setReads([])}
                             >
-                                3
-                            </ESTypography>
-                            <ESTypography variant='caption'>
+                                {t(`${intlPath}markAllRead`)}
+                            </ESButton>
+                        </div>
+                        <div className='pl-md pr-md pb-md'>
+                            <ESNotificationList>
+                                {reads.length ? (
+                                    reads.map((e, i) => (
+                                        <CSSTransition
+                                            timeout={500}
+                                            classNames='read'
+                                            key={e.icon}
+                                        >
+                                            <Notification
+                                                {...e}
+                                                markAsRead={() =>
+                                                    setReads(
+                                                        reads.filter(
+                                                            (e, a) => i !== a
+                                                        )
+                                                    )
+                                                }
+                                            />
+                                        </CSSTransition>
+                                    ))
+                                ) : (
+                                    <ESNotificationEmpty />
+                                )}
+                            </ESNotificationList>
+                        </div>
+                    </ESTabPane>
+                    <ESTabPane
+                        tab={
+                            <ESTypography strong variant='subtitle2'>
                                 {t(`${intlPath}alreadyRead`)}
                             </ESTypography>
-                        </div>
-                        <ESButton
-                            size='xsmall'
-                            bold
-                            color='white'
-                            variant='text'
-                            onClick={() => setUnreads([])}
-                        >
-                            {t(`${intlPath}excludeRlreadyRead`)}
-                        </ESButton>
-                    </div>
-                    <div className='pl-md pr-md pb-md'>
-                        <ESNotificationList>
-                            {unreads.map((e, i) => (
-                                <CSSTransition
-                                    timeout={500}
-                                    classNames='unread'
-                                    key={e.icon}
+                        }
+                        key='2'
+                    >
+                        <div className='pl-md pr-md pb-md d-flex align-items-center justify-content-between'>
+                            <div className='d-flex align-items-center'>
+                                <ESTypography
+                                    className='mr-xs'
+                                    strong
+                                    variant='caption'
                                 >
-                                    <ESNotificationItem
-                                        {...e}
-                                        markAsUnread={() =>
-                                            setUnreads(
-                                                unreads.filter(
-                                                    (e, a) => i !== a
-                                                )
-                                            )
-                                        }
-                                        labelMarkAsRead={t(
-                                            `${intlPath}markRead`
-                                        )}
-                                        labelMarkAsUnread={t(
-                                            `${intlPath}markUnread`
-                                        )}
-                                    />
-                                </CSSTransition>
-                            ))}
-                        </ESNotificationList>
-                    </div>
-                </ESTabPane>
-            </ESTabs>
+                                    3
+                                </ESTypography>
+                                <ESTypography variant='caption'>
+                                    {t(`${intlPath}alreadyRead`)}
+                                </ESTypography>
+                            </div>
+                            <ESButton
+                                size='xsmall'
+                                bold
+                                color='white'
+                                variant='text'
+                                onClick={() => setUnreads([])}
+                            >
+                                {t(`${intlPath}excludeRlreadyRead`)}
+                            </ESButton>
+                        </div>
+                        <div className='pl-md pr-md pb-md'>
+                            <ESNotificationList>
+                                {unreads.length ? (
+                                    unreads.map((e, i) => (
+                                        <CSSTransition
+                                            timeout={500}
+                                            classNames='unread'
+                                            key={e.icon}
+                                        >
+                                            <Notification
+                                                {...e}
+                                                markAsUnread={() =>
+                                                    setUnreads(
+                                                        unreads.filter(
+                                                            (e, a) => i !== a
+                                                        )
+                                                    )
+                                                }
+                                            />
+                                        </CSSTransition>
+                                    ))
+                                ) : (
+                                    <ESNotificationEmpty />
+                                )}
+                            </ESNotificationList>
+                        </div>
+                    </ESTabPane>
+                </ESTabs>
+            ) : (
+                <ESNotificationEmpty />
+            )}
         </>
     )
 }
