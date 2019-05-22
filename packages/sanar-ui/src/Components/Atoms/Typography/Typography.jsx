@@ -7,10 +7,18 @@ import ANTTypographyBase from 'antd/lib/typography/Base'
 
 const levels = [1, 2, 3, 4, 5, 6]
 
-const ESTypography = ({ className, type, level, variant, ...props }) => {
+const ESTypography = ({
+    className,
+    type,
+    level,
+    variant,
+    regular,
+    ...props
+}) => {
     const classes = classNames('es-typography', className, {
         [`es-typography--${type}`]: type,
-        [`es-typography--${variant}`]: variant
+        [`es-typography--${variant}`]: variant,
+        'es-typography--regular': regular
     })
 
     const component = levels.includes(level) ? `h${level}` : 'div'
@@ -35,6 +43,7 @@ ESTypography.propTypes = {
         'overline'
     ]),
     className: PropTypes.string,
+    regular: PropTypes.bool,
     code: PropTypes.bool,
     copyable: PropTypes.oneOfType([
         PropTypes.bool,

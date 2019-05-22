@@ -48,6 +48,7 @@ storiesOf('Atoms.Typography', module).add('Simple', () => (
         mark={boolean('Mark', false)}
         underline={boolean('Underline', false)}
         strong={boolean('Strong', false)}
+        regular={boolean('Regular', false)}
         level={select('Level', levelOptions, '')}
         type={select('Type', typeOptions, 'default')}
         variant={select('Variant', variantOptions, undefined)}

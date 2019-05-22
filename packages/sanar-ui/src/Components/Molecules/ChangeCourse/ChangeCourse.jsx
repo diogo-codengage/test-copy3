@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import ESTypography from '../../Atoms/Typography'
 import ESProgress from '../../Atoms/Progress'
 import ESEvaIcon from '../../Atoms/EvaIcon'
+import ESCardContinueCourse from '../../Atoms/CardContinueCourse/CardContinueCourse'
 
 const Continue = ({ onContinue, module, description }) => (
     <div onClick={onContinue} className='es-change-course__continue'>
@@ -76,7 +77,11 @@ const ESChangeCourse = ({
                     </div>
                 </div>
                 {onContinue && (
-                    <Continue {...{ onContinue, module, description }} />
+                    <ESCardContinueCourse
+                        className='mt-md mb-md'
+                        borderRadius
+                        {...{ onContinue, module, description }}
+                    />
                 )}
             </div>
             <div className='es-change-course__progress'>
