@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import CKEditor from 'ckeditor4-react'
 
 import ESButton from '../../Atoms/Button'
+import ESTypography from '../../Atoms/Typography'
 
 const height = 356
 
@@ -28,6 +29,14 @@ const config = {
     }
 }
 
+const letterCount = text =>
+    text
+        ? text
+              .trim()
+              .replace(/&nbsp;/gi, ' ')
+              .replace(/<[^<|>]+?>/gi, '').length
+        : 0
+
 export const createConfig = conf => ({
     ...config,
     ...conf
@@ -42,19 +51,23 @@ const ESTextEditor = ({
     onSubmit,
     labelSubmit,
     labelCancel,
+    labelLetterCount,
     ...props
 }) => {
     const [data, setData] = useState()
+    const [letter, setLetter] = useState('0')
     const classes = classNames('es-text-editor', className)
 
     useEffect(() => {
         setData(initialValue)
+        setLetter(letterCount(initialValue))
     }, [])
 
     const onChange = event => {
         const text = event.editor.getData()
         setData(text)
         props.onChange && props.onChange(text)
+        setLetter(letterCount(text))
     }
 
     const handleCancel = async e => {
@@ -74,6 +87,14 @@ const ESTextEditor = ({
                 data={data}
                 onChange={onChange}
             />
+            {!!letter && (
+                <ESTypography
+                    variant='subtitle2'
+                    className='es-text-editor__count'
+                >
+                    {`${labelLetterCount} ${letter}`}
+                </ESTypography>
+            )}
             <div className='es-text-editor__buttons'>
                 <ESButton
                     className='mr-md'
@@ -112,6 +133,7 @@ ESTextEditor.propTypes = {
     type: PropTypes.oneOf(['classic', 'inline']),
     labelCancel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     labelSubmit: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    labelLetterCount: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     onCancel: PropTypes.func,
     onSubmit: PropTypes.func
 }
@@ -120,6 +142,7 @@ ESTextEditor.defaultProps = {
     config,
     labelCancel: 'Cancelar',
     labelSubmit: 'Publicar pergunta',
+    labelLetterCount: 'Caracteres:',
     height
 }
 
