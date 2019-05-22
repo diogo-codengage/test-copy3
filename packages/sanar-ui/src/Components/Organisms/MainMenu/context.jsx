@@ -11,10 +11,12 @@ export const MainMenuProvider = ({ children }) => {
     const [theme, setTheme] = useState('primary')
     const [position, setPosition] = useState('left')
     const [showClose, setShowClose] = useState()
+    const [showContinueBar, setShowContinueBar] = useState()
     const [staticToolbar, setStaticToolbar] = useState(false)
     const { width } = useWindowSize()
 
     useMemo(() => setPosition(width <= 1024 ? 'bottom' : 'left'), [width])
+    useMemo(() => setShowContinueBar(width <= 1024), [width])
     useMemo(() => setToggle(width >= 1365), [width])
     useMemo(() => setStaticToolbar(width >= 1025 && width <= 1365), [width])
     useMemo(() => setShowClose(width <= 1365), [width])
@@ -32,6 +34,8 @@ export const MainMenuProvider = ({ children }) => {
         setToggle,
         showClose,
         staticToolbar,
+        showContinueBar,
+        setShowContinueBar,
         onClose
     }
 

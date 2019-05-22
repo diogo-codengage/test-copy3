@@ -10,6 +10,7 @@ import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESButton from '../../Atoms/Button'
 
 import MainMenuContentHeader from './MainMenuContentHeader'
+import ESCardContinueCourse from '../../Atoms/CardContinueCourse/CardContinueCourse'
 
 const SideButton = ({ name, ...props }) => {
     const { theme } = useMainMenuContext()
@@ -42,7 +43,8 @@ const ESMainMenu = ({
     children,
     onSearchClick,
     onInitialClick,
-    theme: themeProp
+    theme: themeProp,
+    showContinueBar: showContinueBarProp
 }) => {
     const {
         position,
@@ -51,6 +53,8 @@ const ESMainMenu = ({
         toggle,
         setToggle,
         staticToolbar,
+        showContinueBar,
+        setShowContinueBar,
         onClose
     } = useMainMenuContext()
 
@@ -67,6 +71,10 @@ const ESMainMenu = ({
     useEffect(() => {
         setTheme(themeProp)
     }, [themeProp])
+
+    useEffect(() => {
+        setShowContinueBar(showContinueBarProp)
+    }, [showContinueBarProp])
 
     const initialClick = e => {
         setToggle(true)
@@ -101,11 +109,21 @@ const ESMainMenu = ({
                     <img className='logo' src={logoSvg} />
                 </div>
             ) : (
-                <div className='es-main-menu__sidebar-bottom'>
-                    <HomeButton onClick={() => setToggle(true)} />
-                    <SearchButton onClick={searchBottomClick} />
-                    <InitalButton onClick={initialBottomClick} />
-                </div>
+                <>
+                    {showContinueBar && (
+                        <ESCardContinueCourse
+                            className='es-main-menu__continue'
+                            module='Test'
+                            description='Cacilds'
+                            borderRadius={false}
+                        />
+                    )}
+                    <div className='es-main-menu__sidebar-bottom'>
+                        <HomeButton onClick={() => setToggle(true)} />
+                        <SearchButton onClick={searchBottomClick} />
+                        <InitalButton onClick={initialBottomClick} />
+                    </div>
+                </>
             )}
 
             <div className={classesContent}>
@@ -123,7 +141,8 @@ ESMainMenu.propTypes = {
     className: PropTypes.string,
     theme: PropTypes.oneOf(['primary', 'dark', 'light']),
     onInitialClick: PropTypes.func,
-    onSearchClick: PropTypes.func
+    onSearchClick: PropTypes.func,
+    showContinueBar: PropTypes.bool
 }
 ESMainMenu.defaultProps = {
     theme: 'primary'
