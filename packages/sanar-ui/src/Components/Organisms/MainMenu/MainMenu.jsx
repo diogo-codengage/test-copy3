@@ -113,8 +113,8 @@ const ESMainMenu = ({
                     {showContinueBar && (
                         <ESCardContinueCourse
                             className='es-main-menu__continue'
-                            module='Test'
-                            description='Cacilds'
+                            module='Continuar no Módulo 1, aula 2'
+                            description='Per aumento de cachacis, eu reclamis.'
                             borderRadius={false}
                         />
                     )}
