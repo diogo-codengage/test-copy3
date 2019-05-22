@@ -14,7 +14,7 @@ import SANSearch from './Search'
 
 const intlPath = 'mainMenu.title.'
 
-const MenuContent = ({ index, setTab }) => {
+const MenuContent = ({ index, setTab, showContinueBar }) => {
     const { t } = useTranslation()
 
     switch (index) {
@@ -81,6 +81,7 @@ const SANMenu = () => {
             onInitialClick={() => setTab(0)}
             title={title}
             theme={theme}
+            showContinueBar
             className='san-main-menu'
         >
             <MenuContent {...{ index, setTab }} />
