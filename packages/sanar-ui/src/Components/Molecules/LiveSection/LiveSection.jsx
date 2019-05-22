@@ -55,7 +55,8 @@ const ESLiveSection = ({
     name,
     action,
     formation,
-    linkedin
+    linkedin,
+    status
 }) => {
     const classes = classNames('es-live-section', className)
 
@@ -69,6 +70,15 @@ const ESLiveSection = ({
                 className='es-live-section__player'
             >
                 <div>
+                    {status === 'active' && (
+                        <ESTypography
+                            className='aovivo'
+                            variant='caption'
+                            strong
+                        >
+                            Ao vivo
+                        </ESTypography>
+                    )}
                     <iframe
                         width='100%'
                         height='100%'
@@ -122,6 +132,7 @@ const ESLiveSection = ({
 }
 
 ESLiveSection.propTypes = {
+    status: PropTypes.oneOf(['active']),
     videoSrc: PropTypes.string,
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     labelLive: PropTypes.string,

@@ -22,6 +22,8 @@ const SANLives = () => {
 
     const date = format(live.release_date, 'DD/MM/YYYY')
 
+    const link = `https://www.youtube.com/embed/${live.link.split('=')[1]}`
+
     return (
         <SANPortalPagesContainer className='lives'>
             <ESSessionTitle
@@ -29,7 +31,8 @@ const SANLives = () => {
                 subtitle={t('courseDetails.livesSubtitle')}
             />
             <ESLiveSection
-                videoSrc={live.link}
+                status={live.status}
+                videoSrc={link}
                 description={live.description}
                 title={live.title}
                 date={date}

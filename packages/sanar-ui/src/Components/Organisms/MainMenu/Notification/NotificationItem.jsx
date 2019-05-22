@@ -2,6 +2,8 @@ import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
+import { CSSTransition } from 'react-transition-group'
+
 import ESTypography from '../../../Atoms/Typography'
 import ESEvaIcon from '../../../Atoms/EvaIcon'
 import ESButton from '../../../Atoms/Button'
@@ -16,7 +18,7 @@ const icons = {
     general: 'globe-2-outline'
 }
 
-const ESNotification = ({
+const ESNotificationItem = ({
     className,
     read,
     type,
@@ -29,13 +31,14 @@ const ESNotification = ({
     labelMarkAsRead,
     markAsUnread,
     labelMarkAsUnread,
-    labelGoToLive
+    labelGoToLive,
+    customKey
 }) => {
     const classes = classNames(
-        'es-notification',
+        'es-notification-item',
         {
-            [`es-notification__${type}`]: type && !read,
-            'es-notification__read': read
+            [`es-notification-item__${type}`]: type && !read,
+            'es-notification-item__read': read
         },
         className
     )
@@ -109,7 +112,7 @@ const ESNotification = ({
     )
 }
 
-ESNotification.propTypes = {
+ESNotificationItem.propTypes = {
     className: PropTypes.string,
     type: PropTypes.oneOf(['default', 'medium', 'high']),
     icon: PropTypes.oneOf(Object.keys(icons)),
@@ -127,7 +130,7 @@ ESNotification.propTypes = {
     labelGoToLive: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
 }
 
-ESNotification.defaultProps = {
+ESNotificationItem.defaultProps = {
     labelMarkAsRead: 'Marcar como lida',
     labelMarkAsUnread: 'Marcar como não lida',
     labelGoToLive: 'Ir para Live',
@@ -135,4 +138,4 @@ ESNotification.defaultProps = {
     icon: Object.keys(icons)[0]
 }
 
-export default ESNotification
+export default ESNotificationItem
