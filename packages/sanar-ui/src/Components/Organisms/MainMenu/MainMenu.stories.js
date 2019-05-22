@@ -6,7 +6,8 @@ import { Layout, Radio } from 'antd'
 import ESMainMenu from './MainMenu'
 import ESLeftOff from './LeftOff/LeftOff'
 import ESAvatarMenu from './Avatar/Avatar'
-import ESNotification from './Notification/Notification'
+import ESNotificationList from './Notification/NotificationList'
+import ESNotificationItem from './Notification/NotificationItem'
 import ESNavigationList from './NavigationList/NavigationList'
 import ESNavigationListItem from './NavigationList/NavigationListItem'
 import ESSearch from './Search/Search'
@@ -230,8 +231,8 @@ const Notifications = ({ setIndex }) => (
                         Marcar todas como lidas
                     </ESButton>
                 </div>
-                <div className='pl-md pr-md pb-md'>
-                    <ESNotification
+                <ESNotificationList className='pl-md pr-md pb-md'>
+                    <ESNotificationItem
                         icon='interaction'
                         action='Adré Cabral reagiu ao seu comentário'
                         text={`Ensure your most important links are available at the high level, and links that are a level deeper are relevant and impactful to more niche users`}
@@ -240,7 +241,7 @@ const Notifications = ({ setIndex }) => (
                         markAsUnread={action('markAsUnread')}
                         user='Adré Cabral'
                     />
-                    <ESNotification
+                    <ESNotificationItem
                         action='Aula nova adicionada'
                         icon='new'
                         type='medium'
@@ -249,7 +250,7 @@ const Notifications = ({ setIndex }) => (
                         markAsRead={action('markAsRead')}
                         markAsUnread={action('markAsUnread')}
                     />
-                    <ESNotification
+                    <ESNotificationItem
                         action='Mapa mental atualizado'
                         icon='update'
                         type='high'
@@ -258,7 +259,7 @@ const Notifications = ({ setIndex }) => (
                         markAsRead={action('markAsRead')}
                         markAsUnread={action('markAsUnread')}
                     />
-                </div>
+                </ESNotificationList>
             </ESTabPane>
             <ESTabPane
                 tab={
@@ -283,8 +284,8 @@ const Notifications = ({ setIndex }) => (
                         Excluir já lidos
                     </ESButton>
                 </div>
-                <div className='pl-md pr-md pb-md'>
-                    <ESNotification
+                <ESNotificationList className='pl-md pr-md pb-md'>
+                    <ESNotificationItem
                         read
                         action='Desempenho positivo'
                         icon='performance'
@@ -294,7 +295,7 @@ const Notifications = ({ setIndex }) => (
                         markAsUnread={action('markAsUnread')}
                         user='Adré Cabral'
                     />
-                    <ESNotification
+                    <ESNotificationItem
                         read
                         action='Live programada'
                         icon='live'
@@ -303,7 +304,7 @@ const Notifications = ({ setIndex }) => (
                         markAsRead={action('markAsRead')}
                         markAsUnread={action('markAsUnread')}
                     />
-                    <ESNotification
+                    <ESNotificationItem
                         read
                         action='Atividade módulo 4'
                         icon='schedule'
@@ -312,7 +313,7 @@ const Notifications = ({ setIndex }) => (
                         markAsRead={action('markAsRead')}
                         markAsUnread={action('markAsUnread')}
                     />
-                    <ESNotification
+                    <ESNotificationItem
                         read
                         action='Termos legais atualizados'
                         icon='general'
@@ -321,7 +322,7 @@ const Notifications = ({ setIndex }) => (
                         markAsRead={action('markAsRead')}
                         markAsUnread={action('markAsUnread')}
                     />
-                </div>
+                </ESNotificationList>
             </ESTabPane>
         </ESTabs>
     </>
