@@ -22,9 +22,9 @@ const ESInstructor = ({ avatar, labelLive, linkedin, formation, name }) => (
             <ESTypography strong ellipsis className='text-grey-8 mb-xs'>
                 {name}
             </ESTypography>
-            <div className='d-flex align-items-center justify-content-between'>
+            <div className='d-flex align-items-center'>
                 <ESTypography
-                    className='es-live-section__instructor--formation text-grey-7'
+                    className='text-grey-7'
                     ellipsis
                     variant='caption'
                 >
@@ -56,7 +56,8 @@ const ESLiveSection = ({
     action,
     formation,
     linkedin,
-    status
+    status,
+    labelAoVivo
 }) => {
     const classes = classNames('es-live-section', className)
 
@@ -76,7 +77,7 @@ const ESLiveSection = ({
                             variant='caption'
                             strong
                         >
-                            Ao vivo
+                            {labelAoVivo}
                         </ESTypography>
                     )}
                     <iframe
@@ -135,7 +136,8 @@ ESLiveSection.propTypes = {
     status: PropTypes.oneOf(['active']),
     videoSrc: PropTypes.string,
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    labelLive: PropTypes.string,
+    labelLive: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    labelAoVivo: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     labelCourses: PropTypes.string,
     title: PropTypes.string,
     date: PropTypes.string,
@@ -149,7 +151,8 @@ ESLiveSection.propTypes = {
 
 ESLiveSection.defaultProps = {
     height: 400,
-    labelLive: 'LIVE FACILITADA POR:'
+    labelLive: 'LIVE FACILITADA POR:',
+    labelAoVivo: 'Ao vivo'
 }
 
 export default ESLiveSection
