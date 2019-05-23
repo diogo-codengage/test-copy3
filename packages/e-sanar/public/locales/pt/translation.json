@@ -180,7 +180,14 @@
                 }
             }
         },
-        "tabComments": "Perguntas e Respostas"
+        "tabQuestions": {
+            "title": "Perguntas e Respostas",
+            "interact": {
+                "button": "Fazer nova pergunta",
+                "subtitle": "Pergunte e ajude seus colegas a tirar suas dúvidas sobre o curso",
+                "title": "Interaja com seus colegas"
+            }
+        }
     },
     "footer": {
         "helpButton": "Precisa de ajuda?",
