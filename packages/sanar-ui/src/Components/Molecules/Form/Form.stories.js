@@ -39,7 +39,7 @@ const ruleTypes = {
     Email: 'email'
 }
 
-const Example = withESForm(({ form }) => {
+const Example = withESForm()(({ form }) => {
     return (
         <ESForm
             form={form}
