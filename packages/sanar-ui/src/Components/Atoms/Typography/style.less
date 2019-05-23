@@ -1,0 +1,65 @@
+.ant-typography + h1.ant-typography,
+.ant-typography + h2.ant-typography,
+.ant-typography + h3.ant-typography,
+.ant-typography + h4.ant-typography,
+h4.ant-typography,
+.ant-typography h4,
+h1.ant-typography,
+.ant-typography h1,
+h5.ant-typography,
+.ant-typography h5,
+h6.ant-typography,
+.ant-typography h6,
+div.ant-typography,
+.ant-typography p {
+    margin: 0;
+}
+
+.es-typography {
+    &--regular {
+        font-weight: 400 !important;
+    }
+
+    &--info {
+        color: @info-color !important;
+    }
+    &--danger {
+        color: @error-color !important;
+    }
+    &--success {
+        color: @success-color !important;
+    }
+    &--warning {
+        color: @warning-color !important;
+    }
+    &--muted {
+        color: @text-color-secondary !important;
+    }
+
+    &--subtitle1 {
+        font-size: @font-size-lg;
+        line-height: 1.4;
+    }
+    &--subtitle2 {
+        font-size: @font-size-base;
+        line-height: 1.4;
+    }
+    &--body1 {
+        font-size: @font-size-lg;
+        line-height: @line-height-base;
+    }
+    &--body2 {
+        font-size: @font-size-base;
+        line-height: @line-height-base;
+    }
+    &--caption {
+        font-size: @font-size-sm;
+        line-height: 1.25;
+    }
+    &--overline {
+        font-size: @font-size-sm - 2px;
+        letter-spacing: 0.4px;
+        line-height: 1.25;
+        text-transform: uppercase;
+    }
+}

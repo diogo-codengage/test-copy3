@@ -2,11 +2,51 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Pagination from 'antd/lib/pagination'
 import classNames from 'classnames'
+import ESButton from '../Button'
+import ESEvaIcon from '../EvaIcon'
+
+const customRenderElements = (current, type, originalElement) => {
+    console.log(type)
+    switch (type) {
+        case 'prev':
+            return (
+                <ESButton className='es-pagination--arrow--prev' variant='text'>
+                    <ESEvaIcon name='chevron-left-outline' />
+                </ESButton>
+            )
+        case 'next':
+            return (
+                <ESButton className='es-pagination--arrow--next' variant='text'>
+                    <ESEvaIcon name='chevron-right-outline' />
+                </ESButton>
+            )
+        case 'jump-next':
+            return (
+                <ESButton className='es-pagination--jumps' variant='text'>
+                    <ESEvaIcon name='more-horizontal-outline' />
+                </ESButton>
+            )
+        case 'jump-prev':
+            return (
+                <ESButton className='es-pagination--jumps' variant='text'>
+                    <ESEvaIcon name='more-horizontal-outline' />
+                </ESButton>
+            )
+        default:
+            return originalElement
+    }
+}
 
 const ESPagination = ({ className, ...props }) => {
     const classes = classNames('es-pagination', className)
 
-    return <Pagination className={classes} {...props} />
+    return (
+        <Pagination
+            className={classes}
+            itemRender={customRenderElements}
+            {...props}
+        />
+    )
 }
 
 ESPagination.propTypes = Object.assign(

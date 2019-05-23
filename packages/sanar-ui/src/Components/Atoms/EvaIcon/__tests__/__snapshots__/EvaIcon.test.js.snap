@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<i
+  className="anticon es-eva-icon es-eva-icon--medium"
+>
+  <i
+    data-eva="award-outline"
+    data-eva-fill="#fff"
+    data-eva-height="18px"
+    data-eva-width="18px"
+  />
+</i>
+`;

@@ -1,8 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { select, text, boolean, number } from '@storybook/addon-knobs'
+import { select, text, boolean } from '@storybook/addon-knobs'
 
-import Input from 'antd/lib/input'
 import ESInput, { ESInputSearch, ESTextArea } from './'
 import ESIcon from '../Icon'
 
@@ -27,7 +26,7 @@ storiesOf('Atoms.Input', module)
     .add('Password', () => (
         <ESInput
             placeholder={text('Placeholder', 'Senha')}
-            component={Input.Password}
+            component={ESInput.Password}
         />
     ))
     .add('Search', () => (

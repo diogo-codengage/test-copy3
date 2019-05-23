@@ -1,9 +1,231 @@
+.button-sizes(@height; @padding; @font-size; @line-height) {
+    height: @height;
+    padding: 0 @padding;
+    font-size: @font-size;
+    line-height: @line-height;
+}
+
+.button-circle-size(@size) {
+    height: @size;
+    width: @size;
+    border-radius: @size / 2;
+}
+
 .es-button {
-  &__clear {
-    border: none;
-    box-shadow: none;
-    &[disabled] {
-      background-color: @white;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+
+    &__variant {
+        &--outlined {
+            background-color: transparent;
+            color: rgba(17, 19, 23, 0.65);
+            border-color: rgba(17, 19, 23, 0.15);
+            &:focus,
+            &:hover {
+                background-color: rgba(17, 19, 23, 0.05);
+                color: rgba(17, 19, 23, 0.85);
+                border-color: rgba(17, 19, 23, 0.15);
+            }
+            &:active {
+                background-color: rgba(17, 19, 23, 0.15);
+                color: rgba(17, 19, 23, 0.65);
+                border-color: rgba(17, 19, 23, 0.15);
+            }
+            &[disabled] {
+                background-color: transparent !important;
+                opacity: 0.3;
+            }
+
+            &.primary {
+                border-color: @primary-color;
+                color: @primary-color;
+                &:focus,
+                &:hover {
+                    background-color: rgba(37, 90, 208, 0.1) !important;
+                }
+                &:active {
+                    background-color: rgba(37, 90, 208, 0.25) !important;
+                }
+                &[disabled] {
+                    opacity: 0.3;
+                }
+            }
+
+            &.white {
+                border-color: rgba(255, 255, 255, 0.15);
+                color: rgba(255, 255, 255, 0.65);
+                &:focus,
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.25);
+                    color: rgba(255, 255, 255, 0.95);
+                }
+                &:active {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    color: rgba(255, 255, 255, 0.65);
+                }
+                &[disabled] {
+                    background-color: transparent;
+                    opacity: 0.3;
+                }
+            }
+        }
+
+        &--solid {
+            border: none;
+            background-color: @primary-color;
+            color: @white;
+            &:focus,
+            &:hover {
+                background-color: darken(@primary-color, 10);
+                color: @white;
+            }
+            &:active {
+                background-color: darken(@primary-color, 20);
+                color: @white;
+            }
+            &[disabled] {
+                background-color: @primary-color;
+                color: @white;
+                opacity: 0.3;
+            }
+
+            &.white {
+                background-color: rgba(255, 255, 255, 0.65);
+                color: rgba(17, 19, 23, 0.65);
+                &:focus,
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.95);
+                }
+                &:active {
+                    background-color: rgba(255, 255, 255, 0.4);
+                }
+                &[disabled] {
+                    opacity: 0.3;
+                }
+            }
+        }
+
+        &--text {
+            border: none;
+            box-shadow: none;
+            background-color: transparent;
+            color: rgba(17, 19, 23, 0.65);
+            &:focus,
+            &:hover {
+                background-color: transparent;
+                color: rgba(17, 19, 23, 0.85);
+            }
+
+            &:active {
+                background-color: rgba(17, 19, 23, 0.05);
+                color: rgba(17, 19, 23, 0.65);
+            }
+
+            &[disabled] {
+                background-color: transparent;
+                opacity: 0.3;
+            }
+
+            &.primary {
+                color: @primary-color;
+                &:hover {
+                    color: darken(@primary-color, 10);
+                }
+
+                &:active {
+                    background-color: rgba(17, 19, 23, 0.05);
+                    color: @primary-color;
+                }
+            }
+
+            &.white {
+                border: none;
+                box-shadow: none;
+                background-color: transparent;
+                color: rgba(255, 255, 255, 0.65);
+                &:hover {
+                    color: rgba(255, 255, 255, 0.95);
+                }
+                &:active {
+                    background-color: rgba(255, 255, 255, 0.15);
+                    color: rgba(255, 255, 255, 0.65);
+                }
+            }
+        }
     }
-  }
+
+    &__block {
+        width: 100%;
+
+        @media (max-width: @screen-md) {
+            &--mobile {
+                width: 100%;
+            }
+        }
+    }
+
+    &.bold {
+        font-weight: bold !important;
+    }
+
+    &.uppercase {
+        text-transform: uppercase !important;
+    }
+
+    & .anticon {
+        line-height: 0;
+    }
+
+    & .es-badge {
+        margin-left: @margin-xs;
+    }
+
+    &__xsmall {
+        .button-sizes(@btn-height-xs; @btn-padding-xs; @btn-font-size-xs; 1);
+        & i.anticon svg {
+            font-size: @font-size-lg;
+        }
+        &.circle {
+            .button-circle-size(@btn-height-xs);
+        }
+    }
+
+    &__small {
+        .button-sizes(@btn-height-sm; @btn-padding-sm; @btn-font-size-sm; 1.25);
+        & i.anticon svg {
+            font-size: @font-size-lg;
+        }
+        &.circle {
+            .button-circle-size(@btn-height-sm);
+        }
+    }
+    &__medium {
+        .button-sizes(
+            @btn-height-base; @btn-padding-base; @btn-font-size-base; 1.25
+        );
+
+        & i.anticon svg {
+            font-size: @font-size-lg + 4px;
+        }
+        &.circle {
+            .button-circle-size(@btn-height-base);
+        }
+    }
+    &__large {
+        .button-sizes(@btn-height-lg; @btn-padding-lg; @btn-font-size-lg; 1.5);
+        & i.anticon svg {
+            font-size: 24px;
+        }
+        &.circle {
+            .button-circle-size(@btn-height-lg);
+        }
+    }
+
+    &-group {
+        & .es-button {
+            text-transform: capitalize;
+            display: inline-block !important;
+        }
+    }
 }

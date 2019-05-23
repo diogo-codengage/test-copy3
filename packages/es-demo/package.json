@@ -2,12 +2,7 @@
 	"name": "es-demo",
 	"version": "0.1.0",
 	"private": true,
-	"dependencies": {
-		"react": "^16.8.6",
-		"react-dom": "^16.8.6",
-		"react-scripts": "2.1.8",
-		"sanar-ui": "0.1.0"
-	},
+	"dependencies": {},
 	"scripts": {
 		"start": "react-app-rewired start",
 		"build": "react-scripts build",
@@ -29,7 +24,7 @@
 		"less": "2.7.2",
 		"less-loader": "^4.1.0",
 		"react-app-rewired": "^2.1.1",
-		"jest": "23.6.0",
-		"webpack": "4.28.3"
+		"jest": "24.7.1",
+		"webpack": "4.29.6"
 	}
 }

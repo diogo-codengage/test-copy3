@@ -3,7 +3,7 @@ import TestRenderer from 'react-test-renderer'
 
 import ESProgressBar from '../'
 
-it.skip('renders correctly', () => {
+it('renders correctly', () => {
     const component = <ESProgressBar percent={30} />
 
     const tree = TestRenderer.create(component).toJSON()

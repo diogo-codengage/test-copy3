@@ -3,8 +3,14 @@ import PropTypes from 'prop-types'
 import Tabs from 'antd/lib/tabs'
 import classNames from 'classnames'
 
-const ESTabs = ({ className, ...props }) => {
-    const classes = classNames('es-tabs', className)
+const ESTabs = ({ className, center, ...props }) => {
+    const classes = classNames(
+        'es-tabs',
+        {
+            'es-tabs__center': center
+        },
+        className
+    )
 
     return <Tabs className={classes} {...props} />
 }
@@ -28,7 +34,8 @@ ESTabs.propTypes = Object.assign(
         onEdit: PropTypes.func,
         onNextClick: PropTypes.func,
         onPrevClick: PropTypes.func,
-        onTabClick: PropTypes.func
+        onTabClick: PropTypes.func,
+        center: PropTypes.bool
     }
 )
 

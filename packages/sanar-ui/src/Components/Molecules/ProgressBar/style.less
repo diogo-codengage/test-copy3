@@ -1,31 +1,25 @@
 .es-progress-bar {
     &__icon {
         margin-right: @margin-xs;
+
+        & i.es-eva-icon {
+            vertical-align: middle;
+            color: @grey-2;
+        }
+
+        & i.es-eva-icon.warning {
+            color: @warning-color;
+        }
     }
 
     &__title {
         font-size: @font-size-sm !important;
         font-weight: bold;
+        color: @grey-8;
     }
 
-    &__progress {
-        position: relative;
-        &--limit {
-            background-color: @normal-color;
-            position: absolute;
-            right: 0;
-            bottom: 5px;
-            height: @border-radius-sm * 2;
-            border-radius: @border-radius-sm;
-        }
-        & .ant-progress-inner {
-            background-color: lighten(@normal-color, 10);
-            & .ant-progress-bg {
-                height: @border-radius-sm * 2 !important;
-                background-color: @warning-color;
-                z-index: 2;
-            }
-        }
+    & .es-badge-percent {
+        vertical-align: text-bottom;
     }
 
     & h4.ant-typography {

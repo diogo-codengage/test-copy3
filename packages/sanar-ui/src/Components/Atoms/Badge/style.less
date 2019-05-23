@@ -1,0 +1,93 @@
+.es-badge {
+    border-radius: 9px;
+    font-size: @font-size-sm;
+
+    &__border {
+        border: 1px solid @normal-color;
+    }
+
+    & > .ant-badge-count {
+        background-color: transparent;
+        color: darken(@normal-color, 20);
+        font-weight: bold;
+        box-shadow: none;
+        border-radius: 0;
+        background-color: inherit;
+        height: 16px;
+        line-height: 16px;
+        min-width: 24px;
+    }
+
+    & .ant-badge-dot {
+        box-shadow: none;
+    }
+
+    &__success {
+        border-color: @success-color;
+        & .ant-badge-count {
+            color: darken(@success-color, 20);
+        }
+
+        &--solid {
+            border: none;
+
+            & .ant-badge-count {
+                background: @green-1;
+                color: black;
+                border-radius: 9px;
+            }
+        }
+    }
+
+    &__processing {
+        border-color: @processing-color;
+        & .ant-badge-count {
+            color: blue-1darken(@processing-color, 20);
+        }
+
+        &--solid {
+            border: none;
+
+            & .ant-badge-count {
+                background: @blue-1;
+                color: black;
+                border-radius: 9px;
+            }
+        }
+    }
+
+    &__error {
+        border-color: @error-color;
+
+        & .ant-badge-count {
+            color: darken(@error-color, 20);
+        }
+
+        &--solid {
+            border: none;
+
+            & .ant-badge-count {
+                background: @red-1;
+                color: black;
+                border-radius: 9px;
+            }
+        }
+    }
+
+    &__warning {
+        border-color: @warning-color;
+        & .ant-badge-count {
+            color: darken(@warning-color, 20);
+        }
+
+        &--solid {
+            border: none;
+
+            & .ant-badge-count {
+                background: @gold-1;
+                color: black;
+                border-radius: 9px;
+            }
+        }
+    }
+}

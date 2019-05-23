@@ -1,0 +1,76 @@
+.es-text-editor {
+    position: relative;
+    border-radius: @border-radius-base;
+    background-color: @grey-1;
+
+    &__count {
+        position: absolute;
+        left: 180px;
+        bottom: 25px;
+    }
+
+    &__buttons {
+        position: absolute;
+        right: 16px;
+        bottom: 22px;
+        display: flex;
+        align-items: center;
+    }
+
+    & .cke_button_icon.cke_button__bold_icon,
+    & .cke_button_icon.cke_button__italic_icon,
+    & .cke_button_icon.cke_button__link_icon,
+    & .cke_button_icon.cke_button__source_icon {
+        background: none !important;
+    }
+
+    & .cke_button.cke_button_on {
+        border-radius: @border-radius-base;
+        border-color: @grey-2 !important;
+    }
+
+    & .cke_button_icon.cke_button__bold_icon {
+        background-image: url('@{assetsPath}/images/editor-icons/bold.svg') !important;
+    }
+
+    & .cke_button_icon.cke_button__italic_icon {
+        background-image: url('@{assetsPath}/images/editor-icons/italic.svg') !important;
+    }
+
+    & .cke_button_icon.cke_button__link_icon {
+        background-image: url('@{assetsPath}/images/editor-icons/link.svg') !important;
+    }
+
+    & .cke_button_icon.cke_button__source_icon {
+        background-image: url('@{assetsPath}/images/editor-icons/code.svg') !important;
+    }
+
+    &
+        .cke_button_icon.cke_button__source_icon
+        + span.cke_button_label.cke_button__source_label {
+        display: none;
+    }
+
+    & .cke_button {
+        &:focus,
+        &:active,
+        &:hover {
+            background-color: @grey-1 !important;
+            border-radius: @border-radius-base;
+            border-color: @grey-1 !important;
+        }
+
+        &:after {
+            display: none;
+        }
+    }
+
+    & .cke {
+        border-radius: @border-radius-base;
+        overflow: hidden;
+    }
+
+    & .cke_bottom {
+        padding: @padding-md;
+    }
+}

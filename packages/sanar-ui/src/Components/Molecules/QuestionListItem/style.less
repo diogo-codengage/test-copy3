@@ -1,0 +1,48 @@
+.es-question-list-item {
+    width: 100%;
+
+    &__content {
+        overflow: hidden;
+
+        &--title {
+            color: @grey-8;
+            margin-bottom: @margin-xs - 3 !important;
+        }
+
+        &__subtitle {
+            &--author {
+                color: @grey-7;
+            }
+
+            &--interaction {
+                color: @grey-5;
+                padding-left: @padding-xs;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    left: 4px;
+                    top: ~'calc(50% - 2px)';
+                    width: 4px;
+                    height: 4px;
+                    border-radius: 100%;
+                    background: @grey-4;
+                }
+            }
+
+            &--responses {
+                text-align: right;
+
+                span {
+                    color: @grey-7;
+                }
+            }
+
+            &--badge {
+                background: @grey-solid-2;
+                border-radius: 4px;
+                padding: 2px @padding-xs / 2;
+            }
+        }
+    }
+}

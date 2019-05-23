@@ -1,5 +1,34 @@
 .es-session-title {
-    & .es-button {
-        background-color: transparent;
+    margin-bottom: @margin-xl;
+
+    &__texts {
+        max-width: ~'calc(100% - 16px)';
+
+        &--title {
+            color: @grey-8 !important;
+        }
+
+        &--subtitle {
+            color: @grey-6;
+        }
+    }
+
+    .ant-typography-ellipsis {
+        max-width: 100%;
+    }
+
+    @media (max-width: @screen-md) {
+        margin-bottom: @margin-md;
+
+        &__extra {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+            margin-top: @margin-md;
+
+            &--on-left {
+                justify-content: start;
+            }
+        }
     }
 }

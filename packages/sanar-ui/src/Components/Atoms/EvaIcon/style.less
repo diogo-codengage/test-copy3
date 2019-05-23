@@ -1,48 +1,49 @@
 .es-eva-icon {
     & svg {
-        fill: @normal-color;
+        fill: currentColor;
+        width: 1em;
+        height: 1em;
     }
 
     & i.eva-hover {
         display: flex;
     }
 
+    &--xsmall svg {
+        font-size: @font-size-base - 2px;
+    }
     &--small svg {
-        width: 16px;
-        height: 16px;
+        font-size: @font-size-base;
     }
     &--medium svg {
-        width: 20px;
-        height: 20px;
+        font-size: 16px;
     }
     &--large svg {
-        width: 24px;
-        height: 24px;
+        font-size: 20px;
     }
     &--xlarge svg {
-        width: 30px;
-        height: 30px;
+        font-size: 24px;
     }
 
-    &--primary svg {
-        fill: @primary-color;
+    &--primary {
+        color: @primary-color;
     }
-    &--secondary svg {
-        fill: @primary-color;
+    &--secondary {
+        color: @primary-color;
     }
-    &--success svg {
-        fill: @success-color;
+    &--success {
+        color: @success-color;
     }
-    &--warning svg {
-        fill: @warning-color;
+    &--warning {
+        color: @warning-color;
     }
-    &--error svg {
-        fill: @error-color;
+    &--error {
+        color: @error-color;
     }
-    &--info svg {
-        fill: @info-color;
+    &--info {
+        color: @info-color;
     }
-    &--default svg {
-        fill: @normal-color;
+    &--default {
+        color: @normal-color;
     }
 }

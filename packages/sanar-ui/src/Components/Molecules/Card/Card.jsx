@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import { Card, Tooltip, Icon } from 'antd'
+import ESEvaIcon from '../../Atoms/EvaIcon/EvaIcon'
+import ESTooltip from '../../Atoms/Tooltip/Tooltip'
 
 const ESCard = ({ className, children, doubt, ...props }) => {
     const classes = classNames('es-card', className)
@@ -10,13 +12,18 @@ const ESCard = ({ className, children, doubt, ...props }) => {
     return (
         <Card className={classes} {...props}>
             {doubt && (
-                <Tooltip
+                <ESTooltip
                     className='es-card__doubt'
                     placement='left'
                     title={doubt}
                 >
-                    <Icon type='question-circle' />
-                </Tooltip>
+                    <span>
+                        <ESEvaIcon
+                            name='question-mark-circle-outline'
+                            size='small'
+                        />
+                    </span>
+                </ESTooltip>
             )}
             {children}
         </Card>
@@ -31,7 +38,7 @@ ESCard.propTypes = Object.assign(
         bordered: PropTypes.bool,
         loading: PropTypes.bool,
         hoverable: PropTypes.bool,
-        children: PropTypes.element,
+        children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]),
         className: PropTypes.string,
         size: PropTypes.string,
         type: PropTypes.string,

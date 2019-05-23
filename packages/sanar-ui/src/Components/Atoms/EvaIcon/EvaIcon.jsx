@@ -4,24 +4,23 @@ import classNames from 'classnames'
 import Icon from 'react-eva-icons'
 
 const ESEvaIcon = ({ className, style, size, color, ...props }) => {
-    const classes = classNames(
-        'es-eva-icon',
-        className,
-        `es-eva-icon--${size}`,
-        `es-eva-icon--${color}`
-    )
+    const classes = classNames('anticon', 'es-eva-icon', className, {
+        [`es-eva-icon--${size}`]: size,
+        [`es-eva-icon--${color}`]: color
+    })
 
     return (
-        <div style={style} className={classes}>
+        <i style={style} className={classes}>
             <Icon {...props} />
-        </div>
+        </i>
     )
 }
 
 ESEvaIcon.propTypes = Object.assign(
     { ...Icon['propTypes'] },
     {
-        className: PropTypes.string,
+        className: PropTypes.any,
+        size: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large', 'xlarge']),
         color: PropTypes.oneOf([
             'primary',
             'secondary',

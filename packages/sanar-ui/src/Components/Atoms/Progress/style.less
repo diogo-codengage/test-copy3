@@ -1,0 +1,55 @@
+.es-progress {
+    .ant-progress-inner {
+        background: @grey-1;
+    }
+
+    .ant-progress-text {
+        font-weight: bold;
+    }
+
+    &__goal {
+        position: relative;
+
+        &__indicator {
+            position: absolute;
+            background: @grey-2;
+            right: 0;
+            border-radius: 100px;
+            height: 8px;
+            bottom: ~'calc(50% - 5px)';
+
+            &--small {
+                height: 6px;
+                bottom: ~'calc(50% - 4px)';
+
+                .ant-progress-text {
+                    font-size: @font-size-xs;
+                }
+            }
+        }
+    }
+
+    &--square {
+        & .ant-progress-inner {
+            border-radius: 0;
+
+            & .ant-progress-bg {
+                border-radius: 0 100px 100px 0 !important;
+            }
+        }
+
+        & .es-progress__goal__indicator {
+            border-radius: 100px 0 0 100px;
+        }
+    }
+
+    &--warning {
+        .ant-progress-bg {
+            background: @warning-color;
+        }
+        .ant-progress-text {
+            color: @warning-color;
+            font-size: @font-size-xs;
+        }
+    }
+}

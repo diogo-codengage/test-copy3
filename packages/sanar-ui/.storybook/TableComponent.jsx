@@ -41,24 +41,66 @@ const Table = props => (
     />
 )
 
+const formatPropType = (propType, recursion) => {
+    switch (propType.name) {
+        case 'enum':
+            return recursion
+                ? `(${formatPropTypeEnum(propType)})`
+                : formatPropTypeEnum(propType)
+        case 'union':
+            return formatPropTypeUnion(propType)
+        case 'shape':
+            return formatPropTypeShape(propType)
+        default:
+            return propType.name
+    }
+}
+
+const formatPropTypeEnum = propType =>
+    propType.value.map(prop => prop.value.replace(/'/g, '"')).join(' | ')
+
+const formatPropTypeUnion = propType =>
+    propType.value.map(prop => formatPropType(prop, true)).join(' | ')
+
+const formatPropTypeShape = propType => (
+    <pre>
+        {JSON.stringify(
+            Object.keys(propType.value).reduce(
+                (prev, current) => ({
+                    ...prev,
+                    [current]: formatPropType(propType.value[current])
+                }),
+                {}
+            ),
+            null,
+            2
+        ).replace(/\\/gi, '')}
+    </pre>
+)
+
+const PropComponent = ({
+    property,
+    propType,
+    required,
+    description,
+    defaultValue
+}) => (
+    <Tr key={property} title={description}>
+        <Td>{property}</Td>
+        <Td>
+            {propType && propType.name ? formatPropType(propType) : propType}
+        </Td>
+        <Td>{typeof required !== 'undefined' && required.toString()}</Td>
+        <Td>
+            {defaultValue && Object.keys(defaultValue).length
+                ? defaultValue
+                : '-'}
+        </Td>
+    </Tr>
+)
+
 const TableComponent = ({ propDefinitions }) => {
-    const props = propDefinitions.map(
-        ({ property, propType, required, description, defaultValue }) => (
-            <Tr key={property}>
-                <Td>{property}</Td>
-                <Td>{propType && propType.name ? propType.name : propType}</Td>
-                <Td>
-                    {typeof required !== 'undefined' && required.toString()}
-                </Td>
-                <Td>
-                    {defaultValue && Object.keys(defaultValue).length
-                        ? defaultValue
-                        : '-'}
-                </Td>
-                <Td>{description}</Td>
-            </Tr>
-        )
-    )
+    const props = propDefinitions.map(PropComponent)
 
     return (
         <Table>
@@ -73,7 +115,6 @@ const TableComponent = ({ propDefinitions }) => {
                     <Th>Type</Th>
                     <Th>Required</Th>
                     <Th>Default</Th>
-                    <Th>Description</Th>
                 </tr>
             </thead>
             <tbody>{props}</tbody>

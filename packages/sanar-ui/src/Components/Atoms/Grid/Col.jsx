@@ -1,16 +1,50 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Col } from 'antd'
 import classNames from 'classnames'
 
-const ESCol = ({ className, ...props }) => {
-  const classes = classNames(
-    'es-Col',
-    className
-  )
-  
-  return (
-    <Col className={classes} {...props} />
-  )
+const ESCol = ({ className, flex, style, type, alignSelf, ...props }) => {
+    const classes = classNames('es-col', className, {
+        [`es-col__${type}`]: type
+    })
+
+    const styles = {
+        ...style,
+        ...(flex && { flex }),
+        ...(alignSelf && { alignSelf })
+    }
+
+    return <Col style={styles} className={classes} {...props} />
 }
+
+ESCol.propTypes = Object.assign(
+    { ...Col['propTypes'] },
+    {
+        flex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        alignSelf: PropTypes.oneOf([
+            'auto',
+            'baseline',
+            'center',
+            ' end',
+            'flex-end',
+            'flex-start',
+            'inherit',
+            'initial',
+            'left',
+            'normal',
+            'right',
+            'safe',
+            'self-end',
+            'self-start',
+            'start',
+            'stretch',
+            'unsafe',
+            'unset'
+        ]),
+        type: PropTypes.string
+    }
+)
+
+ESCol.defaultProps = Col['defaultProps']
 
 export default ESCol

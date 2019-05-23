@@ -1,0 +1,135 @@
+{
+    "enrollment": {
+        "contract": "signed",
+        "progress_percentage": 6.62,
+        "certificate": {
+            "available": false,
+            "link": ""
+        },
+        "course": {
+            "id": "5c5d8a040301dab3e67",
+            "name": "Trilha Sanar Fisioterapia",
+            "knowledge_area": "Enfermagem",
+            "comments": [
+                {
+                    "user": {},
+                    "text": "asokjdfhdjs",
+                    "answers": 23
+                }
+            ],
+            "lives": [
+                {
+                    "link": "https://www.youtube.com/embed/aG-Go8W-wcE",
+                    "title": "Live de Correção da prova",
+                    "release_date": "2019-02-08T14:02:06.093Z",
+                    "description": "Essa é a oportunidade de você aprender como planejar seus estudos em 2019! Saiba como montar um cronograma, quanto tempo deverá dedicar ao estudo por dia, quantas horas para cada matéria.",
+                    "scheduled": true,
+                    "professor": {
+                        "name": "Camila Carla Gianna",
+                        "courses": 4
+                    }
+                },
+                {
+                    "link": "https://www.youtube.com/embed/aG-Go8W-wcE",
+                    "title": "Live de Correção da prova",
+                    "release_date": "2019-02-08T14:02:06.093Z",
+                    "description": "Essa é a oportunidade de você aprender como planejar seus estudos em 2019! Saiba como montar um cronograma, quanto tempo deverá dedicar ao estudo por dia, quantas horas para cada matéria.",
+                    "scheduled": false,
+                    "professor": {
+                        "name": "Camila Carla Gianna",
+                        "courses": 4
+                    }
+                },
+                {
+                    "link": "https://www.youtube.com/embed/aG-Go8W-wcE",
+                    "title": "Live de Correção da prova",
+                    "release_date": "2019-02-08T14:02:06.093Z",
+                    "description": "Essa é a oportunidade de você aprender como planejar seus estudos em 2019! Saiba como montar um cronograma, quanto tempo deverá dedicar ao estudo por dia, quantas horas para cada matéria.",
+                    "scheduled": false,
+                    "professor": {
+                        "name": "Camila Carla Gianna",
+                        "courses": 4
+                    }
+                },
+                {
+                    "link": "https://www.youtube.com/embed/aG-Go8W-wcE",
+                    "title": "Live de Correção da prova",
+                    "release_date": "2019-02-08T14:02:06.093Z",
+                    "description": "Essa é a oportunidade de você aprender como planejar seus estudos em 2019! Saiba como montar um cronograma, quanto tempo deverá dedicar ao estudo por dia, quantas horas para cada matéria.",
+                    "scheduled": true,
+                    "professor": {
+                        "name": "Camila Carla Gianna",
+                        "courses": 4
+                    }
+                },
+                {
+                    "link": "https://www.youtube.com/embed/aG-Go8W-wcE",
+                    "title": "Live de Correção da prova",
+                    "release_date": "2019-02-08T14:02:06.093Z",
+                    "description": "Essa é a oportunidade de você aprender como planejar seus estudos em 2019! Saiba como montar um cronograma, quanto tempo deverá dedicar ao estudo por dia, quantas horas para cada matéria.",
+                    "scheduled": false,
+                    "professor": {
+                        "name": "Camila Carla Gianna",
+                        "courses": 4
+                    }
+                },
+                {
+                    "link": "https://www.youtube.com/embed/aG-Go8W-wcE",
+                    "title": "Live de Correção da prova",
+                    "release_date": "2019-02-08T14:02:06.093Z",
+                    "description": "Essa é a oportunidade de você aprender como planejar seus estudos em 2019! Saiba como montar um cronograma, quanto tempo deverá dedicar ao estudo por dia, quantas horas para cada matéria.",
+                    "scheduled": false,
+                    "professor": {
+                        "name": "Camila Carla Gianna",
+                        "courses": 4
+                    }
+                },
+                {
+                    "link": "https://www.youtube.com/embed/aG-Go8W-wcE",
+                    "title": "Live de Correção da prova",
+                    "release_date": "2019-02-08T14:02:06.093Z",
+                    "description": "Essa é a oportunidade de você aprender como planejar seus estudos em 2019! Saiba como montar um cronograma, quanto tempo deverá dedicar ao estudo por dia, quantas horas para cada matéria.",
+                    "scheduled": false,
+                    "professor": {
+                        "name": "Camila Carla Gianna",
+                        "courses": 4
+                    }
+                },
+                {
+                    "link": "https://www.youtube.com/embed/aG-Go8W-wcE",
+                    "title": "Live de Correção da prova",
+                    "release_date": "2019-02-08T14:02:06.093Z",
+                    "description": "Essa é a oportunidade de você aprender como planejar seus estudos em 2019! Saiba como montar um cronograma, quanto tempo deverá dedicar ao estudo por dia, quantas horas para cada matéria.",
+                    "scheduled": false,
+                    "professor": {
+                        "name": "Camila Carla Gianna",
+                        "courses": 4
+                    }
+                }
+            ]
+        },
+        "last_accessed_content": {
+            "resource_type": "video",
+            "resource": {}
+        },
+        "performance_indicators": {
+            "commitment": 38,
+            "uniformity": 24,
+            "progress": {
+                "done": 12,
+                "total": 93
+            },
+            "tests": {
+                "done": 12,
+                "total": 93
+            },
+            "interatction": 123
+        },
+        "saved_content": [
+            {
+                "resource_type": "video",
+                "resource": {}
+            }
+        ]
+    }
+}
