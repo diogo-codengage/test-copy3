@@ -20,4 +20,6 @@ ESInput.propTypes = Object.assign(
 
 ESInput.defaultProps = Input['defaultProps']
 
+ESInput.Password = Input.Password
+
 export default ESInput
