@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
+import { ESInputSearch } from 'sanar-ui/dist/Components/Atoms/Input'
 import ESChangeCourse from 'sanar-ui/dist/Components/Molecules/ChangeCourse'
-import ESSelect, { ESOption } from 'sanar-ui/dist/Components/Atoms/Select'
 
 const intlPath = 'mainMenu.changeCourse.'
 
@@ -43,9 +43,7 @@ const SANCourseChange = ({ setTab }) => {
                     {t(`${intlPath}changeCourse`)}
                 </ESTypography>
 
-                <ESSelect style={{ width: '100%' }} defaultValue='todas'>
-                    <ESOption value='todas'>Todas as áreas</ESOption>
-                </ESSelect>
+                <ESInputSearch placeholder='Todas as áreas' />
                 <ESTypography
                     className='mb-md mt-md text-white-8'
                     variant='caption'
