@@ -4,7 +4,8 @@
         "percentOf": "{{done}} de {{final}}",
         "you": "Você",
         "back": "Voltar",
-        "leave": "Sair"
+        "leave": "Sair",
+        "loadMore": "Carregar mais"
     },
     "logout": {
         "message": "Tem certeza que deseja sair da conta agora?"
@@ -186,6 +187,20 @@
                 "button": "Fazer nova pergunta",
                 "subtitle": "Pergunte e ajude seus colegas a tirar suas dúvidas sobre o curso",
                 "title": "Interaja com seus colegas"
+            },
+            "search": {
+                "input": "Encontre sua pergunta",
+                "noAnswers": "Perguntas sem respostas",
+                "participate": "Perguntas que participo"
+            },
+            "list": {
+                "questions": "Perguntas",
+                "participate": "Perguntas que participo",
+                "orderBy": {
+                    "title": "Ordenar por",
+                    "best": "Melhores perguntas",
+                    "first": "Mais recentes primeiro"
+                }
             }
         }
     },

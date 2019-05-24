@@ -14,7 +14,7 @@ const SANCoursePage = () => {
     return (
         <div className='course'>
             <SANCourseHeader />
-            <ESTabs defaultActiveKey='1' tabBarGutter={0}>
+            <ESTabs defaultActiveKey='3' tabBarGutter={0}>
                 <ESTabPane tab={t('courseDetails.tabGeneral')} key='1'>
                     <SANCourseTabGeneral />
                 </ESTabPane>
