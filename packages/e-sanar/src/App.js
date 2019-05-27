@@ -19,54 +19,41 @@ import PrivateRoute from 'Pages/Portal/Private/Private'
 // const SANPrivateRoute = lazy(() => import('./Pages/Portal/Private'))
 
 const SANApp = () => (
-<<<<<<< HEAD
-    <Suspense fallback={<SANLoader />}>
+    <Suspense fallback={<ESSplashLoader image={image} />}>
         <ANTLocaleProvider locale={pt_FR}>
             <Router>
-                <Switch>
-                    <Route path='/auth' component={SANAuth} />
-                    <SANPrivateRoute
-                        path='/aluno'
-                        component={SANPortalRoutes}
-                    />
-                    <Route
-                        exact
-                        path='*'
-                        render={() => <Redirect to='/aluno' />}
-                    />
-                </Switch>
+                <Route
+                    render={({ location }) => {
+                        return (
+                            <TransitionGroup>
+                                <CSSTransition
+                                    key={location.pathname}
+                                    classNames='app-routes-transition'
+                                    timeout={300}
+                                >
+                                    <Switch>
+                                        <Route
+                                            path='/auth'
+                                            component={SANAuth}
+                                        />
+                                        <PrivateRoute
+                                            path='/aluno'
+                                            component={SANPortalRoutes}
+                                        />
+                                        <Route
+                                            path='*'
+                                            render={() => (
+                                                <Redirect to='/aluno' />
+                                            )}
+                                        />
+                                    </Switch>
+                                </CSSTransition>
+                            </TransitionGroup>
+                        )
+                    }}
+                />
             </Router>
         </ANTLocaleProvider>
-=======
-    <Suspense fallback={<ESSplashLoader image={image} />}>
-        <Router>
-            <Route
-                render={({ location }) => {
-                    return (
-                        <TransitionGroup>
-                            <CSSTransition
-                                key={location.pathname}
-                                classNames='app-routes-transition'
-                                timeout={300}
-                            >
-                                <Switch>
-                                    <Route path='/auth' component={SANAuth} />
-                                    <PrivateRoute
-                                        path='/aluno'
-                                        component={SANPortalRoutes}
-                                    />
-                                    <Route
-                                        path='*'
-                                        render={() => <Redirect to='/aluno' />}
-                                    />
-                                </Switch>
-                            </CSSTransition>
-                        </TransitionGroup>
-                    )
-                }}
-            />
-        </Router>
->>>>>>> feature/NE-270-Login-Screen
     </Suspense>
 )
 
