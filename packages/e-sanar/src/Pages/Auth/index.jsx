@@ -1,20 +1,19 @@
-import React, { lazy } from 'react'
+import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
+import SANSigninPage from './Signin'
+import SANPasswordRecovery from './PasswordRecovery'
 
-const SANSigninPage = lazy(() => import('./Signin'))
-const SANPasswordRecoveryPage = lazy(() => import('./PasswordRecovery'))
-const SANSignupPage = lazy(() => import('./Signup'))
+// const SANSigninPage = lazy(() => import('./Signin'))
+// const SANPasswordRecoveryPage = lazy(() => import('./PasswordRecovery'))
 
 const SANAuth = ({ match: { url } }) => (
     <Switch>
         <Route path={`${url}/signin`} component={SANSigninPage} />
-        <Route path={`${url}/signup`} component={SANSignupPage} />
         <Route
-            path={`${url}/password-recovery`}
-            component={SANPasswordRecoveryPage}
+            path={`${url}/recuperar-senha`}
+            component={SANPasswordRecovery}
         />
         <Route
-            exact
             path={[`${url}/*`, `${url}`]}
             render={() => <Redirect to={`${url}/signin`} />}
         />

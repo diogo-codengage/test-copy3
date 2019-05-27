@@ -9,6 +9,8 @@ import SANPortalLayout from './Layout'
 import { GET_ME } from 'Apollo/Me/query'
 import { useAuthContext } from 'Hooks/auth'
 
+import ESSplashLoader from 'sanar-ui/dist/Components/Atoms/SplashLoader'
+
 const SANPortalRoutes = ({ match: { url } }) => {
     const { setMe } = useAuthContext()
 
@@ -17,7 +19,7 @@ const SANPortalRoutes = ({ match: { url } }) => {
             {({ loading }) => (
                 <>
                     {loading ? (
-                        'loading'
+                        <ESSplashLoader />
                     ) : (
                         <SANPortalLayout>
                             <Switch>
@@ -27,10 +29,12 @@ const SANPortalRoutes = ({ match: { url } }) => {
                                     component={SANCoursePage}
                                 />
                                 <Route
-                                    exact
                                     path={[`${url}/*`, `${url}`]}
                                     render={() => (
-                                        <Redirect to={`${url}/curso`} />
+                                        <Redirect
+                                            from='/'
+                                            to={`${url}/curso`}
+                                        />
                                     )}
                                 />
                             </Switch>
