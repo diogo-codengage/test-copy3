@@ -22,7 +22,7 @@ ESIcon.propTypes = Object.assign(
         theme: PropTypes.oneOf(['filled', 'outlined', 'twoTone']),
         spin: PropTypes.bool,
         rotate: PropTypes.number,
-        component: PropTypes.node,
+        component: PropTypes.func,
         twoToneColor: PropTypes.string
     }
 )
