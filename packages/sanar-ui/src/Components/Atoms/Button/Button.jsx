@@ -19,6 +19,8 @@ const ESButton = ({
     href,
     icon,
     circle,
+    loading,
+    htmlType,
     ...props
 }) => {
     const classes = classNames(
@@ -30,6 +32,7 @@ const ESButton = ({
             [`${color}`]: color,
             'es-button__block': block,
             'es-button__block--mobile': blockOnlyMobile,
+            loading,
             bold: bold,
             uppercase: uppercase,
             circle: circle
@@ -58,9 +61,17 @@ const ESButton = ({
         )
     }
 
+    const Loading = () => <ESIcon type='loading' />
+
     return (
-        <button type='button' className={classes} {...props}>
+        <button
+            disabled={loading}
+            type={htmlType}
+            className={classes}
+            {...props}
+        >
             {icon && <ESIcon type={icon} />}
+            {loading && <Loading />}
             {kids}
         </button>
     )
@@ -76,12 +87,12 @@ ESButton.propTypes = Object.assign(
         target: PropTypes.string,
         size: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large']),
         type: PropTypes.oneOf(['solid', 'outlined', 'text']),
-        color: PropTypes.oneOf(['primary', 'white', 'default']),
+        color: PropTypes.oneOf(['primary', 'white', 'black', 'default']),
         bold: PropTypes.bool,
         blockOnlyMobile: PropTypes.bool
     }
 )
 
-ESButton.defaultProps = { size: 'medium' }
+ESButton.defaultProps = { size: 'medium', htmlType: 'button' }
 
 export default ESButton
