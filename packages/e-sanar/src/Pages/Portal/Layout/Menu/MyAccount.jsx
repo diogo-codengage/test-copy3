@@ -16,6 +16,7 @@ import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import { useAuthContext } from 'Hooks/auth'
 import SANLogout from 'Components/ModalLogout'
 import SANFeedback from 'Components/ModalFeedback'
+import { Auth } from 'aws-amplify'
 
 const intlPath = 'mainMenu.myAccount.'
 
@@ -29,15 +30,21 @@ const SANMyAccount = ({ setTab }) => {
         setOpen(Number(key) === 2)
     }
 
-    const handleHelp = ({key}) => {
+    const handleHelp = ({ key }) => {
         setOpenFeedback(Number(key) === 0)
+    }
+
+    const leaveAccount = () => {
+        Auth.signOut().then(() => {
+            window.location.pathname = '/'
+        })
     }
 
     return (
         <>
             <SANLogout
                 visible={open}
-                onLeave={() => setOpen(false)}
+                onLeave={() => leaveAccount()}
                 onCancel={() => setOpen(false)}
             />
             <SANFeedback
