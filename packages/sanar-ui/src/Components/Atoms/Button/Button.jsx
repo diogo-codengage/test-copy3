@@ -86,7 +86,7 @@ ESButton.propTypes = Object.assign(
         fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         target: PropTypes.string,
         size: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large']),
-        type: PropTypes.oneOf(['solid', 'outlined', 'text']),
+        variant: PropTypes.oneOf(['solid', 'outlined', 'text']),
         color: PropTypes.oneOf(['primary', 'white', 'black', 'default']),
         bold: PropTypes.bool,
         blockOnlyMobile: PropTypes.bool
