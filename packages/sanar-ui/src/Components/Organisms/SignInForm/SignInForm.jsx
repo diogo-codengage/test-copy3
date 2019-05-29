@@ -9,10 +9,9 @@ import ESCheckbox from '../../Atoms/Checkbox'
 import ESTypography from '../../Atoms/Typography'
 import ESGoogleSignIn from './GoogleSignIn'
 import ESFacebookSignIn from './FacebookSignIn'
-import { Auth } from 'aws-amplify'
-import { withSignInFormProvider, useSignInFormContext } from './context'
 import ESForm, { ESFormItem, withESForm } from '../../Molecules/Form'
 import { message } from 'antd'
+import esSignIn from '../../../Util/Auth/signIn'
 
 const ESSignInForm = ({
     className,
@@ -25,39 +24,18 @@ const ESSignInForm = ({
 }) => {
     const classes = classNames('es-sign-in-form', className)
     const [loading, setLoading] = useState(false)
-    const { user, setUser } = useSignInFormContext()
 
     const signIn = e => {
         e.preventDefault()
         setLoading(true)
-        form.validateFields()
-            .then(res => {
-                const { email, password } = form.getFieldsValue()
-                Auth.signIn(email, password)
-                    .then(user => {
-                        setLoading(false)
-                        return actProp(user)
-                    })
-                    .catch(err => {
-                        setLoading(false)
-                        switch (err.code) {
-                            case 'UserNotFoundException':
-                                message.error(
-                                    'Desculpe, não encontramos nenhuma conta associada ao e-mail inserido. Por favor tente novamente.'
-                                )
-                                break
-                            case 'NotAuthorizedException':
-                                message.error(
-                                    'Desculpe, essa combinação inserida de e-mail e senha está incorreta. Verifique seus dados e tente novamente!'
-                                )
-                            default:
-                                message.error('Verifique seus dados de login!')
-                        }
-                    })
-            })
-            .catch(() => {
+        esSignIn(form)
+            .then(() => {
                 setLoading(false)
-                message.error('Por favor, digite dados válidos.')
+                return actProp()
+            })
+            .catch(error => {
+                setLoading(false)
+                message.error(error)
             })
     }
 
@@ -139,7 +117,6 @@ const ESSignInForm = ({
                     >
                         {login}
                     </ESButton>
-                    {user && user.attributes.name}
                 </div>
             </ESForm>
         </div>
@@ -151,4 +128,4 @@ ESSignInForm.propTypes = {
 }
 ESSignInForm.defaultProps = {}
 
-export default withSignInFormProvider(withESForm(ESSignInForm))
+export default withESForm(ESSignInForm)
