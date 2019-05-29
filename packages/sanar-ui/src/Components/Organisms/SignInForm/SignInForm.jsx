@@ -31,7 +31,6 @@ const ESSignInForm = ({
 }) => {
     const classes = classNames('es-sign-in-form', className)
     const [loading, setLoading] = useState(false)
-    const [loadingFace, setLoadingFace] = useState(false)
 
     const signIn = e => {
         e.preventDefault()
@@ -48,16 +47,23 @@ const ESSignInForm = ({
     }
 
     const signInFacebook = () => {
-        setLoadingFace(true)
-        signInAsPromise().then(() => {
-            setLoadingFace(false)
-            return actProp()
-        })
+        setLoading(true)
+        signInAsPromise()
+            .then(() => {
+                setLoading(false)
+                return actProp()
+            })
+            .catch(() => {
+                setLoading(false)
+                message.error(
+                    'Ocorreu um erro ao logar-se utilizando o Facebook.'
+                )
+            })
     }
 
     return (
         <div className={classes}>
-            <Spin indicator={antIcon} spinning={loading || loadingFace}>
+            <Spin indicator={antIcon} spinning={loading}>
                 <ESForm form={form} onSubmit={signIn}>
                     <ESRow className='es-sign-in-form--social' gutter={16}>
                         <ESCol xs={24} sm={12}>

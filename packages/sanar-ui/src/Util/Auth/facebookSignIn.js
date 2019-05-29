@@ -1,6 +1,10 @@
 import { Auth } from 'aws-amplify'
 
 export const signInAsPromise = () => {
+    if (location.protocol === 'http:') {
+        return Promise.reject('Erro')
+    }
+
     return getLoginStatus()
         .then(response => {
             return response.status === 'connected'
