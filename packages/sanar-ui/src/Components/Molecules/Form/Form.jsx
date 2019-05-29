@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import { Form } from 'antd'
+import i18n from '../../../Config/i18n'
 
 import { withFormProvider, useFormContext } from './context'
 
@@ -26,8 +27,5 @@ ESForm.propTypes = Object.assign(
 )
 
 ESForm.defaultProps = {}
-
-export const withESForm = (defaultOptions = {}) => component =>
-    Form.create(defaultOptions)(component)
 
 export default withFormProvider(ESForm)

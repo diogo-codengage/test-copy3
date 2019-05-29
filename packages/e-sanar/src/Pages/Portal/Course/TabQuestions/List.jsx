@@ -37,7 +37,7 @@ const intlPath = 'courseDetails.tabQuestions.'
 const arr = [0, 1, 2, 3, 4, 5]
 
 const SANQuestionList = () => {
-    const { t } = useTranslation()
+    const { t, i18n } = useTranslation('esanar')
     const [loading, setLoading] = useState(false)
     const [items, setItems] = useState(arr)
 
@@ -61,6 +61,7 @@ const SANQuestionList = () => {
                                 bold
                                 uppercase
                                 blockOnlyMobile
+                                onClick={() => i18n.changeLanguage('en')}
                             >
                                 {t(`${intlPath}interact.button`)}
                             </ESButton>

@@ -151,4 +151,4 @@ ESSignInForm.propTypes = {
 }
 ESSignInForm.defaultProps = {}
 
-export default withESForm()(ESSignInForm)
+export default withESForm(ESSignInForm)

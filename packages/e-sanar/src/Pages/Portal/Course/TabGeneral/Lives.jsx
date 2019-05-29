@@ -16,7 +16,7 @@ const SANLives = () => {
         course: { lives }
     } = getEnrollment()
 
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
 
     const live = lives[0]
 

@@ -6,7 +6,7 @@ import Amplify from 'aws-amplify'
 import SANGraphQLProvider from './Apollo/GraphQLService'
 import { SANAuthProvider } from './Hooks/auth'
 
-import './Config/i18n'
+import 'sanar-ui/dist/Config/i18n'
 import AWSAmplifyConfig from 'Config/aws-amplify'
 
 Amplify.configure(AWSAmplifyConfig)

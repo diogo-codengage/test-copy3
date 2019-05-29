@@ -21,7 +21,7 @@ const Linkedin = ({ link }) => (
 )
 
 const SANCourseProfessors = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
 
     const { getEnrollment } = useAuthContext()
 

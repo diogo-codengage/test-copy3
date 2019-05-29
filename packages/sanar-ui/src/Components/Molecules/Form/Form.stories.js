@@ -3,7 +3,8 @@ import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { select, boolean, text, number } from '@storybook/addon-knobs'
 
-import ESForm, { withESForm } from './Form'
+import ESForm from './Form'
+import withESForm from './withForm'
 import ESFormItem from './FormItem'
 
 import ESInput from '../../Atoms/Input'
@@ -39,7 +40,7 @@ const ruleTypes = {
     Email: 'email'
 }
 
-const Example = withESForm()(({ form }) => {
+const Example = withESForm(({ form }) => {
     return (
         <ESForm
             form={form}

@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuthContext } from 'Hooks/auth'
 
 const SANCourseHeader = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
 
     const { getEnrollment } = useAuthContext()
 

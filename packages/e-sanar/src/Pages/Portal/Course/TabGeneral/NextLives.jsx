@@ -12,7 +12,7 @@ import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 import { useAuthContext } from 'Hooks/auth'
 
 const SANLives = ({ title, release_date, scheduled }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
     const date = format(new Date(release_date), 'DD/MM/YYYY [às] HH[h]')
 
     return (
@@ -57,7 +57,7 @@ const SANNextLives = () => {
         course: { lives: livesProp }
     } = getEnrollment()
 
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
 
     const lives = livesProp.map((live, idx) => ({
         ...live,

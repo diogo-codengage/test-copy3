@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 
+import { useTranslation } from 'react-i18next'
+
 import { Layout, Radio } from 'antd'
 import ESMainMenu from './MainMenu'
 import ESLeftOff from './LeftOff/LeftOff'
@@ -403,6 +405,7 @@ const Search = () => (
 )
 
 const DemoMainMenu = () => {
+    const { t, i18n } = useTranslation('sanarui')
     const [theme, setTheme] = useState('light')
     const [index, setIndex] = useState(0)
 
@@ -413,9 +416,12 @@ const DemoMainMenu = () => {
     return (
         <Layout style={{ flexDirection: 'row', height: '100%' }}>
             <ESMainMenu
-                onSearchClick={() => setIndex(8)}
-                onInitialClick={() => setIndex(0)}
-                title='Menu'
+                onSearchClick={() => i18n.changeLanguage('en')}
+                onInitialClick={() => i18n.changeLanguage('pt')}
+                // onSearchClick={() => setIndex(8)}
+                // onInitialClick={() => setIndex(0)}
+                // title='Menu'
+                title={t('mainMenu.leftOff')}
                 theme={theme}
             >
                 {index === 0 && <Initial {...{ setIndex }} />}
