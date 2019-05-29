@@ -15,7 +15,7 @@ import SANSearch from './Search'
 const intlPath = 'mainMenu.title.'
 
 const MenuContent = ({ index, setTab, showContinueBar }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
 
     switch (index) {
         case 0:
@@ -48,7 +48,7 @@ const MenuContent = ({ index, setTab, showContinueBar }) => {
 }
 
 const SANMenu = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
     const [theme, setTheme] = useState('light')
     const [index, setIndex] = useState(0)
     const [title, setTitle] = useState(t(`${intlPath}menu`))

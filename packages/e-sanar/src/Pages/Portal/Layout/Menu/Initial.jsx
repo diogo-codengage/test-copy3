@@ -13,7 +13,7 @@ import ESBadge from 'sanar-ui/dist/Components/Atoms/Badge'
 const intlPath = 'mainMenu.initial.'
 
 const SANInitial = ({ setTab }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
 
     return (
         <>

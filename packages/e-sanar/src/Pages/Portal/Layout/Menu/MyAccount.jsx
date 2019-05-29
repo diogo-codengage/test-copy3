@@ -21,7 +21,7 @@ const intlPath = 'mainMenu.myAccount.'
 
 const SANMyAccount = ({ setTab }) => {
     const { me } = useAuthContext()
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
     const [open, setOpen] = useState(false)
     const [openFeedback, setOpenFeedback] = useState(false)
 

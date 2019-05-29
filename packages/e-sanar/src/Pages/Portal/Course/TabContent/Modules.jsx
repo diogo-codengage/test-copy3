@@ -50,7 +50,7 @@ const responsive = [
 ]
 
 const SANCourseModules = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
 
     return (
         <div className='san-tab-course-content__modules pt-md pb-lg'>

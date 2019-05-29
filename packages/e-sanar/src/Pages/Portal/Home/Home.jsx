@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 
 function HomePage() {
-    const { t, i18n } = useTranslation()
+    const { t, i18n } = useTranslation('esanar')
 
     const changeLng = lng => {
         i18n.changeLanguage(lng)

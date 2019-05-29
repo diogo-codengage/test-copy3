@@ -2,6 +2,9 @@ import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
+import { Trans, useTranslation } from 'react-i18next'
+import i18n from '../../../../Config/i18n'
+
 import ESTypography from '../../../Atoms/Typography'
 import ESEvaIcon from '../../../Atoms/EvaIcon'
 
@@ -14,6 +17,7 @@ const ESLeftOff = ({
     label,
     onClick
 }) => {
+    const { t } = useTranslation('sanarui')
     const classes = classNames('es-left-off', className)
 
     return (
@@ -22,7 +26,7 @@ const ESLeftOff = ({
                 {title}
             </ESTypography>
             <ESTypography variant='overline' className='text-white-6 mb-sm'>
-                {label}
+                {label || t('mainMenu.leftOff')}
             </ESTypography>
             <div className='es-left-off__class'>
                 <div className='es-left-off__class--img'>
@@ -55,11 +59,9 @@ ESLeftOff.propTypes = {
     thumbnail: PropTypes.string,
     classReference: PropTypes.string,
     moduleReference: PropTypes.string,
-    label: PropTypes.string
+    label: PropTypes.node
 }
 
-ESLeftOff.defaultProps = {
-    label: 'Continuar de onde parei'
-}
+ESLeftOff.defaultProps = {}
 
 export default ESLeftOff

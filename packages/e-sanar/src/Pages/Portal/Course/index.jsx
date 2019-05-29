@@ -9,7 +9,7 @@ import SANCourseTabGeneral from './TabGeneral'
 import SANCourseTabQuestions from './TabQuestions'
 
 const SANCoursePage = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
 
     return (
         <div className='course'>

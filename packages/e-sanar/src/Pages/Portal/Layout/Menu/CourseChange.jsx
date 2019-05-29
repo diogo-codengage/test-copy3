@@ -11,7 +11,7 @@ import ESChangeCourse from 'sanar-ui/dist/Components/Molecules/ChangeCourse'
 const intlPath = 'mainMenu.changeCourse.'
 
 const SANCourseChange = ({ setTab }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
 
     return (
         <>

@@ -33,7 +33,7 @@ const statusCommitment = {
 }
 
 const CommitmentCard = ({ value, status }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
 
     return (
         <ESCard
@@ -80,7 +80,7 @@ const CommitmentCard = ({ value, status }) => {
 }
 
 const SANPerformance = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
     const { getEnrollment } = useAuthContext()
     const { performance } = getEnrollment()
 

@@ -13,7 +13,7 @@ const mock = {
 }
 
 const SANCourseContinue = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
 
     return (
         <div className='san-tab-course-content__continue'>

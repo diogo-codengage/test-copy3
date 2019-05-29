@@ -22,7 +22,7 @@ import noQuestion from 'assets/images/empty-question.svg'
 import noBookmark from 'assets/images/empty-bookmark.svg'
 
 const SANInteractions = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
 
     const {
         me: { id: idLoggedUser },

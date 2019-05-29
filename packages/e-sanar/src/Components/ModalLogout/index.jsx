@@ -7,7 +7,7 @@ import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import ESModal, { ESModalFooter } from 'sanar-ui/dist/Components/Atoms/Modal'
 
 const SANLogout = ({ onLeave, onCancel, ...props }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
 
     return (
         <ESModal

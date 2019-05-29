@@ -6,6 +6,8 @@ import { withInfo } from '@storybook/addon-info'
 import './styles.less'
 import TableComponent from './TableComponent'
 
+import '../src/Config/i18n'
+
 const DefaultDecotator = (story, { parameters }) => (
     <div
         style={
@@ -47,7 +49,9 @@ addDecorator(
 )
 addParameters({
     options: {
-        name: 'SANAR UI'
+        theme: {
+            brandTitle: 'SANAR LIB'
+        }
     }
 })
 

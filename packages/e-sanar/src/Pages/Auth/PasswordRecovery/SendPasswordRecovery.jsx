@@ -91,4 +91,4 @@ const SANSendPasswordRecovery = ({ history, form }) => {
     )
 }
 
-export default withESForm()(SANSendPasswordRecovery)
+export default withESForm(SANSendPasswordRecovery)

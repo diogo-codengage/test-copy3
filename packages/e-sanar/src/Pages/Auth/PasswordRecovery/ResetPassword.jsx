@@ -121,4 +121,4 @@ const SANResetPassword = ({ history, location, form }) => {
     )
 }
 
-export default withESForm()(SANResetPassword)
+export default withESForm(SANResetPassword)
