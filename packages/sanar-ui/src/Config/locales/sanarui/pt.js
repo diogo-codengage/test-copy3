@@ -1,6 +1,13 @@
 export default {
+    global: {
+        filter: 'Filtrar'
+    },
     mainMenu: {
         leftOff: 'Continuar onde parei'
+    },
+    cardSelectFilter: {
+        selectAll: 'Selecionar todos',
+        clearSelect: 'Limpar seleção'
     },
     formValidateMessages: {
         default: 'Erro de validação no campo %s',

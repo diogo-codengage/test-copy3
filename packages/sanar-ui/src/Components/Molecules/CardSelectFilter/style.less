@@ -1,0 +1,87 @@
+.es-card-select-filter {
+    & .ant-card-body {
+        padding: 0;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: @padding-lg;
+
+        & .badge {
+            width: 20px;
+            height: 20px;
+            border-radius: 50vh;
+            background-color: fade(@primary-1, 50%);
+            color: @primary-4;
+            text-align: center;
+            font-weight: bold;
+            font-size: @font-size-sm;
+        }
+
+        & .ant-skeleton {
+            width: auto;
+        }
+
+        &--img {
+            margin-top: @padding-lg;
+        }
+    }
+
+    &__footer {
+        position: relative;
+        background-color: @grey-solid-3;
+        border-top: 1px solid @grey-3;
+        padding: @padding-md @padding-lg;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &--checked {
+            background-color: fade(@primary-1, 20);
+
+            & .es-eva-icon {
+                color: @primary-color !important;
+            }
+        }
+
+        & .es-eva-icon {
+            position: absolute;
+            left: 24px;
+            color: @grey-solid-4;
+        }
+    }
+
+    &__menu {
+        & .ant-card-body {
+            padding: 0;
+        }
+
+        & .es-divider {
+            margin: 0 auto;
+            width: calc(100% - 24px);
+        }
+
+        &--buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: @padding-sm 0;
+        }
+
+        &__items {
+            padding: 4px 0;
+
+            &--item {
+                width: 100%;
+                cursor: pointer;
+                padding: 4px @padding-sm;
+
+                &:hover {
+                    background-color: @grey-1;
+                }
+            }
+        }
+    }
+}

@@ -3,13 +3,9 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { Radio } from 'antd'
 
-const ESRadio = ({ className, children, ...props }) => {
+const ESRadio = ({ className, ...props }) => {
     const classes = classNames('es-radio', className)
-    return (
-        <Radio className={classes} {...props}>
-            {children}
-        </Radio>
-    )
+    return <Radio className={classes} {...props} />
 }
 
 ESRadio.propTypes = Object.assign(
