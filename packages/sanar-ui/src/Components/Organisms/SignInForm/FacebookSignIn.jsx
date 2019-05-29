@@ -2,11 +2,7 @@ import React, { useEffect } from 'react'
 import ESIcon from '../../Atoms/Icon'
 import facebook from '../../../assets/images/social/blue-facebook.svg'
 import ESButton from '../../Atoms/Button'
-import { Auth } from 'aws-amplify'
-import {
-    esFacebookCreateScript,
-    esFacebookSignin
-} from '../../../Util/Auth/facebookSignIn'
+import { esFacebookCreateScript } from '../../../Util/Auth/facebookSignIn'
 
 const FacebookSVG = () => <img src={facebook} alt='Facebook Sign In' />
 
@@ -24,7 +20,7 @@ const ESFacebookSignIn = ({ signIn, loading }) => {
             color='black'
             loading={loading}
             onClick={() => signIn()}
-            // className={className}
+            className='mb-md'
         >
             <ESIcon component={FacebookSVG} />
             Facebook
