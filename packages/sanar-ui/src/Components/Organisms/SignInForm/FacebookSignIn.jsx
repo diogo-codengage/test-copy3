@@ -1,15 +1,35 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ESIcon from '../../Atoms/Icon'
 import facebook from '../../../assets/images/social/blue-facebook.svg'
 import ESButton from '../../Atoms/Button'
+import { Auth } from 'aws-amplify'
+import {
+    esFacebookCreateScript,
+    esFacebookSignin
+} from '../../../Util/Auth/facebookSignIn'
 
 const FacebookSVG = () => <img src={facebook} alt='Facebook Sign In' />
 
-const ESFacebookSignIn = ({ className }) => (
-    <ESButton block bold variant='outlined' color='black' className={className}>
-        <ESIcon component={FacebookSVG} />
-        Facebook
-    </ESButton>
-)
+// To federated sign in from Facebook
+const ESFacebookSignIn = ({ signIn, loading }) => {
+    useEffect(() => {
+        if (!window.FB) esFacebookCreateScript()
+    }, [])
+
+    return (
+        <ESButton
+            block
+            bold
+            variant='outlined'
+            color='black'
+            loading={loading}
+            onClick={() => signIn()}
+            // className={className}
+        >
+            <ESIcon component={FacebookSVG} />
+            Facebook
+        </ESButton>
+    )
+}
 
 export default ESFacebookSignIn
