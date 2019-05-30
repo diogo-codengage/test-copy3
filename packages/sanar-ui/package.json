@@ -38,7 +38,6 @@
         "jest-puppeteer": "^4.1.1",
         "less-plugin-npm-import": "^2.1.0",
         "puppeteer": "^1.14.0",
-        "react-eva-icons": "^0.0.7",
         "react-test-renderer": "^16.8.6",
         "react-testing-library": "^6.1.2"
     },

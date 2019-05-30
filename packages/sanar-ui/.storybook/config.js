@@ -17,7 +17,7 @@ const DefaultDecotator = (story, { parameters }) => (
                 : {
                       padding: 20,
                       minHeight: '200px',
-                      backgroundColor: '#edeff2'
+                      backgroundColor: '#f7f8f9'
                   }
         }
     >
