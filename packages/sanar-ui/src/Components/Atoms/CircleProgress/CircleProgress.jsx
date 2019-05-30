@@ -4,8 +4,12 @@ import PropTypes from 'prop-types'
 
 import { Progress } from 'antd'
 
-const ESCircleProgress = ({ className, ...props }) => {
-    const classes = classNames('es-circle-progress', className)
+const ESCircleProgress = ({ className, status, ...props }) => {
+    const classes = classNames(
+        'es-circle-progress',
+        [`es-circle-progress--${status}`],
+        className
+    )
     return <Progress className={classes} type='circle' {...props} />
 }
 
@@ -17,16 +21,13 @@ ESCircleProgress.propTypes = {
     successPercent: PropTypes.number,
     showInfo: PropTypes.bool,
     format: PropTypes.func,
-    status: PropTypes.oneOf([
-        'normal',
-        'exception',
-        'active',
-        'success',
-        'warning'
-    ])
+    strokeLinecap: PropTypes.oneOf(['round', 'square']),
+    status: PropTypes.oneOf(['normal', 'error', 'success'])
 }
 ESCircleProgress.defaultProps = {
-    strokeWidth: 6
+    strokeWidth: 6,
+    strokeLinecap: 'square',
+    status: 'normal'
 }
 
 export default ESCircleProgress

@@ -15,7 +15,11 @@ import ESDivider from '../../Atoms/Divider'
 import ESTypography from '../../Atoms/Typography'
 import ESCard from '../Card'
 
-const Badge = props => <div className='badge' {...props} />
+const Badge = ({ count, ...props }) => (
+    <div className='badge' {...props}>
+        {count > 99 ? '99+' : count}
+    </div>
+)
 
 const Items = ({
     items,
@@ -108,10 +112,7 @@ const ESCardSelectFilter = ({
     })
 
     useMemo(
-        () =>
-            items.length === selectedItems.length
-                ? setChecked(true)
-                : setChecked(false),
+        () => (selectedItems.length ? setChecked(true) : setChecked(false)),
         [selectedItems]
     )
 
@@ -166,7 +167,7 @@ const ESCardSelectFilter = ({
 
     const suffixIcon =
         open && selectedItems.length ? (
-            <Badge>{selectedItems.length}</Badge>
+            <Badge count={selectedItems.length} />
         ) : open ? (
             undefined
         ) : (
