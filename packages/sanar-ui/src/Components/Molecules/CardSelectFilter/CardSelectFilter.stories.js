@@ -48,7 +48,7 @@ storiesOf('Molecules.CardSelectFilter', module).add('Simple', () => (
         labelSelecteds={text('Label selecteds', 'Especialidades')}
         placeholder={text('Placeholder', 'Escolher especialidades')}
         filterName={text('Filter name', 'Especialidade')}
-        image='https://public-v2links.adobecc.com/4c410069-6394-48fa-541c-bc910177739e/component?params=component_id:dd16791c-b71d-445b-a86d-e4d7439afb08&params=version:0&token=1559235271_da39a3ee_ba23828d0c23e3335a51dd740aef643486573a74&api_key=CometServer1'
+        image='http://www.unirio.br/arquivocentral/imagens/localizacao.png/image_preview'
         items={items}
         defaultSelectedItems={[items[0], items[3]]}
     />

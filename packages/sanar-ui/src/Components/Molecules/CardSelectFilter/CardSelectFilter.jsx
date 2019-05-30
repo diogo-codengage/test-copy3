@@ -22,7 +22,6 @@ const Items = ({
     selectedItems,
     handleSelectAll,
     handleClear,
-    handleClose,
     handleChange,
     search
 }) => {
@@ -74,7 +73,7 @@ const Items = ({
                     {rows.length ? (
                         rows
                     ) : (
-                        <Empty classsName='mt-md' style={{ height: 206 }} />
+                        <Empty className='mt-md' style={{ height: 206 }} />
                     )}
                 </div>
             </Scrollbars>
@@ -126,15 +125,6 @@ const ESCardSelectFilter = ({
         onClose && onClose(e)
     }
 
-    const handleChangeRadio = e => {
-        const {
-            target: { checked }
-        } = e
-        setChecked(checked)
-
-        checked ? handleSelectAll() : handleClear()
-    }
-
     const handleSelectAll = e => {
         setSelectedItems(items)
         onSelectAll && onSelectAll(items, e)
@@ -158,10 +148,12 @@ const ESCardSelectFilter = ({
         } = e
         if (checked) {
             setSelectedItems([...selectedItems, item])
+            onSelectItem && onSelectItem(item)
         } else {
             setSelectedItems(
                 selectedItems.filter(selected => selected.value !== item.value)
             )
+            onDeselectItem && onDeselectItem(item)
         }
     }
 
