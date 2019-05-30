@@ -2,6 +2,7 @@ import React from 'react'
 import { configure, addDecorator, addParameters } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
 import { withInfo } from '@storybook/addon-info'
+import { create } from '@storybook/theming'
 
 import './styles.less'
 import TableComponent from './TableComponent'
@@ -47,6 +48,7 @@ addDecorator(
         })
     })
 )
+
 addParameters({
     options: {
         theme: {
