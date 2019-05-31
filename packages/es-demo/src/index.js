@@ -1,12 +1,22 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.less";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import SANApp from './App'
+import Amplify from 'aws-amplify'
 
-ReactDOM.render(<App />, document.getElementById("root"));
+import SANGraphQLProvider from './Apollo/GraphQLService'
+import { SANAuthProvider } from './Hooks/auth'
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+import 'sanar-ui/dist/Config/i18n'
+import AWSAmplifyConfig from 'Config/aws-amplify'
+
+Amplify.configure(AWSAmplifyConfig)
+
+const SANRootComponent = () => (
+    <SANGraphQLProvider>
+        <SANAuthProvider>
+            <SANApp />
+        </SANAuthProvider>
+    </SANGraphQLProvider>
+)
+
+ReactDOM.render(<SANRootComponent />, document.getElementById('root'))

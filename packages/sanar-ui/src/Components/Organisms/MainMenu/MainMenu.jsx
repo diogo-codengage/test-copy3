@@ -44,7 +44,8 @@ const ESMainMenu = ({
     onSearchClick,
     onInitialClick,
     theme: themeProp,
-    showContinueBar: showContinueBarProp
+    showContinueBar: showContinueBarProp,
+    logo
 }) => {
     const {
         position,
@@ -106,7 +107,7 @@ const ESMainMenu = ({
                         <InitalButton onClick={initialClick} />
                         <SearchButton onClick={searchClick} />
                     </div>
-                    <img className='logo' src={logoSvg} />
+                    <img className='logo' src={logo} />
                 </div>
             ) : (
                 <>
@@ -142,10 +143,12 @@ ESMainMenu.propTypes = {
     theme: PropTypes.oneOf(['primary', 'dark', 'light']),
     onInitialClick: PropTypes.func,
     onSearchClick: PropTypes.func,
-    showContinueBar: PropTypes.bool
+    showContinueBar: PropTypes.bool,
+    logo: PropTypes.string
 }
 ESMainMenu.defaultProps = {
-    theme: 'primary'
+    theme: 'primary',
+    logo: logoSvg
 }
 
 export default withMainMenuProvider(ESMainMenu)

@@ -1,0 +1,73 @@
+.san-tab-course-general {
+    & .performance {
+        padding-top: @padding-md;
+        border-bottom: 0.5px solid rgba(17, 19, 23, 0.15);
+        background-color: rgba(247, 249, 252, 1);
+
+        & .es-card {
+            height: 100%;
+        }
+
+        &__card-commitment {
+            &__content {
+                height: 100%;
+                align-items: center;
+                justify-content: center;
+
+                &--emoticon {
+                    display: flex;
+                    flex-direction: column;
+                    width: min-content;
+                    margin-bottom: 20px;
+
+                    &--text {
+                        display: flex;
+                        justify-content: space-between;
+                        margin: 4px 6px 0 6px;
+                    }
+                }
+            }
+
+            & > .ant-card-body {
+                height: ~'calc(100% - 25px)';
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+    }
+
+    & .interactions {
+        padding-top: @padding-xs;
+
+        &__column {
+            margin-bottom: @margin-lg;
+        }
+    }
+
+    & .lives {
+        & .ant-divider {
+            margin-top: @margin-lg * 2;
+            margin-bottom: 0;
+        }
+    }
+
+    & .next-lives {
+        margin-bottom: @margin-xs;
+
+        &__title {
+            font-size: @font-size-lg;
+            margin-bottom: @margin-lg - 4;
+        }
+    }
+
+    @media (min-width: @screen-md) {
+        & .performance {
+            padding-bottom: @padding-lg;
+        }
+
+        & .interactions {
+            padding-top: @padding-md * 2;
+        }
+    }
+}
