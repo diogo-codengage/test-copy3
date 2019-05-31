@@ -67,7 +67,8 @@ const ESImageViewer = ({ className, image, alt }) => {
 }
 
 ESImageViewer.propTypes = {
-    className: PropTypes.string
+    className: PropTypes.string,
+    image: PropTypes.string
 }
 ESImageViewer.defaultProps = {}
 
