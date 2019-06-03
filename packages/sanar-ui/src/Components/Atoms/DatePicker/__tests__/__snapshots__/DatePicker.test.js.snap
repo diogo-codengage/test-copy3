@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<span
+  className="es-date-picker ant-calendar-picker"
+  onBlur={[Function]}
+  onFocus={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+  style={Object {}}
+>
+  <div
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    onMouseDown={[Function]}
+    onTouchStart={[Function]}
+  >
+    <input
+      className="ant-calendar-picker-input ant-input"
+      placeholder="Select date"
+      readOnly={true}
+      value=""
+    />
+    <i
+      className="anticon es-eva-icon ant-calendar-picker-icon es-eva-icon--medium"
+    >
+      <i
+        data-eva="calendar-outline"
+        data-eva-fill="#fff"
+        data-eva-height="18px"
+        data-eva-width="18px"
+      />
+    </i>
+  </div>
+</span>
+`;

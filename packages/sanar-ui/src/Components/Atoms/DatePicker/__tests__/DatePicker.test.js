@@ -1,14 +1,10 @@
 import React from 'react'
 import TestRenderer from 'react-test-renderer'
 
-import ESListViewItem from '../../ListViewItem'
+import ESDatePicker from '../'
 
 it('renders correctly', () => {
-    const component = (
-        <ESListViewItem>
-            <h1>ESListViewItem</h1>
-        </ESListViewItem>
-    )
+    const component = <ESDatePicker />
 
     const tree = TestRenderer.create(component).toJSON()
     expect(tree).toMatchSnapshot()

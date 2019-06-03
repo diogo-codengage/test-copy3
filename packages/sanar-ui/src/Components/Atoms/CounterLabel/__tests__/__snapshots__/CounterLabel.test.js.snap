@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<span
+  aria-label={null}
+  className="ant-typography"
+  style={
+    Object {
+      "WebkitLineClamp": null,
+      "fontSize": 12,
+    }
+  }
+>
+  <span
+    aria-label={null}
+    className="ant-typography"
+    style={
+      Object {
+        "WebkitLineClamp": null,
+      }
+    }
+  >
+    <strong>
+      
+    </strong>
+  </span>
+   undefineds
+</span>
+`;

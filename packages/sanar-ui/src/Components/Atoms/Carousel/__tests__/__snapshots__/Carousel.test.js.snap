@@ -3,11 +3,6 @@
 exports[`renders correctly 1`] = `
 <div
   className="es-carousel"
-  style={
-    Object {
-      "width": "calc(100% - 150px)",
-    }
-  }
 >
   <div
     className="ant-carousel"
@@ -17,7 +12,7 @@ exports[`renders correctly 1`] = `
       dir="ltr"
     >
       <button
-        className="ant-btn es-button slick-arrow slick-prev ant-btn-circle"
+        className="es-button slick-arrow slick-prev es-button__xsmall circle ant-btn"
         currentSlide={0}
         data-role="none"
         onClick={[Function]}
@@ -500,7 +495,7 @@ exports[`renders correctly 1`] = `
         </div>
       </div>
       <button
-        className="ant-btn es-button slick-arrow slick-next ant-btn-circle"
+        className="es-button slick-arrow slick-next es-button__xsmall circle ant-btn"
         currentSlide={0}
         data-role="none"
         onClick={[Function]}
@@ -524,7 +519,7 @@ exports[`renders correctly 1`] = `
         </i>
       </button>
       <ul
-        className="slick-dots"
+        className="slick-dots slick-dots-bottom"
         onMouseEnter={null}
         onMouseLeave={null}
         onMouseOver={null}

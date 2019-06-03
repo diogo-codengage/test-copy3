@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="ant-card es-card es-card-select-filter ant-card-bordered ant-card-small"
+>
+  <div
+    className="ant-card-body"
+    style={Object {}}
+  >
+    <div
+      className="es-card-select-filter__content"
+    >
+      <span
+        className="es-input ant-dropdown-trigger es-dropdown ant-input-affix-wrapper"
+      >
+        <input
+          className="ant-input"
+          disabled={false}
+          onChange={[Function]}
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          onTouchStart={[Function]}
+          placeholder="Escolher especialidades"
+          style={null}
+          type="text"
+          value=""
+        />
+        <span
+          className="ant-input-suffix"
+        >
+          <i
+            className="anticon es-eva-icon es-eva-icon--medium"
+          >
+            <i
+              data-eva="plus-outline"
+              data-eva-fill="#fff"
+              data-eva-height="18px"
+              data-eva-width="18px"
+            />
+          </i>
+        </span>
+      </span>
+      <img
+        className="es-card-select-filter__content--img"
+        onLoad={[Function]}
+        src="https://public-v2links.adobecc.com/4c410069-6394-48fa-541c-bc910177739e/component?params=component_id:dd16791c-b71d-445b-a86d-e4d7439afb08&params=version:0&token=1559235271_da39a3ee_ba23828d0c23e3335a51dd740aef643486573a74&api_key=CometServer1"
+        style={
+          Object {
+            "display": "none",
+          }
+        }
+      />
+      <div
+        className="ant-skeleton mt-md mb-xs ant-skeleton-with-avatar"
+      >
+        <div
+          className="ant-skeleton-header"
+        >
+          <span
+            className="ant-skeleton-avatar ant-skeleton-avatar-circle"
+            style={
+              Object {
+                "height": 168,
+                "lineHeight": "168px",
+                "width": 168,
+              }
+            }
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="es-card-select-filter__footer"
+    >
+      <i
+        className="anticon es-eva-icon es-eva-icon--medium"
+      >
+        <i
+          data-eva="checkmark-circle-2"
+          data-eva-fill="#fff"
+          data-eva-height="18px"
+          data-eva-width="18px"
+        />
+      </i>
+      <div
+        aria-label={null}
+        className="ant-typography es-typography es-typography--body1"
+        style={
+          Object {
+            "WebkitLineClamp": null,
+          }
+        }
+      >
+        <strong>
+          Especialidade
+        </strong>
+      </div>
+    </div>
+  </div>
+</div>
+`;
