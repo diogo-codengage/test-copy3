@@ -9,13 +9,7 @@ import i18n from '../../../Config/i18n'
 
 import { withFormProvider, useFormContext } from './context'
 
-const ESForm = ({
-    className,
-    form,
-    preValidate,
-    customValidator,
-    ...props
-}) => {
+const ESForm = ({ className, form, customValidator, ...props }) => {
     const classes = classNames('es-form', className)
     const { setForm } = useFormContext()
 
