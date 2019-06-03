@@ -10,6 +10,7 @@ import ESForm, {
     ESFormItem,
     withESForm
 } from 'sanar-ui/dist/Components/Molecules/Form'
+import { message } from 'antd'
 
 const SANSendPasswordRecovery = ({ history, form }) => {
     const [loading, setLoading] = useState(false)
@@ -30,11 +31,30 @@ const SANSendPasswordRecovery = ({ history, form }) => {
                             search: `?email=${email}`
                         })
                     })
-                    .catch(() => {
+                    .catch(error => {
+                        switch (error.code) {
+                            case 'LimitExceededException':
+                                message.error(
+                                    'Você excedeu o limite de tentativas. Tente novamente mais tarde.'
+                                )
+                                break
+                            default:
+                                message.error(
+                                    'Ocorreu um erro. Tente novamente'
+                                )
+                        }
                         setLoading(false)
                     })
             })
-            .catch(() => {
+            .catch(error => {
+                switch (error.type) {
+                    case 'UserNotFoundException':
+                        message.error(
+                            'Nenhuma conta foi encontrada com esse e-mail.'
+                        )
+                    default:
+                        message.error('Ocorreu um erro ao redefinir sua senha.')
+                }
                 setLoading(false)
             })
     }
@@ -66,18 +86,18 @@ const SANSendPasswordRecovery = ({ history, form }) => {
                         />
                     </ESFormItem>
                     <ESButton
+                        loading={loading}
                         htmlType='submit'
                         uppercase
                         block
                         variant='solid'
                         color='primary'
-                        loading={loading}
                         className='mb-md'
                     >
                         Enviar
                     </ESButton>
                     <ESButton
-                        href='../'
+                        href='/#/auth/signin'
                         uppercase
                         block
                         variant='text'
