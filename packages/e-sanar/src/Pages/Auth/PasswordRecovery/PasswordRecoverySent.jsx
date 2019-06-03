@@ -9,6 +9,7 @@ import image from 'assets/images/auth/mail.png'
 //TODO: change to real behavior.
 const SANPasswordRecoverySent = ({ location, history }) => {
     const params = new URLSearchParams(location.search)
+
     return (
         <div className='san-password-recovery__success'>
             <ESPasswordRecoveryTemplate
@@ -31,7 +32,7 @@ const SANPasswordRecoverySent = ({ location, history }) => {
                             e-mail de recuperação.
                         </ESTypography>
                         <ESButton
-                            href='../../'
+                            onClick={() => history.push('/')}
                             uppercase
                             block
                             variant='solid'

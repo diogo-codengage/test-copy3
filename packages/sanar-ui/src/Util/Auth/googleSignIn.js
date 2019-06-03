@@ -2,7 +2,7 @@ import { Auth } from 'aws-amplify'
 
 // To federated sign in from Google
 
-export const esSignInByGoogle = () => {
+const esGoogleSignIn = () => {
     const ga = window.gapi.auth2.getAuthInstance()
     return ga.signIn().then(
         googleUser => {
@@ -46,3 +46,5 @@ const getAWSCredentials = async googleUser => {
 
     await Auth.federatedSignIn('google', { token: id_token, expires_at }, user)
 }
+
+export default esGoogleSignIn
