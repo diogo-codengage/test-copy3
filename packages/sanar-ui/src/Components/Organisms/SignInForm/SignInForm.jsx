@@ -12,9 +12,6 @@ import ESGoogleSignIn from './GoogleSignIn'
 import ESFacebookSignIn from './FacebookSignIn'
 import ESForm, { ESFormItem, withESForm } from '../../Molecules/Form'
 import { message, Spin } from 'antd'
-import esSignIn from '../../../Util/Auth/signIn'
-import { esSignInByFacebook } from '../../../Util/Auth/facebookSignIn'
-import { esSignInByGoogle } from '../../../Util/Auth/googleSignIn'
 
 const antIcon = <ESIcon type='loading' style={{ fontSize: 24 }} spin />
 
@@ -25,32 +22,33 @@ const ESSignInForm = ({
     login,
     title,
     action: actProp,
+    signInByEmail,
+    signInByFacebook,
+    signInByGoogle,
+    isKeepMeLoggedChecked,
+    keepMeLogged,
     form
 }) => {
     const classes = classNames('es-sign-in-form', className)
     const [loading, setLoading] = useState(false)
-    const [invalidEmail, setInvalidEmail] = useState(false)
 
     const signIn = e => {
         e.preventDefault()
         setLoading(true)
-        esSignIn(form)
+        signInByEmail(form)
             .then(() => {
                 setLoading(false)
                 return actProp()
             })
             .catch(error => {
                 setLoading(false)
-                if (error.field === 'email') {
-                    setInvalidEmail(true)
-                }
                 message.error(error.message)
             })
     }
 
     const signInFacebook = () => {
         setLoading(true)
-        esSignInByFacebook()
+        signInByFacebook()
             .then(() => {
                 setLoading(false)
                 return actProp()
@@ -65,7 +63,7 @@ const ESSignInForm = ({
 
     const signInGoogle = async () => {
         setLoading(true)
-        esSignInByGoogle()
+        signInByGoogle()
             .then(() => {
                 setLoading(false)
                 actProp()
@@ -141,7 +139,12 @@ const ESSignInForm = ({
                         className='mb-lg es-sign-in-form__form--extra'
                     >
                         <ESCol>
-                            <ESCheckbox>{keepMeLoggedIn}</ESCheckbox>
+                            <ESCheckbox
+                                checked={isKeepMeLoggedChecked}
+                                onClick={() => keepMeLogged()}
+                            >
+                                {keepMeLoggedIn}
+                            </ESCheckbox>
                         </ESCol>
                         <ESCol>
                             <ESButton
