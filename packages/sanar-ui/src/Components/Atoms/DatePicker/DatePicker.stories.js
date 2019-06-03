@@ -24,7 +24,6 @@ storiesOf('Atoms.DatePicker', module).add('Simple', () => (
         disabled={boolean('Disabled', false)}
         placeholder={text('Placeholder', 'Select date')}
         size={select('Size', sizeOptions, '')}
-        format={text('Placeholder', 'Select date')}
         showToday={boolean('Show today', true)}
     />
 ))
