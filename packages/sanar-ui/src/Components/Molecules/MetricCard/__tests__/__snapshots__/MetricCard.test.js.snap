@@ -28,7 +28,7 @@ exports[`renders correctly 1`] = `
     style={Object {}}
   >
     <span
-      className="es-card__doubt"
+      className="es-tooltip es-card__doubt"
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
     >
@@ -57,17 +57,17 @@ exports[`renders correctly 1`] = `
           25 de 50
         </strong>
       </div>
-      <span
+      <div
         aria-label={null}
-        className="ant-typography"
+        className="ant-typography es-typography es-metric-card__content--description es-typography--caption ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
         style={
           Object {
-            "WebkitLineClamp": null,
+            "WebkitLineClamp": 2,
           }
         }
       >
         Horas estudadas na semana
-      </span>
+      </div>
     </div>
   </div>
 </div>

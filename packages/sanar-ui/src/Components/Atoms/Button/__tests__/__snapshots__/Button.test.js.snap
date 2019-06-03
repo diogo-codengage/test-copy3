@@ -2,9 +2,7 @@
 
 exports[`renders correctly 1`] = `
 <button
-  className="ant-btn es-button"
-  onClick={[Function]}
-  style={Object {}}
+  className="es-button es-button__medium ant-btn"
   type="button"
 >
   <span>

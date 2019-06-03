@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="es-progress"
+>
+  <div
+    className="ant-progress ant-progress-line ant-progress-status-normal ant-progress-default"
+  >
+    <div>
+      <div
+        className="ant-progress-outer"
+      >
+        <div
+          className="ant-progress-inner"
+        >
+          <div
+            className="ant-progress-bg"
+            style={
+              Object {
+                "background": undefined,
+                "borderRadius": "100px",
+                "height": 8,
+                "width": "0%",
+              }
+            }
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

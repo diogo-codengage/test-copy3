@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="es-feedback-upload"
+>
+  <div
+    className="es-feedback-upload__text"
+  >
+    <i
+      className="anticon es-eva-icon es-feedback-upload__icon es-eva-icon--medium"
+    >
+      <i
+        data-eva="image-outline"
+        data-eva-fill="#fff"
+        data-eva-height="18px"
+        data-eva-width="18px"
+      />
+    </i>
+    Carregar uma imagem de até 
+    <strong>
+       100kb 
+    </strong>
+     de peso
+  </div>
+</div>
+`;

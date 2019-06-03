@@ -1,0 +1,229 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="es-card-info"
+>
+  <div
+    className="ant-row-flex ant-row-flex-middle es-row"
+    style={
+      Object {
+        "marginLeft": -4,
+        "marginRight": -4,
+      }
+    }
+  >
+    <div
+      className="ant-col es-col"
+      style={
+        Object {
+          "paddingLeft": 4,
+          "paddingRight": 4,
+        }
+      }
+    >
+      <span
+        className="ant-avatar ant-avatar-lg ant-avatar-circle"
+        style={Object {}}
+      >
+        <span
+          className="ant-avatar-string"
+        />
+      </span>
+    </div>
+    <div
+      className="ant-col es-col es-card-info__content"
+      style={
+        Object {
+          "paddingLeft": 4,
+          "paddingRight": 4,
+        }
+      }
+    >
+      <span
+        className="es-badge es-badge__warning es-badge__border es-badge__warning--solid ant-badge ant-badge-not-a-wrapper"
+      >
+        <sup
+          className="ant-scroll-number ant-badge-count"
+          data-show={true}
+          title="1"
+        >
+          <span
+            className="ant-scroll-number-only"
+            style={
+              Object {
+                "WebkitTransform": "translateY(-1100%)",
+                "msTransform": "translateY(-1100%)",
+                "transform": "translateY(-1100%)",
+                "transition": "none",
+              }
+            }
+          >
+            <p
+              className=""
+            >
+              0
+            </p>
+            <p
+              className=""
+            >
+              1
+            </p>
+            <p
+              className=""
+            >
+              2
+            </p>
+            <p
+              className=""
+            >
+              3
+            </p>
+            <p
+              className=""
+            >
+              4
+            </p>
+            <p
+              className=""
+            >
+              5
+            </p>
+            <p
+              className=""
+            >
+              6
+            </p>
+            <p
+              className=""
+            >
+              7
+            </p>
+            <p
+              className=""
+            >
+              8
+            </p>
+            <p
+              className=""
+            >
+              9
+            </p>
+            <p
+              className=""
+            >
+              0
+            </p>
+            <p
+              className="current"
+            >
+              1
+            </p>
+            <p
+              className=""
+            >
+              2
+            </p>
+            <p
+              className=""
+            >
+              3
+            </p>
+            <p
+              className=""
+            >
+              4
+            </p>
+            <p
+              className=""
+            >
+              5
+            </p>
+            <p
+              className=""
+            >
+              6
+            </p>
+            <p
+              className=""
+            >
+              7
+            </p>
+            <p
+              className=""
+            >
+              8
+            </p>
+            <p
+              className=""
+            >
+              9
+            </p>
+            <p
+              className=""
+            >
+              0
+            </p>
+            <p
+              className=""
+            >
+              1
+            </p>
+            <p
+              className=""
+            >
+              2
+            </p>
+            <p
+              className=""
+            >
+              3
+            </p>
+            <p
+              className=""
+            >
+              4
+            </p>
+            <p
+              className=""
+            >
+              5
+            </p>
+            <p
+              className=""
+            >
+              6
+            </p>
+            <p
+              className=""
+            >
+              7
+            </p>
+            <p
+              className=""
+            >
+              8
+            </p>
+            <p
+              className=""
+            >
+              9
+            </p>
+          </span>
+        </sup>
+      </span>
+      <div
+        aria-label={null}
+        className="ant-typography es-typography es-typography--caption ant-typography-ellipsis ant-typography-ellipsis-single-line"
+        style={
+          Object {
+            "WebkitLineClamp": null,
+          }
+        }
+      >
+        
+      </div>
+    </div>
+  </div>
+</div>
+`;

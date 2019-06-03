@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="es-change-course"
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundImage": "url(http://sites.psu.edu/huangnutr360/files/2017/04/lesson-0-1ta118a.png)",
+      "cursor": "pointer",
+    }
+  }
+>
+  <div
+    className="es-change-course__content"
+  >
+    <div
+      className="d-flex align-items-center"
+    >
+      <img
+        className="mr-xs"
+        src="https://public-v2links.adobecc.com/708e2f04-215d-454f-6692-c1d3b53d580f/component?params=component_id:2eef4ded-78c2-4ef5-abe4-08b602aad71c&params=version:0&token=1558008652_da39a3ee_7a22c22a02018c4fd70f9f9f69150074add489ff&api_key=CometServer1"
+      />
+      <div>
+        <div
+          aria-label={null}
+          className="ant-typography es-typography text-white es-typography--subtitle1"
+          style={
+            Object {
+              "WebkitLineClamp": null,
+            }
+          }
+        >
+          Trilha Sanar Enfermagem
+        </div>
+        <div
+          aria-label={null}
+          className="ant-typography es-typography text-white-7 es-typography--caption"
+          style={
+            Object {
+              "WebkitLineClamp": null,
+            }
+          }
+        >
+          Termina em: 23/05/2020
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="es-change-course__progress"
+  >
+    <div
+      className="es-progress es-progress--warning"
+    >
+      <div
+        className="ant-progress ant-progress-line ant-progress-status-normal ant-progress-show-info ant-progress-small"
+      >
+        <div>
+          <div
+            className="ant-progress-outer"
+          >
+            <div
+              className="ant-progress-inner"
+            >
+              <div
+                className="ant-progress-bg"
+                style={
+                  Object {
+                    "background": undefined,
+                    "borderRadius": "100px",
+                    "height": 6,
+                    "width": "45%",
+                  }
+                }
+              />
+            </div>
+          </div>
+          <span
+            className="ant-progress-text"
+            title="45%"
+          >
+            45%
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

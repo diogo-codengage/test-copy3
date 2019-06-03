@@ -5,14 +5,16 @@ exports[`renders correctly 1`] = `
   className="es-progress-bar"
 >
   <div
-    className="ant-row-flex ant-row-flex-space-between ant-row-flex-middle"
+    className="ant-row-flex ant-row-flex-space-between ant-row-flex-middle es-row"
+    style={Object {}}
   >
     <div
-      className="ant-col"
+      className="ant-col es-col ant-col-xs-12"
+      style={Object {}}
     >
-      <h1
+      <h6
         aria-label={null}
-        className="ant-typography es-progress-bar__title"
+        className="ant-typography es-typography es-progress-bar__title"
         style={
           Object {
             "WebkitLineClamp": null,
@@ -20,13 +22,14 @@ exports[`renders correctly 1`] = `
         }
       >
         Progresso do curso
-      </h1>
+      </h6>
     </div>
     <div
-      className="ant-col"
+      className="ant-col es-col"
+      style={Object {}}
     >
       <div
-        className="ant-row-flex ant-row-flex-space-between ant-row-flex-middle"
+        className="ant-row-flex ant-row-flex-space-between ant-row-flex-middle es-row"
         style={
           Object {
             "marginLeft": -8,
@@ -35,7 +38,7 @@ exports[`renders correctly 1`] = `
         }
       >
         <div
-          className="ant-col d-flex"
+          className="ant-col es-col"
           style={
             Object {
               "paddingLeft": 8,
@@ -44,18 +47,14 @@ exports[`renders correctly 1`] = `
           }
         >
           <div
-            className="es-badge-percent es-badge-percent--warning"
-            style={
-              Object {
-                "fontSize": 10,
-              }
-            }
+            className="es-common-badge es-common-badge--warning"
+            style={Object {}}
           >
             30%
           </div>
         </div>
         <div
-          className="ant-col d-flex es-progress-bar__icon"
+          className="ant-col es-col es-progress-bar__icon"
           style={
             Object {
               "paddingLeft": 8,
@@ -64,7 +63,7 @@ exports[`renders correctly 1`] = `
           }
         >
           <i
-            className="anticon es-eva-icon es-eva-icon--small es-eva-icon--default"
+            className="anticon es-eva-icon es-eva-icon--small"
           >
             <i
               data-eva="award-outline"
@@ -78,7 +77,7 @@ exports[`renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="es-progress-bar__progress"
+    className="es-progress es-progress--warning es-progress__goal"
   >
     <div
       className="ant-progress ant-progress-line ant-progress-status-normal ant-progress-small"
@@ -106,7 +105,7 @@ exports[`renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="es-progress-bar__progress--limit"
+      className="es-progress__goal__indicator es-progress__goal__indicator--small"
       style={
         Object {
           "width": "calc(100% - 80%)",

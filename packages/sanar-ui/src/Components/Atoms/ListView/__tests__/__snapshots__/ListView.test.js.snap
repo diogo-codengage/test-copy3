@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="ant-list ant-list-split"
+>
+  <div
+    className="ant-spin-nested-loading"
+  >
+    <div
+      className="ant-spin-container"
+    >
+      <li
+        className="ant-list-item es-list-view-item"
+      >
+        &gt;Here is some content!
+      </li>
+    </div>
+  </div>
+</div>
+`;
