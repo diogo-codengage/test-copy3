@@ -4,12 +4,9 @@ import { ApolloProvider } from 'react-apollo'
 import { Auth } from 'aws-amplify'
 
 const getCurrentTokenSession = () => {
-    return Auth.currentSession()
-        .then(response => {
-            // return `Bearer ${response.accessToken.jwtToken}`
-            return `Bearer iambatman`
-        })
-        .catch(console.log)
+    return Auth.currentAuthenticatedUser().then(response => {
+        return `Bearer iambatman`
+    })
 }
 
 const client = new ApolloClient({
