@@ -52,6 +52,7 @@ const SANSendPasswordRecovery = ({ history, form }) => {
                         message.error(
                             'Nenhuma conta foi encontrada com esse e-mail.'
                         )
+                        break
                     default:
                         message.error('Ocorreu um erro ao redefinir sua senha.')
                 }
