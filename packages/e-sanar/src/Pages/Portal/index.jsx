@@ -10,6 +10,7 @@ import { GET_ME } from 'Apollo/Me/query'
 import { useAuthContext } from 'Hooks/auth'
 
 import ESSplashLoader from 'sanar-ui/dist/Components/Atoms/SplashLoader'
+import ESQuestionDetailsPage from './Questions/Details/QuestionDetails'
 
 const SANPortalRoutes = ({ match: { url } }) => {
     const { setMe } = useAuthContext()
@@ -27,6 +28,11 @@ const SANPortalRoutes = ({ match: { url } }) => {
                                     path={`${url}/curso`}
                                     strict
                                     component={SANCoursePage}
+                                />
+                                <Route
+                                    path={`${url}/questoes`}
+                                    strict
+                                    component={ESQuestionDetailsPage}
                                 />
                                 <Route
                                     path={[`${url}/*`, `${url}`]}
