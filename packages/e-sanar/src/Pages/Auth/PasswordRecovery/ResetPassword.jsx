@@ -32,7 +32,30 @@ const SANResetPassword = ({ history, location, form }) => {
                         history.push('../../')
                     })
                     .catch(err => {
-                        console.log(err)
+                        switch (err.code) {
+                            case 'ExpiredCodeException':
+                                message.error(
+                                    'O código de redefinição inválido. Solicite um novo.'
+                                )
+                                history.push('../')
+                                break
+                            case 'CodeMismatchException':
+                                message.error(
+                                    'O código de redefinição expirou. Solicite um novo.'
+                                )
+                                history.push('../')
+                                break
+                            case 'LimitExceededException':
+                                message.error(
+                                    'Você excedeu o límite de tentativas. Tente novamente mais tarde.'
+                                )
+                                history.push('../')
+                                break
+                            default:
+                                message.error(
+                                    'Ocorreu um erro ao alterar sua senha. Tente novamente em instantes.'
+                                )
+                        }
                         setLoading(false)
                     })
             })
@@ -96,7 +119,7 @@ const SANResetPassword = ({ history, location, form }) => {
                     </ESFormItem>
 
                     <ESButton
-                        onClick={() => resetPassword()}
+                        htmlType='submit'
                         uppercase
                         block
                         variant='solid'
