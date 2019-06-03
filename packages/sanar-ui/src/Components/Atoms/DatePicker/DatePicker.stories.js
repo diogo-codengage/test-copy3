@@ -23,7 +23,8 @@ storiesOf('Atoms.DatePicker', module).add('Simple', () => (
         mode={select('Mode', modeOptions, 'year')}
         disabled={boolean('Disabled', false)}
         placeholder={text('Placeholder', 'Select date')}
-        size={select('Size', sizeOptions, '')}
+        showTime={boolean('Show time', false)}
         showToday={boolean('Show today', true)}
+        size={select('Size', sizeOptions, '')}
     />
 ))
