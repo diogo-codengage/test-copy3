@@ -13,9 +13,12 @@ const ESImageViewer = ({ className, image, alt }) => {
     const [open, setOpen] = useState(false)
     const [isMobile, setMobile] = useState(false)
     const classes = classNames('es-image-viewer', className)
+    const classesModal = classNames('es-image-viewer__full', {
+        'es-image-viewer__full--mobile': isMobile
+    })
 
     useMemo(() => setMobile(width <= 992), [width, open])
-    console.log(isMobile)
+
     return (
         <div className={classes}>
             <div
@@ -44,9 +47,10 @@ const ESImageViewer = ({ className, image, alt }) => {
             <ESModal
                 closable={false}
                 centered
-                className='es-image-viewer__full'
+                className={classesModal}
                 onCancel={() => setOpen(false)}
                 visible={open}
+                width={isMobile ? '100%' : 'auto'}
             >
                 {!isMobile && (
                     <ESButton
