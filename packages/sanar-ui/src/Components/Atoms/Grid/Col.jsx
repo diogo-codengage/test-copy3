@@ -1,21 +1,23 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import { Col } from 'antd'
 import classNames from 'classnames'
 
-const ESCol = ({ className, flex, style, type, alignSelf, ...props }) => {
-    const classes = classNames('es-col', className, {
-        [`es-col__${type}`]: type
-    })
+const ESCol = forwardRef(
+    ({ className, flex, style, type, alignSelf, ...props }, ref) => {
+        const classes = classNames('es-col', className, {
+            [`es-col__${type}`]: type
+        })
 
-    const styles = {
-        ...style,
-        ...(flex && { flex }),
-        ...(alignSelf && { alignSelf })
+        const styles = {
+            ...style,
+            ...(flex && { flex }),
+            ...(alignSelf && { alignSelf })
+        }
+
+        return <Col ref={ref} style={styles} className={classes} {...props} />
     }
-
-    return <Col style={styles} className={classes} {...props} />
-}
+)
 
 ESCol.propTypes = Object.assign(
     { ...Col['propTypes'] },

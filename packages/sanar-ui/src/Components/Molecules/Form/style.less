@@ -1,4 +1,11 @@
 .es-form {
-    text-align: left;
-    margin-bottom: @margin-md;
+    & .ant-form-item-label {
+        font-weight: bold;
+        font-size: @font-size-base;
+        line-height: 24px;
+
+        & label:after {
+            content: '';
+        }
+    }
 }

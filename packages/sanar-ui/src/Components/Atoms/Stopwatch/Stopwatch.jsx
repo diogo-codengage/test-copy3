@@ -36,7 +36,7 @@ const formatTime = (hours, minutes, seconds) => {
     return `${finalHours}:${finalMinutes}:${finalSeconds}`
 }
 
-const ESStopwatch = ({ className, autoStart }, ref) => {
+const ESStopwatch = forwardRef(({ className, autoStart }, ref) => {
     const [paused, setPaused] = useState(!autoStart)
     const { hours, minutes, seconds, start, pause } = useStopwatch()
     const classes = classNames(
@@ -76,7 +76,7 @@ const ESStopwatch = ({ className, autoStart }, ref) => {
             <span>{formatTime(hours, minutes, seconds)}</span>
         </div>
     )
-}
+})
 
 ESStopwatch.propTypes = {
     className: PropTypes.string,
@@ -84,4 +84,4 @@ ESStopwatch.propTypes = {
 }
 ESStopwatch.defaultProps = {}
 
-export default forwardRef(ESStopwatch)
+export default ESStopwatch

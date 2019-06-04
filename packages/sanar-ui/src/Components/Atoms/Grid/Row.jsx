@@ -1,21 +1,23 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import { Row } from 'antd'
 import classNames from 'classnames'
 
-const ESRow = ({ className, direction, flex, style, height, ...props }) => {
-    const classes = classNames('es-row', className, {
-        [`es-row__direction--${direction}`]: direction
-    })
+const ESRow = forwardRef(
+    ({ className, direction, flex, style, height, ...props }, ref) => {
+        const classes = classNames('es-row', className, {
+            [`es-row__direction--${direction}`]: direction
+        })
 
-    const styles = {
-        ...style,
-        ...(flex && { flex }),
-        ...(height && { height })
+        const styles = {
+            ...style,
+            ...(flex && { flex }),
+            ...(height && { height })
+        }
+
+        return <Row ref={ref} style={styles} className={classes} {...props} />
     }
-
-    return <Row style={styles} className={classes} {...props} />
-}
+)
 
 ESRow.propTypes = Object.assign(
     { ...Row['propTypes'] },

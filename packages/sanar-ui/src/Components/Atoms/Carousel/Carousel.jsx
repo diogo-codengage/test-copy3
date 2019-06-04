@@ -6,7 +6,7 @@ import { Carousel } from 'antd'
 import ESButton from '../Button'
 import ESEvaIcon from '../EvaIcon'
 
-const ESCarousel = ({ className, style, ...props }, ref) => {
+const ESCarousel = forwardRef(({ className, style, ...props }, ref) => {
     const classes = classNames('es-carousel', className)
 
     const next = () => ref.current.next()
@@ -31,7 +31,7 @@ const ESCarousel = ({ className, style, ...props }, ref) => {
             />
         </div>
     )
-}
+})
 
 ESCarousel.propTypes = Object.assign(
     { ...Carousel['propTypes'] },
@@ -76,4 +76,4 @@ ESCarousel.propTypes = Object.assign(
 
 ESCarousel.defaultProps = Carousel['defaultProps']
 
-export default forwardRef(ESCarousel)
+export default ESCarousel

@@ -24,7 +24,7 @@ export default {
             schedule: 'Cronograma',
             saved: 'Salvos',
             performace: 'Desempenho',
-            questions: 'Questões',
+            questions: 'Banco de questões',
             changeCourse: 'Trocar de curso',
             myAccount: 'Minha conta'
         },
@@ -167,6 +167,64 @@ export default {
                     best: 'Melhores perguntas',
                     first: 'Mais recentes primeiro'
                 }
+            }
+        }
+    },
+    questionBase: {
+        filter: {
+            title: 'Banco de questões',
+            subtitle: 'Hora de praticar tudo o que você aprendeu no curso',
+            hitoricButton: 'Histórico',
+            startPracticeButton: 'Iniciar prática',
+            module: {
+                title: 'Módulo',
+                choose: 'Escolher módulos',
+                selecteds: 'Módulos'
+            },
+            theme: {
+                title: 'Tema',
+                choose: 'Escolher Tema',
+                selecteds: 'Temas'
+            },
+            bank: {
+                title: 'Banca',
+                choose: 'Escolher bancas',
+                selecteds: 'Bancas'
+            },
+            test: {
+                title: 'Prova',
+                choose: 'Escolher provas',
+                selecteds: 'Provas'
+            },
+            advanced: {
+                show: 'Ver filtros avançados',
+                hide: 'Ocultar filtros avançados',
+                state: {
+                    label: 'Estado',
+                    placeholder: 'Escolher o estado'
+                },
+                year: {
+                    label: 'Ano',
+                    placeholder: 'Escolher o ano'
+                },
+                difficulty: {
+                    label: 'Dificuldade',
+                    options: {
+                        easy: 'Fácil',
+                        intermediate: 'Intermediária',
+                        hard: 'Difícil'
+                    }
+                },
+                progress: {
+                    label: 'Progresso em questões',
+                    options: {
+                        all: 'Todas as questões',
+                        neverAnswered: 'Nunca respondidas',
+                        alreadyAnswered: 'Já respondidas',
+                        issuesMissed: 'Questões que errei'
+                    }
+                },
+                justCommented: 'Apenas comentadas'
             }
         }
     },

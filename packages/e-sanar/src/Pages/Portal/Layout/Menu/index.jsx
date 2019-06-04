@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
+import { withRouter } from 'react-router'
 
 import ESMainMenu from 'sanar-ui/dist/Components/Organisms/MainMenu'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
@@ -47,7 +48,7 @@ const MenuContent = ({ index, setTab, showContinueBar }) => {
     }
 }
 
-const SANMenu = () => {
+const SANMenu = ({ history }) => {
     const { t } = useTranslation('esanar')
     const [theme, setTheme] = useState('light')
     const [index, setIndex] = useState(0)
@@ -61,17 +62,25 @@ const SANMenu = () => {
         setIndex(index)
         switch (index) {
             case 0:
-                return setTitle(t(`${intlPath}menu`))
+                setTitle(t(`${intlPath}menu`))
+                break
             case 1:
-                return setTitle(t(`${intlPath}notifications`))
+                setTitle(t(`${intlPath}notifications`))
+                break
+            case 5:
+                history.push('/aluno/banco-questoes')
+                break
             case 6:
-                return setTitle(t(`${intlPath}studying`))
+                setTitle(t(`${intlPath}studying`))
+                break
             case 7:
-                return setTitle(t(`${intlPath}myAccount`))
+                setTitle(t(`${intlPath}myAccount`))
+                break
             case 8:
-                return setTitle(t(`${intlPath}search`))
+                setTitle(t(`${intlPath}search`))
+                break
             default:
-                return setTitle(t(`${intlPath}menu`))
+                setTitle(t(`${intlPath}menu`))
         }
     }
 
@@ -89,4 +98,4 @@ const SANMenu = () => {
     )
 }
 
-export default SANMenu
+export default withRouter(SANMenu)

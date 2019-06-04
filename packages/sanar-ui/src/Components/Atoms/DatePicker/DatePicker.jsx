@@ -1,16 +1,23 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import { DatePicker } from 'antd'
 import ESEvaIcon from '../EvaIcon'
 
-const ESDatePicker = ({ className, suffixIcon, ...props }) => {
+const ESDatePicker = forwardRef(({ className, suffixIcon, ...props }, ref) => {
     const classes = classNames('es-date-picker', className)
     const icon = suffixIcon ? suffixIcon : <ESEvaIcon name='calendar-outline' />
 
-    return <DatePicker className={classes} suffixIcon={icon} {...props} />
-}
+    return (
+        <DatePicker
+            ref={ref}
+            className={classes}
+            suffixIcon={icon}
+            {...props}
+        />
+    )
+})
 
 ESDatePicker.propTypes = {
     className: PropTypes.string,

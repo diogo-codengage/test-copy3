@@ -1,17 +1,24 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import Switch from 'antd/lib/switch'
 import classNames from 'classnames'
 
 import ESIcon from '../Icon'
 
-const ESSwitch = ({ className, checkedChildren, ...props }) => {
+const ESSwitch = forwardRef(({ className, checkedChildren, ...props }, ref) => {
     const classes = classNames('es-switch', className)
 
     const icon = checkedChildren ? checkedChildren : <ESIcon type='check' />
 
-    return <Switch checkedChildren={icon} className={classes} {...props} />
-}
+    return (
+        <Switch
+            ref={ref}
+            checkedChildren={icon}
+            className={classes}
+            {...props}
+        />
+    )
+})
 
 ESSwitch.propTypes = Object.assign(
     { ...Switch['propTypes'] },

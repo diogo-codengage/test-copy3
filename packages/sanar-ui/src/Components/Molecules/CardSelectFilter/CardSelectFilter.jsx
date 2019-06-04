@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -23,7 +23,7 @@ const Badge = ({ count, ...props }) => (
 
 const Items = ({
     items,
-    selectedItems,
+    value,
     handleSelectAll,
     handleClear,
     handleChange,
@@ -38,13 +38,14 @@ const Items = ({
             <div key={item.value}>
                 <ESCheckbox
                     onChange={e => handleChange(item, e)}
-                    checked={selectedItems.includes(item)}
+                    checked={!!value.find(val => val.value === item.value)}
                     className='es-card-select-filter__menu__items--item'
                 >
                     {item.label}
                 </ESCheckbox>
             </div>
         ))
+
     return (
         <ESCard className='es-card-select-filter__menu'>
             <Scrollbars
@@ -98,23 +99,19 @@ const ESCardSelectFilter = ({
     onOpen,
     items,
     defaultSelectedItems = [],
-    labelSelecteds
+    labelSelecteds,
+    onChange,
+    value = []
 }) => {
     const { t } = useTranslation('sanarui')
     const [loadImage, setLoadImage] = useState(true)
-    const [checked, setChecked] = useState(false)
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState()
     const [selectedItems, setSelectedItems] = useState(defaultSelectedItems)
     const classes = classNames('es-card-select-filter', className)
     const classesFooter = classNames('es-card-select-filter__footer', {
-        'es-card-select-filter__footer--checked': checked
+        'es-card-select-filter__footer--checked': value.length
     })
-
-    useMemo(
-        () => (selectedItems.length ? setChecked(true) : setChecked(false)),
-        [selectedItems]
-    )
 
     const handleOpen = visibility => {
         setOpen(visibility)
@@ -129,11 +126,13 @@ const ESCardSelectFilter = ({
     const handleSelectAll = e => {
         setSelectedItems(items)
         onSelectAll && onSelectAll(items, e)
+        onChange && onChange(items, e)
     }
 
     const handleClear = e => {
         setSelectedItems([])
         onClear && onClear([], e)
+        onChange && onChange([], e)
     }
 
     const handleSearch = e => {
@@ -148,26 +147,29 @@ const ESCardSelectFilter = ({
             target: { checked }
         } = e
         if (checked) {
-            setSelectedItems([...selectedItems, item])
+            setSelectedItems([...value, item])
             onSelectItem && onSelectItem(item)
+            onChange && onChange([...value, item])
         } else {
-            setSelectedItems(
-                selectedItems.filter(selected => selected.value !== item.value)
+            const newItems = value.filter(
+                selected => selected.value !== item.value
             )
+            setSelectedItems(newItems)
             onDeselectItem && onDeselectItem(item)
+            onChange && onChange(newItems)
         }
     }
 
     const makePlaceholder =
-        selectedItems.length && !open
-            ? `${selectedItems.length} ${labelSelecteds}`
+        value.length && !open
+            ? `${value.length} ${labelSelecteds}`
             : open
             ? t('global.filter')
             : placeholder
 
     const suffixIcon =
-        open && selectedItems.length ? (
-            <Badge count={selectedItems.length} />
+        open && value.length ? (
+            <Badge count={value.length} />
         ) : open ? (
             undefined
         ) : (
@@ -186,7 +188,7 @@ const ESCardSelectFilter = ({
                         <Items
                             {...{
                                 items,
-                                selectedItems,
+                                value,
                                 handleSelectAll,
                                 handleClear,
                                 handleClose,

@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import { Query } from 'react-apollo'
 
 import SANCoursePage from './Course'
+import SANQuestionsPage from './Questions'
 import SANPortalLayout from './Layout'
 
 import { GET_ME } from 'Apollo/Me/query'
@@ -29,12 +30,13 @@ const SANPortalRoutes = ({ match: { url } }) => {
                                     component={SANCoursePage}
                                 />
                                 <Route
-                                    path={[`${url}/*`, `${url}`]}
+                                    path={`${url}/banco-questoes`}
+                                    component={SANQuestionsPage}
+                                />
+                                <Route
+                                    path={[`${url}/`, `${url}`]}
                                     render={() => (
-                                        <Redirect
-                                            from='/'
-                                            to={`${url}/curso`}
-                                        />
+                                        <Redirect to={`${url}/curso`} />
                                     )}
                                 />
                             </Switch>
