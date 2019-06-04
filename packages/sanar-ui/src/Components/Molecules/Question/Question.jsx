@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import ESTypography from '../../Atoms/Typography'
 import ESButton from '../../Atoms/Button'
 import { ESAlternative } from '../../Atoms/Question/Alternative'
-import './style.less'
 import ESEvaIcon from '../../Atoms/EvaIcon'
+import { ESComment } from '../Comment'
+import './style.less'
 
-const ESQuestion = ({ title, content, alternatives, next, jump }) => (
+const ESQuestion = ({ title, content, alternatives, next, jump, comment }) => (
     <div>
         <div className='es-question'>
             <ESTypography level={6} className='es-question__title'>
@@ -20,10 +21,26 @@ const ESQuestion = ({ title, content, alternatives, next, jump }) => (
                 alternatives.map(alternative => (
                     <ESAlternative {...alternative} />
                 ))}
+            <div className='comment-container'>
+                <div className='comment-container__header'>
+                    <ESTypography variant='body1' strong>
+                        Comentário do especialista
+                    </ESTypography>
+                    <ESButton variant='outlined' size='small' bold>
+                        Enviar feedback
+                    </ESButton>
+                </div>
+                <div className='comment-container__body'>
+                    <ESComment
+                        author={comment.author}
+                        content={comment.content}
+                        time={comment.time}
+                    />
+                </div>
+            </div>
         </div>
         <div className='footer'>
             <ESButton
-                icon={<ESEvaIcon name='refresh-outline' color='default' />}
                 size='xsmall'
                 color='secondary'
                 variant='text'
@@ -31,6 +48,7 @@ const ESQuestion = ({ title, content, alternatives, next, jump }) => (
                 bold
                 onClick={jump}
             >
+                <ESEvaIcon name='refresh-outline' color='default' />
                 Pular
             </ESButton>
             <ESButton
@@ -42,6 +60,7 @@ const ESQuestion = ({ title, content, alternatives, next, jump }) => (
                 onClick={next}
             >
                 Próxima
+                <ESEvaIcon name='arrow-forward-outline' color='#FFF' />
             </ESButton>
         </div>
     </div>

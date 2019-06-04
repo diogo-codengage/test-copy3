@@ -63,7 +63,17 @@ const allUnSelected = {
             striped: false,
             onStripeClicked: () => console.log('On Striped clicked!')
         }
-    ]
+    ],
+    comment: {
+        author: {
+            name: 'San Holo',
+            avatar:
+                'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+        },
+        content: `We supply a series of design principles, practical patterns and high quality design
+        resources (Sketch and Axure), to help people create their product prototypes beautifully
+        and efficiently.`
+    }
 }
 
 storiesOf('Molecules.Question', module).add('One selected and striped', () => (
