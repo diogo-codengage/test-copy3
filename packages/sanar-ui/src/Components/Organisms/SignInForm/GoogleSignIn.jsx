@@ -25,7 +25,7 @@ const ESGoogleSignIn = ({ className, signIn }) => {
             className={className}
         >
             <ESIcon component={GoogleSVG} />
-            Google
+            Entrar com Google
         </ESButton>
     )
 }

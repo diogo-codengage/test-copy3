@@ -37,7 +37,8 @@ const SANMyAccount = ({ setTab, history }) => {
 
     const leaveAccount = () => {
         Auth.signOut().then(() => {
-            history.go('/')
+            localStorage.setItem('es-keep-me-logged-in', false)
+            history.push('/')
         })
     }
 

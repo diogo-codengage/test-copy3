@@ -2,7 +2,7 @@ import { Auth } from 'aws-amplify'
 
 const formValidation = form => {
     return form.validateFields().catch(() => {
-        return Promise.reject('Por favor, digite dados válidos.')
+        return Promise.reject({ message: 'Por favor, digite dados válidos.' })
     })
 }
 
@@ -18,11 +18,14 @@ const esSignIn = form => {
                         field: 'email'
                     })
                 case 'NotAuthorizedException':
-                    return Promise.reject(
-                        'Desculpe, essa combinação inserida de e-mail e senha está incorreta. Verifique seus dados e tente novamente!'
-                    )
+                    return Promise.reject({
+                        message:
+                            'Desculpe, essa combinação inserida de e-mail e senha está incorreta. Verifique seus dados e tente novamente!'
+                    })
                 default:
-                    return Promise.reject('Verifique seus dados de login!')
+                    return Promise.reject({
+                        message: 'Verifique seus dados de login!'
+                    })
             }
         })
     })

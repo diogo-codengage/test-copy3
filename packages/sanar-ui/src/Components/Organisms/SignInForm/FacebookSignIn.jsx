@@ -23,7 +23,7 @@ const ESFacebookSignIn = ({ signIn, loading }) => {
             className='mb-md'
         >
             <ESIcon component={FacebookSVG} />
-            Facebook
+            Entrar com Facebook
         </ESButton>
     )
 }
