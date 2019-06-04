@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="es-auth-template"
+>
+  <div
+    className="ant-row es-row"
+    style={Object {}}
+  >
+    <div
+      className="ant-col es-col ant-col-xs-24 ant-col-md-12"
+      style={Object {}}
+    >
+      <div
+        className="es-auth-template__input-data"
+      >
+        <div
+          className="es-brand-header es-auth-template__input-data__header"
+        >
+          <img
+            alt="Sanar Logo in brand header."
+            src={
+              Object {
+                "process": [Function],
+              }
+            }
+          />
+        </div>
+        <div
+          className="es-auth-template__input-data__content"
+        >
+          <div
+            className="es-auth-template__input-data__content__terms"
+          >
+            <div
+              aria-label={null}
+              className="ant-typography es-typography"
+              style={
+                Object {
+                  "WebkitLineClamp": null,
+                }
+              }
+            >
+              Ao entrar na plataforma, você concorda com nossos
+            </div>
+            <a
+              href="#"
+            >
+               Termos de Uso 
+            </a>
+            <div
+              aria-label={null}
+              className="ant-typography es-typography"
+              style={
+                Object {
+                  "WebkitLineClamp": null,
+                }
+              }
+            >
+              e nossa
+            </div>
+            <a
+              href="#"
+            >
+               Política de Privacidade
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-col es-col es-auth-template__marketing ant-col-xs-0 ant-col-md-12"
+      style={
+        Object {
+          "backgroundImage": "url(undefined)",
+        }
+      }
+    >
+      <div
+        className="es-auth-template__marketing__content mb-xl"
+      >
+        <h3
+          aria-label={null}
+          className="ant-typography es-typography"
+          style={
+            Object {
+              "WebkitLineClamp": null,
+            }
+          }
+        >
+          Tenha uma experiência de excelência nos seus estudos e na sua carreira
+        </h3>
+        <h6
+          aria-label={null}
+          className="ant-typography es-typography es-typography--regular"
+          style={
+            Object {
+              "WebkitLineClamp": null,
+            }
+          }
+        >
+          Acompanhe seu desempenho, tenha acesso a questões, conteúdos exclusivos e diversos conteúdos que vão te ajudar a conseguir alcançar seus objetivos
+        </h6>
+      </div>
+      <button
+        className="es-button es-button__medium es-button__variant--outlined white bold ant-btn"
+        type="button"
+      >
+        <span>
+          CONHEÇA NOSSOS CURSOS
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="es-image-viewer"
+>
+  <div
+    className="es-image-viewer__small"
+    onClick={[Function]}
+  >
+    <img
+      src="https://i.pinimg.com/736x/28/65/74/28657471c865a566cf1347ae44bb388c.jpg"
+    />
+    <div
+      className="es-image-viewer__small--hover"
+    >
+      <i
+        className="anticon es-eva-icon es-eva-icon--medium"
+      >
+        <i
+          data-eva="maximize-outline"
+          data-eva-fill="#fff"
+          data-eva-height="18px"
+          data-eva-width="18px"
+        />
+      </i>
+    </div>
+  </div>
+</div>
+`;

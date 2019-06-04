@@ -3,11 +3,6 @@
 exports[`renders correctly 1`] = `
 <div
   className="es-carousel"
-  style={
-    Object {
-      "width": "calc(100% - 150px)",
-    }
-  }
 >
   <div
     className="ant-carousel"
@@ -17,10 +12,10 @@ exports[`renders correctly 1`] = `
       dir="ltr"
     >
       <button
-        className="ant-btn es-button slick-arrow slick-prev slick-disabled ant-btn-circle"
+        className="es-button slick-arrow slick-prev slick-disabled es-button__xsmall circle ant-btn"
         currentSlide={0}
         data-role="none"
-        onClick={[Function]}
+        onClick={null}
         slideCount={7}
         style={
           Object {
@@ -105,20 +100,22 @@ exports[`renders correctly 1`] = `
                     className="ant-card-body"
                     style={Object {}}
                   >
-                    <h4
+                    <div
                       aria-label={null}
-                      className="ant-typography es-card-next-live__title"
+                      className="ant-typography es-typography es-card-next-live__title mb-xs es-typography--body2"
                       style={
                         Object {
                           "WebkitLineClamp": null,
                         }
                       }
                     >
-                      Live de Correção da prova SUS-SP 2019
-                    </h4>
-                    <span
+                      <strong>
+                        Live de Correção da prova SUS-SP 2019
+                      </strong>
+                    </div>
+                    <div
                       aria-label={null}
-                      className="ant-typography es-card-next-live__date ant-typography-disabled"
+                      className="ant-typography es-typography es-typography--muted es-typography--caption"
                       style={
                         Object {
                           "WebkitLineClamp": null,
@@ -126,7 +123,7 @@ exports[`renders correctly 1`] = `
                       }
                     >
                       27/04/2019 às 10h
-                    </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -167,20 +164,22 @@ exports[`renders correctly 1`] = `
                     className="ant-card-body"
                     style={Object {}}
                   >
-                    <h4
+                    <div
                       aria-label={null}
-                      className="ant-typography es-card-next-live__title"
+                      className="ant-typography es-typography es-card-next-live__title mb-xs es-typography--body2"
                       style={
                         Object {
                           "WebkitLineClamp": null,
                         }
                       }
                     >
-                      Live de Correção da prova SUS-SP 2019
-                    </h4>
-                    <span
+                      <strong>
+                        Live de Correção da prova SUS-SP 2019
+                      </strong>
+                    </div>
+                    <div
                       aria-label={null}
-                      className="ant-typography es-card-next-live__date ant-typography-disabled"
+                      className="ant-typography es-typography es-typography--muted es-typography--caption"
                       style={
                         Object {
                           "WebkitLineClamp": null,
@@ -188,7 +187,7 @@ exports[`renders correctly 1`] = `
                       }
                     >
                       27/04/2019 às 10h
-                    </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -229,20 +228,22 @@ exports[`renders correctly 1`] = `
                     className="ant-card-body"
                     style={Object {}}
                   >
-                    <h4
+                    <div
                       aria-label={null}
-                      className="ant-typography es-card-next-live__title"
+                      className="ant-typography es-typography es-card-next-live__title mb-xs es-typography--body2"
                       style={
                         Object {
                           "WebkitLineClamp": null,
                         }
                       }
                     >
-                      Live de Correção da prova SUS-SP 2019
-                    </h4>
-                    <span
+                      <strong>
+                        Live de Correção da prova SUS-SP 2019
+                      </strong>
+                    </div>
+                    <div
                       aria-label={null}
-                      className="ant-typography es-card-next-live__date ant-typography-disabled"
+                      className="ant-typography es-typography es-typography--muted es-typography--caption"
                       style={
                         Object {
                           "WebkitLineClamp": null,
@@ -250,7 +251,7 @@ exports[`renders correctly 1`] = `
                       }
                     >
                       27/04/2019 às 10h
-                    </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -291,20 +292,22 @@ exports[`renders correctly 1`] = `
                     className="ant-card-body"
                     style={Object {}}
                   >
-                    <h4
+                    <div
                       aria-label={null}
-                      className="ant-typography es-card-next-live__title"
+                      className="ant-typography es-typography es-card-next-live__title mb-xs es-typography--body2"
                       style={
                         Object {
                           "WebkitLineClamp": null,
                         }
                       }
                     >
-                      Live de Correção da prova SUS-SP 2019
-                    </h4>
-                    <span
+                      <strong>
+                        Live de Correção da prova SUS-SP 2019
+                      </strong>
+                    </div>
+                    <div
                       aria-label={null}
-                      className="ant-typography es-card-next-live__date ant-typography-disabled"
+                      className="ant-typography es-typography es-typography--muted es-typography--caption"
                       style={
                         Object {
                           "WebkitLineClamp": null,
@@ -312,15 +315,15 @@ exports[`renders correctly 1`] = `
                       }
                     >
                       27/04/2019 às 10h
-                    </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div
-            aria-hidden={false}
-            className="slick-slide slick-active"
+            aria-hidden={true}
+            className="slick-slide"
             data-index={4}
             onClick={[Function]}
             style={
@@ -353,20 +356,22 @@ exports[`renders correctly 1`] = `
                     className="ant-card-body"
                     style={Object {}}
                   >
-                    <h4
+                    <div
                       aria-label={null}
-                      className="ant-typography es-card-next-live__title"
+                      className="ant-typography es-typography es-card-next-live__title mb-xs es-typography--body2"
                       style={
                         Object {
                           "WebkitLineClamp": null,
                         }
                       }
                     >
-                      Live de Correção da prova SUS-SP 2019
-                    </h4>
-                    <span
+                      <strong>
+                        Live de Correção da prova SUS-SP 2019
+                      </strong>
+                    </div>
+                    <div
                       aria-label={null}
-                      className="ant-typography es-card-next-live__date ant-typography-disabled"
+                      className="ant-typography es-typography es-typography--muted es-typography--caption"
                       style={
                         Object {
                           "WebkitLineClamp": null,
@@ -374,7 +379,7 @@ exports[`renders correctly 1`] = `
                       }
                     >
                       27/04/2019 às 10h
-                    </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -415,20 +420,22 @@ exports[`renders correctly 1`] = `
                     className="ant-card-body"
                     style={Object {}}
                   >
-                    <h4
+                    <div
                       aria-label={null}
-                      className="ant-typography es-card-next-live__title"
+                      className="ant-typography es-typography es-card-next-live__title mb-xs es-typography--body2"
                       style={
                         Object {
                           "WebkitLineClamp": null,
                         }
                       }
                     >
-                      Live de Correção da prova SUS-SP 2019
-                    </h4>
-                    <span
+                      <strong>
+                        Live de Correção da prova SUS-SP 2019
+                      </strong>
+                    </div>
+                    <div
                       aria-label={null}
-                      className="ant-typography es-card-next-live__date ant-typography-disabled"
+                      className="ant-typography es-typography es-typography--muted es-typography--caption"
                       style={
                         Object {
                           "WebkitLineClamp": null,
@@ -436,7 +443,7 @@ exports[`renders correctly 1`] = `
                       }
                     >
                       27/04/2019 às 10h
-                    </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -477,20 +484,22 @@ exports[`renders correctly 1`] = `
                     className="ant-card-body"
                     style={Object {}}
                   >
-                    <h4
+                    <div
                       aria-label={null}
-                      className="ant-typography es-card-next-live__title"
+                      className="ant-typography es-typography es-card-next-live__title mb-xs es-typography--body2"
                       style={
                         Object {
                           "WebkitLineClamp": null,
                         }
                       }
                     >
-                      Live de Correção da prova SUS-SP 2019
-                    </h4>
-                    <span
+                      <strong>
+                        Live de Correção da prova SUS-SP 2019
+                      </strong>
+                    </div>
+                    <div
                       aria-label={null}
-                      className="ant-typography es-card-next-live__date ant-typography-disabled"
+                      className="ant-typography es-typography es-typography--muted es-typography--caption"
                       style={
                         Object {
                           "WebkitLineClamp": null,
@@ -498,7 +507,7 @@ exports[`renders correctly 1`] = `
                       }
                     >
                       27/04/2019 às 10h
-                    </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -507,7 +516,7 @@ exports[`renders correctly 1`] = `
         </div>
       </div>
       <button
-        className="ant-btn es-button slick-arrow slick-next ant-btn-circle"
+        className="es-button slick-arrow slick-next es-button__xsmall circle ant-btn"
         currentSlide={0}
         data-role="none"
         onClick={[Function]}

@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<li
+  className="ant-list-item es-list-view-item"
+>
+  <div
+    className="ant-row-flex es-row es-avatar-list-item"
+    style={
+      Object {
+        "marginLeft": -8,
+        "marginRight": -8,
+      }
+    }
+  >
+    <div
+      className="ant-col es-col"
+      style={
+        Object {
+          "paddingLeft": 8,
+          "paddingRight": 8,
+        }
+      }
+    >
+      <span
+        className="ant-avatar es-avatar-list-item--avatar ant-avatar-circle"
+        style={Object {}}
+      >
+        <span
+          className="ant-avatar-string"
+        />
+      </span>
+    </div>
+    <div
+      className="ant-col es-col es-avatar-list-item__content"
+      style={
+        Object {
+          "flex": 1,
+          "paddingLeft": 8,
+          "paddingRight": 8,
+        }
+      }
+    >
+      <div
+        aria-label={null}
+        className="ant-typography es-typography mb-xs es-recent-saved-list-item--title es-typography--subtitle2 ant-typography-ellipsis ant-typography-ellipsis-single-line"
+        style={
+          Object {
+            "WebkitLineClamp": null,
+          }
+        }
+      >
+        <strong>
+          
+        </strong>
+      </div>
+      <div
+        aria-label={null}
+        className="ant-typography es-typography es-recent-saved-list-item--description es-typography--caption"
+        style={
+          Object {
+            "WebkitLineClamp": null,
+          }
+        }
+      >
+        
+      </div>
+    </div>
+  </div>
+</li>
+`;

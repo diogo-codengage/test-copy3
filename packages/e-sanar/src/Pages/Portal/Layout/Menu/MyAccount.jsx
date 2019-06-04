@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { withRouter } from 'react-router'
 
 import { useTranslation } from 'react-i18next'
 
@@ -20,7 +21,7 @@ import { Auth } from 'aws-amplify'
 
 const intlPath = 'mainMenu.myAccount.'
 
-const SANMyAccount = ({ setTab }) => {
+const SANMyAccount = ({ setTab, history }) => {
     const { me } = useAuthContext()
     const { t } = useTranslation('esanar')
     const [open, setOpen] = useState(false)
@@ -36,7 +37,8 @@ const SANMyAccount = ({ setTab }) => {
 
     const leaveAccount = () => {
         Auth.signOut().then(() => {
-            window.location.pathname = '/'
+            localStorage.setItem('es-keep-me-logged-in', false)
+            history.push('/')
         })
     }
 
@@ -146,4 +148,4 @@ const SANMyAccount = ({ setTab }) => {
     )
 }
 
-export default SANMyAccount
+export default withRouter(SANMyAccount)

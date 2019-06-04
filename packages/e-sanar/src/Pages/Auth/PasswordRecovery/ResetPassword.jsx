@@ -9,30 +9,30 @@ import ESForm, {
 } from 'sanar-ui/dist/Components/Molecules/Form'
 
 import image from 'assets/images/auth/chest.png'
-import { Auth } from 'aws-amplify'
-import { message } from 'antd'
+import { esSendPasswordReset } from 'sanar-ui/dist/Util/Auth'
 
 const SANResetPassword = ({ history, location, form }) => {
     const [loading, setLoading] = useState(false)
     const params = new URLSearchParams(location.search)
 
-    const resetPassword = () => {
+    const resetPassword = event => {
+        event.preventDefault()
+
         form.validateFields()
             .then(res => {
                 const { password } = form.getFieldsValue()
                 setLoading(true)
-                Auth.forgotPasswordSubmit(
+                esSendPasswordReset(
+                    password,
                     params.get('email'),
-                    params.get('codigo'),
-                    password
+                    params.get('codigo')
                 )
-                    .then(res => {
+                    .then(() => {
                         setLoading(false)
-                        message.success('Senha alterada com sucesso!')
-                        history.push('../../')
+                        history.push('../')
                     })
-                    .catch(err => {
-                        console.log(err)
+                    .catch(() => {
+                        history.push('../recuperar-senha')
                         setLoading(false)
                     })
             })
@@ -96,7 +96,7 @@ const SANResetPassword = ({ history, location, form }) => {
                     </ESFormItem>
 
                     <ESButton
-                        onClick={() => resetPassword()}
+                        htmlType='submit'
                         uppercase
                         block
                         variant='solid'
@@ -107,7 +107,7 @@ const SANResetPassword = ({ history, location, form }) => {
                         Enviar
                     </ESButton>
                     <ESButton
-                        href='/#/auth/signin'
+                        onClick={() => history.push('/')}
                         uppercase
                         block
                         variant='text'

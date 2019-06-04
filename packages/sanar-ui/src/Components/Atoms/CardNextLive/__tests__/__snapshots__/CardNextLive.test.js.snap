@@ -8,20 +8,22 @@ exports[`renders correctly 1`] = `
     className="ant-card-body"
     style={Object {}}
   >
-    <h4
+    <div
       aria-label={null}
-      className="ant-typography es-card-next-live__title"
+      className="ant-typography es-typography es-card-next-live__title mb-xs es-typography--body2"
       style={
         Object {
           "WebkitLineClamp": null,
         }
       }
     >
-      Live de Correção da prova SUS-SP 2019
-    </h4>
-    <span
+      <strong>
+        Live de Correção da prova SUS-SP 2019
+      </strong>
+    </div>
+    <div
       aria-label={null}
-      className="ant-typography es-card-next-live__date ant-typography-disabled"
+      className="ant-typography es-typography es-typography--muted es-typography--caption"
       style={
         Object {
           "WebkitLineClamp": null,
@@ -29,7 +31,7 @@ exports[`renders correctly 1`] = `
       }
     >
       27/04/2019 às 10h
-    </span>
+    </div>
   </div>
 </div>
 `;

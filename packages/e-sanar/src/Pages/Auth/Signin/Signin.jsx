@@ -1,12 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ESAuthTemplate from 'sanar-ui/dist/Components/Templates/Auth'
 import ESSignInForm from 'sanar-ui/dist/Components/Organisms/SignInForm'
+import esSignIn, {
+    esFacebookSignIn,
+    esGoogleSignIn
+} from 'sanar-ui/dist/Util/Auth'
 
 import image from 'assets/images/auth/login.png'
 
+import useLocalStorage from 'sanar-ui/dist/Hooks/useLocalStorage'
+
 const SANSigninPage = ({ history }) => {
-    const action = user => {
+    const [storedValue, setValue] = useLocalStorage('es-keep-me-logged-in')
+    const [isKeepMeLoggedChecked, setIsKeepMeLoggedChecked] = useState(
+        storedValue
+    )
+    const action = () => {
         history.push('/aluno')
+    }
+
+    const storeKeepMeLoggedIn = () => {
+        if (storedValue) {
+            setIsKeepMeLoggedChecked(false)
+            setValue(false)
+        } else {
+            setValue(true)
+            setIsKeepMeLoggedChecked(true)
+        }
     }
 
     return (
@@ -22,6 +42,11 @@ const SANSigninPage = ({ history }) => {
                     login='Entrar'
                     title='Ou entre com os dados abaixo'
                     action={action}
+                    isKeepMeLoggedChecked={isKeepMeLoggedChecked}
+                    keepMeLogged={storeKeepMeLoggedIn}
+                    signInByEmail={esSignIn}
+                    signInByFacebook={esFacebookSignIn}
+                    signInByGoogle={esGoogleSignIn}
                 />
             }
         />

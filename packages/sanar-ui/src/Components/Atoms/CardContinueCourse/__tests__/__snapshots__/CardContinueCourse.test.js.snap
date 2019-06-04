@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="es-card-continue-course es-card-continue-course--radius"
+>
+  <div
+    className="es-card-continue-course--texts"
+  >
+    <div
+      aria-label={null}
+      className="ant-typography es-typography text-grey-6 es-typography--caption"
+      style={
+        Object {
+          "WebkitLineClamp": null,
+        }
+      }
+    >
+      
+    </div>
+    <div
+      aria-label={null}
+      className="ant-typography es-typography text-grey-8 es-typography--caption ant-typography-ellipsis ant-typography-ellipsis-single-line"
+      style={
+        Object {
+          "WebkitLineClamp": null,
+        }
+      }
+    >
+      <strong>
+        
+      </strong>
+    </div>
+  </div>
+  <i
+    className="anticon es-eva-icon es-eva-icon--large"
+  >
+    <i
+      data-eva="play-circle"
+      data-eva-fill="#fff"
+      data-eva-height="18px"
+      data-eva-width="18px"
+    />
+  </i>
+</div>
+`;

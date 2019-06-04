@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="es-text-editor"
+  style={
+    Object {
+      "height": 356,
+    }
+  }
+>
+  <div
+    contentEditable="true"
+  />
+  <div
+    className="es-text-editor__buttons"
+  >
+    <button
+      className="es-button mr-md es-button__xsmall es-button__variant--text bold uppercase ant-btn"
+      onClick={[Function]}
+      type="button"
+    >
+      <span>
+        Cancelar
+      </span>
+    </button>
+    <button
+      className="es-button es-button__xsmall es-button__variant--solid primary bold uppercase ant-btn"
+      onClick={[Function]}
+      type="button"
+    >
+      <span>
+        Publicar pergunta
+      </span>
+    </button>
+  </div>
+</div>
+`;

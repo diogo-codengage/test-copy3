@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<form
+  className="ant-form ant-form-horizontal es-form"
+  onSubmit={[Function]}
+>
+  <h1>
+    ESForm
+  </h1>
+</form>
+`;

@@ -1,6 +1,6 @@
 import { Auth } from 'aws-amplify'
 
-export const signInAsPromise = () => {
+const esFacebookSignIn = () => {
     if (location.protocol === 'http:') {
         return Promise.reject('Erro')
     }
@@ -86,3 +86,5 @@ const fbAsyncInit = () => {
 const initFB = () => {
     const fb = window.FB
 }
+
+export default esFacebookSignIn

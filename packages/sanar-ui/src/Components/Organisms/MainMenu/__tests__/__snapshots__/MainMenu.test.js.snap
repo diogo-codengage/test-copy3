@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="es-main-menu es-main-menu__primary"
+>
+  <div
+    className="es-main-menu__sidebar-bottom"
+  >
+    <button
+      className="es-button es-button__medium es-button__variant--text white circle ant-btn"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="anticon es-eva-icon es-eva-icon--medium"
+      >
+        <i
+          data-eva="home-outline"
+          data-eva-fill="#fff"
+          data-eva-height="18px"
+          data-eva-width="18px"
+        />
+      </i>
+    </button>
+    <button
+      className="es-button es-button__medium es-button__variant--text white circle ant-btn"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="anticon es-eva-icon es-eva-icon--medium"
+      >
+        <i
+          data-eva="search-outline"
+          data-eva-fill="#fff"
+          data-eva-height="18px"
+          data-eva-width="18px"
+        />
+      </i>
+    </button>
+    <button
+      className="es-button es-button__medium es-button__variant--text white circle ant-btn"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="anticon es-eva-icon es-eva-icon--medium"
+      >
+        <i
+          data-eva="keypad-outline"
+          data-eva-fill="#fff"
+          data-eva-height="18px"
+          data-eva-width="18px"
+        />
+      </i>
+    </button>
+  </div>
+  <div
+    className="es-main-menu__content close"
+  >
+    <div
+      className="es-main-menu__content--header"
+    >
+      <h5
+        aria-label={null}
+        className="ant-typography es-typography"
+        style={
+          Object {
+            "WebkitLineClamp": null,
+          }
+        }
+      >
+        Menu
+      </h5>
+      <button
+        className="es-button es-button__medium es-button__variant--text white circle ant-btn"
+        onClick={[Function]}
+        type="button"
+      >
+        <i
+          className="anticon es-eva-icon es-eva-icon--medium"
+        >
+          <i
+            data-eva="close-outline"
+            data-eva-fill="#fff"
+            data-eva-height="18px"
+            data-eva-width="18px"
+          />
+        </i>
+      </button>
+    </div>
+    <div
+      className="es-main-menu__content--scrollable"
+    />
+  </div>
+</div>
+`;
