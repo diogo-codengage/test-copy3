@@ -7,6 +7,7 @@ import SANPortalLayout from './Layout'
 import { GET_ME } from 'Apollo/Me/query'
 import { useAuthContext } from 'Hooks/auth'
 import ESSplashLoader from 'sanar-ui/dist/Components/Atoms/SplashLoader'
+import ESQuestionDetailsPage from './Questions/Details/QuestionDetails'
 import { Auth } from 'aws-amplify'
 
 const SANPortalRoutes = ({ match: { url } }) => {
@@ -42,6 +43,11 @@ const SANPortalRoutes = ({ match: { url } }) => {
                                     path={`${url}/curso`}
                                     strict
                                     component={SANCoursePage}
+                                />
+                                <Route
+                                    path={`${url}/questoes`}
+                                    strict
+                                    component={ESQuestionDetailsPage}
                                 />
                                 <Route
                                     path={[`${url}/*`, `${url}`]}
