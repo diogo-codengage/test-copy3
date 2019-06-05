@@ -17,7 +17,7 @@ const SANQuestionsHistoricHeader = ({ history }) => {
     const { t } = useTranslation('esanar')
 
     return (
-        <div className='questions-filter__header'>
+        <div className='questions-historic__header'>
             <SANPortalPagesContainer>
                 <ESSessionTitle
                     title={

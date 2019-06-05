@@ -9,6 +9,8 @@ import { SANAuthProvider } from './Hooks/auth'
 import 'sanar-ui/dist/Config/i18n'
 import AWSAmplifyConfig from 'Config/aws-amplify'
 
+import 'normalize.css'
+
 Amplify.configure(AWSAmplifyConfig)
 
 const SANRootComponent = () => (
