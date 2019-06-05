@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
 
@@ -11,7 +12,7 @@ import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 
 const intlPath = 'questionBase.filter.'
 
-const SANQuestionsFilterHeader = () => {
+const SANQuestionsFilterHeader = ({ goHistory }) => {
     const { t } = useTranslation('esanar')
 
     return (
@@ -32,6 +33,7 @@ const SANQuestionsFilterHeader = () => {
                                 bold
                                 size='small'
                                 className='mr-lg'
+                                onClick={goHistory}
                             >
                                 {t(`${intlPath}hitoricButton`)}
                             </ESButton>
@@ -53,6 +55,10 @@ const SANQuestionsFilterHeader = () => {
             </SANPortalPagesContainer>
         </div>
     )
+}
+
+SANQuestionsFilterHeader.propTypes = {
+    goHistory: PropTypes.func.isRequired
 }
 
 export default SANQuestionsFilterHeader
