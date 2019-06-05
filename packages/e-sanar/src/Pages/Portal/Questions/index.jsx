@@ -2,11 +2,6 @@ import React from 'react'
 
 import { Switch, Route, Redirect } from 'react-router-dom'
 
-import ESQuestionList from './List/QuestionList'
-import { ESQuestionHeader } from './Header'
-import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
-import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
-
 import SANQuestionsFilter from './Filter'
 import SANQuestionsHistoric from './Historic'
 import SANQuestionDetailsPage from './Details/QuestionDetails'

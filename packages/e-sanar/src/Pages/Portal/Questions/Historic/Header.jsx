@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -7,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
-import { ESFormItem } from 'sanar-ui/dist/Components/Molecules/Form'
 
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 

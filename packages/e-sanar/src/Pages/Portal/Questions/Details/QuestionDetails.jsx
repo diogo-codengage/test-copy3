@@ -4,7 +4,6 @@ import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESQuestionHeader from '../Header'
 import PropTypes from 'prop-types'
 import { ESAlternative } from 'sanar-ui/dist/Components/Atoms/Alternative'
-import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
 const Title = ({ questionNumber, total }) => (

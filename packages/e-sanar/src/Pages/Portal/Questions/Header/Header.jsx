@@ -2,16 +2,10 @@ import React from 'react'
 
 import { PageHeader as ANTPageHeader } from 'antd'
 import { SANPortalPagesContainer } from '../../Layout'
-import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
-import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
-import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
-import ESAlternative from 'sanar-ui/dist/Components/Atoms/Alternative'
 
 const ESQuestionHeader = ({ title, extra }) => {
-    const { t } = useTranslation()
-
     return (
         <ANTPageHeader className='header'>
             <SANPortalPagesContainer>
