@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import SANApp from './App'
 import Amplify from 'aws-amplify'
 
+import registerServiceWorker from 'registerServiceWorker'
+
 import SANGraphQLProvider from './Apollo/GraphQLService'
 import { SANAuthProvider } from './Hooks/auth'
 
@@ -22,3 +24,4 @@ const SANRootComponent = () => (
 )
 
 ReactDOM.render(<SANRootComponent />, document.getElementById('root'))
+registerServiceWorker()

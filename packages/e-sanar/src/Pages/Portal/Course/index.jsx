@@ -14,14 +14,18 @@ const SANCoursePage = () => {
     return (
         <div className='course'>
             <SANCourseHeader />
-            <ESTabs defaultActiveKey='3' tabBarGutter={0}>
+            <ESTabs defaultActiveKey='1' tabBarGutter={0}>
                 <ESTabPane tab={t('courseDetails.tabGeneral')} key='1'>
                     <SANCourseTabGeneral />
                 </ESTabPane>
                 <ESTabPane tab={t('courseDetails.tabContent.title')} key='2'>
                     <SANCourseTabContent />
                 </ESTabPane>
-                <ESTabPane tab={t('courseDetails.tabQuestions.title')} key='3'>
+                <ESTabPane
+                    tab={t('courseDetails.tabQuestions.title')}
+                    key='3'
+                    disabled
+                >
                     <SANCourseTabQuestions />
                 </ESTabPane>
             </ESTabs>
