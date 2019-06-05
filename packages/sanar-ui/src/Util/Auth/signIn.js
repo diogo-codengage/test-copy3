@@ -1,6 +1,4 @@
 import { Auth } from 'aws-amplify'
-import CustomSessionStorage from './customSessionStorage'
-import CustomLocalStorage from './customLocalStorage'
 
 const formValidation = form => {
     return form.validateFields().catch(() => {
