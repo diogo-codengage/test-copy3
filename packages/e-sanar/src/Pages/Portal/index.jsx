@@ -8,26 +8,13 @@ import SANPortalLayout from './Layout'
 import { GET_ME } from 'Apollo/Me/query'
 import { useAuthContext } from 'Hooks/auth'
 import ESSplashLoader from 'sanar-ui/dist/Components/Atoms/SplashLoader'
-import { Auth } from 'aws-amplify'
+import { esConfigureAuthStorage } from 'sanar-ui/dist/Util/Auth'
 
 const SANPortalRoutes = ({ match: { url } }) => {
     const { setMe } = useAuthContext()
 
     useEffect(() => {
-        const action = () => {
-            const value = JSON.parse(
-                localStorage.getItem('es-keep-me-logged-in')
-            )
-
-            if (!value) {
-                Auth.signOut()
-                localStorage.setItem('es-keep-me-logged-in', false)
-            }
-        }
-
-        window.addEventListener('beforeunload', action)
-
-        return () => window.removeEventListener('beforeunload', action)
+        return () => esConfigureAuthStorage()
     }, [])
 
     return (

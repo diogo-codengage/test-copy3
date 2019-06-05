@@ -3,7 +3,8 @@ import ESAuthTemplate from 'sanar-ui/dist/Components/Templates/Auth'
 import ESSignInForm from 'sanar-ui/dist/Components/Organisms/SignInForm'
 import esSignIn, {
     esFacebookSignIn,
-    esGoogleSignIn
+    esGoogleSignIn,
+    esConfigureAuthStorage
 } from 'sanar-ui/dist/Util/Auth'
 
 import image from 'assets/images/auth/login.png'
@@ -27,6 +28,8 @@ const SANSigninPage = ({ history }) => {
             setValue(true)
             setIsKeepMeLoggedChecked(true)
         }
+
+        esConfigureAuthStorage()
     }
 
     return (

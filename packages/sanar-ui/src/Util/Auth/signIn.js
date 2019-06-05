@@ -1,4 +1,6 @@
 import { Auth } from 'aws-amplify'
+import CustomSessionStorage from './customSessionStorage'
+import CustomLocalStorage from './customLocalStorage'
 
 const formValidation = form => {
     return form.validateFields().catch(() => {
@@ -9,25 +11,29 @@ const formValidation = form => {
 const esSignIn = form => {
     return formValidation(form).then(() => {
         const { email, password } = form.getFieldsValue()
-        return Auth.signIn(email, password).catch(err => {
-            switch (err.code) {
-                case 'UserNotFoundException':
-                    return Promise.reject({
-                        message:
-                            'Desculpe, não encontramos nenhuma conta associada ao e-mail inserido. Por favor tente novamente.',
-                        field: 'email'
-                    })
-                case 'NotAuthorizedException':
-                    return Promise.reject({
-                        message:
-                            'Desculpe, essa combinação inserida de e-mail e senha está incorreta. Verifique seus dados e tente novamente!'
-                    })
-                default:
-                    return Promise.reject({
-                        message: 'Verifique seus dados de login!'
-                    })
-            }
-        })
+
+        return Auth.signIn(email, password)
+            .then(res => console.log(res))
+            .catch(err => {
+                debugger
+                switch (err.code) {
+                    case 'UserNotFoundException':
+                        return Promise.reject({
+                            message:
+                                'Desculpe, não encontramos nenhuma conta associada ao e-mail inserido. Por favor tente novamente.',
+                            field: 'email'
+                        })
+                    case 'NotAuthorizedException':
+                        return Promise.reject({
+                            message:
+                                'Desculpe, essa combinação inserida de e-mail e senha está incorreta. Verifique seus dados e tente novamente!'
+                        })
+                    default:
+                        return Promise.reject({
+                            message: 'Verifique seus dados de login!'
+                        })
+                }
+            })
     })
 }
 
