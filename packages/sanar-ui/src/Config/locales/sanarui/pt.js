@@ -55,5 +55,14 @@ export default {
         pattern: {
             mismatch: '%s valor %s não corresponde ao padrão %s'
         }
+    },
+    practiceCompleted: {
+        title: 'Prática finalizada',
+        elapsedTime: 'Tempo decorrido na sessão',
+        averageQuestionTime: 'Tempo médio de resposta',
+        sawQuestions: 'questões visualizadas',
+        correct: 'Corretas:',
+        wrong: 'Erradas:',
+        skipped: 'Puladas:'
     }
 }
