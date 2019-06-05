@@ -11,8 +11,7 @@ import ESEmpty from 'sanar-ui/dist/Components/Atoms/Empty'
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 import SANQuestionsHistoricHeader from './Header'
 
-// const arr = Array.from(new Array(10), (_, i) => i)
-const arr = []
+const arr = Array.from(new Array(10), (_, i) => i)
 
 const SANQuestionsHistoric = () => {
     const { t } = useTranslation('esanar')

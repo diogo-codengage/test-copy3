@@ -59,27 +59,32 @@ const SANMenu = ({ history }) => {
     ])
 
     const setTab = index => {
-        setIndex(index)
         switch (index) {
             case 0:
+                history.push('/aluno/curso')
                 setTitle(t(`${intlPath}menu`))
                 break
             case 1:
+                setIndex(index)
                 setTitle(t(`${intlPath}notifications`))
                 break
             case 5:
                 history.push('/aluno/banco-questoes')
                 break
             case 6:
+                setIndex(index)
                 setTitle(t(`${intlPath}studying`))
                 break
             case 7:
+                setIndex(index)
                 setTitle(t(`${intlPath}myAccount`))
                 break
             case 8:
+                setIndex(index)
                 setTitle(t(`${intlPath}search`))
                 break
             default:
+                setIndex(index)
                 setTitle(t(`${intlPath}menu`))
         }
     }
