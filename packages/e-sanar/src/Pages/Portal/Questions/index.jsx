@@ -8,6 +8,7 @@ import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 
 import SANQuestionsFilter from './Filter'
+import SANQuestionsHistoric from './Historic'
 import SANQuestionDetailsPage from './Details/QuestionDetails'
 
 const SANQuestions = ({ match: { url } }) => {
@@ -15,6 +16,10 @@ const SANQuestions = ({ match: { url } }) => {
         <div className='questions'>
             <Switch>
                 <Route path={`${url}/filtro`} component={SANQuestionsFilter} />
+                <Route
+                    path={`${url}/historico`}
+                    component={SANQuestionsHistoric}
+                />
                 <Route
                     path={`${url}/perguntas`}
                     component={SANQuestionDetailsPage}

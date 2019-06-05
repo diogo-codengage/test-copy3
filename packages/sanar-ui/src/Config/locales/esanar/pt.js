@@ -171,6 +171,11 @@ export default {
         }
     },
     questionBase: {
+        historic: {
+            title: 'Histórico de questões',
+            questionsButton: 'BANCO DE QUESTÕES',
+            empty: 'Não há histórico'
+        },
         filter: {
             title: 'Banco de questões',
             subtitle: 'Hora de praticar tudo o que você aprendeu no curso',

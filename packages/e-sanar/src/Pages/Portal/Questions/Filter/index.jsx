@@ -20,7 +20,9 @@ const SANQuestionsFilter = ({ form, history, ...props }) => {
 
     return (
         <ESForm form={form} onSubmit={handleSubmit}>
-            <SANQuestionsFilterHeader />
+            <SANQuestionsFilterHeader
+                goHistory={() => history.push('./historico')}
+            />
             <SANQuestionsFilterSelects />
         </ESForm>
     )

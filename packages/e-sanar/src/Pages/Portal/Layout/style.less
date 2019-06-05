@@ -19,6 +19,12 @@
         background: @white !important;
     }
 
+    &__content {
+        min-height: ~'calc(100% - 181px)';
+        display: flex;
+        flex-direction: column;
+    }
+
     &__footer {
         padding: 0 !important;
 
@@ -51,7 +57,8 @@
         }
 
         &--copyright {
-            margin: @margin-lg 0 !important;
+            margin-top: @margin-lg;
+            padding-bottom: @padding-lg;
 
             & .es-typography {
                 color: @grey-8;
