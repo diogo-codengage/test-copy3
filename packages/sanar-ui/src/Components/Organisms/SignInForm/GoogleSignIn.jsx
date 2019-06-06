@@ -3,10 +3,12 @@ import ESIcon from '../../Atoms/Icon'
 import google from '../../../assets/images/social/blue-google-circle.svg'
 import ESButton from '../../Atoms/Button'
 import { esGoogleCreateScript } from '../../../Util/Auth/googleSignIn'
+import { useTranslation } from 'react-i18next'
 
 const GoogleSVG = () => <img src={google} alt='Google Sign In' />
 
 const ESGoogleSignIn = ({ className, signIn }) => {
+    const { t } = useTranslation('sanarui')
     useEffect(() => {
         const ga =
             window.gapi && window.gapi.auth2
@@ -25,7 +27,7 @@ const ESGoogleSignIn = ({ className, signIn }) => {
             className={className}
         >
             <ESIcon component={GoogleSVG} />
-            Entrar com Google
+            {t('authTexts.signInWith', { social: 'Google ' })}
         </ESButton>
     )
 }

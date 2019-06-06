@@ -6,7 +6,7 @@ import ESBrandHeader from '../../Atoms/BrandHeader'
 import ESTypography from '../../Atoms/Typography'
 import ESButton from '../../Atoms/Button'
 
-const ESAuthTemplate = ({ className, description, form, image }) => {
+const ESAuthTemplate = ({ className, description, form, image, marketing }) => {
     const classes = classNames('es-auth-template', className)
     return (
         <div className={classes}>
@@ -44,18 +44,19 @@ const ESAuthTemplate = ({ className, description, form, image }) => {
                     style={{ backgroundImage: `url(${image})` }}
                 >
                     <div className='es-auth-template__marketing__content mb-xl'>
-                        <ESTypography level={3}>
-                            Tenha uma experiência de excelência nos seus estudos
-                            e na sua carreira
-                        </ESTypography>
+                        <ESTypography level={3}>{marketing.title}</ESTypography>
                         <ESTypography level={6} regular>
-                            Acompanhe seu desempenho, tenha acesso a questões,
-                            conteúdos exclusivos e diversos conteúdos que vão te
-                            ajudar a conseguir alcançar seus objetivos
+                            {marketing.description}
                         </ESTypography>
                     </div>
-                    <ESButton color='white' bold variant='outlined'>
-                        CONHEÇA NOSSOS CURSOS
+                    <ESButton
+                        href={marketing.link}
+                        color='white'
+                        bold
+                        variant='outlined'
+                        target='_blank'
+                    >
+                        {marketing.linkDescription}
                     </ESButton>
                 </ESCol>
             </ESRow>
@@ -67,7 +68,13 @@ ESAuthTemplate.propTypes = {
     className: PropTypes.string,
     description: PropTypes.string,
     form: PropTypes.element.isRequired,
-    image: PropTypes.string
+    image: PropTypes.string,
+    marketing: PropTypes.shape({
+        title: PropTypes.string,
+        description: PropTypes.string,
+        linkDescription: PropTypes.string,
+        link: PropTypes.string
+    })
 }
 ESAuthTemplate.defaultProps = {}
 

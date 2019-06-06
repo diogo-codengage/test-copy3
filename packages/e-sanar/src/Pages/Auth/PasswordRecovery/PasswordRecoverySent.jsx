@@ -5,16 +5,17 @@ import ESPasswordRecoveryTemplate from 'sanar-ui/dist/Components/Templates/Passw
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 
 import image from 'assets/images/auth/mail.png'
+import { useTranslation } from 'react-i18next'
 
-//TODO: change to real behavior.
 const SANPasswordRecoverySent = ({ location, history }) => {
+    const { t } = useTranslation()
     const params = new URLSearchParams(location.search)
 
     return (
         <div className='san-password-recovery__success'>
             <ESPasswordRecoveryTemplate
-                title='Enviado com sucesso!'
-                subtitle='Um link de recuperação foi enviado para:'
+                title={t('esanar:auth.passwordResetSent.title')}
+                subtitle={t('esanar:auth.passwordResetSent.subtitle')}
                 image={image}
                 actions={
                     <>
@@ -28,8 +29,7 @@ const SANPasswordRecoverySent = ({ location, history }) => {
                             variant='subtitle2'
                             className='san-password-recovery__success--info'
                         >
-                            Fique atento a caixa de spam caso não encontre o
-                            e-mail de recuperação.
+                            {t('esanar:auth.passwordResetSent.advice')}
                         </ESTypography>
                         <ESButton
                             onClick={() => history.push('/')}
@@ -38,7 +38,7 @@ const SANPasswordRecoverySent = ({ location, history }) => {
                             variant='solid'
                             color='primary'
                         >
-                            Acessar conta
+                            {t('esanar:auth.accessAccount')}
                         </ESButton>
                     </>
                 }

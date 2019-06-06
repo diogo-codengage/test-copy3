@@ -1,6 +1,8 @@
 export default {
     global: {
-        filter: 'Filtrar'
+        filter: 'Filtrar',
+        password: 'Senha',
+        user: 'Usuário'
     },
     mainMenu: {
         leftOff: 'Continuar onde parei'
@@ -11,7 +13,7 @@ export default {
     },
     formValidateMessages: {
         default: 'Erro de validação no campo %s',
-        required: '%s é obrigatório',
+        required: 'Este campo é obrigatório',
         enum: '%s deve ser um dos %s',
         whitespace: '%s não pode estar vazio',
         date: {
@@ -30,13 +32,13 @@ export default {
             integer: '%s não é %s',
             float: '%s não é %s',
             regexp: '%s não é valido %s',
-            email: '%s não é valido %s',
+            email: 'Este não é um e-mail válido.',
             url: '%s não é valido %s',
             hex: '%s não é valido %s'
         },
         string: {
             len: '%s deve ser exatamente %s caracteres',
-            min: '%s deve ter pelo menos %s caracteres',
+            min: '{{field}} deve ter pelo menos {{min}} caracteres',
             max: '%s não pode ser maior que %s caracteres',
             range: '%s deve estar entre %s and %s caracteres'
         },
@@ -55,6 +57,28 @@ export default {
         pattern: {
             mismatch: '%s valor %s não corresponde ao padrão %s'
         }
+    },
+    authTexts: {
+        signInWith: 'Entrar com {{social}}'
+    },
+    authMessages: {
+        generic: 'Ocorreu um erro. Tente novamente mais tarde.',
+        notAuthorizedException:
+            'Desculpe, essa combinação inserida de e-mail e senha está incorreta. Verifique seus dados e tente novamente!',
+        limitExceededException:
+            'Você excedeu o limite de tentativas. Tente novamente mais tarde.',
+        userNotFoundException:
+            'Desculpe, não encontramos nenhuma conta associada ao e-mail inserido. Por favor tente novamente.',
+        invalidParameterException:
+            'Você ainda não possui um e-mail ou telefone confirmado para esta conta.',
+
+        expiredCodeException:
+            'O código de redefinição expirou. Solicite um novo.',
+        codeMismatchException:
+            'O código de redefinição inválido. Solicite um novo.',
+        limitExceededException:
+            'Você excedeu o límite de tentativas. Tente novamente mais tarde.',
+        passwordWasReseted: 'Senha alterada com sucesso!'
     },
     practiceCompleted: {
         title: 'Prática finalizada',

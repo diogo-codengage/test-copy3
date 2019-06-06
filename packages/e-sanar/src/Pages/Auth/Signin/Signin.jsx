@@ -10,8 +10,11 @@ import esSignIn, {
 import image from 'assets/images/auth/login.png'
 
 import useLocalStorage from 'sanar-ui/dist/Hooks/useLocalStorage'
+import { useTranslation } from 'react-i18next'
 
 const SANSigninPage = ({ history }) => {
+    const { t } = useTranslation('esanar')
+
     const [storedValue, setValue] = useLocalStorage('es-keep-me-logged-in')
     const [isKeepMeLoggedChecked, setIsKeepMeLoggedChecked] = useState(
         storedValue
@@ -32,18 +35,24 @@ const SANSigninPage = ({ history }) => {
         esConfigureAuthStorage()
     }
 
+    const marketing = {
+        title: t('auth.marketing.title'),
+        description: t('auth.marketing.description'),
+        linkDescription: t('auth.marketing.linkDescription'),
+        link: 'https://www.editorasanar.com.br/'
+    }
+
     return (
         <ESAuthTemplate
             image={image}
-            description='Sua conta é seu portal de acesso a cursos e
-            todas as ferramentas necessárias para
-            impulsionar a sua carreira'
+            description={t('auth.signInDescription')}
+            marketing={marketing}
             form={
                 <ESSignInForm
-                    keepMeLoggedIn='Manter-me logado'
-                    forgotPassword='Esqueci minha senha'
-                    login='Entrar'
-                    title='Ou entre com os dados abaixo'
+                    keepMeLoggedIn={t('auth.keepMeLoggedIn')}
+                    forgotPassword={t('auth.forgotPassword')}
+                    login={t('auth.login')}
+                    title={t('auth.title')}
                     action={action}
                     isKeepMeLoggedChecked={isKeepMeLoggedChecked}
                     keepMeLogged={storeKeepMeLoggedIn}

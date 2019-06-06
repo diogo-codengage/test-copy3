@@ -12,6 +12,7 @@ import ESGoogleSignIn from './GoogleSignIn'
 import ESFacebookSignIn from './FacebookSignIn'
 import ESForm, { ESFormItem, withESForm } from '../../Molecules/Form'
 import { message, Spin } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 const antIcon = <ESIcon type='loading' style={{ fontSize: 24 }} spin />
 
@@ -29,21 +30,25 @@ const ESSignInForm = ({
     keepMeLogged,
     form
 }) => {
+    const { t } = useTranslation('sanarui')
     const classes = classNames('es-sign-in-form', className)
     const [loading, setLoading] = useState(false)
 
     const signIn = e => {
         e.preventDefault()
         setLoading(true)
-        signInByEmail(form)
-            .then(() => {
-                setLoading(false)
-                return actProp()
-            })
-            .catch(error => {
-                setLoading(false)
-                message.error(error.message)
-            })
+        form.validateFields().then(() => {
+            const { email, password } = form.getFieldsValue()
+            signInByEmail(email, password)
+                .then(() => {
+                    setLoading(false)
+                    return actProp()
+                })
+                .catch(error => {
+                    setLoading(false)
+                    message.error(error.message)
+                })
+        })
     }
 
     const signInFacebook = () => {
@@ -105,16 +110,16 @@ const ESSignInForm = ({
                         rules={[
                             {
                                 required: true,
-                                message: 'Por favor, preencha seu e-mail.'
+                                message: t('formValidateMessages.required')
                             },
                             {
                                 type: 'email',
-                                message: 'Por favor, insira um e-mail válido.'
+                                message: t('formValidateMessages.types.email')
                             }
                         ]}
                         name='email'
                     >
-                        <ESInput size='large' placeholder='Usuário' />
+                        <ESInput size='large' placeholder={t('global.user')} />
                     </ESFormItem>
                     <ESFormItem
                         name='password'
@@ -122,13 +127,13 @@ const ESSignInForm = ({
                             {
                                 required: true,
                                 whitespace: true,
-                                message: 'Por favor, preencha sua senha.'
+                                message: t('formValidateMessages.required')
                             }
                         ]}
                     >
                         <ESInput
                             size='large'
-                            placeholder='Senha'
+                            placeholder={t('global.password')}
                             component={ESInput.Password}
                         />
                     </ESFormItem>

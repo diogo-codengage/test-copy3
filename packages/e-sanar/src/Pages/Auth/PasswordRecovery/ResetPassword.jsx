@@ -10,8 +10,12 @@ import ESForm, {
 
 import image from 'assets/images/auth/chest.png'
 import { esSendPasswordReset } from 'sanar-ui/dist/Util/Auth'
+import { message } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 const SANResetPassword = ({ history, location, form }) => {
+    const { t } = useTranslation()
+
     const [loading, setLoading] = useState(false)
     const params = new URLSearchParams(location.search)
 
@@ -19,7 +23,7 @@ const SANResetPassword = ({ history, location, form }) => {
         event.preventDefault()
 
         form.validateFields()
-            .then(res => {
+            .then(() => {
                 const { password } = form.getFieldsValue()
                 setLoading(true)
                 esSendPasswordReset(
@@ -27,11 +31,13 @@ const SANResetPassword = ({ history, location, form }) => {
                     params.get('email'),
                     params.get('codigo')
                 )
-                    .then(() => {
+                    .then(res => {
+                        message.success(res.message)
                         setLoading(false)
                         history.push('../')
                     })
-                    .catch(() => {
+                    .catch(error => {
+                        message.error(error.message)
                         history.push('../recuperar-senha')
                         setLoading(false)
                     })
@@ -49,8 +55,8 @@ const SANResetPassword = ({ history, location, form }) => {
 
     return (
         <ESPasswordRecoveryTemplate
-            title='Troque sua senha'
-            subtitle='Cadastre uma nova senha preenchendo os campos abaixo:'
+            title={t('esanar:auth.sendResetPassword.title')}
+            subtitle={t('esanar:auth.sendResetPassword.subtitle')}
             image={image}
             actionsMargin='large'
             actions={
@@ -60,19 +66,25 @@ const SANResetPassword = ({ history, location, form }) => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Campo obrigatório.'
+                                message: t(
+                                    'sanarui:formValidateMessages.required'
+                                )
                             },
                             {
                                 min: 6,
-                                message:
-                                    'A senha deve conter no mínimo seis caracteres.'
+                                message: t(
+                                    'esanar:auth.validations.minPassword',
+                                    {
+                                        min: 6
+                                    }
+                                )
                             }
                         ]}
                     >
                         <ESInput
                             size='large'
                             component={ESInput.Password}
-                            placeholder='Nova senha'
+                            placeholder={t('esanar:auth.newPassword')}
                         />
                     </ESFormItem>
                     <ESFormItem
@@ -80,18 +92,24 @@ const SANResetPassword = ({ history, location, form }) => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Campo obrigatório.'
+                                message: t(
+                                    'sanarui:formValidateMessages.required'
+                                )
                             },
                             {
                                 validator: compareToFirstPassword,
-                                message: 'As senhas não conferem.'
+                                message: t(
+                                    'esanar:auth.validations.passwordsMismatch'
+                                )
                             }
                         ]}
                     >
                         <ESInput
                             size='large'
                             component={ESInput.Password}
-                            placeholder='Confirme sua senha'
+                            placeholder={t(
+                                'esanar:auth.sendResetPassword.confirmPassword'
+                            )}
                         />
                     </ESFormItem>
 
@@ -104,7 +122,7 @@ const SANResetPassword = ({ history, location, form }) => {
                         className='mb-md'
                         loading={loading}
                     >
-                        Enviar
+                        {t('esanar:global.send')}
                     </ESButton>
                     <ESButton
                         onClick={() => history.push('/')}
@@ -113,7 +131,7 @@ const SANResetPassword = ({ history, location, form }) => {
                         variant='text'
                         color='primary'
                     >
-                        Acessar conta
+                        {t('esanar:auth.accessAccount')}
                     </ESButton>
                 </ESForm>
             }

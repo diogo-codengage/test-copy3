@@ -1,37 +1,42 @@
-import { message } from 'antd'
 import { Auth } from 'aws-amplify'
+import i18n from '../../Config/i18n'
 
 const sendPasswordReset = (password, email, code) => {
     return Auth.forgotPasswordSubmit(email, code, password)
         .then(res => {
-            message.success('Senha alterada com sucesso!')
-            return Promise.resolve()
+            return Promise.resolve({
+                message: i18n.t('sanarui:authMessages.passwordWasReseted')
+            })
         })
         .catch(err => {
             switch (err.code) {
                 case 'ExpiredCodeException':
-                    message.error(
-                        'O código de redefinição inválido. Solicite um novo.'
-                    )
-                    break
+                    return Promise.reject({
+                        code: 'ExpiredCodeException',
+                        message: i18n.t(
+                            'sanarui:authMessages.expiredCodeException'
+                        )
+                    })
                 case 'CodeMismatchException':
-                    message.error(
-                        'O código de redefinição expirou. Solicite um novo.'
-                    )
-                    break
+                    return Promise.reject({
+                        code: 'CodeMismatchException',
+                        message: i18n.t(
+                            'sanarui:authMessages.codeMismatchException'
+                        )
+                    })
                 case 'LimitExceededException':
-                    message.error(
-                        'Você excedeu o límite de tentativas. Tente novamente mais tarde.'
-                    )
-                    break
+                    return Promise.reject({
+                        code: 'LimitExceededException',
+                        message: i18n.t(
+                            'sanarui:authMessages.limitExceededException'
+                        )
+                    })
                 default:
-                    message.error(
-                        'Ocorreu um erro ao alterar sua senha. Tente novamente em instantes.'
-                    )
-                    break
+                    return Promise.reject({
+                        code: 'Generic',
+                        message: i18n.t('sanarui:authMessages.generic')
+                    })
             }
-
-            return Promise.reject()
         })
 }
 

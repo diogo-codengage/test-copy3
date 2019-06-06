@@ -5,14 +5,16 @@ import ESInput from 'sanar-ui/dist/Components/Atoms/Input'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 
 import image from 'assets/images/auth/searching.png'
-import { Auth } from 'aws-amplify'
 import ESForm, {
     ESFormItem,
     withESForm
 } from 'sanar-ui/dist/Components/Molecules/Form'
+import { esSendPasswordRecovery } from 'sanar-ui/dist/Util/Auth'
 import { message } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 const SANSendPasswordRecovery = ({ history, form }) => {
+    const { t } = useTranslation()
     const [loading, setLoading] = useState(false)
 
     const forgotPassword = event => {
@@ -23,7 +25,7 @@ const SANSendPasswordRecovery = ({ history, form }) => {
             .then(() => {
                 const { email } = form.getFieldsValue()
 
-                Auth.forgotPassword(email)
+                esSendPasswordRecovery(email)
                     .then(() => {
                         setLoading(false)
                         history.push({
@@ -32,38 +34,19 @@ const SANSendPasswordRecovery = ({ history, form }) => {
                         })
                     })
                     .catch(error => {
-                        switch (error.code) {
-                            case 'LimitExceededException':
-                                message.error(
-                                    'Você excedeu o limite de tentativas. Tente novamente mais tarde.'
-                                )
-                                break
-                            default:
-                                message.error(
-                                    'Ocorreu um erro. Tente novamente'
-                                )
-                        }
+                        message.error(error.message)
                         setLoading(false)
                     })
             })
-            .catch(error => {
-                switch (error.type) {
-                    case 'UserNotFoundException':
-                        message.error(
-                            'Nenhuma conta foi encontrada com esse e-mail.'
-                        )
-                        break
-                    default:
-                        message.error('Ocorreu um erro ao redefinir sua senha.')
-                }
+            .catch(() => {
                 setLoading(false)
             })
     }
 
     return (
         <ESPasswordRecoveryTemplate
-            title='Esqueci minha senha'
-            subtitle='Preencha o campo abaixo e nós te enviaremos um link de recuperação alteração de senha'
+            title={t('esanar:auth.sendPasswordRecovery.title')}
+            subtitle={t('esanar:auth.sendPasswordRecovery.subtitle')}
             image={image}
             actionsMargin='large'
             actions={
@@ -72,18 +55,24 @@ const SANSendPasswordRecovery = ({ history, form }) => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Por favor, preencha seu e-mail.'
+                                message: t(
+                                    'sanarui:formValidateMessages.required'
+                                )
                             },
                             {
                                 type: 'email',
-                                message: 'Por favor, insira um e-mail válido.'
+                                message: t(
+                                    'sanarui:formValidateMessages.types.email'
+                                )
                             }
                         ]}
                         name='email'
                     >
                         <ESInput
                             size='large'
-                            placeholder='Digite seu e-mail cadastrado'
+                            placeholder={t(
+                                'esanar:auth.sendPasswordRecovery.email'
+                            )}
                         />
                     </ESFormItem>
                     <ESButton
@@ -95,7 +84,7 @@ const SANSendPasswordRecovery = ({ history, form }) => {
                         color='primary'
                         className='mb-md'
                     >
-                        Enviar
+                        {t('esanar:global.send')}
                     </ESButton>
                     <ESButton
                         href='/#/auth/signin'
@@ -104,7 +93,7 @@ const SANSendPasswordRecovery = ({ history, form }) => {
                         variant='text'
                         color='primary'
                     >
-                        Acessar conta
+                        {t('esanar:auth.accessAccount')}
                     </ESButton>
                 </ESForm>
             }
