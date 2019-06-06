@@ -15,7 +15,7 @@ const SANPortalRoutes = ({ match: { url } }) => {
 
     useEffect(() => {
         return () => esConfigureAuthStorage()
-    }, [])
+    })
 
     return (
         <Query query={GET_ME} onCompleted={({ me }) => setMe(me)}>
