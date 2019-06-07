@@ -33,7 +33,6 @@ const SANQuestionsHistoric = () => {
                             </ESHistoricalIssuesList>
                             <div className='d-flex justify-content-center'>
                                 <ESPagination
-                                    current={5}
                                     total={100}
                                     className='pb-lg mt-xl'
                                 />

@@ -45,7 +45,8 @@ const ESMainMenu = ({
     onInitialClick,
     theme: themeProp,
     showContinueBar: showContinueBarProp,
-    logo
+    logo,
+    onHome
 }) => {
     const {
         position,
@@ -105,7 +106,9 @@ const ESMainMenu = ({
                 <div className='es-main-menu__sidebar-left'>
                     <div className='es-main-menu__sidebar-left--actions'>
                         <InitalButton onClick={initialClick} />
-                        <SearchButton onClick={searchClick} />
+                        {onSearchClick && (
+                            <SearchButton onClick={searchClick} />
+                        )}
                     </div>
                     <img className='logo' src={logo} />
                 </div>
@@ -120,8 +123,10 @@ const ESMainMenu = ({
                         />
                     )}
                     <div className='es-main-menu__sidebar-bottom'>
-                        <HomeButton onClick={() => setToggle(true)} />
-                        <SearchButton onClick={searchBottomClick} />
+                        <HomeButton onClick={onHome} />
+                        {onSearchClick && (
+                            <SearchButton onClick={searchBottomClick} />
+                        )}
                         <InitalButton onClick={initialBottomClick} />
                     </div>
                 </>
@@ -143,6 +148,7 @@ ESMainMenu.propTypes = {
     theme: PropTypes.oneOf(['primary', 'dark', 'light']),
     onInitialClick: PropTypes.func,
     onSearchClick: PropTypes.func,
+    onHome: PropTypes.func,
     showContinueBar: PropTypes.bool,
     logo: PropTypes.string
 }

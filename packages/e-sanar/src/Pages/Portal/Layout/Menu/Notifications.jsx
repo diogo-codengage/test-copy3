@@ -82,7 +82,7 @@ const Notification = ({ ...props }) => {
     )
 }
 
-const SANNotifications = ({ setTab }) => {
+const SANNotifications = ({ handleBack }) => {
     const { t } = useTranslation('esanar')
     const [reads, setReads] = useState(notificationsRead)
     const [unreads, setUnreads] = useState(notificationsUnread)
@@ -96,7 +96,7 @@ const SANNotifications = ({ setTab }) => {
                     variant='outlined'
                     color='white'
                     block
-                    onClick={() => setTab(0)}
+                    onClick={handleBack}
                 >
                     <ESEvaIcon name='arrow-back-outline' />
                     {t('mainMenu.back')}

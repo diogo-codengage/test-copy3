@@ -54,6 +54,7 @@ const SANQuestionsFilterAdvanced = ({ form }) => {
                                 label={t(`${intlPath}state.label`)}
                             >
                                 <ESSelect
+                                    disabled
                                     placeholder={t(
                                         `${intlPath}state.placeholder`
                                     )}
@@ -75,7 +76,9 @@ const SANQuestionsFilterAdvanced = ({ form }) => {
                                 ]}
                             >
                                 <ESDatePicker
-                                    placeholder={t(`${intlPath}year.label`)}
+                                    placeholder={t(
+                                        `${intlPath}year.placeholder`
+                                    )}
                                     mode='year'
                                     size='large'
                                 />
@@ -85,8 +88,12 @@ const SANQuestionsFilterAdvanced = ({ form }) => {
                             <ESFormItem
                                 name='difficulty'
                                 label={t(`${intlPath}difficulty.label`)}
+                                className='no-margin'
                             >
-                                <ESCheckboxGroup className='checkbox'>
+                                <ESCheckboxGroup
+                                    className='checkbox disabled'
+                                    disabled
+                                >
                                     <ESCheckbox value='easy'>
                                         {t(
                                             `${intlPath}difficulty.options.easy`
@@ -111,6 +118,7 @@ const SANQuestionsFilterAdvanced = ({ form }) => {
                             <ESFormItem
                                 name='progress'
                                 label={t(`${intlPath}progress.label`)}
+                                className='no-margin'
                             >
                                 <ESRow>
                                     <ESRadioGroup>

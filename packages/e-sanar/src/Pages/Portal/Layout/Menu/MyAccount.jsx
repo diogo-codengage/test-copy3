@@ -21,7 +21,7 @@ import { Auth } from 'aws-amplify'
 
 const intlPath = 'mainMenu.myAccount.'
 
-const SANMyAccount = ({ setTab, history }) => {
+const SANMyAccount = ({ handleBack, history }) => {
     const { me } = useAuthContext()
     const { t } = useTranslation('esanar')
     const [open, setOpen] = useState(false)
@@ -31,9 +31,9 @@ const SANMyAccount = ({ setTab, history }) => {
         setOpen(Number(key) === 2)
     }
 
-    const handleHelp = ({ key }) => {
-        setOpenFeedback(Number(key) === 0)
-    }
+    //FIXME: const handleHelp = ({ key }) => {
+    //     setOpenFeedback(Number(key) === 0)
+    // }
 
     const leaveAccount = () => {
         Auth.signOut().then(() => {
@@ -62,7 +62,7 @@ const SANMyAccount = ({ setTab, history }) => {
                     variant='outlined'
                     color='white'
                     block
-                    onClick={() => setTab(0)}
+                    onClick={handleBack}
                 >
                     <ESEvaIcon name='arrow-back-outline' />
                     {t('mainMenu.back')}
@@ -81,18 +81,18 @@ const SANMyAccount = ({ setTab, history }) => {
                 {t(`${intlPath}management`)}
             </ESTypography>
             <ESNavigationList onClick={console.log}>
-                <ESNavigationListItem
+                {/*FIXME: <ESNavigationListItem
                     key='0'
                     title={t(`${intlPath}myData`)}
                     icon={<ESEvaIcon name='folder-outline' color='default' />}
-                />
+                /> */}
                 <ESNavigationListItem
                     key='1'
                     title={t(`${intlPath}changePassword`)}
                     icon={<ESEvaIcon name='lock-outline' color='default' />}
                 />
             </ESNavigationList>
-            <div className='pl-md pr-md'>
+            {/*FIXME: <div className='pl-md pr-md'>
                 <ESDivider className='mt-md mb-md' />
             </div>
             <ESTypography
@@ -117,7 +117,7 @@ const SANMyAccount = ({ setTab, history }) => {
                         />
                     }
                 />
-            </ESNavigationList>
+            </ESNavigationList> */}
             <div className='pl-md pr-md'>
                 <ESDivider className='mt-md mb-md' />
             </div>

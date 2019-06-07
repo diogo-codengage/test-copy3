@@ -10,7 +10,7 @@ import ESChangeCourse from 'sanar-ui/dist/Components/Molecules/ChangeCourse'
 
 const intlPath = 'mainMenu.changeCourse.'
 
-const SANCourseChange = ({ setTab }) => {
+const SANCourseChange = ({ handleBack }) => {
     const { t } = useTranslation('esanar')
 
     return (
@@ -22,7 +22,7 @@ const SANCourseChange = ({ setTab }) => {
                     variant='outlined'
                     color='white'
                     block
-                    onClick={() => setTab(0)}
+                    onClick={handleBack}
                 >
                     <ESEvaIcon name='arrow-back-outline' />
                     {t('mainMenu.back')}

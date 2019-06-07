@@ -173,7 +173,7 @@ export default {
                 buttonLoadMore: 'Carregar mais'
             },
             modules: {
-                pluralName: 'módulos',
+                pluralName: 'disciplinas',
                 singularName: 'Módulo',
                 whatCourseHas: 'O que esse curso possui',
                 whatCourseHasSubtitle:

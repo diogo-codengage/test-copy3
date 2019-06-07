@@ -7,10 +7,6 @@ import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import ESCardInfo from 'sanar-ui/dist/Components/Molecules/CardInfo'
 import ESCardCourseModule from 'sanar-ui/dist/Components/Molecules/CardCourseModule'
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
-import {
-    ESRadioGroup,
-    ESRadioButton
-} from 'sanar-ui/dist/Components/Atoms/Radio'
 
 import { modules, courseFeatures } from './mocks'
 import { useTranslation } from 'react-i18next'
@@ -94,26 +90,26 @@ const SANCourseModules = () => {
                     title={`42 ${t(
                         'courseDetails.tabContent.modules.pluralName'
                     )}`}
-                    extraOnLeft
-                    extra={
-                        <ESRadioGroup defaultValue='all' blocks>
-                            <ESRadioButton value='all'>
-                                {t(
-                                    'courseDetails.tabContent.modules.status.all'
-                                )}
-                            </ESRadioButton>
-                            <ESRadioButton value='done'>
-                                {t(
-                                    'courseDetails.tabContent.modules.status.done'
-                                )}
-                            </ESRadioButton>
-                            <ESRadioButton value='incomplete'>
-                                {t(
-                                    'courseDetails.tabContent.modules.status.incomplete'
-                                )}
-                            </ESRadioButton>
-                        </ESRadioGroup>
-                    }
+                    //FIXME: extraOnLeft
+                    // extra={
+                    //     <ESRadioGroup defaultValue='all' blocks>
+                    //         <ESRadioButton value='all'>
+                    //             {t(
+                    //                 'courseDetails.tabContent.modules.status.all'
+                    //             )}
+                    //         </ESRadioButton>
+                    //         <ESRadioButton value='done'>
+                    //             {t(
+                    //                 'courseDetails.tabContent.modules.status.done'
+                    //             )}
+                    //         </ESRadioButton>
+                    //         <ESRadioButton value='incomplete'>
+                    //             {t(
+                    //                 'courseDetails.tabContent.modules.status.incomplete'
+                    //             )}
+                    //         </ESRadioButton>
+                    //     </ESRadioGroup>
+                    // }
                 />
 
                 <ESRow gutter={24}>
@@ -144,7 +140,7 @@ const SANCourseModules = () => {
                         )
                     })}
                 </ESRow>
-                <ESPagination pageSize={12} current={1} total={200} />
+                <ESPagination total={200} />
             </SANPortalPagesContainer>
         </div>
     )

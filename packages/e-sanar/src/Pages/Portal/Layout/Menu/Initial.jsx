@@ -8,7 +8,6 @@ import {
     ESNavigationListItem
 } from 'sanar-ui/dist/Components/Organisms/MainMenu'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
-import ESBadge from 'sanar-ui/dist/Components/Atoms/Badge'
 
 const intlPath = 'mainMenu.initial.'
 
@@ -22,7 +21,7 @@ const SANInitial = ({ setTab }) => {
                     title='Trilha Sanar Enfermagem'
                     classReference='Nome da aula exemplo'
                     moduleReference='Módulo 2, aula 5'
-                    thumbnail='https://www.e-sanar.com.br/fotos/esanar_noticias/83/mg/esanar-avatar-matheus_jpeg.jpg'
+                    thumbnail='nopes'
                 />
             </div>
             <ESNavigationList onClick={e => setTab(Number(e.key))}>
@@ -31,7 +30,7 @@ const SANInitial = ({ setTab }) => {
                     title={t(`${intlPath}init`)}
                     icon={<ESEvaIcon name='home-outline' color='default' />}
                 />
-                <ESNavigationListItem
+                {/*FIXME: <ESNavigationListItem
                     key={1}
                     title={t(`${intlPath}notifications`)}
                     icon={
@@ -56,17 +55,17 @@ const SANInitial = ({ setTab }) => {
                     icon={
                         <ESEvaIcon name='pie-chart-outline' color='default' />
                     }
-                />
+                /> */}
                 <ESNavigationListItem
                     key={5}
                     title={t(`${intlPath}questions`)}
                     icon={<ESEvaIcon name='edit-outline' color='default' />}
                 />
-                <ESNavigationListItem
+                {/*FIXME: <ESNavigationListItem
                     key={6}
                     title={t(`${intlPath}changeCourse`)}
                     icon={<ESEvaIcon name='swap-outline' color='default' />}
-                />
+                /> */}
                 <ESNavigationListItem
                     key={7}
                     title={t(`${intlPath}myAccount`)}

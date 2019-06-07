@@ -47,7 +47,7 @@ const Items = ({
         ))
 
     return (
-        <ESCard className='es-card-select-filter__menu'>
+        <ESCard className='es-card-select-filter__menu' tabIndex={1}>
             <Scrollbars
                 autoHeight
                 autoHeightMax={246}
@@ -198,13 +198,15 @@ const ESCardSelectFilter = ({
                         />
                     }
                 >
-                    <ESInput
-                        placeholder={makePlaceholder}
-                        prefix={open && <ESEvaIcon name='search-outline' />}
-                        suffix={suffixIcon}
-                        onChange={handleSearch}
-                        value={search}
-                    />
+                    <span style={{ width: '100%' }}>
+                        <ESInput
+                            placeholder={makePlaceholder}
+                            prefix={open && <ESEvaIcon name='search-outline' />}
+                            suffix={suffixIcon}
+                            onChange={handleSearch}
+                            value={search}
+                        />
+                    </span>
                 </ESDropdown>
                 <img
                     src={image}

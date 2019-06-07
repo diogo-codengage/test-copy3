@@ -1,52 +1,58 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { format } from 'date-fns'
+import { format, isBefore } from 'date-fns'
 
 import ESNextLives from 'sanar-ui/dist/Components/Molecules/NextLives'
 import ESCardNextLive from 'sanar-ui/dist/Components/Atoms/CardNextLive'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
-import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 import { useAuthContext } from 'Hooks/auth'
 
-const SANLives = ({ title, release_date, scheduled }) => {
+const SANLives = ({ title, release_date, scheduled, link }) => {
     const { t } = useTranslation('esanar')
     const date = format(new Date(release_date), 'DD/MM/YYYY [às] HH[h]')
+
+    const canWatch = isBefore(new Date(release_date), new Date())
+
+    const actions = [
+        //FIXME: <ESButton
+        //     block
+        //     uppercase
+        //     bold
+        //     size='xsmall'
+        //     variant='text'
+        //     color={scheduled ? 'primary' : 'default'}
+        // >
+        //     <ESEvaIcon
+        //         size='small'
+        //         name={scheduled ? 'bell' : 'bell-outline'}
+        //     />{' '}
+        //     {scheduled
+        //         ? t('courseDetails.remembered')
+        //         : t('courseDetails.remember')}
+        // </ESButton>,
+        <ESButton
+            block
+            uppercase
+            bold
+            size='xsmall'
+            variant='text'
+            color='primary'
+            target='_blank'
+            href={link}
+            rel='noopener noreferrer'
+        >
+            {t('courseDetails.viewLive')}
+        </ESButton>
+    ]
 
     return (
         <ESCardNextLive
             title={title}
             date={date}
-            actions={[
-                <ESButton
-                    block
-                    uppercase
-                    bold
-                    size='xsmall'
-                    variant='text'
-                    color={scheduled ? 'primary' : 'default'}
-                >
-                    <ESEvaIcon
-                        size='small'
-                        name={scheduled ? 'bell' : 'bell-outline'}
-                    />{' '}
-                    {scheduled
-                        ? t('courseDetails.remembered')
-                        : t('courseDetails.remember')}
-                </ESButton>,
-                <ESButton
-                    block
-                    uppercase
-                    bold
-                    size='xsmall'
-                    variant='text'
-                    color='primary'
-                >
-                    {t('courseDetails.viewLive')}
-                </ESButton>
-            ]}
+            actions={canWatch && actions}
         />
     )
 }

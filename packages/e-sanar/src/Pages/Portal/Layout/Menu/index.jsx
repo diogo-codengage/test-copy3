@@ -11,24 +11,24 @@ import SANInitial from './Initial'
 import SANNotifications from './Notifications'
 import SANCourseChange from './CourseChange'
 import SANMyAccount from './MyAccount'
-import SANSearch from './Search'
+// import SANSearch from './Search'
 
 const intlPath = 'mainMenu.title.'
 
-const MenuContent = ({ index, setTab, showContinueBar }) => {
+const MenuContent = ({ index, setTab, showContinueBar, handleBack }) => {
     const { t } = useTranslation('esanar')
 
     switch (index) {
         case 0:
             return <SANInitial {...{ setTab }} />
         case 1:
-            return <SANNotifications {...{ setTab }} />
+            return <SANNotifications {...{ handleBack }} />
         case 6:
-            return <SANCourseChange {...{ setTab }} />
+            return <SANCourseChange {...{ handleBack }} />
         case 7:
-            return <SANMyAccount {...{ setTab }} />
-        case 8:
-            return <SANSearch />
+            return <SANMyAccount {...{ handleBack }} />
+        // case 8:
+        //     return <SANSearch />
         default:
             return (
                 <div className='pl-md pr-md mb-md'>
@@ -58,9 +58,15 @@ const SANMenu = ({ history }) => {
         index
     ])
 
+    const handleBack = () => {
+        setIndex(0)
+        setTitle(t(`${intlPath}menu`))
+    }
+
     const setTab = index => {
         switch (index) {
             case 0:
+                setIndex(index)
                 history.push('/aluno/curso')
                 setTitle(t(`${intlPath}menu`))
                 break
@@ -91,14 +97,15 @@ const SANMenu = ({ history }) => {
 
     return (
         <ESMainMenu
-            onSearchClick={() => setTab(8)}
+            // onSearchClick={() => setTab(8)}
             onInitialClick={() => setTab(0)}
+            onHome={() => history.push('/aluno/curso')}
             title={title}
             theme={theme}
             showContinueBar
             className='san-main-menu'
         >
-            <MenuContent {...{ index, setTab }} />
+            <MenuContent {...{ index, setTab, handleBack }} />
         </ESMainMenu>
     )
 }
