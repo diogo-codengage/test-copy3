@@ -50,7 +50,6 @@ export const GET_ME = gql`
                     icon
                     status
                     knowledge_area
-                    cover_picture
                     professors {
                         id
                         name
