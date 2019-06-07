@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 import { Query } from 'react-apollo'
@@ -8,14 +8,9 @@ import SANPortalLayout from './Layout'
 import { GET_ME } from 'Apollo/Me/query'
 import { useAuthContext } from 'Hooks/auth'
 import ESSplashLoader from 'sanar-ui/dist/Components/Atoms/SplashLoader'
-import { esConfigureAuthStorage } from 'sanar-ui/dist/Util/Auth'
 
 const SANPortalRoutes = ({ match: { url } }) => {
     const { setMe } = useAuthContext()
-
-    useEffect(() => {
-        return () => esConfigureAuthStorage()
-    })
 
     return (
         <Query query={GET_ME} onCompleted={({ me }) => setMe(me)}>

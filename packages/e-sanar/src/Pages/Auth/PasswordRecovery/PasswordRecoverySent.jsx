@@ -20,14 +20,14 @@ const SANPasswordRecoverySent = ({ location, history }) => {
                 actions={
                     <>
                         <ESTypography
-                            className='san-password-recovery__success--email'
+                            className='san-password-recovery__success--email mb-md'
                             level={6}
                         >
                             {params.get('email')}
                         </ESTypography>
                         <ESTypography
                             variant='subtitle2'
-                            className='san-password-recovery__success--info'
+                            className='san-password-recovery__success--info mb-md'
                         >
                             {t('esanar:auth.passwordResetSent.advice')}
                         </ESTypography>

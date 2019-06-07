@@ -40,9 +40,9 @@ const ESSignInForm = ({
         form.validateFields().then(() => {
             const { email, password } = form.getFieldsValue()
             signInByEmail(email, password)
-                .then(() => {
+                .then(response => {
                     setLoading(false)
-                    return actProp()
+                    actProp()
                 })
                 .catch(error => {
                     setLoading(false)
@@ -56,7 +56,7 @@ const ESSignInForm = ({
         signInByFacebook()
             .then(() => {
                 setLoading(false)
-                return actProp()
+                actProp()
             })
             .catch(() => {
                 setLoading(false)
@@ -70,7 +70,7 @@ const ESSignInForm = ({
         setLoading(true)
         signInByGoogle()
             .then(() => {
-                setLoading(false)
+                ~setLoading(false)
                 actProp()
             })
             .catch(() => {

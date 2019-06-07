@@ -38,7 +38,7 @@ export default {
         },
         string: {
             len: '%s deve ser exatamente %s caracteres',
-            min: '{{field}} deve ter pelo menos {{min}} caracteres',
+            min: '%s deve ter pelo menos %s caracteres',
             max: '%s não pode ser maior que %s caracteres',
             range: '%s deve estar entre %s and %s caracteres'
         },
@@ -73,9 +73,9 @@ export default {
             'Você ainda não possui um e-mail ou telefone confirmado para esta conta.',
 
         expiredCodeException:
-            'O código de redefinição expirou. Solicite um novo.',
+            'O link de redefinição da senha expirou. Solicite um novo.',
         codeMismatchException:
-            'O código de redefinição inválido. Solicite um novo.',
+            'O link de redefinição da senha é inválido. Solicite um novo.',
         limitExceededException:
             'Você excedeu o límite de tentativas. Tente novamente mais tarde.',
         passwordWasReseted: 'Senha alterada com sucesso!'

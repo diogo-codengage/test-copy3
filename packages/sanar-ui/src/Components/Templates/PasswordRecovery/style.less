@@ -1,8 +1,8 @@
 .es-password-recovery-template {
     display: flex;
-    align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    padding: @padding-xl * 2.25 @padding-md 0 @padding-md;
+    overflow-y: auto;
     background: @white;
 
     &__header {
@@ -13,7 +13,6 @@
     }
 
     &__content {
-        padding: 64px @padding-md @padding-md @padding-md;
         max-width: 360px;
 
         &__infos {
@@ -46,14 +45,6 @@
         &__actions {
             .es-typography {
                 text-align: center;
-            }
-
-            > * {
-                margin-bottom: @margin-md !important;
-
-                &:last-child {
-                    margin-bottom: 0;
-                }
             }
         }
 

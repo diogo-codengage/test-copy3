@@ -11,7 +11,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         setLoading(true)
 
         Auth.currentAuthenticatedUser()
-            .then(res => {
+            .then(() => {
                 setLoading(false)
                 setLogged(true)
             })
