@@ -43,6 +43,7 @@
     },
     "dependencies": {
         "ckeditor4-react": "^0.1.1",
+        "pdfobject": "^2.1.1",
         "react-eva-icons": "^0.0.7"
     }
 }
