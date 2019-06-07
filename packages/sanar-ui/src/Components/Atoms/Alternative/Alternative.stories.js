@@ -11,30 +11,43 @@ storiesOf('Atoms.Alternative', module)
     .add('Unselected', () => (
         <ESAlternative
             situation='none'
-            answer='A'
-            value={alternativeText}
-            striped={striped}
-            onStripeClicked={() => console.log('onStripeClicked')}
+            id='id-alternative-1'
+            text={alternativeText}
+            index={0}
+        />
+    ))
+    .add('Selected', () => (
+        <ESAlternative
+            selected='id-alternative-1'
+            id='id-alternative-1'
+            text={alternativeText}
+            index={0}
         />
     ))
     .add('Correct', () => (
         <ESAlternative
-            situation='correct'
-            answer='A'
-            value={alternativeText}
-            striped={true}
+            selected='id-alternative-1'
+            correctAnswer='id-alternative-1'
+            id='id-alternative-1'
+            text={alternativeText}
+            index={0}
         />
     ))
     .add('Wrong', () => (
-        <ESAlternative situation='wrong' answer='A' value={alternativeText} />
-    ))
-    .add('Selected', () => (
         <ESAlternative
-            situation='selected'
-            answer='A'
-            value={alternativeText}
+            selected='id-alternative-2'
+            correctAnswer='id-alternative-1'
+            id='id-alternative-2'
+            text={alternativeText}
+            index={0}
         />
     ))
     .add('Missed', () => (
-        <ESAlternative situation='missed' answer='A' value={alternativeText} />
+        <ESAlternative
+            selected='id-alternative-2'
+            correctAnswer='id-alternative-1'
+            id='id-alternative-3'
+            text={alternativeText}
+            index={0}
+        />
     ))
