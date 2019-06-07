@@ -12,11 +12,11 @@
         align-items: center;
         flex-grow: 1;
         &--none {
-            background-color: #f7f9fa;
-            border: 1px solid #111317;
+            background-color: #ffffff;
+            border: 1px solid rgba(17, 19, 23, 0.15);
         }
         &--selected {
-            background-color: #f7f9fa;
+            background-color: #ffffff;
             border: 1px solid #255ad0;
         }
         &--correct {
@@ -27,8 +27,12 @@
             background-color: #ffbdbd;
             border: 1px solid #d94a4b;
         }
+        &--wrong-missed {
+            background-color: #ffffff;
+            border: 1px solid rgba(17, 19, 23, 0.15);
+        }
         &--missed {
-            background-color: #f7f9fa;
+            background-color: #ffffff;
             border: 1px solid #4aa62e;
         }
     }
@@ -55,6 +59,10 @@
         &--wrong {
             background-color: #d94a4b;
             color: #ffffff;
+        }
+        &--wrong-missed {
+            background-color: #ebeef2;
+            color: rgba(17, 19, 23, 0.65);
         }
         &--missed {
             background-color: #4aa62e;
