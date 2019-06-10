@@ -29,24 +29,26 @@ const SANQuestionsFilterSelects = () => {
             <SANPortalPagesContainer>
                 <ESRow gutter={24}>
                     <ESCol sm={24} md={12}>
-                        <ESFormItem name='module'>
+                        <ESFormItem name='subject'>
                             <ESCardSelectFilter
                                 labelSelecteds={t(
-                                    `${intlPath}module.selecteds`
+                                    `${intlPath}subject.selecteds`
                                 )}
-                                placeholder={t(`${intlPath}module.choose`)}
-                                filterName={t(`${intlPath}module.title`)}
+                                placeholder={t(`${intlPath}subject.choose`)}
+                                filterName={t(`${intlPath}subject.title`)}
                                 image={moduloSvg}
                                 items={items}
                             />
                         </ESFormItem>
                     </ESCol>
                     <ESCol sm={24} md={12}>
-                        <ESFormItem name='theme'>
+                        <ESFormItem name='discipline'>
                             <ESCardSelectFilter
-                                labelSelecteds={t(`${intlPath}theme.selecteds`)}
-                                placeholder={t(`${intlPath}theme.choose`)}
-                                filterName={t(`${intlPath}theme.title`)}
+                                labelSelecteds={t(
+                                    `${intlPath}discipline.selecteds`
+                                )}
+                                placeholder={t(`${intlPath}discipline.choose`)}
+                                filterName={t(`${intlPath}discipline.title`)}
                                 image={assuntoSvg}
                                 items={items}
                             />

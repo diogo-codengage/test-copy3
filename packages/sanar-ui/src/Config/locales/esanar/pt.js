@@ -220,15 +220,15 @@ export default {
             subtitle: 'Hora de praticar tudo o que você aprendeu no curso',
             hitoricButton: 'Histórico',
             startPracticeButton: 'Iniciar prática',
-            module: {
-                title: 'Módulo',
-                choose: 'Escolher módulos',
-                selecteds: 'Módulos'
+            subject: {
+                title: 'Assunto',
+                choose: 'Escolher assuntos',
+                selecteds: 'Assuntos'
             },
-            theme: {
-                title: 'Tema',
-                choose: 'Escolher Tema',
-                selecteds: 'Temas'
+            discipline: {
+                title: 'Disciplina',
+                choose: 'Escolher disciplina',
+                selecteds: 'Disciplinas'
             },
             bank: {
                 title: 'Banca',
