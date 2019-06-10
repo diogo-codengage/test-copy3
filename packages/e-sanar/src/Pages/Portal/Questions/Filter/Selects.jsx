@@ -17,6 +17,7 @@ import { useAuthContext } from 'Hooks/auth'
 import { GET_TAGS } from 'Apollo/Questions/queries/tags'
 import { GET_EXAMS } from 'Apollo/Questions/queries/exams'
 import { GET_BOARDS } from 'Apollo/Questions/queries/boards'
+import { GET_MODULES } from 'Apollo/Questions/queries/modules'
 
 import SANQuestionsFilterAdvanced from './Advanced'
 
@@ -27,7 +28,7 @@ const SANQuestionsFilterSelects = () => {
     const { t } = useTranslation('esanar')
 
     const {
-        course: { modules = [] }
+        course: { id }
     } = getEnrollment()
 
     const mapItem = item => ({
@@ -43,17 +44,29 @@ const SANQuestionsFilterSelects = () => {
             <SANPortalPagesContainer>
                 <ESRow gutter={24}>
                     <ESCol sm={24} md={12}>
-                        <ESFormItem name='levels'>
-                            <ESCardSelectFilter
-                                labelSelecteds={t(
-                                    `${intlPath}discipline.selecteds`
-                                )}
-                                placeholder={t(`${intlPath}discipline.choose`)}
-                                filterName={t(`${intlPath}discipline.title`)}
-                                image={assuntoSvg}
-                                items={modules.data.map(mapItem)}
-                            />
-                        </ESFormItem>
+                        <Query query={GET_MODULES}>
+                            {props => (
+                                <ESFormItem
+                                    name='levels'
+                                    variables={{ courseId: id }}
+                                    skip={!id}
+                                >
+                                    <ESCardSelectFilter
+                                        labelSelecteds={t(
+                                            `${intlPath}discipline.selecteds`
+                                        )}
+                                        placeholder={t(
+                                            `${intlPath}discipline.choose`
+                                        )}
+                                        filterName={t(
+                                            `${intlPath}discipline.title`
+                                        )}
+                                        image={assuntoSvg}
+                                        items={makeItems(props, 'modules')}
+                                    />
+                                </ESFormItem>
+                            )}
+                        </Query>
                     </ESCol>
                     <ESCol sm={24} md={12}>
                         <Query query={GET_TAGS}>
