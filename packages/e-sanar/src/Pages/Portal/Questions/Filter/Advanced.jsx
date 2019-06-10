@@ -74,6 +74,7 @@ const SANQuestionsFilterAdvanced = ({ form }) => {
                                         type: 'object'
                                     }
                                 ]}
+                                trigger={'onPanelChange'}
                             >
                                 <ESDatePicker
                                     placeholder={t(

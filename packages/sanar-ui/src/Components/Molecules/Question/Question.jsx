@@ -65,26 +65,25 @@ const ESQuestion = ({
         </div>
         <div className='footer'>
             <ESButton
-                size='xsmall'
-                color='secondary'
+                size='small'
                 variant='text'
                 uppercase
                 bold
                 onClick={onJump}
             >
-                <ESEvaIcon name='refresh-outline' color='default' />
+                <ESEvaIcon name='refresh-outline' />
                 Pular
             </ESButton>
             <ESButton
-                size='xsmall'
+                size='small'
                 color='primary'
-                variant='solid'
+                variant='outlined'
                 uppercase
                 bold
                 onClick={answered ? onNext : onConfirm}
             >
                 {nextText}
-                <ESEvaIcon name='arrow-forward-outline' color='#FFF' />
+                <ESEvaIcon name='arrow-forward-outline' />
             </ESButton>
         </div>
     </div>

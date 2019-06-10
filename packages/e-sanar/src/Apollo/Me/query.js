@@ -66,6 +66,12 @@ export const GET_ME = gql`
                     icon
                     status
                     knowledge_area
+                    modules {
+                        data {
+                            id
+                            name
+                        }
+                    }
                     professors {
                         id
                         name

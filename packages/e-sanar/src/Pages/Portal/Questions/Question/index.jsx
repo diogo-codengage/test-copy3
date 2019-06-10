@@ -1,34 +1,16 @@
 import React, { useState } from 'react'
-import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
-import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
-import ESQuestionHeader from '../Header'
 import PropTypes from 'prop-types'
-import { ESQuestion } from 'sanar-ui/dist/Components/Molecules/Question'
-import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 import { Query, Mutation } from 'react-apollo'
+
+import { ESQuestion } from 'sanar-ui/dist/Components/Molecules/Question'
+
 import { GET_QUESTIONS } from 'Apollo/Questions/queries/questions'
-import { useAuthContext } from 'Hooks/auth'
 import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
 
-const Title = ({ questionNumber, total }) => (
-    <ESTypography level={4}>
-        Questão {questionNumber}
-        <ESTypography variant='body2'>/ {total} +</ESTypography>
-    </ESTypography>
-)
+import SANQuestionHeader from './Header'
 
-const Extras = ({ onClick }) => (
-    <ESButton
-        size='xsmall'
-        color='primary'
-        variant='solid'
-        uppercase
-        bold
-        onClick={onClick}
-    >
-        Encerrar prática
-    </ESButton>
-)
+import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
+import { useAuthContext } from 'Hooks/auth'
 
 const SANQuestionDetailsPage = () => {
     const [qs, setQuestions] = useState({})
@@ -85,22 +67,9 @@ const SANQuestionDetailsPage = () => {
                         {() => {
                             return (
                                 <div className='san-questions-details'>
-                                    <ESQuestionHeader
-                                        title={
-                                            <Title
-                                                questionNumber={idx + 1}
-                                                total={qs.length}
-                                            />
-                                        }
-                                        extra={
-                                            <Extras
-                                                onClick={() =>
-                                                    console.log(
-                                                        'Clicou no extra'
-                                                    )
-                                                }
-                                            />
-                                        }
+                                    <SANQuestionHeader
+                                        current={idx + 1}
+                                        total={qs.length}
                                     />
                                     <SANPortalPagesContainer>
                                         <ESQuestion

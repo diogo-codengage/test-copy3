@@ -98,7 +98,6 @@ const ESCardSelectFilter = ({
     onClose,
     onOpen,
     items,
-    defaultSelectedItems = [],
     labelSelecteds,
     onChange,
     value = []
@@ -107,7 +106,6 @@ const ESCardSelectFilter = ({
     const [loadImage, setLoadImage] = useState(true)
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState()
-    const [selectedItems, setSelectedItems] = useState(defaultSelectedItems)
     const classes = classNames('es-card-select-filter', className)
     const classesFooter = classNames('es-card-select-filter__footer', {
         'es-card-select-filter__footer--checked': value.length
@@ -124,13 +122,11 @@ const ESCardSelectFilter = ({
     }
 
     const handleSelectAll = e => {
-        setSelectedItems(items)
         onSelectAll && onSelectAll(items, e)
         onChange && onChange(items, e)
     }
 
     const handleClear = e => {
-        setSelectedItems([])
         onClear && onClear([], e)
         onChange && onChange([], e)
     }
@@ -147,14 +143,12 @@ const ESCardSelectFilter = ({
             target: { checked }
         } = e
         if (checked) {
-            setSelectedItems([...value, item])
             onSelectItem && onSelectItem(item)
             onChange && onChange([...value, item])
         } else {
             const newItems = value.filter(
                 selected => selected.value !== item.value
             )
-            setSelectedItems(newItems)
             onDeselectItem && onDeselectItem(item)
             onChange && onChange(newItems)
         }

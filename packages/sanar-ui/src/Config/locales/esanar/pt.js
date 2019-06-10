@@ -210,6 +210,10 @@ export default {
         }
     },
     questionBase: {
+        question: {
+            title: 'Questões',
+            endPracticeButton: 'Encerrar prática'
+        },
         historic: {
             title: 'Histórico de questões',
             questionsButton: 'BANCO DE QUESTÕES',

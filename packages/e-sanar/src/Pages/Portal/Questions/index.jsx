@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 
 import SANQuestionsFilter from './Filter'
 import SANQuestionsHistoric from './Historic'
-import SANQuestionDetailsPage from './Details/QuestionDetails'
+import SANQuestionPage from './Question'
 
 const SANQuestions = ({ match: { url } }) => {
     return (
@@ -15,10 +15,7 @@ const SANQuestions = ({ match: { url } }) => {
                     path={`${url}/historico`}
                     component={SANQuestionsHistoric}
                 />
-                <Route
-                    path={`${url}/perguntas`}
-                    component={SANQuestionDetailsPage}
-                />
+                <Route path={`${url}/perguntas`} component={SANQuestionPage} />
                 <Route
                     path={[`${url}/`, `${url}`]}
                     render={() => <Redirect to={`${url}/filtro`} />}
