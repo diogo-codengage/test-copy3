@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Query, Mutation } from 'react-apollo'
-
 import { ESQuestion } from 'sanar-ui/dist/Components/Molecules/Question'
-
+import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
+import { Query, Mutation } from 'react-apollo'
 import { GET_QUESTIONS } from 'Apollo/Questions/queries/questions'
 import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
-
+import ESCircleProgress from 'sanar-ui/dist/Components/Atoms/CircleProgress'
+import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import SANQuestionHeader from './Header'
-
-import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 import { useAuthContext } from 'Hooks/auth'
+import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
+import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
+import './style.less'
 
 const SANQuestionDetailsPage = () => {
     const [qs, setQuestions] = useState({})
@@ -49,6 +50,10 @@ const SANQuestionDetailsPage = () => {
         setAnswer(correctAnswer)
     }
 
+    const saveQuestion = () => {}
+
+    const openFilters = () => {}
+
     return (
         <Mutation
             mutation={ANSWER_MUTATION}
@@ -72,6 +77,98 @@ const SANQuestionDetailsPage = () => {
                                         total={qs.length}
                                     />
                                     <SANPortalPagesContainer>
+                                        <div className='san-questions-details__subheader-container'>
+                                            <div className='san-questions-details__subheader-container--left-side'>
+                                                <div className='san-questions-details__subheader-container__progress-container'>
+                                                    <div className='san-questions-details__subheader-container__progress-container--label'>
+                                                        <ESTypography variant='body2'>
+                                                            Corretas:
+                                                        </ESTypography>
+                                                    </div>
+                                                    <ESCircleProgress
+                                                        percent={50}
+                                                        showInfo={true}
+                                                        status='success'
+                                                        strokeLinecap='square'
+                                                        width={44}
+                                                        strokeWidth={6}
+                                                    />
+                                                </div>
+                                                <div className='san-questions-details__subheader-container__progress-container'>
+                                                    <div className='san-questions-details__subheader-container__progress-container--label'>
+                                                        <ESTypography variant='body2'>
+                                                            Erradas:
+                                                        </ESTypography>
+                                                    </div>
+                                                    <ESCircleProgress
+                                                        percent={50}
+                                                        showInfo={true}
+                                                        status='danger'
+                                                        strokeLinecap='square'
+                                                        width={44}
+                                                        strokeWidth={6}
+                                                    />
+                                                </div>
+                                                <div className='san-questions-details__subheader-container__progress-container'>
+                                                    <div className='san-questions-details__subheader-container__progress-container--label'>
+                                                        <ESTypography variant='body2'>
+                                                            Puladas:
+                                                        </ESTypography>
+                                                    </div>
+                                                    <ESCircleProgress
+                                                        percent={50}
+                                                        showInfo={true}
+                                                        status='normal'
+                                                        strokeLinecap='square'
+                                                        width={44}
+                                                        strokeWidth={6}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className='san-questions-details__subheader-container'>
+                                                <ESButton
+                                                    size='xsmall'
+                                                    color='secondary'
+                                                    variant='text'
+                                                    uppercase
+                                                    bold
+                                                    onClick={saveQuestion}
+                                                >
+                                                    <ESEvaIcon
+                                                        name='heart-outline'
+                                                        color='default'
+                                                    />
+                                                    Salvar questão
+                                                </ESButton>
+                                                <ESButton
+                                                    size='xsmall'
+                                                    color='secondary'
+                                                    variant='text'
+                                                    uppercase
+                                                    bold
+                                                    onClick={openFilters}
+                                                >
+                                                    <ESEvaIcon
+                                                        name='options-2-outline'
+                                                        color='default'
+                                                    />
+                                                    Ver filtros
+                                                </ESButton>
+                                                <ESButton
+                                                    size='xsmall'
+                                                    color='secondary'
+                                                    variant='text'
+                                                    uppercase
+                                                    bold
+                                                    onClick={saveQuestion}
+                                                >
+                                                    <ESEvaIcon
+                                                        name='more-vertical-outline'
+                                                        color='default'
+                                                    />
+                                                </ESButton>
+                                            </div>
+                                        </div>
                                         <ESQuestion
                                             alternatives={
                                                 currentQuestion.alternatives &&
