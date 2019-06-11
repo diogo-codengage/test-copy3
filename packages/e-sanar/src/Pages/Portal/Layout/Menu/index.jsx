@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
+import { withRouter } from 'react-router'
 
 import ESMainMenu from 'sanar-ui/dist/Components/Organisms/MainMenu'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
@@ -10,24 +11,24 @@ import SANInitial from './Initial'
 import SANNotifications from './Notifications'
 import SANCourseChange from './CourseChange'
 import SANMyAccount from './MyAccount'
-import SANSearch from './Search'
+// import SANSearch from './Search'
 
 const intlPath = 'mainMenu.title.'
 
-const MenuContent = ({ index, setTab, showContinueBar }) => {
-    const { t } = useTranslation()
+const MenuContent = ({ index, setTab, showContinueBar, handleBack }) => {
+    const { t } = useTranslation('esanar')
 
     switch (index) {
         case 0:
             return <SANInitial {...{ setTab }} />
         case 1:
-            return <SANNotifications {...{ setTab }} />
+            return <SANNotifications {...{ handleBack }} />
         case 6:
-            return <SANCourseChange {...{ setTab }} />
+            return <SANCourseChange {...{ handleBack }} />
         case 7:
-            return <SANMyAccount {...{ setTab }} />
-        case 8:
-            return <SANSearch />
+            return <SANMyAccount {...{ handleBack }} />
+        // case 8:
+        //     return <SANSearch />
         default:
             return (
                 <div className='pl-md pr-md mb-md'>
@@ -47,8 +48,8 @@ const MenuContent = ({ index, setTab, showContinueBar }) => {
     }
 }
 
-const SANMenu = () => {
-    const { t } = useTranslation()
+const SANMenu = ({ history }) => {
+    const { t } = useTranslation('esanar')
     const [theme, setTheme] = useState('light')
     const [index, setIndex] = useState(0)
     const [title, setTitle] = useState(t(`${intlPath}menu`))
@@ -57,36 +58,56 @@ const SANMenu = () => {
         index
     ])
 
+    const handleBack = () => {
+        setIndex(0)
+        setTitle(t(`${intlPath}menu`))
+    }
+
     const setTab = index => {
-        setIndex(index)
         switch (index) {
             case 0:
-                return setTitle(t(`${intlPath}menu`))
+                setIndex(index)
+                history.push('/aluno/curso')
+                setTitle(t(`${intlPath}menu`))
+                break
             case 1:
-                return setTitle(t(`${intlPath}notifications`))
+                setIndex(index)
+                setTitle(t(`${intlPath}notifications`))
+                break
+            case 5:
+                history.push('/aluno/banco-questoes')
+                break
             case 6:
-                return setTitle(t(`${intlPath}studying`))
+                setIndex(index)
+                setTitle(t(`${intlPath}studying`))
+                break
             case 7:
-                return setTitle(t(`${intlPath}myAccount`))
+                setIndex(index)
+                setTitle(t(`${intlPath}myAccount`))
+                break
             case 8:
-                return setTitle(t(`${intlPath}search`))
+                setIndex(index)
+                setTitle(t(`${intlPath}search`))
+                break
             default:
-                return setTitle(t(`${intlPath}menu`))
+                setIndex(index)
+                setTitle(t(`${intlPath}menu`))
         }
     }
 
     return (
         <ESMainMenu
-            onSearchClick={() => setTab(8)}
+            // onSearchClick={() => setTab(8)}
             onInitialClick={() => setTab(0)}
+            onHome={() => history.push('/aluno/curso')}
             title={title}
             theme={theme}
             showContinueBar
             className='san-main-menu'
         >
-            <MenuContent {...{ index, setTab }} />
+            <MenuContent {...{ index, setTab, handleBack }} />
         </ESMainMenu>
     )
 }
 
-export default SANMenu
+export default withRouter(SANMenu)

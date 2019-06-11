@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<label
+  className="es-radio ant-radio-wrapper"
+>
+  <span
+    className="ant-radio"
+    style={Object {}}
+  >
+    <input
+      checked={false}
+      className="ant-radio-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      type="radio"
+    />
+    <span
+      className="ant-radio-inner"
+    />
+  </span>
+  <span>
+    <h1>
+      ESRadio
+    </h1>
+  </span>
+</label>
+`;

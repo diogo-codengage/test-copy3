@@ -1,0 +1,443 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "marginTop": "1em",
+      }
+    }
+  >
+    <div
+      aria-label={null}
+      className="ant-typography es-typography es-typography--caption"
+      style={
+        Object {
+          "WebkitLineClamp": null,
+        }
+      }
+    >
+      <strong>
+         O que você achou da experiência na E-sanar? 
+        <span
+          style={
+            Object {
+              "color": "red",
+            }
+          }
+        >
+          *
+        </span>
+      </strong>
+    </div>
+    <div
+      className="es-feedback-rate"
+      style={
+        Object {
+          "display": "flex",
+        }
+      }
+    >
+      <div
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "cursor": "pointer",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "opacity": "1",
+          }
+        }
+      >
+        <img
+          alt={1}
+          src={
+            Object {
+              "process": [Function],
+            }
+          }
+          style={
+            Object {
+              "padding": "12px",
+            }
+          }
+        />
+        <span>
+          Péssima
+        </span>
+      </div>
+      <div
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "cursor": "pointer",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "opacity": "1",
+          }
+        }
+      >
+        <img
+          alt={2}
+          src={
+            Object {
+              "process": [Function],
+            }
+          }
+          style={
+            Object {
+              "padding": "12px",
+            }
+          }
+        />
+        <span>
+          Ruin
+        </span>
+      </div>
+      <div
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "cursor": "pointer",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "opacity": "1",
+          }
+        }
+      >
+        <img
+          alt={3}
+          src={
+            Object {
+              "process": [Function],
+            }
+          }
+          style={
+            Object {
+              "padding": "12px",
+            }
+          }
+        />
+        <span>
+          Regular
+        </span>
+      </div>
+      <div
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "cursor": "pointer",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "opacity": "1",
+          }
+        }
+      >
+        <img
+          alt={4}
+          src={
+            Object {
+              "process": [Function],
+            }
+          }
+          style={
+            Object {
+              "padding": "12px",
+            }
+          }
+        />
+        <span>
+          Boa
+        </span>
+      </div>
+      <div
+        onClick={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "cursor": "pointer",
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "opacity": "1",
+          }
+        }
+      >
+        <img
+          alt={5}
+          src={
+            Object {
+              "process": [Function],
+            }
+          }
+          style={
+            Object {
+              "padding": "12px",
+            }
+          }
+        />
+        <span>
+          Incrível
+        </span>
+      </div>
+    </div>
+  </div>,
+  <div
+    style={
+      Object {
+        "marginTop": "1em",
+      }
+    }
+  >
+    <div
+      aria-label={null}
+      className="ant-typography es-typography es-typography--caption"
+      style={
+        Object {
+          "WebkitLineClamp": null,
+        }
+      }
+    >
+      <strong>
+        O Feedback se trata principalmente sobre: 
+        <span
+          style={
+            Object {
+              "color": "red",
+            }
+          }
+        >
+          *
+        </span>
+      </strong>
+    </div>
+    <div
+      className="es-select ant-select ant-select-enabled"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onMouseDown={[Function]}
+      onMouseOut={[Function]}
+      onMouseUp={[Function]}
+      onTouchStart={[Function]}
+      style={
+        Object {
+          "width": "100%",
+        }
+      }
+    >
+      <div
+        aria-autocomplete="list"
+        aria-controls="test-uuid"
+        aria-expanded={false}
+        aria-haspopup="true"
+        className="ant-select-selection
+            ant-select-selection--single"
+        onKeyDown={[Function]}
+        role="combobox"
+        tabIndex={0}
+      >
+        <div
+          className="ant-select-selection__rendered"
+        />
+        <span
+          className="ant-select-arrow"
+          onClick={[Function]}
+          style={
+            Object {
+              "WebkitUserSelect": "none",
+              "userSelect": "none",
+            }
+          }
+          unselectable="on"
+        >
+          <i
+            className="anticon es-eva-icon ant-select-arrow-icon es-eva-icon--medium"
+          >
+            <i
+              data-eva="chevron-down-outline"
+              data-eva-fill="#fff"
+              data-eva-height="18px"
+              data-eva-width="18px"
+            />
+          </i>
+        </span>
+      </div>
+    </div>
+  </div>,
+  <div
+    style={
+      Object {
+        "marginTop": "1em",
+      }
+    }
+  >
+    <div
+      aria-label={null}
+      className="ant-typography es-typography es-typography--caption"
+      style={
+        Object {
+          "WebkitLineClamp": null,
+        }
+      }
+    >
+      <strong>
+         O quer quer nos dizer? 
+        <span
+          style={
+            Object {
+              "color": "red",
+            }
+          }
+        >
+          *
+        </span>
+      </strong>
+    </div>
+    <textarea
+      className="ant-input es-text-area"
+      onChange={[Function]}
+      onKeyDown={[Function]}
+      rows={4}
+      style={
+        Object {
+          "resize": "none",
+        }
+      }
+    />
+  </div>,
+  <div
+    style={
+      Object {
+        "marginTop": "1em",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "marginTop": "1em",
+        }
+      }
+    >
+      <label
+        className="es-checkbox ant-checkbox-wrapper"
+        style={
+          Object {
+            "paddingRight": "1em",
+          }
+        }
+      >
+        <span
+          className="ant-checkbox"
+          style={Object {}}
+        >
+          <input
+            checked={false}
+            className="ant-checkbox-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            type="checkbox"
+          />
+          <span
+            className="ant-checkbox-inner"
+          />
+        </span>
+      </label>
+      <div
+        aria-label={null}
+        className="ant-typography es-typography es-typography--caption"
+        style={
+          Object {
+            "WebkitLineClamp": null,
+          }
+        }
+      >
+        <strong>
+          Permitir o contato da Sanar para tirar dúvidas sobre o feedback.
+        </strong>
+      </div>
+    </div>
+  </div>,
+  <div
+    style={
+      Object {
+        "marginTop": "1em",
+      }
+    }
+  >
+    <div
+      className="es-feedback-upload"
+    >
+      <div
+        className="es-feedback-upload__text"
+      >
+        <i
+          className="anticon es-eva-icon es-feedback-upload__icon es-eva-icon--medium"
+        >
+          <i
+            data-eva="image-outline"
+            data-eva-fill="#fff"
+            data-eva-height="18px"
+            data-eva-width="18px"
+          />
+        </i>
+        Carregar uma imagem de até 
+        <strong>
+           100kb 
+        </strong>
+         de peso
+      </div>
+    </div>
+  </div>,
+  <div
+    style={
+      Object {
+        "marginTop": "1em",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "display": "flex",
+          "justifyContent": "flex-end",
+          "marginTop": "1em",
+        }
+      }
+    >
+      <button
+        className="es-button es-button__medium es-button__variant--solid primary bold uppercase ant-btn"
+        onClick={[Function]}
+        type="button"
+      >
+        <span>
+          Enviar
+        </span>
+      </button>
+    </div>
+  </div>,
+]
+`;

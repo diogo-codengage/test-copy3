@@ -1,1 +1,14 @@
-.es-form {}
+.es-form {
+    & .ant-form-item-label {
+        font-weight: bold;
+        font-size: @font-size-base;
+        line-height: 24px;
+        & > label {
+            color: @form-label;
+        }
+
+        & label:after {
+            content: '';
+        }
+    }
+}

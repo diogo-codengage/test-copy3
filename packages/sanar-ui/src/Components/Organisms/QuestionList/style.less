@@ -1,0 +1,39 @@
+.es-question-list {
+    display: flex;
+    flex-direction: column;
+
+    & .ant-card-body {
+        padding: 0;
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: @padding-lg;
+        border-bottom: 1px solid @grey-3;
+    }
+
+    &__content {
+        flex-grow: 1;
+        padding: 0 @padding-xs;
+        margin: 0;
+
+        & .es-list-view-item {
+            border-bottom: 1px solid @grey-3;
+            padding: 20px @padding-sm;
+
+            &:last-child {
+                border: none;
+            }
+        }
+    }
+
+    &__footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: @padding-xs;
+        border-top: 1px solid @grey-3;
+    }
+}

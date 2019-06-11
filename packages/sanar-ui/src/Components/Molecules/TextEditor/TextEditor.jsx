@@ -3,11 +3,22 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import CKEditor from 'ckeditor4-react'
+import { Avatar } from 'antd'
 
 import ESButton from '../../Atoms/Button'
 import ESTypography from '../../Atoms/Typography'
 
 const height = 356
+
+const body = `
+    font-size: 14px;
+    font-family: Nunito Sans, sans-serif;
+    color: rgba(57, 63, 77, 1);
+    line-height: 1.4;
+    margin: 16px
+`
+
+const contentsCss = [`body { ${body} }`]
 
 const config = {
     removePlugins: 'elementspath, resize',
@@ -15,15 +26,7 @@ const config = {
     toolbar: [['Bold'], ['Italic'], ['Link'], ['Source']],
     toolbarLocation: 'bottom',
     uiColor: '#F7F9FA',
-    contentsCss: [
-        `body {
-            font-size: 14px;
-            font-family: Nunito Sans, sans-serif;
-            color: rgba(57, 63, 77, 1);
-            line-height: 1.4;
-            margin: 16px
-        }`
-    ],
+    contentsCss,
     on: {
         instanceReady: function() {}
     }
@@ -52,11 +55,19 @@ const ESTextEditor = ({
     labelSubmit,
     labelCancel,
     labelLetterCount,
+    comment,
+    onFocus,
+    onBlur,
     ...props
 }) => {
     const [data, setData] = useState()
+    const [focus, setFocus] = useState(false)
     const [letter, setLetter] = useState('0')
-    const classes = classNames('es-text-editor', className)
+    const classes = classNames(
+        'es-text-editor',
+        { 'es-text-editor__comment': comment && !focus },
+        className
+    )
 
     useEffect(() => {
         setData(initialValue)
@@ -70,6 +81,16 @@ const ESTextEditor = ({
         setLetter(letterCount(text))
     }
 
+    const handleFocus = e => {
+        onFocus && onFocus(e)
+        setFocus(true)
+    }
+
+    const handleBlur = e => {
+        onBlur && onBlur(e)
+        setFocus(false)
+    }
+
     const handleCancel = async e => {
         await setData(initialValue)
         onCancel && onCancel()
@@ -79,15 +100,42 @@ const ESTextEditor = ({
         onSubmit && onSubmit(data)
     }
 
+    const heightCalculated =
+        comment && !focus ? 52 : comment && focus ? 52 + 66 : height
+    const heightIframe = comment ? 52 : height - 68
+
+    const css = `
+        body {
+            background-color: #f7f9fa;
+            ${body}
+        }
+        p {
+            margin-left: 40px;
+        }
+    `
+
     return (
-        <div className={classes} style={{ height: height + 68 }}>
+        <div className={classes} style={{ height: heightCalculated }}>
             <CKEditor
                 {...props}
-                config={{ ...config, height }}
+                config={{
+                    ...config,
+                    height: heightIframe,
+                    contentsCss: comment ? css : contentsCss
+                }}
                 data={data}
                 onChange={onChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
             />
-            {!!letter && (
+            {comment && (
+                <Avatar
+                    className='es-text-editor__comment--avatar'
+                    size={28}
+                    icon='user'
+                />
+            )}
+            {!!letter && !!focus && (
                 <ESTypography
                     variant='subtitle2'
                     className='es-text-editor__count'
@@ -135,7 +183,8 @@ ESTextEditor.propTypes = {
     labelSubmit: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     labelLetterCount: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     onCancel: PropTypes.func,
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
+    comment: PropTypes.bool
 }
 ESTextEditor.defaultProps = {
     type: 'classic',

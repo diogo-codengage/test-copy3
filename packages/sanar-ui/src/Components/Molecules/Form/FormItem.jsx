@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -6,20 +6,22 @@ import { Form } from 'antd'
 
 import { useFormContext } from './context'
 
-const ESFormItem = ({ className, children, name, ...props }) => {
-    const {
-        form: { getFieldDecorator }
-    } = useFormContext()
-    const classes = classNames('es-form', className)
+const ESFormItem = forwardRef(
+    ({ className, children, name, ...props }, ref) => {
+        const {
+            form: { getFieldDecorator }
+        } = useFormContext()
+        const classes = classNames('es-form-item', className)
 
-    return (
-        <Form.Item className={classes} {...props}>
-            {getFieldDecorator && name
-                ? getFieldDecorator(name, props)(children)
-                : children}
-        </Form.Item>
-    )
-}
+        return (
+            <Form.Item className={classes} {...props} ref={ref}>
+                {getFieldDecorator && name
+                    ? getFieldDecorator(name, props)(children)
+                    : children}
+            </Form.Item>
+        )
+    }
+)
 
 ESFormItem.propTypes = Object.assign(
     {

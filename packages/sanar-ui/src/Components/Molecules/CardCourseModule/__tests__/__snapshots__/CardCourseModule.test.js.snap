@@ -1,0 +1,137 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="ant-card es-card es-car-course-module ant-card-bordered ant-card-small"
+>
+  <div
+    className="ant-card-body"
+    style={Object {}}
+  >
+    <div
+      className="es-car-course-module__content"
+    >
+      <div
+        className="es-car-course-module__content__module-data"
+      >
+        <div
+          aria-label={null}
+          className="ant-typography es-typography mb-xs es-typography--overline"
+          style={
+            Object {
+              "WebkitLineClamp": null,
+            }
+          }
+        >
+          
+        </div>
+        <div
+          aria-label={null}
+          className="ant-typography es-typography"
+          style={
+            Object {
+              "WebkitLineClamp": null,
+            }
+          }
+        >
+          <strong>
+            
+          </strong>
+        </div>
+      </div>
+      <div
+        className="es-car-course-module__content__image-container"
+      >
+        <div
+          className="es-car-course-module__content__image-container--image"
+          style={
+            Object {
+              "backgroundImage": "url(undefined)",
+            }
+          }
+        />
+      </div>
+      <div
+        className="es-common-badge es-common-badge--warning es-car-course-module__content__badge"
+        style={Object {}}
+      >
+        undefined
+      </div>
+      <div
+        className="es-progress es-progress--square es-progress--warning"
+      >
+        <div
+          className="ant-progress ant-progress-line ant-progress-status-normal ant-progress-small"
+        >
+          <div>
+            <div
+              className="ant-progress-outer"
+            >
+              <div
+                className="ant-progress-inner"
+              >
+                <div
+                  className="ant-progress-bg"
+                  style={
+                    Object {
+                      "background": undefined,
+                      "borderRadius": "100px",
+                      "height": 6,
+                      "width": "0%",
+                    }
+                  }
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-row-flex ant-row-flex-space-between ant-row-flex-middle es-row"
+      style={Object {}}
+    >
+      <div
+        className="ant-col es-col"
+        style={Object {}}
+      >
+        <div
+          aria-label={null}
+          className="ant-typography es-typography es-typography--caption"
+          muted={true}
+          style={
+            Object {
+              "WebkitLineClamp": null,
+            }
+          }
+        >
+          
+        </div>
+      </div>
+      <div
+        className="ant-col es-col"
+        style={Object {}}
+      >
+        <button
+          className="es-button pr-no es-button__medium es-button__variant--text bold ant-btn"
+          type="button"
+        >
+          <span>
+            Ver aulas
+          </span>
+          <i
+            className="anticon es-eva-icon es-eva-icon--large"
+          >
+            <i
+              data-eva="chevron-right-outline"
+              data-eva-fill="#fff"
+              data-eva-height="18px"
+              data-eva-width="18px"
+            />
+          </i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

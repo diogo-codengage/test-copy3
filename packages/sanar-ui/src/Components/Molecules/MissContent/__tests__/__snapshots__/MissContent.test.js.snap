@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="es-miss-content"
+>
+  <img
+    className="es-miss-content--img"
+  />
+  <div
+    className="es-miss-content__content"
+  >
+    <h5
+      aria-label={null}
+      className="ant-typography es-typography es-miss-content__content--text es-typography--regular"
+      style={
+        Object {
+          "WebkitLineClamp": null,
+        }
+      }
+    >
+      
+    </h5>
+  </div>
+</div>
+`;

@@ -6,7 +6,18 @@ import { Carousel } from 'antd'
 import ESButton from '../Button'
 import ESEvaIcon from '../EvaIcon'
 
-const ESCarousel = ({ className, style, ...props }, ref) => {
+const NextArrow = ({ onClick, className }) => (
+    <ESButton onClick={onClick} circle size='xsmall' className={className}>
+        <ESEvaIcon name='arrow-ios-forward-outline' />
+    </ESButton>
+)
+const PrevArrow = ({ onClick, className }) => (
+    <ESButton onClick={onClick} circle size='xsmall' className={className}>
+        <ESEvaIcon name='arrow-ios-back-outline' />
+    </ESButton>
+)
+
+const ESCarousel = forwardRef(({ className, style, ...props }, ref) => {
     const classes = classNames('es-carousel', className)
 
     const next = () => ref.current.next()
@@ -18,20 +29,12 @@ const ESCarousel = ({ className, style, ...props }, ref) => {
             <Carousel
                 ref={ref}
                 {...props}
-                nextArrow={
-                    <ESButton onClick={next} circle size='xsmall'>
-                        <ESEvaIcon name='arrow-ios-forward-outline' />
-                    </ESButton>
-                }
-                prevArrow={
-                    <ESButton onClick={prev} circle size='xsmall'>
-                        <ESEvaIcon name='arrow-ios-back-outline' />
-                    </ESButton>
-                }
+                nextArrow={<NextArrow />}
+                prevArrow={<PrevArrow />}
             />
         </div>
     )
-}
+})
 
 ESCarousel.propTypes = Object.assign(
     { ...Carousel['propTypes'] },
@@ -76,4 +79,4 @@ ESCarousel.propTypes = Object.assign(
 
 ESCarousel.defaultProps = Carousel['defaultProps']
 
-export default forwardRef(ESCarousel)
+export default ESCarousel

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<h1
+  className="es-tooltip"
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+>
+  ESTooltip
+</h1>
+`;

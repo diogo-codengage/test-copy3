@@ -2,11 +2,9 @@
 
 exports[`renders correctly 1`] = `
 <button
-  className="ant-btn es-button ant-dropdown-trigger es-dropdown"
-  onClick={[Function]}
+  className="es-button ant-dropdown-trigger es-dropdown es-button__medium ant-btn"
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
-  style={Object {}}
   type="button"
 >
   <span>
@@ -29,7 +27,7 @@ exports[`renders correctly 2`] = `
     </span>
   </button>
   <button
-    className="ant-btn ant-dropdown-trigger ant-btn-default ant-btn-icon-only"
+    className="ant-btn ant-dropdown-trigger ant-btn-default"
     onClick={[Function]}
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}

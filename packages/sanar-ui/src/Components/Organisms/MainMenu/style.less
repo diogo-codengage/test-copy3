@@ -40,13 +40,13 @@
         z-index: 1;
         background-color: inherit;
         width: 304px;
-        height: 100%;
-        transition: all 0.5s ease-in;
+        height: ~'calc(100% + 8px)';
         overflow: hidden;
+        transition: transform 0.5s ease-in;
 
         // Sempre que não houver espaço deixará "scrollavel", mesmo em desktop.
         &--scrollable {
-            max-height: ~'calc(100% - 72px)';
+            max-height: ~'calc(100% - 135px)';
             overflow-y: auto;
         }
 
@@ -57,7 +57,7 @@
 
         &.close {
             position: absolute;
-            transform: translateX(-304px);
+            transform: translateX(-100%);
         }
 
         @media (min-width: 1025px) {
@@ -106,12 +106,13 @@
 
         &-left {
             flex-direction: column;
-            box-shadow: 1px 0px 1px rgba(17, 19, 23, 0.25);
+            box-shadow: 1px 0px 1px @grey-4;
             width: 56px;
             height: 100%;
             padding: @padding-md 0;
             & img {
                 cursor: pointer;
+                max-width: 32px;
             }
         }
 
@@ -120,7 +121,7 @@
             bottom: 0;
             width: 100%;
             height: 48px;
-            box-shadow: 0px -1px 2px rgba(17, 19, 23, 0.25);
+            box-shadow: 0px -1px 2px @grey-4;
             padding: 0 @padding-md;
         }
 
@@ -161,7 +162,7 @@
     }
 
     &__dark {
-        background-color: rgba(36, 41, 56, 1);
+        background-color: @grey-solid-9;
         & .es-typography {
             color: @white-9;
         }

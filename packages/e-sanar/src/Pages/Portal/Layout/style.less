@@ -7,12 +7,22 @@
         max-width: 1008px;
         padding: 16px;
         margin: 0 auto;
+
+        &--grey {
+            background-color: @grey-solid-2;
+        }
     }
 
     & .ant-layout,
     &__footer,
     &__content {
         background: @white !important;
+    }
+
+    &__content {
+        min-height: ~'calc(100% - 181px)';
+        display: flex;
+        flex-direction: column;
     }
 
     &__footer {
@@ -41,10 +51,14 @@
             &--attendance {
                 text-align: end;
             }
+            &--logo img {
+                max-width: 104px;
+            }
         }
 
         &--copyright {
-            margin: @margin-lg 0 !important;
+            margin-top: @margin-lg;
+            padding-bottom: @padding-lg;
 
             & .es-typography {
                 color: @grey-8;

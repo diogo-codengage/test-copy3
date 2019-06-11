@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="es-feedback-rate"
+  style={
+    Object {
+      "display": "flex",
+    }
+  }
+>
+  <div
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "cursor": "pointer",
+        "display": "flex",
+        "flexDirection": "column",
+        "justifyContent": "center",
+        "opacity": "1",
+      }
+    }
+  >
+    <img
+      alt={1}
+      src={
+        Object {
+          "process": [Function],
+        }
+      }
+      style={
+        Object {
+          "padding": "12px",
+        }
+      }
+    />
+    <span>
+      Péssima
+    </span>
+  </div>
+  <div
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "cursor": "pointer",
+        "display": "flex",
+        "flexDirection": "column",
+        "justifyContent": "center",
+        "opacity": "1",
+      }
+    }
+  >
+    <img
+      alt={2}
+      src={
+        Object {
+          "process": [Function],
+        }
+      }
+      style={
+        Object {
+          "padding": "12px",
+        }
+      }
+    />
+    <span>
+      Ruin
+    </span>
+  </div>
+  <div
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "cursor": "pointer",
+        "display": "flex",
+        "flexDirection": "column",
+        "justifyContent": "center",
+        "opacity": "1",
+      }
+    }
+  >
+    <img
+      alt={3}
+      src={
+        Object {
+          "process": [Function],
+        }
+      }
+      style={
+        Object {
+          "padding": "12px",
+        }
+      }
+    />
+    <span>
+      Regular
+    </span>
+  </div>
+  <div
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "cursor": "pointer",
+        "display": "flex",
+        "flexDirection": "column",
+        "justifyContent": "center",
+        "opacity": "1",
+      }
+    }
+  >
+    <img
+      alt={4}
+      src={
+        Object {
+          "process": [Function],
+        }
+      }
+      style={
+        Object {
+          "padding": "12px",
+        }
+      }
+    />
+    <span>
+      Boa
+    </span>
+  </div>
+  <div
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "cursor": "pointer",
+        "display": "flex",
+        "flexDirection": "column",
+        "justifyContent": "center",
+        "opacity": "1",
+      }
+    }
+  >
+    <img
+      alt={5}
+      src={
+        Object {
+          "process": [Function],
+        }
+      }
+      style={
+        Object {
+          "padding": "12px",
+        }
+      }
+    />
+    <span>
+      Incrível
+    </span>
+  </div>
+</div>
+`;

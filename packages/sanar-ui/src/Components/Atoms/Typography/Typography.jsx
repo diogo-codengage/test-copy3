@@ -13,12 +13,14 @@ const ESTypography = ({
     level,
     variant,
     regular,
+    transform,
     ...props
 }) => {
     const classes = classNames('es-typography', className, {
         [`es-typography--${type}`]: type,
         [`es-typography--${variant}`]: variant,
-        'es-typography--regular': regular
+        'es-typography--regular': regular,
+        [`es-typography--transform-${transform}`]: transform
     })
 
     const component = levels.includes(level) ? `h${level}` : 'div'
@@ -42,6 +44,7 @@ ESTypography.propTypes = {
         'caption',
         'overline'
     ]),
+    transform: PropTypes.oneOf(['initial', 'uppercase']),
     className: PropTypes.string,
     regular: PropTypes.bool,
     code: PropTypes.bool,

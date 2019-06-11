@@ -11,7 +11,7 @@ const ESModal = ({ className, footer, children, ...props }) => {
     const mapChildren = child => child.type === ESModalFooter && child
 
     const kids = React.Children.toArray(children)
-    const footerChild = children.find(mapChildren)
+    const footerChild = React.Children.toArray(children).find(mapChildren)
 
     return (
         <Modal
@@ -19,7 +19,7 @@ const ESModal = ({ className, footer, children, ...props }) => {
             {...props}
             footer={footer ? footer : footerChild ? footerChild : null}
         >
-            {kids.splice(footerChild, 1)}
+            {footerChild ? kids.splice(footerChild, 1) : kids}
         </Modal>
     )
 }

@@ -2,9 +2,12 @@ import React from 'react'
 import { configure, addDecorator, addParameters } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
 import { withInfo } from '@storybook/addon-info'
+import { create } from '@storybook/theming'
 
 import './styles.less'
 import TableComponent from './TableComponent'
+
+import '../src/Config/i18n'
 
 const DefaultDecotator = (story, { parameters }) => (
     <div
@@ -14,7 +17,7 @@ const DefaultDecotator = (story, { parameters }) => (
                 : {
                       padding: 20,
                       minHeight: '200px',
-                      backgroundColor: '#edeff2'
+                      backgroundColor: '#f7f8f9'
                   }
         }
     >
@@ -45,9 +48,12 @@ addDecorator(
         })
     })
 )
+
 addParameters({
     options: {
-        name: 'SANAR UI'
+        theme: {
+            brandTitle: 'SANAR LIB'
+        }
     }
 })
 

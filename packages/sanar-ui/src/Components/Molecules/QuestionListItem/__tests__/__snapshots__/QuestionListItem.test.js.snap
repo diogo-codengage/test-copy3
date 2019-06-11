@@ -1,0 +1,174 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<li
+  className="ant-list-item es-list-view-item"
+>
+  <div
+    className="ant-row-flex es-row es-avatar-list-item"
+    style={
+      Object {
+        "marginLeft": -8,
+        "marginRight": -8,
+      }
+    }
+  >
+    <div
+      className="ant-col es-col"
+      style={
+        Object {
+          "paddingLeft": 8,
+          "paddingRight": 8,
+        }
+      }
+    >
+      <span
+        className="ant-avatar es-avatar-list-item--avatar ant-avatar-circle"
+        style={Object {}}
+      >
+        <span
+          className="ant-avatar-string"
+        />
+      </span>
+    </div>
+    <div
+      className="ant-col es-col es-avatar-list-item__content"
+      style={
+        Object {
+          "flex": 1,
+          "paddingLeft": 8,
+          "paddingRight": 8,
+        }
+      }
+    >
+      <div
+        className="ant-row es-row"
+        style={Object {}}
+      >
+        <div
+          className="ant-col es-col"
+          style={Object {}}
+        >
+          <div
+            aria-label={null}
+            className="ant-typography es-typography es-question-list-item__content--title es-typography--subtitle2 ant-typography-ellipsis ant-typography-ellipsis-single-line"
+            style={
+              Object {
+                "WebkitLineClamp": null,
+              }
+            }
+          >
+            <strong>
+              
+            </strong>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row es-row"
+        style={Object {}}
+      >
+        <div
+          className="ant-col es-col es-question-list-item__content__subtitle"
+          style={Object {}}
+        >
+          <div
+            className="ant-row-flex ant-row-flex-space-between ant-row-flex-middle es-row"
+            style={Object {}}
+          >
+            <div
+              className="ant-col es-col"
+              style={Object {}}
+            >
+              <div
+                className="ant-row-flex ant-row-flex-middle es-row"
+                style={
+                  Object {
+                    "marginLeft": -4,
+                    "marginRight": -4,
+                  }
+                }
+              >
+                <div
+                  className="ant-col es-col"
+                  style={
+                    Object {
+                      "paddingLeft": 4,
+                      "paddingRight": 4,
+                    }
+                  }
+                >
+                  <div
+                    aria-label={null}
+                    className="ant-typography es-typography es-question-list-item__content__subtitle--author es-typography--caption"
+                    style={
+                      Object {
+                        "WebkitLineClamp": null,
+                      }
+                    }
+                  >
+                    <strong>
+                      
+                    </strong>
+                  </div>
+                </div>
+                <div
+                  className="ant-col es-col"
+                  style={
+                    Object {
+                      "paddingLeft": 4,
+                      "paddingRight": 4,
+                    }
+                  }
+                >
+                  <div
+                    aria-label={null}
+                    className="ant-typography es-typography es-question-list-item__content__subtitle--interaction es-typography--caption"
+                    style={
+                      Object {
+                        "WebkitLineClamp": null,
+                      }
+                    }
+                  >
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="ant-col es-col es-question-list-item__content__subtitle--responses ant-col-xs-0 ant-col-sm-4 ant-col-md-8 ant-col-lg-6"
+              style={Object {}}
+            >
+              <span
+                aria-label={null}
+                className="ant-typography"
+                style={
+                  Object {
+                    "WebkitLineClamp": null,
+                    "fontSize": 12,
+                  }
+                }
+              >
+                <span
+                  aria-label={null}
+                  className="ant-typography"
+                  style={
+                    Object {
+                      "WebkitLineClamp": null,
+                    }
+                  }
+                >
+                  <strong>
+                    
+                  </strong>
+                </span>
+                 Respostas
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+`;

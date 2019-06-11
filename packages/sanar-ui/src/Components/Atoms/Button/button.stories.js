@@ -21,6 +21,7 @@ const variantOptions = {
 const colorOptions = {
     Primary: 'primary',
     White: 'white',
+    Black: 'black',
     Default: 'default'
 }
 

@@ -2,7 +2,15 @@
 
 Este projeto foi desenvolvido para que seja atendido de forma ampla, eficiênte e produtiva todas as necessidades das diversas plataformas pertencentes à [**Editora Sanar**](https://www.editorasanar.com.br/).
 
--   [SANAR](#) - [Instalação](#instalacao); - [Execução](#execucao); - [Estrutura](#estrutura); - [Construção](#construcao); - [Observações](#observações); - [Bibliotecas utilizadas](#bibliotecas-utilizadas); - [Padrões utilizadas](#padrões-utilizadas); - [Dicas e recomendações](#dicas-e-recomendações);
+-   [SANAR](#)
+-   [Instalação](#instalação);
+-   [Execução](#execução);
+-   [Estrutura](#estrutura);
+-   [Construção](#construção);
+-   [Observações](#observações);
+-   [Bibliotecas utilizadas](#bibliotecas-utilizadas);
+-   [Padrões utilizadas](#padrões-utilizadas);
+-   [Dicas e recomendações](#dicas-e-recomendações);
 -   [Sanar UI](#sanar-ui)
 
 ---
@@ -67,12 +75,15 @@ Nesta estrutura fora utilizado o [Yarn Workspaces](https://yarnpkg.com/lang/en/d
 -   [React](https://reactjs.org/)
 -   [React Testing Library](https://github.com/kentcdodds/react-testing-library)
 -   [Storybook](https://storybook.js.org/)
--   [Yarn](https://yarnpkg.com/) - [Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/)
+-   [Yarn](https://yarnpkg.com/)
+    -   [Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/)
 
 ### Padrões utilizados:
 
 -   [Atomic Design](http://bradfrost.com/blog/post/atomic-web-design/);
--   [Git Flow](https://danielkummer.github.io/git-flow-cheatsheet/index.html).
+-   [Git Flow](https://danielkummer.github.io/git-flow-cheatsheet/index.html); - Os nomes da _branch_ deverá seguir a nomenclatura sugerida pelo [Jira](https://sanar.atlassian.net): CÓD-TASK; - Ex.: `NE-001-Documentar-projeto`.
+-   _Commits_:
+    Para possuírmos um padrão de _commits_ fora utilizados as ferramentas listadas ao final deste tópico. - Padrões e convenções: - Deverão ser em inglês; - O _commit_ deve ser da forma imperativa: - Ex.: add, fix, adjust, etc; - Seguindo o CLI da ferramenta (`yarn commit`) teria o seguinte padrão: - Característica - as opções são listadas pelo CLI: - Ex.: `feat`, `refactor`, `docs`; - Contexto: - Ex.: `e-sanar`, `sanar-ui`, `core`; - Mensagem curta: `add component Button`; - Mensagem longa (opcional); - **RESULTADO: ** `feat(sanar-ui): add component Button`; - Ferramentas: - [Commitzen](https://github.com/commitizen); - [CLI](https://github.com/commitizen/cz-cli); - [Convetional](https://github.com/commitizen/cz-conventional-changelog).
 
 ### Dicas e Recomendações
 
@@ -88,8 +99,14 @@ Para o seu desenvolvimento é utilizado os seguintes padrões e bibliotecas:
 
 -   [Ant Design](https://ant.design/);
 -   [Atomic Design](http://bradfrost.com/blog/post/atomic-web-design/);
--   [Storybook](https://storybook.js.org/); - Todos os componentes que serão adicionados ao Storybook deverão conter a extensão `*.stories.*` para que a adição seja automática; - Deverá ser contido pela pasta a qual está categorizado dentro do padrão do Atomic Design (Atoms, Molecules, Organisms, entre outros); - Ex.: `storiesOf("Atoms.Button", module)`
--   Testes ([Jest](https://jestjs.io/) | [React Testing Library](https://github.com/kentcdodds/react-testing-library)): - Cada componente terá em sua raíz a pasta `__tests__` contendo todos os arquivos de teste; - O arquivo de testes deverá seguir o padrão: `NomeComponente.test.js`; - Todo o arquivo com a extensão `*.test.*` será adicionado automaticamente à lista de testes para a execução;
--   Componentes: - Terão de sempre iniciar com o prefixo `ES`; - Ex.: `ESButton`, `ESCard`; - Deverão conter a extensão `.jsx`; - Seus diferentes tipos de aplicação deverão - quando necessário a criação de outro arquivo - conter alguma referência de que pertecem para aquele ecossistema; - Ex.: `Button`, `ButtonIcon`, `Menu`, `SubMenu`;
--   Estilização: - Seguirão o seguinte processo para a importação:
-    `//Button/style.less //Atoms/atoms.less @import('./Button/style.less'); // Components/components.less @import('./Atoms/atoms.less')`
+-   [Storybook](https://storybook.js.org/);
+    -   Todos os componentes que serão adicionados ao Storybook deverão conter a extensão `*.stories.*` para que a adição seja automática; - Deverá ser contido pela pasta a qual está categorizado dentro do padrão do Atomic Design (Atoms, Molecules, Organisms, entre outros); - Ex.: `storiesOf("Atoms.Button", module)`
+-   Testes ([Jest](https://jestjs.io/) | [React Testing Library](https://github.com/kentcdodds/react-testing-library)):
+    -   Cada componente terá em sua raíz a pasta `__tests__` contendo todos os arquivos de teste; - O arquivo de testes deverá seguir o padrão: `NomeComponente.test.js`; - Todo o arquivo com a extensão `*.test.*` será adicionado automaticamente à lista de testes para a execução;
+-   Componentes:
+    -   Terão de sempre iniciar com o prefixo `ES`; - Ex.: `ESButton`, `ESCard`;
+    -   Deverão conter a extensão `.jsx`;
+    -   Seus diferentes tipos de aplicação deverão - quando necessário a criação de outro arquivo - conter alguma referência de que pertecem para aquele ecossistema; - Ex.: `Button`, `ButtonIcon`, `Menu`, `SubMenu`;
+-   Estilização:
+    -   Seguirão o seguinte processo para a importação:
+        `//Button/style.less //Atoms/atoms.less @import('./Button/style.less'); // Components/components.less @import('./Atoms/atoms.less')`

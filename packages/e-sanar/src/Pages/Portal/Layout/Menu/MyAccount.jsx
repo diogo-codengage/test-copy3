@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { withRouter } from 'react-router'
 
 import { useTranslation } from 'react-i18next'
 
@@ -16,12 +17,13 @@ import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import { useAuthContext } from 'Hooks/auth'
 import SANLogout from 'Components/ModalLogout'
 import SANFeedback from 'Components/ModalFeedback'
+import { Auth } from 'aws-amplify'
 
 const intlPath = 'mainMenu.myAccount.'
 
-const SANMyAccount = ({ setTab }) => {
+const SANMyAccount = ({ handleBack, history }) => {
     const { me } = useAuthContext()
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
     const [open, setOpen] = useState(false)
     const [openFeedback, setOpenFeedback] = useState(false)
 
@@ -29,15 +31,22 @@ const SANMyAccount = ({ setTab }) => {
         setOpen(Number(key) === 2)
     }
 
-    const handleHelp = ({key}) => {
-        setOpenFeedback(Number(key) === 0)
+    //FIXME: const handleHelp = ({ key }) => {
+    //     setOpenFeedback(Number(key) === 0)
+    // }
+
+    const leaveAccount = () => {
+        Auth.signOut().then(() => {
+            // localStorage.removeItem('es-keep-me-logged-in')
+            history.push('/')
+        })
     }
 
     return (
         <>
             <SANLogout
                 visible={open}
-                onLeave={() => setOpen(false)}
+                onLeave={() => leaveAccount()}
                 onCancel={() => setOpen(false)}
             />
             <SANFeedback
@@ -53,7 +62,7 @@ const SANMyAccount = ({ setTab }) => {
                     variant='outlined'
                     color='white'
                     block
-                    onClick={() => setTab(0)}
+                    onClick={handleBack}
                 >
                     <ESEvaIcon name='arrow-back-outline' />
                     {t('mainMenu.back')}
@@ -72,18 +81,18 @@ const SANMyAccount = ({ setTab }) => {
                 {t(`${intlPath}management`)}
             </ESTypography>
             <ESNavigationList onClick={console.log}>
-                <ESNavigationListItem
+                {/*FIXME: <ESNavigationListItem
                     key='0'
                     title={t(`${intlPath}myData`)}
                     icon={<ESEvaIcon name='folder-outline' color='default' />}
-                />
+                /> */}
                 <ESNavigationListItem
                     key='1'
                     title={t(`${intlPath}changePassword`)}
                     icon={<ESEvaIcon name='lock-outline' color='default' />}
                 />
             </ESNavigationList>
-            <div className='pl-md pr-md'>
+            {/*FIXME: <div className='pl-md pr-md'>
                 <ESDivider className='mt-md mb-md' />
             </div>
             <ESTypography
@@ -108,7 +117,7 @@ const SANMyAccount = ({ setTab }) => {
                         />
                     }
                 />
-            </ESNavigationList>
+            </ESNavigationList> */}
             <div className='pl-md pr-md'>
                 <ESDivider className='mt-md mb-md' />
             </div>
@@ -139,4 +148,4 @@ const SANMyAccount = ({ setTab }) => {
     )
 }
 
-export default SANMyAccount
+export default withRouter(SANMyAccount)

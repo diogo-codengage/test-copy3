@@ -13,7 +13,7 @@ import logoSvg from 'assets/images/logo.svg'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 
 const SANFooter = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
 
     return (
         <ANTDLayout.Footer className='san-portal-layout__footer'>

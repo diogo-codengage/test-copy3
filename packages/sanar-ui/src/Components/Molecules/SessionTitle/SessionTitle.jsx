@@ -25,17 +25,24 @@ const ESSessionTitle = ({ className, title, subtitle, extra, extraOnLeft }) => {
             gutter={24}
         >
             <ESCol className='es-session-title__texts'>
-                <ESTypography className={titleClasses} level={5}>
-                    {title}
-                </ESTypography>
-                {subtitle && (
-                    <ESTypography
-                        className='es-session-title__texts--subtitle'
-                        ellipsis
-                    >
-                        {subtitle}
+                {typeof title === 'string' ? (
+                    <ESTypography className={titleClasses} level={5}>
+                        {title}
                     </ESTypography>
+                ) : (
+                    title
                 )}
+                {subtitle &&
+                    (typeof subtitle === 'string' ? (
+                        <ESTypography
+                            className='es-session-title__texts--subtitle'
+                            ellipsis
+                        >
+                            {subtitle}
+                        </ESTypography>
+                    ) : (
+                        subtitle
+                    ))}
             </ESCol>
             {extra && <ESCol className={extraClasses}>{extra}</ESCol>}
         </ESRow>

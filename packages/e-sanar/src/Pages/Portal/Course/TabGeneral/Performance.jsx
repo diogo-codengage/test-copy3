@@ -4,12 +4,10 @@ import { useTranslation } from 'react-i18next'
 import ESMetricCard from 'sanar-ui/dist/Components/Molecules/MetricCard'
 import ESCard from 'sanar-ui/dist/Components/Molecules/Card'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
-import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 
 import consistencia from 'assets/images/consistencia.svg'
-import interacao from 'assets/images/interacao.svg'
 import praticaRegular from 'assets/images/pratica-regular.svg'
 import progresso from 'assets/images/progresso.svg'
 
@@ -33,7 +31,7 @@ const statusCommitment = {
 }
 
 const CommitmentCard = ({ value, status }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
 
     return (
         <ESCard
@@ -80,7 +78,7 @@ const CommitmentCard = ({ value, status }) => {
 }
 
 const SANPerformance = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('esanar')
     const { getEnrollment } = useAuthContext()
     const { performance } = getEnrollment()
 
@@ -88,17 +86,17 @@ const SANPerformance = () => {
         <div className='performance'>
             <SANPortalPagesContainer>
                 <ESSessionTitle
-                    extra={
-                        <ESButton
-                            size='xsmall'
-                            variant='outlined'
-                            bold
-                            uppercase
-                            blockOnlyMobile
-                        >
-                            {t('courseDetails.viewMyPerformance')}
-                        </ESButton>
-                    }
+                    //FIXME: extra={
+                    //     <ESButton
+                    //         size='xsmall'
+                    //         variant='outlined'
+                    //         bold
+                    //         uppercase
+                    //         blockOnlyMobile
+                    //     >
+                    //         {t('courseDetails.viewMyPerformance')}
+                    //     </ESButton>
+                    // }
                     title={t('courseDetails.myDevelopment')}
                     subtitle={t('courseDetails.myDevelopmentSubtitle')}
                 />
@@ -110,9 +108,8 @@ const SANPerformance = () => {
                 >
                     <ESCol
                         xs={24}
-                        sm={24}
-                        md={16}
-                        lg={8}
+                        sm={12}
+                        lg={9}
                         alignSelf='stretch'
                         className='mb-md'
                     >
@@ -120,8 +117,8 @@ const SANPerformance = () => {
                     </ESCol>
                     <ESCol
                         xs={0}
-                        md={8}
-                        lg={4}
+                        sm={12}
+                        lg={5}
                         alignSelf='stretch'
                         className='mb-md'
                     >
@@ -138,8 +135,8 @@ const SANPerformance = () => {
                     </ESCol>
                     <ESCol
                         xs={0}
-                        md={8}
-                        lg={4}
+                        sm={12}
+                        lg={5}
                         alignSelf='stretch'
                         className='mb-md'
                     >
@@ -159,8 +156,8 @@ const SANPerformance = () => {
                     </ESCol>
                     <ESCol
                         xs={0}
-                        md={8}
-                        lg={4}
+                        sm={12}
+                        lg={5}
                         alignSelf='stretch'
                         className='mb-md'
                     >
@@ -178,7 +175,7 @@ const SANPerformance = () => {
                             )}
                         />
                     </ESCol>
-                    <ESCol
+                    {/*FIXME: <ESCol
                         xs={0}
                         md={8}
                         lg={4}
@@ -195,7 +192,7 @@ const SANPerformance = () => {
                                 'courseDetails.cardInteractionDescription'
                             )}
                         />
-                    </ESCol>
+                    </ESCol> */}
                 </ESRow>
             </SANPortalPagesContainer>
         </div>

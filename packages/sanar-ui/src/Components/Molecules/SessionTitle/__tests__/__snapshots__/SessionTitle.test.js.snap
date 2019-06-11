@@ -2,14 +2,26 @@
 
 exports[`renders correctly 1`] = `
 <div
-  className="ant-row-flex ant-row-flex-space-between ant-row-flex-bottom es-session-title"
+  className="ant-row-flex ant-row-flex-space-between ant-row-flex-bottom es-row es-session-title"
+  style={
+    Object {
+      "marginLeft": -12,
+      "marginRight": -12,
+    }
+  }
 >
   <div
-    className="ant-col"
+    className="ant-col es-col es-session-title__texts"
+    style={
+      Object {
+        "paddingLeft": 12,
+        "paddingRight": 12,
+      }
+    }
   >
-    <h4
+    <h5
       aria-label={null}
-      className="ant-typography"
+      className="ant-typography es-typography es-session-title__texts--title mb-xs"
       style={
         Object {
           "WebkitLineClamp": null,
@@ -17,10 +29,10 @@ exports[`renders correctly 1`] = `
       }
     >
       Meu desenvolvimento
-    </h4>
-    <span
+    </h5>
+    <div
       aria-label={null}
-      className="ant-typography"
+      className="ant-typography es-typography es-session-title__texts--subtitle ant-typography-ellipsis ant-typography-ellipsis-single-line"
       style={
         Object {
           "WebkitLineClamp": null,
@@ -28,7 +40,7 @@ exports[`renders correctly 1`] = `
       }
     >
       Vejas as indicações de como você está se saindo no seu aprendizado com seu curso
-    </span>
+    </div>
   </div>
 </div>
 `;

@@ -90,7 +90,7 @@ ESCardCourseModule.propTypes = {
     badge: PropTypes.string,
     progress: PropTypes.number,
     redirectTo: PropTypes.string,
-    actionName: PropTypes.string,
+    actionName: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     moduleTime: PropTypes.string,
     disabledBadge: PropTypes.string,
     disabled: PropTypes.bool,

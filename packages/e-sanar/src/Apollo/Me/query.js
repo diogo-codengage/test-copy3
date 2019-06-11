@@ -10,6 +10,22 @@ export const GET_ME = gql`
                 id
                 contract
                 progress_percentage
+                # last_accessed {
+                #     last_accessed_at
+                #     resource_type
+                #     module_id
+                #     resource_id
+                #     module_order
+                #     resource_order
+                #     module_title
+                #     module_progress {
+                #         done
+                #         total
+                #         status
+                #     }
+                #     thumbnail
+                #     path
+                # }
                 bookmarks {
                     data {
                         resource_type
@@ -50,7 +66,6 @@ export const GET_ME = gql`
                     icon
                     status
                     knowledge_area
-                    cover_picture
                     professors {
                         id
                         name
@@ -80,6 +95,7 @@ export const GET_ME = gql`
                         description
                         status
                         online
+                        scheduled
                         release_date
                         professors {
                             id

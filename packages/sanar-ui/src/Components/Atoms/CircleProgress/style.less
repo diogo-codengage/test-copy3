@@ -1,0 +1,22 @@
+.es-circle-progress {
+    & .ant-progress-text {
+        color: @grey-7;
+        font-weight: bold;
+    }
+
+    &--error {
+        & .ant-progress-circle-path {
+            stroke: @red-2 !important;
+        }
+    }
+    &--success {
+        & .ant-progress-circle-path {
+            stroke: @green-2 !important;
+        }
+    }
+    &--normal {
+        & .ant-progress-circle-path {
+            stroke: @grey-solid-7 !important;
+        }
+    }
+}
