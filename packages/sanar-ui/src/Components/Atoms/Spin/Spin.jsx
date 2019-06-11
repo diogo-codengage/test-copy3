@@ -21,7 +21,7 @@ ESSpin.propTypes = {
     size: PropTypes.oneOf(['small', 'default', 'large']),
     spinning: PropTypes.bool,
     tip: PropTypes.string,
-    wrapperClassName: PropTypes.string
+    wrapperClassName: PropTypes.string,
     minHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 }
 ESSpin.defaultProps = {}

@@ -2,11 +2,20 @@ import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
+import { useTranslation } from 'react-i18next'
+
 import { Empty } from 'antd'
 
-const ESEmpty = ({ className, ...props }) => {
+const ESEmpty = ({ className, description, ...props }) => {
+    const { t } = useTranslation('sanarui')
     const classes = classNames('es-empty', className)
-    return <Empty className={classes} {...props} />
+    return (
+        <Empty
+            description={description ? description : t('global.empty')}
+            className={classes}
+            {...props}
+        />
+    )
 }
 
 ESEmpty.propTypes = {

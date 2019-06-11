@@ -2,7 +2,8 @@ export default {
     global: {
         filter: 'Filtrar',
         password: 'Senha',
-        user: 'Usuário'
+        user: 'Usuário',
+        empty: 'Não há dados'
     },
     mainMenu: {
         leftOff: 'Continuar onde parei'
