@@ -82,6 +82,7 @@ const SANQuestionsFilterAdvanced = ({ form }) => {
                                     )}
                                     mode='year'
                                     size='large'
+                                    format='YYYY'
                                 />
                             </ESFormItem>
                         </ESCol>

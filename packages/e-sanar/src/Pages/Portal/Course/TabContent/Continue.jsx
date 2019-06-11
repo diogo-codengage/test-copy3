@@ -1,9 +1,14 @@
 import React from 'react'
+
+import { useTranslation } from 'react-i18next'
+
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import SessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import ESCardCourseModule from 'sanar-ui/dist/Components/Molecules/CardCourseModule'
+
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
-import { useTranslation } from 'react-i18next'
+
+import { useAuthContext } from 'Hooks/auth'
 
 const mock = {
     image1:
@@ -13,7 +18,15 @@ const mock = {
 }
 
 const SANCourseContinue = () => {
+    const { getEnrollment } = useAuthContext()
     const { t } = useTranslation('esanar')
+
+    const { last_accessed } = getEnrollment()
+
+    const percentProgress = last_accessed
+        ? (last_accessed.module_progress.done * 100) /
+          last_accessed.module_progress.total
+        : 0
 
     return (
         <div className='san-tab-course-content__continue'>
@@ -27,15 +40,19 @@ const SANCourseContinue = () => {
                         />
                         <ESCardCourseModule
                             className='san-tab-course-content__continue--card'
-                            moduleName='Módulo 1'
-                            title='Planner de estudo'
-                            badge='25/30'
-                            progress={75}
+                            moduleName={`${t(
+                                'courseDetails.tabContent.modules.singularName'
+                            )} ${last_accessed.module_order}`}
+                            title={last_accessed.module_title}
+                            badge={`${last_accessed.module_progress.done}/${
+                                last_accessed.module_progress.total
+                            }`}
+                            progress={percentProgress}
                             actionName={t(
                                 'courseDetails.tabContent.cardModuleAction'
                             )}
-                            moduleTime='30min'
-                            image={mock.image1}
+                            moduleTime={`${last_accessed.duration || 0}min`}
+                            image={last_accessed.thumbnail}
                         />
                     </ESCol>
                     <ESCol xs={24} md={12}>
@@ -48,7 +65,7 @@ const SANCourseContinue = () => {
                             className='san-tab-course-content__continue--card'
                             moduleName='Módulo 1'
                             title='Planner de estudo'
-                            badge='25/30'
+                            badge='15/30'
                             progress={75}
                             actionName={t(
                                 'courseDetails.tabContent.cardModuleAction'

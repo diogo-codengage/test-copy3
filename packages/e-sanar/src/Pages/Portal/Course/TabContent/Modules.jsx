@@ -145,7 +145,10 @@ const SANCourseModules = () => {
                                             badge={`${item.progress.done}/${
                                                 item.progress.total
                                             }`}
-                                            progress={item.workload}
+                                            progress={
+                                                (item.progress.done * 100) /
+                                                item.progress.total
+                                            }
                                             actionName={
                                                 <span className='san-tab-course-content__modules--card-action'>
                                                     {t(
