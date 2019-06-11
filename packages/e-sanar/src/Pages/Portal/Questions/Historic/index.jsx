@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { useTranslation } from 'react-i18next'
 import { Query } from 'react-apollo'
+import { useTranslation } from 'react-i18next'
 
 import ESHistoricalIssuesList, {
     ESHistoricalIssuesItem
@@ -17,6 +17,8 @@ import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 import SANQuestionsHistoricHeader from './Header'
 
 const SANQuestionsHistoric = () => {
+    const [current, setCurrent] = useState(1)
+    const [pageSize] = useState(10)
     const {
         me: { id }
     } = useAuthContext()
@@ -25,19 +27,23 @@ const SANQuestionsHistoric = () => {
     return (
         <Query
             query={GET_HISTORIC_QUESTIONS}
-            variables={{ userId: id }}
+            variables={{
+                userId: id,
+                limit: pageSize,
+                skip: pageSize * current - pageSize
+            }}
             skip={!id}
         >
-            {({ loading, error, data }) => {
+            {({ loading, error, data: { userAnswers } }) => {
                 if (loading) return <ESSpin spinning flex />
                 if (error) return `Error! ${error}`
+                const { data, count } = userAnswers
                 return (
                     <>
                         <SANQuestionsHistoricHeader />
                         <div className='questions-historic'>
                             <SANPortalPagesContainer>
-                                {data.userAnswers &&
-                                data.userAnswers.data.length ? (
+                                {data.length ? (
                                     <>
                                         <ESHistoricalIssuesList>
                                             {data.userAnswers.data.map(
@@ -58,7 +64,9 @@ const SANQuestionsHistoric = () => {
                                         </ESHistoricalIssuesList>
                                         <div className='d-flex justify-content-center'>
                                             <ESPagination
-                                                total={100}
+                                                total={count}
+                                                current={current}
+                                                onChange={setCurrent}
                                                 className='pb-lg mt-xl'
                                             />
                                         </div>

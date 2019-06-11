@@ -11,7 +11,6 @@ import SANQuestionHeader from './Header'
 import { useAuthContext } from 'Hooks/auth'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
-import './style.less'
 
 const SANQuestionDetailsPage = () => {
     const [qs, setQuestions] = useState({})

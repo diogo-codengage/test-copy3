@@ -173,7 +173,12 @@ export default {
                 buttonLoadMore: 'Carregar mais'
             },
             modules: {
-                pluralName: 'disciplinas',
+                title: {
+                    key: 'disciplina',
+                    key_plural: 'disciplinas',
+                    keyWithCount: '{{count}} disciplina',
+                    keyWithCount_plural: '{{count}} disciplinas'
+                },
                 singularName: 'Módulo',
                 whatCourseHas: 'O que esse curso possui',
                 whatCourseHasSubtitle:
