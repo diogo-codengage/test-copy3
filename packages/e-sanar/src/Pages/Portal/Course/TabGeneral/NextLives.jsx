@@ -61,18 +61,12 @@ const SANLives = ({ title, release_date, scheduled, link }) => {
 const SANNextLives = () => {
     const { getEnrollment } = useAuthContext()
     const {
-        course: { lives: livesProp }
+        course: { lives }
     } = getEnrollment()
 
     const { t } = useTranslation('esanar')
 
-    livesProp.shift()
-
-    const lives = livesProp.map((live, idx) => ({
-        ...live,
-        scheduled: idx % 2 ? false : true
-    }))
-
+    lives.shift()
     return (
         <SANPortalPagesContainer className='next-lives'>
             <ESTypography strong className='next-lives__title fc-grey-8'>
