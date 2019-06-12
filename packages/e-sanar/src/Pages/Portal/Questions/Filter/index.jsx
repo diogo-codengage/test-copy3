@@ -4,10 +4,13 @@ import { withRouter } from 'react-router-dom'
 
 import ESForm, { withESForm } from 'sanar-ui/dist/Components/Molecules/Form'
 
+import { useQuestionsContext } from '../Context'
 import SANQuestionsFilterHeader from './Header'
 import SANQuestionsFilterSelects from './Selects'
 
 const SANQuestionsFilter = ({ form, history }) => {
+    const { setFilter } = useQuestionsContext()
+
     const handleSubmit = e => {
         e.preventDefault()
         form.validateFieldsAndScroll((err, values) => {
@@ -25,7 +28,8 @@ const SANQuestionsFilter = ({ form, history }) => {
                     }),
                     ...(values.exams && { examIds: values.exams.map(mapItem) })
                 }
-                history.push({ pathname: './perguntas', state: filter })
+                setFilter(filter)
+                history.push('./perguntas')
             }
         })
     }

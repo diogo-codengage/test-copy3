@@ -32,28 +32,30 @@ const question = {
             'Mauris imperdiet orci dapibus, commodo libero nec, interdum tortor. Morbi in nibh faucibus, iaculis lorem vitae, cursus velit. Etiam non blandit ex. Mauris in fringilla velit. Fusce eu dictum neque. Maecenas tristique sem neque, vel congue libero efficitur at. Cras molestie ipsum at sem sollicitudin consectetur.',
         time: 'Há 24 dias'
     },
-    alternatives: [
-        {
-            id: 'id-alternative-0',
-            text:
-                'In consequat, quam id sodales hendrerit, eros mi molestie leo, nec lacinia risus neque tristique augue.'
-        },
-        {
-            id: 'id-alternative-1',
-            text:
-                'In consequat, quam id sodales hendrerit, eros mi molestie leo, nec lacinia risus neque tristique augue.'
-        },
-        {
-            id: 'id-alternative-2',
-            text:
-                'In consequat, quam id sodales hendrerit, eros mi molestie leo, nec lacinia risus neque tristique augue.'
-        },
-        {
-            id: 'id-alternative-3',
-            text:
-                'In consequat, quam id sodales hendrerit, eros mi molestie leo, nec lacinia risus neque tristique augue.'
-        }
-    ]
+    alternatives: {
+        data: [
+            {
+                id: 'id-alternative-0',
+                text:
+                    'In consequat, quam id sodales hendrerit, eros mi molestie leo, nec lacinia risus neque tristique augue.'
+            },
+            {
+                id: 'id-alternative-1',
+                text:
+                    'In consequat, quam id sodales hendrerit, eros mi molestie leo, nec lacinia risus neque tristique augue.'
+            },
+            {
+                id: 'id-alternative-2',
+                text:
+                    'In consequat, quam id sodales hendrerit, eros mi molestie leo, nec lacinia risus neque tristique augue.'
+            },
+            {
+                id: 'id-alternative-3',
+                text:
+                    'In consequat, quam id sodales hendrerit, eros mi molestie leo, nec lacinia risus neque tristique augue.'
+            }
+        ]
+    }
 }
 
 const Example = () => {

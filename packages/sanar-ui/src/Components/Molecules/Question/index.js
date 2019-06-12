@@ -1,1 +1,1 @@
-export { default as ESQuestion } from './Question'
+export { default } from './Question'

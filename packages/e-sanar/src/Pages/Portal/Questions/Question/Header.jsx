@@ -11,9 +11,12 @@ import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 
+import { useQuestionsContext } from '../Context'
+
 const intlPath = 'questionBase.question.'
 
 const SANQuestionHeader = ({ total, current, history }) => {
+    const { stopwatchRef } = useQuestionsContext()
     const { t } = useTranslation('esanar')
 
     return (
@@ -35,7 +38,7 @@ const SANQuestionHeader = ({ total, current, history }) => {
                     }
                     extra={
                         <div className='d-flex align-items-center'>
-                            <ESStopwatch className='mr-lg' />
+                            <ESStopwatch className='mr-lg' ref={stopwatchRef} />
                             <ESButton
                                 size='small'
                                 variant='outlined'

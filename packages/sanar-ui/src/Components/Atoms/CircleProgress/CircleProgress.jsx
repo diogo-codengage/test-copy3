@@ -4,13 +4,21 @@ import PropTypes from 'prop-types'
 
 import { Progress } from 'antd'
 
-const ESCircleProgress = ({ className, status, ...props }) => {
+const ESCircleProgress = ({ className, status, format, ...props }) => {
     const classes = classNames(
         'es-circle-progress',
         [`es-circle-progress--${status}`],
         className
     )
-    return <Progress className={classes} type='circle' {...props} />
+    const customFormat = format ? format : percent => `${parseInt(percent)}%`
+    return (
+        <Progress
+            format={customFormat}
+            className={classes}
+            type='circle'
+            {...props}
+        />
+    )
 }
 
 ESCircleProgress.propTypes = {

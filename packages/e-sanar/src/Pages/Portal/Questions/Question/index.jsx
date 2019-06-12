@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-import { Query, Mutation } from 'react-apollo'
+import { Mutation } from 'react-apollo'
 
-import { ESQuestion } from 'sanar-ui/dist/Components/Molecules/Question'
+import ESQuestion from 'sanar-ui/dist/Components/Molecules/Question'
 import ESCircleProgress from 'sanar-ui/dist/Components/Atoms/CircleProgress'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
@@ -14,6 +14,7 @@ import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
 
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
+import { useQuestionsContext } from '../Context'
 import SANQuestionHeader from './Header'
 import { useAuthContext } from 'Hooks/auth'
 import { useApolloContext } from 'Hooks/apollo'
@@ -35,8 +36,18 @@ const Indicator = ({ text, percent, status }) => (
     </div>
 )
 
-const SANQuestionDetailsPage = ({ location: { state = {} } }) => {
-    const { year, tagIds, levelIds, boardIds, examIds } = state
+const SANQuestionDetailsPage = () => {
+    const {
+        filter,
+        skippedQuestions,
+        setSkippedQuestions,
+        wrongQuestions,
+        setWrongQuestions,
+        correctQuestions,
+        setCorrectQuestions,
+        totalQuestions,
+        stopwatchRef
+    } = useQuestionsContext()
 
     const client = useApolloContext()
     const [questions, setQuestions] = useState([])
@@ -60,12 +71,13 @@ const SANQuestionDetailsPage = ({ location: { state = {} } }) => {
         })
     }
 
-    const handleJump = () => handleNext()
+    const handleJump = () => {
+        setSkippedQuestions(oldSkipped => ++oldSkipped)
+        handleNext(null, true)
+    }
 
-    const handleNext = () => {
-        console.log('index', index)
+    const handleNext = (isCorrect, isJump) => {
         if (index === limit - 5) {
-            console.log('1')
             setQuestions(questions.slice(limit - 5))
             fetchQuestions()
         } else if (index === questions.length - 1) {
@@ -73,9 +85,14 @@ const SANQuestionDetailsPage = ({ location: { state = {} } }) => {
             setCurrentQuestion(null)
             fetchQuestions()
         } else {
-            console.log('3')
             setIndex(oldIndex => ++oldIndex)
             resetCurrent()
+        }
+
+        if (!isJump) {
+            isCorrect
+                ? setCorrectQuestions(oldCorrect => ++oldCorrect)
+                : setWrongQuestions(oldWrong => ++oldWrong)
         }
     }
 
@@ -102,11 +119,7 @@ const SANQuestionDetailsPage = ({ location: { state = {} } }) => {
             query: GET_QUESTIONS,
             fetchPolicy: 'network-only',
             variables: {
-                year,
-                tagIds,
-                levelIds,
-                boardIds,
-                examIds,
+                ...filter,
                 courseId: course.id,
                 limit
             }
@@ -125,7 +138,11 @@ const SANQuestionDetailsPage = ({ location: { state = {} } }) => {
 
     useEffect(() => {
         fetchQuestions()
-    }, [year, tagIds, levelIds, boardIds, examIds, course.id])
+    }, [filter])
+
+    useEffect(() => {
+        stopwatchRef && stopwatchRef.current.start()
+    }, [])
 
     return (
         <Mutation mutation={ANSWER_MUTATION} onCompleted={callbackAnswer}>
@@ -144,17 +161,26 @@ const SANQuestionDetailsPage = ({ location: { state = {} } }) => {
                                     <div className='questions-question__subheader--indicators'>
                                         <Indicator
                                             text='Corretas'
-                                            percent={50}
+                                            percent={
+                                                (correctQuestions * 100) /
+                                                totalQuestions
+                                            }
                                             status='success'
                                         />
                                         <Indicator
                                             text='Erradas'
-                                            percent={30}
+                                            percent={
+                                                (wrongQuestions * 100) /
+                                                totalQuestions
+                                            }
                                             status='error'
                                         />
                                         <Indicator
                                             text='Puladas'
-                                            percent={10}
+                                            percent={
+                                                (skippedQuestions * 100) /
+                                                totalQuestions
+                                            }
                                         />
                                     </div>
                                     <div className='questions-question__subheader--actions'>
@@ -162,7 +188,7 @@ const SANQuestionDetailsPage = ({ location: { state = {} } }) => {
                                             size='small'
                                             variant='text'
                                             bold
-                                            onClick={saveQuestion}
+                                            disabled
                                         >
                                             <ESEvaIcon name='heart-outline' />
                                             Salvar questão

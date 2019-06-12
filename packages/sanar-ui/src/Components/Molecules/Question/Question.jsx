@@ -65,7 +65,7 @@ const ESQuestion = ({
 
     const handleNext = () => {
         reset()
-        onNext && onNext()
+        onNext && onNext(answer && answer === selected)
     }
 
     const handleJump = () => {
