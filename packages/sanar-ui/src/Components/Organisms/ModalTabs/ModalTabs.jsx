@@ -9,7 +9,7 @@ import ESTabs, { ESTabPane } from '../../Atoms/Tabs'
 import ESBrandHeader from '../../Atoms/BrandHeader'
 import useWindowSize from '../../../Hooks/useWindowSize'
 
-const ESModalTabs = ({ className, visible, onCancel, content }) => {
+const ESModalTabs = ({ className, visible, onCancel, content, activeTab }) => {
     const classes = classNames('es-modal-tabs', className)
     const [tabPosition, setTabPosition] = useState('top')
     const { width } = useWindowSize()
@@ -42,12 +42,16 @@ const ESModalTabs = ({ className, visible, onCancel, content }) => {
                                 {item.content.map((item, index) => (
                                     <p key={index}>
                                         <ESTyography
-                                            className='mb-xs'
+                                            className='es-modal-tabs__content__text--title'
                                             level={6}
                                         >
                                             {item.title}
                                         </ESTyography>
-                                        <ESTyography level={6} regular>
+                                        <ESTyography
+                                            className='es-modal-tabs__content__text--paragraph'
+                                            level={6}
+                                            regular
+                                        >
                                             {item.content}
                                         </ESTyography>
                                     </p>
@@ -63,7 +67,11 @@ const ESModalTabs = ({ className, visible, onCancel, content }) => {
 
 ESModalTabs.propTypes = {
     className: PropTypes.string,
-    visible: PropTypes.bool
+    visible: PropTypes.bool,
+    content: PropTypes.shape({
+        title: PropTypes.string,
+        content: PropTypes.string
+    })
 }
 ESModalTabs.defaultProps = {}
 

@@ -60,13 +60,39 @@
             }
         }
 
+        &__text {
+            &--title {
+                color: @grey-7;
+                margin-bottom: @margin-xs !important;
+            }
+
+            &--paragraph {
+                color: @grey-6;
+            }
+        }
+
         .ant-tabs {
             &-bar {
                 background: @white;
             }
 
+            &-ink-bar {
+                display: none !important;
+            }
+
+            &-nav {
+                .ant-tabs-tab-active {
+                    color: @grey-7;
+                    font-weight: bold;
+                }
+            }
+
             &-tab {
                 text-align: center !important;
+
+                &:hover {
+                    color: @grey-6;
+                }
             }
 
             &-tabpane {
