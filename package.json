@@ -42,6 +42,7 @@
         "jest-transform-stub": "^2.0.0",
         "less": "2.7.2",
         "less-loader": "^4.1.0",
+        "npm-run-all": "^4.1.5",
         "react-app-rewired": "^2.1.1",
         "webpack": "4.29.6"
     },
@@ -55,7 +56,8 @@
         "sanarui:storybook": "yarn workspace sanar-ui storybook",
         "sanarui:test": "yarn workspace sanar-ui test",
         "esanar:start": "yarn workspace e-sanar start",
-        "esanar:build": "yarn workspace e-sanar build"
+        "esanar:build": "yarn workspace e-sanar build",
+        "esanar:start:dev": "npm-run-all --parallel sanarui:dev sanarui:storybook esanar:start"
     },
     "husky": {
         "hooks": {

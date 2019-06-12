@@ -13,11 +13,14 @@ import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESDivider from 'sanar-ui/dist/Components/Atoms/Divider'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
+import ESModalTabs from 'sanar-ui/dist/Components/Organisms/ModalTabs'
 
 import { useAuthContext } from 'Hooks/auth'
 import SANLogout from 'Components/ModalLogout'
 import SANFeedback from 'Components/ModalFeedback'
 import { Auth } from 'aws-amplify'
+
+import modalTermsContent from 'assets/termsAndPrivacity'
 
 const intlPath = 'mainMenu.myAccount.'
 
@@ -26,6 +29,7 @@ const SANMyAccount = ({ handleBack, history }) => {
     const { t } = useTranslation('esanar')
     const [open, setOpen] = useState(false)
     const [openFeedback, setOpenFeedback] = useState(false)
+    const [openModalTerms, setOpenModalTerms] = useState(false)
 
     const handleOtherLinks = ({ key }) => {
         setOpen(Number(key) === 2)
@@ -55,6 +59,12 @@ const SANMyAccount = ({ handleBack, history }) => {
                 onCancel={() => setOpenFeedback(false)}
                 onSendEnd={() => setOpenFeedback(false)}
             />
+            <ESModalTabs
+                visible={openModalTerms}
+                onCancel={() => setOpenModalTerms(false)}
+                content={modalTermsContent}
+            />
+
             <div className='pl-md pr-md mb-md'>
                 <ESButton
                     className='mb-md'
@@ -132,11 +142,13 @@ const SANMyAccount = ({ handleBack, history }) => {
                     key={0}
                     title={t(`${intlPath}termsOfUse`)}
                     arrow={false}
+                    onClick={() => setOpenModalTerms(true)}
                 />
                 <ESNavigationListItem
                     key={1}
                     title={t(`${intlPath}privacyPolicy`)}
                     arrow={false}
+                    onClick={() => setOpenModalTerms(true)}
                 />
                 <ESNavigationListItem
                     key={2}

@@ -4,8 +4,11 @@ import PropTypes from 'prop-types'
 
 import logo from '../../../assets/images/logo/full-logo.svg'
 
-const ESBrandHeader = ({ className }) => {
-    const classes = classNames('es-brand-header', className)
+const ESBrandHeader = ({ className, size }) => {
+    const classes = classNames('es-brand-header', className, {
+        'es-brand-header--small': size === 'small',
+        'es-brand-header--large': size === 'large'
+    })
     return (
         <div className={classes}>
             <img src={logo} alt='Sanar Logo in brand header.' />
@@ -14,8 +17,11 @@ const ESBrandHeader = ({ className }) => {
 }
 
 ESBrandHeader.propTypes = {
-    className: PropTypes.string
+    className: PropTypes.string,
+    size: PropTypes.oneOf(['small', 'medium', 'large'])
 }
-ESBrandHeader.defaultProps = {}
+ESBrandHeader.defaultProps = {
+    size: 'medium'
+}
 
 export default ESBrandHeader
