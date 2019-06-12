@@ -1,6 +1,7 @@
 import React from 'react'
 import ESComment from './Comment'
 import { storiesOf } from '@storybook/react'
+import { boolean } from '@storybook/addon-knobs'
 
 const comment = {
     author: {
@@ -19,5 +20,6 @@ storiesOf('Molecules.Comment', module).add('Comment', () => (
         author={comment.author}
         content={comment.content}
         time={comment.time}
+        monitor={boolean('Monitor', true)}
     />
 ))

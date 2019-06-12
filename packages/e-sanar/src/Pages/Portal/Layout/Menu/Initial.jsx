@@ -9,19 +9,24 @@ import {
 } from 'sanar-ui/dist/Components/Organisms/MainMenu'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 
+import { useAuthContext } from 'Hooks/auth'
+
 const intlPath = 'mainMenu.initial.'
 
 const SANInitial = ({ setTab }) => {
+    const { getEnrollment } = useAuthContext()
     const { t } = useTranslation('esanar')
+
+    const { course, last_accessed } = getEnrollment()
 
     return (
         <>
             <div className='pl-md pr-md'>
                 <ESLeftOff
-                    title='Trilha Sanar Enfermagem'
-                    classReference='Nome da aula exemplo'
-                    moduleReference='Módulo 2, aula 5'
-                    thumbnail='nopes'
+                    title={course.name}
+                    classReference={last_accessed.module_title}
+                    moduleReference={last_accessed.path}
+                    thumbnail={last_accessed.thumbnail}
                 />
             </div>
             <ESNavigationList onClick={e => setTab(Number(e.key))}>

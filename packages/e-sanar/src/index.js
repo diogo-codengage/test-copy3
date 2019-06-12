@@ -6,8 +6,9 @@ import 'normalize.css'
 
 import registerServiceWorker from 'registerServiceWorker'
 
-import SANGraphQLProvider from './Apollo/GraphQLService'
-import { SANAuthProvider } from './Hooks/auth'
+import SANGraphQLProvider from 'Apollo/GraphQLService'
+import { SANAuthProvider } from 'Hooks/auth'
+import { SANApolloProvider } from 'Hooks/apollo'
 
 import 'sanar-ui/dist/Config/i18n'
 import AWSAmplifyConfig from 'Config/aws-amplify'
@@ -16,9 +17,11 @@ Amplify.configure(AWSAmplifyConfig)
 
 const SANRootComponent = () => (
     <SANGraphQLProvider>
-        <SANAuthProvider>
-            <SANApp />
-        </SANAuthProvider>
+        <SANApolloProvider>
+            <SANAuthProvider>
+                <SANApp />
+            </SANAuthProvider>
+        </SANApolloProvider>
     </SANGraphQLProvider>
 )
 
