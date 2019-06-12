@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, forwardRef, useImperativeHandle } from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
+
 import { ESCol, ESRow } from '../Grid'
 import ESTypography from '../Typography'
-import classNames from 'classnames'
-import PropTypes from 'prop-types'
+
 import disabledStrike from '../../../assets/images/questions/strike-disabled.svg'
 import enabledStrike from '../../../assets/images/questions/strike-enabled.svg'
 
@@ -25,133 +27,70 @@ const createAcronym = (index, percent) => {
     }
 }
 
-const createSituation = (id, selected, correctAnswer) => {
-    if (!selected && !correctAnswer) {
-        return 'none'
-    } else if (selected && selected === id && !correctAnswer) {
-        return 'selected'
-    } else if (selected && selected !== id && !correctAnswer) {
-        return 'none'
-    } else if (selected && correctAnswer) {
-        if (selected === id && selected === correctAnswer) {
-            return 'correct'
-        } else if (selected === id && selected !== correctAnswer) {
-            return 'wrong'
-        } else if (
-            (selected !== id &&
-                selected !== correctAnswer &&
-                correctAnswer !== id) ||
-            (selected !== id &&
-                selected === correctAnswer &&
-                correctAnswer !== id)
-        ) {
-            return 'wrong-missed'
-        } else if (
-            selected !== id &&
-            selected !== correctAnswer &&
-            correctAnswer === id
-        ) {
-            return 'missed'
-        }
-    }
-}
+const ESAlternative = forwardRef(
+    ({ id, index, percent, text, onSelect, status }, ref) => {
+        const [striped, setStriped] = useState(false)
 
-const ESAlternative = ({
-    correctAnswer,
-    id,
-    index,
-    percent,
-    selected,
-    text,
-    onSelectAlternative
-}) => {
-    const [striped, setStriped] = useState(false)
+        const containerClasses = classNames(
+            'es-alternative__container',
+            `es-alternative__container--${status}`
+        )
 
-    const situation = createSituation(id, selected, correctAnswer)
+        const patternClassNames = classNames('pattern', {
+            pattern__success:
+                status === 'correct' || status === 'correct-when-miss',
+            pattern__danger: status === 'incorrect',
+            pattern__grey: status === 'incorrect-when-miss'
+        })
 
-    const containerClasses = classNames(
-        'es-alternative',
-        'es-alternative__container',
-        `es-alternative__container--${situation}`
-    )
+        useImperativeHandle(ref, () => ({
+            reset: () => setStriped(false)
+        }))
 
-    const rowClasses = classNames(
-        'es-alternative',
-        'es-alternative__alternative-row'
-    )
-
-    const badgeClasses = classNames(
-        'es-alternative',
-        'es-alternative__badge',
-        `es-alternative__badge--${situation}`
-    )
-
-    const badgeTextClasses = classNames(
-        'es-alternative',
-        'es-alternative__text',
-        `es-alternative__text--${situation}`
-    )
-
-    const answerTextClasses = classNames(
-        'es-alternative',
-        'es-alternative__answer',
-        { 'es-alternative__answer--striped': striped }
-    )
-
-    const patternClassNames = classNames('pattern', {
-        pattern__success: situation === 'correct' || situation === 'missed',
-        pattern__danger: situation === 'wrong',
-        pattern__grey: situation === 'wrong-missed'
-    })
-
-    return (
-        <div className='es-alternative__alternative-row' key={id}>
-            <ESRow className={rowClasses}>
+        return (
+            <div className='es-alternative'>
                 <div
                     className={containerClasses}
-                    onClick={() => onSelectAlternative(id)}
+                    onClick={() => onSelect && onSelect(id)}
                 >
-                    <ESCol span={1}>
-                        <div className={badgeClasses}>
-                            <ESTypography
-                                variant='subtitle2'
-                                className={badgeTextClasses}
-                            >
-                                {createAcronym(index, percent)}
-                            </ESTypography>
-                        </div>
-                    </ESCol>
-                    <ESCol span={22} className='gutter-box'>
-                        <ESTypography
-                            ellipsis
-                            variant='subtitle2'
-                            className={answerTextClasses}
-                        >
-                            {text}
-                        </ESTypography>
-                    </ESCol>
-                    <ESCol span={1} push={1}>
-                        <div className={patternClassNames} />
-                    </ESCol>
+                    <div className='badge'>
+                        <span className='badge__text'>
+                            {createAcronym(index, percent)}
+                        </span>
+                    </div>
+                    <ESTypography
+                        variant='subtitle2'
+                        className={classNames('answer', { striped: striped })}
+                    >
+                        {text}
+                    </ESTypography>
+                    <div className={patternClassNames} />
                 </div>
-            </ESRow>
-            {!correctAnswer && (
-                <img
-                    src={striped ? enabledStrike : disabledStrike}
-                    className='stripe-badge'
-                    onClick={() => setStriped(!striped)}
-                />
-            )}
-        </div>
-    )
-}
+                {(status === 'selected' || status === 'normal') && (
+                    <img
+                        src={striped ? enabledStrike : disabledStrike}
+                        className='stripe-badge'
+                        onClick={() => setStriped(!striped)}
+                    />
+                )}
+            </div>
+        )
+    }
+)
 
 ESAlternative.propTypes = {
-    situation: PropTypes.string,
-    value: PropTypes.string,
-    answer: PropTypes.string,
-    striped: PropTypes.bool,
-    onStripeClicked: PropTypes.func
+    index: PropTypes.number.isRequired,
+    percent: PropTypes.string,
+    text: PropTypes.string.isRequired,
+    onSelect: PropTypes.func,
+    status: PropTypes.oneOf([
+        'normal',
+        'selected',
+        'correct',
+        'incorrect',
+        'correct-when-miss',
+        'incorrect-when-miss'
+    ])
 }
 
 export default ESAlternative
