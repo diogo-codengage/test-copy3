@@ -34,6 +34,11 @@ const question = {
     },
     alternatives: [
         {
+            id: 'id-alternative-0',
+            text:
+                'In consequat, quam id sodales hendrerit, eros mi molestie leo, nec lacinia risus neque tristique augue.'
+        },
+        {
             id: 'id-alternative-1',
             text:
                 'In consequat, quam id sodales hendrerit, eros mi molestie leo, nec lacinia risus neque tristique augue.'
@@ -45,11 +50,6 @@ const question = {
         },
         {
             id: 'id-alternative-3',
-            text:
-                'In consequat, quam id sodales hendrerit, eros mi molestie leo, nec lacinia risus neque tristique augue.'
-        },
-        {
-            id: 'id-alternative-4',
             text:
                 'In consequat, quam id sodales hendrerit, eros mi molestie leo, nec lacinia risus neque tristique augue.'
         }
@@ -72,7 +72,7 @@ const Example = () => {
     const handleConfirm = () => {
         setLoading(true)
         setTimeout(() => {
-            setAnswer(`id-alternative-${Math.floor(Math.random() * 5 + 1)}`)
+            setAnswer(`id-alternative-${Math.floor(Math.random() * 4)}`)
             setAnswered(true)
             setLoading(false)
         }, 3000)
@@ -86,6 +86,10 @@ const Example = () => {
         setLoading(true)
         setTimeout(() => {
             setAnswer()
+            setCurrentQuestion({
+                ...question,
+                id: Math.floor(Math.random() * 100).toString()
+            })
             setAnswered(false)
             setLoading(false)
         }, 3000)

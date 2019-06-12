@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
@@ -38,7 +38,6 @@ const ExpertComment = ({ author, content, time }) => {
 
 const ESQuestion = ({
     answer,
-    answered,
     question,
     onSelect,
     onConfirm,
@@ -48,6 +47,7 @@ const ESQuestion = ({
     loading
 }) => {
     const { t } = useTranslation('sanarui')
+    const [striped, setStripe] = useState()
     const [selected, setSelect] = useState(null)
     const [confirmed, setConfirm] = useState(false)
 
@@ -55,6 +55,7 @@ const ESQuestion = ({
         if (confirmed) return
         setSelect(item)
         onSelect && onSelect(item)
+        onlyStep && handleConfirm()
     }
 
     const handleConfirm = () => {
@@ -102,6 +103,16 @@ const ESQuestion = ({
 
         return 'normal'
     }
+
+    useEffect(() => {
+        const values = question
+            ? Array.from(
+                  new Array(question.alternatives.length),
+                  (_, i) => false
+              )
+            : []
+        setStripe({ ...values })
+    }, [question])
 
     return (
         <ESCard className='es-question'>
@@ -152,6 +163,13 @@ const ESQuestion = ({
                                     key={alternative.id}
                                     {...alternative}
                                     index={index}
+                                    striped={striped[index]}
+                                    handleStripe={() =>
+                                        setStripe({
+                                            ...striped,
+                                            [index]: !striped[index]
+                                        })
+                                    }
                                     percent={alternative.percent}
                                     onSelect={handleSelect}
                                     status={verifyStatus(
@@ -160,7 +178,7 @@ const ESQuestion = ({
                                     )}
                                 />
                             ))}
-                            {question.comment && (answered || onlyStep) && (
+                            {question.comment && answer && (
                                 <ExpertComment {...question.comment} />
                             )}
                         </>
@@ -173,7 +191,7 @@ const ESQuestion = ({
                         uppercase
                         bold
                         onClick={handleJump}
-                        disabled={answered}
+                        disabled={answer}
                     >
                         <ESEvaIcon name='refresh-outline' />
                         {t('question.jump')}
@@ -185,15 +203,11 @@ const ESQuestion = ({
                         uppercase
                         bold
                         disabled={!selected}
-                        onClick={
-                            onlyStep
-                                ? handleNext
-                                : answered
-                                ? handleNext
-                                : handleConfirm
-                        }
+                        onClick={answer ? handleNext : handleConfirm}
                     >
-                        {answered ? t('question.next') : t('question.confirm')}
+                        {onlyStep || answer
+                            ? t('question.next')
+                            : t('question.confirm')}
                         <ESEvaIcon name='arrow-forward-outline' />
                     </ESButton>
                 </div>
@@ -204,7 +218,6 @@ const ESQuestion = ({
 
 ESQuestion.propTypes = {
     answer: PropTypes.string,
-    answered: PropTypes.bool,
     loading: PropTypes.bool,
     onSelect: PropTypes.func,
     onConfirm: PropTypes.func,

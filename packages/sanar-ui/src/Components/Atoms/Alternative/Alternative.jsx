@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
@@ -27,62 +27,65 @@ const createAcronym = (index, percent) => {
     }
 }
 
-const ESAlternative = forwardRef(
-    ({ id, index, percent, text, onSelect, status }, ref) => {
-        const [striped, setStriped] = useState(false)
+const ESAlternative = ({
+    id,
+    index,
+    percent,
+    text,
+    onSelect,
+    status,
+    striped,
+    handleStripe
+}) => {
+    const containerClasses = classNames(
+        'es-alternative__container',
+        `es-alternative__container--${status}`
+    )
 
-        const containerClasses = classNames(
-            'es-alternative__container',
-            `es-alternative__container--${status}`
-        )
+    const patternClassNames = classNames('pattern', {
+        pattern__success:
+            status === 'correct' || status === 'correct-when-miss',
+        pattern__danger: status === 'incorrect',
+        pattern__grey: status === 'incorrect-when-miss'
+    })
 
-        const patternClassNames = classNames('pattern', {
-            pattern__success:
-                status === 'correct' || status === 'correct-when-miss',
-            pattern__danger: status === 'incorrect',
-            pattern__grey: status === 'incorrect-when-miss'
-        })
-
-        useImperativeHandle(ref, () => ({
-            reset: () => setStriped(false)
-        }))
-
-        return (
-            <div className='es-alternative'>
-                <div
-                    className={containerClasses}
-                    onClick={() => onSelect && onSelect(id)}
-                >
-                    <div className='badge'>
-                        <span className='badge__text'>
-                            {createAcronym(index, percent)}
-                        </span>
-                    </div>
-                    <ESTypography
-                        variant='subtitle2'
-                        className={classNames('answer', { striped: striped })}
-                    >
-                        {text}
-                    </ESTypography>
-                    <div className={patternClassNames} />
+    return (
+        <div className='es-alternative'>
+            <div
+                className={containerClasses}
+                onClick={() => onSelect && onSelect(id)}
+            >
+                <div className='badge'>
+                    <span className='badge__text'>
+                        {createAcronym(index, percent)}
+                    </span>
                 </div>
-                {(status === 'selected' || status === 'normal') && (
-                    <img
-                        src={striped ? enabledStrike : disabledStrike}
-                        className='stripe-badge'
-                        onClick={() => setStriped(!striped)}
-                    />
-                )}
+                <ESTypography
+                    variant='subtitle2'
+                    className={classNames('answer', { striped })}
+                >
+                    {text}
+                </ESTypography>
+                <div className={patternClassNames} />
             </div>
-        )
-    }
-)
+            {(status === 'selected' || status === 'normal') && (
+                <img
+                    src={striped ? enabledStrike : disabledStrike}
+                    className='stripe-badge'
+                    onClick={handleStripe}
+                />
+            )}
+        </div>
+    )
+}
 
 ESAlternative.propTypes = {
     index: PropTypes.number.isRequired,
     percent: PropTypes.string,
     text: PropTypes.string.isRequired,
     onSelect: PropTypes.func,
+    handleStripe: PropTypes.func,
+    stripe: PropTypes.bool,
     status: PropTypes.oneOf([
         'normal',
         'selected',
