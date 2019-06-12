@@ -1,1 +1,1 @@
-export { default as ESAlternative } from './Alternative'
+export { default } from './Alternative'

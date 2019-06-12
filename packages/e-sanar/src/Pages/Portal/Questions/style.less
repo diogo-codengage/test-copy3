@@ -1,71 +1,10 @@
 @import './Filter/style.less';
 @import './Historic/style.less';
 @import './Question/style.less';
+@import './PracticeCompleted/style.less';
 
 .questions {
     flex: 1;
     display: flex;
     flex-direction: column;
-
-    & .header {
-        border-bottom: 1px solid rgba(17, 19, 23, 0.1);
-        padding: 0 !important;
-
-        &__container {
-            &__about-course {
-                // padding-bottom: @padding-md;
-                // margin-bottom: @margin-md;
-                position: relative;
-
-                &::after {
-                    content: '';
-                    left: 10px;
-                    right: 10px;
-                    height: 1px;
-                    background: rgba(17, 19, 23, 0.15);
-                    position: absolute;
-                    bottom: 0;
-                }
-
-                > div {
-                    flex-flow: row !important;
-                }
-
-                &--descriptions {
-                    max-width: ~'calc(100% - 56px)';
-
-                    &--name {
-                        max-width: 100%;
-                    }
-                }
-            }
-            &__progress {
-                .es-progress-bar {
-                    // margin-bottom: @margin-md;
-                }
-
-                &__container-certify-button {
-                    max-height: fit-content;
-
-                    .es-button {
-                        // margin: 4px 0 0 @margin-md;
-                    }
-                }
-            }
-            &--left {
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-            }
-            &--right {
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
-            }
-        }
-
-        img {
-            width: 40px;
-        }
-    }
 }

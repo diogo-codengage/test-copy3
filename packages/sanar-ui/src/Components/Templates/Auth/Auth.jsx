@@ -6,7 +6,14 @@ import ESBrandHeader from '../../Atoms/BrandHeader'
 import ESTypography from '../../Atoms/Typography'
 import ESButton from '../../Atoms/Button'
 
-const ESAuthTemplate = ({ className, description, form, image, marketing }) => {
+const ESAuthTemplate = ({
+    className,
+    description,
+    form,
+    image,
+    marketing = {},
+    terms
+}) => {
     const classes = classNames('es-auth-template', className)
     return (
         <div className={classes}>
@@ -26,13 +33,7 @@ const ESAuthTemplate = ({ className, description, form, image, marketing }) => {
                             )}
                             {form}
                             <div className='es-auth-template__input-data__content__terms'>
-                                <ESTypography>
-                                    Ao entrar na plataforma, você concorda com
-                                    nossos
-                                </ESTypography>
-                                <a href='#'> Termos de Uso </a>
-                                <ESTypography>e nossa</ESTypography>
-                                <a href='#'> Política de Privacidade</a>
+                                {terms}
                             </div>
                         </div>
                     </div>
@@ -69,6 +70,7 @@ ESAuthTemplate.propTypes = {
     description: PropTypes.string,
     form: PropTypes.element.isRequired,
     image: PropTypes.string,
+    terms: PropTypes.element,
     marketing: PropTypes.shape({
         title: PropTypes.string,
         description: PropTypes.string,

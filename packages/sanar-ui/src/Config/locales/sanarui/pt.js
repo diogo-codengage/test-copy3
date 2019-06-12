@@ -3,7 +3,9 @@ export default {
         filter: 'Filtrar',
         password: 'Senha',
         user: 'Usuário',
-        empty: 'Não há dados'
+        empty: 'Não há dados',
+        monitor: 'Monitor',
+        sendFeedback: 'Enviar feedback'
     },
     mainMenu: {
         leftOff: 'Continuar onde parei'
@@ -89,5 +91,11 @@ export default {
         correct: 'Corretas:',
         wrong: 'Erradas:',
         skipped: 'Puladas:'
+    },
+    question: {
+        expertComment: 'Comentário do especialista',
+        confirm: 'Confirmar',
+        next: 'Próxima',
+        jump: 'Pular'
     }
 }
