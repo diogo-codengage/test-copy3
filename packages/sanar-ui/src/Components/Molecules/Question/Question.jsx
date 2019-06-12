@@ -70,7 +70,7 @@ const ESQuestion = ({
 
     const handleJump = () => {
         reset()
-        onJump && onJump()
+        onJump && onJump(question)
     }
 
     const reset = () => {
@@ -107,7 +107,7 @@ const ESQuestion = ({
     useEffect(() => {
         const values = question
             ? Array.from(
-                  new Array(question.alternatives.length),
+                  new Array(question.alternatives.data.length),
                   (_, i) => false
               )
             : []
@@ -158,26 +158,28 @@ const ESQuestion = ({
                         ))
                     ) : (
                         <>
-                            {question.alternatives.map((alternative, index) => (
-                                <ESAlternative
-                                    key={alternative.id}
-                                    {...alternative}
-                                    index={index}
-                                    striped={striped[index]}
-                                    handleStripe={() =>
-                                        setStripe({
-                                            ...striped,
-                                            [index]: !striped[index]
-                                        })
-                                    }
-                                    percent={alternative.percent}
-                                    onSelect={handleSelect}
-                                    status={verifyStatus(
-                                        alternative.id,
-                                        answer
-                                    )}
-                                />
-                            ))}
+                            {question.alternatives.data.map(
+                                (alternative, index) => (
+                                    <ESAlternative
+                                        key={alternative.id}
+                                        {...alternative}
+                                        index={index}
+                                        striped={striped[index]}
+                                        handleStripe={() =>
+                                            setStripe({
+                                                ...striped,
+                                                [index]: !striped[index]
+                                            })
+                                        }
+                                        percent={alternative.percent}
+                                        onSelect={handleSelect}
+                                        status={verifyStatus(
+                                            alternative.id,
+                                            answer
+                                        )}
+                                    />
+                                )
+                            )}
                             {question.comment && answer && (
                                 <ExpertComment {...question.comment} />
                             )}
@@ -191,7 +193,7 @@ const ESQuestion = ({
                         uppercase
                         bold
                         onClick={handleJump}
-                        disabled={answer}
+                        disabled={answer || !question}
                     >
                         <ESEvaIcon name='refresh-outline' />
                         {t('question.jump')}
@@ -202,7 +204,7 @@ const ESQuestion = ({
                         variant='outlined'
                         uppercase
                         bold
-                        disabled={!selected}
+                        disabled={!selected || !question}
                         onClick={answer ? handleNext : handleConfirm}
                     >
                         {onlyStep || answer
@@ -240,12 +242,14 @@ ESQuestion.propTypes = {
             content: PropTypes.string,
             time: PropTypes.string
         }),
-        alternatives: PropTypes.arrayOf(
-            PropTypes.shape({
-                id: PropTypes.string,
-                text: PropTypes.string
-            })
-        )
+        alternatives: PropTypes.shape({
+            data: PropTypes.arrayOf(
+                PropTypes.shape({
+                    id: PropTypes.string,
+                    text: PropTypes.string
+                })
+            )
+        })
     })
 }
 

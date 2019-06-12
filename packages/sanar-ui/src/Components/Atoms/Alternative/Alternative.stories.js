@@ -10,7 +10,7 @@ const alternativeText =
 const statusOptions = {
     normal: 'normal',
     selected: 'selected',
-    corrent: 'correct',
+    correct: 'correct',
     incorrect: 'incorrect',
     ['correct-when-miss']: 'correct-when-miss',
     ['incorrect-when-miss']: 'incorrect-when-miss'

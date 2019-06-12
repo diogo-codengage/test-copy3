@@ -58,7 +58,6 @@ const question = {
 
 const Example = () => {
     const [currentQuestion, setCurrentQuestion] = useState()
-    const [answered, setAnswered] = useState(false)
     const [answer, setAnswer] = useState()
     const [loading, setLoading] = useState(true)
 
@@ -73,7 +72,6 @@ const Example = () => {
         setLoading(true)
         setTimeout(() => {
             setAnswer(`id-alternative-${Math.floor(Math.random() * 4)}`)
-            setAnswered(true)
             setLoading(false)
         }, 3000)
     }
@@ -90,7 +88,6 @@ const Example = () => {
                 ...question,
                 id: Math.floor(Math.random() * 100).toString()
             })
-            setAnswered(false)
             setLoading(false)
         }, 3000)
     }
@@ -99,7 +96,6 @@ const Example = () => {
         <ESQuestion
             loading={loading}
             question={currentQuestion}
-            answered={answered}
             answer={answer}
             onConfirm={handleConfirm}
             onNext={handleNext}
