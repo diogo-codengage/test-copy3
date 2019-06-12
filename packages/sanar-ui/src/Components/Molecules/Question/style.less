@@ -9,6 +9,13 @@
         min-height: 100% !important;
     }
 
+    &__full {
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 0;
+    }
+
     &__content {
         padding: @padding-xl;
 
@@ -21,9 +28,18 @@
         }
 
         &-comment {
+            margin: 0 @padding-xl @padding-xl @padding-xl;
             border-radius: @border-radius-base;
             background-color: fade(@gold-1, 20);
             border: 1px solid @grey-3;
+
+            @media (max-width: @screen-lg) {
+                margin: 0;
+                border-radius: 0;
+                border-left: 0;
+                border-right: 0;
+                border-bottom: 0;
+            }
 
             &__header {
                 padding: @padding-sm @padding-md;

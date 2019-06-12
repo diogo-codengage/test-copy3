@@ -38,7 +38,7 @@ const SANQuestionHeader = ({ total, current, history }) => {
                     }
                     extra={
                         <div className='d-flex align-items-center'>
-                            <ESStopwatch className='mr-lg' ref={stopwatchRef} />
+                            <ESStopwatch className='mr-sm' ref={stopwatchRef} />
                             <ESButton
                                 size='small'
                                 variant='outlined'

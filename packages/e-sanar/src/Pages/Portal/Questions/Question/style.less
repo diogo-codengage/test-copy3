@@ -18,15 +18,33 @@
     }
 
     &__subheader {
+        margin-bottom: @margin-xl;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: @margin-xl;
 
         &--actions,
         &--indicators {
             display: flex;
             align-items: center;
+        }
+
+        @media (max-width: @screen-md) {
+            &--indicators {
+                display: none;
+            }
+            &--actions {
+                flex: 1;
+                justify-content: space-between;
+                padding: 0 @padding-sm;
+            }
+        }
+    }
+
+    @media (max-width: @screen-lg) {
+        & .san-portal-layout__container {
+            padding-left: 0;
+            padding-right: 0;
         }
     }
 }

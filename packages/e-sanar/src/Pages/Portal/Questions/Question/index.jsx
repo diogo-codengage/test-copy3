@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import { Mutation } from 'react-apollo'
@@ -8,6 +8,7 @@ import ESCircleProgress from 'sanar-ui/dist/Components/Atoms/CircleProgress'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
+import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
 import { GET_QUESTIONS } from 'Apollo/Questions/queries/questions'
 import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
@@ -49,7 +50,9 @@ const SANQuestionDetailsPage = () => {
         stopwatchRef
     } = useQuestionsContext()
 
+    const { width } = useWindowSize()
     const client = useApolloContext()
+    const [isFull, setIsFull] = useState(width <= 992)
     const [questions, setQuestions] = useState([])
     const [index, setIndex] = useState(0)
     const [currentQuestion, setCurrentQuestion] = useState()
@@ -133,16 +136,18 @@ const SANQuestionDetailsPage = () => {
     }
 
     useEffect(() => {
+        stopwatchRef && stopwatchRef.current.start()
+    }, [])
+
+    useMemo(() => {
         setCurrentQuestion(questions[index])
     }, [index])
 
-    useEffect(() => {
+    useMemo(() => {
         fetchQuestions()
     }, [filter])
 
-    useEffect(() => {
-        stopwatchRef && stopwatchRef.current.start()
-    }, [])
+    useMemo(() => setIsFull(width <= 992), [width])
 
     return (
         <Mutation mutation={ANSWER_MUTATION} onCompleted={callbackAnswer}>
@@ -214,6 +219,7 @@ const SANQuestionDetailsPage = () => {
                                     </div>
                                 </div>
                                 <ESQuestion
+                                    full={isFull}
                                     question={currentQuestion}
                                     onConfirm={handleConfirm(answerQuestion)}
                                     onJump={handleJump}

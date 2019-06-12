@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 import { useTranslation } from 'react-i18next'
 import { Skeleton } from 'antd'
@@ -44,10 +45,11 @@ const ESQuestion = ({
     onNext,
     onJump,
     onlyStep,
-    loading
+    loading,
+    full
 }) => {
     const { t } = useTranslation('sanarui')
-    const [striped, setStripe] = useState()
+    const [striped, setStripe] = useState({})
     const [selected, setSelect] = useState(null)
     const [confirmed, setConfirm] = useState(false)
 
@@ -105,17 +107,13 @@ const ESQuestion = ({
     }
 
     useEffect(() => {
-        const values = question
-            ? Array.from(
-                  new Array(question.alternatives.data.length),
-                  (_, i) => false
-              )
-            : []
-        setStripe({ ...values })
+        setStripe({})
     }, [question])
 
     return (
-        <ESCard className='es-question'>
+        <ESCard
+            className={classNames('es-question', { 'es-question__full': full })}
+        >
             <ESSpin spinning={loading}>
                 <div className='es-question__content'>
                     <Skeleton
@@ -180,12 +178,12 @@ const ESQuestion = ({
                                     />
                                 )
                             )}
-                            {question.comment && answer && (
-                                <ExpertComment {...question.comment} />
-                            )}
                         </>
                     )}
                 </div>
+                {question && question.comment && answer && (
+                    <ExpertComment {...question.comment} />
+                )}
                 <div className='es-question__footer'>
                     <ESButton
                         size='small'
@@ -226,6 +224,7 @@ ESQuestion.propTypes = {
     onNext: PropTypes.func,
     onJump: PropTypes.func,
     onlyStep: PropTypes.bool,
+    full: PropTypes.bool,
     question: PropTypes.shape({
         id: PropTypes.string,
         image: PropTypes.string,
