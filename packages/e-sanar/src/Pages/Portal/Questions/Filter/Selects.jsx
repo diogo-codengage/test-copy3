@@ -31,13 +31,8 @@ const SANQuestionsFilterSelects = () => {
         course: { id }
     } = getEnrollment()
 
-    const mapItem = item => ({
-        label: item.name,
-        value: item.id
-    })
-
     const makeItems = ({ loading, data }, entity) =>
-        !loading && data ? data[entity].data.map(mapItem) : []
+        !loading && data ? data[entity].data : []
 
     return (
         <div className='questions-filter'>
