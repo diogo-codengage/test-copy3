@@ -63,19 +63,17 @@ const formatPropTypeUnion = propType =>
     propType.value.map(prop => formatPropType(prop, true)).join(' | ')
 
 const formatPropTypeShape = propType => (
-    <pre>
-        {JSON.stringify(
-            Object.keys(propType.value).reduce(
-                (prev, current) => ({
-                    ...prev,
-                    [current]: formatPropType(propType.value[current])
-                }),
-                {}
-            ),
-            null,
-            2
-        ).replace(/\\/gi, '')}
-    </pre>
+    JSON.stringify(
+        Object.keys(propType.value).reduce(
+            (prev, current) => ({
+                ...prev,
+                [current]: formatPropType(propType.value[current])
+            }),
+            {}
+        ),
+        null,
+        2
+    ).replace(/\\|\n/gi, '')
 )
 
 const PropComponent = ({
@@ -88,7 +86,7 @@ const PropComponent = ({
     <Tr key={property} title={description}>
         <Td>{property}</Td>
         <Td>
-            {propType && propType.name ? formatPropType(propType) : propType}
+            {propType && propType.name ? <pre>{formatPropType(propType)}</pre> : propType}
         </Td>
         <Td>{typeof required !== 'undefined' && required.toString()}</Td>
         <Td>

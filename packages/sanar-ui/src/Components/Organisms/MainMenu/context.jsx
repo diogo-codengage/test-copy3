@@ -1,4 +1,4 @@
-import React, { useMemo, useState, createContext, useContext } from 'react'
+import React, { useEffect, useState, createContext, useContext } from 'react'
 
 import useWindowSize from '../../../Hooks/useWindowSize'
 
@@ -15,11 +15,13 @@ export const MainMenuProvider = ({ children }) => {
     const [staticToolbar, setStaticToolbar] = useState(false)
     const { width } = useWindowSize()
 
-    useMemo(() => setPosition(width <= 1024 ? 'bottom' : 'left'), [width])
-    useMemo(() => setShowContinueBar(width <= 1024), [width])
-    useMemo(() => setToggle(width >= 1365), [width])
-    useMemo(() => setStaticToolbar(width >= 1025 && width <= 1365), [width])
-    useMemo(() => setShowClose(width <= 1365), [width])
+    useEffect(() => {
+        setPosition(width <= 1024 ? 'bottom' : 'left')
+        setShowContinueBar(width <= 1024)
+        setToggle(width >= 1365), [width]
+        setStaticToolbar(width >= 1025 && width <= 1365)
+        setShowClose(width <= 1365)
+    }, [width])
 
     const onClose = () => {
         setToggle(false)

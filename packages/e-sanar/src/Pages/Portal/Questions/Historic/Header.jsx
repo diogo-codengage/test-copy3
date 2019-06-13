@@ -23,6 +23,11 @@ const SANQuestionsHistoricHeader = ({ history }) => {
                             {t(`${intlPath}title`)}
                         </ESTypography>
                     }
+                    subtitle={
+                        <ESTypography variant='subtitle2'>
+                            {t(`${intlPath}subtitle`)}
+                        </ESTypography>
+                    }
                     extra={
                         <ESButton
                             variant='solid'

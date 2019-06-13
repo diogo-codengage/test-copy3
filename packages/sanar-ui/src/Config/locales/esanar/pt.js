@@ -5,7 +5,8 @@ export default {
         back: 'Voltar',
         leave: 'Sair',
         loadMore: 'Carregar mais',
-        send: 'Enviar'
+        send: 'Enviar',
+        continue: 'Continuar'
     },
     auth: {
         accessAccount: 'Acessar conta',
@@ -217,10 +218,16 @@ export default {
     questionBase: {
         question: {
             title: 'Questões',
-            endPracticeButton: 'Encerrar prática'
+            endPracticeButton: 'Encerrar prática',
+            corrects: 'Corretas',
+            wrong: 'Erradas',
+            skipped: 'Puladas',
+            saveQuestion: 'Salvar questão',
+            seeFilters: 'Ver filtros'
         },
         historic: {
             title: 'Histórico de questões',
+            subtitle: 'Confira as últimas questões respondidas por você',
             questionsButton: 'BANCO DE QUESTÕES',
             empty: 'Não há histórico'
         },

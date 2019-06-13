@@ -4,8 +4,8 @@ export const GET_EXAMS = gql`
     query {
         exams {
             data {
-                id
-                name
+                value: id
+                label: name
             }
         }
     }

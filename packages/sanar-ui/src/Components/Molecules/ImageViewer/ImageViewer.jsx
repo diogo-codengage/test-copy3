@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -17,7 +17,7 @@ const ESImageViewer = ({ className, image, alt }) => {
         'es-image-viewer__full--mobile': isMobile
     })
 
-    useMemo(() => setMobile(width <= 992), [width, open])
+    useEffect(() => setMobile(width <= 992), [width, open])
 
     return (
         <div className={classes}>

@@ -4,9 +4,8 @@ export const GET_BOARDS = gql`
     query {
         boards {
             data {
-                id
-                name
-                status
+                value: id
+                label: name
             }
         }
     }
