@@ -46,9 +46,7 @@ const SANQuestionHeader = ({ history }) => {
                                 variant='outlined'
                                 uppercase
                                 bold
-                                onClick={() =>
-                                    history.push('/aluno/banco-questoes/filtro')
-                                }
+                                onClick={() => history.push('../finalizado')}
                             >
                                 {t(`${intlPath}endPracticeButton`)}
                             </ESButton>

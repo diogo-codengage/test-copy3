@@ -9,7 +9,8 @@ import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 
-const intlPath = 'questionBase.historic.'
+const intlQuestionsPath = 'questionBase.'
+const intlPath = `${intlQuestionsPath}historic.`
 
 const SANQuestionsHistoricHeader = ({ history }) => {
     const { t } = useTranslation('esanar')
@@ -38,7 +39,7 @@ const SANQuestionsHistoricHeader = ({ history }) => {
                             blockOnlyMobile
                             onClick={() => history.push('./filtro')}
                         >
-                            {t(`${intlPath}questionsButton`)}
+                            {t(`${intlQuestionsPath}questionsButton`)}
                         </ESButton>
                     }
                 />
