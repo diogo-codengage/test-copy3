@@ -27,7 +27,8 @@ const SANQuestionPage = ({ history }) => {
         setCorrectQuestions,
         stopwatchRef,
         setTotalQuestions,
-        setCurrentIndex
+        setCurrentIndex,
+        currentIndex
     } = useQuestionsContext()
 
     const { t } = useTranslation('esanar')
@@ -35,8 +36,6 @@ const SANQuestionPage = ({ history }) => {
     const client = useApolloContext()
     const [isFull, setIsFull] = useState(width <= 992)
     const [questions, setQuestions] = useState([])
-    const [index, setIndex] = useState(0)
-    const [currentQuestion, setCurrentQuestion] = useState()
     const [answer, setAnswer] = useState()
     const [stats, setStats] = useState()
     const [firstLoad, setFirstLoad] = useState(false)
@@ -50,7 +49,7 @@ const SANQuestionPage = ({ history }) => {
             variables: {
                 userId: me.id,
                 alternativeIds: [alternative],
-                questionId: currentQuestion.id
+                questionId: questions[0].id
             }
         })
     }
@@ -61,15 +60,15 @@ const SANQuestionPage = ({ history }) => {
     }
 
     const handleNext = (isCorrect, isJump) => {
-        if (index === limit - 5) {
-            setQuestions(questions.slice(limit - 5))
+        setCurrentIndex(oldIndex => ++oldIndex)
+        setQuestions(questions.slice(1))
+
+        if (currentIndex === limit - 5) {
             fetchQuestions()
-        } else if (index === questions.length - 1) {
-            setFirstLoad(true)
-            setCurrentQuestion(null)
-            fetchQuestions()
+        } else if (currentIndex === questions.length) {
+            fetchQuestions(true)
+            resetCurrent()
         } else {
-            setIndex(oldIndex => ++oldIndex)
             resetCurrent()
         }
 
@@ -90,7 +89,8 @@ const SANQuestionPage = ({ history }) => {
         setStats(null)
     }
 
-    const fetchQuestions = async () => {
+    const fetchQuestions = async load => {
+        load && setFirstLoad(true)
         const {
             data: {
                 questions: { data }
@@ -108,10 +108,6 @@ const SANQuestionPage = ({ history }) => {
         const newQuestions = [...questions, ...data]
         setTotalQuestions(oldTotal => oldTotal + data.length)
         setQuestions(newQuestions)
-        if (!currentQuestion || !currentQuestion.length) {
-            setCurrentQuestion(data[0])
-            resetCurrent()
-        }
         setFirstLoad(false)
     }
 
@@ -129,13 +125,7 @@ const SANQuestionPage = ({ history }) => {
     }, [stopwatchRef])
 
     useEffect(() => {
-        setCurrentQuestion(questions[index])
-        setCurrentIndex(index + 1)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [index, questions])
-
-    useEffect(() => {
-        fetchQuestions()
+        fetchQuestions(true)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter])
 
@@ -189,7 +179,7 @@ const SANQuestionPage = ({ history }) => {
                         <SANPortalPagesContainer>
                             <ESQuestion
                                 full={isFull}
-                                question={currentQuestion}
+                                question={questions[0]}
                                 onConfirm={handleConfirm(answerQuestion)}
                                 onJump={handleJump}
                                 onNext={handleNext}

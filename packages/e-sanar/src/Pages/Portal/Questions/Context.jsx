@@ -19,7 +19,7 @@ export const SANQuestionsProvider = ({ children }) => {
     const [wrongQuestions, setWrongQuestions] = useState(0)
     const [correctQuestions, setCorrectQuestions] = useState(0)
     const [totalQuestions, setTotalQuestions] = useState(0)
-    const [currentIndex, setCurrentIndex] = useState(0)
+    const [currentIndex, setCurrentIndex] = useState(1)
 
     const totalAnsweredQuestions = useMemo(
         () => skippedQuestions + wrongQuestions + correctQuestions,
