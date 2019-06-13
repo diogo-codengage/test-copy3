@@ -29,7 +29,7 @@ const question = {
         },
         content:
             'Mauris imperdiet orci dapibus, commodo libero nec, interdum tortor. Morbi in nibh faucibus, iaculis lorem vitae, cursus velit. Etiam non blandit ex. Mauris in fringilla velit. Fusce eu dictum neque. Maecenas tristique sem neque, vel congue libero efficitur at. Cras molestie ipsum at sem sollicitudin consectetur.',
-        time: 'Há 24 dias'
+        time: '2018-08-07T08:40:51.620Z'
     },
     alternatives: {
         data: [

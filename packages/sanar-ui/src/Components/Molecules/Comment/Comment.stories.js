@@ -12,7 +12,7 @@ const comment = {
     content: `We supply a series of design principles, practical patterns and high quality design
     resources (Sketch and Axure), to help people create their product prototypes beautifully
     and efficiently.`,
-    time: '24 dias'
+    time: '2019-07-07T08:40:51.620Z'
 }
 
 storiesOf('Molecules.Comment', module).add('Comment', () => (
