@@ -14,16 +14,12 @@ import useLocalStorage from 'sanar-ui/dist/Hooks/useLocalStorage'
 
 import ESModalTabs from 'sanar-ui/dist/Components/Organisms/ModalTabs'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
+import ESTermsAndPrivacy from 'assets/TermsAndPrivacy'
 
 const content = [
     {
         title: 'Termos de Uso',
-        content: (
-            <iframe
-                className='san-signin--terms-iframe'
-                src='https://docs.google.com/document/d/e/2PACX-1vRFqbbI9NGXsiuGWIUsjmbFkgI7KH2uaytlHRjDw_o_WQ8w03ce96mwtTeUO31ZepI68Rdrhudx7cbV/pub?embedded=true'
-            />
-        )
+        content: <ESTermsAndPrivacy />
     }
 ]
 
