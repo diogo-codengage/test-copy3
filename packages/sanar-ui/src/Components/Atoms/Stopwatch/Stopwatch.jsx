@@ -8,8 +8,6 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import ESEvaIcon from '../EvaIcon'
-import ESIcon from '../Icon'
-import ESTypography from '../Typography'
 
 import useStopwatch from '../../../Hooks/useStopwatch'
 
@@ -71,7 +69,8 @@ const ESStopwatch = forwardRef(({ className, autoStart }, ref) => {
 
     useImperativeHandle(ref, () => ({
         start: () => handleStart(),
-        pause: () => handlePause()
+        pause: () => handlePause(),
+        time: () => formatTime(hours, minutes, seconds)
     }))
 
     return (
