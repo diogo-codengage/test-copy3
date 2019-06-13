@@ -4,11 +4,11 @@ import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import logo from '../assets/images/logo.png'
 
 interface IProp {
-    title: string
-    rightElement: ReactNode
+    title?: string
+    rightElement?: ReactNode
 }
 
-export function RMHeader(props: IProp) {
+export function RMHeader({ title = 'Área de Prática', rightElement }: IProp) {
     return (
         <div style={
             {
@@ -29,11 +29,11 @@ export function RMHeader(props: IProp) {
                         alignItems: 'center'
                     }
                 }>
-                    <img src={logo} />
+                    <img src={logo}/>
                     <ESTypography
                         level={6}
-                    >{props.title}</ESTypography>
-                    {props.rightElement}
+                    >{title}</ESTypography>
+                    {rightElement || <div></div>}
                 </div>
             </RMContainer>
         </div>
