@@ -109,5 +109,5 @@ const Example = () => {
 storiesOf('Molecules.Question', module)
     .add('Example', () => <Example />)
     .add('Simple', () => (
-            <ESQuestion question={question} loading={boolean('Loading', true)} />
+        <ESQuestion question={question} loading={boolean('Loading', true)} />
     ))

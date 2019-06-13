@@ -22,12 +22,12 @@ const SANInitial = ({ setTab }) => {
     return (
         <>
             <div className='pl-md pr-md'>
-                {/* <ESLeftOff
+                <ESLeftOff
                     title={course.name}
                     classReference={last_accessed.module_title}
                     moduleReference={last_accessed.path}
                     thumbnail={last_accessed.thumbnail}
-                /> */}
+                />
             </div>
             <ESNavigationList onClick={e => setTab(Number(e.key))}>
                 <ESNavigationListItem
