@@ -98,5 +98,8 @@ export default {
         next: 'Próxima',
         previous: 'Anterior',
         jump: 'Pular'
+    },
+    playlist: {
+        youAreIn: 'Você está em'
     }
 }
