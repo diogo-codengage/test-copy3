@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-import { Scrollbars } from 'react-custom-scrollbars'
 
 import ESModal from '../../Atoms/Modal'
-import ESTyography from '../../Atoms/Typography'
 import ESTabs, { ESTabPane } from '../../Atoms/Tabs'
 import ESBrandHeader from '../../Atoms/BrandHeader'
+import ESTypography from '../../Atoms/Typography'
 import useWindowSize from '../../../Hooks/useWindowSize'
 
-const ESModalTabs = ({ className, visible, onCancel, content, activeTab }) => {
+const ESModalTabs = ({ className, visible, onCancel, content }) => {
     const classes = classNames('es-modal-tabs', className)
     const [tabPosition, setTabPosition] = useState('top')
     const { width } = useWindowSize()
@@ -32,33 +31,7 @@ const ESModalTabs = ({ className, visible, onCancel, content, activeTab }) => {
                 <ESTabs tabPosition={tabPosition}>
                     {content.map((item, index) => (
                         <ESTabPane tab={item.title} key={index}>
-                            <ESTyography
-                                className='es-modal-tabs__content--title'
-                                level={4}
-                                regular
-                            >
-                                {item.title}
-                            </ESTyography>
-
-                            <Scrollbars renderTrackHorizontal={() => <div />}>
-                                {item.content.map((item, index) => (
-                                    <div key={index}>
-                                        <ESTyography
-                                            className='es-modal-tabs__content__text--title'
-                                            level={6}
-                                        >
-                                            {item.title}
-                                        </ESTyography>
-                                        <ESTyography
-                                            className='es-modal-tabs__content__text--paragraph'
-                                            level={6}
-                                            regular
-                                        >
-                                            {item.content}
-                                        </ESTyography>
-                                    </div>
-                                ))}
-                            </Scrollbars>
+                            {item.content}
                         </ESTabPane>
                     ))}
                 </ESTabs>
@@ -72,7 +45,7 @@ ESModalTabs.propTypes = {
     visible: PropTypes.bool,
     content: PropTypes.shape({
         title: PropTypes.string,
-        content: PropTypes.string
+        content: PropTypes.node
     })
 }
 ESModalTabs.defaultProps = {}

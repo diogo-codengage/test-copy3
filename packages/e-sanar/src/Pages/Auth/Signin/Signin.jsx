@@ -9,12 +9,23 @@ import esSignIn, {
 } from 'sanar-ui/dist/Util/Auth'
 
 import image from 'assets/images/auth/login.png'
-import modalTermsContent from 'assets/termsAndPrivacity'
 
 import useLocalStorage from 'sanar-ui/dist/Hooks/useLocalStorage'
 
 import ESModalTabs from 'sanar-ui/dist/Components/Organisms/ModalTabs'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
+
+const content = [
+    {
+        title: 'Termos de Uso',
+        content: (
+            <iframe
+                className='san-signin--terms-iframe'
+                src='https://docs.google.com/document/d/e/2PACX-1vRFqbbI9NGXsiuGWIUsjmbFkgI7KH2uaytlHRjDw_o_WQ8w03ce96mwtTeUO31ZepI68Rdrhudx7cbV/pub?embedded=true'
+            />
+        )
+    }
+]
 
 const SANSigninPage = ({ history }) => {
     const { t } = useTranslation('esanar')
@@ -62,7 +73,7 @@ const SANSigninPage = ({ history }) => {
     )
 
     return (
-        <>
+        <div className='san-signin'>
             <ESAuthTemplate
                 image={image}
                 description={t('auth.signInDescription')}
@@ -87,9 +98,10 @@ const SANSigninPage = ({ history }) => {
             <ESModalTabs
                 onCancel={() => setShowModalTerms(false)}
                 visible={showModalTerms}
-                content={modalTermsContent}
+                content={content}
+                scrolling
             />
-        </>
+        </div>
     )
 }
 
