@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -14,7 +14,9 @@ const ESModalTabs = ({ className, visible, onCancel, content, activeTab }) => {
     const [tabPosition, setTabPosition] = useState('top')
     const { width } = useWindowSize()
 
-    useMemo(() => setTabPosition(width > 1023 ? 'left' : 'top'), [width])
+    useEffect(() => {
+        setTabPosition(width > 1023 ? 'left' : 'top')
+    }, [width])
 
     return (
         <ESModal
@@ -40,7 +42,7 @@ const ESModalTabs = ({ className, visible, onCancel, content, activeTab }) => {
 
                             <Scrollbars renderTrackHorizontal={() => <div />}>
                                 {item.content.map((item, index) => (
-                                    <p key={index}>
+                                    <div key={index}>
                                         <ESTyography
                                             className='es-modal-tabs__content__text--title'
                                             level={6}
@@ -54,7 +56,7 @@ const ESModalTabs = ({ className, visible, onCancel, content, activeTab }) => {
                                         >
                                             {item.content}
                                         </ESTyography>
-                                    </p>
+                                    </div>
                                 ))}
                             </Scrollbars>
                         </ESTabPane>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
 import { boolean } from '@storybook/addon-knobs'
 
 import ESQuestion from './Question'
@@ -109,41 +108,6 @@ const Example = () => {
 
 storiesOf('Molecules.Question', module)
     .add('Example', () => <Example />)
-    .add('Not anwered and selected yet', () => (
-        <ESQuestion
-            question={question}
-            answered={false}
-            onConfirm={action('You clicked on confirm!')}
-            onNext={action('You clicked on confirm!')}
-            onJump={action('You clicked on jump!')}
-        />
-    ))
-    .add('Anwered correctlly', () => (
-        <ESQuestion
-            question={question}
-            answered={true}
-            selectedAlternative='id-alternative-3'
-            answer='id-alternative-3'
-            onConfirm={action('You clicked on confirm!')}
-            onJump={action('You clicked on jump!')}
-        />
-    ))
-    .add('Anwered wronglly', () => (
-        <ESQuestion
-            question={question}
-            answered={true}
-            selectedAlternative='id-alternative-4'
-            answer='id-alternative-3'
-            onConfirm={action('You clicked on confirm!')}
-            onJump={action('You clicked on jump!')}
-        />
-    ))
-    .add('Selected only', () => (
-        <ESQuestion
-            question={question}
-            answered={false}
-            selectedAlternative='id-alternative-4'
-            onConfirm={action('You clicked on confirm!')}
-            onJump={action('You clicked on jump!')}
-        />
+    .add('Simple', () => (
+            <ESQuestion question={question} loading={boolean('Loading', true)} />
     ))

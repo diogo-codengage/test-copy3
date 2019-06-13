@@ -227,6 +227,7 @@ export default {
         },
         historic: {
             title: 'Histórico de questões',
+            subtitle: 'Confira as últimas questões respondidas por você',
             questionsButton: 'BANCO DE QUESTÕES',
             empty: 'Não há histórico'
         },

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 
@@ -409,7 +409,7 @@ const DemoMainMenu = () => {
     const [theme, setTheme] = useState('light')
     const [index, setIndex] = useState(0)
 
-    useMemo(() => (index === 6 ? setTheme('dark') : setTheme('primary')), [
+    useEffect(() => {index === 6 ? setTheme('dark') : setTheme('primary')}, [
         index
     ])
 
