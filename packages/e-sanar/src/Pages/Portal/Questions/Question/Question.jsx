@@ -142,7 +142,7 @@ const SANQuestionPage = ({ history }) => {
     useEffect(() => {
         setIsFull(width <= 992)
     }, [width])
-    console.log('11')
+
     return (
         <Mutation mutation={ANSWER_MUTATION} onCompleted={callbackAnswer}>
             {(

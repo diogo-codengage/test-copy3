@@ -35,6 +35,7 @@ const SANQuestionsHistoricHeader = ({ history }) => {
                             uppercase
                             bold
                             size='small'
+                            blockOnlyMobile
                             onClick={() => history.push('./filtro')}
                         >
                             {t(`${intlPath}questionsButton`)}

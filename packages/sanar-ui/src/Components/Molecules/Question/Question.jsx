@@ -46,7 +46,8 @@ const ESQuestion = ({
     onJump,
     onlyStep,
     loading,
-    full
+    full,
+    stats
 }) => {
     const { t } = useTranslation('sanarui')
     const [striped, setStripe] = useState({})
@@ -104,6 +105,12 @@ const ESQuestion = ({
         }
 
         return 'normal'
+    }
+
+    const getPercent = id => {
+        if (!stats || !stats.length) return
+        const statistic = stats.find(statistic => statistic.id === id)
+        return statistic && parseInt(statistic.percent)
     }
 
     useEffect(() => {
@@ -169,7 +176,7 @@ const ESQuestion = ({
                                                 [index]: !striped[index]
                                             })
                                         }
-                                        percent={alternative.percent}
+                                        percent={getPercent(alternative.id)}
                                         onSelect={handleSelect}
                                         status={verifyStatus(
                                             alternative.id,
@@ -225,6 +232,12 @@ ESQuestion.propTypes = {
     onJump: PropTypes.func,
     onlyStep: PropTypes.bool,
     full: PropTypes.bool,
+    stats: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string,
+            percent: PropTypes.number
+        })
+    ),
     question: PropTypes.shape({
         id: PropTypes.string,
         image: PropTypes.string,
