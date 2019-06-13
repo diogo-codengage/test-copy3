@@ -5,7 +5,14 @@ import classNames from 'classnames'
 import { ESRow, ESCol } from '../../Atoms/Grid'
 import ESTypography from '../../Atoms/Typography'
 
-const ESSessionTitle = ({ className, title, subtitle, extra, extraOnLeft }) => {
+const ESSessionTitle = ({
+    className,
+    title,
+    subtitle,
+    extra,
+    extraOnLeft,
+    children
+}) => {
     const classes = classNames('es-session-title', className)
 
     const extraClasses = classNames('es-session-title__extra', {

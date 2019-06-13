@@ -4,8 +4,8 @@ export const GET_TAGS = gql`
     query {
         tags {
             data {
-                id
-                name
+                value: id
+                label: name
             }
         }
     }

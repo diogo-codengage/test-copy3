@@ -8,33 +8,34 @@ import { useQuestionsContext } from '../Context'
 import SANQuestionsFilterHeader from './Header'
 import SANQuestionsFilterSelects from './Selects'
 
+const mapItem = item => item.value
+export const makeFilter = values => ({
+    ...(values.year && {
+        year: Number(values.year.format('YYYY'))
+    }),
+    ...(values.tags && { tagIds: values.tags.map(mapItem) }),
+    ...(values.levels && {
+        levelIds: values.levels.map(mapItem)
+    }),
+    ...(values.boards && {
+        boardIds: values.boards.map(mapItem)
+    }),
+    ...(values.exams && { examIds: values.exams.map(mapItem) })
+})
+
 const SANQuestionsFilter = ({ form, history }) => {
-    const { setFilter } = useQuestionsContext()
+    const { setFilter, setFormState } = useQuestionsContext()
 
     const handleSubmit = e => {
         e.preventDefault()
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                const filter = {
-                    ...(values.year && {
-                        year: Number(values.year.format('YYYY'))
-                    }),
-                    ...(values.tags && { tagIds: values.tags.map(mapItem) }),
-                    ...(values.levels && {
-                        levelIds: values.levels.map(mapItem)
-                    }),
-                    ...(values.boards && {
-                        boardIds: values.boards.map(mapItem)
-                    }),
-                    ...(values.exams && { examIds: values.exams.map(mapItem) })
-                }
-                setFilter(filter)
-                history.push('./perguntas')
+                setFormState(values)
+                setFilter(makeFilter(values))
+                history.push('./perguntas/pratica')
             }
         })
     }
-
-    const mapItem = item => item.value
 
     return (
         <ESForm form={form} onSubmit={handleSubmit}>

@@ -8,15 +8,14 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import ESEvaIcon from '../EvaIcon'
-import ESIcon from '../Icon'
-import ESTypography from '../Typography'
 
 import useStopwatch from '../../../Hooks/useStopwatch'
 
-const formatTime = (hours, minutes, seconds) => {
+const formatTime = (hours, minutes, seconds, days) => {
     let finalHours
     let finalMinutes
     let finalSeconds
+    let finalDays
 
     if (hours > 9) {
         finalHours = hours
@@ -33,12 +32,19 @@ const formatTime = (hours, minutes, seconds) => {
     } else {
         finalSeconds = `0${seconds}`
     }
-    return `${finalHours}:${finalMinutes}:${finalSeconds}`
+    if (days) {
+        finalDays = `${days}d  - `
+    }
+
+    const formatted = `${finalHours}:${finalMinutes}:${finalSeconds}`
+
+    if (days) return `${days}d  - ${formatted}`
+    return formatted
 }
 
 const ESStopwatch = forwardRef(({ className, autoStart }, ref) => {
     const [paused, setPaused] = useState(!autoStart)
-    const { hours, minutes, seconds, start, pause } = useStopwatch()
+    const { hours, minutes, seconds, start, pause, days } = useStopwatch()
     const classes = classNames(
         'es-stopwatch',
         {
@@ -63,7 +69,8 @@ const ESStopwatch = forwardRef(({ className, autoStart }, ref) => {
 
     useImperativeHandle(ref, () => ({
         start: () => handleStart(),
-        pause: () => handlePause()
+        pause: () => handlePause(),
+        time: () => formatTime(hours, minutes, seconds)
     }))
 
     return (
@@ -73,7 +80,7 @@ const ESStopwatch = forwardRef(({ className, autoStart }, ref) => {
             ) : (
                 <ESEvaIcon key='2' name='clock-outline' />
             )}
-            <span>{formatTime(hours, minutes, seconds)}</span>
+            <span>{formatTime(hours, minutes, seconds, days)}</span>
         </div>
     )
 })

@@ -5,7 +5,8 @@ export default {
         back: 'Voltar',
         leave: 'Sair',
         loadMore: 'Carregar mais',
-        send: 'Enviar'
+        send: 'Enviar',
+        continue: 'Continuar'
     },
     auth: {
         accessAccount: 'Acessar conta',
@@ -215,19 +216,29 @@ export default {
         }
     },
     questionBase: {
+        hitoricButton: 'Histórico',
+        questionsButton: 'BANCO DE QUESTÕES',
+        completed: {
+            title: 'Resultado',
+            subtitle: 'Verifique como você se saiu nessa sessão prática'
+        },
         question: {
             title: 'Questões',
-            endPracticeButton: 'Encerrar prática'
+            endPracticeButton: 'Encerrar prática',
+            corrects: 'Corretas',
+            wrong: 'Erradas',
+            skipped: 'Puladas',
+            saveQuestion: 'Salvar questão',
+            seeFilters: 'Ver filtros'
         },
         historic: {
             title: 'Histórico de questões',
-            questionsButton: 'BANCO DE QUESTÕES',
+            subtitle: 'Confira as últimas questões respondidas por você',
             empty: 'Não há histórico'
         },
         filter: {
             title: 'Banco de questões',
             subtitle: 'Hora de praticar tudo o que você aprendeu no curso',
-            hitoricButton: 'Histórico',
             startPracticeButton: 'Iniciar prática',
             subject: {
                 title: 'Assunto',

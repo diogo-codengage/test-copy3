@@ -19,10 +19,16 @@ import { useAuthContext } from 'Hooks/auth'
 import SANLogout from 'Components/ModalLogout'
 import SANFeedback from 'Components/ModalFeedback'
 import { Auth } from 'aws-amplify'
-
-import modalTermsContent from 'assets/termsAndPrivacity'
+import ESTermsAndPrivacy from 'assets/TermsAndPrivacy'
 
 const intlPath = 'mainMenu.myAccount.'
+
+const modalTermsContent = [
+    {
+        title: 'Termos de uso',
+        content: <ESTermsAndPrivacy />
+    }
+]
 
 const SANMyAccount = ({ handleBack, history }) => {
     const { me } = useAuthContext()

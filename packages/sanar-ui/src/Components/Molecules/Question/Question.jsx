@@ -14,28 +14,8 @@ import ESImageViewer from '../ImageViewer'
 import ESCard from '../Card'
 import ESComment from '../Comment'
 
-const ExpertComment = ({ author, content, time }) => {
-    const { t } = useTranslation('sanarui')
-    return (
-        <div className='es-question__content-comment'>
-            <div className='es-question__content-comment__header'>
-                <ESTypography variant='body1' strong>
-                    {t('question.expertComment')}
-                </ESTypography>
-                <ESButton variant='outlined' size='xsmall' bold disabled>
-                    {t('global.sendFeedback')}
-                </ESButton>
-            </div>
-            <ESComment
-                monitor
-                className='es-question__content-comment__body'
-                author={author}
-                content={content}
-                time={time}
-            />
-        </div>
-    )
-}
+import ESQuestionFooter from './Footer'
+import ESQuestionComment from './Comment'
 
 const ESQuestion = ({
     answer,
@@ -43,10 +23,13 @@ const ESQuestion = ({
     onSelect,
     onConfirm,
     onNext,
+    onPrevious,
     onJump,
     onlyStep,
     loading,
-    full
+    full,
+    stats,
+    isHistoric
 }) => {
     const { t } = useTranslation('sanarui')
     const [striped, setStripe] = useState({})
@@ -104,6 +87,12 @@ const ESQuestion = ({
         }
 
         return 'normal'
+    }
+
+    const getPercent = id => {
+        if (!stats || !stats.length) return
+        const statistic = stats.find(statistic => statistic.id === id)
+        return statistic && parseInt(statistic.percent)
     }
 
     useEffect(() => {
@@ -169,7 +158,7 @@ const ESQuestion = ({
                                                 [index]: !striped[index]
                                             })
                                         }
-                                        percent={alternative.percent}
+                                        percent={getPercent(alternative.id)}
                                         onSelect={handleSelect}
                                         status={verifyStatus(
                                             alternative.id,
@@ -182,35 +171,21 @@ const ESQuestion = ({
                     )}
                 </div>
                 {question && question.comment && answer && (
-                    <ExpertComment {...question.comment} />
+                    <ESQuestionComment {...question.comment} />
                 )}
-                <div className='es-question__footer'>
-                    <ESButton
-                        size='small'
-                        variant='text'
-                        uppercase
-                        bold
-                        onClick={handleJump}
-                        disabled={answer || !question}
-                    >
-                        <ESEvaIcon name='refresh-outline' />
-                        {t('question.jump')}
-                    </ESButton>
-                    <ESButton
-                        size='small'
-                        color='primary'
-                        variant='outlined'
-                        uppercase
-                        bold
-                        disabled={!selected || !question}
-                        onClick={answer ? handleNext : handleConfirm}
-                    >
-                        {onlyStep || answer
-                            ? t('question.next')
-                            : t('question.confirm')}
-                        <ESEvaIcon name='arrow-forward-outline' />
-                    </ESButton>
-                </div>
+                <ESQuestionFooter
+                    {...{
+                        handleJump,
+                        handleNext,
+                        handleConfirm,
+                        handlePrevious: onPrevious,
+                        selected,
+                        answer,
+                        question,
+                        onlyStep,
+                        isHistoric
+                    }}
+                />
             </ESSpin>
         </ESCard>
     )
@@ -222,9 +197,17 @@ ESQuestion.propTypes = {
     onSelect: PropTypes.func,
     onConfirm: PropTypes.func,
     onNext: PropTypes.func,
+    onPrevious: PropTypes.func,
     onJump: PropTypes.func,
     onlyStep: PropTypes.bool,
     full: PropTypes.bool,
+    isHistoric: PropTypes.bool,
+    stats: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string,
+            percent: PropTypes.number
+        })
+    ),
     question: PropTypes.shape({
         id: PropTypes.string,
         image: PropTypes.string,

@@ -18,6 +18,8 @@ import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import ESDatePicker from 'sanar-ui/dist/Components/Atoms/DatePicker'
 import { ESFormItem } from 'sanar-ui/dist/Components/Molecules/Form'
 
+import { useQuestionsContext } from '../Context'
+
 const Title = props => (
     <div className='d-flex align-items-center text-grey-7 justify-content-center'>
         <ESEvaIcon name='options-2-outline' className='mr-sm' />
@@ -26,8 +28,9 @@ const Title = props => (
 )
 const intlPath = 'questionBase.filter.advanced.'
 
-const SANQuestionsFilterAdvanced = ({ form }) => {
+const SANQuestionsFilterAdvanced = () => {
     const { t } = useTranslation('esanar')
+    const { formState } = useQuestionsContext()
     const [open, setOpen] = useState(false)
 
     return (
@@ -69,12 +72,8 @@ const SANQuestionsFilterAdvanced = ({ form }) => {
                             <ESFormItem
                                 name='year'
                                 label={t(`${intlPath}year.label`)}
-                                rules={[
-                                    {
-                                        type: 'object'
-                                    }
-                                ]}
                                 trigger={'onPanelChange'}
+                                initialValue={formState.year}
                             >
                                 <ESDatePicker
                                     placeholder={t(
@@ -82,7 +81,6 @@ const SANQuestionsFilterAdvanced = ({ form }) => {
                                     )}
                                     mode='year'
                                     size='large'
-                                    format='YYYY'
                                 />
                             </ESFormItem>
                         </ESCol>
@@ -91,6 +89,7 @@ const SANQuestionsFilterAdvanced = ({ form }) => {
                                 name='difficulty'
                                 label={t(`${intlPath}difficulty.label`)}
                                 className='no-margin'
+                                initialValue={formState.difficulty}
                             >
                                 <ESCheckboxGroup
                                     className='checkbox disabled'
@@ -121,39 +120,40 @@ const SANQuestionsFilterAdvanced = ({ form }) => {
                                 name='progress'
                                 label={t(`${intlPath}progress.label`)}
                                 className='no-margin'
+                                initialValue={formState.progress}
                             >
-                                <ESRow>
-                                    <ESRadioGroup>
+                                <ESRadioGroup>
+                                    <ESRow>
                                         <ESCol xs={24} md={6}>
-                                            <ESRadio value={1}>
+                                            <ESRadio value={'1'}>
                                                 {t(
                                                     `${intlPath}progress.options.all`
                                                 )}
                                             </ESRadio>
                                         </ESCol>
                                         <ESCol xs={24} md={6}>
-                                            <ESRadio value={2}>
+                                            <ESRadio value={'2'}>
                                                 {t(
                                                     `${intlPath}progress.options.neverAnswered`
                                                 )}
                                             </ESRadio>
                                         </ESCol>
                                         <ESCol xs={24} md={6}>
-                                            <ESRadio value={3}>
+                                            <ESRadio value={'3'}>
                                                 {t(
                                                     `${intlPath}progress.options.alreadyAnswered`
                                                 )}
                                             </ESRadio>
                                         </ESCol>
                                         <ESCol xs={24} md={6}>
-                                            <ESRadio value={4}>
+                                            <ESRadio value={'4'}>
                                                 {t(
                                                     `${intlPath}progress.options.issuesMissed`
                                                 )}
                                             </ESRadio>
                                         </ESCol>
-                                    </ESRadioGroup>
-                                </ESRow>
+                                    </ESRow>
+                                </ESRadioGroup>
                             </ESFormItem>
                         </ESCol>
                         <ESCol xs={24} lg={6}>
@@ -161,6 +161,8 @@ const SANQuestionsFilterAdvanced = ({ form }) => {
                                 name='justCommented'
                                 label={t(`${intlPath}justCommented`)}
                                 className='switch'
+                                valuePropName='checked'
+                                initialValue={formState.justCommented}
                             >
                                 <ESSwitch />
                             </ESFormItem>

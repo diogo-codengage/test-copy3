@@ -34,7 +34,7 @@ const SANResetPassword = ({ history, location, form }) => {
                     .then(res => {
                         message.success(res.message)
                         setLoading(false)
-                        history.push('../')
+                        history.push('/auth/signin')
                     })
                     .catch(error => {
                         message.error(error.message)

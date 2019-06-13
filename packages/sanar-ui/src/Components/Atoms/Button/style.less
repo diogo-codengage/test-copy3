@@ -19,18 +19,19 @@
     &__variant {
         &--outlined {
             background-color: transparent;
-            color: rgba(17, 19, 23, 0.65);
-            border-color: rgba(17, 19, 23, 0.15);
+            color: @grey-7;
+            border-color: @grey-3;
+
             &:focus,
             &:hover {
-                background-color: rgba(17, 19, 23, 0.05);
-                color: rgba(17, 19, 23, 0.85);
-                border-color: rgba(17, 19, 23, 0.15);
+                background-color: @grey-1;
+                color: @grey-9;
+                border-color: @grey-3;
             }
             &:active {
-                background-color: rgba(17, 19, 23, 0.15);
-                color: rgba(17, 19, 23, 0.65);
-                border-color: rgba(17, 19, 23, 0.15);
+                background-color: @grey-3;
+                color: @grey-7;
+                border-color: @grey-3;
             }
             &[disabled] {
                 background-color: transparent !important;
@@ -40,29 +41,35 @@
             &.primary {
                 border-color: @primary-color;
                 color: @primary-color;
+
                 &:focus,
                 &:hover {
                     background-color: rgba(37, 90, 208, 0.1) !important;
                 }
+
                 &:active {
                     background-color: rgba(37, 90, 208, 0.25) !important;
                 }
                 &[disabled] {
                     opacity: 0.3;
+                    border-color: @primary-color;
+                    color: @primary-color;
                 }
             }
 
             &.white {
-                border-color: rgba(255, 255, 255, 0.15);
-                color: rgba(255, 255, 255, 0.65);
+                border-color: @white-3;
+                color: @white-7;
+
                 &:focus,
                 &:hover {
-                    background-color: rgba(255, 255, 255, 0.25);
-                    color: rgba(255, 255, 255, 0.95);
+                    background-color: @white-4;
+                    color: @white-10;
                 }
+
                 &:active {
-                    background-color: rgba(255, 255, 255, 0.1);
-                    color: rgba(255, 255, 255, 0.65);
+                    background-color: @white-2;
+                    color: @white-7;
                 }
                 &[disabled] {
                     background-color: transparent;
@@ -79,11 +86,13 @@
             border: none;
             background-color: @primary-color;
             color: @white;
+
             &:focus,
             &:hover {
                 background-color: darken(@primary-color, 10);
                 color: @white;
             }
+
             &:active {
                 background-color: darken(@primary-color, 20);
                 color: @white;
@@ -95,14 +104,16 @@
             }
 
             &.white {
-                background-color: rgba(255, 255, 255, 0.65);
-                color: rgba(17, 19, 23, 0.65);
+                background-color: @white-7;
+                color: @grey-7;
+
                 &:focus,
                 &:hover {
-                    background-color: rgba(255, 255, 255, 0.95);
+                    background-color: @white-10;
                 }
+
                 &:active {
-                    background-color: rgba(255, 255, 255, 0.4);
+                    background-color: @white-5;
                 }
                 &[disabled] {
                     opacity: 0.3;
@@ -114,16 +125,16 @@
             border: none;
             box-shadow: none;
             background-color: transparent;
-            color: rgba(17, 19, 23, 0.65);
+            color: @grey-7;
+
             &:focus,
             &:hover {
                 background-color: transparent;
-                color: rgba(17, 19, 23, 0.85);
+                color: @grey-9;
             }
-
             &:active {
-                background-color: rgba(17, 19, 23, 0.05);
-                color: rgba(17, 19, 23, 0.65);
+                background-color: @grey-1;
+                color: @grey-7;
             }
 
             &[disabled] {
@@ -133,12 +144,12 @@
 
             &.primary {
                 color: @primary-color;
+
                 &:hover {
                     color: darken(@primary-color, 10);
                 }
-
                 &:active {
-                    background-color: rgba(17, 19, 23, 0.05);
+                    background-color: @grey-1;
                     color: @primary-color;
                 }
             }
@@ -147,13 +158,13 @@
                 border: none;
                 box-shadow: none;
                 background-color: transparent;
-                color: rgba(255, 255, 255, 0.65);
+                color: @white-7;
                 &:hover {
-                    color: rgba(255, 255, 255, 0.95);
+                    color: @white-10;
                 }
                 &:active {
-                    background-color: rgba(255, 255, 255, 0.15);
-                    color: rgba(255, 255, 255, 0.65);
+                    background-color: @white-3;
+                    color: @white-7;
                 }
             }
         }
