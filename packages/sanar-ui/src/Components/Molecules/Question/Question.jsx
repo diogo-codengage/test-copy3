@@ -110,7 +110,7 @@ const ESQuestion = ({
                         {question && (
                             <>
                                 <ESTypography level={6} className='mb-md'>
-                                    {`${question.instituition.name}, ${
+                                    {`${question.institution.name}, ${
                                         question.year
                                     }`}
                                 </ESTypography>
@@ -120,17 +120,14 @@ const ESQuestion = ({
                                 >
                                     {question.statement}
                                 </ESTypography>
-                                {question.images &&
-                                    question.images.data &&
-                                    question.images.data.length && (
-                                        <ESImageViewer
-                                            images={
-                                                question.images.data[0]
-                                                    .sizedImages
-                                            }
-                                            className='mb-md'
-                                        />
-                                    )}
+                                {question.images && question.images.data[0] && (
+                                    <ESImageViewer
+                                        images={
+                                            question.images.data[0].sizedImages
+                                        }
+                                        className='mb-md'
+                                    />
+                                )}
                             </>
                         )}
                     </Skeleton>
@@ -247,7 +244,7 @@ ESQuestion.propTypes = {
         }),
         statement: PropTypes.string,
         year: PropTypes.number,
-        instituition: PropTypes.shape({
+        institution: PropTypes.shape({
             name: PropTypes.string
         }),
         alternatives: PropTypes.shape({

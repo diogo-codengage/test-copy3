@@ -21,7 +21,7 @@ export const GET_HISTORIC_QUESTIONS = gql`
                     id
                     statement
                     year
-                    instituition {
+                    institution: instituition {
                         id
                         name
                     }

@@ -7,7 +7,7 @@ export const GET_QUESTIONS = gql`
                 id
                 statement
                 year
-                instituition {
+                institution: instituition {
                     id
                     name
                 }

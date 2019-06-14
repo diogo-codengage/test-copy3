@@ -43,7 +43,7 @@ const question = {
         level: 1,
         name: 'low'
     },
-    instituition: {
+    institution: {
         id: 'id-instituition-ufba',
         name: 'Ufba'
     },
