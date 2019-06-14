@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import { useTranslation } from 'react-i18next'
 import { Skeleton } from 'antd'
 
 import ESTypography from '../../Atoms/Typography'
@@ -29,7 +28,6 @@ const ESQuestion = ({
     stats,
     isHistoric
 }) => {
-    const { t } = useTranslation('sanarui')
     const [striped, setStripe] = useState({})
     const [selected, setSelect] = useState(null)
     const [confirmed, setConfirm] = useState(false)
@@ -43,6 +41,7 @@ const ESQuestion = ({
 
     const handleConfirm = () => {
         setConfirm(true)
+        setStripe({})
         onConfirm && onConfirm(selected)
     }
 
@@ -121,12 +120,17 @@ const ESQuestion = ({
                                 >
                                     {question.statement}
                                 </ESTypography>
-                                {question.image && (
-                                    <ESImageViewer
-                                        image={question.image}
-                                        className='mb-md'
-                                    />
-                                )}
+                                {question.images &&
+                                    question.images.data &&
+                                    question.images.data.length && (
+                                        <ESImageViewer
+                                            images={
+                                                question.images.data[0]
+                                                    .sizedImages
+                                            }
+                                            className='mb-md'
+                                        />
+                                    )}
                             </>
                         )}
                     </Skeleton>
@@ -217,7 +221,30 @@ ESQuestion.propTypes = {
     }),
     question: PropTypes.shape({
         id: PropTypes.string,
-        image: PropTypes.string,
+        images: PropTypes.shape({
+            data: PropTypes.arrayOf(
+                PropTypes.shape({
+                    id: PropTypes.string,
+                    sizedImages: PropTypes.shape({
+                        small: PropTypes.shape({
+                            width: PropTypes.number,
+                            height: PropTypes.number,
+                            url: PropTypes.string
+                        }),
+                        medium: PropTypes.shape({
+                            width: PropTypes.number,
+                            height: PropTypes.number,
+                            url: PropTypes.string
+                        }),
+                        large: PropTypes.shape({
+                            width: PropTypes.number,
+                            height: PropTypes.number,
+                            url: PropTypes.string
+                        })
+                    })
+                })
+            )
+        }),
         statement: PropTypes.string,
         year: PropTypes.number,
         instituition: PropTypes.shape({

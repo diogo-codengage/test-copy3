@@ -6,6 +6,32 @@ import ESQuestion from './Question'
 
 const question = {
     id: 'id-question-1',
+    images: {
+        data: [
+            {
+                sizedImages: {
+                    small: {
+                        width: 665,
+                        height: 429,
+                        url:
+                            'https://i.pinimg.com/736x/28/65/74/28657471c865a566cf1347ae44bb388c.jpg'
+                    },
+                    medium: {
+                        width: 665,
+                        height: 429,
+                        url:
+                            'https://i.pinimg.com/736x/28/65/74/28657471c865a566cf1347ae44bb388c.jpg'
+                    },
+                    large: {
+                        width: 665,
+                        height: 429,
+                        url:
+                            'https://i.pinimg.com/736x/28/65/74/28657471c865a566cf1347ae44bb388c.jpg'
+                    }
+                }
+            }
+        ]
+    },
     image:
         'https://i.pinimg.com/736x/28/65/74/28657471c865a566cf1347ae44bb388c.jpg',
     statement:
@@ -70,7 +96,7 @@ const Example = () => {
         setTimeout(() => {
             setCurrentQuestion(question)
             setLoading(false)
-        }, 2000)
+        }, 1000)
     }, [])
 
     const handleConfirm = () => {
@@ -79,7 +105,7 @@ const Example = () => {
             setAnswer(`id-alternative-${Math.floor(Math.random() * 4)}`)
             setEspecialist(comment)
             setLoading(false)
-        }, 3000)
+        }, 1000)
     }
 
     const handleNext = () => fetch()
@@ -96,7 +122,7 @@ const Example = () => {
                 id: Math.floor(Math.random() * 100).toString()
             })
             setLoading(false)
-        }, 3000)
+        }, 1000)
     }
 
     return (

@@ -7,8 +7,9 @@ import useWindowSize from '../../../Hooks/useWindowSize'
 import ESModal from '../../Atoms/Modal'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESButton from '../../Atoms/Button'
+import { ConsoleLogger } from '@aws-amplify/core'
 
-const ESImageViewer = ({ className, image, alt }) => {
+const ESImageViewer = ({ className, images, alt }) => {
     const { width } = useWindowSize()
     const [open, setOpen] = useState(false)
     const [isMobile, setMobile] = useState(false)
@@ -25,7 +26,7 @@ const ESImageViewer = ({ className, image, alt }) => {
                 className='es-image-viewer__small'
                 onClick={() => setOpen(true)}
             >
-                <img src={image} alt={alt} />
+                <img src={images.small.url} alt={alt} />
                 <div className='es-image-viewer__small--hover'>
                     <ESEvaIcon name='maximize-outline' />
                 </div>
@@ -64,7 +65,7 @@ const ESImageViewer = ({ className, image, alt }) => {
                         <ESEvaIcon name='close-outline' />
                     </ESButton>
                 )}
-                <img src={image} alt={alt} />
+                <img src={images.large.url || images.medium.url} alt={alt} />
             </ESModal>
         </div>
     )
@@ -72,7 +73,23 @@ const ESImageViewer = ({ className, image, alt }) => {
 
 ESImageViewer.propTypes = {
     className: PropTypes.string,
-    image: PropTypes.string
+    images: PropTypes.shape({
+        small: PropTypes.shape({
+            width: PropTypes.number,
+            height: PropTypes.number,
+            url: PropTypes.string
+        }),
+        medium: PropTypes.shape({
+            width: PropTypes.number,
+            height: PropTypes.number,
+            url: PropTypes.string
+        }),
+        large: PropTypes.shape({
+            width: PropTypes.number,
+            height: PropTypes.number,
+            url: PropTypes.string
+        })
+    })
 }
 ESImageViewer.defaultProps = {}
 
