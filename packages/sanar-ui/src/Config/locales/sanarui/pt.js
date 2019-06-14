@@ -101,5 +101,8 @@ export default {
     },
     playlist: {
         youAreIn: 'Você está em'
+    },
+    questionMap: {
+        title: 'Mapa de questões'
     }
 }
