@@ -2,8 +2,6 @@ import React from 'react'
 import { Layout } from 'antd'
 import classNames from 'classnames'
 
-import { Scrollbars } from 'react-custom-scrollbars'
-
 import SANFooter from './Footer'
 import SANMenu from './Menu'
 
@@ -16,12 +14,10 @@ const SANPortalLayout = ({ children }) => {
         <Layout className={classes}>
             <SANMenu showContinueBar />
             <Layout>
-                <Scrollbars renderTrackHorizontal={() => <div />}>
-                    <Layout.Content className='san-portal-layout__content'>
-                        {children}
-                    </Layout.Content>
-                    <SANFooter />
-                </Scrollbars>
+                <Layout.Content className='san-portal-layout__content'>
+                    {children}
+                </Layout.Content>
+                <SANFooter />
             </Layout>
         </Layout>
     )
