@@ -9,18 +9,18 @@ export const GET_HISTORIC_QUESTIONS = gql`
             where: $where
         ) {
             data {
-                text_answer
                 correct
+                # alternatives that the user chose
+                alternatives {
+                    data {
+                        id
+                        text
+                    }
+                }
                 question {
                     id
                     statement
                     year
-                    observation
-                    type
-                    difficulty {
-                        level
-                        name
-                    }
                     instituition {
                         id
                         name
@@ -29,7 +29,35 @@ export const GET_HISTORIC_QUESTIONS = gql`
                         data {
                             id
                             text
-                            correct
+                        }
+                    }
+                    images {
+                        data {
+                            id
+                            sizedImages {
+                                id
+                                small {
+                                    id
+                                    filename
+                                    url
+                                    height
+                                    width
+                                }
+                                medium {
+                                    id
+                                    filename
+                                    url
+                                    height
+                                    width
+                                }
+                                large {
+                                    id
+                                    filename
+                                    url
+                                    height
+                                    width
+                                }
+                            }
                         }
                     }
                 }

@@ -6,13 +6,10 @@ import { useTranslation } from 'react-i18next'
 import { Skeleton } from 'antd'
 
 import ESTypography from '../../Atoms/Typography'
-import ESButton from '../../Atoms/Button'
 import ESAlternative from '../../Atoms/Alternative'
-import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESSpin from '../../Atoms/Spin'
 import ESImageViewer from '../ImageViewer'
 import ESCard from '../Card'
-import ESComment from '../Comment'
 
 import ESQuestionFooter from './Footer'
 import ESQuestionComment from './Comment'
@@ -20,6 +17,7 @@ import ESQuestionComment from './Comment'
 const ESQuestion = ({
     answer,
     question,
+    comment,
     onSelect,
     onConfirm,
     onNext,
@@ -170,8 +168,9 @@ const ESQuestion = ({
                         </>
                     )}
                 </div>
-                {question && question.comment && answer && (
-                    <ESQuestionComment {...question.comment} />
+
+                {question && comment && answer && (
+                    <ESQuestionComment {...comment} />
                 )}
                 <ESQuestionFooter
                     {...{
@@ -208,6 +207,14 @@ ESQuestion.propTypes = {
             percent: PropTypes.number
         })
     ),
+    comment: PropTypes.shape({
+        user: PropTypes.shape({
+            name: PropTypes.string,
+            profile_picture: PropTypes.string
+        }),
+        text: PropTypes.string,
+        time: PropTypes.string
+    }),
     question: PropTypes.shape({
         id: PropTypes.string,
         image: PropTypes.string,
@@ -215,14 +222,6 @@ ESQuestion.propTypes = {
         year: PropTypes.number,
         instituition: PropTypes.shape({
             name: PropTypes.string
-        }),
-        comment: PropTypes.shape({
-            author: PropTypes.shape({
-                name: PropTypes.string,
-                avatar: PropTypes.string
-            }),
-            content: PropTypes.string,
-            time: PropTypes.string
         }),
         alternatives: PropTypes.shape({
             data: PropTypes.arrayOf(

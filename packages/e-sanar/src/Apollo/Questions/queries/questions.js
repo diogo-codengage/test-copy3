@@ -7,12 +7,6 @@ export const GET_QUESTIONS = gql`
                 id
                 statement
                 year
-                observation
-                type
-                difficulty {
-                    level
-                    name
-                }
                 instituition {
                     id
                     name
@@ -21,6 +15,35 @@ export const GET_QUESTIONS = gql`
                     data {
                         id
                         text
+                    }
+                }
+                images {
+                    data {
+                        id
+                        sizedImages {
+                            id
+                            small {
+                                id
+                                filename
+                                url
+                                height
+                                width
+                            }
+                            medium {
+                                id
+                                filename
+                                url
+                                height
+                                width
+                            }
+                            large {
+                                id
+                                filename
+                                url
+                                height
+                                width
+                            }
+                        }
                     }
                 }
             }

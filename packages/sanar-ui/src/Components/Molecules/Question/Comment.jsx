@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 
 import { useTranslation } from 'react-i18next'
 
@@ -8,7 +7,7 @@ import ESTypography from '../../Atoms/Typography'
 import ESButton from '../../Atoms/Button'
 import ESComment from '../Comment'
 
-const ESQuestionComment = ({ author, content, time }) => {
+const ESQuestionComment = ({ user, text, time }) => {
     const { t } = useTranslation('sanarui')
 
     return (
@@ -24,8 +23,8 @@ const ESQuestionComment = ({ author, content, time }) => {
             <ESComment
                 monitor
                 className='es-question__content-comment__body'
-                author={author}
-                content={content}
+                user={user}
+                text={text}
                 time={time}
             />
         </div>
@@ -33,11 +32,11 @@ const ESQuestionComment = ({ author, content, time }) => {
 }
 
 ESQuestionComment.propTypes = {
-    author: PropTypes.shape({
+    user: PropTypes.shape({
         name: PropTypes.string,
-        avatar: PropTypes.string
+        profile_picture: PropTypes.string
     }),
-    content: PropTypes.string,
+    text: PropTypes.string,
     time: PropTypes.string
 }
 

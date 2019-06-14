@@ -21,16 +21,6 @@ const question = {
         id: 'id-instituition-ufba',
         name: 'Ufba'
     },
-    comment: {
-        author: {
-            name: 'San Holo',
-            avatar:
-                'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-        },
-        content:
-            'Mauris imperdiet orci dapibus, commodo libero nec, interdum tortor. Morbi in nibh faucibus, iaculis lorem vitae, cursus velit. Etiam non blandit ex. Mauris in fringilla velit. Fusce eu dictum neque. Maecenas tristique sem neque, vel congue libero efficitur at. Cras molestie ipsum at sem sollicitudin consectetur.',
-        time: '2018-08-07T08:40:51.620Z'
-    },
     alternatives: {
         data: [
             {
@@ -57,10 +47,24 @@ const question = {
     }
 }
 
+const comment = {
+    id: '5c49fedaf7d3a400265ec0dd',
+    text:
+        'Os enunciados das questões de ECG são tão importantes quanto o próprio traçado. Numa paciente tabagista e diabética com precordialgia irradiada para membro superior esquerdo e náuseas, o que esperamos do ECG? Síndrome Coronariana Aguda! ECG com supradesnivelamento em DII, DIIII e AVR? Parede inferior! Mas calma lá...Além disso, temos infradesnivelamento em D1 + aVL (parede lateral alta) e em precordiais, mais evidente em V1, V2 e V3. O que isso pode ser? Uma imagem em espelho da parede posterior. Idealmente precisaríamos complementar o ECG com as derivações V7 e V8 (e também V3R+V4R, para avaliar acometimento de VD, já que estamos diante de um IAMCSST de parede inferior). Qual a provável artéria acometida? Coronária Direita! Resposta: letra A.',
+    user: {
+        name: 'San Holo',
+        profile_picture:
+            'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+    },
+    labels: 'expert',
+    time: '2018-08-07T08:40:51.620Z'
+}
+
 const Example = () => {
     const [currentQuestion, setCurrentQuestion] = useState()
     const [answer, setAnswer] = useState()
     const [loading, setLoading] = useState(true)
+    const [especialist, setEspecialist] = useState()
 
     useEffect(() => {
         setTimeout(() => {
@@ -73,6 +77,7 @@ const Example = () => {
         setLoading(true)
         setTimeout(() => {
             setAnswer(`id-alternative-${Math.floor(Math.random() * 4)}`)
+            setEspecialist(comment)
             setLoading(false)
         }, 3000)
     }
@@ -85,6 +90,7 @@ const Example = () => {
         setLoading(true)
         setTimeout(() => {
             setAnswer()
+            setEspecialist()
             setCurrentQuestion({
                 ...question,
                 id: Math.floor(Math.random() * 100).toString()
@@ -98,6 +104,7 @@ const Example = () => {
             loading={loading}
             question={currentQuestion}
             answer={answer}
+            comment={especialist}
             onConfirm={handleConfirm}
             onNext={handleNext}
             onJump={handleJump}
