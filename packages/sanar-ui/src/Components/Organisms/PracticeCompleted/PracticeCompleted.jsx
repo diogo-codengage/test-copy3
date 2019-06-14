@@ -39,7 +39,7 @@ const GraphContent = ({ label, value }) => (
         >
             {label}
         </ESTypography>
-        <ESTypography variant='caption2' strong>
+        <ESTypography variant='caption' strong>
             {value}%
         </ESTypography>
     </div>
@@ -111,12 +111,12 @@ const ESPracticeCompleted = ({
                                 <ESCircleProgress
                                     strokeWidth={3}
                                     showInfo
-                                    format={() => (
+                                    format={percent => (
                                         <GraphContent
                                             label={t(
                                                 'practiceCompleted.correct'
                                             )}
-                                            value={correct}
+                                            value={percent}
                                         />
                                     )}
                                     width={76}
@@ -128,10 +128,10 @@ const ESPracticeCompleted = ({
                                 <ESCircleProgress
                                     strokeWidth={3}
                                     showInfo
-                                    format={() => (
+                                    format={percent => (
                                         <GraphContent
                                             label={t('practiceCompleted.wrong')}
-                                            value={wrong}
+                                            value={percent}
                                         />
                                     )}
                                     width={76}
@@ -143,12 +143,12 @@ const ESPracticeCompleted = ({
                                 <ESCircleProgress
                                     strokeWidth={3}
                                     showInfo
-                                    format={() => (
+                                    format={percent => (
                                         <GraphContent
                                             label={t(
                                                 'practiceCompleted.skipped'
                                             )}
-                                            value={skipped}
+                                            value={percent}
                                         />
                                     )}
                                     width={76}

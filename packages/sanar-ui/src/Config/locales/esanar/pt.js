@@ -216,6 +216,12 @@ export default {
         }
     },
     questionBase: {
+        hitoricButton: 'Histórico',
+        questionsButton: 'BANCO DE QUESTÕES',
+        completed: {
+            title: 'Resultado',
+            subtitle: 'Verifique como você se saiu nessa sessão prática'
+        },
         question: {
             title: 'Questões',
             endPracticeButton: 'Encerrar prática',
@@ -228,13 +234,11 @@ export default {
         historic: {
             title: 'Histórico de questões',
             subtitle: 'Confira as últimas questões respondidas por você',
-            questionsButton: 'BANCO DE QUESTÕES',
             empty: 'Não há histórico'
         },
         filter: {
             title: 'Banco de questões',
             subtitle: 'Hora de praticar tudo o que você aprendeu no curso',
-            hitoricButton: 'Histórico',
             startPracticeButton: 'Iniciar prática',
             subject: {
                 title: 'Assunto',

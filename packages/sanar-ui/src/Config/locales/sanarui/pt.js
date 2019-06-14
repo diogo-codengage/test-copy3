@@ -96,6 +96,10 @@ export default {
         expertComment: 'Comentário do especialista',
         confirm: 'Confirmar',
         next: 'Próxima',
+        previous: 'Anterior',
         jump: 'Pular'
+    },
+    playlist: {
+        youAreIn: 'Você está em'
     }
 }

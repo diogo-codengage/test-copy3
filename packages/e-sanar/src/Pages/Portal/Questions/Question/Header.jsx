@@ -12,12 +12,46 @@ import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 
 import { useQuestionsContext } from '../Context'
+import { Modal } from 'antd'
 
 const intlPath = 'questionBase.question.'
 
 const SANQuestionHeader = ({ history }) => {
-    const { stopwatchRef, totalQuestions, currentIndex } = useQuestionsContext()
+    const {
+        stopwatchRef,
+        totalQuestions,
+        currentIndex,
+        skippedQuestions,
+        totalAnsweredQuestions,
+        reset
+    } = useQuestionsContext()
     const { t } = useTranslation('esanar')
+
+    const validatePractice = () => {
+        if (
+            totalAnsweredQuestions === 0 ||
+            totalAnsweredQuestions === skippedQuestions
+        ) {
+            const modal = Modal.confirm({
+                centered: true,
+                title: 'Ops! Nenhuma questão foi respondida.',
+                content:
+                    'Que tal aprimorar seus conhecimentos reiniciando a prática?',
+                okText: 'Reiniciar prática',
+                cancelText: 'Encerrar',
+                onOk: () => {
+                    reset()
+                    modal.destroy()
+                },
+                onCancel: () => {
+                    history.push('../filtro')
+                }
+            })
+            return
+        }
+
+        history.push('../finalizado')
+    }
 
     return (
         <div className='questions-question__header'>
@@ -46,9 +80,7 @@ const SANQuestionHeader = ({ history }) => {
                                 variant='outlined'
                                 uppercase
                                 bold
-                                onClick={() =>
-                                    history.push('/aluno/banco-questoes/filtro')
-                                }
+                                onClick={() => validatePractice()}
                             >
                                 {t(`${intlPath}endPracticeButton`)}
                             </ESButton>

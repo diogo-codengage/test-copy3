@@ -1,0 +1,97 @@
+.es-playlist {
+    &__current-info {
+        margin: @margin-lg @margin-md;
+        position: relative;
+
+        &__description {
+            margin-left: 52px;
+            & .title {
+                color: @white-6;
+            }
+
+            & .description {
+                color: @white;
+            }
+        }
+
+        &__index {
+            position: absolute;
+            border-radius: @border-radius-base;
+            background-color: @white-1;
+            width: 36px;
+            height: 36px;
+            margin-right: @margin-md;
+            & .es-typography {
+                color: @white;
+                line-height: 36px;
+                text-align: center;
+            }
+        }
+    }
+
+    &-list {
+        &__item {
+            padding: @padding-md;
+            position: relative;
+            cursor: pointer;
+
+            &:nth-child(odd) {
+                background-color: @grey-2;
+            }
+            &:nth-child(even) {
+                background-color: @grey-4;
+            }
+
+            & .icon {
+                padding: 0 @padding-xs;
+            }
+
+            & .index {
+                width: 12px;
+                text-align: center;
+            }
+
+            & .icon,
+            & .index {
+                color: @white-4;
+            }
+            & .description {
+                color: @white-6;
+                width: ~'calc(100% - 77px)';
+            }
+            & .time {
+                color: @white-5;
+                position: absolute;
+                right: 16px;
+                top: ~'calc(100% - 31px)';
+            }
+
+            &--finish .icon {
+                color: @secondary-color;
+            }
+
+            &--current {
+                & .icon,
+                & .es-typography {
+                    color: @white;
+                }
+                &:before {
+                    content: '';
+                    position: absolute;
+                    width: 2px;
+                    height: 100%;
+                    left: 0;
+                    top: 0;
+                    background-color: @secondary-color;
+                }
+            }
+
+            &:hover {
+                & .icon,
+                & .es-typography {
+                    color: @white-8;
+                }
+            }
+        }
+    }
+}

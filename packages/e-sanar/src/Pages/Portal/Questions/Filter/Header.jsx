@@ -10,7 +10,8 @@ import { ESFormItem } from 'sanar-ui/dist/Components/Molecules/Form'
 
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 
-const intlPath = 'questionBase.filter.'
+const intlQuestionsPath = 'questionBase.'
+const intlQuestionsFilterPath = `${intlQuestionsPath}filter.`
 
 const SANQuestionsFilterHeader = ({ goHistory }) => {
     const { t } = useTranslation('esanar')
@@ -21,10 +22,10 @@ const SANQuestionsFilterHeader = ({ goHistory }) => {
                 <ESSessionTitle
                     title={
                         <ESTypography level={4}>
-                            {t(`${intlPath}title`)}
+                            {t(`${intlQuestionsFilterPath}title`)}
                         </ESTypography>
                     }
-                    subtitle={t(`${intlPath}subtitle`)}
+                    subtitle={t(`${intlQuestionsFilterPath}subtitle`)}
                     extra={
                         <div className='d-flex align-items-center'>
                             <ESButton
@@ -35,7 +36,7 @@ const SANQuestionsFilterHeader = ({ goHistory }) => {
                                 className='mr-lg'
                                 onClick={goHistory}
                             >
-                                {t(`${intlPath}hitoricButton`)}
+                                {t(`${intlQuestionsPath}hitoricButton`)}
                             </ESButton>
                             <ESFormItem>
                                 <ESButton
@@ -46,7 +47,9 @@ const SANQuestionsFilterHeader = ({ goHistory }) => {
                                     size='small'
                                     type='submit'
                                 >
-                                    {t(`${intlPath}startPracticeButton`)}
+                                    {t(
+                                        `${intlQuestionsFilterPath}startPracticeButton`
+                                    )}
                                 </ESButton>
                             </ESFormItem>
                         </div>

@@ -2,53 +2,32 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import { useTranslation } from 'react-i18next'
 import { Skeleton } from 'antd'
 
 import ESTypography from '../../Atoms/Typography'
-import ESButton from '../../Atoms/Button'
 import ESAlternative from '../../Atoms/Alternative'
-import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESSpin from '../../Atoms/Spin'
 import ESImageViewer from '../ImageViewer'
 import ESCard from '../Card'
-import ESComment from '../Comment'
 
-const ExpertComment = ({ author, content, time }) => {
-    const { t } = useTranslation('sanarui')
-    return (
-        <div className='es-question__content-comment'>
-            <div className='es-question__content-comment__header'>
-                <ESTypography variant='body1' strong>
-                    {t('question.expertComment')}
-                </ESTypography>
-                <ESButton variant='outlined' size='xsmall' bold disabled>
-                    {t('global.sendFeedback')}
-                </ESButton>
-            </div>
-            <ESComment
-                monitor
-                className='es-question__content-comment__body'
-                author={author}
-                content={content}
-                time={time}
-            />
-        </div>
-    )
-}
+import ESQuestionFooter from './Footer'
+import ESQuestionComment from './Comment'
 
 const ESQuestion = ({
     answer,
     question,
+    comment,
     onSelect,
     onConfirm,
     onNext,
+    onPrevious,
     onJump,
     onlyStep,
     loading,
-    full
+    full,
+    stats,
+    isHistoric
 }) => {
-    const { t } = useTranslation('sanarui')
     const [striped, setStripe] = useState({})
     const [selected, setSelect] = useState(null)
     const [confirmed, setConfirm] = useState(false)
@@ -62,6 +41,7 @@ const ESQuestion = ({
 
     const handleConfirm = () => {
         setConfirm(true)
+        setStripe({})
         onConfirm && onConfirm(selected)
     }
 
@@ -106,6 +86,12 @@ const ESQuestion = ({
         return 'normal'
     }
 
+    const getPercent = id => {
+        if (!stats || !stats.length) return
+        const statistic = stats.find(statistic => statistic.id === id)
+        return statistic && parseInt(statistic.percent)
+    }
+
     useEffect(() => {
         setStripe({})
     }, [question])
@@ -124,7 +110,7 @@ const ESQuestion = ({
                         {question && (
                             <>
                                 <ESTypography level={6} className='mb-md'>
-                                    {`${question.instituition.name}, ${
+                                    {`${question.institution.name}, ${
                                         question.year
                                     }`}
                                 </ESTypography>
@@ -134,9 +120,11 @@ const ESQuestion = ({
                                 >
                                     {question.statement}
                                 </ESTypography>
-                                {question.image && (
+                                {question.images && question.images.data[0] && (
                                     <ESImageViewer
-                                        image={question.image}
+                                        images={
+                                            question.images.data[0].sizedImages
+                                        }
                                         className='mb-md'
                                     />
                                 )}
@@ -169,7 +157,7 @@ const ESQuestion = ({
                                                 [index]: !striped[index]
                                             })
                                         }
-                                        percent={alternative.percent}
+                                        percent={getPercent(alternative.id)}
                                         onSelect={handleSelect}
                                         status={verifyStatus(
                                             alternative.id,
@@ -181,36 +169,23 @@ const ESQuestion = ({
                         </>
                     )}
                 </div>
-                {question && question.comment && answer && (
-                    <ExpertComment {...question.comment} />
+
+                {question && comment && answer && (
+                    <ESQuestionComment {...comment} />
                 )}
-                <div className='es-question__footer'>
-                    <ESButton
-                        size='small'
-                        variant='text'
-                        uppercase
-                        bold
-                        onClick={handleJump}
-                        disabled={answer || !question}
-                    >
-                        <ESEvaIcon name='refresh-outline' />
-                        {t('question.jump')}
-                    </ESButton>
-                    <ESButton
-                        size='small'
-                        color='primary'
-                        variant='outlined'
-                        uppercase
-                        bold
-                        disabled={!selected || !question}
-                        onClick={answer ? handleNext : handleConfirm}
-                    >
-                        {onlyStep || answer
-                            ? t('question.next')
-                            : t('question.confirm')}
-                        <ESEvaIcon name='arrow-forward-outline' />
-                    </ESButton>
-                </div>
+                <ESQuestionFooter
+                    {...{
+                        handleJump,
+                        handleNext,
+                        handleConfirm,
+                        handlePrevious: onPrevious,
+                        selected,
+                        answer,
+                        question,
+                        onlyStep,
+                        isHistoric
+                    }}
+                />
             </ESSpin>
         </ESCard>
     )
@@ -222,24 +197,55 @@ ESQuestion.propTypes = {
     onSelect: PropTypes.func,
     onConfirm: PropTypes.func,
     onNext: PropTypes.func,
+    onPrevious: PropTypes.func,
     onJump: PropTypes.func,
     onlyStep: PropTypes.bool,
     full: PropTypes.bool,
+    isHistoric: PropTypes.bool,
+    stats: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string,
+            percent: PropTypes.number
+        })
+    ),
+    comment: PropTypes.shape({
+        user: PropTypes.shape({
+            name: PropTypes.string,
+            profile_picture: PropTypes.string
+        }),
+        text: PropTypes.string,
+        time: PropTypes.string
+    }),
     question: PropTypes.shape({
         id: PropTypes.string,
-        image: PropTypes.string,
+        images: PropTypes.shape({
+            data: PropTypes.arrayOf(
+                PropTypes.shape({
+                    id: PropTypes.string,
+                    sizedImages: PropTypes.shape({
+                        small: PropTypes.shape({
+                            width: PropTypes.number,
+                            height: PropTypes.number,
+                            url: PropTypes.string
+                        }),
+                        medium: PropTypes.shape({
+                            width: PropTypes.number,
+                            height: PropTypes.number,
+                            url: PropTypes.string
+                        }),
+                        large: PropTypes.shape({
+                            width: PropTypes.number,
+                            height: PropTypes.number,
+                            url: PropTypes.string
+                        })
+                    })
+                })
+            )
+        }),
         statement: PropTypes.string,
         year: PropTypes.number,
-        instituition: PropTypes.shape({
+        institution: PropTypes.shape({
             name: PropTypes.string
-        }),
-        comment: PropTypes.shape({
-            author: PropTypes.shape({
-                name: PropTypes.string,
-                avatar: PropTypes.string
-            }),
-            content: PropTypes.string,
-            time: PropTypes.string
         }),
         alternatives: PropTypes.shape({
             data: PropTypes.arrayOf(
