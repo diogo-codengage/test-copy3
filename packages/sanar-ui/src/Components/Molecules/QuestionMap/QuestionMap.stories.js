@@ -4,7 +4,7 @@ import { boolean } from '@storybook/addon-knobs'
 
 import ESQuestionMap from './QuestionMap'
 
-const map = [
+const quiz = [
     {
         index: 1,
         status: 'correct'
@@ -19,13 +19,75 @@ const map = [
     },
     {
         index: 4,
-        status: 'current'
+        current: true
     },
     {
         index: 5
     }
 ]
 
-storiesOf('Molecules.QuestionMap', module).add('Simple', () => (
-    <ESQuestionMap visible={boolean('Visible', true)} />
-))
+const mock = [
+    {
+        index: 1,
+        status: 'correct'
+    },
+    {
+        index: 2,
+        status: 'correct'
+    },
+    {
+        index: 3,
+        status: 'wrong'
+    },
+    {
+        index: 4
+    },
+    {
+        index: 5,
+        current: true
+    },
+    {
+        index: 6,
+        status: 'correct'
+    },
+    {
+        index: 7,
+        status: 'correct'
+    },
+    {
+        index: 8,
+        status: 'correct'
+    },
+    {
+        index: 9,
+        status: 'correct'
+    },
+    {
+        index: 10,
+        status: 'correct'
+    },
+    {
+        index: 11,
+        status: 'correct'
+    },
+    {
+        index: 12
+    },
+    {
+        index: 13
+    },
+    {
+        index: 14
+    },
+    {
+        index: 15
+    }
+]
+
+storiesOf('Molecules.QuestionMap', module)
+    .add('Quiz', () => (
+        <ESQuestionMap visible={boolean('Visible', true)} items={quiz} />
+    ))
+    .add('Mock', () => (
+        <ESQuestionMap visible={boolean('Visible', true)} items={mock} mock />
+    ))
