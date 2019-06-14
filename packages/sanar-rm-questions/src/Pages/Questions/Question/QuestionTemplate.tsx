@@ -2,27 +2,31 @@ import React from 'react'
 import ESQuestion from 'sanar-ui/dist/Components/Molecules/Question'
 import { RMContainer } from '../../../Components/RMContainer'
 import { RMHeader } from '../../../Components/RMHeader'
+import { useQuestionsContext } from '../QuestionsContext'
+import { SessionStatusDashboard } from './SessionStatusDashboard'
 
 interface IProps {
-    question: any
     onConfirm?: Function
     onNext?: Function
     onJump?: Function
-    loading?: boolean
 }
 
-export const QuestionTemplate = ({question, onConfirm, onNext, onJump, loading }:IProps) => {
+export const QuestionTemplate = ({ onConfirm, onNext, onJump }:IProps) => {
+
+    const questionCtx = useQuestionsContext()
 
     return <>
         <RMHeader />
+        <SessionStatusDashboard/>
         <RMContainer>
             <ESQuestion
-                loading={loading}
-                question={question}
-                answered={true}
+                loading={!questionCtx.currentQuestion}
+                question={questionCtx.currentQuestion}
+                answer={questionCtx.currentAnswerId}
                 onConfirm={onConfirm}
                 onNext={onNext}
                 onJump={onJump}
+                onlyStep={true}
             />
             {/*<pre>{JSON.stringify(question, null,4)}</pre>*/}
         </RMContainer>

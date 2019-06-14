@@ -1,26 +1,12 @@
-import React, { useState } from 'react'
-import { Question } from './Question/Question'
-import { Filter } from './Filter/Filter'
+import React from 'react';
 
-interface IProps {
-    isFromCourse?: boolean
-    courseLinkReturn: string
-}
+import { QuestionsContextProvider } from './QuestionsContext'
+import { QuestionsTemplate } from './QuestionsTemplate'
 
-export const QuestionsPage = ({isFromCourse, courseLinkReturn}:IProps) => {
-
-    const [editingFilters, setEditingFilters] = useState(true)
-    const [questionsFilter, setQuestionsFilter] = useState()
-
-    const startQuestionsWithFilter = (filters) => {
-        console.log(filters)
-        setQuestionsFilter(filters)
-        setEditingFilters(false)
-    }
-
-    if(editingFilters)
-        return <Filter onStart={filters => startQuestionsWithFilter(filters) } />
-
-    return <Question isFromCourse={isFromCourse} questionsFilter={questionsFilter}/>
-
+export const QuestionsPage = () => {
+    return (
+        <QuestionsContextProvider>
+            <QuestionsTemplate/>
+        </QuestionsContextProvider>
+    )
 }

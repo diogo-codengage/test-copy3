@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { FilterTemplate } from './FilterTemplate'
-import Query from 'react-apollo/Query'
 import { GET_FILTERS } from '../../../Apollo/Questions/get-filters'
 import { RMSplashLoader } from '../../../Components/RMSplashLoader'
+import { useQuestionsContext } from '../QuestionsContext'
+import { ApolloContext } from 'react-apollo'
 
 const normalizeSpecialties = (list) => {
+    console.log({list})
+
     list.forEach(e => e.tags = e.tags.data)
     const roots = list.filter(s => s.parent === null)
     roots.forEach(e => e.children = [])
@@ -15,18 +18,20 @@ const normalizeSpecialties = (list) => {
     return roots
 }
 
-interface IProps {
-    onStart: Function
-}
+export const Filter = () => {
 
-export const Filter = ({onStart}:IProps) => {
-    return (
-        <Query query={GET_FILTERS}>
-            {({ loading, error, data }) => {
-                if(loading) return <RMSplashLoader />
-                const specialties = normalizeSpecialties(data.specialties.data)
-                return <FilterTemplate  specialties={specialties} onStart={onStart}/>
-            }}
-        </Query>
-    )
+    const questionsCtx = useQuestionsContext()
+    const {client} = useContext(ApolloContext)
+
+    const hasSpecialties = !!questionsCtx.specialties
+
+    if(!hasSpecialties)  {
+        client.query({query: GET_FILTERS}).then(({data}) => {
+            questionsCtx.setSpecialties(normalizeSpecialties(data.specialties.data))
+        })
+        return <RMSplashLoader />
+    }
+
+    return <FilterTemplate/>
+
 }

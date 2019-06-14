@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import CardSelectFilter from 'sanar-ui/dist/Components/Molecules/CardSelectFilter'
 import { ESCol, ESRow } from 'sanar-ui/dist/Components/Atoms/Grid'
@@ -13,16 +12,19 @@ import ESCard from 'sanar-ui/dist/Components/Molecules/Card'
 import iconSpecialties from '../../../assets/images/icon-specialties.png'
 import iconSubSpecialties from '../../../assets/images/icon-subspecialties.png'
 import iconTheme from '../../../assets/images/icon-theme.png'
-import { Speciality } from '../../../Apollo/speciality'
 import { BRAZIL_STATES } from './brazil-states'
 import { RMContainer } from '../../../Components/RMContainer'
 import { RMHeader } from '../../../Components/RMHeader'
+import { IFormFilterState, QuestionPageType, useQuestionsContext } from '../QuestionsContext'
+import { QuestionsInputFilter } from '../../../Apollo/QuestionsInputFilter'
 
-
-interface IProps {
-    specialties: Speciality[],
-    onStart?: Function,
-}
+// const toQuestionFilter = (formFilter: IFormFilterState): QuestionsInputFilter  => ({
+//         specialtiesIds: formFilter.selectedSpecialties.map(s => s.value)
+//             .concat( formFilter.selectedSubSpecialties.map(s => s.value)),
+//         state: formFilter.selectedState ? formFilter.selectedState.value : null,
+//         tagsIds: formFilter.selectedTags.map(t => t.value),
+//         isCommentedByExpert: formFilter.isCommentedByExpert
+// })
 
 const RMInputContainer = ({ label, input }) =>
     <div style={
@@ -40,28 +42,23 @@ interface SelectFilterItem {
     value: any,
 }
 
-const specialityToSelectFilterItem = (s: Speciality): SelectFilterItem => {
-    return {
-        label: s.label,
-        value: s.value
+export const FilterTemplate = () => {
+    console.log('re rendering')
+    const questionsCtx = useQuestionsContext()
+    const filters = questionsCtx.formFilterState;
+    const setFilters = questionsCtx.setFormFilterState;
+
+    const normalizeFiltersValues = () => {
+        questionsCtx.allSpecialties = questionsCtx.specialties
+        questionsCtx.allSubSpecialties = questionsCtx.selectedSpecialties.flatMap(s => s.children)
+        questionsCtx.allTags = questionsCtx.allSpecialties.flatMap(s => s.tags).concat(
+            // questionsCtx.allSubSpecialties.flatMap(s => s.children).flatMap(s => s.tags)
+        );
     }
-}
 
-export const FilterTemplate = ({ specialties, onStart }: IProps) => {
-
-    const [filters, setFilters] = useState({
-        specialties: [],
-        subSpecialties: [],
-        tags: [],
-        state: null,
-        year: null,
-        onlyWithComments: false
-    })
-    const [showAdvancedFilters, setShowAdvancedFilters] = useState(false)
-    const [subSpecialties, setSubSpecialties] = useState([])
-
-    const states = ['PR', 'SC']
-    const tags = specialties.flatMap(s => s.tags);
+    if(questionsCtx.allSpecialties.length === 0) {
+        normalizeFiltersValues();
+    }
 
     const btnStart = <ESButton
         color='primary'
@@ -69,20 +66,11 @@ export const FilterTemplate = ({ specialties, onStart }: IProps) => {
         uppercase
         blockOnlyMobile
         onClick={() => {
-            onStart(filters)
+            console.log({filters})
+            // questionsCtx.setFilters(toQuestionFilter(filters))
+            questionsCtx.setCurrentPage(QuestionPageType.Question)
         }}
     >INICIAR PRÁTICA</ESButton>
-
-    const setSpecialties = (v: SelectFilterItem[]) => {
-
-        const _subs = v.map(i => specialties.find(s => s.value === i.value))
-            .flatMap(s => s.children).map(specialityToSelectFilterItem);
-
-        const _subSelected =  filters.subSpecialties.filter( subSpecialtySelected => _subs.find( sub => sub.value === subSpecialtySelected.value ))
-
-        setSubSpecialties(_subs)
-        setFilters({ ...filters, specialties: v, subSpecialties: _subSelected })
-    }
 
     return (
         <>
@@ -93,28 +81,37 @@ export const FilterTemplate = ({ specialties, onStart }: IProps) => {
                         <CardSelectFilter
                             filterName="Especialidade"
                             image={iconSpecialties}
-                            items={specialties.map(specialityToSelectFilterItem)}
-                            onChange={v => setSpecialties(v)}
-                            value={filters.specialties}
+                            items={questionsCtx.allSpecialties}
+                            onChange={v => {
+                                questionsCtx.setSelectedSpecialties(v)
+                                normalizeFiltersValues()
+                            }}
+                            value={questionsCtx.selectedSpecialties}
                         />
                     </ESCol>
                     <ESCol span={8}>
                         <CardSelectFilter
-                            disabled={subSpecialties.length === 0}
+                            // disabled={filters.selectedSpecialties.length === 0}
                             filterName="Subespecialidade"
                             image={iconSubSpecialties}
-                            items={subSpecialties}
-                            onChange={v => setFilters({ ...filters, subSpecialties: v })}
-                            value={filters.subSpecialties}
+                            items={questionsCtx.allSubSpecialties}
+                            onChange={v => {
+                                questionsCtx.setSelectedSubSpecialties(v)
+                                normalizeFiltersValues();
+                            }}
+                            value={questionsCtx.selectedSubSpecialties}
                         />
                     </ESCol>
                     <ESCol span={8}>
                         <CardSelectFilter
                             filterName="Tema"
                             image={iconTheme}
-                            items={tags}
-                            onChange={v => setFilters({...filters, tags: v})}
-                            value={filters.tags}
+                            items={questionsCtx.allTags}
+                            onChange={v => {
+                                questionsCtx.setSelectedTags(v)
+                                normalizeFiltersValues()
+                            }}
+                            value={questionsCtx.selectedTags}
                         />
                     </ESCol>
                 </ESRow>
@@ -126,8 +123,8 @@ export const FilterTemplate = ({ specialties, onStart }: IProps) => {
                                 label={<label>Estado</label>}
                                 input={<ESSelect
                                     style={{ width: '100%' }}
-                                    onSelect={v => setFilters({...filters, state: v})}
-
+                                    defaultValue={filters.selectedState}
+                                    onSelect={v => setFilters({...filters, selectedState: v})}
                                 >
                                     {BRAZIL_STATES.map(s =>  <ESOption key={s.value} value={s.value}>{s.label}</ESOption>) }
                                 </ESSelect>}
@@ -137,8 +134,8 @@ export const FilterTemplate = ({ specialties, onStart }: IProps) => {
                         <ESCol span={8}>
                             <RMInputContainer
                                 label={'Ano'}
-                                input={<ESDatePicker onPanelChange={v => { setFilters({...filters, year: v})} }
-                                                     value={filters.year}
+                                input={<ESDatePicker onPanelChange={v => { setFilters({...filters, selectedYear: v})} }
+                                                     value={filters.selectedYear}
                                                      d
                                                      mode={'year'} style={{ width: '100%' }}/>}
                             />
@@ -155,7 +152,7 @@ export const FilterTemplate = ({ specialties, onStart }: IProps) => {
                                     borderRadius: '4px'
                                 }
                             }>
-                                Apenas comentadas<ESSwitch onChange={ v => setFilters({...filters, onlyWithComments: v}) } value={filters.onlyWithComments}/>
+                                Apenas comentadas<ESSwitch onChange={ v => setFilters({...filters, isCommentedByExpert: v}) } checked={filters.isCommentedByExpert}/>
                             </div>
                         </ESCol>
                     </ESRow>

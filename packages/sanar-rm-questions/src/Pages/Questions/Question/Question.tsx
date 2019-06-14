@@ -1,60 +1,75 @@
 import React, { useContext, useEffect } from 'react'
 import { QuestionTemplate } from './QuestionTemplate'
-import { useState } from 'react'
 import { ApolloContext } from 'react-apollo'
-import { GET_QUESTION } from '../../../Apollo/Questions/get-question'
+import { getQuestionsQuery } from '../../../Apollo/Questions/get-questions'
+import { useQuestionsContext } from '../QuestionsContext'
 
-interface IPros {
-    questionsFilter
-    isFromCourse: boolean
-}
+export const Question = () => {
 
-export const Question = ({ questionsFilter, isFromCourse }: IPros) => {
-
-    const [question, setQuestion] = useState()
-    const [questions, setQuestions] = useState([])
-    // const [loading, setLoading] = useState(false)
-
+    const questionsCtx = useQuestionsContext()
     const { client } = useContext(ApolloContext)
 
     const pushQuestions = (moreQuestions) => {
+        let questions = questionsCtx.questions
+
         questions.push(...moreQuestions)
-        if (!question) {
-            setQuestion(questions.shift())
+        if (!questionsCtx.currentQuestion) {
+            questionsCtx.setCurrentQuestion(questions.shift())
         }
-        setQuestions(questions)
+        questionsCtx.setQuestions(questions)
     }
 
-    const nextQuestion = () => {
-        setQuestion(questions.shift())
+    const loadNextQuestion = () => {
+        let questions = questionsCtx.questions
+        questionsCtx.setCurrentQuestion(questions.shift())
+        questionsCtx.setQuestions(questions)
         if (questions.length === 1) {
             loadMoreQuestions()
         }
+        questionsCtx.setCurrentAnswerId(null)
     }
 
     const loadMoreQuestions = () => {
-        client.query({ query: GET_QUESTION, fetchPolicy: 'no-cache' })
-            .then(({ data }) => {
-                pushQuestions(data.questions.data)
-                // setLoading(false)
+        client.query(
+            {
+                query: getQuestionsQuery(questionsCtx.filters),
+                fetchPolicy: 'no-cache'
             })
+            .then(({ data }) => pushQuestions(data.questions.data))
     }
 
-    const skipQuestion = () => {
-        nextQuestion()
+    const onSkipQuestion = () => {
+        loadNextQuestion()
+        questionsCtx.increaseTotalSkipped()
     }
 
-    if(!question){
+    const onNextQuestion = (correct) => {
+        loadNextQuestion()
+
+        if(correct) {
+            questionsCtx.increaseTotalCorrect()
+        }else {
+            questionsCtx.increaseTotalWrong()
+        }
+    }
+
+    if(! questionsCtx.currentQuestion) {
         loadMoreQuestions();
     }
 
+    const onConfirmResponse = () => {
+        const answerId = questionsCtx.currentQuestion.alternatives.data
+            .find(alternative => alternative.correct === true).id
+
+        questionsCtx.setCurrentAnswerId(answerId)
+    }
+
     return (
-        <QuestionTemplate
-            loading={!question}
-            question={question}
-            onJump={skipQuestion}
-            onNext={v => console.log('onNext',{v})}
-            onConfirm={v => console.log('onConfirm',{v})}
-        />
+            <QuestionTemplate
+                onJump={onSkipQuestion}
+                onNext={onNextQuestion}
+                onConfirm={onConfirmResponse}
+            />
     )
+
 }

@@ -3,14 +3,38 @@ interface State {
     label: string,
 }
 
-export const BRAZIL_STATES: State[] = [
-    {
-        label: 'PR', value: 'PR'
-    },
-    {
-        label: 'SP', value: 'SP'
-    }
+const abreviations = [
+    'DF',
+    'AC',
+    'AL',
+    'AP',
+    'AM',
+    'BA',
+    'CE',
+    'ES',
+    'GO',
+    'MA',
+    'MT',
+    'MS',
+    'MG',
+    'PA',
+    'PB',
+    'PR',
+    'PE',
+    'PI',
+    'RJ',
+    'RN',
+    'RS',
+    'RO',
+    'RR',
+    'SC',
+    'SP',
+    'SE',
+    'TO']
 
-
-]
-
+export const BRAZIL_STATES: State[] = abreviations.map(s =>
+    ({
+        value: s,
+        label: s,
+    })
+)
