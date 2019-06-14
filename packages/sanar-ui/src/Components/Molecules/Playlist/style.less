@@ -33,6 +33,7 @@
         &__item {
             padding: @padding-md;
             position: relative;
+            cursor: pointer;
 
             &:nth-child(odd) {
                 background-color: @grey-2;
@@ -43,6 +44,11 @@
 
             & .icon {
                 padding: 0 @padding-xs;
+            }
+
+            & .index {
+                width: 12px;
+                text-align: center;
             }
 
             & .icon,
@@ -77,6 +83,13 @@
                     left: 0;
                     top: 0;
                     background-color: @secondary-color;
+                }
+            }
+
+            &:hover {
+                & .icon,
+                & .es-typography {
+                    color: @white-8;
                 }
             }
         }
