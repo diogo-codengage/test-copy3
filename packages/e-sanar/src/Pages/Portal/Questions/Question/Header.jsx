@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import { withRouter } from 'react-router-dom'
@@ -8,7 +8,6 @@ import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESStopwatch from 'sanar-ui/dist/Components/Atoms/Stopwatch'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
-import ESModal from 'sanar-ui/dist/Components/Atoms/Modal'
 
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 
