@@ -47,6 +47,22 @@ export const SANQuestionsProvider = ({ children }) => {
         ]
     )
 
+    const reset = () => {
+        setFilter({
+            ...filter,
+            reset: true
+        })
+        setSkippedQuestions(0)
+        setWrongQuestions(0)
+        setCorrectQuestions(0)
+        setTotalQuestions(0)
+        setCurrentIndex(1)
+
+        if (stopwatchRef && stopwatchRef.current) {
+            stopwatchRef.current.reset()
+        }
+    }
+
     const value = {
         filter,
         setFilter,
@@ -64,7 +80,8 @@ export const SANQuestionsProvider = ({ children }) => {
         currentIndex,
         setCurrentIndex,
         totalQuestions,
-        setTotalQuestions
+        setTotalQuestions,
+        reset
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

@@ -14,7 +14,8 @@ const SANPracticeCompletedPage = ({ history }) => {
     const {
         calcPercent,
         totalAnsweredQuestions,
-        stopwatchRef
+        stopwatchRef,
+        reset
     } = useQuestionsContext()
 
     useEffect(() => {
@@ -23,6 +24,12 @@ const SANPracticeCompletedPage = ({ history }) => {
                 'Você não iniciou nenhuma prática ou não respondeu nenhuma questão. Por favor, inicie uma nova.'
             )
             history.push('./filtro')
+        }
+    })
+
+    useEffect(() => {
+        return () => {
+            reset()
         }
     })
 

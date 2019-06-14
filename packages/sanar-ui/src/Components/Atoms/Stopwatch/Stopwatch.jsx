@@ -44,7 +44,15 @@ const formatTime = (hours, minutes, seconds, days) => {
 
 const ESStopwatch = forwardRef(({ className, autoStart }, ref) => {
     const [paused, setPaused] = useState(!autoStart)
-    const { hours, minutes, seconds, start, pause, days } = useStopwatch()
+    const {
+        hours,
+        minutes,
+        seconds,
+        start,
+        pause,
+        days,
+        reset
+    } = useStopwatch()
     const classes = classNames(
         'es-stopwatch',
         {
@@ -70,7 +78,8 @@ const ESStopwatch = forwardRef(({ className, autoStart }, ref) => {
     useImperativeHandle(ref, () => ({
         start: () => handleStart(),
         pause: () => handlePause(),
-        time: () => formatTime(hours, minutes, seconds)
+        time: () => formatTime(hours, minutes, seconds, days),
+        reset: () => reset()
     }))
 
     return (

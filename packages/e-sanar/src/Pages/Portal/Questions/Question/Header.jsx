@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { withRouter } from 'react-router-dom'
@@ -8,16 +8,51 @@ import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESStopwatch from 'sanar-ui/dist/Components/Atoms/Stopwatch'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
+import ESModal from 'sanar-ui/dist/Components/Atoms/Modal'
 
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 
 import { useQuestionsContext } from '../Context'
+import { Modal } from 'antd'
 
 const intlPath = 'questionBase.question.'
 
 const SANQuestionHeader = ({ history }) => {
-    const { stopwatchRef, totalQuestions, currentIndex } = useQuestionsContext()
+    const {
+        stopwatchRef,
+        totalQuestions,
+        currentIndex,
+        skippedQuestions,
+        totalAnsweredQuestions,
+        reset
+    } = useQuestionsContext()
     const { t } = useTranslation('esanar')
+
+    const validatePractice = () => {
+        if (
+            totalAnsweredQuestions === 0 ||
+            totalAnsweredQuestions === skippedQuestions
+        ) {
+            const modal = Modal.confirm({
+                centered: true,
+                title: 'Ops! Nenhuma questão foi respondida.',
+                content:
+                    'Que tal aprimorar seus conhecimentos reiniciando a prática?',
+                okText: 'Reiniciar prática',
+                cancelText: 'Encerrar',
+                onOk: () => {
+                    reset()
+                    modal.destroy()
+                },
+                onCancel: () => {
+                    history.push('../filtro')
+                }
+            })
+            return
+        }
+
+        history.push('../finalizado')
+    }
 
     return (
         <div className='questions-question__header'>
@@ -46,7 +81,7 @@ const SANQuestionHeader = ({ history }) => {
                                 variant='outlined'
                                 uppercase
                                 bold
-                                onClick={() => history.push('../finalizado')}
+                                onClick={() => validatePractice()}
                             >
                                 {t(`${intlPath}endPracticeButton`)}
                             </ESButton>
