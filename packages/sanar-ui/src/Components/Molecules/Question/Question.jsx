@@ -2,17 +2,13 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import { useTranslation } from 'react-i18next'
 import { Skeleton } from 'antd'
 
 import ESTypography from '../../Atoms/Typography'
-import ESButton from '../../Atoms/Button'
 import ESAlternative from '../../Atoms/Alternative'
-import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESSpin from '../../Atoms/Spin'
 import ESImageViewer from '../ImageViewer'
 import ESCard from '../Card'
-import ESComment from '../Comment'
 
 import ESQuestionFooter from './Footer'
 import ESQuestionComment from './Comment'
@@ -20,6 +16,7 @@ import ESQuestionComment from './Comment'
 const ESQuestion = ({
     answer,
     question,
+    comment,
     onSelect,
     onConfirm,
     onNext,
@@ -31,7 +28,6 @@ const ESQuestion = ({
     stats,
     isHistoric
 }) => {
-    const { t } = useTranslation('sanarui')
     const [striped, setStripe] = useState({})
     const [selected, setSelect] = useState(null)
     const [confirmed, setConfirm] = useState(false)
@@ -45,6 +41,7 @@ const ESQuestion = ({
 
     const handleConfirm = () => {
         setConfirm(true)
+        setStripe({})
         onConfirm && onConfirm(selected)
     }
 
@@ -113,7 +110,7 @@ const ESQuestion = ({
                         {question && (
                             <>
                                 <ESTypography level={6} className='mb-md'>
-                                    {`${question.instituition.name}, ${
+                                    {`${question.institution.name}, ${
                                         question.year
                                     }`}
                                 </ESTypography>
@@ -123,9 +120,11 @@ const ESQuestion = ({
                                 >
                                     {question.statement}
                                 </ESTypography>
-                                {question.image && (
+                                {question.images && question.images.data[0] && (
                                     <ESImageViewer
-                                        image={question.image}
+                                        images={
+                                            question.images.data[0].sizedImages
+                                        }
                                         className='mb-md'
                                     />
                                 )}
@@ -170,8 +169,9 @@ const ESQuestion = ({
                         </>
                     )}
                 </div>
-                {question && question.comment && answer && (
-                    <ESQuestionComment {...question.comment} />
+
+                {question && comment && answer && (
+                    <ESQuestionComment {...comment} />
                 )}
                 <ESQuestionFooter
                     {...{
@@ -208,21 +208,44 @@ ESQuestion.propTypes = {
             percent: PropTypes.number
         })
     ),
+    comment: PropTypes.shape({
+        user: PropTypes.shape({
+            name: PropTypes.string,
+            profile_picture: PropTypes.string
+        }),
+        text: PropTypes.string,
+        time: PropTypes.string
+    }),
     question: PropTypes.shape({
         id: PropTypes.string,
-        image: PropTypes.string,
+        images: PropTypes.shape({
+            data: PropTypes.arrayOf(
+                PropTypes.shape({
+                    id: PropTypes.string,
+                    sizedImages: PropTypes.shape({
+                        small: PropTypes.shape({
+                            width: PropTypes.number,
+                            height: PropTypes.number,
+                            url: PropTypes.string
+                        }),
+                        medium: PropTypes.shape({
+                            width: PropTypes.number,
+                            height: PropTypes.number,
+                            url: PropTypes.string
+                        }),
+                        large: PropTypes.shape({
+                            width: PropTypes.number,
+                            height: PropTypes.number,
+                            url: PropTypes.string
+                        })
+                    })
+                })
+            )
+        }),
         statement: PropTypes.string,
         year: PropTypes.number,
-        instituition: PropTypes.shape({
+        institution: PropTypes.shape({
             name: PropTypes.string
-        }),
-        comment: PropTypes.shape({
-            author: PropTypes.shape({
-                name: PropTypes.string,
-                avatar: PropTypes.string
-            }),
-            content: PropTypes.string,
-            time: PropTypes.string
         }),
         alternatives: PropTypes.shape({
             data: PropTypes.arrayOf(

@@ -32,6 +32,7 @@ const SANQuestionsFilterAdvanced = () => {
     const { t } = useTranslation('esanar')
     const { formState } = useQuestionsContext()
     const [open, setOpen] = useState(false)
+    const [openCalendar, setOpenCalendar] = useState(false)
 
     return (
         <ESCollapse
@@ -81,6 +82,10 @@ const SANQuestionsFilterAdvanced = () => {
                                     )}
                                     mode='year'
                                     size='large'
+                                    open={openCalendar}
+                                    format='YYYY'
+                                    onOpenChange={() => setOpenCalendar(true)}
+                                    onPanelChange={() => setOpenCalendar(false)}
                                 />
                             </ESFormItem>
                         </ESCol>
