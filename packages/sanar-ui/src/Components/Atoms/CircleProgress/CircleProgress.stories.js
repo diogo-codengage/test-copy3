@@ -7,7 +7,8 @@ import ESCircleProgress from './CircleProgress'
 const statusOptions = {
     Error: 'error',
     Success: 'success',
-    Normal: 'normal'
+    Normal: 'normal',
+    Warning: 'warning'
 }
 
 const StrokeLinecap = {
