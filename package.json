@@ -60,7 +60,8 @@
         "esanar:build": "yarn workspace e-sanar build",
         "esanar:start:dev": "npm-run-all --parallel sanarui:dev sanarui:storybook esanar:start",
         "sanarrm:build": "yarn workspace sanar-rm-questions build",
-        "sanarui:dev": "yarn workspace sanar-rm-questions start"
+        "sanarrm:start": "yarn workspace sanar-rm-questions start",
+        "sanarrm:start:dev": "npm-run-all --parallel sanarui:dev sanarui:storybook sanarrm:start"
     },
     "husky": {
         "hooks": {
