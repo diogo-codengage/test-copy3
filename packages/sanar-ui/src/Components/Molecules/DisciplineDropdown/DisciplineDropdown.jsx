@@ -49,12 +49,14 @@ const ESDisciplineDropdown = ({ className, items, onSelect }) => {
 ESDisciplineDropdown.propTypes = {
     className: PropTypes.string,
     onSelect: PropTypes.func,
-    items: PropTypes.shape({
-        description: PropTypes.string,
-        active: PropTypes.bool,
-        completed: PropTypes.bool,
-        incomplete: PropTypes.bool
-    })
+    items: PropTypes.arrayOf(
+        PropTypes.shape({
+            description: PropTypes.string,
+            active: PropTypes.bool,
+            completed: PropTypes.bool,
+            incomplete: PropTypes.bool
+        })
+    )
 }
 ESDisciplineDropdown.defaultProps = {}
 
