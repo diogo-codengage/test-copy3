@@ -54,6 +54,7 @@
         "sanarui:cli": "yarn workspace sanar-ui cli",
         "sanarui:dev": "yarn workspace sanar-ui dev",
         "sanarui:storybook": "yarn workspace sanar-ui storybook",
+        "sanarui:storybook:build": "yarn workspace sanar-ui storybook:build",
         "sanarui:test": "yarn workspace sanar-ui test",
         "esanar:start": "yarn workspace e-sanar start",
         "esanar:build": "yarn workspace e-sanar build",

@@ -10,6 +10,7 @@
         "cli": "hygen sanar-ui",
         "dev": "yarn build -w",
         "storybook": "start-storybook -p 62238",
+        "storybook:build": "build-storybook -c .storybook -o dist-storybook",
         "test": "jest --config ./jest.config.js --env=jsdom"
     },
     "files": [
