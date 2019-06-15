@@ -4,6 +4,12 @@
         font-weight: bold;
     }
 
+    &--warning {
+        & .ant-progress-circle-path {
+            stroke: @warning-color !important;
+        }
+    }
+
     &--error {
         & .ant-progress-circle-path {
             stroke: @red-2 !important;
@@ -17,6 +23,12 @@
     &--normal {
         & .ant-progress-circle-path {
             stroke: @grey-solid-7 !important;
+        }
+    }
+
+    &--white {
+        .ant-progress-text {
+            color: @white !important;
         }
     }
 }
