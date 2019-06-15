@@ -3,19 +3,19 @@ import { QuestionsInputFilter } from '../QuestionsInputFilter'
 
 export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
 
-    const where = {};
+    const where:any = {};
 
     if(filter.isCommentedByExpert) {
-        where['isCommentedByExpert'] = true;
+        where.isCommentedByExpert = true;
     }
 
-    if(Object.keys(where).length > 0){
-
+    if(filter.year) {
+        where.year = filter.year
     }
 
-    const whereFilter = ` ,where: "${JSON.stringify(where)}" `
+    const whereFilter = ` ,where: "${JSON.stringify(where).replace(/\"/g, '\\"') }" `
 
-    return gql`
+    const queryWithParams = `
         {
             questions(limit:3, random:true ${whereFilter}){
                 data {
@@ -34,11 +34,19 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
                         name,
                         state
                     },
-                    answers {
+
+                    comments{
                         data {
                             id
+                            text
+                            user{
+                                id
+                                name
+                            }
+                            labels
                         }
-                    },
+                    }
+
                     tags {
                         data {
                             name
@@ -47,5 +55,7 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
                 }
             }
         }
-    `
+`
+    // console.log({queryWithParams})
+    return gql`${queryWithParams}`
 }

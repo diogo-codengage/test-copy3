@@ -42,6 +42,11 @@ export const FilterTemplate = () => {
 
     const [ openCalendar, setOpenCalendar ] = useState(false);
 
+    const clearQuestions = () => {
+        questionsCtx.setQuestions([])
+        questionsCtx.setCurrentQuestion(null)
+    }
+
     const normalizeFiltersValues = () => {
         questionsCtx.allSpecialties = questionsCtx.specialties
         questionsCtx.allSubSpecialties = questionsCtx.selectedSpecialties.flatMap(s => s.children)
@@ -65,6 +70,7 @@ export const FilterTemplate = () => {
                         onChange={v => {
                             questionsCtx.setSelectedSpecialties(v)
                             normalizeFiltersValues()
+                            clearQuestions()
                         }}
                         value={questionsCtx.selectedSpecialties}
                     />
@@ -77,6 +83,7 @@ export const FilterTemplate = () => {
                         onChange={v => {
                             questionsCtx.setSelectedSubSpecialties(v)
                             normalizeFiltersValues()
+                            clearQuestions()
                         }}
                         value={questionsCtx.selectedSubSpecialties}
                     />
@@ -89,6 +96,7 @@ export const FilterTemplate = () => {
                         onChange={v => {
                             questionsCtx.setSelectedTags(v)
                             normalizeFiltersValues()
+                            clearQuestions()
                         }}
                         value={questionsCtx.selectedTags}
                     />
@@ -113,7 +121,10 @@ export const FilterTemplate = () => {
                                 input={<ESSelect
                                     style={{ width: '100%' }}
                                     defaultValue={filters.selectedState}
-                                    onSelect={v => setFilters({ ...filters, selectedState: v })}
+                                    onSelect={v => {
+                                        setFilters({ ...filters, selectedState: v })
+                                        clearQuestions()
+                                    }}
                                 >
                                     {BRAZIL_STATES.map(s => <ESOption key={s.value}
                                                                       value={s.value}>{s.label}</ESOption>)}
@@ -127,6 +138,7 @@ export const FilterTemplate = () => {
                                     onPanelChange={v => {
                                         setFilters({ ...filters, selectedYear: v })
                                         setOpenCalendar(false)
+                                        clearQuestions()
                                     }}
                                     onClear={() => setFilters({ ...filters, selectedYear: null })}
                                     value={filters.selectedYear}
@@ -156,7 +168,10 @@ export const FilterTemplate = () => {
                                 }
                             }>
                                 Apenas comentadas<ESSwitch
-                                onChange={v => setFilters({ ...filters, isCommentedByExpert: v })}
+                                onChange={v => {
+                                    setFilters({ ...filters, isCommentedByExpert: v })
+                                    clearQuestions()
+                                }}
                                 checked={filters.isCommentedByExpert}/>
                             </div>
                         </ESCol>

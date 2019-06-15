@@ -12,7 +12,7 @@ export enum QuestionPageType {
 
 export interface IFormFilterState {
     selectedState: any,
-    selectedYear: number,
+    selectedYear: any,
     isCommentedByExpert: boolean
 }
 
@@ -26,9 +26,6 @@ interface IQuestionsContext {
 
     currentPage: QuestionPageType
     setCurrentPage: (currentPage: QuestionPageType) => void
-
-    filters: QuestionsInputFilter,
-    setFilters: (filters: QuestionsInputFilter) => void
 
     currentQuestion?: Question
     setCurrentQuestion: (currentQuestion?: Question) => void
@@ -86,7 +83,6 @@ export const QuestionsContextProvider = ({ children }) => {
     const [courseName, setCourseName] = useState()
 
     const [currentPage, setCurrentPage] = useState(QuestionPageType.Filter)
-    const [filters, setFilters] = useState<QuestionsInputFilter>({})
 
     const [currentQuestion, setCurrentQuestion] = useState()
     const [currentAnswerId, setCurrentAnswerId] = useState()
@@ -134,8 +130,6 @@ export const QuestionsContextProvider = ({ children }) => {
 
         currentPage,
         setCurrentPage,
-        filters,
-        setFilters,
 
         currentQuestion,
         setCurrentQuestion,

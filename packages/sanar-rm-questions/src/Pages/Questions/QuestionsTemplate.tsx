@@ -11,11 +11,9 @@ export const QuestionsTemplate = () => {
     if (loading)
         return <RMSplashLoader/>
 
-    return <div style={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
+    return <div>
         <QuestionsHeader/>
-        <div style={{flexGrow: 1, overflow: 'auto'}}>
-            <QuestionsBody/>
-        </div>
+        <QuestionsBody/>
     </div>
 
 }

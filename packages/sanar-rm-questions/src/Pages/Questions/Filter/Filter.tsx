@@ -5,7 +5,6 @@ import { useQuestionsContext } from '../QuestionsContext'
 import { ApolloContext } from 'react-apollo'
 
 const normalizeSpecialties = (list) => {
-    console.log({ list })
 
     list.forEach(e => e.tags = e.tags.data)
     const roots = list.filter(s => s.parent === null)

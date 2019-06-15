@@ -4,6 +4,7 @@ import { RMContainer } from '../../../Components/RMContainer'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import { QuestionPageType, useQuestionsContext } from '../QuestionsContext'
 import { SessionStatusDashboard } from './SessionStatusDashboard'
+import { questionSkip } from '../../../Apollo/Questions/questionSkip'
 
 interface IProps {
     onConfirm?: (alternativeId) => void
@@ -21,6 +22,14 @@ export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: 
         isFromCourse,
         setCurrentPage
     } = useQuestionsContext()
+
+    let expertComment
+    if (currentQuestion) {
+        expertComment = currentQuestion
+            .comments
+            .data
+            .find(c => c.labels === 'expert')
+    }
 
     return <RMContainer>
         <div style={
@@ -45,11 +54,15 @@ export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: 
             question={currentQuestion}
             answer={currentAnswerId}
             stats={stats}
+            comment={expertComment}
             onConfirm={onConfirm}
             onNext={onNext}
             onJump={onJump}
             onlyStep={true}
         />
+
+        {/*<pre>{JSON.stringify(currentQuestion, null, 4)}</pre>*/}
+
     </RMContainer>
 
 }
