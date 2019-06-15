@@ -60,6 +60,7 @@ export const SANQuestionsProvider = ({ children }) => {
 
         if (stopwatchRef && stopwatchRef.current) {
             stopwatchRef.current.reset()
+            stopwatchRef.current.start()
         }
     }
 
