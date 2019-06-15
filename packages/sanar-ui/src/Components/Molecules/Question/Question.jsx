@@ -36,13 +36,13 @@ const ESQuestion = ({
         if (confirmed) return
         setSelect(item)
         onSelect && onSelect(item)
-        onlyStep && handleConfirm()
+        onlyStep && handleConfirm(item)
     }
 
-    const handleConfirm = () => {
+    const handleConfirm = (item) => {
         setConfirm(true)
         setStripe({})
-        onConfirm && onConfirm(selected)
+        onConfirm && onConfirm(item)
     }
 
     const handleNext = () => {
@@ -89,7 +89,8 @@ const ESQuestion = ({
     const getPercent = id => {
         if (!stats || !stats.length) return
         const statistic = stats.find(statistic => statistic.id === id)
-        return statistic && parseInt(statistic.percent)
+        if(!statistic && statistic !== 0) return null
+        return `${parseInt(statistic.percent)}%`
     }
 
     useEffect(() => {

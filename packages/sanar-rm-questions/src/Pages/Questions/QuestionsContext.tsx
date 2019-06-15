@@ -18,6 +18,12 @@ export interface IFormFilterState {
 
 interface IQuestionsContext {
 
+    loading: boolean
+    setLoading: (loading: boolean) => void
+
+    courseName: string
+    setCourseName: (courseName: string) => void
+
     currentPage: QuestionPageType
     setCurrentPage: (currentPage: QuestionPageType) => void
 
@@ -66,12 +72,19 @@ interface IQuestionsContext {
     allTags: Tag[]
     setAllTags: (selectedTags: Tag[]) => void
 
+    showAdvancedFilters: boolean
+    setShowAdvancedFilters: (showAdvancedFilters: boolean) => void
+
 }
 
 const QuestionsContext = createContext<IQuestionsContext>(null)
 export const useQuestionsContext = () => useContext(QuestionsContext)
 
 export const QuestionsContextProvider = ({ children }) => {
+    const [loading, setLoading] = useState(false)
+
+    const [courseName, setCourseName] = useState()
+
     const [currentPage, setCurrentPage] = useState(QuestionPageType.Filter)
     const [filters, setFilters] = useState<QuestionsInputFilter>({})
 
@@ -98,6 +111,8 @@ export const QuestionsContextProvider = ({ children }) => {
     const [allSubSpecialties, setAllSubSpecialties] = useState([])
     const [allTags, setAllTags] = useState([])
 
+    const [ showAdvancedFilters, setShowAdvancedFilters ] = useState(false)
+
     const increaseTotalCorrect = () => {
         setTotalCorrect(totalCorrect + 1)
     }
@@ -111,6 +126,12 @@ export const QuestionsContextProvider = ({ children }) => {
     }
 
     const value = {
+        loading,
+        setLoading,
+
+        courseName,
+        setCourseName,
+
         currentPage,
         setCurrentPage,
         filters,
@@ -151,6 +172,9 @@ export const QuestionsContextProvider = ({ children }) => {
         setAllSubSpecialties,
         allTags,
         setAllTags,
+
+        showAdvancedFilters,
+        setShowAdvancedFilters,
     }
     return (<QuestionsContext.Provider value={value}>{children}</QuestionsContext.Provider>)
 }

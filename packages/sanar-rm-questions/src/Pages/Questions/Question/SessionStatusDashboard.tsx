@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 
-import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESCircleProgress from 'sanar-ui/dist/Components/Atoms/CircleProgress'
 
 import { RMContainer } from '../../../Components/RMContainer'
@@ -15,7 +14,6 @@ const ESCircleProgressWrapper = ({ label, percent, status }) => {
             alignItems: 'center'
         }
     }><span style={{ marginRight: 6 }}>{label}</span>
-
         <ESCircleProgress
             strokeWidth={12}
             showInfo
@@ -23,11 +21,11 @@ const ESCircleProgressWrapper = ({ label, percent, status }) => {
             percent={percent}
             status={status}
         />
-
     </div>
 }
 
 const calc = ({ totalCorrect, totalSkipped, totalWrong }) => {
+
     let correct = 0
     let skipped = 0
     let wrong = 0
@@ -35,15 +33,31 @@ const calc = ({ totalCorrect, totalSkipped, totalWrong }) => {
     const total = totalCorrect + totalSkipped + totalWrong
 
     if (total > 0) {
+
         if (totalCorrect) {
-            correct = (totalCorrect / total) * 100
+            correct = Math.trunc((totalCorrect / total) * 100)
         }
         if (totalSkipped) {
-            skipped = (totalSkipped / total) * 100
+            skipped = Math.trunc((totalSkipped / total) * 100)
         }
         if (totalWrong) {
-            wrong = (totalWrong / total) * 100
+            wrong = Math.trunc((totalWrong / total) * 100)
         }
+
+        //fix rounding
+        if(totalSkipped > 0){
+            skipped = 100 - correct - wrong
+        } else if(totalCorrect > 0) {
+            correct = 100 - wrong - skipped
+        }
+
+        if((correct + wrong + skipped) !== 100){
+            console.log(`ooops, total = ${correct + wrong + skipped}  is not equal 100
+            correct ${correct}
+            wrong ${wrong}
+            skipped ${skipped}`);
+        }
+
     }
 
     return {
@@ -68,45 +82,32 @@ export const SessionStatusDashboard = () => {
         skipped
     } = calc({ totalCorrect, totalSkipped, totalWrong })
 
-    return (
-        <RMContainer>
-            <div style={
-                {
-                    marginTop: '1em',
-                    marginBottom: '1em',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                }
-            }
-            >
-                <div className="" style={{ display: 'flex' }}>
-                    <ESCircleProgressWrapper
-                        label={'Corretas:'}
-                        percent={correct}
-                        status={'success'}
-                    />
-                    <ESCircleProgressWrapper
-                        label={'Erradas:'}
-                        percent={wrong}
-                        status={'error'}
-                    />
-                    <ESCircleProgressWrapper
-                        label={'Puladas:'}
-                        percent={skipped}
-                        status={'normal'}
-                    />
-                </div>
-
-                <ESButton
-                    color='primary'
-                    variant='text'
-                    blockOnlyMobile
-                    onClick={() => {
-                        setCurrentPage(QuestionPageType.Filter)
-                    }}
-                >Ver filtros</ESButton>
-            </div>
-        </RMContainer>
-    )
+    return <div style={
+        {
+            marginTop: '1em',
+            marginBottom: '1em',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+        }
+    }
+    >
+        <div className="" style={{ display: 'flex' }}>
+            <ESCircleProgressWrapper
+                label={'Corretas:'}
+                percent={correct}
+                status={'success'}
+            />
+            <ESCircleProgressWrapper
+                label={'Erradas:'}
+                percent={wrong}
+                status={'error'}
+            />
+            <ESCircleProgressWrapper
+                label={'Puladas:'}
+                percent={skipped}
+                status={'normal'}
+            />
+        </div>
+    </div>
 }

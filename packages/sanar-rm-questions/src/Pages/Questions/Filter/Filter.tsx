@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
 import { FilterTemplate } from './FilterTemplate'
 import { GET_FILTERS } from '../../../Apollo/Questions/get-filters'
-import { RMSplashLoader } from '../../../Components/RMSplashLoader'
 import { useQuestionsContext } from '../QuestionsContext'
 import { ApolloContext } from 'react-apollo'
 
 const normalizeSpecialties = (list) => {
-    console.log({list})
+    console.log({ list })
 
     list.forEach(e => e.tags = e.tags.data)
     const roots = list.filter(s => s.parent === null)
@@ -19,19 +18,19 @@ const normalizeSpecialties = (list) => {
 }
 
 export const Filter = () => {
-
     const questionsCtx = useQuestionsContext()
-    const {client} = useContext(ApolloContext)
-
+    const { client } = useContext(ApolloContext)
     const hasSpecialties = !!questionsCtx.specialties
 
-    if(!hasSpecialties)  {
-        client.query({query: GET_FILTERS}).then(({data}) => {
+    if (hasSpecialties) {
+        return <FilterTemplate/>
+    } else {
+        questionsCtx.setLoading(true)
+        client.query({ query: GET_FILTERS }).then(({ data }) => {
             questionsCtx.setSpecialties(normalizeSpecialties(data.specialties.data))
+            questionsCtx.setLoading(false)
         })
-        return <RMSplashLoader />
+        return <></>
     }
-
-    return <FilterTemplate/>
 
 }

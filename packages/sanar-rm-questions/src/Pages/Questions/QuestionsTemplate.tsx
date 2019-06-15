@@ -1,18 +1,21 @@
-import React, { useContext, useState } from 'react'
-import { Filter } from './Filter/Filter'
-import { Question } from './Question/Question'
-import { EndSession } from './EndSession/EndSession'
-import { QuestionPageType, useQuestionsContext } from './QuestionsContext'
+import React from 'react'
+import { useQuestionsContext } from './QuestionsContext'
+import { RMSplashLoader } from '../../Components/RMSplashLoader'
+import { QuestionsHeader } from './QuestionsHeader'
+import { QuestionsBody } from './QuestionsBody'
 
 export const QuestionsTemplate = () => {
 
-    const questionsCtx = useQuestionsContext()
+    const { loading } = useQuestionsContext()
 
-    return (
-        <>
-            {questionsCtx.currentPage === QuestionPageType.Filter && <Filter/>}
-            {questionsCtx.currentPage === QuestionPageType.Question && <Question/>}
-            {questionsCtx.currentPage === QuestionPageType.EndSession && <EndSession/>}
-        </>
-    )
+    if (loading)
+        return <RMSplashLoader/>
+
+    return <div style={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
+        <QuestionsHeader/>
+        <div style={{flexGrow: 1, overflow: 'auto'}}>
+            <QuestionsBody/>
+        </div>
+    </div>
+
 }

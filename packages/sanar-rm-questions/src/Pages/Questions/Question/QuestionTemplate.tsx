@@ -1,35 +1,55 @@
 import React from 'react'
 import ESQuestion from 'sanar-ui/dist/Components/Molecules/Question'
 import { RMContainer } from '../../../Components/RMContainer'
-import { RMHeader } from '../../../Components/RMHeader'
-import { useQuestionsContext } from '../QuestionsContext'
+import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
+import { QuestionPageType, useQuestionsContext } from '../QuestionsContext'
 import { SessionStatusDashboard } from './SessionStatusDashboard'
 
 interface IProps {
-    onConfirm?: Function
-    onNext?: Function
-    onJump?: Function
+    onConfirm?: (alternativeId) => void
+    onNext?: (correct) => void
+    onJump?: (question) => void
+    stats: any
+    loading: boolean
 }
 
-export const QuestionTemplate = ({ onConfirm, onNext, onJump }:IProps) => {
+export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: IProps) => {
 
-    const questionCtx = useQuestionsContext()
+    const {
+        currentQuestion,
+        currentAnswerId,
+        isFromCourse,
+        setCurrentPage
+    } = useQuestionsContext()
 
-    return <>
-        <RMHeader />
-        <SessionStatusDashboard/>
-        <RMContainer>
-            <ESQuestion
-                loading={!questionCtx.currentQuestion}
-                question={questionCtx.currentQuestion}
-                answer={questionCtx.currentAnswerId}
-                onConfirm={onConfirm}
-                onNext={onNext}
-                onJump={onJump}
-                onlyStep={true}
-            />
-            {/*<pre>{JSON.stringify(question, null,4)}</pre>*/}
-        </RMContainer>
-    </>
+    return <RMContainer>
+        <div style={
+            {
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: isFromCourse ? 'center' : 'space-between'
+            }
+        }>
+            <SessionStatusDashboard/>
+
+            {!isFromCourse && <ESButton
+                color='primary'
+                variant='text'
+                blockOnlyMobile
+                onClick={() => setCurrentPage(QuestionPageType.Filter)}
+            >Ver filtros</ESButton>
+            }
+        </div>
+        <ESQuestion
+            loading={loading || !currentQuestion}
+            question={currentQuestion}
+            answer={currentAnswerId}
+            stats={stats}
+            onConfirm={onConfirm}
+            onNext={onNext}
+            onJump={onJump}
+            onlyStep={true}
+        />
+    </RMContainer>
 
 }

@@ -6,7 +6,8 @@ export const HomePage = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            flexFlow: 'column'
+            flexFlow: 'column',
+            height: '60vh',
         }}>
             <a href={'/#/Questions'}> acesso direto </a>
             <a href={'/#/QuestionsFromCurse'}> acesso apartir de um curso </a>
