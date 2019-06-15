@@ -5,12 +5,12 @@ import { Auth } from 'aws-amplify'
 
 const getCurrentTokenSession = () => {
     return Auth.currentSession().then(response => {
-        return `Bearer ${response.accessToken.jwtToken}`
+        return `${response.accessToken.jwtToken}`
     })
 }
 
 const client = new ApolloClient({
-    uri: 'http://178.62.228.241:4000/graphql',
+    uri: 'http://165.22.9.231:4002/graphql',
     onError: console.log,
     request: async operation =>
         operation.setContext({
