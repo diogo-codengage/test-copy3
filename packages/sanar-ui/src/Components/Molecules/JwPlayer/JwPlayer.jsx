@@ -1,16 +1,10 @@
-import React, {
-    useEffect,
-    forwardRef,
-    useRef,
-    useCallback,
-    useState
-} from 'react'
+import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
-import ReactJWPlayer from 'react-jw-player'
+import { useTranslation } from 'react-i18next'
 
-import img from '../../../assets/images/questions/strike-disabled.svg'
+import ReactJWPlayer from 'react-jw-player'
 
 const captions = {
     textColor: '#edc26d',
@@ -26,10 +20,21 @@ const captions = {
 const getPlayer = id => window.jwplayer && window.jwplayer(id)
 
 const ESJwPlayer = ({ className, playerId, onReady, ...props }) => {
+    const { t } = useTranslation('sanarui')
     const classes = classNames('es-jw-player', className)
 
     const handleReady = e => {
         const player = getPlayer(playerId)
+
+        player.addButton(
+            '',
+            t('jwplayer.advance'),
+            function() {
+                player.seek(player.getPosition() + 10)
+            },
+            'es-jw-advance',
+            'jw-svg-icon-advance'
+        )
 
         player.setCaptions(captions)
         onReady && onReady(e)

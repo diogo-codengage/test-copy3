@@ -15,6 +15,7 @@
 
     & .jw-reset {
         border-radius: @border-radius-base;
+        font-family: 'Nunito Sans', sans-serif;
     }
 
     & .jw-knob {
@@ -130,5 +131,16 @@
     }
     .jw-icon-rewind:hover .jw-svg-icon-rewind {
         background-image: url('@{assetsPath}/images/video/rewind-hover.svg');
+    }
+    /* ADVANCE */
+    .jw-svg-icon-advance .jw-button-image {
+        background-image: url('@{assetsPath}/images/video/advance.svg') !important;
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 16px;
+        height: 16px;
+    }
+    .jw-svg-icon-advance:hover .jw-button-image {
+        background-image: url('@{assetsPath}/images/video/advance-hover.svg') !important;
     }
 }
