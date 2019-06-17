@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useMemo } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -27,9 +27,15 @@ const Items = ({
     handleSelectAll,
     handleClear,
     handleChange,
-    search
+    search,
+    width = 426
 }) => {
     const { t } = useTranslation('sanarui')
+
+    const onChange = item => e => handleChange(item, e)
+
+    const checkValue = item => val => val.value === item.value
+
     const rows = items
         .filter(item =>
             search ? item.label.toLowerCase().match(search.toLowerCase()) : item
@@ -37,8 +43,8 @@ const Items = ({
         .map(item => (
             <div key={item.value}>
                 <ESCheckbox
-                    onChange={e => handleChange(item, e)}
-                    checked={!!value.find(val => val.value === item.value)}
+                    onChange={onChange(item)}
+                    checked={!!value.find(checkValue(item))}
                     className='es-card-select-filter__menu__items--item'
                 >
                     {item.label}
@@ -48,11 +54,7 @@ const Items = ({
 
     return (
         <ESCard className='es-card-select-filter__menu' tabIndex={1}>
-            <Scrollbars
-                autoHeight
-                autoHeightMax={246}
-                renderTrackHorizontal={() => <div />}
-            >
+            <Scrollbars autoHeight autoHeightMax={246} style={{ width }}>
                 <div className='es-card-select-filter__menu--buttons'>
                     <ESButton
                         onClick={handleSelectAll}
@@ -102,6 +104,7 @@ const ESCardSelectFilter = ({
     onChange,
     value = []
 }) => {
+    const dropdownRef = useRef()
     const { t } = useTranslation('sanarui')
     const [loadImage, setLoadImage] = useState(true)
     const [open, setOpen] = useState(false)
@@ -122,6 +125,7 @@ const ESCardSelectFilter = ({
     }
 
     const handleSelectAll = e => {
+        if (value.length === items.length) return
         onSelectAll && onSelectAll(items, e)
         onChange && onChange(items, e)
     }
@@ -170,6 +174,11 @@ const ESCardSelectFilter = ({
             <ESEvaIcon name='plus-outline' />
         )
 
+    const width = useMemo(
+        () => dropdownRef.current && dropdownRef.current.offsetWidth,
+        [dropdownRef]
+    )
+
     return (
         <ESCard className={classes}>
             <div className='es-card-select-filter__content'>
@@ -187,12 +196,13 @@ const ESCardSelectFilter = ({
                                 handleClear,
                                 handleClose,
                                 handleChange,
-                                search
+                                search,
+                                width
                             }}
                         />
                     }
                 >
-                    <span style={{ width: '100%' }}>
+                    <span style={{ width: '100%' }} ref={dropdownRef}>
                         <ESInput
                             placeholder={makePlaceholder}
                             prefix={open && <ESEvaIcon name='search-outline' />}
