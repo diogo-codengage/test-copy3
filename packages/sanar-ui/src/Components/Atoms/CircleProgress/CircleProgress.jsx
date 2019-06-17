@@ -4,10 +4,11 @@ import PropTypes from 'prop-types'
 
 import { Progress } from 'antd'
 
-const ESCircleProgress = ({ className, status, format, ...props }) => {
+const ESCircleProgress = ({ className, status, format, color, ...props }) => {
     const classes = classNames(
         'es-circle-progress',
         [`es-circle-progress--${status}`],
+        [`es-circle-progress--${color}`],
         className
     )
     const customFormat = format ? format : percent => `${parseInt(percent)}%`
@@ -30,7 +31,8 @@ ESCircleProgress.propTypes = {
     showInfo: PropTypes.bool,
     format: PropTypes.func,
     strokeLinecap: PropTypes.oneOf(['round', 'square']),
-    status: PropTypes.oneOf(['normal', 'error', 'success'])
+    color: PropTypes.oneOf(['white']),
+    status: PropTypes.oneOf(['normal', 'error', 'success', 'warning'])
 }
 ESCircleProgress.defaultProps = {
     strokeWidth: 6,

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -25,8 +25,9 @@ const ESQuestionMap = ({ className, visible, items, mock }) => {
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-question-map', className)
 
-    const renderCircle = (item, i) => (
-        <Circle key={i} {...item} index={i + 1} mock={mock} />
+    const renderCircle = useCallback(
+        (item, i) => <Circle key={i} {...item} index={i + 1} mock={mock} />,
+        [mock, items]
     )
 
     return (

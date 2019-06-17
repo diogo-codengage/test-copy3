@@ -1,0 +1,57 @@
+.es-discipline-dropdown {
+    width: 100%;
+
+    &__menu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: @white-1;
+        padding: @padding-sm;
+        border-radius: @border-radius-base;
+        border: 1px solid @white-3;
+
+        &,
+        .es-typography {
+            color: @white;
+        }
+
+        &__content {
+            width: 100%;
+            background: @white-1;
+            border-radius: @border-radius-base;
+            border: 1px solid @white-3;
+            flex: 1 1;
+
+            .es-typography {
+                color: @white-6;
+            }
+
+            &--item {
+                padding: @padding-xs @padding-xl + @padding-xs / 2;
+                display: flex;
+                align-items: center;
+
+                &--active {
+                    .es-typography {
+                        color: @white;
+                    }
+                }
+
+                &--has-suffix {
+                    padding-left: @padding-sm;
+
+                    .es-eva-icon {
+                        color: @warning-color;
+                        font-size: @font-size-lg;
+                        margin-right: @margin-xs;
+                    }
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,146 @@
+.es-jw-player {
+    & .jw-svg-icon {
+        height: 16px;
+        width: 16px;
+    }
+
+    & .jw-slider-horizontal .jw-slider-container {
+        height: 12px;
+    }
+
+    & .jw-progress {
+        background-color: @secondary-color;
+        border-radius: @border-radius-base;
+    }
+
+    & .jw-reset {
+        border-radius: @border-radius-base;
+        font-family: 'Nunito Sans', sans-serif;
+    }
+
+    & .jw-knob {
+        background-color: @secondary-color;
+        box-shadow: 0 2px 4px @grey-5;
+        border-radius: 50%;
+    }
+
+    & .jw-text-duration,
+    & .jw-text-countdown,
+    & .jw-text-elapsed {
+        color: @white-8;
+    }
+
+    /* PLAYBACK */
+    .jw-state-idle .jw-svg-icon-play path {
+        display: none;
+    }
+    .jw-state-idle .jw-svg-icon-play {
+        background-image: url('@{assetsPath}/images/video/play.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 32px;
+        width: 32px;
+    }
+    .jw-state-idle .jw-display-icon-container:hover .jw-svg-icon-play {
+        background-image: url('@{assetsPath}/images/video/play-hover.svg');
+    }
+    .jw-state-paused .jw-svg-icon-play path {
+        display: none;
+    }
+    .jw-state-paused .jw-svg-icon-play {
+        background-image: url('@{assetsPath}/images/video/play.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 32px;
+        width: 32px;
+    }
+    .jw-state-paused .jw-icon-playback:hover .jw-svg-icon-play {
+        background-image: url('@{assetsPath}/images/video/play-hover.svg');
+    }
+
+    /* VOLUME */
+    .jw-svg-icon-volume-100 path {
+        display: none;
+    }
+    .jw-svg-icon-volume-100 {
+        background-image: url('@{assetsPath}/images/video/volume-up.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .jw-icon-volume:hover .jw-svg-icon-volume-100 {
+        background-image: url('@{assetsPath}/images/video/volume-up-hover.svg');
+    }
+    .jw-svg-icon-volume-50 path {
+        display: none;
+    }
+    .jw-svg-icon-volume-50 {
+        background-image: url('@{assetsPath}/images/video/volume-down.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .jw-icon-volume:hover .jw-svg-icon-volume-50 {
+        background-image: url('@{assetsPath}/images/video/volume-down-hover.svg');
+    }
+    .jw-svg-icon-volume-0 path {
+        display: none;
+    }
+    .jw-svg-icon-volume-0 {
+        background-image: url('@{assetsPath}/images/video/volume-off.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .jw-icon-volume:hover .jw-svg-icon-volume-0 {
+        background-image: url('@{assetsPath}/images/video/volume-off-hover.svg');
+    }
+
+    /* CLOSED CAPTIONS */
+    .jw-svg-icon-cc-off path {
+        display: none;
+    }
+    .jw-svg-icon-cc-off {
+        background-image: url('@{assetsPath}/images/video/captions.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .jw-icon-cc-off:hover .jw-svg-icon-cc-off {
+        background-image: url('@{assetsPath}/images/video/captions-hover.svg');
+    }
+
+    /* FULLSCREEN */
+    .jw-svg-icon-fullscreen-on path {
+        display: none;
+    }
+    .jw-svg-icon-fullscreen-on {
+        background-image: url('@{assetsPath}/images/video/fullscreen-on.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .jw-icon-fullscreen:hover .jw-svg-icon-fullscreen-on {
+        background-image: url('@{assetsPath}/images/video/fullscreen-on-hover.svg');
+    }
+
+    /* REWIND */
+    .jw-svg-icon-rewind path {
+        display: none;
+    }
+
+    .jw-svg-icon-rewind {
+        background-image: url('@{assetsPath}/images/video/rewind.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .jw-icon-rewind:hover .jw-svg-icon-rewind {
+        background-image: url('@{assetsPath}/images/video/rewind-hover.svg');
+    }
+    /* ADVANCE */
+    .jw-svg-icon-advance .jw-button-image {
+        background-image: url('@{assetsPath}/images/video/advance.svg') !important;
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 16px;
+        height: 16px;
+    }
+    .jw-svg-icon-advance:hover .jw-button-image {
+        background-image: url('@{assetsPath}/images/video/advance-hover.svg') !important;
+    }
+}
