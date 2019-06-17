@@ -99,6 +99,13 @@ export default {
         previous: 'Anterior',
         jump: 'Pular'
     },
+    classroom: {
+        header: {
+            extra: {
+                bookmark: 'Favoritar aula'
+            }
+        }
+    },
     playlist: {
         youAreIn: 'Você está em'
     },
