@@ -111,5 +111,8 @@ export default {
     },
     questionMap: {
         title: 'Mapa de questões'
+    },
+    jwplayer: {
+        advance: 'Avançar 10 segundos'
     }
 }
