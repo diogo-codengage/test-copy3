@@ -1,10 +1,15 @@
 import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-import ESLessonHeaderExtra from './LessonHeaderExtra'
 import { ESRow, ESCol } from '../../Atoms/Grid'
 
-const ESLessonHeader = ({ className, children, ...props }) => {
+const ESLessonHeader = ({
+    className,
+    children,
+    leftChildren,
+    rightChildren,
+    ...props
+}) => {
     const classes = classNames('es-lesson-header', className)
     return (
         <div className={classes}>
@@ -15,13 +20,13 @@ const ESLessonHeader = ({ className, children, ...props }) => {
                     xl={8}
                     className='es-lesson-header__left'
                 >
-                    left
+                    {leftChildren}
                 </ESCol>
                 <ESCol xs={0} xl={1} flex={1}>
                     {children}
                 </ESCol>
                 <ESCol className='es-lesson-header__right'>
-                    <ESLessonHeaderExtra />
+                    {rightChildren}
                 </ESCol>
             </ESRow>
         </div>
@@ -29,7 +34,9 @@ const ESLessonHeader = ({ className, children, ...props }) => {
 }
 
 ESLessonHeader.propTypes = {
-    className: PropTypes.string
+    className: PropTypes.string,
+    rightChildren: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+    leftChildren: PropTypes.oneOfType([PropTypes.node, PropTypes.string])
 }
 ESLessonHeader.defaultProps = {}
 

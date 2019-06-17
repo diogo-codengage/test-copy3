@@ -5,18 +5,39 @@ import ESTabs, { ESTabPane } from '../../Atoms/Tabs'
 import ESLessonHeaderExtra from './LessonHeaderExtra'
 
 const renderTabBarFun = (props, DefaultTabBar) => (
-    <ESLessonHeader>
+    <ESLessonHeader
+        leftChildren='Left'
+        rightChildren={
+            <ESLessonHeaderExtra
+                previousLesson='Consectetur adipisicing elit'
+                nextLesson='Lorem ipsum dolor sit amet.'
+            />
+        }
+    >
         <DefaultTabBar {...props} style={{ background: 'none' }} />
     </ESLessonHeader>
 )
 
 storiesOf('Molecules.LessonHeader', module)
-    .add('Simple', () => <ESLessonHeader />, {
-        style: {
-            background: '#242938',
-            height: 300
+    .add(
+        'Simple',
+        () => (
+            <ESLessonHeader
+                rightChildren={
+                    <ESLessonHeaderExtra
+                        previousLesson='Consectetur adipisicing elit'
+                        nextLesson='Lorem ipsum dolor sit amet.'
+                    />
+                }
+            />
+        ),
+        {
+            style: {
+                background: '#242938',
+                height: 300
+            }
         }
-    })
+    )
     .add(
         'Extra default',
         () => (
