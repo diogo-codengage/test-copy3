@@ -4,12 +4,11 @@ import { Filter } from './Filter/Filter'
 import { Question } from './Question/Question'
 import { EndSession } from './EndSession/EndSession'
 
-
 export const QuestionsBody = () => {
     const { currentPage } = useQuestionsContext()
 
-    const renderCurrentPage = React.useCallback((currentPage: QuestionPageType) => {
-        switch(currentPage) {
+    const renderCurrentPage = (currentPage: QuestionPageType) => {
+        switch (currentPage) {
             case QuestionPageType.Filter:
                 return <Filter/>
             case QuestionPageType.Question:
@@ -19,9 +18,8 @@ export const QuestionsBody = () => {
             default:
                 return 'not found'
         }
-    }, [currentPage])
+    }
 
     return <>
-        { renderCurrentPage(currentPage) }
-        1</>
+        {renderCurrentPage(currentPage)}</>
 }

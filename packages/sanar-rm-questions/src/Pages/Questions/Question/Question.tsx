@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { QuestionTemplate } from './QuestionTemplate'
 import { ApolloContext } from 'react-apollo'
 import { getQuestionsQuery } from '../../../Apollo/Questions/get-questions'
@@ -6,6 +6,7 @@ import { useQuestionsContext } from '../QuestionsContext'
 import { questionAnswer } from '../../../Apollo/Questions/questionAnswer'
 import { questionSkip } from '../../../Apollo/Questions/questionSkip'
 import { useAuthContext } from '../../../AuthContext'
+import { QuestionsInputFilter } from '../../../Apollo/QuestionsInputFilter'
 
 export const Question = () => {
 
@@ -15,6 +16,19 @@ export const Question = () => {
 
     const [stats, setStats] = useState()
     const [loading, setLoading] = useState(false)
+
+    const getFilters = (): QuestionsInputFilter  => {
+        return  {
+            tagsIds: questionsCtx.selectedTags.map( t => t.value),
+            state: questionsCtx.formFilterState.selectedYear,
+            specialtiesIds: questionsCtx.selectedSpecialties
+                .map(s => s.value)
+                .concat(questionsCtx.selectedSubSpecialties
+                    .map(s => s.value)),
+            isCommentedByExpert: questionsCtx.formFilterState.isCommentedByExpert,
+            year: questionsCtx.formFilterState.selectedYear ? parseInt(questionsCtx.formFilterState.selectedYear.format('YYYY')) : null
+        }
+    }
 
     const pushQuestions = (moreQuestions) => {
         let questions = questionsCtx.questions
@@ -37,9 +51,11 @@ export const Question = () => {
     }
 
     const loadMoreQuestions = () => {
+        const filters = getFilters();
+        console.log({filters})
         client.query(
             {
-                query: getQuestionsQuery(questionsCtx.filters),
+                query: getQuestionsQuery(filters),
                 fetchPolicy: 'no-cache'
             })
             .then(({ data }) => pushQuestions(data.questions.data))

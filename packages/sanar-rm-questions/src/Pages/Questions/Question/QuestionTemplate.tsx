@@ -22,6 +22,14 @@ export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: 
         setCurrentPage
     } = useQuestionsContext()
 
+    let expertComment
+    if (currentQuestion) {
+        expertComment = currentQuestion
+            .comments
+            .data
+            .find(c => c.labels === 'expert')
+    }
+
     return <RMContainer>
         <div style={
             {
@@ -45,11 +53,13 @@ export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: 
             question={currentQuestion}
             answer={currentAnswerId}
             stats={stats}
+            comment={expertComment}
             onConfirm={onConfirm}
             onNext={onNext}
             onJump={onJump}
             onlyStep={true}
         />
+
     </RMContainer>
 
 }

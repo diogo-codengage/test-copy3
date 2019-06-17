@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import React from 'react'
 import './App.less'
 import { RMGraphQLProvider } from './Apollo/GraphQLService'
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'

@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState } from 'react'
 import { Question } from '../../Apollo/question'
 import { Speciality } from '../../Apollo/speciality'
-import { QuestionsInputFilter } from '../../Apollo/QuestionsInputFilter'
 import { Tag } from '../../Apollo/tag'
 
 export enum QuestionPageType {
@@ -12,8 +11,15 @@ export enum QuestionPageType {
 
 export interface IFormFilterState {
     selectedState: any,
-    selectedYear: number,
+    selectedYear: any,
     isCommentedByExpert: boolean
+}
+
+interface Course {
+    enrollmentId?: string
+    contentId?: string
+    moduleId?: string
+    courseName?: string
 }
 
 interface IQuestionsContext {
@@ -27,9 +33,6 @@ interface IQuestionsContext {
     currentPage: QuestionPageType
     setCurrentPage: (currentPage: QuestionPageType) => void
 
-    filters: QuestionsInputFilter,
-    setFilters: (filters: QuestionsInputFilter) => void
-
     currentQuestion?: Question
     setCurrentQuestion: (currentQuestion?: Question) => void
 
@@ -40,7 +43,7 @@ interface IQuestionsContext {
     setQuestions: (questions: Question[]) => void
 
     isFromCourse?
-    courseLinkReturn?
+    course?: Course
 
     totalCorrect: number
     totalWrong: number
@@ -86,7 +89,6 @@ export const QuestionsContextProvider = ({ children }) => {
     const [courseName, setCourseName] = useState()
 
     const [currentPage, setCurrentPage] = useState(QuestionPageType.Filter)
-    const [filters, setFilters] = useState<QuestionsInputFilter>({})
 
     const [currentQuestion, setCurrentQuestion] = useState()
     const [currentAnswerId, setCurrentAnswerId] = useState()
@@ -134,8 +136,6 @@ export const QuestionsContextProvider = ({ children }) => {
 
         currentPage,
         setCurrentPage,
-        filters,
-        setFilters,
 
         currentQuestion,
         setCurrentQuestion,

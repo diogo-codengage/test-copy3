@@ -8,7 +8,7 @@ import ESCardCourseModule from 'sanar-ui/dist/Components/Molecules/CardCourseMod
 
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
-import { useAuthContext } from 'Hooks/auth'
+// import { useAuthContext } from 'Hooks/auth'
 
 const mock = {
     image1:
@@ -18,15 +18,15 @@ const mock = {
 }
 
 const SANCourseContinue = () => {
-    const { getEnrollment } = useAuthContext()
+    // const { getEnrollment } = useAuthContext()
     const { t } = useTranslation('esanar')
 
-    const { last_accessed } = getEnrollment()
+    // const { last_accessed } = getEnrollment()
 
-    const percentProgress = last_accessed
-        ? (last_accessed.module_progress.done * 100) /
-          last_accessed.module_progress.total
-        : 0
+    // const percentProgress = last_accessed
+    //     ? (last_accessed.module_progress.done * 100) /
+    //       last_accessed.module_progress.total
+    //     : 0
 
     return (
         <div className='san-tab-course-content__continue'>
@@ -38,7 +38,7 @@ const SANCourseContinue = () => {
                                 'courseDetails.tabContent.continue.whereStopped'
                             )}
                         />
-                        <ESCardCourseModule
+                        {/* <ESCardCourseModule
                             className='san-tab-course-content__continue--card'
                             moduleName={`${t(
                                 'courseDetails.tabContent.modules.singularName'
@@ -53,7 +53,7 @@ const SANCourseContinue = () => {
                             )}
                             moduleTime={`${last_accessed.duration || 0}min`}
                             image={last_accessed.thumbnail}
-                        />
+                        /> */}
                     </ESCol>
                     <ESCol xs={24} md={12}>
                         <SessionTitle
