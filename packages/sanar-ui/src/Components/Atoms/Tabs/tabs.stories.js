@@ -28,6 +28,7 @@ storiesOf('Atoms.Tabs', module).add('Simple', () => (
     <ESTabs
         defaultActiveKey='1'
         center={boolean('Center', true)}
+        dark={boolean('Dark', false)}
         tabBarGutter={number('Gutter', 0)}
         size={select('Size', sizeOptions, 'default')}
         type={select('Type', typeOptions, 'line')}

@@ -1,0 +1,61 @@
+.es-lesson-header {
+    background: @grey-solid-8;
+    width: 100%;
+    padding: @padding-md;
+    box-shadow: 0 3px 6px @grey-3;
+
+    .es-typography,
+    & {
+        color: @white;
+    }
+
+    > .es-row {
+        width: 100%;
+    }
+
+    .ant-tabs {
+        &-bar {
+            margin-bottom: -@margin-md - 3;
+        }
+    }
+
+    &__extra {
+        flex: 1 1;
+
+        .es-button {
+            width: 100%;
+
+            &:last-of-type {
+                margin-top: @margin-xs;
+            }
+        }
+
+        @media (min-width: @screen-sm) {
+            display: flex;
+            justify-content: flex-end;
+
+            .es-button {
+                margin-right: @margin-md;
+                max-width: 165px;
+                min-width: 165px;
+
+                &:last-of-type {
+                    margin: 0;
+                }
+            }
+        }
+
+        @media (min-width: @screen-lg) {
+            &--bookmark {
+                display: inline-block !important;
+            }
+        }
+    }
+
+    @media (min-width: @screen-lg) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: @padding-md @padding-lg;
+    }
+}

@@ -6,4 +6,33 @@
             justify-content: center;
         }
     }
+
+    &__dark {
+        .ant-tabs {
+            &-bar {
+                border-bottom: none;
+                color: white;
+            }
+
+            &-ink-bar {
+                background: @warning-color;
+            }
+
+            &-tab {
+                color: @white !important;
+
+                &-active {
+                    color: @warning-color !important;
+
+                    &:hover {
+                        font-weight: bold;
+                    }
+                }
+
+                &:hover {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
 }
