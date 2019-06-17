@@ -15,7 +15,7 @@ const client = new ApolloClient({
     request: async operation =>
         operation.setContext({
             headers: {
-                Authorization: await getCurrentTokenSession()
+                authorization: await getCurrentTokenSession()
             }
         })
 })

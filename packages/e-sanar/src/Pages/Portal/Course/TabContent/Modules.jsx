@@ -142,13 +142,13 @@ const SANCourseModules = () => {
                                                 'courseDetails.tabContent.modules.singularName'
                                             )} ${item.index}`}
                                             title={item.name}
-                                            badge={`${item.progress.done}/${
-                                                item.progress.total
-                                            }`}
-                                            progress={
-                                                (item.progress.done * 100) /
-                                                item.progress.total
-                                            }
+                                            // badge={`${item.progress.done}/${
+                                            //     item.progress.total
+                                            // }`}
+                                            // progress={
+                                            //     (item.progress.done * 100) /
+                                            //     item.progress.total
+                                            // }
                                             actionName={
                                                 <span className='san-tab-course-content__modules--card-action'>
                                                     {t(
