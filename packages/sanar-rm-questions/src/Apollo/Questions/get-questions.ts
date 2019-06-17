@@ -13,7 +13,7 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
         where.year = filter.year
     }
 
-    const whereFilter = ` ,where: "${JSON.stringify(where).replace(/\"/g, '\\"') }" `
+    const whereFilter = ` ,where: "${JSON.stringify(where).replace(/"/g, '\\"') }" `
 
     const queryWithParams = `
         {
@@ -21,7 +21,6 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
                 data {
                     id,
                     statement,
-                    year,
                     type,
                     alternatives {
                         data {

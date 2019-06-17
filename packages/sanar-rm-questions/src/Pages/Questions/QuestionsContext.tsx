@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState } from 'react'
 import { Question } from '../../Apollo/question'
 import { Speciality } from '../../Apollo/speciality'
-import { QuestionsInputFilter } from '../../Apollo/QuestionsInputFilter'
 import { Tag } from '../../Apollo/tag'
 
 export enum QuestionPageType {
@@ -14,6 +13,13 @@ export interface IFormFilterState {
     selectedState: any,
     selectedYear: any,
     isCommentedByExpert: boolean
+}
+
+interface Course {
+    enrollmentId?: string
+    contentId?: string
+    moduleId?: string
+    courseName?: string
 }
 
 interface IQuestionsContext {
@@ -37,7 +43,7 @@ interface IQuestionsContext {
     setQuestions: (questions: Question[]) => void
 
     isFromCourse?
-    courseLinkReturn?
+    course?: Course
 
     totalCorrect: number
     totalWrong: number

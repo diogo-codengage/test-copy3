@@ -4,7 +4,6 @@ import { RMContainer } from '../../../Components/RMContainer'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import { QuestionPageType, useQuestionsContext } from '../QuestionsContext'
 import { SessionStatusDashboard } from './SessionStatusDashboard'
-import { questionSkip } from '../../../Apollo/Questions/questionSkip'
 
 interface IProps {
     onConfirm?: (alternativeId) => void
@@ -60,8 +59,6 @@ export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: 
             onJump={onJump}
             onlyStep={true}
         />
-
-        {/*<pre>{JSON.stringify(currentQuestion, null, 4)}</pre>*/}
 
     </RMContainer>
 

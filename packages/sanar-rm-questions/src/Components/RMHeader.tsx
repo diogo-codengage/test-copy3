@@ -35,7 +35,7 @@ export function RMHeader({ title , rightElement }: IProp) {
                         alignItems: 'center',
                     }
                 }>
-                    <img src={logo}/>
+                    <img alt={'logo'} src={logo}/>
                     <ESTypography
                         level={4}
                     >{title}</ESTypography>

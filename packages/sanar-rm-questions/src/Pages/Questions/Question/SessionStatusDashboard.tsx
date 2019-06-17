@@ -1,11 +1,14 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import ESCircleProgress from 'sanar-ui/dist/Components/Atoms/CircleProgress'
 
-import { RMContainer } from '../../../Components/RMContainer'
-import { QuestionPageType, useQuestionsContext } from '../QuestionsContext'
+import { useQuestionsContext } from '../QuestionsContext'
+import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
 const ESCircleProgressWrapper = ({ label, percent, status }) => {
+
+    const { width } = useWindowSize()
+    const isSmall = width < 768
 
     return <div style={
         {
@@ -13,11 +16,12 @@ const ESCircleProgressWrapper = ({ label, percent, status }) => {
             display: 'flex',
             alignItems: 'center'
         }
-    }><span style={{ marginRight: 6 }}>{label}</span>
+    }>
+        {!isSmall && <span style={{ marginRight: 6 }}>{label}</span> }
         <ESCircleProgress
-            strokeWidth={12}
+            strokeWidth={14}
             showInfo
-            width={44}
+            width={60}
             percent={percent}
             status={status}
         />
@@ -73,7 +77,6 @@ export const SessionStatusDashboard = () => {
         totalCorrect,
         totalSkipped,
         totalWrong,
-        setCurrentPage
     } = useQuestionsContext()
 
     const {
