@@ -1,7 +1,111 @@
 .es-jw-player {
+    position: relative;
+
+    &__header {
+        position: absolute;
+        padding: @padding-md;
+        z-index: 1;
+        left: 0;
+        right: 0;
+        justify-content: space-between;
+        display: flex;
+        transition: display 1000ms;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background-color: @grey-3;
+        }
+
+        &--left {
+            display: flex;
+            z-index: 1;
+            & .es-button {
+                background-color: @secondary-color;
+                margin-right: @margin-md;
+            }
+
+            & .title {
+                color: @white;
+            }
+            & .subtitle {
+                color: @gold-1;
+            }
+        }
+
+        &--right {
+            z-index: 1;
+            > div {
+                z-index: 1;
+                display: flex;
+                align-items: center;
+                & .es-typography,
+                & .es-button {
+                    color: @white;
+                }
+            }
+        }
+
+        @media (max-width: @screen-md) {
+            &--left {
+                flex: 1;
+                justify-content: space-between;
+                & .title {
+                    font-size: @font-size-lg;
+                }
+                & .subtitle {
+                    font-size: @font-size-base;
+                }
+                & .es-button {
+                    order: 2;
+                }
+            }
+            &--right {
+                display: none;
+            }
+        }
+    }
+
+    @media (max-width: @screen-sm) {
+        &__header {
+            display: none;
+        }
+    }
+
+    @media (max-width: @screen-xs) {
+        & .jw-svg-icon-advance .jw-button-image {
+            display: none;
+        }
+    }
+
+    & .jw-wrapper {
+        background-color: transparent;
+    }
+
+    & .jw-reset {
+        border-radius: 0 !important;
+    }
+
     & .jw-svg-icon {
         height: 16px;
         width: 16px;
+    }
+
+    & .jw-breakpoint-0 .jw-display .jw-icon.jw-icon-display {
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+    }
+
+    & .jw-breakpoint-7 .jw-icon-inline.jw-svg-icon-next .jw-button-image,
+    & .jw-breakpoint-7 .jw-icon-inline.jw-svg-icon-previous .jw-button-image,
+    & .jw-breakpoint-7 .jw-icon-inline.jw-svg-icon-advance .jw-button-image {
+        width: 30px;
+        height: 30px;
     }
 
     & .jw-slider-horizontal .jw-slider-container {
@@ -28,6 +132,70 @@
     & .jw-text-countdown,
     & .jw-text-elapsed {
         color: @white-8;
+    }
+
+    & .jw-breakpoint-1 .jw-display .jw-icon.jw-icon-rewind {
+        visibility: hidden;
+    }
+
+    /* CONTROLS ORDER */
+    & .jw-icon-playback {
+        order: 2;
+    }
+    & .jw-icon-rewind {
+        order: 4;
+    }
+    & .jw-svg-icon-advance {
+        order: 5;
+    }
+    & .jw-svg-icon-previous {
+        order: 1;
+    }
+    & .jw-svg-icon-next {
+        order: 3;
+    }
+    & .jw-icon-volume {
+        order: 9;
+    }
+    & .jw-text-elapsed {
+        order: 6;
+    }
+    & .jw-text-countdown {
+        order: 7;
+    }
+    & .jw-text-duration {
+        order: 8;
+    }
+    & .jw-spacer {
+        order: 9;
+    }
+    & .jw-icon-cc {
+        order: 10;
+    }
+    & .jw-icon-settings {
+        order: 11;
+    }
+    & .jw-icon-fullscreen {
+        order: 12;
+    }
+
+    & .jw-slider-time:focus .jw-progress,
+    & .jw-slider-time:focus .jw-buffer,
+    & .jw-slider-time:focus .jw-rail,
+    & .jw-slider-time:hover .jw-progress,
+    & .jw-slider-time:hover .jw-buffer,
+    & .jw-slider-time:hover .jw-rail {
+        transform: translate(0, -50%) scale(1, 0.7);
+    }
+
+    & .jw-slider-time .jw-progress,
+    & .jw-slider-time .jw-buffer,
+    & .jw-slider-time .jw-rail {
+        border-radius: @border-radius-base !important;
+    }
+
+    & .jw-knob {
+        border-radius: 50% !important;
     }
 
     /* PLAYBACK */
@@ -135,12 +303,34 @@
     /* ADVANCE */
     .jw-svg-icon-advance .jw-button-image {
         background-image: url('@{assetsPath}/images/video/advance.svg') !important;
-        background-size: contain;
+        background-size: cover;
         background-repeat: no-repeat;
         width: 16px;
         height: 16px;
     }
     .jw-svg-icon-advance:hover .jw-button-image {
         background-image: url('@{assetsPath}/images/video/advance-hover.svg') !important;
+    }
+    /* NEXT */
+    .jw-svg-icon-next .jw-button-image {
+        background-image: url('@{assetsPath}/images/video/next.svg') !important;
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 16px;
+        height: 16px;
+    }
+    .jw-svg-icon-next:hover .jw-button-image {
+        background-image: url('@{assetsPath}/images/video/next-hover.svg') !important;
+    }
+    /* PREVIOUS */
+    .jw-svg-icon-previous .jw-button-image {
+        background-image: url('@{assetsPath}/images/video/previous.svg') !important;
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 16px;
+        height: 16px;
+    }
+    .jw-svg-icon-previous:hover .jw-button-image {
+        background-image: url('@{assetsPath}/images/video/previous-hover.svg') !important;
     }
 }

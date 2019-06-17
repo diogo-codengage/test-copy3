@@ -106,6 +106,9 @@ export default {
         title: 'Mapa de questões'
     },
     jwplayer: {
-        advance: 'Avançar 10 segundos'
+        advance: 'Avançar 10 segundos',
+        rateClass: 'Avaliar aula',
+        next: 'Próximo',
+        previous: 'Anterior'
     }
 }
