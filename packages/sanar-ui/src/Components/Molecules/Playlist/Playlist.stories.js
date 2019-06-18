@@ -1,5 +1,5 @@
 import React from 'react'
-import { storiesOf } from '@storyDocument/react'
+import { storiesOf } from '@storybook/react'
 
 import ESPlaylist from './Playlist'
 import ESPlaylistList from './PlaylistList'
