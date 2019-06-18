@@ -1,13 +1,16 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-
 import { Query } from 'react-apollo'
-import SANCoursePage from './Course'
-import SANQuestionsPage from './Questions'
-import SANPortalLayout from './Layout'
+
+import ESSplashLoader from 'sanar-ui/dist/Components/Atoms/SplashLoader'
+
 import { GET_ME } from 'Apollo/Me/query'
 import { useAuthContext } from 'Hooks/auth'
-import ESSplashLoader from 'sanar-ui/dist/Components/Atoms/SplashLoader'
+
+import SANPortalLayout from './Layout'
+import SANCoursePage from './Course'
+import SANQuestionsPage from './Questions'
+import SANClassromPage from './Classrom'
 
 const SANPortalRoutes = ({ match: { url } }) => {
     const { setMe } = useAuthContext()
@@ -29,6 +32,10 @@ const SANPortalRoutes = ({ match: { url } }) => {
                                 <Route
                                     path={`${url}/banco-questoes`}
                                     component={SANQuestionsPage}
+                                />
+                                <Route
+                                    path={`${url}/sala-aula`}
+                                    component={SANClassromPage}
                                 />
                                 <Route
                                     path={[`${url}/`, `${url}`]}
