@@ -48,6 +48,7 @@ const SANQuestionPage = ({ history }) => {
     const { course } = getEnrollment()
 
     const handleConfirm = mutation => alternative => {
+        pauseStopwatch()
         mutation({
             variables: {
                 userId: me.id,
@@ -65,6 +66,7 @@ const SANQuestionPage = ({ history }) => {
     const handleNext = (isCorrect, isJump) => {
         setCurrentIndex(oldIndex => ++oldIndex)
         setQuestions(questions.slice(1))
+        startStopwatch()
 
         if (currentIndex === limit - 5) {
             fetchQuestions()
@@ -98,7 +100,9 @@ const SANQuestionPage = ({ history }) => {
             setResponse({
                 stats: stats.alternatives,
                 comment:
-                    comments.data && comments.data.length && comments.data[0],
+                    comments.data && comments.data.length
+                        ? comments.data[0]
+                        : null,
                 answer: correct.id
             })
         } else {
@@ -132,11 +136,21 @@ const SANQuestionPage = ({ history }) => {
         setFirstLoad(false)
     }
 
-    const seeFilter = () => {
-        history.push('/aluno/banco-questoes/perguntas/filtro')
+    const pauseStopwatch = () => {
         if (stopwatchRef && stopwatchRef.current) {
             stopwatchRef.current.pause()
         }
+    }
+
+    const startStopwatch = () => {
+        if (stopwatchRef && stopwatchRef.current) {
+            stopwatchRef.current.start()
+        }
+    }
+
+    const seeFilter = () => {
+        history.push('/aluno/banco-questoes/perguntas/filtro')
+        pauseStopwatch()
     }
 
     useEffect(() => {
