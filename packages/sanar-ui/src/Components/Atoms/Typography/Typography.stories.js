@@ -23,6 +23,11 @@ const typeOptions = {
     Muted: 'muted'
 }
 
+const transformOptions = {
+    Initial: 'initial',
+    Uppercase: 'uppercase'
+}
+
 const levelOptions = {
     '': '',
     1: 1,
@@ -52,6 +57,7 @@ storiesOf('Atoms.Typography', module).add('Simple', () => (
         level={select('Level', levelOptions, '')}
         type={select('Type', typeOptions, 'default')}
         variant={select('Variant', variantOptions, undefined)}
+        variant={select('Transform', transformOptions, undefined)}
     >
         Every year, I took a holiday. I went to Florence, this cafe on the banks
         of the Arno. Every fine evening, I would sit there and order a Fernet
