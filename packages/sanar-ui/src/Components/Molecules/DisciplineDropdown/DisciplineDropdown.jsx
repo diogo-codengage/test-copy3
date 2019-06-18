@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -10,37 +10,69 @@ import ESTypography from '../../Atoms/Typography'
 
 const ESDisciplineDropdown = ({ className, items, onSelect }) => {
     const classes = classNames('es-discipline-dropdown', className)
+    const [open, setOpen] = useState(false)
 
     const totalDisicplines = items.length
     const currentDiscipline = items.findIndex(item => item.active) + 1
     const activeDiscipline = items.find(item => item.active).description
 
-    const calcProgress = () => {
-        return (currentDiscipline * 100) / totalDisicplines
-    }
+    const calcProgress = () =>
+        items.filter(item => item.completed).length === items.length
+            ? 100
+            : (currentDiscipline * 100) / totalDisicplines
+
+    const openControl = useCallback(() => {
+        setOpen(!open)
+    }, [open])
 
     return (
         <ESDropdown
             overlay={<ESDisciplineList onSelect={onSelect} items={items} />}
             className={classes}
+            trigger={['click']}
+            onVisibleChange={openControl}
         >
             <div className='es-discipline-dropdown__menu'>
                 <div className='d-flex align-items-center'>
                     <ESCircleProgress
                         strokeWidth={8}
                         width={32}
-                        format={() => `${currentDiscipline}`}
+                        format={() =>
+                            calcProgress() === 100 ? (
+                                <ESEvaIcon
+                                    className='es-discipline-dropdown__menu--all-completed'
+                                    key={3}
+                                    size='large'
+                                    name='checkmark-outline'
+                                />
+                            ) : (
+                                `${currentDiscipline}`
+                            )
+                        }
                         percent={calcProgress()}
                         className='mr-xs'
                         status='warning'
                         color='white'
+                        trailColor='grey'
                     />
                     <ESTypography variant='body2'>
                         {activeDiscipline}
                     </ESTypography>
                 </div>
 
-                <ESEvaIcon size='large' name='arrow-ios-downward-outline' />
+                {open ? (
+                    <ESEvaIcon
+                        key={1}
+                        size='large'
+                        name='arrow-ios-upward-outline'
+                    />
+                ) : (
+                    <ESEvaIcon
+                        key={2}
+                        size='large'
+                        name='arrow-ios-downward-outline'
+                    />
+                )}
             </div>
         </ESDropdown>
     )

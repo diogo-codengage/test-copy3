@@ -1,12 +1,15 @@
 .es-discipline-dropdown {
-    width: 100%;
+    .ant-progress-text {
+        font-weight: normal;
+        font-size: 1.5em;
+    }
 
     &__menu {
         display: flex;
         justify-content: space-between;
         align-items: center;
         background: @white-1;
-        padding: @padding-sm;
+        padding: @padding-xs @padding-sm;
         border-radius: @border-radius-base;
         border: 1px solid @white-3;
 
@@ -15,12 +18,15 @@
             color: @white;
         }
 
+        &--all-completed {
+            color: @warning-color;
+        }
+
         &__content {
-            width: 100%;
             background: @white-1;
             border-radius: @border-radius-base;
             border: 1px solid @white-3;
-            flex: 1 1;
+            width: ~'calc(100vw - 32px)' !important;
 
             .es-typography {
                 color: @white-6;
@@ -34,6 +40,12 @@
                 &--active {
                     .es-typography {
                         color: @white;
+                    }
+
+                    &:hover {
+                        .es-typography {
+                            color: @white-9;
+                        }
                     }
                 }
 
@@ -49,9 +61,24 @@
 
                 &:hover {
                     cursor: pointer;
-                    font-weight: bold;
+
+                    .es-typography {
+                        color: @white-7 !important;
+                    }
                 }
             }
+
+            @media (min-width: 1004px) {
+                margin-left: 0;
+            }
+
+            @media (min-width: 1025px) {
+                max-width: 272px;
+            }
         }
+    }
+
+    @media (min-width: 1025px) {
+        max-width: 272px;
     }
 }

@@ -28,10 +28,13 @@ const ESDisciplineList = ({ className, items, onSelect }) => {
                     key={index}
                     onClick={() => onSelect(item)}
                 >
-                    {item.completed && <ESEvaIcon name='checkmark-outline' />}
-                    {item.incomplete && <ESEvaIcon name='minus-outline' />}
+                    {item.completed ? (
+                        <ESEvaIcon name='checkmark-outline' />
+                    ) : (
+                        item.incomplete && <ESEvaIcon name='minus-outline' />
+                    )}
                     <ESTypography variant='body2'>
-                        {`${index + 1}. `}
+                        {`${index + 1} - `}
                         {item.description}
                     </ESTypography>
                 </div>
