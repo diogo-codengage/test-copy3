@@ -5,14 +5,12 @@ import { getQuestionsQuery } from '../../../Apollo/Questions/get-questions'
 import { useQuestionsContext } from '../QuestionsContext'
 import { questionAnswer } from '../../../Apollo/Questions/questionAnswer'
 import { questionSkip } from '../../../Apollo/Questions/questionSkip'
-import { useAuthContext } from '../../../AuthContext'
 import { QuestionsInputFilter } from '../../../Apollo/QuestionsInputFilter'
 
 export const Question = () => {
 
     const questionsCtx = useQuestionsContext()
     const { client } = useContext(ApolloContext)
-    const { userId } = useAuthContext()
 
     const [stats, setStats] = useState()
     const [loading, setLoading] = useState(false)
@@ -66,7 +64,7 @@ export const Question = () => {
 
         client.mutate({
             mutation: questionSkip,
-            variables: {userId, questionId},
+            variables: {questionId},
         }).then(() => {})
 
         questionsCtx.increaseTotalSkipped()
@@ -94,7 +92,8 @@ export const Question = () => {
 
         setLoading(true)
         client.mutate({mutation: questionAnswer, variables: {
-            userId, alternativeId, correct, questionId}})
+
+            alternativeId, correct, questionId}})
             .then(({data, errors}) => {
                 console.log({data, errors})
 

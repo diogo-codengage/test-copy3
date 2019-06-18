@@ -35,12 +35,12 @@ export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: 
             {
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: isFromCourse ? 'center' : 'space-between'
+                justifyContent: isFromCourse() ? 'center' : 'space-between'
             }
         }>
             <SessionStatusDashboard/>
 
-            {!isFromCourse && <ESButton
+            {!isFromCourse() && <ESButton
                 color='primary'
                 variant='text'
                 blockOnlyMobile

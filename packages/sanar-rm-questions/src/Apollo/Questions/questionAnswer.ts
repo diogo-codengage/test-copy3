@@ -4,7 +4,6 @@ import { gql } from 'apollo-boost'
 export const questionAnswer = gql`
     
     mutation QuestionAnswer (
-        $userId: String!
         $questionId: String!
         $alternativeId: String
         $correct: Boolean!
@@ -13,7 +12,6 @@ export const questionAnswer = gql`
             input: {
                 question_id: $questionId
                 alternative_ids:[ $alternativeId ]
-                user_id: $userId
                 correct: $correct
             }) {
             answer {

@@ -1,6 +1,7 @@
 .es-jw-player {
     position: relative;
 
+    /* HEADER LAYER */
     &__header {
         position: absolute;
         padding: @padding-md;
@@ -42,7 +43,7 @@
             > div {
                 z-index: 1;
                 display: flex;
-                align-items: center;
+                align-items: flex-end;
                 & .es-typography,
                 & .es-button {
                     color: @white;
@@ -50,6 +51,7 @@
             }
         }
 
+        /* RESPONSIVE HEADER */
         @media (max-width: @screen-md) {
             &--left {
                 flex: 1;
@@ -62,6 +64,8 @@
                 }
                 & .es-button {
                     order: 2;
+                    width: 32px;
+                    height: 32px;
                 }
             }
             &--right {
@@ -70,16 +74,30 @@
         }
     }
 
-    @media (max-width: @screen-sm) {
-        &__header {
-            display: none;
+    /* CUSTOM BUTTONS CENTER WHEN PAUSED */
+    & .previous-center,
+    & .next-center {
+        z-index: 1;
+        color: @white;
+        position: absolute;
+        top: ~'calc(100% / 2 - 18px)';
+        color: @white-7;
+        visibility: hidden;
+        cursor: pointer;
+
+        & svg {
+            font-size: 35px;
+        }
+
+        &:hover {
+            color: @white;
         }
     }
-
-    @media (max-width: @screen-xs) {
-        & .jw-svg-icon-advance .jw-button-image {
-            display: none;
-        }
+    & .previous-center {
+        left: ~'calc(100% / 2 - 65px)';
+    }
+    & .next-center {
+        right: ~'calc(100% / 2 - 65px)';
     }
 
     & .jw-wrapper {
@@ -90,17 +108,19 @@
         border-radius: 0 !important;
     }
 
+    /* SET SIZE CONTROLS ICONS */
     & .jw-svg-icon {
         height: 16px;
         width: 16px;
     }
 
-    & .jw-breakpoint-0 .jw-display .jw-icon.jw-icon-display {
-        width: 60px;
-        height: 60px;
-        line-height: 60px;
+    /* REMOVE BUTTONS CENTER UNUSED */
+    & .jw-display-icon-container.jw-display-icon-next.jw-reset,
+    & .jw-display-icon-container.jw-display-icon-rewind.jw-reset {
+        display: none;
     }
 
+    /* RESIZE CUSTOM BUTTONS CONTROLS WHEN SCREEN > 1580 */
     & .jw-breakpoint-7 .jw-icon-inline.jw-svg-icon-next .jw-button-image,
     & .jw-breakpoint-7 .jw-icon-inline.jw-svg-icon-previous .jw-button-image,
     & .jw-breakpoint-7 .jw-icon-inline.jw-svg-icon-advance .jw-button-image {
@@ -108,34 +128,44 @@
         height: 30px;
     }
 
-    & .jw-slider-horizontal .jw-slider-container {
-        height: 12px;
-    }
-
-    & .jw-progress {
-        background-color: @secondary-color;
-        border-radius: @border-radius-base;
-    }
-
     & .jw-reset {
         border-radius: @border-radius-base;
         font-family: 'Nunito Sans', sans-serif;
     }
 
+    /* PROGRESS BAR HEIGHT */
+    & .jw-slider-horizontal .jw-slider-container {
+        height: 12px;
+    }
+    & .jw-progress {
+        background-color: @secondary-color;
+        border-radius: @border-radius-base;
+    }
+    & .jw-slider-time:focus .jw-progress,
+    & .jw-slider-time:focus .jw-buffer,
+    & .jw-slider-time:focus .jw-rail,
+    & .jw-slider-time:hover .jw-progress,
+    & .jw-slider-time:hover .jw-buffer,
+    & .jw-slider-time:hover .jw-rail {
+        transform: translate(0, -50%) scale(1, 0.7);
+    }
+
+    & .jw-slider-time .jw-progress,
+    & .jw-slider-time .jw-buffer,
+    & .jw-slider-time .jw-rail {
+        border-radius: @border-radius-base !important;
+    }
+
     & .jw-knob {
         background-color: @secondary-color;
         box-shadow: 0 2px 4px @grey-5;
-        border-radius: 50%;
+        border-radius: 50% !important;
     }
 
     & .jw-text-duration,
     & .jw-text-countdown,
     & .jw-text-elapsed {
         color: @white-8;
-    }
-
-    & .jw-breakpoint-1 .jw-display .jw-icon.jw-icon-rewind {
-        visibility: hidden;
     }
 
     /* CONTROLS ORDER */
@@ -179,46 +209,42 @@
         order: 12;
     }
 
-    & .jw-slider-time:focus .jw-progress,
-    & .jw-slider-time:focus .jw-buffer,
-    & .jw-slider-time:focus .jw-rail,
-    & .jw-slider-time:hover .jw-progress,
-    & .jw-slider-time:hover .jw-buffer,
-    & .jw-slider-time:hover .jw-rail {
-        transform: translate(0, -50%) scale(1, 0.7);
-    }
-
-    & .jw-slider-time .jw-progress,
-    & .jw-slider-time .jw-buffer,
-    & .jw-slider-time .jw-rail {
-        border-radius: @border-radius-base !important;
-    }
-
-    & .jw-knob {
-        border-radius: 50% !important;
-    }
+    /* OVERRIDE ICONS */
 
     /* PLAYBACK */
+    .jw-state-paused .jw-svg-icon-play path,
+    .jw-svg-icon-volume-100 path,
+    .jw-svg-icon-volume-50 path,
+    .jw-svg-icon-volume-0 path,
+    .jw-svg-icon-cc-off path,
+    .jw-svg-icon-fullscreen-on path,
+    .jw-svg-icon-rewind path,
     .jw-state-idle .jw-svg-icon-play path {
         display: none;
     }
+
+    .jw-svg-icon-rewind,
+    .jw-svg-icon-fullscreen-on,
+    .jw-svg-icon-cc-off,
+    .jw-svg-icon-volume-0,
+    .jw-svg-icon-volume-50,
+    .jw-svg-icon-volume-100,
+    .jw-state-paused .jw-svg-icon-play,
     .jw-state-idle .jw-svg-icon-play {
-        background-image: url('@{assetsPath}/images/video/play.svg');
         background-size: contain;
         background-repeat: no-repeat;
+    }
+
+    .jw-state-idle .jw-svg-icon-play {
+        background-image: url('@{assetsPath}/images/video/play.svg');
         height: 32px;
         width: 32px;
     }
     .jw-state-idle .jw-display-icon-container:hover .jw-svg-icon-play {
         background-image: url('@{assetsPath}/images/video/play-hover.svg');
     }
-    .jw-state-paused .jw-svg-icon-play path {
-        display: none;
-    }
     .jw-state-paused .jw-svg-icon-play {
         background-image: url('@{assetsPath}/images/video/play.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
         height: 32px;
         width: 32px;
     }
@@ -227,110 +253,109 @@
     }
 
     /* VOLUME */
-    .jw-svg-icon-volume-100 path {
-        display: none;
-    }
     .jw-svg-icon-volume-100 {
         background-image: url('@{assetsPath}/images/video/volume-up.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
     }
     .jw-icon-volume:hover .jw-svg-icon-volume-100 {
         background-image: url('@{assetsPath}/images/video/volume-up-hover.svg');
     }
-    .jw-svg-icon-volume-50 path {
-        display: none;
-    }
     .jw-svg-icon-volume-50 {
         background-image: url('@{assetsPath}/images/video/volume-down.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
     }
     .jw-icon-volume:hover .jw-svg-icon-volume-50 {
         background-image: url('@{assetsPath}/images/video/volume-down-hover.svg');
     }
-    .jw-svg-icon-volume-0 path {
-        display: none;
-    }
     .jw-svg-icon-volume-0 {
         background-image: url('@{assetsPath}/images/video/volume-off.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
     }
     .jw-icon-volume:hover .jw-svg-icon-volume-0 {
         background-image: url('@{assetsPath}/images/video/volume-off-hover.svg');
     }
 
     /* CLOSED CAPTIONS */
-    .jw-svg-icon-cc-off path {
-        display: none;
-    }
     .jw-svg-icon-cc-off {
         background-image: url('@{assetsPath}/images/video/captions.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
     }
     .jw-icon-cc-off:hover .jw-svg-icon-cc-off {
         background-image: url('@{assetsPath}/images/video/captions-hover.svg');
     }
 
     /* FULLSCREEN */
-    .jw-svg-icon-fullscreen-on path {
-        display: none;
-    }
     .jw-svg-icon-fullscreen-on {
         background-image: url('@{assetsPath}/images/video/fullscreen-on.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
     }
     .jw-icon-fullscreen:hover .jw-svg-icon-fullscreen-on {
         background-image: url('@{assetsPath}/images/video/fullscreen-on-hover.svg');
     }
 
     /* REWIND */
-    .jw-svg-icon-rewind path {
-        display: none;
-    }
-
     .jw-svg-icon-rewind {
         background-image: url('@{assetsPath}/images/video/rewind.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
     }
     .jw-icon-rewind:hover .jw-svg-icon-rewind {
         background-image: url('@{assetsPath}/images/video/rewind-hover.svg');
     }
-    /* ADVANCE */
+
+    .jw-svg-icon-previous .jw-button-image,
+    .jw-svg-icon-next .jw-button-image,
     .jw-svg-icon-advance .jw-button-image {
-        background-image: url('@{assetsPath}/images/video/advance.svg') !important;
         background-size: cover;
         background-repeat: no-repeat;
         width: 16px;
         height: 16px;
+    }
+
+    /* ADVANCE - CUSTOM */
+    .jw-svg-icon-advance .jw-button-image {
+        background-image: url('@{assetsPath}/images/video/advance.svg') !important;
     }
     .jw-svg-icon-advance:hover .jw-button-image {
         background-image: url('@{assetsPath}/images/video/advance-hover.svg') !important;
     }
-    /* NEXT */
+    /* NEXT - CUSTOM */
     .jw-svg-icon-next .jw-button-image {
         background-image: url('@{assetsPath}/images/video/next.svg') !important;
-        background-size: cover;
-        background-repeat: no-repeat;
-        width: 16px;
-        height: 16px;
     }
     .jw-svg-icon-next:hover .jw-button-image {
         background-image: url('@{assetsPath}/images/video/next-hover.svg') !important;
     }
-    /* PREVIOUS */
+    /* PREVIOUS - CUSTOM */
     .jw-svg-icon-previous .jw-button-image {
         background-image: url('@{assetsPath}/images/video/previous.svg') !important;
-        background-size: cover;
-        background-repeat: no-repeat;
-        width: 16px;
-        height: 16px;
     }
     .jw-svg-icon-previous:hover .jw-button-image {
         background-image: url('@{assetsPath}/images/video/previous-hover.svg') !important;
+    }
+
+    @media (max-width: @screen-sm) {
+        &__header {
+            display: none;
+        }
+    }
+
+    @media (max-width: @screen-xs) {
+        & .jw-svg-icon-next,
+        & .jw-svg-icon-previous,
+        & .jw-svg-icon-advance {
+            display: none;
+        }
+
+        & .jw-text-elapsed {
+            order: 1;
+        }
+        & .jw-text-countdown {
+            order: 2;
+        }
+        & .jw-text-duration {
+            order: 3;
+        }
+        & .jw-text-volume {
+            order: 4;
+        }
+
+        & .previous-center,
+        & .next-center {
+            visibility: visible;
+        }
     }
 }
