@@ -16,7 +16,7 @@ const ESCardCourseModule = ({
     title,
     badge,
     progress,
-    redirectTo,
+    onClick,
     actionName,
     moduleTime,
     disabledBadge,
@@ -29,7 +29,7 @@ const ESCardCourseModule = ({
 
     const renderBasedOnDisabled = disabled => {
         return !disabled ? (
-            <ESButton href={redirectTo} variant='text' className='pr-no' bold>
+            <ESButton onClick={onClick} variant='text' className='pr-no' bold>
                 {actionName}
                 <ESEvaIcon name='chevron-right-outline' size='large' />
             </ESButton>

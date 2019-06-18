@@ -10,24 +10,24 @@ const SANClassrom = ({ match: { url } }) => {
             <div className='classrom'>
                 <Switch>
                     <Route
-                        path={`${url}/video`}
+                        path={`${url}/video/:id`}
                         render={() => <div>SANClassromVideo</div>}
                         // component={SANClassromVideo}
                     />
                     <Route
-                        path={`${url}/documento`}
+                        path={`${url}/documento/:id`}
                         render={() => <div>SANClassromDocument</div>}
                         // component={SANClassromDocument}
                     />
                     <Route
-                        path={`${url}/simulado`}
+                        path={`${url}/simulado/:id`}
                         render={() => <div>SANClassromDocument</div>}
                         // component={SANClassromMock}
                     />
-                    <Route
+                    {/* <Route
                         path={[`${url}/`, `${url}`]}
-                        render={() => <Redirect to={`${url}/video`} />}
-                    />
+                        render={() => <Redirect to='/aluno/curso' />}
+                    /> */}
                 </Switch>
             </div>
         </SANClassromProvider>

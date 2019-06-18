@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { withRouter } from 'react-router-dom'
 import { Query } from 'react-apollo'
 import { useTranslation } from 'react-i18next'
 
@@ -46,10 +47,12 @@ import { GET_MODULES } from 'Apollo/CourseDetails/queries/modules'
 //     }
 // ]
 
-const SANCourseModules = () => {
+const SANCourseModules = ({ history }) => {
     const [current, setCurrent] = useState(1)
     const [pageSize] = useState(10)
     const { t } = useTranslation('esanar')
+
+    const goClassrom = id => () => history.push(`/aluno/sala-aula/${id}`)
 
     return (
         <Query
@@ -142,13 +145,20 @@ const SANCourseModules = () => {
                                                 'courseDetails.tabContent.modules.singularName'
                                             )} ${item.index}`}
                                             title={item.name}
-                                            // badge={`${item.progress.done}/${
-                                            //     item.progress.total
-                                            // }`}
-                                            // progress={
-                                            //     (item.progress.done * 100) /
-                                            //     item.progress.total
-                                            // }
+                                            badge={
+                                                item.progress
+                                                    ? `${item.progress.done}/${
+                                                          item.progress.total
+                                                      }`
+                                                    : '0/0'
+                                            }
+                                            progress={
+                                                item.progress
+                                                    ? (item.progress.done *
+                                                          100) /
+                                                      item.progress.total
+                                                    : 0
+                                            }
                                             actionName={
                                                 <span className='san-tab-course-content__modules--card-action'>
                                                     {t(
@@ -159,6 +169,7 @@ const SANCourseModules = () => {
                                             moduleTime={`${item.duration ||
                                                 0}min`}
                                             image={item.cover_picture}
+                                            onClick={goClassrom(item.id)}
                                         />
                                     </ESCol>
                                 ))}
@@ -176,4 +187,4 @@ const SANCourseModules = () => {
     )
 }
 
-export default SANCourseModules
+export default withRouter(SANCourseModules)

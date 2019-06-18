@@ -34,7 +34,7 @@ const SANPortalRoutes = ({ match: { url } }) => {
                                     component={SANQuestionsPage}
                                 />
                                 <Route
-                                    path={`${url}/sala-aula`}
+                                    path={`${url}/sala-aula/:id`}
                                     component={SANClassromPage}
                                 />
                                 <Route
