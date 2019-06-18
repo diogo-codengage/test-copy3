@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import ESDisciplineDropdown from './DisciplineDropdown'
+import { object } from '@storybook/addon-knobs'
 
 const items = [
     {
@@ -25,11 +26,16 @@ const onSelect = item => console.log(item)
 
 storiesOf('Molecules.DisciplineDropdown', module).add(
     'Simple',
-    () => <ESDisciplineDropdown items={items} onSelect={onSelect} />,
+    () => (
+        <ESDisciplineDropdown
+            items={object('Items', items)}
+            onSelect={onSelect}
+        />
+    ),
     {
         style: {
             background: '#242938',
-            padding: '20px',
+            padding: '16px',
             height: 500
         }
     }
