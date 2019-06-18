@@ -143,6 +143,20 @@ const ESJwPlayer = ({
                     </div>
                 </div>
             )}
+            {isReady && isPause && (
+                <>
+                    <ESEvaIcon
+                        name='skip-back'
+                        className='previous-center'
+                        onClick={onPrevious}
+                    />
+                    <ESEvaIcon
+                        name='skip-forward'
+                        className='next-center'
+                        onClick={onNext}
+                    />
+                </>
+            )}
             <ReactJWPlayer
                 {...props}
                 onReady={handleReady}
