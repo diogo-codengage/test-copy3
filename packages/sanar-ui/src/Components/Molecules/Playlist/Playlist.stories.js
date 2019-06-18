@@ -1,5 +1,5 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
+import { storiesOf } from '@storyDocument/react'
 
 import ESPlaylist from './Playlist'
 import ESPlaylistList from './PlaylistList'
@@ -15,7 +15,7 @@ const items = [
     },
     {
         id: 2,
-        type: 'Book',
+        type: 'Document',
         description: 'Material para leitura',
         finish: true
     },
@@ -28,7 +28,7 @@ const items = [
     },
     {
         id: 4,
-        type: 'Book',
+        type: 'Document',
         description: 'Simulado módulo 1',
         finish: true
     },
@@ -41,7 +41,7 @@ const items = [
     },
     {
         id: 6,
-        type: 'Book',
+        type: 'Document',
         description: 'Material para leitura'
     },
     {
@@ -52,7 +52,7 @@ const items = [
     },
     {
         id: 8,
-        type: 'Book',
+        type: 'Document',
         description: 'Material para leitura'
     },
     {
@@ -63,7 +63,7 @@ const items = [
     },
     {
         id: 10,
-        type: 'Question',
+        type: 'Quiz',
         description: 'Simulado'
     }
 ]

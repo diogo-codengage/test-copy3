@@ -7,8 +7,8 @@ import ESEvaIcon from '../../Atoms/EvaIcon'
 
 const icons = {
     Video: 'play-circle-outline',
-    Book: 'book-open-outline',
-    Question: 'edit-outline'
+    Document: 'book-open-outline',
+    Quiz: 'edit-outline'
 }
 
 const ESPlaylist = ({
