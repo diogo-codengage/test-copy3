@@ -110,9 +110,16 @@ export default {
         youAreIn: 'Você está em'
     },
     questionMap: {
-        title: 'Mapa de questões'
+        title: 'Mapa de questões',
+        correct: 'Acertou',
+        wrong: 'Errou',
+        whereIs: 'Onde está',
+        answered: 'Respondida'
     },
     jwplayer: {
-        advance: 'Avançar 10 segundos'
+        advance: 'Avançar 10 segundos',
+        rateClass: 'Avaliar aula',
+        next: 'Próximo',
+        previous: 'Anterior'
     }
 }

@@ -21,6 +21,13 @@ const Circle = ({ index, status, current, mock }) => {
     )
 }
 
+const Subtitle = ({ status, label }) => (
+    <div className='item'>
+        <div className={status} />
+        <ESTypography variant='overline'>{label}</ESTypography>
+    </div>
+)
+
 const ESQuestionMap = ({ className, visible, items, mock }) => {
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-question-map', className)
@@ -40,6 +47,17 @@ const ESQuestionMap = ({ className, visible, items, mock }) => {
         >
             <div className='es-question-map__list'>
                 {items.map(renderCircle)}
+            </div>
+            <div className='es-question-map__subtitle'>
+                <Subtitle status='correct' label={t('questionMap.correct')} />
+                <Subtitle status='wrong' label={t('questionMap.wrong')} />
+                <Subtitle status='current' label={t('questionMap.whereIs')} />
+                {mock && (
+                    <Subtitle
+                        status='answered'
+                        label={t('questionMap.answered')}
+                    />
+                )}
             </div>
         </ESModal>
     )
