@@ -19,7 +19,12 @@ const App: React.FC = () => {
                             component={HomePage}
                         />
                         <Route
-                            path="/Questions"
+                            path="/questoes"
+                            // exact
+                            component={QuestionsPage}
+                        />
+                        <Route
+                            path="/pratica-curso/:videoParams"
                             // exact
                             component={QuestionsPage}
                         />

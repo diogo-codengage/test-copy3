@@ -10,8 +10,8 @@ export const QuestionsHeader = () => {
     const {
         loading,
         isFromCourse,
+        course,
         currentPage,
-        courseName,
         setCurrentPage
     } = useQuestionsContext()
 
@@ -74,7 +74,7 @@ export const QuestionsHeader = () => {
     }
 
     return <RMHeader
-        title={courseName ||'Área de Prática'}
+        title={isFromCourse() ? course.moduleName : 'Área de Prática'}
         rightElement={menuAction}
     />
 }

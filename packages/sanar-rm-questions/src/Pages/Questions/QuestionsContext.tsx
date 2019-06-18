@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react'
+import { createContext, useContext } from 'react'
 import { Question } from '../../Apollo/question'
 import { Speciality } from '../../Apollo/speciality'
 import { Tag } from '../../Apollo/tag'
@@ -15,20 +15,23 @@ export interface IFormFilterState {
     isCommentedByExpert: boolean
 }
 
-interface Course {
-    enrollmentId?: string
-    contentId?: string
-    moduleId?: string
-    courseName?: string
+export interface VideoParams {
+    enrollmentId: string
+    contentId: string
+    moduleId: string
+    moduleName: string;
+    subSpecialtyName: string;
+    specialtyName: string;
+
 }
 
-interface IQuestionsContext {
+export interface IQuestionsContext {
 
     loading: boolean
     setLoading: (loading: boolean) => void
 
-    courseName: string
-    setCourseName: (courseName: string) => void
+    isFromCourse: () => boolean
+    course?: VideoParams
 
     currentPage: QuestionPageType
     setCurrentPage: (currentPage: QuestionPageType) => void
@@ -41,9 +44,6 @@ interface IQuestionsContext {
 
     questions: Question[],
     setQuestions: (questions: Question[]) => void
-
-    isFromCourse?
-    course?: Course
 
     totalCorrect: number
     totalWrong: number
@@ -80,101 +80,5 @@ interface IQuestionsContext {
 
 }
 
-const QuestionsContext = createContext<IQuestionsContext>(null)
+export const QuestionsContext = createContext<IQuestionsContext>(null)
 export const useQuestionsContext = () => useContext(QuestionsContext)
-
-export const QuestionsContextProvider = ({ children }) => {
-    const [loading, setLoading] = useState(false)
-
-    const [courseName, setCourseName] = useState()
-
-    const [currentPage, setCurrentPage] = useState(QuestionPageType.Filter)
-
-    const [currentQuestion, setCurrentQuestion] = useState()
-    const [currentAnswerId, setCurrentAnswerId] = useState()
-    const [questions, setQuestions] = useState([])
-
-    const [totalCorrect, setTotalCorrect] = useState(0)
-    const [totalWrong, setTotalWrong] = useState(0)
-    const [totalSkipped, setTotalSkipped] = useState(0)
-
-    const [specialties, setSpecialties] = useState()
-
-    const [formFilterState, setFormFilterState] = useState<IFormFilterState>({
-        selectedState: null,
-        selectedYear: null,
-        isCommentedByExpert: false
-    })
-    const [selectedSpecialties, setSelectedSpecialties] = useState([])
-    const [selectedSubSpecialties, setSelectedSubSpecialties] = useState([])
-    const [selectedTags, setSelectedTags] = useState([])
-
-    const [allSpecialties, setAllSpecialties] = useState([])
-    const [allSubSpecialties, setAllSubSpecialties] = useState([])
-    const [allTags, setAllTags] = useState([])
-
-    const [ showAdvancedFilters, setShowAdvancedFilters ] = useState(false)
-
-    const increaseTotalCorrect = () => {
-        setTotalCorrect(totalCorrect + 1)
-    }
-
-    const increaseTotalSkipped = () => {
-        setTotalSkipped(totalSkipped + 1)
-    }
-
-    const increaseTotalWrong = () => {
-        setTotalWrong(totalWrong + 1)
-    }
-
-    const value = {
-        loading,
-        setLoading,
-
-        courseName,
-        setCourseName,
-
-        currentPage,
-        setCurrentPage,
-
-        currentQuestion,
-        setCurrentQuestion,
-        currentAnswerId,
-        setCurrentAnswerId,
-        questions,
-        setQuestions,
-
-        totalCorrect,
-        totalWrong,
-        totalSkipped,
-        setTotalCorrect,
-        setTotalWrong,
-        setTotalSkipped,
-        increaseTotalCorrect,
-        increaseTotalWrong,
-        increaseTotalSkipped,
-
-        specialties,
-        setSpecialties,
-
-        formFilterState,
-        setFormFilterState,
-
-        selectedSpecialties,
-        setSelectedSpecialties,
-        selectedSubSpecialties,
-        setSelectedSubSpecialties,
-        selectedTags,
-        setSelectedTags,
-        allSpecialties,
-        setAllSpecialties,
-        allSubSpecialties,
-        setAllSubSpecialties,
-        allTags,
-        setAllTags,
-
-        showAdvancedFilters,
-        setShowAdvancedFilters,
-    }
-    return (<QuestionsContext.Provider value={value}>{children}</QuestionsContext.Provider>)
-}
