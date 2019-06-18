@@ -15,6 +15,28 @@ export const ANSWER_MUTATION = gql`
         ) {
             answer {
                 id
+                question {
+                    id
+                    alternatives {
+                        data {
+                            id
+                            correct
+                        }
+                    }
+                    comments {
+                        data {
+                            id
+                            text
+                            labels
+                            time: created_at
+                            user {
+                                id
+                                name
+                                profile_picture
+                            }
+                        }
+                    }
+                }
             }
             stats {
                 alternatives {

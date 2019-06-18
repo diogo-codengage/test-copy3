@@ -41,12 +41,12 @@ const ESComment = ({ user, text, time, monitor, className }) => {
     return (
         <Comment
             className={classes}
-            author={<Title name={user.name} monitor={monitor} />}
+            author={<Title name={user && user.name} monitor={monitor} />}
             avatar={
                 <Avatar
-                    src={user.profile_picture}
+                    src={user && user.profile_picture}
                     icon='user'
-                    alt={user.name}
+                    alt={user && user.name}
                 />
             }
             content={<ESTypography variant='body2'>{text}</ESTypography>}

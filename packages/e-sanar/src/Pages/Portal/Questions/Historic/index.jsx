@@ -24,6 +24,14 @@ const SANQuestionsHistoric = () => {
     } = useAuthContext()
     const { t } = useTranslation('esanar')
 
+    const getSubtitle = answer => {
+        if (answer.question.institution) {
+            return `${answer.question.institution.name}, ${
+                answer.question.year
+            }`
+        }
+    }
+
     return (
         <Query
             query={GET_HISTORIC_QUESTIONS}
@@ -38,6 +46,7 @@ const SANQuestionsHistoric = () => {
                 if (loading) return <ESSpin spinning flex />
                 if (error) return `Error! ${error}`
                 const { data, count } = userAnswers
+
                 return (
                     <>
                         <SANQuestionsHistoricHeader />
@@ -46,21 +55,18 @@ const SANQuestionsHistoric = () => {
                                 {data.length ? (
                                     <>
                                         <ESHistoricalIssuesList>
-                                            {data.userAnswers.data.map(
-                                                answer => (
-                                                    <ESHistoricalIssuesItem
-                                                        key={answer.id}
-                                                        title={
-                                                            answer.question
-                                                                .statement
-                                                        }
-                                                        subtitle={`${
-                                                            answer.question
-                                                                .statement
-                                                        }, ${answer.year}`}
-                                                    />
-                                                )
-                                            )}
+                                            {data.map(answer => (
+                                                <ESHistoricalIssuesItem
+                                                    key={answer.id}
+                                                    title={
+                                                        answer.question
+                                                            .statement
+                                                    }
+                                                    subtitle={getSubtitle(
+                                                        answer
+                                                    )}
+                                                />
+                                            ))}
                                         </ESHistoricalIssuesList>
                                         <div className='d-flex justify-content-center'>
                                             <ESPagination

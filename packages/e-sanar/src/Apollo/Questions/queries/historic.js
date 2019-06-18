@@ -1,14 +1,11 @@
 import gql from 'graphql-tag'
 
 export const GET_HISTORIC_QUESTIONS = gql`
-    query userAnswers($userId: ID!, $limit: Int, $skip: Int, $where: String) {
-        userAnswers(
-            userId: $userId
-            limit: $limit
-            skip: $skip
-            where: $where
-        ) {
+    query userAnswers($userId: ID!, $limit: Int, $skip: Int) {
+        userAnswers(userId: $userId, limit: $limit, skip: $skip) {
+            count
             data {
+                id
                 correct
                 # alternatives that the user chose
                 alternatives {

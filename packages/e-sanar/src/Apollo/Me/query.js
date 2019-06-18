@@ -38,8 +38,9 @@ export const GET_ME = gql`
                 }
                 performance {
                     interaction {
-                        value
-                        status
+                        id
+                        # value
+                        # status
                     }
                     commitment {
                         value

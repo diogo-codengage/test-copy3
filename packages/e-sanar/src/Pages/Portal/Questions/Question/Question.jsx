@@ -36,8 +36,11 @@ const SANQuestionPage = ({ history }) => {
     const client = useApolloContext()
     const [isFull, setIsFull] = useState(width <= 992)
     const [questions, setQuestions] = useState([])
-    const [answer, setAnswer] = useState()
-    const [stats, setStats] = useState()
+    const [response, setResponse] = useState({
+        answer: null,
+        stats: null,
+        comment: null
+    })
     const [firstLoad, setFirstLoad] = useState(false)
     const [limit] = useState(20)
 
@@ -67,9 +70,9 @@ const SANQuestionPage = ({ history }) => {
             fetchQuestions()
         } else if (currentIndex === questions.length) {
             fetchQuestions(true)
-            resetCurrent()
+            setResponse()
         } else {
-            resetCurrent()
+            setResponse()
         }
 
         if (!isJump) {
@@ -79,14 +82,32 @@ const SANQuestionPage = ({ history }) => {
         }
     }
 
-    const callbackAnswer = ({ questionAnswer: { answer, stats } }) => {
-        setAnswer(answer.id)
-        setStats(stats.alternatives)
-    }
+    const callbackAnswer = ({
+        questionAnswer: {
+            answer: {
+                question: { comments, alternatives }
+            },
+            stats
+        }
+    }) => {
+        if (alternatives && alternatives.data && alternatives.data.length) {
+            const correct = alternatives.data.find(
+                alternative => alternative.correct
+            )
 
-    const resetCurrent = () => {
-        setAnswer(null)
-        setStats(null)
+            setResponse({
+                stats: stats.alternatives,
+                comment:
+                    comments.data && comments.data.length && comments.data[0],
+                answer: correct.id
+            })
+        } else {
+            setResponse({
+                stats: stats.alternatives,
+                comment:
+                    comments.data && comments.data.length && comments.data[0]
+            })
+        }
     }
 
     const fetchQuestions = async load => {
@@ -184,8 +205,7 @@ const SANQuestionPage = ({ history }) => {
                                 onJump={handleJump}
                                 onNext={handleNext}
                                 loading={firstLoad || loadingMutation}
-                                answer={answer}
-                                stats={stats}
+                                {...response}
                             />
                         </SANPortalPagesContainer>
                     </>

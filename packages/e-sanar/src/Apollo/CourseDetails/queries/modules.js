@@ -1,13 +1,8 @@
 import gql from 'graphql-tag'
 
 export const GET_MODULES = gql`
-    query modules($courseId: ID, $limit: Int, $skip: Int, $where: String) {
-        modules(
-            courseId: $courseId
-            limit: $limit
-            skip: $skip
-            where: $where
-        ) {
+    query {
+        modules {
             data {
                 id
                 name

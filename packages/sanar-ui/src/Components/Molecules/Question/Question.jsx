@@ -32,17 +32,23 @@ const ESQuestion = ({
     const [selected, setSelect] = useState(null)
     const [confirmed, setConfirm] = useState(false)
 
-    const handleSelect = item => {
+    const handleSelect = index => item => {
         if (confirmed) return
+        if (striped[index]) {
+            setStripe({
+                ...striped,
+                [index]: false
+            })
+        }
         setSelect(item)
         onSelect && onSelect(item)
         onlyStep && handleConfirm(item)
     }
 
-    const handleConfirm = (item) => {
+    const handleConfirm = () => {
         setConfirm(true)
         setStripe({})
-        onConfirm && onConfirm(item)
+        onConfirm && onConfirm(selected)
     }
 
     const handleNext = () => {
@@ -89,9 +95,15 @@ const ESQuestion = ({
     const getPercent = id => {
         if (!stats || !stats.length) return
         const statistic = stats.find(statistic => statistic.id === id)
-        if(!statistic && statistic !== 0) return null
+        if (!statistic && statistic !== 0) return null
         return `${parseInt(statistic.percent)}%`
     }
+
+    const handleStripe = index => () =>
+        setStripe({
+            ...striped,
+            [index]: !striped[index]
+        })
 
     useEffect(() => {
         setStripe({})
@@ -110,11 +122,13 @@ const ESQuestion = ({
                     >
                         {question && (
                             <>
-                                <ESTypography level={6} className='mb-md'>
-                                    {`${question.institution.name}, ${
-                                        question.year
-                                    }`}
-                                </ESTypography>
+                                {question.institution && (
+                                    <ESTypography level={6} className='mb-md'>
+                                        {`${question.institution.name}, ${
+                                            question.year
+                                        }`}
+                                    </ESTypography>
+                                )}
                                 <ESTypography
                                     variant='subtitle2'
                                     className='mb-lg'
@@ -133,7 +147,7 @@ const ESQuestion = ({
                         )}
                     </Skeleton>
                     {!question ? (
-                        [0, 1, 2, 3].map((_, i) => (
+                        [0, 1, 2, 3, 4].map((_, i) => (
                             <Skeleton
                                 key={i}
                                 active
@@ -152,14 +166,9 @@ const ESQuestion = ({
                                         {...alternative}
                                         index={index}
                                         striped={striped[index]}
-                                        handleStripe={() =>
-                                            setStripe({
-                                                ...striped,
-                                                [index]: !striped[index]
-                                            })
-                                        }
+                                        handleStripe={handleStripe(index)}
                                         percent={getPercent(alternative.id)}
-                                        onSelect={handleSelect}
+                                        onSelect={handleSelect(index)}
                                         status={verifyStatus(
                                             alternative.id,
                                             answer
@@ -171,8 +180,10 @@ const ESQuestion = ({
                     )}
                 </div>
 
-                {question && comment && answer && (
+                {question && comment && answer ? (
                     <ESQuestionComment {...comment} />
+                ) : (
+                    undefined
                 )}
                 <ESQuestionFooter
                     {...{
