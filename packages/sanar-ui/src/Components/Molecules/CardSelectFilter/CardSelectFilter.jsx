@@ -176,7 +176,7 @@ const ESCardSelectFilter = ({
 
     const width = useMemo(
         () => dropdownRef.current && dropdownRef.current.offsetWidth,
-        [dropdownRef]
+        [dropdownRef.current]
     )
 
     return (
