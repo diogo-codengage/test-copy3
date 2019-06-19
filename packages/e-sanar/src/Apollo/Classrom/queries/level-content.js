@@ -23,19 +23,18 @@ export const GET_LEVEL_CONTENT = gql`
                             code
                             videoId
                             videoUrl
-                            # files {
-                            #     smil {
-                            #         id
-                            #         filename
-                            #         mime_type
-                            #         size
-                            #         url
-                            #     }
-                            # }
+                            files {
+                                smil {
+                                    filename
+                                    mime_type
+                                    size
+                                    url
+                                }
+                            }
                         }
                     }
                 }
-                download {
+                document {
                     id
                     title
                     file {
