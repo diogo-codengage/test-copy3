@@ -69,3 +69,8 @@ storiesOf('Atoms.Typography', module).add('Simple', () => (
         wanted something more for you than that. I still do.
     </ESTypography>
 ))
+.add('Dark', () => (
+    <ESTypography type='light'>
+        Another text in dark mode
+    </ESTypography>
+))

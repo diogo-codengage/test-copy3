@@ -28,13 +28,25 @@
     &__footer {
         padding: 0 !important;
 
+        &--dark {
+            background-color: @grey-9;
+        }
+
+        &--light {
+            background-color: #fff;
+        }
+
         &--divider {
             margin-top: 0;
+            &-dark{
+                background-color: @white-3;
+            }
         }
 
         &--contact {
-            & .es-typography {
-                color: @grey-8;
+
+            &--help-button {
+                color: currentColor !important;
             }
 
             &--email,
@@ -60,9 +72,6 @@
             margin: @margin-lg 0 0 0 !important;
             padding-bottom: @padding-lg;
 
-            & .es-typography {
-                color: @grey-8;
-            }
         }
     }
 

@@ -4,6 +4,7 @@ import classNames from 'classnames'
 
 import SANFooter from './Footer'
 import SANMenu from './Menu'
+import { DarkProvider } from './Context';
 
 const SANPortalLayout = ({ children }) => {
     const classes = classNames('san-portal-layout', {
@@ -11,15 +12,17 @@ const SANPortalLayout = ({ children }) => {
     })
 
     return (
-        <Layout className={classes}>
-            <SANMenu showContinueBar />
-            <Layout>
-                <Layout.Content className='san-portal-layout__content'>
-                    {children}
-                </Layout.Content>
-                <SANFooter />
+        <DarkProvider>
+            <Layout className={classes}>
+                <SANMenu showContinueBar />
+                <Layout>
+                    <Layout.Content className='san-portal-layout__content'>
+                        {children}
+                    </Layout.Content>
+                    <SANFooter />
+                </Layout>
             </Layout>
-        </Layout>
+        </DarkProvider>
     )
 }
 
