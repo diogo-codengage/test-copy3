@@ -17,6 +17,9 @@ const SANClassromVideo = () => {
     const [rate, setRate] = useState()
     const [playlistVideo, setPlaylistVideo] = useState()
 
+    //Vini, add toggle theme function call here and replace.
+    const toggle = () => {}
+
     const handleRate = value => {
         setRate(value)
         mutateRate({
@@ -50,6 +53,8 @@ const SANClassromVideo = () => {
                 }
             ])
         }
+
+        toggle(true)
     }, [current])
 
     return (

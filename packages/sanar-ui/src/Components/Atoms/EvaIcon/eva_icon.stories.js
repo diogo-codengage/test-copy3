@@ -29,3 +29,10 @@ storiesOf('Atoms.Eva icon', module).add('Simple', () => (
         color={select('Color', colorOptions, 'default')}
     />
 ))
+.add('Dark', () => (
+    <ESEvaIcon
+        name='award-outline'
+        size={select('Size', sizeOptions, 'medium')}
+        color='light'
+    />
+))

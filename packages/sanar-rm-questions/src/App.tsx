@@ -14,17 +14,17 @@ const App: React.FC = () => {
                 <HashRouter>
                     <Switch>
                         <Route
-                            path="/"
+                            path={`/`}
                             exact
                             component={HomePage}
                         />
                         <Route
-                            path="/questoes"
+                            path={`/pratica`}
                             // exact
                             component={QuestionsPage}
                         />
                         <Route
-                            path="/pratica-curso/:videoParams"
+                            path={`/pratica-curso/:videoParams`}
                             // exact
                             component={QuestionsPage}
                         />
