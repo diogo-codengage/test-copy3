@@ -11,6 +11,7 @@ import { withRouter } from 'react-router-dom'
 
 import { useApolloContext } from 'Hooks/apollo'
 import { GET_LEVEL_CONTENT } from 'Apollo/Classrom/queries/level-content'
+import { usePortalContext } from '../Context'
 
 const Context = createContext()
 
@@ -39,11 +40,14 @@ const getSubRoute = type => {
             return 'documento'
         case 'Quiz':
             return 'simulado'
+        default:
+            return ''
     }
 }
 
 const ClassromProvider = ({ children, match: { params }, history }) => {
     const client = useApolloContext()
+    const { setPlaylist } = usePortalContext()
     const [current, setCurrent] = useState()
     const [state, dispatch] = useReducer(reducer, initialState)
 
@@ -65,6 +69,7 @@ const ClassromProvider = ({ children, match: { params }, history }) => {
                 })
 
                 const ordered = R.sortBy(R.prop('index'), data)
+                setPlaylist(ordered)
                 const anchor = ordered[0]
                 setCurrent(anchor)
                 dispatch({ type: 'success', payload: ordered })
@@ -78,7 +83,7 @@ const ClassromProvider = ({ children, match: { params }, history }) => {
             }
         }
         fetchData()
-    }, [params.id, client])
+    }, [params.id, client, history, setPlaylist])
 
     const value = {
         state,
