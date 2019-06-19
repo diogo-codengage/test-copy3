@@ -40,7 +40,6 @@ const ESJwPlayer = ({
     const { t } = useTranslation('sanarui')
     const [isReady, setIsReady] = useState(false)
     const [isPause, setIsPause] = useState(false)
-    const [isHover, setIsHover] = useState(false)
     const classes = classNames('es-jw-player', className)
 
     const handleReady = e => {
@@ -98,51 +97,45 @@ const ESJwPlayer = ({
         onReady && onReady(e)
     }
 
-    const handleHoverIn = () => setIsHover(true)
-    const handleHoverOut = () => setIsHover(false)
-
     return (
-        <div
-            className={classes}
-            onMouseOver={handleHoverIn}
-            onMouseOut={handleHoverOut}
-        >
-            {isReady && (isPause || isHover) && (
-                <div className='es-jw-player__header'>
-                    <div className='es-jw-player__header--left'>
-                        <ESButton
-                            onClick={onOpenMenu}
-                            circle
-                            size='medium'
-                            variant='text'
-                        >
-                            <ESEvaIcon name='menu-outline' />
-                        </ESButton>
-                        <div>
-                            <ESTypography level={5} className='title'>
-                                {title}
-                            </ESTypography>
-                            <ESTypography
-                                variant='subtitle2'
-                                className='subtitle'
-                            >
-                                {subtitle}
-                            </ESTypography>
-                        </div>
-                    </div>
-                    <div className='es-jw-player__header--right'>
-                        <div>
-                            <ESTypography
-                                variant='subtitle2'
-                                className='mr-xs ml-xs'
-                            >
-                                {t('jwplayer.rateClass')}:
-                            </ESTypography>
-                            <ESRate {...rate} />
-                        </div>
+        <div className={classes}>
+            <div
+                className={classNames('es-jw-player__header', {
+                    ['has-header']: isReady && isPause
+                })}
+            >
+                <div className='es-jw-player__header--left'>
+                    <ESButton
+                        onClick={onOpenMenu}
+                        circle
+                        size='medium'
+                        variant='text'
+                        className={classNames({ ['visible']: isReady })}
+                    >
+                        <ESEvaIcon name='menu-outline' />
+                    </ESButton>
+                    <div>
+                        <ESTypography level={5} className='title'>
+                            {title}
+                        </ESTypography>
+                        <ESTypography variant='subtitle2' className='subtitle'>
+                            {subtitle}
+                        </ESTypography>
                     </div>
                 </div>
-            )}
+                <div className='es-jw-player__header--right'>
+                    <div>
+                        <ESTypography
+                            variant='subtitle2'
+                            className='mr-xs ml-xs'
+                        >
+                            {t('jwplayer.rateClass')}:
+                        </ESTypography>
+                        <ESRate {...rate} />
+                    </div>
+                </div>
+            </div>
+
             {isReady && isPause && (
                 <>
                     <ESEvaIcon

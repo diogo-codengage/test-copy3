@@ -22,7 +22,7 @@ ESTabs.propTypes = Object.assign(
         className: PropTypes.string,
         activeKey: PropTypes.string,
         animated: PropTypes.bool,
-        renderTabBar: PropTypes.node,
+        renderTabBar: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
         defaultActiveKey: PropTypes.string,
         hideAdd: PropTypes.bool,
         size: PropTypes.oneOf(['default', 'large', 'small']),

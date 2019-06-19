@@ -1,6 +1,28 @@
 .es-jw-player {
     position: relative;
 
+    &:hover .es-jw-player__header,
+    & .has-header {
+        visibility: visible;
+    }
+
+    &:before {
+        content: '';
+        z-index: 1;
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        background: radial-gradient(
+            circle closest-corner,
+            rgba(255, 255, 255, 0),
+            @grey-4
+        );
+        background-repeat: no-repeat;
+    }
+
     /* HEADER LAYER */
     &__header {
         position: absolute;
@@ -10,16 +32,9 @@
         right: 0;
         justify-content: space-between;
         display: flex;
-        transition: display 1000ms;
-
-        &:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
-            background-color: @grey-3;
+        visibility: hidden;
+        & * {
+            transition: none;
         }
 
         &--left {
@@ -28,6 +43,10 @@
             & .es-button {
                 background-color: @secondary-color;
                 margin-right: @margin-md;
+
+                &.visible {
+                    visibility: visible;
+                }
             }
 
             & .title {
@@ -108,6 +127,31 @@
         border-radius: 0 !important;
     }
 
+    /* POPUP SETTINGS */
+    & .jw-settings-menu {
+        border-radius: @border-radius-base !important;
+        & .jw-settings-topbar {
+            border-top-left-radius: @border-radius-base !important;
+            border-top-right-radius: @border-radius-base !important;
+            border-bottom: 1px solid @white-3;
+        }
+        & .jw-settings-submenu {
+            border-bottom-left-radius: @border-radius-base !important;
+            border-bottom-right-radius: @border-radius-base !important;
+        }
+        & .jw-settings-topbar,
+        & .jw-settings-submenu {
+            background-color: @grey-solid-9;
+        }
+
+        & .jw-settings-item-active {
+            &:before {
+                content: '\2714';
+                color: @secondary-color;
+            }
+        }
+    }
+
     /* SET SIZE CONTROLS ICONS */
     & .jw-svg-icon {
         height: 16px;
@@ -128,6 +172,7 @@
         height: 30px;
     }
 
+    & .jw-reset-text,
     & .jw-reset {
         border-radius: @border-radius-base;
         font-family: 'Nunito Sans', sans-serif;
@@ -160,6 +205,30 @@
         background-color: @secondary-color;
         box-shadow: 0 2px 4px @grey-5;
         border-radius: 50% !important;
+    }
+
+    /* STYLE VOLUME BAR */
+    & .jw-slider-volume.jw-slider-vertical {
+        margin: 0 auto;
+        background-color: @grey-solid-9;
+        box-shadow: 0 4px 8px @grey-3;
+        border-radius: 12px !important;
+        width: 24px;
+        padding: @padding-xs 0;
+
+        & .jw-slider-container {
+            border-radius: @border-radius-base !important;
+            & .jw-rail,
+            & .jw-buffer,
+            & .jw-progress {
+                width: 8px;
+                border-radius: @border-radius-base !important;
+            }
+            & .jw-knob {
+                height: 16px;
+                width: 16px;
+            }
+        }
     }
 
     & .jw-text-duration,
@@ -219,6 +288,7 @@
     .jw-svg-icon-cc-off path,
     .jw-svg-icon-fullscreen-on path,
     .jw-svg-icon-rewind path,
+    .jw-state-complete .jw-svg-icon-play path,
     .jw-state-idle .jw-svg-icon-play path {
         display: none;
     }
@@ -230,11 +300,13 @@
     .jw-svg-icon-volume-50,
     .jw-svg-icon-volume-100,
     .jw-state-paused .jw-svg-icon-play,
+    .jw-state-complete .jw-svg-icon-play,
     .jw-state-idle .jw-svg-icon-play {
         background-size: contain;
         background-repeat: no-repeat;
     }
 
+    .jw-state-complete .jw-svg-icon-play,
     .jw-state-idle .jw-svg-icon-play {
         background-image: url('@{assetsPath}/images/video/play.svg');
         height: 32px;
