@@ -11,7 +11,7 @@ import SANQuestionsFilterSelects from './Selects'
 const mapItem = item => item.value
 export const makeFilter = values => ({
     ...(values.year && {
-        year: Number(values.year.format('YYYY'))
+        years: [Number(values.year.format('YYYY'))]
     }),
     ...(values.tags && { tagIds: values.tags.map(mapItem) }),
     ...(values.levels && {

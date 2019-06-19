@@ -125,7 +125,7 @@ const SANQuestionPage = ({ history }) => {
             fetchPolicy: 'network-only',
             variables: {
                 ...filter,
-                courseId: course.id,
+                courseIds: [course.id],
                 limit
             }
         })
