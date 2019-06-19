@@ -26,7 +26,7 @@ import ESJwPlayer from './JwPlayer'
 storiesOf('Molecules.JwPlayer', module).add('Simple', () => (
     <ESJwPlayer
         playerId='playerId'
-        playlist='https://cdn.jwplayer.com/v2/media/8L4m9FJB'
+        playlist='https://cdn.jwplayer.com/v2/media/yp34SRmf'
         playerScript='https://cdn.jwplayer.com/libraries/jX7FSJdG.js'
         isMuted={false}
         title='Nome da aula exemplo que'

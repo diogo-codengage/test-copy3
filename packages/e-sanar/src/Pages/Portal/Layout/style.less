@@ -20,9 +20,7 @@
     }
 
     &__content {
-        min-height: ~'calc(100% - 181px)';
-        display: flex;
-        flex-direction: column;
+        max-width: 100vw;
     }
 
     &__footer {
@@ -106,6 +104,18 @@
             margin-bottom: @margin-lg;
             text-align: center;
             justify-content: center;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        &__content {
+            padding-left: 56px;
+        }
+    }
+
+    @media (min-width: 1365px) {
+        &__content {
+            padding-left: 360px;
         }
     }
 }

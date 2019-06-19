@@ -1,58 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import { Switch, Route } from 'react-router-dom'
-import * as R from 'ramda'
 
 import ESSpin from 'sanar-ui/dist/Components/Atoms/Spin'
 
-import { useApolloContext } from 'Hooks/apollo'
-import { GET_LEVEL_CONTENT } from 'Apollo/Classrom/queries/level-content'
-import { withClassromProvider, useClassromContext } from './Context'
+import SANClassromVideo from './Video'
+import { useClassromContext, withClassromProvider } from './Context'
 
-const SANClassrom = ({ match: { url, params } }) => {
-    const client = useApolloContext()
-    const { setPlaylist } = useClassromContext()
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(false)
-
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true)
-            setError(false)
-            try {
-                const {
-                    data: {
-                        levelContent: { data }
-                    }
-                } = await client.query({
-                    query: GET_LEVEL_CONTENT,
-                    fetchPolicy: 'network-only',
-                    variables: {
-                        levelId: params.id
-                    }
-                })
-
-                setPlaylist(R.sortBy(R.prop('index'), data))
-            } catch (err) {
-                setError(true)
-            }
-            setLoading(false)
-        }
-        fetchData()
-    }, [params.id, client, setPlaylist])
+const SANClassrom = ({ match: { url } }) => {
+    const {
+        state: { loading, error }
+    } = useClassromContext()
 
     if (loading) return <ESSpin />
 
-    if (error) return `Error! ${error}`
+    if (error) return `Error: ${error}`
 
     return (
         <div className='classrom'>
             <Switch>
-                <Route
-                    path={`${url}/video/:id`}
-                    render={() => <div>SANClassromVideo</div>}
-                    // component={SANClassromVideo}
-                />
+                <Route path={`${url}/video/:id`} component={SANClassromVideo} />
                 <Route
                     path={`${url}/documento/:id`}
                     render={() => <div>SANClassromDocument</div>}
