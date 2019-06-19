@@ -13,8 +13,10 @@ const SANPortalLayout = ({ children }) => {
     return (
         <Layout className={classes}>
             <SANMenu showContinueBar />
-            <Layout className='san-portal-layout__content'>
-                <Layout.Content>{children}</Layout.Content>
+            <Layout>
+                <Layout.Content className='san-portal-layout__content'>
+                    {children}
+                </Layout.Content>
                 <SANFooter />
             </Layout>
         </Layout>
