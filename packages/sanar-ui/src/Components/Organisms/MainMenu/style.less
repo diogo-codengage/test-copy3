@@ -52,11 +52,11 @@
 
         &.open {
             width: 100%;
-            position: absolute;
+            position: fixed;
         }
 
         &.close {
-            position: absolute;
+            position: fixed;
             transform: translateX(-100%);
         }
 
@@ -110,6 +110,7 @@
             width: 56px;
             height: 100%;
             padding: @padding-md 0;
+            position: fixed;
             & img {
                 cursor: pointer;
                 max-width: 32px;
@@ -165,6 +166,13 @@
         background-color: @grey-solid-9;
         & .es-typography {
             color: @white-9;
+        }
+    }
+
+    @media (min-width: 1365px) {
+        &__content {
+            position: fixed;
+            left: 56px;
         }
     }
 }
