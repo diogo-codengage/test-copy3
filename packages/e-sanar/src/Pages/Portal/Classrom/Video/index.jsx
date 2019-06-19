@@ -7,6 +7,7 @@ import { useApolloContext } from 'Hooks/apollo'
 import { useAuthContext } from 'Hooks/auth'
 import { CREATE_RATING } from 'Apollo/Classrom/mutations/rate'
 import { useClassromContext } from '../Context'
+import { useDarkContext } from 'Pages/Portal/Layout/Context'
 
 const SANClassromVideo = () => {
     const {
@@ -16,6 +17,8 @@ const SANClassromVideo = () => {
     const { current } = useClassromContext()
     const [rate, setRate] = useState()
     const [playlistVideo, setPlaylistVideo] = useState()
+
+    const { toggle } = useDarkContext()
 
     const handleRate = value => {
         setRate(value)
@@ -50,6 +53,8 @@ const SANClassromVideo = () => {
                 }
             ])
         }
+
+        toggle(true)
     }, [current])
 
     return (
