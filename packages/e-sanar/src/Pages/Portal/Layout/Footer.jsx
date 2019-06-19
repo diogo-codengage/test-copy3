@@ -12,13 +12,12 @@ import logoSvg from 'assets/images/logo.svg'
 import whiteLogo from 'assets/images/white-logo.svg'
 
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
-import { DarkProvider } from './Context'
-import { useDarkContext } from './Context'
 
 const SANFooter = () => {
     const { t } = useTranslation('esanar')
 
-    const { dark } = useDarkContext()
+    //Vini, add your context call here and replace it.
+    const dark = false;
 
     return (
         <ANTDLayout.Footer

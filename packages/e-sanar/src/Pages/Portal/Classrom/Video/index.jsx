@@ -7,7 +7,6 @@ import { useApolloContext } from 'Hooks/apollo'
 import { useAuthContext } from 'Hooks/auth'
 import { CREATE_RATING } from 'Apollo/Classrom/mutations/rate'
 import { useClassromContext } from '../Context'
-import { useDarkContext } from 'Pages/Portal/Layout/Context'
 
 const SANClassromVideo = () => {
     const {
@@ -18,7 +17,8 @@ const SANClassromVideo = () => {
     const [rate, setRate] = useState()
     const [playlistVideo, setPlaylistVideo] = useState()
 
-    const { toggle } = useDarkContext()
+    //Vini, add toggle theme function call here and replace.
+    const toggle = () => {}
 
     const handleRate = value => {
         setRate(value)
