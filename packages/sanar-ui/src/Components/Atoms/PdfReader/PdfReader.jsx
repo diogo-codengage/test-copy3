@@ -1,12 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
-import classNames from 'classnames'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import PDFObject from 'pdfobject'
 
 const ESPdfReader = ({ className, url, ...props }) => {
-    const classes = classNames('es-pdf-reader', className)
-
     useEffect(() => {
         if (PDFObject.supportsPDFs) {
             PDFObject.embed(url, '#es-pdf')
