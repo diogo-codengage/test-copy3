@@ -4,14 +4,36 @@ import React, {
     useRef,
     useMemo,
     useContext,
-    useCallback
+    useCallback,
+    useEffect
 } from 'react'
+
+import { withRouter } from 'react-router-dom'
+
+import { useAuthContext } from 'Hooks/auth'
+import { useApolloContext } from 'Hooks/apollo'
+import { GET_QUESTIONS } from 'Apollo/Questions/queries/questions'
 
 const Context = createContext()
 
 export const useQuestionsContext = () => useContext(Context)
 
-export const SANQuestionsProvider = ({ children }) => {
+const uniqBy = (a, key) => {
+    const seen = new Set()
+    return a.filter(item => {
+        const k = key(item)
+        return seen.has(k) ? false : seen.add(k)
+    })
+}
+
+const QuestionsProvider = ({ children, location: { pathname } }) => {
+    const client = useApolloContext()
+    const [limit] = useState(20)
+    const [firstLoad, setFirstLoad] = useState(false)
+    const [questions, setQuestions] = useState([])
+    const { getEnrollment } = useAuthContext()
+    const { course } = getEnrollment()
+
     const stopwatchRef = useRef()
     const [filter, setFilter] = useState({})
     const [formState, setFormState] = useState({})
@@ -48,10 +70,10 @@ export const SANQuestionsProvider = ({ children }) => {
     )
 
     const reset = () => {
-        setFilter({
-            ...filter,
+        setFilter(oldFilter => ({
+            ...oldFilter,
             reset: true
-        })
+        }))
         setSkippedQuestions(0)
         setWrongQuestions(0)
         setCorrectQuestions(0)
@@ -63,6 +85,38 @@ export const SANQuestionsProvider = ({ children }) => {
             stopwatchRef.current.start()
         }
     }
+
+    const fetchQuestions = async load => {
+        load && setFirstLoad(true)
+        const oldQuestions = questions || []
+        const {
+            data: {
+                questions: { data, count = 0 }
+            }
+        } = await client.query({
+            query: GET_QUESTIONS,
+            fetchPolicy: 'network-only',
+            variables: {
+                ...filter,
+                courseIds: [course.id],
+                limit
+            }
+        })
+
+        const newQuestions = uniqBy([...oldQuestions, ...data], item => item.id)
+
+        setTotalQuestions(oldTotal => oldTotal + count)
+        setQuestions(newQuestions)
+        setFirstLoad(false)
+    }
+
+    useEffect(() => {
+        const paths = pathname.split('/')
+        if (paths[paths.length - 1] === 'pratica') {
+            fetchQuestions(true)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filter])
 
     const value = {
         filter,
@@ -82,8 +136,14 @@ export const SANQuestionsProvider = ({ children }) => {
         setCurrentIndex,
         totalQuestions,
         setTotalQuestions,
-        reset
+        reset,
+        fetchQuestions,
+        questions,
+        setQuestions,
+        firstLoad
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>
 }
+
+export const SANQuestionsProvider = withRouter(QuestionsProvider)

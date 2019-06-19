@@ -13,14 +13,26 @@ import SANSubheader from './Subheader'
 
 const SANQuestionDetailsPage = ({ form, history }) => {
     const { t } = useTranslation('esanar')
-    const { setFilter, setFormState } = useQuestionsContext()
+    const {
+        filter,
+        setFilter,
+        setFormState,
+        fetchQuestions
+    } = useQuestionsContext()
 
     const handleSubmit = e => {
         e.preventDefault()
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 setFormState(values)
-                setFilter(makeFilter(values))
+                const newFilters = makeFilter(values)
+                if (
+                    Object.keys(newFilters).length &&
+                    JSON.stringify(filter) !== JSON.stringify(newFilters)
+                ) {
+                    setFilter(newFilters)
+                    fetchQuestions(newFilters)
+                }
                 history.push('/aluno/banco-questoes/perguntas/pratica')
             }
         })

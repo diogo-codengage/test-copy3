@@ -44,6 +44,7 @@ const SANQuestionHeader = ({ history }) => {
                     modal.destroy()
                 },
                 onCancel: () => {
+                    reset()
                     history.push('../filtro')
                 }
             })

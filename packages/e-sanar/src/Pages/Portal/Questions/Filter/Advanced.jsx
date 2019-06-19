@@ -74,7 +74,7 @@ const SANQuestionsFilterAdvanced = () => {
                                 name='year'
                                 label={t(`${intlPath}year.label`)}
                                 trigger={'onPanelChange'}
-                                initialValue={formState.year}
+                                initialValue={formState && formState.year}
                             >
                                 <ESDatePicker
                                     placeholder={t(
@@ -94,7 +94,7 @@ const SANQuestionsFilterAdvanced = () => {
                                 name='difficulty'
                                 label={t(`${intlPath}difficulty.label`)}
                                 className='no-margin'
-                                initialValue={formState.difficulty}
+                                initialValue={formState && formState.difficulty}
                             >
                                 <ESCheckboxGroup
                                     className='checkbox disabled'
@@ -125,7 +125,7 @@ const SANQuestionsFilterAdvanced = () => {
                                 name='progress'
                                 label={t(`${intlPath}progress.label`)}
                                 className='no-margin'
-                                initialValue={formState.progress}
+                                initialValue={formState && formState.progress}
                             >
                                 <ESRadioGroup>
                                     <ESRow>
@@ -167,7 +167,9 @@ const SANQuestionsFilterAdvanced = () => {
                                 label={t(`${intlPath}justCommented`)}
                                 className='switch'
                                 valuePropName='checked'
-                                initialValue={formState.justCommented}
+                                initialValue={
+                                    formState && formState.justCommented
+                                }
                             >
                                 <ESSwitch />
                             </ESFormItem>

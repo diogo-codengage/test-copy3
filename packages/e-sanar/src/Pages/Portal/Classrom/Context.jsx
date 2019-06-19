@@ -39,6 +39,8 @@ const getSubRoute = type => {
             return 'documento'
         case 'Quiz':
             return 'simulado'
+        default:
+            throw new Error()
     }
 }
 
@@ -78,7 +80,7 @@ const ClassromProvider = ({ children, match: { params }, history }) => {
             }
         }
         fetchData()
-    }, [params.id, client])
+    }, [params.id, client, history])
 
     const value = {
         state,

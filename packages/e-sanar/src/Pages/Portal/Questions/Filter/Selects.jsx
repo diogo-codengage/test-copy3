@@ -49,7 +49,7 @@ const SANQuestionsFilterSelects = () => {
                             {props => (
                                 <ESFormItem
                                     name='levels'
-                                    initialValue={formState.levels}
+                                    initialValue={formState && formState.levels}
                                 >
                                     <ESCardSelectFilter
                                         labelSelecteds={t(
@@ -73,7 +73,7 @@ const SANQuestionsFilterSelects = () => {
                             {props => (
                                 <ESFormItem
                                     name='tags'
-                                    initialValue={formState.tags}
+                                    initialValue={formState && formState.tags}
                                 >
                                     <ESCardSelectFilter
                                         labelSelecteds={t(
@@ -98,7 +98,7 @@ const SANQuestionsFilterSelects = () => {
                                 <ESFormItem
                                     name='boards'
                                     className='mb-lg'
-                                    initialValue={formState.boards}
+                                    initialValue={formState && formState.boards}
                                 >
                                     <ESCardSelectFilter
                                         labelSelecteds={t(
@@ -121,7 +121,7 @@ const SANQuestionsFilterSelects = () => {
                                 <ESFormItem
                                     name='exams'
                                     className='mb-lg'
-                                    initialValue={formState.exams}
+                                    initialValue={formState && formState.exams}
                                 >
                                     <ESCardSelectFilter
                                         labelSelecteds={t(

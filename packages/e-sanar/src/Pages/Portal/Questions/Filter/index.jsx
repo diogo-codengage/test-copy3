@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { compose } from 'ramda'
 import { withRouter } from 'react-router-dom'
 
@@ -20,11 +20,18 @@ export const makeFilter = values => ({
     ...(values.boards && {
         boardIds: values.boards.map(mapItem)
     }),
-    ...(values.exams && { examIds: values.exams.map(mapItem) })
+    ...(values.exams && { examIds: values.exams.map(mapItem) }),
+    ...(values.justCommented && { justCommented: values.justCommented }),
+    ...(values.pregress && { pregress: values.pregress })
 })
 
 const SANQuestionsFilter = ({ form, history }) => {
-    const { setFilter, setFormState } = useQuestionsContext()
+    const {
+        setFilter,
+        setFormState,
+        setTotalQuestions,
+        setQuestions
+    } = useQuestionsContext()
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -36,6 +43,12 @@ const SANQuestionsFilter = ({ form, history }) => {
             }
         })
     }
+
+    useEffect(() => {
+        setTotalQuestions(0)
+        setQuestions()
+        setFormState()
+    }, [setTotalQuestions, setQuestions, setFormState])
 
     return (
         <ESForm form={form} onSubmit={handleSubmit}>

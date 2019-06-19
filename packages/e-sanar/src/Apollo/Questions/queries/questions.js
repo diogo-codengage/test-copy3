@@ -1,8 +1,25 @@
 import gql from 'graphql-tag'
 
 export const GET_QUESTIONS = gql`
-    query {
-        questions {
+    query Questions(
+        $courseIds: [ID]
+        $tagIds: [ID]
+        $levelIds: [ID]
+        $boardIds: [ID]
+        $examIds: [ID]
+        $years: [Int]
+        $limit: Int
+    ) {
+        questions(
+            courseIds: $courseIds
+            tagIds: $tagIds
+            levelIds: $levelIds
+            boardIds: $boardIds
+            examIds: $examIds
+            years: $years
+            limit: $limit
+        ) {
+            count
             data {
                 id
                 statement
