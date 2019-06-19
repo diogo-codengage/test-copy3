@@ -1,5 +1,6 @@
 {
   "name": "sanar-rm-questions",
+  "homepage": "/questoes/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,7 +9,8 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build && mv build questoes && mkdir build && mv -v questoes build/",
+    "build": "react-app-rewired build",
+    "postbuild": "mv build questoes && mkdir build && mv -v questoes build/",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
