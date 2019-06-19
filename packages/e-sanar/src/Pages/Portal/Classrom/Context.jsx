@@ -11,7 +11,7 @@ import { withRouter } from 'react-router-dom'
 
 import { useApolloContext } from 'Hooks/apollo'
 import { GET_LEVEL_CONTENT } from 'Apollo/Classrom/queries/level-content'
-import { usePortalContext } from '../Context'
+import { usePortalContext } from 'Pages/Portal/Context'
 
 const Context = createContext()
 
