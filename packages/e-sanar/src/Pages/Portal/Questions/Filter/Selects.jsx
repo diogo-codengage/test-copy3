@@ -30,7 +30,8 @@ const SANQuestionsFilterSelects = () => {
     const { t } = useTranslation('esanar')
 
     const {
-        course: { id }
+        course: { id: courseId },
+        id: enrollmentId
     } = getEnrollment()
 
     const makeItems = ({ loading, data }, entity) =>
@@ -43,8 +44,10 @@ const SANQuestionsFilterSelects = () => {
                     <ESCol sm={24} md={12}>
                         <Query
                             query={GET_MODULES}
-                            variables={{ courseId: id }}
-                            skip={!id}
+                            variables={{
+                                courseId,
+                                enrollmentId
+                            }}
                         >
                             {props => (
                                 <ESFormItem

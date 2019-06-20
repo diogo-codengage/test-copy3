@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const GET_MODULES = gql`
-    query {
-        modules {
+    query Modules($courseId: ID!, $enrollmentId: ID!) {
+        modules(courseId: $courseId, enrollmentId: $enrollmentId) {
             data {
                 id
                 name
@@ -13,7 +13,7 @@ export const GET_MODULES = gql`
                 progress {
                     done
                     total
-                    status
+                    # status
                 }
             }
             count

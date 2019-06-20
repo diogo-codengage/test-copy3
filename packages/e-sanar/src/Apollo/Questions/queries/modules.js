@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const GET_MODULES = gql`
-    query modules($courseId: ID) {
-        modules(courseId: $courseId) {
+    query Modules($courseId: ID!, $enrollmentId: ID!) {
+        modules(courseId: $courseId, enrollmentId: $enrollmentId) {
             data {
                 value: id
                 label: name

@@ -12,6 +12,7 @@ import ESCardCourseModule from 'sanar-ui/dist/Components/Molecules/CardCourseMod
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 
 import { GET_MODULES } from 'Apollo/CourseDetails/queries/modules'
+import { useAuthContext } from 'Hooks/auth'
 
 //FIXME: const responsive = [
 //     {
@@ -48,9 +49,15 @@ import { GET_MODULES } from 'Apollo/CourseDetails/queries/modules'
 // ]
 
 const SANCourseModules = ({ history }) => {
+    const { t } = useTranslation('esanar')
+    const { getEnrollment } = useAuthContext()
     const [current, setCurrent] = useState(1)
     const [pageSize] = useState(10)
-    const { t } = useTranslation('esanar')
+
+    const {
+        course: { id: courseId },
+        id: enrollmentId
+    } = getEnrollment()
 
     const goClassrom = id => () => history.push(`/aluno/sala-aula/${id}`)
 
@@ -58,6 +65,8 @@ const SANCourseModules = ({ history }) => {
         <Query
             query={GET_MODULES}
             variables={{
+                courseId,
+                enrollmentId,
                 limit: pageSize,
                 skip: pageSize * current - pageSize
             }}
