@@ -95,11 +95,18 @@ const SANMenu = ({ history }) => {
         }
     }
 
+    const handleInitialClick = () => {
+        setIndex(index)
+        setTitle(t(`${intlPath}menu`))
+    }
+
+    const handleHome = () => history.push('/aluno/curso')
+
     return (
         <ESMainMenu
             // onSearchClick={() => setTab(8)}
-            onInitialClick={() => setTab(0)}
-            onHome={() => history.push('/aluno/curso')}
+            onInitialClick={handleInitialClick}
+            onHome={handleHome}
             title={title}
             theme={theme}
             showContinueBar
