@@ -28,24 +28,45 @@ const Subtitle = ({ status, label }) => (
     </div>
 )
 
-const ESQuestionMap = ({ className, visible, items, mock }) => {
+const ESQuestionMap = ({
+    className,
+    visible,
+    items,
+    current,
+    mock,
+    onCancel
+}) => {
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-question-map', className)
 
     const renderCircle = useCallback(
-        (item, i) => <Circle key={i} {...item} index={i + 1} mock={mock} />,
+        (item, i) => (
+            <Circle
+                key={i}
+                {...item}
+                index={i + 1}
+                mock={mock}
+                current={current === ++i}
+            />
+        ),
         [mock, items]
     )
 
+    const columns = items.length < 4 ? items.length : 5
+
     return (
         <ESModal
+            onCancel={onCancel}
             className={classes}
             visible={visible}
             centered
             width={400}
             title={t('questionMap.title')}
         >
-            <div className='es-question-map__list'>
+            <div
+                className='es-question-map__list'
+                style={{ gridTemplateColumns: `repeat(${columns}, 40px)` }}
+            >
                 {items.map(renderCircle)}
             </div>
             <div className='es-question-map__subtitle'>
@@ -72,7 +93,10 @@ ESQuestionMap.propTypes = {
             correct: PropTypes.bool
         })
     ).isRequired,
-    mock: PropTypes.bool
+    mock: PropTypes.bool,
+    current: PropTypes.number,
+    onCancel: PropTypes.func,
+    visible: PropTypes.bool
 }
 ESQuestionMap.defaultProps = {}
 

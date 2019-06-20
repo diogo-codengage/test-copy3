@@ -6,7 +6,9 @@ export default {
         leave: 'Sair',
         loadMore: 'Carregar mais',
         send: 'Enviar',
-        continue: 'Continuar'
+        continue: 'Continuar',
+        subject: 'Disciplina',
+        activity: 'Atividade'
     },
     auth: {
         accessAccount: 'Acessar conta',
@@ -291,6 +293,15 @@ export default {
                 justCommented: 'Apenas comentadas'
             }
         }
+    },
+    classroom: {
+        rateClass: 'Avaliar aula',
+        question: 'Questão',
+        questions: 'Questões',
+        questionMap: 'Mapa de questões',
+        discussions: 'Discussões',
+        favoriteQuestion: 'Favoritar questão',
+        favoriteClass: 'Favoritar aula'
     },
     footer: {
         helpButton: 'Precisa de ajuda?',

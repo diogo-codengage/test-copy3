@@ -1,4 +1,19 @@
-.classrom {
+@import './Video/style.less';
+
+.classroom {
     width: 100%;
     height: 100%;
+    background-color: @grey-solid-9;
+
+    &__loader {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & .ant-spin-dot-item {
+            background-color: @white;
+        }
+    }
 }

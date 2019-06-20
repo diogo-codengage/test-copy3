@@ -152,7 +152,7 @@ const SANCourseModules = ({ history }) => {
                                             className='san-tab-course-content__continue--card'
                                             moduleName={`${t(
                                                 'courseDetails.tabContent.modules.singularName'
-                                            )} ${item.index}`}
+                                            )} ${item.index + 1}`}
                                             title={item.name}
                                             badge={
                                                 item.progress

@@ -18,8 +18,7 @@ const quiz = [
         status: 'wrong'
     },
     {
-        index: 4,
-        current: true
+        index: 4
     },
     {
         index: 5
@@ -43,8 +42,7 @@ const mock = [
         index: 4
     },
     {
-        index: 5,
-        current: true
+        index: 5
     },
     {
         index: 6,
@@ -86,8 +84,17 @@ const mock = [
 
 storiesOf('Molecules.QuestionMap', module)
     .add('Quiz', () => (
-        <ESQuestionMap visible={boolean('Visible', true)} items={quiz} />
+        <ESQuestionMap
+            visible={boolean('Visible', true)}
+            items={quiz}
+            current={4}
+        />
     ))
     .add('Mock', () => (
-        <ESQuestionMap visible={boolean('Visible', true)} items={mock} mock />
+        <ESQuestionMap
+            visible={boolean('Visible', true)}
+            items={mock}
+            mock
+            current={5}
+        />
     ))

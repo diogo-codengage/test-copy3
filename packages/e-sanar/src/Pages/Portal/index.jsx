@@ -10,7 +10,7 @@ import { useAuthContext } from 'Hooks/auth'
 import SANPortalLayout from './Layout'
 import SANCoursePage from './Course'
 import SANQuestionsPage from './Questions'
-import SANClassromPage from './Classrom'
+import SANClassroomPage from './Classrom'
 
 const SANPortalRoutes = ({ match: { url } }) => {
     const { setMe } = useAuthContext()
@@ -35,7 +35,7 @@ const SANPortalRoutes = ({ match: { url } }) => {
                                 />
                                 <Route
                                     path={`${url}/sala-aula/:id`}
-                                    component={SANClassromPage}
+                                    component={SANClassroomPage}
                                 />
                                 <Route
                                     path={[`${url}/`, `${url}`]}

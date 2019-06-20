@@ -10,12 +10,12 @@ import * as R from 'ramda'
 import { withRouter } from 'react-router-dom'
 
 import { useApolloContext } from 'Hooks/apollo'
-import { GET_LEVEL_CONTENT } from 'Apollo/Classrom/queries/level-content'
+import { GET_LEVEL_CONTENT } from 'Apollo/Classroom/queries/level-content'
 // import { usePortalContext } from 'Pages/Portal/Context'
 
 const Context = createContext()
 
-export const useClassromContext = () => useContext(Context)
+export const useClassroomContext = () => useContext(Context)
 
 const initialState = { loading: true, success: false, error: false }
 
@@ -45,7 +45,7 @@ const getSubRoute = type => {
     }
 }
 
-const ClassromProvider = ({ children, match: { params }, history }) => {
+const ClassroomProvider = ({ children, match: { params }, history }) => {
     const client = useApolloContext()
     // const { setPlaylist } = usePortalContext()
     const [current, setCurrent] = useState()
@@ -69,9 +69,12 @@ const ClassromProvider = ({ children, match: { params }, history }) => {
                 })
 
                 const ordered = R.sortBy(R.prop('index'), data)
-                // setPlaylist(ordered)
-                const anchor = ordered[0]
-                setCurrent(anchor)
+
+                // Set data mock to current video - Diogo
+                const quiz = ordered.find(e => e.resource_type === 'Quiz')
+                const anchor = ordered.find(e => e.resource_type === 'Video')
+                setCurrent({ ...anchor, quiz: quiz.quiz })
+
                 dispatch({ type: 'success', payload: ordered })
                 history.push(
                     `/aluno/sala-aula/${params.id}/${getSubRoute(
@@ -93,10 +96,10 @@ const ClassromProvider = ({ children, match: { params }, history }) => {
     return <Context.Provider value={value}>{children}</Context.Provider>
 }
 
-export const SANClassromProvider = withRouter(ClassromProvider)
+export const SANClassroomProvider = withRouter(ClassroomProvider)
 
-export const withClassromProvider = Component => props => (
-    <SANClassromProvider>
+export const withClassroomProvider = Component => props => (
+    <SANClassroomProvider>
         <Component {...props} />
-    </SANClassromProvider>
+    </SANClassroomProvider>
 )

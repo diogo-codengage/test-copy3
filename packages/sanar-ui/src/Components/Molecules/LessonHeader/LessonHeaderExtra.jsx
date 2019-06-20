@@ -29,19 +29,30 @@ const ESLessonHeaderExtra = ({
                     size='small'
                     variant='text'
                     color='white'
+                    onClick={onBookmarked}
                 >
                     <ESEvaIcon name='heart-outline' />
                     {t('classroom.header.extra.bookmark')}
                 </ESButton>
             </ESCol>
             <ESCol xs={24} sm={12} flex={1}>
-                <ESButton size='small' variant='outlined' color='white'>
+                <ESButton
+                    size='small'
+                    variant='outlined'
+                    onClick={onPrevious}
+                    color='white'
+                >
                     <ESEvaIcon name='arrow-back-outline' />
                     <ESTypography ellipsis>{previousLesson}</ESTypography>
                 </ESButton>
             </ESCol>
             <ESCol xs={24} sm={12} flex={1}>
-                <ESButton size='small' variant='outlined' color='white'>
+                <ESButton
+                    size='small'
+                    variant='outlined'
+                    onClick={onNext}
+                    color='white'
+                >
                     <ESTypography ellipsis>{nextLesson}</ESTypography>
                     <ESEvaIcon name='arrow-forward-outline' />
                 </ESButton>

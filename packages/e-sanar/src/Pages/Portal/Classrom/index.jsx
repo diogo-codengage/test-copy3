@@ -4,22 +4,30 @@ import { Switch, Route } from 'react-router-dom'
 
 import ESSpin from 'sanar-ui/dist/Components/Atoms/Spin'
 
-import SANClassromVideo from './Video'
-import { useClassromContext, withClassromProvider } from './Context'
+import SANClassroomVideo from './Video'
+import { useClassroomContext, withClassroomProvider } from './Context'
 
-const SANClassrom = ({ match: { url } }) => {
+const SANClassroomPage = ({ match: { url } }) => {
     const {
         state: { loading, error }
-    } = useClassromContext()
+    } = useClassroomContext()
 
-    if (loading) return <ESSpin />
+    if (loading)
+        return (
+            <div className='classroom'>
+                <ESSpin className='classroom__loader' />
+            </div>
+        )
 
-    if (error) return `Error: ${error}`
+    if (error) return <div className='classroom'>{`Error: ${error}`}</div>
 
     return (
-        <div className='classrom'>
+        <div className='classroom'>
             <Switch>
-                <Route path={`${url}/video/:id`} component={SANClassromVideo} />
+                <Route
+                    path={`${url}/video/:id`}
+                    component={SANClassroomVideo}
+                />
                 <Route
                     path={`${url}/documento/:id`}
                     render={() => <div>SANClassromDocument</div>}
@@ -35,4 +43,4 @@ const SANClassrom = ({ match: { url } }) => {
     )
 }
 
-export default withClassromProvider(SANClassrom)
+export default withClassroomProvider(SANClassroomPage)

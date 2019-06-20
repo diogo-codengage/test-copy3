@@ -1,0 +1,36 @@
+.classroom__video {
+    margin-bottom: @margin-md;
+
+    & .es-lesson-header {
+        &__left {
+            & .subtitle {
+                margin-top: @margin-xs;
+                display: flex;
+                align-items: flex-end;
+                &__path {
+                    color: @gold-1;
+                }
+                &__rate {
+                    &:before {
+                        content: '\2022';
+                        margin: 0 @margin-xs;
+                    }
+                }
+                & .es-rate {
+                    margin-left: @margin-xs;
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+
+    &-quiz {
+        &__subheader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: @margin-md;
+            margin-bottom: @margin-xl;
+        }
+    }
+}
