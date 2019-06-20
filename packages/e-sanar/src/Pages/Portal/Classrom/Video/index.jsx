@@ -1,94 +1,60 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
 import ESJwPlayer from 'sanar-ui/dist/Components/Molecules/JwPlayer'
-import ESLessonHeader, {
-    ESLessonHeaderExtra
-} from 'sanar-ui/dist/Components/Molecules/LessonHeader'
 import ESTabs, { ESTabPane } from 'sanar-ui/dist/Components/Atoms/Tabs'
-import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
-import ESRate from 'sanar-ui/dist/Components/Atoms/Rate'
 
 import { useApolloContext } from 'Hooks/apollo'
 
 import { useAuthContext } from 'Hooks/auth'
 import { CREATE_RATING } from 'Apollo/Classroom/mutations/rate'
+import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
 import { useClassroomContext } from '../Context'
 
 import SANClassroomVideoQuiz from './Quiz'
-
-const renderTabBar = ({ rate, label, title, subtitle }) => (
-    props,
-    DefaultTabBar
-) => {
-    return (
-        <ESLessonHeader
-            leftChildren={
-                <>
-                    <ESTypography ellipsis level={5}>
-                        {title}
-                    </ESTypography>
-                    <div className='subtitle'>
-                        <ESTypography
-                            variant='subtitle2'
-                            className='subtitle__path'
-                            ellipsis
-                        >
-                            {subtitle}
-                        </ESTypography>
-                        <ESTypography
-                            variant='subtitle2'
-                            className='subtitle__rate'
-                        >
-                            {label}
-                        </ESTypography>
-                        <ESRate {...rate} />
-                    </div>
-                </>
-            }
-            rightChildren={
-                <ESLessonHeaderExtra
-                    previousLesson='Anterior'
-                    nextLesson='Próxima'
-                />
-            }
-        >
-            <DefaultTabBar {...props} style={{ background: 'none' }} />
-        </ESLessonHeader>
-    )
-}
+import renderTabBar from './renderTabBar'
 
 const SANClassroomVideo = () => {
     const { t } = useTranslation('esanar')
+    const playerRef = useRef()
     const {
-        me: { id: userId }
-    } = useAuthContext(0)
+        me: { id: userId },
+        getEnrollment
+    } = useAuthContext()
     const client = useApolloContext()
     const { current } = useClassroomContext()
     const [rate, setRate] = useState()
     const [playlistVideo, setPlaylistVideo] = useState()
 
+    const { id: enrollmentId } = getEnrollment()
+
     const handleRate = value => {
         setRate(value)
-        mutateRate({
-            resourceId: current.video.id,
-            resourceType: current.resource_type,
-            userId,
-            rating: { value, type: 'numeric' }
-        })
-    }
-
-    const mutateRate = ({ resourceId, resourceType, userId, rating }) =>
         client.mutate({
             mutation: CREATE_RATING,
             variables: {
-                resourceId,
-                resourceType,
+                resourceId: current.video.id,
+                resourceType: current.resource_type,
                 userId,
-                rating
+                rating: { value, type: 'numeric' }
             }
         })
+    }
+
+    const handleProgress = percentage => () => {
+        const timeInSeconds = playerRef && playerRef.current.position()
+        client.mutate({
+            mutation: CREATE_PROGRESS,
+            variables: {
+                percentage,
+                timeInSeconds: parseInt(timeInSeconds),
+                enrollmentId,
+                resourceId: current.video.id,
+                resourceType: current.resource_type
+            }
+        })
+    }
 
     useEffect(() => {
         if (current) {
@@ -107,6 +73,7 @@ const SANClassroomVideo = () => {
     return (
         <div className='classroom__video'>
             <ESJwPlayer
+                ref={playerRef}
                 playerId='playerId'
                 playlist={playlistVideo}
                 playerScript='/jwplayer/jwplayer.js'
@@ -123,6 +90,10 @@ const SANClassroomVideo = () => {
                 onOpenMenu={console.log('onOpenMenu')}
                 onNext={console.log('onNext')}
                 onPrevious={console.log('onPrevious')}
+                onTwentyFivePercent={handleProgress(25)}
+                onFiftyPercent={handleProgress(50)}
+                onSeventyFivePercent={handleProgress(75)}
+                onOneHundredPercent={handleProgress(100)}
             />
             {current.quiz && (
                 <ESTabs

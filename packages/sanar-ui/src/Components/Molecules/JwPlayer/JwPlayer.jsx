@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, forwardRef, useRef, useImperativeHandle } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -24,140 +24,156 @@ const captions = {
 
 const getPlayer = id => window.jwplayer && window.jwplayer(id)
 
-const ESJwPlayer = ({
-    className,
-    playerId,
-    onReady,
-    onOpenMenu,
-    onFavorite,
-    onNext,
-    onPrevious,
-    rate,
-    title,
-    subtitle,
-    ...props
-}) => {
-    const { t } = useTranslation('sanarui')
-    const [isReady, setIsReady] = useState(false)
-    const [isPause, setIsPause] = useState(false)
-    const classes = classNames('es-jw-player', className)
+const ESJwPlayer = forwardRef(
+    (
+        {
+            className,
+            playerId,
+            onReady,
+            onOpenMenu,
+            onFavorite,
+            onNext,
+            onPrevious,
+            rate,
+            title,
+            subtitle,
+            ...props
+        },
+        ref
+    ) => {
+        const playerRef = useRef()
+        const { t } = useTranslation('sanarui')
+        const [isReady, setIsReady] = useState(false)
+        const [isPause, setIsPause] = useState(false)
+        const classes = classNames('es-jw-player', className)
 
-    const handleReady = e => {
-        const player = getPlayer(playerId)
+        const handleReady = e => {
+            const player = getPlayer(playerId)
 
-        player.addButton(
-            '',
-            t('jwplayer.advance'),
-            function() {
-                player.seek(player.getPosition() + 10)
-            },
-            'es-jw-advance',
-            'jw-svg-icon-advance'
-        )
-
-        onNext &&
             player.addButton(
                 '',
-                t('jwplayer.next'),
-                function(e) {
-                    onNext(e)
+                t('jwplayer.advance'),
+                function() {
+                    player.seek(player.getPosition() + 10)
                 },
-                'es-jw-next',
-                'jw-svg-icon-next'
+                'es-jw-advance',
+                'jw-svg-icon-advance'
             )
 
-        onPrevious &&
-            player.addButton(
-                '',
-                t('jwplayer.previous'),
-                function(e) {
-                    onPrevious(e)
-                },
-                'es-jw-previous',
-                'jw-svg-icon-previous'
-            )
+            onNext &&
+                player.addButton(
+                    '',
+                    t('jwplayer.next'),
+                    function(e) {
+                        onNext(e)
+                    },
+                    'es-jw-next',
+                    'jw-svg-icon-next'
+                )
 
-        player.on('error', function() {
-            player.load({
-                file: '//content.jwplatform.com/videos/7RtXk3vl-52qL9xLP.mp4',
-                image: '//content.jwplatform.com/thumbs/7RtXk3vl-480.jpg'
+            onPrevious &&
+                player.addButton(
+                    '',
+                    t('jwplayer.previous'),
+                    function(e) {
+                        onPrevious(e)
+                    },
+                    'es-jw-previous',
+                    'jw-svg-icon-previous'
+                )
+
+            player.on('error', function() {
+                player.load({
+                    file:
+                        '//content.jwplatform.com/videos/7RtXk3vl-52qL9xLP.mp4',
+                    image: '//content.jwplatform.com/thumbs/7RtXk3vl-480.jpg'
+                })
+                player.play()
             })
-            player.play()
-        })
 
-        player.on('pause', function() {
-            setIsPause(true)
-        })
-        player.on('play', function() {
-            setIsPause(false)
-        })
+            player.on('pause', function() {
+                setIsPause(true)
+            })
+            player.on('play', function() {
+                setIsPause(false)
+            })
 
-        setIsReady(true)
-        player.setCaptions(captions)
-        onReady && onReady(e)
-    }
+            setIsReady(true)
+            player.setCaptions(captions)
+            onReady && onReady(e)
+        }
 
-    return (
-        <div className={classes}>
-            <div
-                className={classNames('es-jw-player__header', {
-                    ['has-header']: isReady && isPause
-                })}
-            >
-                <div className='es-jw-player__header--left'>
-                    <ESButton
-                        onClick={onOpenMenu}
-                        circle
-                        size='medium'
-                        variant='text'
-                        className={classNames({ ['visible']: isReady })}
-                    >
-                        <ESEvaIcon name='menu-outline' />
-                    </ESButton>
-                    <div>
-                        <ESTypography level={5} className='title'>
-                            {title}
-                        </ESTypography>
-                        <ESTypography variant='subtitle2' className='subtitle'>
-                            {subtitle}
-                        </ESTypography>
-                    </div>
-                </div>
-                <div className='es-jw-player__header--right'>
-                    <div>
-                        <ESTypography
-                            variant='subtitle2'
-                            className='mr-xs ml-xs'
+        useImperativeHandle(ref, () => ({
+            ...playerRef,
+            position: () => getPlayer(playerId).getPosition()
+        }))
+
+        return (
+            <div className={classes}>
+                <div
+                    className={classNames('es-jw-player__header', {
+                        ['has-header']: isReady && isPause
+                    })}
+                >
+                    <div className='es-jw-player__header--left'>
+                        <ESButton
+                            onClick={onOpenMenu}
+                            circle
+                            size='medium'
+                            variant='text'
+                            className={classNames({ ['visible']: isReady })}
                         >
-                            {t('jwplayer.rateClass')}:
-                        </ESTypography>
-                        <ESRate {...rate} />
+                            <ESEvaIcon name='menu-outline' />
+                        </ESButton>
+                        <div>
+                            <ESTypography level={5} className='title'>
+                                {title}
+                            </ESTypography>
+                            <ESTypography
+                                variant='subtitle2'
+                                className='subtitle'
+                            >
+                                {subtitle}
+                            </ESTypography>
+                        </div>
+                    </div>
+                    <div className='es-jw-player__header--right'>
+                        <div>
+                            <ESTypography
+                                variant='subtitle2'
+                                className='mr-xs ml-xs'
+                            >
+                                {t('jwplayer.rateClass')}:
+                            </ESTypography>
+                            <ESRate {...rate} />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {isReady && isPause && (
-                <>
-                    <ESEvaIcon
-                        name='skip-back'
-                        className='previous-center'
-                        onClick={onPrevious}
-                    />
-                    <ESEvaIcon
-                        name='skip-forward'
-                        className='next-center'
-                        onClick={onNext}
-                    />
-                </>
-            )}
-            <ReactJWPlayer
-                {...props}
-                onReady={handleReady}
-                playerId={playerId}
-            />
-        </div>
-    )
-}
+                {isReady && isPause && (
+                    <>
+                        <ESEvaIcon
+                            name='skip-back'
+                            className='previous-center'
+                            onClick={onPrevious}
+                        />
+                        <ESEvaIcon
+                            name='skip-forward'
+                            className='next-center'
+                            onClick={onNext}
+                        />
+                    </>
+                )}
+                <ReactJWPlayer
+                    {...props}
+                    ref={playerRef}
+                    onReady={handleReady}
+                    playerId={playerId}
+                />
+            </div>
+        )
+    }
+)
 
 ESJwPlayer.propTypes = Object.assign(
     {

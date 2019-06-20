@@ -23,8 +23,9 @@ import ESJwPlayer from './JwPlayer'
 //     }
 // ]}
 
-storiesOf('Molecules.JwPlayer', module).add('Simple', () => (
+const Example = () => (
     <ESJwPlayer
+        ref={console.log}
         playerId='playerId'
         playlist='https://cdn.jwplayer.com/v2/media/yp34SRmf'
         playerScript='https://cdn.jwplayer.com/libraries/jX7FSJdG.js'
@@ -40,4 +41,6 @@ storiesOf('Molecules.JwPlayer', module).add('Simple', () => (
         onNext={action('onNext')}
         onPrevious={action('onPrevious')}
     />
-))
+)
+
+storiesOf('Molecules.JwPlayer', module).add('Simple', () => <Example />)
