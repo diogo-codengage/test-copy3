@@ -9,6 +9,7 @@ import { ESRow, ESCol } from '../../Atoms/Grid'
 import ESTypography from '../../Atoms/Typography'
 
 const ESLessonHeaderExtra = ({
+    bookmarkLabel,
     className,
     previousLesson,
     nextLesson,
@@ -32,7 +33,7 @@ const ESLessonHeaderExtra = ({
                     onClick={onBookmarked}
                 >
                     <ESEvaIcon name='heart-outline' />
-                    {t('classroom.header.extra.bookmark')}
+                    {bookmarkLabel || t('classroom.header.extra.bookmark')}
                 </ESButton>
             </ESCol>
             <ESCol xs={24} sm={12} flex={1}>
@@ -62,6 +63,7 @@ const ESLessonHeaderExtra = ({
 }
 
 ESLessonHeaderExtra.propTypes = {
+    bookmarkLabel: PropTypes.string,
     className: PropTypes.string,
     previousLesson: PropTypes.string,
     nextLesson: PropTypes.string,

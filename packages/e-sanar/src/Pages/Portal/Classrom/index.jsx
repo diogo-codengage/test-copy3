@@ -6,6 +6,7 @@ import ESSpin from 'sanar-ui/dist/Components/Atoms/Spin'
 
 import SANClassroomVideo from './Video'
 import { useClassroomContext, withClassroomProvider } from './Context'
+import SANClassRoomDocument from './Video/Document';
 
 const SANClassroomPage = ({ match: { url } }) => {
     const {
@@ -30,8 +31,7 @@ const SANClassroomPage = ({ match: { url } }) => {
                 />
                 <Route
                     path={`${url}/documento/:id`}
-                    render={() => <div>SANClassromDocument</div>}
-                    // component={SANClassromDocument}
+                    component={SANClassRoomDocument}
                 />
                 <Route
                     path={`${url}/simulado/:id`}
