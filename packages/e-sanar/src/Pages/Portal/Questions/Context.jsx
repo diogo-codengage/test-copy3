@@ -86,7 +86,7 @@ const QuestionsProvider = ({ children, location: { pathname } }) => {
         }
     }
 
-    const fetchQuestions = async load => {
+    const fetchQuestions = async (load, reset) => {
         load && setFirstLoad(true)
         const oldQuestions = questions || []
         const {
@@ -103,17 +103,26 @@ const QuestionsProvider = ({ children, location: { pathname } }) => {
             }
         })
 
-        const newQuestions = uniqBy([...oldQuestions, ...data], item => item.id)
+        if (reset) {
+            setTotalQuestions(count)
+            setQuestions(data)
+        } else {
+            const newQuestions = uniqBy(
+                [...oldQuestions, ...data],
+                item => item.id
+            )
 
-        setTotalQuestions(oldTotal => oldTotal + count)
-        setQuestions(newQuestions)
+            setTotalQuestions(oldTotal => oldTotal + count)
+            setQuestions(newQuestions)
+        }
+
         setFirstLoad(false)
     }
 
     useEffect(() => {
         const paths = pathname.split('/')
         if (paths[paths.length - 1] === 'pratica') {
-            fetchQuestions(true)
+            fetchQuestions(true, true)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter])
