@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react'
+import React, { useState, useRef } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -41,41 +41,41 @@ const Items = ({
             search ? item.label.toLowerCase().match(search.toLowerCase()) : item
         )
         .map(item => (
-            <div key={item.value}>
-                <ESCheckbox
-                    onChange={onChange(item)}
-                    checked={!!value.find(checkValue(item))}
-                    className='es-card-select-filter__menu__items--item'
-                >
-                    {item.label}
-                </ESCheckbox>
-            </div>
+            // <div key={item.value}>
+            <ESCheckbox
+                onChange={onChange(item)}
+                checked={!!value.find(checkValue(item))}
+                className='es-card-select-filter__menu__items--item'
+            >
+                {item.label}
+            </ESCheckbox>
+            // </div>
         ))
 
     return (
         <ESCard className='es-card-select-filter__menu' tabIndex={1}>
-            <Scrollbars autoHeight autoHeightMax={246} style={{ width }}>
-                <div className='es-card-select-filter__menu--buttons'>
-                    <ESButton
-                        onClick={handleSelectAll}
-                        bold
-                        variant='text'
-                        size='xsmall'
-                        className='mr-sm'
-                    >
-                        {t('cardSelectFilter.selectAll')}
-                    </ESButton>
-                    <ESButton
-                        onClick={handleClear}
-                        bold
-                        variant='text'
-                        size='xsmall'
-                    >
-                        {t('cardSelectFilter.clearSelect')}
-                    </ESButton>
-                </div>
-                <ESDivider />
-
+            <div className='es-card-select-filter__menu--buttons'>
+                <ESButton
+                    onClick={handleSelectAll}
+                    bold
+                    variant='text'
+                    size='xsmall'
+                    className='mr-sm'
+                >
+                    {t('cardSelectFilter.selectAll')}
+                </ESButton>
+                <ESButton
+                    onClick={handleClear}
+                    bold
+                    variant='text'
+                    size='xsmall'
+                    disabled={!value.length}
+                >
+                    {t('cardSelectFilter.clearSelect')}
+                </ESButton>
+            </div>
+            <ESDivider />
+            <Scrollbars autoHeight autoHeightMax={198} style={{ width }}>
                 <div className='es-card-select-filter__menu__items'>
                     {rows.length ? (
                         rows
@@ -174,11 +174,6 @@ const ESCardSelectFilter = ({
             <ESEvaIcon name='plus-outline' />
         )
 
-    const width = useMemo(
-        () => dropdownRef.current && dropdownRef.current.offsetWidth,
-        [dropdownRef.current]
-    )
-
     return (
         <ESCard className={classes}>
             <div className='es-card-select-filter__content'>
@@ -197,7 +192,9 @@ const ESCardSelectFilter = ({
                                 handleClose,
                                 handleChange,
                                 search,
-                                width
+                                width:
+                                    dropdownRef.current &&
+                                    dropdownRef.current.offsetWidth
                             }}
                         />
                     }

@@ -36,7 +36,7 @@ const QuestionsProvider = ({ children, location: { pathname } }) => {
 
     const stopwatchRef = useRef()
     const [filter, setFilter] = useState({})
-    const [formState, setFormState] = useState({})
+    const [formState, setFormState] = useState({ progress: '1' })
     const [skippedQuestions, setSkippedQuestions] = useState(0)
     const [wrongQuestions, setWrongQuestions] = useState(0)
     const [correctQuestions, setCorrectQuestions] = useState(0)

@@ -149,7 +149,7 @@ const SANQuestionPage = ({ history }) => {
                 if (errorMutation) return `Error! ${errorMutation}`
                 return (
                     <>
-                        <SANPortalPagesContainer>
+                        <SANPortalPagesContainer className='without-padding'>
                             <SANSubheader>
                                 <div className='questions-question__subheader--actions'>
                                     <ESButton
@@ -183,7 +183,7 @@ const SANQuestionPage = ({ history }) => {
                                 </div>
                             </SANSubheader>
                         </SANPortalPagesContainer>
-                        <SANPortalPagesContainer>
+                        <SANPortalPagesContainer className='without-padding'>
                             <ESQuestion
                                 full={isFull}
                                 question={questions && questions[0]}

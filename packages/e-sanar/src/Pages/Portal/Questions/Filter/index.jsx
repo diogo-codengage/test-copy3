@@ -22,7 +22,7 @@ export const makeFilter = values => ({
     }),
     ...(values.exams && { examIds: values.exams.map(mapItem) }),
     ...(values.justCommented && { justCommented: values.justCommented }),
-    ...(values.pregress && { pregress: values.pregress })
+    ...(values.progress && { progress: values.progress })
 })
 
 const SANQuestionsFilter = ({ form, history }) => {
@@ -47,7 +47,7 @@ const SANQuestionsFilter = ({ form, history }) => {
     useEffect(() => {
         setTotalQuestions(0)
         setQuestions()
-        setFormState()
+        setFormState({ progress: '1' })
     }, [setTotalQuestions, setQuestions, setFormState])
 
     return (
