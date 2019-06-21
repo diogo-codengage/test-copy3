@@ -36,27 +36,28 @@ const Items = ({
 
     const checkValue = item => val => val.value === item.value
 
-    const rows = items
-        .filter(item =>
-            search ? item.label.toLowerCase().match(search.toLowerCase()) : item
-        )
-        .map(item => (
-            // <div key={item.value}>
-            <ESCheckbox
-                onChange={onChange(item)}
-                checked={!!value.find(checkValue(item))}
-                className='es-card-select-filter__menu__items--item'
-            >
-                {item.label}
-            </ESCheckbox>
-            // </div>
-        ))
+    const filtered = search
+        ? items.filter(item =>
+              item.label.toLowerCase().match(search.toLowerCase())
+          )
+        : items
+
+    const rows = filtered.map(item => (
+        <ESCheckbox
+            key={item.value}
+            onChange={onChange(item)}
+            checked={!!value.find(checkValue(item))}
+            className='es-card-select-filter__menu__items--item'
+        >
+            {item.label}
+        </ESCheckbox>
+    ))
 
     return (
         <ESCard className='es-card-select-filter__menu' tabIndex={1}>
             <div className='es-card-select-filter__menu--buttons'>
                 <ESButton
-                    onClick={handleSelectAll}
+                    onClick={handleSelectAll(filtered)}
                     bold
                     variant='text'
                     size='xsmall'
@@ -124,10 +125,10 @@ const ESCardSelectFilter = ({
         onClose && onClose(e)
     }
 
-    const handleSelectAll = e => {
+    const handleSelectAll = values => e => {
         if (value.length === items.length) return
-        onSelectAll && onSelectAll(items, e)
-        onChange && onChange(items, e)
+        onSelectAll && onSelectAll(values, e)
+        onChange && onChange(values, e)
     }
 
     const handleClear = e => {
