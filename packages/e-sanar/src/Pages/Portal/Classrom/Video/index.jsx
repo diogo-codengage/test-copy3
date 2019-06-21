@@ -62,9 +62,7 @@ const SANClassroomVideo = () => {
         const fetchData = async () => {
             try {
                 const {
-                    data: {
-                        rating: { value }
-                    }
+                    data: { rating }
                 } = await client.query({
                     query: GET_RATING,
                     variables: {
@@ -72,8 +70,8 @@ const SANClassroomVideo = () => {
                         userId
                     }
                 })
-                setRate(value)
-            } catch {
+                setRate(rating && rating.value)
+            } catch (e) {
                 message.error(t('classroom.failLoadRating'))
             }
         }

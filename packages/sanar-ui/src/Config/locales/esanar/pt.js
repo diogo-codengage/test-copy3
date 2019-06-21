@@ -304,7 +304,11 @@ export default {
         discussions: 'Discussões',
         favoriteQuestion: 'Favoritar questão',
         favoriteClass: 'Favoritar aula',
-        failLoadRating: 'Ocorreu um erro ao carregar a avaliação da aula.'
+        failLoadRating: 'Ocorreu um erro ao carregar a avaliação da aula.',
+        correct: 'Corretas',
+        wrong: 'Erradas',
+        skipped: 'Puladas',
+        quizFinalized: 'Quiz finalizado'
     },
     footer: {
         helpButton: 'Precisa de ajuda?',
