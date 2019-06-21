@@ -25,8 +25,10 @@ const SANClassroomVideoQuiz = ({
     const [response, setResponse] = useState()
     const [questions, setQuestions] = useState([])
     const [index, setIndex] = useState(0)
+    const [selected, setSelect] = useState()
 
-    const handleConfirm = mutation => alternative =>
+    const handleConfirm = mutation => alternative => {
+        setSelect(alternative)
         mutation({
             variables: {
                 userId: me.id,
@@ -34,10 +36,9 @@ const SANClassroomVideoQuiz = ({
                 questionId: questions[index].id
             }
         })
+    }
 
-    const handleJump = () => handleNext()
-
-    const handleNext = isCorrect => {
+    const handleNext = () => {
         setIndex(oldIndex => ++oldIndex)
         setResponse()
     }
@@ -54,6 +55,19 @@ const SANClassroomVideoQuiz = ({
             const correct = alternatives.data.find(
                 alternative => alternative.correct
             )
+
+            const test = questions.map(question => {
+                if (question.id === questions[index].id) {
+                    return {
+                        ...question,
+                        status: correct.id === selected ? 'correct' : 'wrong'
+                    }
+                }
+
+                return question
+            })
+
+            setQuestions(test)
 
             setResponse({
                 stats: stats.alternatives,
@@ -104,7 +118,7 @@ const SANClassroomVideoQuiz = ({
                                 full={isFull}
                                 question={questions[index]}
                                 onConfirm={handleConfirm(answerQuestion)}
-                                onJump={handleJump}
+                                onJump={handleNext}
                                 onNext={handleNext}
                                 loading={loadingMutation}
                                 {...response}

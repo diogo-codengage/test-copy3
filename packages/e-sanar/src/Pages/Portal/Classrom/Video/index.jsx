@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
+import { message } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 import ESJwPlayer from 'sanar-ui/dist/Components/Molecules/JwPlayer'
@@ -8,6 +9,7 @@ import ESTabs, { ESTabPane } from 'sanar-ui/dist/Components/Atoms/Tabs'
 import { useApolloContext } from 'Hooks/apollo'
 
 import { useAuthContext } from 'Hooks/auth'
+import { GET_RATING } from 'Apollo/Classroom/queries/rating'
 import { CREATE_RATING } from 'Apollo/Classroom/mutations/rate'
 import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
 import { useClassroomContext } from '../Context'
@@ -55,6 +57,28 @@ const SANClassroomVideo = () => {
             }
         })
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const {
+                    data: {
+                        rating: { value }
+                    }
+                } = await client.query({
+                    query: GET_RATING,
+                    variables: {
+                        resourceId: current.video.id,
+                        userId
+                    }
+                })
+                setRate(value)
+            } catch {
+                message.error(t('classroom.failLoadRating'))
+            }
+        }
+        fetchData()
+    }, [])
 
     useEffect(() => {
         if (current) {

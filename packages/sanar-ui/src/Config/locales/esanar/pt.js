@@ -303,7 +303,8 @@ export default {
         questionMap: 'Mapa de questões',
         discussions: 'Discussões',
         favoriteQuestion: 'Favoritar questão',
-        favoriteClass: 'Favoritar aula'
+        favoriteClass: 'Favoritar aula',
+        failLoadRating: 'Ocorreu um erro ao carregar a avaliação da aula.'
     },
     footer: {
         helpButton: 'Precisa de ajuda?',
