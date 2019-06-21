@@ -93,7 +93,7 @@ const ESPracticeCompleted = ({
                     gutter={32}
                 >
                     <ESCol className='es-practice-completed__content__summary__questions d-flex justify-content-center align-items-center'>
-                        <ESTypography className='mr-lg mb-no' level={2}>
+                        <ESTypography className='mr-lg mb-no' regular level={2}>
                             {sawQuestions}
                         </ESTypography>
                         <ESTypography className='es-practice-completed__content__summary__questions--description'>
