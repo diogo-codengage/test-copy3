@@ -40,11 +40,13 @@ const SANQuestionPage = ({ history }) => {
     const { width } = useWindowSize()
     const [isFull, setIsFull] = useState(width <= 992)
     const [response, setResponse] = useState(initialState)
+    const [selected, setSelect] = useState()
 
     const { me } = useAuthContext()
 
     const handleConfirm = mutation => alternative => {
         pauseStopwatch()
+        setSelect(alternative)
         mutation({
             variables: {
                 userId: me.id,
@@ -75,12 +77,6 @@ const SANQuestionPage = ({ history }) => {
         } else {
             setResponse(initialState)
         }
-
-        if (!isJump) {
-            isCorrect
-                ? setCorrectQuestions(oldCorrect => ++oldCorrect)
-                : setWrongQuestions(oldWrong => ++oldWrong)
-        }
     }
 
     const callbackAnswer = ({
@@ -95,6 +91,10 @@ const SANQuestionPage = ({ history }) => {
             const correct = alternatives.data.find(
                 alternative => alternative.correct
             )
+
+            correct.id === selected
+                ? setCorrectQuestions(oldCorrect => ++oldCorrect)
+                : setWrongQuestions(oldWrong => ++oldWrong)
 
             setResponse({
                 stats: stats.alternatives,
