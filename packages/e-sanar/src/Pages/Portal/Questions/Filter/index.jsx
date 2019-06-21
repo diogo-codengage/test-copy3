@@ -46,7 +46,7 @@ const SANQuestionsFilter = ({ form, history }) => {
 
     useEffect(() => {
         setTotalQuestions(0)
-        setQuestions()
+        setQuestions([])
         setFormState({ progress: '1' })
     }, [setTotalQuestions, setQuestions, setFormState])
 

@@ -13,6 +13,7 @@ import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
 
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
+import SANEmptyQuestions from './Empty'
 import SANSubheader from './Subheader'
 import { useQuestionsContext } from '../Context'
 import { useAuthContext } from 'Hooks/auth'
@@ -139,6 +140,10 @@ const SANQuestionPage = ({ history }) => {
     useEffect(() => {
         setIsFull(width <= 992)
     }, [width])
+
+    if (!firstLoad && (!questions || !questions.length)) {
+        return <SANEmptyQuestions />
+    }
 
     return (
         <Mutation mutation={ANSWER_MUTATION} onCompleted={callbackAnswer}>

@@ -231,7 +231,9 @@ export default {
             wrong: 'Erradas',
             skipped: 'Puladas',
             saveQuestion: 'Salvar questão',
-            seeFilters: 'Ver filtros'
+            seeFilters: 'Ver filtros',
+            empty:
+                'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos'
         },
         historic: {
             title: 'Histórico de questões',
