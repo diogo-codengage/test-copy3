@@ -15,7 +15,7 @@ const SANSubheader = ({ total, index, questions }) => {
 
     return (
         <div className='classroom__video-quiz__subheader'>
-            <div className='d-flex align-items-center'>
+            <div className='classroom__video-quiz__subheader--left'>
                 <ESTypography level={4} className='mr-xs text-white'>
                     {`${t('classroom.question')} ${index}`}
                 </ESTypography>
