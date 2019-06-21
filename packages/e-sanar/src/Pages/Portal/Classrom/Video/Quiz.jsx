@@ -35,9 +35,12 @@ const SANClassroomVideoQuiz = ({
             }
         })
 
-    const handleJump = () => setIndex(oldIndex => ++oldIndex)
+    const handleJump = () => handleNext()
 
-    const handleNext = isCorrect => setIndex(oldIndex => ++oldIndex)
+    const handleNext = isCorrect => {
+        setIndex(oldIndex => ++oldIndex)
+        setResponse()
+    }
 
     const callbackAnswer = ({
         questionAnswer: {
@@ -77,7 +80,7 @@ const SANClassroomVideoQuiz = ({
         // api payload quiz > questionItems > data[] > question
         const map = data.map((data, index) => ({
             ...data.question,
-            index: ++index
+            index
         }))
         setQuestions(map)
     }, [data])
@@ -94,7 +97,7 @@ const SANClassroomVideoQuiz = ({
                         <SANPortalPagesContainer className='classrom__video-quiz'>
                             <SANSubheader
                                 total={questions.length}
-                                index={index + 1}
+                                index={index}
                                 questions={questions}
                             />
                             <ESQuestion

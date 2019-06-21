@@ -16,7 +16,7 @@ const Circle = ({ index, status, current, mock }) => {
     })
     return (
         <div className={classes}>
-            <ESTypography level={6}>{index}</ESTypography>
+            <ESTypography level={6}>{index + 1}</ESTypography>
         </div>
     )
 }
@@ -42,14 +42,14 @@ const ESQuestionMap = ({
     const renderCircle = useCallback(
         (item, i) => (
             <Circle
-                key={i}
+                key={item.id}
                 {...item}
-                index={i + 1}
+                index={i}
                 mock={mock}
-                current={current === ++i}
+                current={current === i}
             />
         ),
-        [mock, items]
+        [mock, items, current]
     )
 
     const columns = items.length < 4 ? items.length : 5

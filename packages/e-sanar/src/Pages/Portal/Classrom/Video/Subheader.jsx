@@ -17,7 +17,7 @@ const SANSubheader = ({ total, index, questions }) => {
         <div className='classroom__video-quiz__subheader'>
             <div className='classroom__video-quiz__subheader--left'>
                 <ESTypography level={4} className='mr-xs text-white'>
-                    {`${t('classroom.question')} ${index}`}
+                    {`${t('classroom.question')} ${index + 1}`}
                 </ESTypography>
                 <ESTypography variant='body1' className='text-white-6'>
                     {total > 999 ? `/ 999+` : `/ ${total}`}
