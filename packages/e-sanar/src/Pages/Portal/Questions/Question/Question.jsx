@@ -132,10 +132,16 @@ const SANQuestionPage = ({ history }) => {
     }
 
     useEffect(() => {
-        if (stopwatchRef && stopwatchRef.current) {
+        if (
+            !firstLoad &&
+            questions &&
+            questions.length &&
+            stopwatchRef &&
+            stopwatchRef.current
+        ) {
             stopwatchRef.current.start()
         }
-    }, [stopwatchRef])
+    }, [stopwatchRef, questions, firstLoad])
 
     useEffect(() => {
         setIsFull(width <= 992)

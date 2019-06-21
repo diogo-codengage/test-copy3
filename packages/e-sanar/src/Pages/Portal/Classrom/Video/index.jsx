@@ -73,6 +73,7 @@ const SANClassroomVideo = () => {
     return (
         <div className='classroom__video'>
             <ESJwPlayer
+                type='html5'
                 ref={playerRef}
                 playerId='playerId'
                 playlist={playlistVideo}

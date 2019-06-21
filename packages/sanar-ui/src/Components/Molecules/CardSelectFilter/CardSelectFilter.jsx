@@ -159,6 +159,13 @@ const ESCardSelectFilter = ({
         }
     }
 
+    const onFocus = () => handleOpen(true)
+
+    const onBlur = () => {
+        setSearch()
+        handleOpen(false)
+    }
+
     const makePlaceholder =
         value.length && !open
             ? `${value.length} ${labelSelecteds}`
@@ -182,7 +189,6 @@ const ESCardSelectFilter = ({
                     trigger={['click']}
                     overlayClassName='es-card-select-filter__overlay'
                     visible={open}
-                    onVisibleChange={handleOpen}
                     overlay={
                         <Items
                             {...{
@@ -202,6 +208,8 @@ const ESCardSelectFilter = ({
                 >
                     <span style={{ width: '100%' }} ref={dropdownRef}>
                         <ESInput
+                            onFocus={onFocus}
+                            onBlur={onBlur}
                             placeholder={makePlaceholder}
                             prefix={open && <ESEvaIcon name='search-outline' />}
                             suffix={suffixIcon}
