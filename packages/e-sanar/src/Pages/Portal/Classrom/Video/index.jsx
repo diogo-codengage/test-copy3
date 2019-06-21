@@ -78,7 +78,7 @@ const SANClassroomVideo = () => {
             }
         }
         fetchData()
-    }, [])
+    }, [client, current.video.id, t, userId])
 
     useEffect(() => {
         if (current) {
