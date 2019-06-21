@@ -60,6 +60,7 @@ const SANQuestionPage = ({ history }) => {
     }
 
     const handleNext = (isCorrect, isJump) => {
+        window.scrollTo(0, 0)
         setCurrentIndex(oldIndex => ++oldIndex)
         const newQuestions = questions.slice(1)
 
