@@ -27,7 +27,9 @@ const ESQuestion = ({
     loading,
     full,
     stats,
-    isHistoric
+    isHistoric,
+    propsNext,
+    propsPrev
 }) => {
     const [striped, setStripe] = useState({})
     const [selected, setSelect] = useState()
@@ -202,7 +204,9 @@ const ESQuestion = ({
                         answer,
                         question,
                         onlyStep,
-                        isHistoric
+                        isHistoric,
+                        propsNext,
+                        propsPrev
                     }}
                 />
             </ESSpin>

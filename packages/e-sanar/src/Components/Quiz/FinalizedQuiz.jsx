@@ -37,7 +37,7 @@ const Progress = ({ percent, status, label }) => (
 const SANQuizFinalized = ({ correct, wrong, skipped, total }) => {
     const { t } = useTranslation('esanar')
     return (
-        <SANPortalPagesContainer className='video-quiz__finalized'>
+        <SANPortalPagesContainer className='video-quiz__finalized--quiz'>
             <div className='title'>
                 <ESEvaIcon size='xlarge' name='checkmark-circle-outline' />
                 <ESTypography level={4} regular>
