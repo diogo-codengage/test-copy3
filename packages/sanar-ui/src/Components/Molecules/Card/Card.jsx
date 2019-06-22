@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import { Card, Tooltip, Icon } from 'antd'
+import { Card } from 'antd'
 import ESEvaIcon from '../../Atoms/EvaIcon/EvaIcon'
 import ESTooltip from '../../Atoms/Tooltip/Tooltip'
 
-const ESCard = ({ className, children, doubt, ...props }) => {
+const ESCard = forwardRef(({ className, children, doubt, ...props }, ref) => {
     const classes = classNames('es-card', className)
 
     return (
-        <Card className={classes} {...props}>
+        <Card className={classes} {...props} ref={ref}>
             {doubt && (
                 <ESTooltip
                     className='es-card__doubt'
@@ -28,7 +28,7 @@ const ESCard = ({ className, children, doubt, ...props }) => {
             {children}
         </Card>
     )
-}
+})
 
 ESCard.propTypes = Object.assign(
     { ...Card['propTypes'] },
