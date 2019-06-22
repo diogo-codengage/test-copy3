@@ -25,41 +25,4 @@
             }
         }
     }
-
-    &-quiz {
-        &__finalized {
-            position: relative;
-            background-color: @white;
-            border-radius: @border-radius-base;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-
-            & .es-circle-progress:not(:last-child) {
-                margin-right: @margin-sm;
-            }
-
-            & .title {
-                background-color: fade(@primary-1, 30);
-                border-bottom: 1px solid @grey-3;
-                width: 100%;
-                padding: @padding-lg;
-                text-align: center;
-            }
-        }
-        &__subheader {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: @margin-md;
-            margin-bottom: @margin-xl;
-
-            &--left {
-                display: flex;
-                align-items: center;
-                white-space: nowrap;
-            }
-        }
-    }
 }

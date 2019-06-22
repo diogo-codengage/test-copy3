@@ -90,13 +90,13 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
                         return level
                     })
 
-                setCurrent(map[0])
-                const type = map[0].resource_type
+                setCurrent(map[map.length - 1])
+                const type = map[map.length - 1].resource_type
 
                 dispatch({ type: 'success', payload: map })
                 history.push(
                     `/aluno/sala-aula/${params.id}/${getSubRoute(type)}/${
-                        map[0][type.toLowerCase()].id
+                        map[map.length - 1][type.toLowerCase()].id
                     }/`
                 )
             } catch (err) {

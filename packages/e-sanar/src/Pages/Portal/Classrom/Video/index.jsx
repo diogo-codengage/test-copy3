@@ -14,7 +14,7 @@ import { CREATE_RATING } from 'Apollo/Classroom/mutations/rate'
 import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
 import { useClassroomContext } from '../Context'
 
-import SANClassroomVideoQuiz from './Quiz'
+import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
 
 const SANClassroomVideo = () => {
@@ -136,7 +136,7 @@ const SANClassroomVideo = () => {
                     })}
                 >
                     <ESTabPane tab={t('classroom.questions')} key='1'>
-                        <SANClassroomVideoQuiz quiz={current.quiz} />
+                        <SANQuiz quiz={current.quiz} />
                     </ESTabPane>
                     <ESTabPane
                         tab={t('classroom.discussions')}

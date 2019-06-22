@@ -1,0 +1,44 @@
+.classroom__mock {
+    padding-bottom: @padding-md;
+
+    &-header--left {
+        display: flex;
+        & .menu-button {
+            background-color: @secondary-color;
+            margin-right: @margin-lg;
+        }
+        & .subtitle {
+            margin-top: @margin-xs;
+            color: @gold-1;
+        }
+
+        @media (max-width: @screen-md) {
+            justify-content: space-between;
+            & .menu-button {
+                order: 1;
+                margin: 0;
+                width: 32px;
+                height: 32px;
+            }
+            & .title {
+                font-size: @font-size-lg;
+            }
+        }
+    }
+
+    &-quiz {
+        &__subheader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: @margin-md;
+            margin-bottom: @margin-xl;
+
+            &--left {
+                display: flex;
+                align-items: center;
+                white-space: nowrap;
+            }
+        }
+    }
+}

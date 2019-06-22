@@ -5,8 +5,8 @@
     display: flex;
     align-items: center;
     border-radius: @border-radius-base;
-    background-color: fade(@primary-1, 30%);
     font-size: @font-size-base;
+    background-color: fade(@primary-1, 30%);
     font-weight: bold;
 
     &--stopped {
@@ -15,5 +15,10 @@
 
     & .es-eva-icon {
         margin-right: @margin-xs;
+    }
+
+    &--dark {
+        background-color: @white-1;
+        color: @white-7;
     }
 }
