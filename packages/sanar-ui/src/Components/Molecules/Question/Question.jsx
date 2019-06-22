@@ -15,6 +15,7 @@ import ESQuestionComment from './Comment'
 
 const ESQuestion = ({
     answer,
+    defaultSelected,
     question,
     comment,
     onSelect,
@@ -29,11 +30,11 @@ const ESQuestion = ({
     isHistoric
 }) => {
     const [striped, setStripe] = useState({})
-    const [selected, setSelect] = useState(null)
+    const [selected, setSelect] = useState()
     const [confirmed, setConfirm] = useState(false)
 
     const handleSelect = index => item => {
-        if (confirmed) return
+        if (confirmed || isHistoric) return
         if (striped[index]) {
             setStripe({
                 ...striped,
@@ -108,6 +109,12 @@ const ESQuestion = ({
     useEffect(() => {
         setStripe({})
     }, [question])
+
+    useEffect(() => {
+        if (isHistoric) {
+            setSelect(defaultSelected)
+        }
+    }, [defaultSelected, isHistoric])
 
     return (
         <ESCard
