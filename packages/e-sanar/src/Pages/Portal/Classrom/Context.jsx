@@ -11,7 +11,8 @@ import { withRouter } from 'react-router-dom'
 
 import { useApolloContext } from 'Hooks/apollo'
 import { GET_LEVEL_CONTENT } from 'Apollo/Classroom/queries/level-content'
-// import { usePortalContext } from 'Pages/Portal/Context'
+import { usePortalContext } from '../Context'
+import { GET_MODULE } from 'Apollo/Classroom/queries/module'
 
 const Context = createContext()
 
@@ -47,7 +48,14 @@ const getSubRoute = type => {
 
 const ClassroomProvider = ({ children, match: { params }, history }) => {
     const client = useApolloContext()
-    // const { setPlaylist } = usePortalContext()
+    const {
+        setPlaylist,
+        setCurrentResourceIndex,
+        currentModule,
+        setCurrentModule,
+        getResource,
+        setPlaylistLoading
+    } = usePortalContext()
     const [current, setCurrent] = useState()
     const [state, dispatch] = useReducer(reducer, initialState)
 
@@ -68,25 +76,48 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
                     }
                 })
 
-                const ordered = R.sortBy(R.prop('index'), data)
+                const {
+                    data: { module }
+                } = await client.query({
+                    query: GET_MODULE,
+                    fetchPolicy: 'network-only',
+                    variables: {
+                        enrollmentId: '5d09125504bf68004bec3406',
+                        id: '5d0ad69c7f018f00114ac688'
+                    }
+                })
+
+                setCurrentModule(module)
+
+                const { level_contents } = module
+                const ordered = R.sortBy(R.prop('index'), level_contents.data)
+
+                console.log({
+                    progress: module.progress,
+                    levelContent: level_contents.data
+                })
+
+                setCurrent(ordered[module.progress.done])
 
                 // Set data mock to current video - Diogo
-                const quiz = ordered.find(e => e.resource_type === 'Quiz')
                 const anchor = ordered.find(e => e.resource_type === 'Video')
-                setCurrent({ ...anchor, quiz: quiz.quiz })
+                setPlaylist(ordered)
+                setCurrentResourceIndex(currentModule.index)
+                setPlaylistLoading(false)
 
                 dispatch({ type: 'success', payload: ordered })
+
                 history.push(
                     `/aluno/sala-aula/${params.id}/${getSubRoute(
-                        anchor.resource_type
-                    )}/${anchor[anchor.resource_type.toLowerCase()].id}`
+                        currentModule.resource_type
+                    )}/${getResource(anchor).id}`
                 )
             } catch (err) {
                 dispatch({ type: 'error' })
             }
         }
         fetchData()
-    }, [params.id, client, history])
+    }, [params.id, client, history, setPlaylist, setCurrentResourceIndex])
 
     const value = {
         state,
