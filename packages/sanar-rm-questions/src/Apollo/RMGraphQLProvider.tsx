@@ -9,13 +9,14 @@ let getGraphqlUri = () => {
     // const dev = 'https://bff.sanarresidenciamedica.com.br/dev/graphql';
     const prod = 'https://bff.sanarresidenciamedica.com.br/prod/graphql';
 
+    // TODO: fix this
     switch(true) {
         case isLocalhost():
             return local
         case isProdEnvironment():
-            return prod;
+            return local;
         case isDevEnvironment():
-            return local; // TODO: fix this
+            return local;
         default:
             return local;
     }
