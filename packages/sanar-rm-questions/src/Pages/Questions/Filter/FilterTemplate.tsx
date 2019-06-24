@@ -40,7 +40,7 @@ export const FilterTemplate = () => {
     const setFilters = questionsCtx.setFormFilterState
 
     const {
-        // specialties,
+        specialties,
         //
         // allTags,
         allSpecialties,
@@ -50,9 +50,9 @@ export const FilterTemplate = () => {
         // setSelectedSubSpecialties,
         setSelectedTags,
         selectedTags,
-        // setAllSubSpecialties,
-        // setAllSpecialties,
-        // setAllTags
+        setAllSubSpecialties,
+        setAllSpecialties,
+        setAllTags
 
     } = questionsCtx
 
@@ -93,22 +93,27 @@ export const FilterTemplate = () => {
     }, [allSubSpecialties])
 
     if (allSpecialties.length === 0) {
-        // setAllSpecialties(specialties)
-        // setAllTags(specialties.flatMap(s => s.tags).concat( specialties.flatMap(s => s.children).flatMap( s=>  s.tags)  ))
+        setAllSpecialties(specialties
+            .sort((o1,o2) => (o1.label.localeCompare(o2.label))))
+        setAllSubSpecialties(specialties.flatMap(s => s.children)
+            .sort((o1,o2) => (o1.label.localeCompare(o2.label)))
+        )
+        setAllTags(specialties.flatMap(s => s.tags).concat( specialties.flatMap(s => s.children).flatMap( s=>  s.tags))
+            .sort((o1,o2) => (o1.label.localeCompare(o2.label)))
+        )
     }
 
     const changeSelectedTags = (newSelectedTags) => {
-
-
         setSelectedTags(newSelectedTags);
         clearQuestions()
     }
 
     return <>
         <RMContainer>
-            <ESRow gutter={24} style={{ marginBottom: '24px' }}>
+            <ESRow gutter={24} style={{ marginBottom: 12 }}>
                 <ESCol span={cardSpan}>
                     <ESCardSelectFilter
+                        style={{marginTop: isSmall ?  20 : 0 }}
                         filterName="Especialidade"
                         image={iconSpecialties}
                         items={questionsCtx.allSpecialties}
@@ -117,11 +122,12 @@ export const FilterTemplate = () => {
                             clearQuestions()
                         }}
                         value={questionsCtx.selectedSpecialties}
-                        labelSelecteds={'foooo'}
+                        labelSelecteds={ questionsCtx.selectedSpecialties.map(e => e.label).join(', ') }
                     />
                 </ESCol>
-                <ESCol span={cardSpan}>
+                <ESCol span={cardSpan}  style={{marginTop: isSmall ?  12 : 0 }}>
                     <ESCardSelectFilter
+
                         filterName="Subespecialidade"
                         image={iconSubSpecialties}
                         items={questionsCtx.allSubSpecialties}
@@ -130,20 +136,23 @@ export const FilterTemplate = () => {
                             clearQuestions()
                         }}
                         value={questionsCtx.selectedSubSpecialties}
+                        labelSelecteds={ questionsCtx.selectedSubSpecialties.map(e => e.label).join(', ') }
                     />
                 </ESCol>
-                <ESCol span={cardSpan}>
+                <ESCol span={cardSpan} style={{marginTop: isSmall ?  12 : 0 }}>
                     <ESCardSelectFilter
                         filterName="Tema"
                         image={iconTheme}
                         items={questionsCtx.allTags}
                         onChange={changeSelectedTags}
                         value={questionsCtx.selectedTags}
+                        labelSelecteds={ questionsCtx.selectedTags.map(e => e.label).join(', ') }
                     />
                 </ESCol>
             </ESRow>
 
-            <ESCollapse
+            <ESRow style={{marginBottom: 20}}>
+                <ESCollapse
                 accordion={true}
                 onChange={keyPanelOpen => questionsCtx.setShowAdvancedFilters(keyPanelOpen === '0')}
                 activeKey={questionsCtx.showAdvancedFilters ? '0' : undefined}
@@ -218,6 +227,7 @@ export const FilterTemplate = () => {
                     </ESRow>
                 </ESCollapsePanel>
             </ESCollapse>
+            </ESRow>
         </RMContainer>
     </>
 }

@@ -6,43 +6,47 @@ import ESQuestionMap from './QuestionMap'
 
 const quiz = [
     {
+        index: 0,
+        status: 'correct'
+    },
+    {
         index: 1,
         status: 'correct'
     },
     {
         index: 2,
-        status: 'correct'
-    },
-    {
-        index: 3,
         status: 'wrong'
     },
     {
-        index: 4
+        index: 3
     },
     {
-        index: 5
+        index: 4
     }
 ]
 
 const mock = [
     {
+        index: 0,
+        status: 'correct'
+    },
+    {
         index: 1,
         status: 'correct'
     },
     {
         index: 2,
-        status: 'correct'
+        status: 'wrong'
     },
     {
-        index: 3,
-        status: 'wrong'
+        index: 3
     },
     {
         index: 4
     },
     {
-        index: 5
+        index: 5,
+        status: 'correct'
     },
     {
         index: 6,
@@ -65,8 +69,7 @@ const mock = [
         status: 'correct'
     },
     {
-        index: 11,
-        status: 'correct'
+        index: 11
     },
     {
         index: 12
@@ -76,9 +79,6 @@ const mock = [
     },
     {
         index: 14
-    },
-    {
-        index: 15
     }
 ]
 

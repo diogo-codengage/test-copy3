@@ -42,6 +42,7 @@ const SANQuestionDetailsPage = ({ form, history }) => {
                         color='primary'
                         bold
                         uppercase
+                        blockOnlyMobile
                         type='submit'
                     >
                         {t('global.continue')}

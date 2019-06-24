@@ -13,6 +13,7 @@ import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
 
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
+import SANEmptyQuestions from './Empty'
 import SANSubheader from './Subheader'
 import { useQuestionsContext } from '../Context'
 import { useAuthContext } from 'Hooks/auth'
@@ -40,11 +41,13 @@ const SANQuestionPage = ({ history }) => {
     const { width } = useWindowSize()
     const [isFull, setIsFull] = useState(width <= 992)
     const [response, setResponse] = useState(initialState)
+    const [selected, setSelect] = useState()
 
     const { me } = useAuthContext()
 
     const handleConfirm = mutation => alternative => {
         pauseStopwatch()
+        setSelect(alternative)
         mutation({
             variables: {
                 userId: me.id,
@@ -60,6 +63,7 @@ const SANQuestionPage = ({ history }) => {
     }
 
     const handleNext = (isCorrect, isJump) => {
+        window.scrollTo(0, 0)
         setCurrentIndex(oldIndex => ++oldIndex)
         const newQuestions = questions.slice(1)
 
@@ -74,12 +78,6 @@ const SANQuestionPage = ({ history }) => {
         } else {
             setResponse(initialState)
         }
-
-        if (!isJump) {
-            isCorrect
-                ? setCorrectQuestions(oldCorrect => ++oldCorrect)
-                : setWrongQuestions(oldWrong => ++oldWrong)
-        }
     }
 
     const callbackAnswer = ({
@@ -90,26 +88,20 @@ const SANQuestionPage = ({ history }) => {
             stats
         }
     }) => {
-        if (alternatives && alternatives.data && alternatives.data.length) {
-            const correct = alternatives.data.find(
-                alternative => alternative.correct
-            )
+        const correct = alternatives.data.find(
+            alternative => alternative.correct
+        )
 
-            setResponse({
-                stats: stats.alternatives,
-                comment:
-                    comments.data && comments.data.length
-                        ? comments.data[0]
-                        : null,
-                answer: correct.id
-            })
-        } else {
-            setResponse({
-                stats: stats.alternatives,
-                comment:
-                    comments.data && comments.data.length && comments.data[0]
-            })
-        }
+        correct.id === selected
+            ? setCorrectQuestions(oldCorrect => ++oldCorrect)
+            : setWrongQuestions(oldWrong => ++oldWrong)
+
+        setResponse({
+            stats: stats.alternatives,
+            comment:
+                comments.data && comments.data.length ? comments.data[0] : null,
+            answer: correct.id
+        })
     }
 
     const pauseStopwatch = () => {
@@ -130,14 +122,24 @@ const SANQuestionPage = ({ history }) => {
     }
 
     useEffect(() => {
-        if (stopwatchRef && stopwatchRef.current) {
+        if (
+            !firstLoad &&
+            questions &&
+            questions.length &&
+            stopwatchRef &&
+            stopwatchRef.current
+        ) {
             stopwatchRef.current.start()
         }
-    }, [stopwatchRef])
+    }, [stopwatchRef, questions, firstLoad])
 
     useEffect(() => {
         setIsFull(width <= 992)
     }, [width])
+
+    if (!firstLoad && (!questions || !questions.length)) {
+        return <SANEmptyQuestions />
+    }
 
     return (
         <Mutation mutation={ANSWER_MUTATION} onCompleted={callbackAnswer}>
@@ -148,7 +150,7 @@ const SANQuestionPage = ({ history }) => {
                 if (errorMutation) return `Error! ${errorMutation}`
                 return (
                     <>
-                        <SANPortalPagesContainer>
+                        <SANPortalPagesContainer className='without-padding'>
                             <SANSubheader>
                                 <div className='questions-question__subheader--actions'>
                                     <ESButton
@@ -182,7 +184,7 @@ const SANQuestionPage = ({ history }) => {
                                 </div>
                             </SANSubheader>
                         </SANPortalPagesContainer>
-                        <SANPortalPagesContainer>
+                        <SANPortalPagesContainer className='without-padding'>
                             <ESQuestion
                                 full={isFull}
                                 question={questions && questions[0]}

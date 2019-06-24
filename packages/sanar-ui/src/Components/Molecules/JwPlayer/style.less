@@ -128,6 +128,20 @@
         border-radius: 0 !important;
     }
 
+    /* TOOLTIP */
+    & .jw-tooltip {
+        & .jw-text {
+            background-color: @tooltip-bg !important;
+            color: @tooltip-color !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            border-radius: @border-radius-base !important;
+            font-family: 'Nunito Sans';
+            &:after {
+                background-color: @tooltip-bg !important;
+            }
+        }
+    }
+
     /* POPUP SETTINGS */
     & .jw-settings-menu {
         border-radius: @border-radius-base !important;

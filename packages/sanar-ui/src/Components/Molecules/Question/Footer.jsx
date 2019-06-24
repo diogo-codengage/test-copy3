@@ -32,7 +32,7 @@ const ESQuestionFooter = ({
                         bold
                         onClick={handlePrevious}
                     >
-                        <ESEvaIcon name='arrow-back-outline' />
+                        <ESEvaIcon key='back' name='arrow-back-outline' />
                         {t('question.previous')}
                     </ESButton>
                     <ESButton
@@ -41,7 +41,7 @@ const ESQuestionFooter = ({
                         variant='text'
                         uppercase
                         bold
-                        onClick={answer ? handleNext : handleConfirm}
+                        onClick={handleNext}
                     >
                         {t('question.next')}
                         <ESEvaIcon name='arrow-forward-outline' />
@@ -57,7 +57,7 @@ const ESQuestionFooter = ({
                         onClick={handleJump}
                         disabled={answer || !question}
                     >
-                        <ESEvaIcon name='refresh-outline' />
+                        <ESEvaIcon key='jump' name='refresh-outline' />
                         {t('question.jump')}
                     </ESButton>
                     <ESButton

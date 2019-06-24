@@ -231,7 +231,9 @@ export default {
             wrong: 'Erradas',
             skipped: 'Puladas',
             saveQuestion: 'Salvar questão',
-            seeFilters: 'Ver filtros'
+            seeFilters: 'Ver filtros',
+            empty:
+                'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos'
         },
         historic: {
             title: 'Histórico de questões',
@@ -301,7 +303,12 @@ export default {
         questionMap: 'Mapa de questões',
         discussions: 'Discussões',
         favoriteQuestion: 'Favoritar questão',
-        favoriteClass: 'Favoritar aula'
+        favoriteClass: 'Favoritar aula',
+        failLoadRating: 'Ocorreu um erro ao carregar a avaliação da aula.',
+        correct: 'Corretas',
+        wrong: 'Erradas',
+        skipped: 'Puladas',
+        quizFinalized: 'Quiz finalizado'
     },
     footer: {
         helpButton: 'Precisa de ajuda?',

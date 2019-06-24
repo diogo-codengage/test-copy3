@@ -5,6 +5,7 @@ import { Switch, Route } from 'react-router-dom'
 import ESSpin from 'sanar-ui/dist/Components/Atoms/Spin'
 
 import SANClassroomVideo from './Video'
+import SANClassroomMock from './Mock'
 import { useClassroomContext, withClassroomProvider } from './Context'
 import SANClassRoomDocument from './Video/Document';
 
@@ -35,8 +36,7 @@ const SANClassroomPage = ({ match: { url } }) => {
                 />
                 <Route
                     path={`${url}/simulado/:id`}
-                    render={() => <div>SANClassromDocument</div>}
-                    // component={SANClassromMock}
+                    component={SANClassroomMock}
                 />
             </Switch>
         </div>

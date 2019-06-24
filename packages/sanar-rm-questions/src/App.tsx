@@ -20,12 +20,10 @@ const App: React.FC = () => {
                         />
                         <Route
                             path={`/pratica`}
-                            // exact
                             component={QuestionsPage}
                         />
                         <Route
                             path={`/pratica-curso/:videoParams`}
-                            // exact
                             component={QuestionsPage}
                         />
                         <Route

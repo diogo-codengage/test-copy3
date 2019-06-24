@@ -15,9 +15,7 @@ export const CREATE_RATING = gql`
                 rating: $rating
             }
         ) {
-            data {
-                id
-            }
+            id
         }
     }
 `

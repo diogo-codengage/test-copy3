@@ -1,10 +1,12 @@
-import React, { useState, useRef, useMemo } from 'react'
+import React, { useState, useRef, forwardRef } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Empty, Skeleton } from 'antd'
+
+import useOnClickOutside from '../../../Hooks/useOnClickOutside'
 
 import ESInput from '../../Atoms/Input'
 import ESCheckbox from '../../Atoms/Checkbox'
@@ -21,72 +23,87 @@ const Badge = ({ count, ...props }) => (
     </div>
 )
 
-const Items = ({
-    items,
-    value,
-    handleSelectAll,
-    handleClear,
-    handleChange,
-    search,
-    width = 426
-}) => {
-    const { t } = useTranslation('sanarui')
+const Items = forwardRef(
+    (
+        {
+            items,
+            value,
+            handleSelectAll,
+            handleClear,
+            handleChange,
+            search,
+            width = 426
+        },
+        ref
+    ) => {
+        const { t } = useTranslation('sanarui')
 
-    const onChange = item => e => handleChange(item, e)
+        const onChange = item => e => handleChange(item, e)
 
-    const checkValue = item => val => val.value === item.value
+        const checkValue = item => val => val.value === item.value
 
-    const rows = items
-        .filter(item =>
-            search ? item.label.toLowerCase().match(search.toLowerCase()) : item
-        )
-        .map(item => (
-            <div key={item.value}>
-                <ESCheckbox
-                    onChange={onChange(item)}
-                    checked={!!value.find(checkValue(item))}
-                    className='es-card-select-filter__menu__items--item'
-                >
-                    {item.label}
-                </ESCheckbox>
-            </div>
+        const filtered = search
+            ? items.filter(item =>
+                  item.label.toLowerCase().match(search.toLowerCase())
+              )
+            : items
+
+        const rows = filtered.map(item => (
+            <ESCheckbox
+                key={item.id}
+                onChange={onChange(item)}
+                checked={!!value.find(checkValue(item))}
+                className='es-card-select-filter__menu__items--item'
+            >
+                {item.label}
+            </ESCheckbox>
         ))
 
-    return (
-        <ESCard className='es-card-select-filter__menu' tabIndex={1}>
-            <Scrollbars autoHeight autoHeightMax={246} style={{ width }}>
-                <div className='es-card-select-filter__menu--buttons'>
-                    <ESButton
-                        onClick={handleSelectAll}
-                        bold
-                        variant='text'
-                        size='xsmall'
-                        className='mr-sm'
+        return (
+            <div ref={ref}>
+                <ESCard className='es-card-select-filter__menu' tabIndex={1}>
+                    <div className='es-card-select-filter__menu--buttons'>
+                        <ESButton
+                            onClick={handleSelectAll(filtered)}
+                            bold
+                            variant='text'
+                            size='xsmall'
+                            className='mr-sm'
+                        >
+                            {t('cardSelectFilter.selectAll')}
+                        </ESButton>
+                        <ESButton
+                            onClick={handleClear}
+                            bold
+                            variant='text'
+                            size='xsmall'
+                            disabled={!value.length}
+                        >
+                            {t('cardSelectFilter.clearSelect')}
+                        </ESButton>
+                    </div>
+                    <ESDivider />
+                    <Scrollbars
+                        autoHeight
+                        autoHeightMax={198}
+                        style={{ width }}
                     >
-                        {t('cardSelectFilter.selectAll')}
-                    </ESButton>
-                    <ESButton
-                        onClick={handleClear}
-                        bold
-                        variant='text'
-                        size='xsmall'
-                    >
-                        {t('cardSelectFilter.clearSelect')}
-                    </ESButton>
-                </div>
-                <ESDivider />
-
-                <div className='es-card-select-filter__menu__items'>
-                    {rows.length ? (
-                        rows
-                    ) : (
-                        <Empty className='mt-md' style={{ height: 206 }} />
-                    )}
-                </div>
-            </Scrollbars>
-        </ESCard>
-    )
-}
+                        <div className='es-card-select-filter__menu__items'>
+                            {rows.length ? (
+                                rows
+                            ) : (
+                                <Empty
+                                    className='mt-md'
+                                    style={{ height: 206 }}
+                                />
+                            )}
+                        </div>
+                    </Scrollbars>
+                </ESCard>
+            </div>
+        )
+    }
+)
 
 const ESCardSelectFilter = ({
     className,
@@ -105,6 +122,7 @@ const ESCardSelectFilter = ({
     value = []
 }) => {
     const dropdownRef = useRef()
+    const menuRef = useRef()
     const { t } = useTranslation('sanarui')
     const [loadImage, setLoadImage] = useState(true)
     const [open, setOpen] = useState(false)
@@ -124,10 +142,10 @@ const ESCardSelectFilter = ({
         onClose && onClose(e)
     }
 
-    const handleSelectAll = e => {
+    const handleSelectAll = values => e => {
         if (value.length === items.length) return
-        onSelectAll && onSelectAll(items, e)
-        onChange && onChange(items, e)
+        onSelectAll && onSelectAll(values, e)
+        onChange && onChange(values, e)
     }
 
     const handleClear = e => {
@@ -158,6 +176,19 @@ const ESCardSelectFilter = ({
         }
     }
 
+    const onFocus = () => handleOpen(true)
+
+    const clickOutside = () => {
+        setSearch()
+        handleOpen(false)
+    }
+
+    useOnClickOutside([menuRef, dropdownRef], clickOutside, [
+        menuRef,
+        dropdownRef,
+        clickOutside
+    ])
+
     const makePlaceholder =
         value.length && !open
             ? `${value.length} ${labelSelecteds}`
@@ -174,11 +205,6 @@ const ESCardSelectFilter = ({
             <ESEvaIcon name='plus-outline' />
         )
 
-    const width = useMemo(
-        () => dropdownRef.current && dropdownRef.current.offsetWidth,
-        [dropdownRef.current]
-    )
-
     return (
         <ESCard className={classes}>
             <div className='es-card-select-filter__content'>
@@ -186,9 +212,10 @@ const ESCardSelectFilter = ({
                     trigger={['click']}
                     overlayClassName='es-card-select-filter__overlay'
                     visible={open}
-                    onVisibleChange={handleOpen}
+                    getPopupContainer={() => dropdownRef && dropdownRef.current}
                     overlay={
                         <Items
+                            ref={menuRef}
                             {...{
                                 items,
                                 value,
@@ -197,13 +224,16 @@ const ESCardSelectFilter = ({
                                 handleClose,
                                 handleChange,
                                 search,
-                                width
+                                width:
+                                    dropdownRef.current &&
+                                    dropdownRef.current.offsetWidth
                             }}
                         />
                     }
                 >
                     <span style={{ width: '100%' }} ref={dropdownRef}>
                         <ESInput
+                            onFocus={onFocus}
                             placeholder={makePlaceholder}
                             prefix={open && <ESEvaIcon name='search-outline' />}
                             suffix={suffixIcon}

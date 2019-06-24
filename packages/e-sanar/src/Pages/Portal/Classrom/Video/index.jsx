@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
+import { message } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 import ESJwPlayer from 'sanar-ui/dist/Components/Molecules/JwPlayer'
@@ -8,11 +9,12 @@ import ESTabs, { ESTabPane } from 'sanar-ui/dist/Components/Atoms/Tabs'
 import { useApolloContext } from 'Hooks/apollo'
 
 import { useAuthContext } from 'Hooks/auth'
+import { GET_RATING } from 'Apollo/Classroom/queries/rating'
 import { CREATE_RATING } from 'Apollo/Classroom/mutations/rate'
 import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
 import { useClassroomContext } from '../Context'
 
-import SANClassroomVideoQuiz from './Quiz'
+import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
 
 const SANClassroomVideo = () => {
@@ -57,6 +59,26 @@ const SANClassroomVideo = () => {
     }
 
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const {
+                    data: { rating }
+                } = await client.query({
+                    query: GET_RATING,
+                    variables: {
+                        resourceId: current.video.id,
+                        userId
+                    }
+                })
+                setRate(rating && rating.value)
+            } catch (e) {
+                message.error(t('classroom.failLoadRating'))
+            }
+        }
+        fetchData()
+    }, [client, current, t, userId])
+
+    useEffect(() => {
         if (current) {
             const playler = current.video.providers.data.find(
                 provider => provider.code === 'jwplayer'
@@ -73,6 +95,7 @@ const SANClassroomVideo = () => {
     return (
         <div className='classroom__video'>
             <ESJwPlayer
+                type='html5'
                 ref={playerRef}
                 playerId='playerId'
                 playlist={playlistVideo}
@@ -113,7 +136,7 @@ const SANClassroomVideo = () => {
                     })}
                 >
                     <ESTabPane tab={t('classroom.questions')} key='1'>
-                        <SANClassroomVideoQuiz quiz={current.quiz} />
+                        <SANQuiz quiz={current.quiz} />
                     </ESTabPane>
                     <ESTabPane
                         tab={t('classroom.discussions')}
