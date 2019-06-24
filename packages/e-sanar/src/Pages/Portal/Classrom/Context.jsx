@@ -11,7 +11,7 @@ import { withRouter } from 'react-router-dom'
 
 import { useApolloContext } from 'Hooks/apollo'
 import { GET_LEVEL_CONTENT } from 'Apollo/Classroom/queries/level-content'
-import { usePortalContext } from '../Context'
+// import { usePortalContext } from '../Context'
 import { GET_MODULE } from 'Apollo/Classroom/queries/module'
 
 const Context = createContext()
@@ -48,11 +48,11 @@ const getSubRoute = type => {
 
 const ClassroomProvider = ({ children, match: { params }, history }) => {
     const client = useApolloContext()
-    const {
-        setPlaylist,
-        setCurrentResourceIndex,
-        setCurrentModule
-    } = usePortalContext()
+    // const {
+    //     setPlaylist,
+    //     setCurrentResourceIndex,
+    //     setCurrentModule
+    // } = usePortalContext()
 
     const [current, setCurrent] = useState({})
     const [state, dispatch] = useReducer(reducer, initialState)
@@ -85,7 +85,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
                     }
                 })
 
-                setCurrentModule(module)
+                // setCurrentModule(module)
 
                 const { level_contents } = module
                 const ordered = R.sortBy(R.prop('index'), level_contents.data)
@@ -131,7 +131,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
             }
         }
         fetchData()
-    }, [params.id, client, history, setPlaylist, setCurrentResourceIndex])
+    }, [params.id, client, history])
 
     const value = {
         state,
