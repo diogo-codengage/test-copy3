@@ -12,7 +12,7 @@ import { withRouter } from 'react-router-dom'
 import { useApolloContext } from 'Hooks/apollo'
 import { GET_LEVEL_CONTENT } from 'Apollo/Classroom/queries/level-content'
 // import { usePortalContext } from '../Context'
-import { GET_MODULE } from 'Apollo/Classroom/queries/module'
+// import { GET_MODULE } from 'Apollo/Classroom/queries/module'
 
 const Context = createContext()
 
@@ -74,21 +74,23 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
                     }
                 })
 
-                const {
-                    data: { module }
-                } = await client.query({
-                    query: GET_MODULE,
-                    fetchPolicy: 'network-only',
-                    variables: {
-                        enrollmentId: '5d09125504bf68004bec3406',
-                        id: '5d0ad69c7f018f00114ac688'
-                    }
-                })
+                // const {
+                //     data: { module }
+                // } = await client.query({
+                //     query: GET_MODULE,
+                //     fetchPolicy: 'network-only',
+                //     variables: {
+                //         enrollmentId: '5d09125504bf68004bec3406',
+                //         id: '5d0ad69c7f018f00114ac688'
+                //     }
+                // })
 
                 // setCurrentModule(module)
 
                 const { level_contents } = module
                 const ordered = R.sortBy(R.prop('index'), level_contents.data)
+
+                console.log(data)
 
                 console.log({
                     progress: module.progress,
