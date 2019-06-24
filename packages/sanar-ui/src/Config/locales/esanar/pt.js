@@ -8,7 +8,7 @@ export default {
         send: 'Enviar',
         continue: 'Continuar',
         subject: 'Disciplina',
-        activity: 'Atividade'
+        activity: 'Aula'
     },
     auth: {
         accessAccount: 'Acessar conta',

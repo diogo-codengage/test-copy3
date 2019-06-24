@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
@@ -8,7 +9,8 @@ import ESCardCourseModule from 'sanar-ui/dist/Components/Molecules/CardCourseMod
 
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
-// import { useAuthContext } from 'Hooks/auth'
+import { useAuthContext } from 'Hooks/auth'
+import { getClassRoute } from 'Utils/getClassRoute'
 
 const mock = {
     image1:
@@ -17,16 +19,23 @@ const mock = {
         'https://www.ft.com/__origami/service/image/v2/images/raw/http://prod-upp-image-read.ft.com/98b79a4e-fefb-11e8-aebf-99e208d3e521?source=next&fit=scale-down&quality=highest&width=800'
 }
 
-const SANCourseContinue = () => {
-    // const { getEnrollment } = useAuthContext()
+const SANCourseContinue = ({ history }) => {
+    const { getEnrollment } = useAuthContext()
     const { t } = useTranslation('esanar')
 
-    // const { last_accessed } = getEnrollment()
+    const { last_accessed } = getEnrollment()
 
-    // const percentProgress = last_accessed
-    //     ? (last_accessed.module_progress.done * 100) /
-    //       last_accessed.module_progress.total
-    //     : 0
+    const percentProgress = last_accessed
+        ? (last_accessed.module_progress.done * 100) /
+          last_accessed.module_progress.total
+        : 0
+
+    const goClassroom = () =>
+        history.push(
+            `/aluno/sala-aula/${last_accessed.module_id}/${getClassRoute(
+                last_accessed.resource_type
+            )}/${last_accessed.resource_id}`
+        )
 
     return (
         <div className='san-tab-course-content__continue'>
@@ -38,7 +47,7 @@ const SANCourseContinue = () => {
                                 'courseDetails.tabContent.continue.whereStopped'
                             )}
                         />
-                        {/* <ESCardCourseModule
+                        <ESCardCourseModule
                             className='san-tab-course-content__continue--card'
                             moduleName={`${t(
                                 'courseDetails.tabContent.modules.singularName'
@@ -53,7 +62,8 @@ const SANCourseContinue = () => {
                             )}
                             moduleTime={`${last_accessed.duration || 0}min`}
                             image={last_accessed.thumbnail}
-                        /> */}
+                            onClick={goClassroom}
+                        />
                     </ESCol>
                     <ESCol xs={24} md={12}>
                         <SessionTitle
@@ -80,4 +90,4 @@ const SANCourseContinue = () => {
     )
 }
 
-export default SANCourseContinue
+export default withRouter(SANCourseContinue)

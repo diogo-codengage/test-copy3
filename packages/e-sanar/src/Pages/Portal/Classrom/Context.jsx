@@ -11,6 +11,7 @@ import { withRouter } from 'react-router-dom'
 
 import { useApolloContext } from 'Hooks/apollo'
 import { GET_LEVEL_CONTENT } from 'Apollo/Classroom/queries/level-content'
+import { getClassRoute } from 'Utils/getClassRoute'
 // import { usePortalContext } from 'Pages/Portal/Context'
 
 const Context = createContext()
@@ -27,19 +28,6 @@ function reducer(state, action) {
             return { ...state, loading: false, level: action.payload }
         case 'error':
             return { ...state, loading: false, error: action.payload || true }
-        default:
-            throw new Error()
-    }
-}
-
-const getSubRoute = type => {
-    switch (type) {
-        case 'Video':
-            return 'video'
-        case 'Document':
-            return 'documento'
-        case 'Quiz':
-            return 'simulado'
         default:
             throw new Error()
     }
@@ -95,7 +83,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
 
                 dispatch({ type: 'success', payload: map })
                 history.push(
-                    `/aluno/sala-aula/${params.id}/${getSubRoute(type)}/${
+                    `/aluno/sala-aula/${params.id}/${getClassRoute(type)}/${
                         map[map.length - 1][type.toLowerCase()].id
                     }/`
                 )
