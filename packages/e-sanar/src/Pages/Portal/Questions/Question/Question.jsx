@@ -88,30 +88,20 @@ const SANQuestionPage = ({ history }) => {
             stats
         }
     }) => {
-        if (alternatives && alternatives.data && alternatives.data.length) {
-            const correct = alternatives.data.find(
-                alternative => alternative.correct
-            )
+        const correct = alternatives.data.find(
+            alternative => alternative.correct
+        )
 
-            correct.id === selected
-                ? setCorrectQuestions(oldCorrect => ++oldCorrect)
-                : setWrongQuestions(oldWrong => ++oldWrong)
+        correct.id === selected
+            ? setCorrectQuestions(oldCorrect => ++oldCorrect)
+            : setWrongQuestions(oldWrong => ++oldWrong)
 
-            setResponse({
-                stats: stats.alternatives,
-                comment:
-                    comments.data && comments.data.length
-                        ? comments.data[0]
-                        : null,
-                answer: correct.id
-            })
-        } else {
-            setResponse({
-                stats: stats.alternatives,
-                comment:
-                    comments.data && comments.data.length && comments.data[0]
-            })
-        }
+        setResponse({
+            stats: stats.alternatives,
+            comment:
+                comments.data && comments.data.length ? comments.data[0] : null,
+            answer: correct.id
+        })
     }
 
     const pauseStopwatch = () => {

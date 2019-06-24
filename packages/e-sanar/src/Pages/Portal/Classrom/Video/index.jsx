@@ -14,7 +14,7 @@ import { CREATE_RATING } from 'Apollo/Classroom/mutations/rate'
 import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
 import { useClassroomContext } from '../Context'
 
-import SANClassroomVideoQuiz from './Quiz'
+import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
 
 const SANClassroomVideo = () => {
@@ -62,9 +62,7 @@ const SANClassroomVideo = () => {
         const fetchData = async () => {
             try {
                 const {
-                    data: {
-                        rating: { value }
-                    }
+                    data: { rating }
                 } = await client.query({
                     query: GET_RATING,
                     variables: {
@@ -72,13 +70,13 @@ const SANClassroomVideo = () => {
                         userId
                     }
                 })
-                setRate(value)
-            } catch {
+                setRate(rating && rating.value)
+            } catch (e) {
                 message.error(t('classroom.failLoadRating'))
             }
         }
         fetchData()
-    }, [client, current.video.id, t, userId])
+    }, [client, current, t, userId])
 
     useEffect(() => {
         if (current) {
@@ -138,7 +136,7 @@ const SANClassroomVideo = () => {
                     })}
                 >
                     <ESTabPane tab={t('classroom.questions')} key='1'>
-                        <SANClassroomVideoQuiz quiz={current.quiz} />
+                        <SANQuiz quiz={current.quiz} />
                     </ESTabPane>
                     <ESTabPane
                         tab={t('classroom.discussions')}

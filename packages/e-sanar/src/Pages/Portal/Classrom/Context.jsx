@@ -27,7 +27,7 @@ function reducer(state, action) {
         case 'success':
             return { ...state, loading: false, level: action.payload }
         case 'error':
-            return { ...state, loading: false, error: action.payload }
+            return { ...state, loading: false, error: action.payload || true }
         default:
             throw new Error()
     }
@@ -51,12 +51,10 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
     const {
         setPlaylist,
         setCurrentResourceIndex,
-        currentModule,
-        setCurrentModule,
-        getResource,
-        setPlaylistLoading
+        setCurrentModule
     } = usePortalContext()
-    const [current, setCurrent] = useState()
+
+    const [current, setCurrent] = useState({})
     const [state, dispatch] = useReducer(reducer, initialState)
 
     useEffect(() => {
@@ -99,18 +97,34 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
 
                 setCurrent(ordered[module.progress.done])
 
-                // Set data mock to current video - Diogo
-                const anchor = ordered.find(e => e.resource_type === 'Video')
-                setPlaylist(ordered)
-                setCurrentResourceIndex(currentModule.index)
-                setPlaylistLoading(false)
+                const map = ordered
+                    .map((level, index) => ({
+                        ...level,
+                        ...(ordered[index + 1] &&
+                            ordered[index + 1]['resource_type'] === 'Quiz' && {
+                                quiz: ordered[index + 1].quiz
+                            })
+                    }))
+                    .filter((level, index) => {
+                        if (
+                            level['resource_type'] === 'Quiz' &&
+                            ordered[index - 1] &&
+                            ordered[index - 1]['resource_type'] === 'Video' &&
+                            index < ordered.length
+                        ) {
+                            return null
+                        }
+                        return level
+                    })
 
-                dispatch({ type: 'success', payload: ordered })
+                setCurrent(map[map.length - 1])
+                const type = map[map.length - 1].resource_type
 
+                dispatch({ type: 'success', payload: map })
                 history.push(
-                    `/aluno/sala-aula/${params.id}/${getSubRoute(
-                        currentModule.resource_type
-                    )}/${getResource(anchor).id}`
+                    `/aluno/sala-aula/${params.id}/${getSubRoute(type)}/${
+                        map[map.length - 1][type.toLowerCase()].id
+                    }/`
                 )
             } catch (err) {
                 dispatch({ type: 'error' })

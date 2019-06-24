@@ -38,12 +38,13 @@ export const QuestionsHeader = () => {
 
             menuAction = <ESButton
                 color='primary'
-                variant='solid'
+                variant='outlined'
                 uppercase
                 blockOnlyMobile
                 onClick={
-                    //TODO: voltar para o curso
-                    () => console.log('TODO: voltar para o curso')
+                    () => {
+                        // console.log('TODO: voltar para o curso')
+                    }
                 }
             >VOLTAR PARA AULA</ESButton>
 

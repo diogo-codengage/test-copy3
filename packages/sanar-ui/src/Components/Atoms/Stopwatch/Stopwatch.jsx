@@ -15,7 +15,6 @@ const formatTime = (hours, minutes, seconds, days) => {
     let finalHours
     let finalMinutes
     let finalSeconds
-    let finalDays
 
     if (hours > 9) {
         finalHours = hours
@@ -32,17 +31,13 @@ const formatTime = (hours, minutes, seconds, days) => {
     } else {
         finalSeconds = `0${seconds}`
     }
-    if (days) {
-        finalDays = `${days}d  - `
-    }
-
     const formatted = `${finalHours}:${finalMinutes}:${finalSeconds}`
 
     if (days) return `${days}d  - ${formatted}`
     return formatted
 }
 
-const ESStopwatch = forwardRef(({ className, autoStart }, ref) => {
+const ESStopwatch = forwardRef(({ className, autoStart, dark }, ref) => {
     const [paused, setPaused] = useState(!autoStart)
     const {
         hours,
@@ -56,7 +51,8 @@ const ESStopwatch = forwardRef(({ className, autoStart }, ref) => {
     const classes = classNames(
         'es-stopwatch',
         {
-            'es-stopwatch--stopped': paused
+            'es-stopwatch--stopped': paused,
+            'es-stopwatch--dark': dark
         },
         className
     )
@@ -96,7 +92,8 @@ const ESStopwatch = forwardRef(({ className, autoStart }, ref) => {
 
 ESStopwatch.propTypes = {
     className: PropTypes.string,
-    autoStart: PropTypes.bool
+    autoStart: PropTypes.bool,
+    dark: PropTypes.bool
 }
 ESStopwatch.defaultProps = {}
 
