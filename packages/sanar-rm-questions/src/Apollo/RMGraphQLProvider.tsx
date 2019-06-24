@@ -1,7 +1,7 @@
 import React from 'react'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
- import { isDevEnvironment, isLocalhost, isProdEnvironment } from '../Util/environment'
+import { isDevEnvironment, isLocalhost, isProdEnvironment } from '../Util/environment'
 import { getUserToken } from '../Util/getUserToken'
 
 let getGraphqlUri = () => {
@@ -20,7 +20,6 @@ let getGraphqlUri = () => {
             return local;
     }
 
-    return local;
 }
 
 const client = new ApolloClient({
