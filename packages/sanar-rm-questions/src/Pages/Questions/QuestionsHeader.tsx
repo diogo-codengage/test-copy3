@@ -97,9 +97,9 @@ export const QuestionsHeader = () => {
         >
             <p>Tem certeza que deseja sair da página de prática?</p>
 
-            <div>
+            <div style={{display: 'flex', justifyContent: 'flex-end'}}>
                 <ESButton
-                    color='primary'
+                    color='outlined'
                     variant='text'
                     uppercase
                     blockOnlyMobile
