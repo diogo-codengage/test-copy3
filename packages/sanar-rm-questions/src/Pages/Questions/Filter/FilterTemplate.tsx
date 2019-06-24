@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import ESCardSelectFilter from 'sanar-ui/dist/Components/Molecules/CardSelectFilter'
 import { ESCol, ESRow } from 'sanar-ui/dist/Components/Atoms/Grid'
