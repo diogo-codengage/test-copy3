@@ -1,7 +1,7 @@
 import React from 'react'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
-import { isDevEnvironment, isLocalhost, isProdEnvironment } from '../Util/environment'
+// import { isDevEnvironment, isLocalhost, isProdEnvironment } from '../Util/environment'
 import { getUserToken } from '../Util/getUserToken'
 
 let getGraphqlUri = () => {
@@ -9,16 +9,18 @@ let getGraphqlUri = () => {
     const dev = 'https://bff.sanarresidenciamedica.com.br/dev/graphql';
     const prod = 'https://bff.sanarresidenciamedica.com.br/prod/graphql';
 
-    switch(true) {
-        case isLocalhost():
-            return local
-        case isProdEnvironment():
-            return prod;
-        case isDevEnvironment():
-            return dev;
-        default:
-            return local;
-    }
+    // switch(true) {
+    //     case isLocalhost():
+    //         return local
+    //     case isProdEnvironment():
+    //         return prod;
+    //     case isDevEnvironment():
+    //         return dev;
+    //     default:
+    //         return local;
+    // }
+
+    return local;
 }
 
 const client = new ApolloClient({
