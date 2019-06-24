@@ -18,9 +18,13 @@ export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: 
     const {
         currentQuestion,
         currentAnswerId,
-        isFromCourse,
-        setCurrentPage
+        setCurrentPage,
+        course,
     } = useQuestionsContext()
+
+    const isFromCourse = () => {
+        return !!course;
+    }
 
     let expertComment
     if (currentQuestion) {
@@ -31,6 +35,7 @@ export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: 
     }
 
     return <RMContainer>
+
         <div style={
             {
                 display: 'flex',
@@ -61,5 +66,6 @@ export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: 
         />
 
     </RMContainer>
+
 
 }
