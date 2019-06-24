@@ -10,6 +10,18 @@ export const GET_ME = gql`
                 id
                 contract
                 progress_percentage
+                next_module {
+                    id
+                    name
+                    slug
+                    index
+                    durantion
+                    cover_picture
+                    progress {
+                        done
+                        total
+                    }
+                }
                 last_accessed {
                     last_accessed_at
                     resource_type

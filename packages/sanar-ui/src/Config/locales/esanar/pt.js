@@ -182,7 +182,12 @@ export default {
                     keyWithCount: '{{count}} disciplina',
                     keyWithCount_plural: '{{count}} disciplinas'
                 },
-                singularName: 'Módulo',
+                module: {
+                    key: 'Módulo',
+                    key_plural: 'Módulos',
+                    keyWithCount: '{{count}} módulo',
+                    keyWithCount_plural: '{{count}} módulos'
+                },
                 whatCourseHas: 'O que esse curso possui',
                 whatCourseHasSubtitle:
                     'Tudo o que você tem acesso na plataforma',
