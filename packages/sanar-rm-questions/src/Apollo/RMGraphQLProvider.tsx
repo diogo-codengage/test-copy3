@@ -7,7 +7,7 @@ import { getUserToken } from '../Util/getUserToken'
 let getGraphqlUri = () => {
     const local = 'http://elb-sanar-residencia-app-bff-qa-53c18f15ca666731.elb.us-east-1.amazonaws.com:4000/graphql';
     // const dev = 'https://bff.sanarresidenciamedica.com.br/dev/graphql';
-    const prod = 'https://bff.sanarresidenciamedica.com.br/prod/graphql';
+    // const prod = 'https://bff.sanarresidenciamedica.com.br/prod/graphql';
 
     // TODO: fix this
     switch(true) {
