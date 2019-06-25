@@ -7,7 +7,13 @@ import ESTypography from '../../Atoms/Typography'
 import ESButton from '../../Atoms/Button'
 import ESComment from '../Comment'
 
-const ESQuestionComment = ({ user, text, time }) => {
+const ESQuestionComment = ({
+    user,
+    text,
+    time,
+    onSendFeedback,
+    labelMonitor
+}) => {
     const { t } = useTranslation('sanarui')
 
     return (
@@ -16,11 +22,14 @@ const ESQuestionComment = ({ user, text, time }) => {
                 <ESTypography variant='body1' strong>
                     {t('question.expertComment')}
                 </ESTypography>
-                <ESButton variant='outlined' size='xsmall' bold disabled>
-                    {t('global.sendFeedback')}
-                </ESButton>
+                {onSendFeedback && (
+                    <ESButton variant='outlined' size='xsmall' bold>
+                        {t('global.sendFeedback')}
+                    </ESButton>
+                )}
             </div>
             <ESComment
+                labelMonitor={labelMonitor}
                 monitor
                 className='es-question__content-comment__body'
                 user={user}
@@ -37,7 +46,9 @@ ESQuestionComment.propTypes = {
         profile_picture: PropTypes.string
     }),
     text: PropTypes.string,
-    time: PropTypes.string
+    time: PropTypes.string,
+    onSendFeedback: PropTypes.func,
+    labelMonitor: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
 }
 
 export default ESQuestionComment
