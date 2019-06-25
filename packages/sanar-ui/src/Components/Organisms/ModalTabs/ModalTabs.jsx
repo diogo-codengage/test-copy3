@@ -43,10 +43,7 @@ const ESModalTabs = ({ className, visible, onCancel, content }) => {
 ESModalTabs.propTypes = {
     className: PropTypes.string,
     visible: PropTypes.bool,
-    content: PropTypes.shape({
-        title: PropTypes.string,
-        content: PropTypes.node
-    })
+    content: PropTypes.any
 }
 ESModalTabs.defaultProps = {}
 

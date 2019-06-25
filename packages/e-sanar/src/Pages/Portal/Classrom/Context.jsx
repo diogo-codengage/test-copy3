@@ -73,7 +73,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
     useEffect(() => {
         currentResource &&
             setBookmarked(getResource(currentResource).bookmarked)
-    }, [currentResource])
+    }, [currentResource, getResource])
 
     useEffect(() => {
         setIndexMenu(9)
