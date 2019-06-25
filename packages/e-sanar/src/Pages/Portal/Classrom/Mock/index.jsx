@@ -2,52 +2,48 @@ import React from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
-import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESLessonHeader, {
-    ESLessonHeaderExtra
+    ESLessonHeaderExtra,
+    ESLessonHeaderLeft
 } from 'sanar-ui/dist/Components/Molecules/LessonHeader'
-import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 
-import { useClassroomContext } from '../Context'
+import { usePortalContext } from 'Pages/Portal/Context'
 import SANQuiz from 'Components/Quiz'
 
 const SANClassroomMock = () => {
     const { t } = useTranslation('esanar')
-    const { current } = useClassroomContext()
+    const {
+        currentResource,
+        nextResource,
+        prevResource,
+        onNavigation,
+        currentModule
+    } = usePortalContext()
 
     return (
         <div className='classroom__mock'>
             <ESLessonHeader
                 leftChildren={
-                    <div className='classroom__mock-header--left'>
-                        <ESButton circle variant='text' className='menu-button'>
-                            <ESEvaIcon name='menu-outline' />
-                        </ESButton>
-                        <div>
-                            <ESTypography ellipsis level={5} className='title'>
-                                {current.quiz.title}
-                            </ESTypography>
-                            <ESTypography
-                                variant='subtitle2'
-                                className='subtitle'
-                                ellipsis
-                            >
-                                {`${t('global.subject')} 3, ${t(
-                                    'global.activity'
-                                )} ${current.index + 1}`}
-                            </ESTypography>
-                        </div>
-                    </div>
+                    <ESLessonHeaderLeft
+                        title={currentResource.quiz.title}
+                        subtitle={`${t(
+                            'global.subject'
+                        )} ${currentModule.index + 1}, ${t(
+                            'global.activity'
+                        )} ${currentResource.index + 1}`}
+                        onClick={() => alert('open menu')}
+                    />
                 }
                 rightChildren={
                     <ESLessonHeaderExtra
-                        previousLesson='Anterior'
-                        nextLesson='Próxima'
+                        previousLesson={prevResource && prevResource.title}
+                        nextLesson={nextResource && nextResource.title}
+                        onPrev={onNavigation('prev')}
+                        onNext={onNavigation('next')}
                     />
                 }
             />
-            <SANQuiz quiz={current.quiz} mock />
+            <SANQuiz quiz={currentResource.quiz} mock />
         </div>
     )
 }

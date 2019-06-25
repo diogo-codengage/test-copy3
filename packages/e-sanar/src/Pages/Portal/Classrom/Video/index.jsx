@@ -25,7 +25,13 @@ const SANClassroomVideo = () => {
         getEnrollment
     } = useAuthContext()
     const client = useApolloContext()
-    const { currentResource } = usePortalContext()
+    const {
+        currentResource,
+        nextResource,
+        prevResource,
+        onNavigation,
+        currentModule
+    } = usePortalContext()
     const [rate, setRate] = useState()
     const [playlistVideo, setPlaylistVideo] = useState()
 
@@ -126,8 +132,14 @@ const SANClassroomVideo = () => {
                     tabBarGutter={0}
                     defaultActiveKey='1'
                     renderTabBar={renderTabBar({
+                        nextResource: nextResource && nextResource.title,
+                        prevResource: prevResource && prevResource.title,
+                        onPrev: onNavigation('prev'),
+                        onNext: onNavigation('next'),
                         title: currentResource.video.title,
-                        subtitle: `${t('global.subject')} 3, ${t(
+                        subtitle: `${t(
+                            'global.subject'
+                        )} ${currentModule.index + 1}, ${t(
                             'global.activity'
                         )} ${currentResource.index + 1}`,
                         label: t('classroom.rateClass'),

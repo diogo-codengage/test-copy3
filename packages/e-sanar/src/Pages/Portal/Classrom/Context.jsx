@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react'
 
-import * as R from 'ramda'
 import { withRouter } from 'react-router-dom'
 
+import { formatPlaylist } from 'Utils/formatPlaylist'
 import { useApolloContext } from 'Hooks/apollo'
 import { useAuthContext } from 'Hooks/auth'
 import { usePortalContext } from '../Context'
@@ -63,48 +63,15 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
                     data: { module: requestedModule }
                 } = await client.query({
                     query: GET_MODULE,
-                    fetchPolicy: 'network-only',
                     variables: {
                         enrollmentId,
                         id: params.moduleId
                     }
                 })
 
-                const ordered = R.sortBy(
-                    R.prop('index'),
+                const formattedLevels = formatPlaylist(
                     requestedModule.level_contents.data
                 )
-
-                const formattedLevels = ordered
-                    .map((level, index) => {
-                        return {
-                            ...level,
-                            ...(ordered[index + 1] &&
-                                ordered[index + 1]['resource_type'] ===
-                                    'Quiz' && {
-                                    quiz: ordered[index + 1].quiz
-                                })
-                        }
-                    })
-                    .filter((level, index) => {
-                        if (
-                            level['resource_type'] === 'Quiz' &&
-                            ordered[index - 1] &&
-                            ordered[index - 1]['resource_type'] === 'Video' &&
-                            index < ordered.length
-                        ) {
-                            return null
-                        }
-
-                        return level
-                    })
-                    .map((level, index) => {
-                        //TODO: Is this the best way?
-                        return {
-                            ...level,
-                            index
-                        }
-                    })
 
                 const module = {
                     ...requestedModule,
@@ -132,17 +99,16 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
 
                     setCurrentResource(lessons[module.progress.done])
                 } else {
-                    const resource = lessons.find(item => {
-                        return getResource(item).id === params.resourceId
-                    })
+                    const resource = lessons.find(
+                        item => getResource(item).id === params.resourceId
+                    )
 
                     setCurrentResource(resource)
                 }
-
-                setResourcesLoading(false)
             } catch (err) {
                 console.log(err)
             }
+            setResourcesLoading(false)
         }
         fetchData()
     }, [

@@ -1,13 +1,22 @@
 import React from 'react'
+
 import ESSpin from 'sanar-ui/dist/Components/Atoms/Spin'
-import SANClassroomVideo from './Video'
+
 import { useClassroomContext, withClassroomProvider } from './Context'
 import { usePortalContext } from '../Context'
+
+import SANClassroomVideo from './Video'
+import SANClassroomDocument from './Document'
+import SANClassroomMock from './Mock'
 
 const renderResourceContent = resource => {
     switch (resource.resource_type) {
         case 'Video':
             return <SANClassroomVideo />
+        case 'Document':
+            return <SANClassroomDocument />
+        case 'Quiz':
+            return <SANClassroomMock />
         default:
             return <h1>Mock</h1>
     }

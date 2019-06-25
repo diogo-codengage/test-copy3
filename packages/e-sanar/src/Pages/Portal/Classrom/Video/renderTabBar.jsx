@@ -5,7 +5,15 @@ import ESLessonHeader, {
     ESLessonHeaderLeft
 } from 'sanar-ui/dist/Components/Molecules/LessonHeader'
 
-const renderTabBar = ({ rate, title, subtitle }) => (props, DefaultTabBar) => (
+const renderTabBar = ({
+    rate,
+    title,
+    subtitle,
+    nextResource,
+    prevResource,
+    onPrev,
+    onNext
+}) => (props, DefaultTabBar) => (
     <ESLessonHeader
         rate={rate}
         onBookmarked={() => alert('onBookmarked')}
@@ -19,10 +27,10 @@ const renderTabBar = ({ rate, title, subtitle }) => (props, DefaultTabBar) => (
         }
         rightChildren={
             <ESLessonHeaderExtra
-                previousLesson='Anterior'
-                nextLesson='Próxima'
-                onPrevious={() => alert('onPrevious')}
-                onNext={() => alert('onNext')}
+                previousLesson={prevResource}
+                nextLesson={nextResource}
+                onPrevious={onPrev}
+                onNext={onNext}
             />
         }
     >

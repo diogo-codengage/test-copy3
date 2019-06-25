@@ -1,11 +1,13 @@
 import React from 'react'
 import classNames from 'classnames'
-import { Layout as ANTDLayout, Divider as ANTDivider } from 'antd'
+
+import { Layout as ANTDLayout } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
+import ESDivider from 'sanar-ui/dist/Components/Atoms/Divider'
 
 import { SANPortalPagesContainer } from '../Layout'
 
@@ -26,7 +28,7 @@ const SANFooter = () => {
                 `san-portal-layout__footer--${darkMode ? 'dark' : 'light'}`
             )}
         >
-            <ANTDivider
+            <ESDivider
                 className={`san-portal-layout__footer--divider${
                     darkMode ? '-dark' : ''
                 }`}
@@ -113,7 +115,7 @@ const SANFooter = () => {
                     </ESCol>
                 </ESRow>
             </SANPortalPagesContainer>
-            <ANTDivider
+            <ESDivider
                 className={
                     darkMode ? 'san-portal-layout__footer--divider-dark' : null
                 }

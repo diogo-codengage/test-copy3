@@ -1,18 +1,21 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 
+import { withRouter } from 'react-router-dom'
+
 const Context = createContext()
 
 export const usePortalContext = () => useContext(Context)
 
-export const SANPortalProvider = ({ children }) => {
-    const [playlist, setPlaylist] = useState([])
+const PortalProvider = ({ children, history }) => {
     const [resourcesLoading, setResourcesLoading] = useState(false)
     const [darkMode, setDarkMode] = useState(false)
+    const [indexMenu, setIndexMenu] = useState(0)
+
     const [currentModule, setCurrentModule] = useState(null)
-    const [previousResource, setPreviousResource] = useState(null)
+
+    const [prevResource, setPrevResource] = useState(null)
     const [currentResource, setCurrentResource] = useState(null)
     const [nextResource, setNextResource] = useState(null)
-    const [indexMenu, setIndexMenu] = useState(0)
 
     const getResource = item => item[item.resource_type.toLowerCase()]
 
@@ -26,14 +29,47 @@ export const SANPortalProvider = ({ children }) => {
                 item => getResource(item).id === getResource(currentResource).id
             )
 
-            setPreviousResource(resources[currentIndex - 1])
-            setNextResource(resources[currentIndex + 1])
+            const prev = resources[currentIndex - 1]
+            const next = resources[currentIndex + 1]
+
+            prev
+                ? setPrevResource({
+                      ...prev,
+                      title: getResource(prev).title
+                  })
+                : setPrevResource()
+            next
+                ? setNextResource({
+                      ...next,
+                      title: getResource(next).title
+                  })
+                : setNextResource()
         }
     }, [currentResource, currentModule])
 
+    const onNavigation = dir => () => {
+        if (dir === 'prev') {
+            setCurrentResource(prevResource)
+            history.push(
+                `/aluno/sala-aula/${
+                    currentModule.id
+                }/${prevResource.resource_type.toLowerCase()}/${
+                    getResource(prevResource).id
+                }`
+            )
+        } else {
+            setCurrentResource(nextResource)
+            history.push(
+                `/aluno/sala-aula/${
+                    currentModule.id
+                }/${nextResource.resource_type.toLowerCase()}/${
+                    getResource(nextResource).id
+                }`
+            )
+        }
+    }
+
     const value = {
-        playlist,
-        setPlaylist,
         darkMode,
         setDarkMode,
         currentModule,
@@ -43,13 +79,16 @@ export const SANPortalProvider = ({ children }) => {
         getResource,
         currentResource,
         setCurrentResource,
-        previousResource,
-        setPreviousResource,
+        prevResource,
+        setPrevResource,
         nextResource,
         setNextResource,
         indexMenu,
-        setIndexMenu
+        setIndexMenu,
+        onNavigation
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>
 }
+
+export const SANPortalProvider = withRouter(PortalProvider)

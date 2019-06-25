@@ -47,6 +47,7 @@ const ESLessonHeaderExtra = ({
                     onClick={onPrevious}
                     color='white'
                     block
+                    disabled={!previousLesson}
                 >
                     <ESEvaIcon name='arrow-back-outline' />
                     {previousLesson}
@@ -59,6 +60,7 @@ const ESLessonHeaderExtra = ({
                     onClick={onNext}
                     color='white'
                     block
+                    disabled={!nextLesson}
                 >
                     {nextLesson}
                     <ESEvaIcon name='arrow-forward-outline' />
@@ -79,9 +81,6 @@ ESLessonHeaderExtra.propTypes = {
     onBookmarked: PropTypes.func
 }
 
-ESLessonHeaderExtra.defaultProps = {
-    previousLesson: 'Previous',
-    nextLesson: 'Next'
-}
+ESLessonHeaderExtra.defaultProps = {}
 
 export default ESLessonHeaderExtra
