@@ -6,54 +6,61 @@ import { useTranslation } from 'react-i18next'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESButton from '../../Atoms/Button'
 import { ESRow, ESCol } from '../../Atoms/Grid'
-import ESTypography from '../../Atoms/Typography'
 
 const ESLessonHeaderExtra = ({
+    bookmarked,
+    bookmarkLabel,
     className,
     previousLesson,
     nextLesson,
     onPrevious,
     onNext,
-    onBookmarked,
-    ...props
+    onBookmarked
 }) => {
     const classes = classNames('es-lesson-header__extra', className)
 
     const { t } = useTranslation('sanarui')
 
     return (
-        <ESRow className={classes} type='flex' gutter={16}>
-            <ESCol xs={0} xl={8} flex={1}>
+        <ESRow className={className} type='flex' gutter={12}>
+            <ESCol>
                 <ESButton
-                    className='es-lesson-header__extra--bookmark'
                     size='small'
                     variant='text'
                     color='white'
                     onClick={onBookmarked}
+                    block
+                    className='bookmark'
                 >
-                    <ESEvaIcon name='heart-outline' />
-                    {t('classroom.header.extra.bookmark')}
+                    {bookmarked ? (
+                        <ESEvaIcon name='heart' key='bookmarked' />
+                    ) : (
+                        <ESEvaIcon name='heart-outline' key='not-bookmarked' />
+                    )}
+                    {bookmarkLabel || t('classroom.header.extra.bookmark')}
                 </ESButton>
             </ESCol>
-            <ESCol xs={24} sm={12} flex={1}>
+            <ESCol xs={12} sm={6}>
                 <ESButton
                     size='small'
                     variant='outlined'
                     onClick={onPrevious}
                     color='white'
+                    block
                 >
                     <ESEvaIcon name='arrow-back-outline' />
-                    <ESTypography ellipsis>{previousLesson}</ESTypography>
+                    {previousLesson}
                 </ESButton>
             </ESCol>
-            <ESCol xs={24} sm={12} flex={1}>
+            <ESCol xs={12} sm={6}>
                 <ESButton
                     size='small'
                     variant='outlined'
                     onClick={onNext}
                     color='white'
+                    block
                 >
-                    <ESTypography ellipsis>{nextLesson}</ESTypography>
+                    {nextLesson}
                     <ESEvaIcon name='arrow-forward-outline' />
                 </ESButton>
             </ESCol>
@@ -62,6 +69,8 @@ const ESLessonHeaderExtra = ({
 }
 
 ESLessonHeaderExtra.propTypes = {
+    bookmarked: PropTypes.book,
+    bookmarkLabel: PropTypes.string,
     className: PropTypes.string,
     previousLesson: PropTypes.string,
     nextLesson: PropTypes.string,

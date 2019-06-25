@@ -49,7 +49,7 @@ const SANQuestionDetailsPage = ({ form, history }) => {
                     </ESButton>
                 </SANSubheader>
             </SANPortalPagesContainer>
-            <SANQuestionsFilterSelects />
+            <SANQuestionsFilterSelects defaultOpen />
         </ESForm>
     )
 }

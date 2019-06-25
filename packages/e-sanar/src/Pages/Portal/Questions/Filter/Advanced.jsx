@@ -28,7 +28,7 @@ const Title = props => (
 )
 const intlPath = 'questionBase.filter.advanced.'
 
-const SANQuestionsFilterAdvanced = () => {
+const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
     const { t } = useTranslation('esanar')
     const { formState } = useQuestionsContext()
     const [open, setOpen] = useState(false)
@@ -41,6 +41,7 @@ const SANQuestionsFilterAdvanced = () => {
             })}
             accordion={true}
             onChange={setOpen}
+            defaultActiveKey={defaultOpen && '1'}
         >
             <ESCollapsePanel
                 header={
@@ -49,26 +50,10 @@ const SANQuestionsFilterAdvanced = () => {
                     </Title>
                 }
                 showArrow={false}
+                key='1'
             >
                 <div className='questions-filter__advanced__content'>
                     <ESRow gutter={32} className='mb-md mt-lg'>
-                        <ESCol xs={24} lg={7}>
-                            <ESFormItem
-                                name='state'
-                                label={t(`${intlPath}state.label`)}
-                            >
-                                <ESSelect
-                                    disabled
-                                    placeholder={t(
-                                        `${intlPath}state.placeholder`
-                                    )}
-                                    showArrow
-                                    size='large'
-                                >
-                                    <ESOption value='jack'>Jack</ESOption>
-                                </ESSelect>
-                            </ESFormItem>
-                        </ESCol>
                         <ESCol xs={24} lg={7}>
                             <ESFormItem
                                 name='year'
@@ -87,6 +72,23 @@ const SANQuestionsFilterAdvanced = () => {
                                     onOpenChange={() => setOpenCalendar(true)}
                                     onPanelChange={() => setOpenCalendar(false)}
                                 />
+                            </ESFormItem>
+                        </ESCol>
+                        <ESCol xs={24} lg={7}>
+                            <ESFormItem
+                                name='state'
+                                label={t(`${intlPath}state.label`)}
+                            >
+                                <ESSelect
+                                    disabled
+                                    placeholder={t(
+                                        `${intlPath}state.placeholder`
+                                    )}
+                                    showArrow
+                                    size='large'
+                                >
+                                    <ESOption value='jack'>Jack</ESOption>
+                                </ESSelect>
                             </ESFormItem>
                         </ESCol>
                         <ESCol xs={24} lg={10}>
@@ -127,7 +129,7 @@ const SANQuestionsFilterAdvanced = () => {
                                 className='no-margin'
                                 initialValue={formState && formState.progress}
                             >
-                                <ESRadioGroup>
+                                <ESRadioGroup disabled>
                                     <ESRow>
                                         <ESCol xs={24} md={6}>
                                             <ESRadio value={'1'}>
@@ -171,7 +173,7 @@ const SANQuestionsFilterAdvanced = () => {
                                     formState && formState.justCommented
                                 }
                             >
-                                <ESSwitch />
+                                <ESSwitch disabled />
                             </ESFormItem>
                         </ESCol>
                     </ESRow>

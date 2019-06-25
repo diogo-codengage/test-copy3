@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react'
-import { Question } from '../../Apollo/question'
-import { Speciality } from '../../Apollo/speciality'
-import { Tag } from '../../Apollo/tag'
+import { Question } from '../../Apollo/Questions/question'
+import { Speciality } from '../../Apollo/Questions/speciality'
+import { Tag } from '../../Apollo/Questions/tag'
 
 export enum QuestionPageType {
     Filter,
@@ -30,7 +30,6 @@ export interface IQuestionsContext {
     loading: boolean
     setLoading: (loading: boolean) => void
 
-    isFromCourse: () => boolean
     course?: VideoParams
 
     currentPage: QuestionPageType

@@ -1,61 +1,139 @@
 .es-lesson-header {
     background: @grey-solid-8;
     width: 100%;
-    padding: @padding-md;
+    // padding: @padding-md;
     box-shadow: 0 3px 6px @grey-3;
 
-    .es-typography,
-    & {
+    .es-typography {
         color: @white;
     }
 
-    > .es-row {
-        width: 100%;
+    &__bookmark,
+    &__left,
+    &__right {
+        padding: @padding-md;
     }
 
-    .ant-tabs {
-        &-bar {
-            margin-bottom: -@margin-md - 3;
+    &__bookmark {
+        flex: 1;
+        display: none;
+        align-items: center;
+        color: @white-8;
+        & > div {
+            display: flex;
+            align-items: center;
+        }
+
+        & .es-rate {
+            margin: 0 @margin-xs;
+        }
+
+        @media (max-width: @screen-sm) {
+            justify-content: space-between;
+        }
+
+        @media (max-width: @screen-md) {
+            display: flex;
         }
     }
 
-    &__extra {
-        flex: 1 1;
+    &__left {
+        position: relative;
+        & .open-menu {
+            background-color: @secondary-color;
+            display: none !important;
+            position: absolute;
+            right: 16px;
+            top: 16px;
+        }
 
-        .es-button {
-            width: 100%;
-
-            &:last-of-type {
-                margin-top: @margin-xs;
+        @media (max-width: @screen-sm) {
+            & h5 {
+                margin-right: 35px;
+            }
+            & .open-menu {
+                display: flex !important;
             }
         }
-
-        @media (min-width: @screen-sm) {
+        & .subtitle {
+            margin-top: @margin-xs;
             display: flex;
-            justify-content: flex-end;
-
-            .es-button {
-                margin-right: @margin-md;
-                max-width: 165px;
-                min-width: 165px;
-
-                &:last-of-type {
-                    margin: 0;
+            align-items: flex-end;
+            &__path {
+                color: @gold-1;
+            }
+            &__rate {
+                color: @white-8;
+                white-space: nowrap;
+                &:before {
+                    content: '\2022';
+                    margin: 0 @margin-xs;
+                    color: @white-4;
+                }
+            }
+            & .es-rate {
+                margin-left: @margin-xs;
+                white-space: nowrap;
+            }
+            @media (max-width: @screen-md) {
+                &__rate,
+                & .es-rate {
+                    display: none;
                 }
             }
         }
+    }
 
-        @media (min-width: @screen-lg) {
-            &--bookmark {
-                display: inline-block !important;
+    &__center {
+        & .ant-tabs-bar {
+            margin: 0;
+        }
+        & .ant-tabs-tab {
+            height: 89px;
+            padding-top: 50px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        @media (max-width: @screen-lg) {
+            & .ant-tabs-tab {
+                height: 50px;
+                padding-top: 12px;
             }
         }
     }
 
-    @media (min-width: @screen-lg) {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: @padding-md @padding-lg;
+    &__right > div {
+        justify-content: flex-end;
+
+        @media (max-width: @screen-md) {
+            justify-content: space-between;
+
+            & div:first-child {
+                display: none;
+            }
+        }
+
+        & .es-button.bookmark {
+            @media (max-width: @screen-xxl) {
+                & span {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    @media (max-width: @screen-lg) {
+        &__bookmark {
+            order: 2;
+        }
+        &__left {
+            order: 1;
+        }
+        &__center {
+            order: 4;
+        }
+        &__right {
+            order: 3;
+        }
     }
 }

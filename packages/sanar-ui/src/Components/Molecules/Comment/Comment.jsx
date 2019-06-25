@@ -16,21 +16,24 @@ const locale =
         ? require('date-fns/locale/en')
         : require('date-fns/locale/pt')
 
-const Title = ({ name, monitor }) => {
+const Title = ({ name, monitor, labelMonitor }) => {
     const { t } = useTranslation('sanarui')
+
     return (
         <div className='es-comment__title'>
             <ESTypography variant='caption' strong className='text-grey-7'>
                 {name}
             </ESTypography>
             {monitor && (
-                <div className='es-comment__badge'>{t('global.monitor')}</div>
+                <div className='es-comment__badge'>
+                    {labelMonitor || t('global.monitor')}
+                </div>
             )}
         </div>
     )
 }
 
-const ESComment = ({ user, text, time, monitor, className }) => {
+const ESComment = ({ user, text, time, monitor, labelMonitor, className }) => {
     const classes = classNames('es-comment', className)
 
     const diff =
@@ -41,7 +44,13 @@ const ESComment = ({ user, text, time, monitor, className }) => {
     return (
         <Comment
             className={classes}
-            author={<Title name={user && user.name} monitor={monitor} />}
+            author={
+                <Title
+                    name={user && user.name}
+                    monitor={monitor}
+                    labelMonitor={labelMonitor}
+                />
+            }
             avatar={
                 <Avatar
                     src={user && user.profile_picture}
@@ -62,7 +71,8 @@ ESComment.propTypes = {
     }),
     text: PropTypes.string,
     time: PropTypes.string,
-    monitor: PropTypes.bool
+    monitor: PropTypes.bool,
+    labelMonitor: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
 }
 
 export default ESComment

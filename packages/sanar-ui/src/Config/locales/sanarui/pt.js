@@ -121,5 +121,12 @@ export default {
         rateClass: 'Avaliar aula',
         next: 'Próximo',
         previous: 'Anterior'
+    },
+    lessonHeader: {
+        rateClass: 'Avaliar aula'
+    },
+    pdfReader: {
+        problemRenderingPdf: 'Problemas ao visualizar esse material?',
+        clickAndDownload: 'Clique aqui e faça o download.'
     }
 }

@@ -99,7 +99,7 @@ const Example = () => {
         }, 1000)
     }, [])
 
-    const handleConfirm = () => {
+    const handleConfirm = id => {
         setLoading(true)
         setTimeout(() => {
             setAnswer(`id-alternative-${Math.floor(Math.random() * 4)}`)

@@ -16,7 +16,9 @@ const ESQuestionFooter = ({
     answer,
     question,
     onlyStep,
-    isHistoric
+    isHistoric,
+    propsNext,
+    propsPrev
 }) => {
     const { t } = useTranslation('sanarui')
 
@@ -31,6 +33,7 @@ const ESQuestionFooter = ({
                         uppercase
                         bold
                         onClick={handlePrevious}
+                        {...propsPrev}
                     >
                         <ESEvaIcon key='back' name='arrow-back-outline' />
                         {t('question.previous')}
@@ -42,6 +45,7 @@ const ESQuestionFooter = ({
                         uppercase
                         bold
                         onClick={handleNext}
+                        {...propsNext}
                     >
                         {t('question.next')}
                         <ESEvaIcon name='arrow-forward-outline' />

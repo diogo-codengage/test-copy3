@@ -27,13 +27,16 @@ const ESQuestion = ({
     loading,
     full,
     stats,
-    isHistoric
+    isHistoric,
+    propsNext,
+    propsPrev,
+    labelMonitor
 }) => {
     const [striped, setStripe] = useState({})
     const [selected, setSelect] = useState()
     const [confirmed, setConfirm] = useState(false)
 
-    const handleSelect = index => item => {
+    const handleSelect = index => id => {
         if (confirmed || isHistoric) return
         if (striped[index]) {
             setStripe({
@@ -41,15 +44,15 @@ const ESQuestion = ({
                 [index]: false
             })
         }
-        setSelect(item)
-        onSelect && onSelect(item)
-        onlyStep && handleConfirm(item)
+        setSelect(id)
+        onSelect && onSelect(id)
+        onlyStep && handleConfirm({ id })
     }
 
-    const handleConfirm = () => {
+    const handleConfirm = ({ id }) => {
         setConfirm(true)
         setStripe({})
-        onConfirm && onConfirm(selected)
+        onConfirm && onConfirm(id || selected)
     }
 
     const handleNext = () => {
@@ -188,7 +191,10 @@ const ESQuestion = ({
                 </div>
 
                 {question && comment && answer ? (
-                    <ESQuestionComment {...comment} />
+                    <ESQuestionComment
+                        {...comment}
+                        labelMonitor={labelMonitor}
+                    />
                 ) : (
                     undefined
                 )}
@@ -202,7 +208,9 @@ const ESQuestion = ({
                         answer,
                         question,
                         onlyStep,
-                        isHistoric
+                        isHistoric,
+                        propsNext,
+                        propsPrev
                     }}
                 />
             </ESSpin>
@@ -221,6 +229,7 @@ ESQuestion.propTypes = {
     onlyStep: PropTypes.bool,
     full: PropTypes.bool,
     isHistoric: PropTypes.bool,
+    labelMonitor: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     stats: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.string,

@@ -1,32 +1,47 @@
 import React from 'react'
 
+import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import {
     ESNavigationList,
-    ESNavigationListItem
+    ESNavigationListItem,
+    ESLeftOff
 } from 'sanar-ui/dist/Components/Organisms/MainMenu'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 
-// import { useAuthContext } from 'Hooks/auth'
+import { useAuthContext } from 'Hooks/auth'
+import { getClassRoute } from 'Utils/getClassRoute'
 
 const intlPath = 'mainMenu.initial.'
 
-const SANInitial = ({ setTab }) => {
-    // const { getEnrollment } = useAuthContext()
+const SANInitial = ({ setTab, history }) => {
+    const { getEnrollment } = useAuthContext()
     const { t } = useTranslation('esanar')
 
-    // const { course, last_accessed } = getEnrollment()
+    const { course, last_accessed } = getEnrollment()
+
+    const moduleReference = `${t('global.subject')} ${
+        last_accessed.module_order
+    }, ${t('global.activity')} ${last_accessed.resource_order}`
+
+    const goClassroom = () =>
+        history.push(
+            `/aluno/sala-aula/${last_accessed.module_id}/${getClassRoute(
+                last_accessed.resource_type
+            )}/${last_accessed.resource_id}`
+        )
 
     return (
         <>
             <div className='pl-md pr-md'>
-                {/* <ESLeftOff
+                <ESLeftOff
                     title={course.name}
                     classReference={last_accessed.module_title}
-                    moduleReference={last_accessed.path}
+                    moduleReference={moduleReference}
                     thumbnail={last_accessed.thumbnail}
-                /> */}
+                    onClick={goClassroom}
+                />
             </div>
             <ESNavigationList onClick={e => setTab(Number(e.key))}>
                 <ESNavigationListItem
@@ -80,4 +95,4 @@ const SANInitial = ({ setTab }) => {
     )
 }
 
-export default SANInitial
+export default withRouter(SANInitial)

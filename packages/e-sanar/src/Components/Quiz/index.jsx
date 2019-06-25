@@ -197,6 +197,12 @@ const SANQuiz = ({
                                     loading={loadingMutation}
                                     isHistoric={isFinish}
                                     {...responses[index]}
+                                    propsNext={{
+                                        disabled: index === questions.length - 1
+                                    }}
+                                    propsPrev={{
+                                        disabled: index === 0
+                                    }}
                                 />
                             </SANPortalPagesContainer>
                         )}
