@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -8,14 +8,10 @@ import ESLessonHeader, {
 } from 'sanar-ui/dist/Components/Molecules/LessonHeader'
 import ESPdfReader from 'sanar-ui/dist/Components/Atoms/PdfReader'
 
-import { useAuthContext } from 'Hooks/auth'
-import { CREATE_BOOKMARK } from 'Apollo/Classroom/mutations/bookmark'
-import { useApolloContext } from 'Hooks/apollo'
-
 import { usePortalContext } from 'Pages/Portal/Context'
+import { useClassroomContext } from '../Context'
 
 const SANClassRoomDocument = () => {
-    const { me } = useAuthContext()
     const { t } = useTranslation('esanar')
     const {
         currentResource,
@@ -24,31 +20,13 @@ const SANClassRoomDocument = () => {
         onNavigation,
         currentModule
     } = usePortalContext()
-    const [bookmarked, setBookmarked] = useState(
-        currentResource &&
-            currentResource.document &&
-            currentResource.document.bookmarked
-    )
-    const client = useApolloContext()
-
-    // const handleNext = () => {}
-
-    const handleBookmarking = async () => {
-        await client.mutate({
-            mutation: CREATE_BOOKMARK,
-            variables: {
-                resourceId: currentResource.document.id,
-                resourceType: currentResource.resource_type,
-                userId: me.id
-            }
-        })
-
-        setBookmarked(!bookmarked)
-    }
+    const { handleBookmark, bookmarked } = useClassroomContext()
 
     return (
         <div className='classroom__document'>
             <ESLessonHeader
+                bookmarked={bookmarked}
+                onBookmarked={handleBookmark}
                 leftChildren={
                     <ESLessonHeaderLeft
                         title={currentResource.document.title}
@@ -68,7 +46,7 @@ const SANClassRoomDocument = () => {
                         onNext={onNavigation('next')}
                         bookmarkLabel={t('classroom.bookmarkDocument')}
                         bookmarked={bookmarked}
-                        onBookmarked={handleBookmarking}
+                        onBookmarked={handleBookmark}
                     />
                 }
             />

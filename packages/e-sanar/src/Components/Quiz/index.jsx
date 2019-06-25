@@ -20,7 +20,9 @@ const SANQuiz = ({
     quiz: {
         questionItems: { data }
     },
-    mock
+    mock,
+    bookmarked,
+    handleBookmark
 }) => {
     const stopwatchRef = useRef()
     const { me } = useAuthContext()
@@ -182,6 +184,8 @@ const SANQuiz = ({
                             mock={mock}
                             stopwatch={!isFinish && mock}
                             ref={stopwatchRef}
+                            bookmarked={bookmarked}
+                            handleBookmark={handleBookmark}
                         />
                         {isFinish && !mock ? (
                             <SANQuizFinalizedQuiz {...stats} />
@@ -215,7 +219,9 @@ const SANQuiz = ({
 
 SANQuiz.propTypes = {
     quiz: PropTypes.object.isRequired,
-    mock: PropTypes.bool
+    mock: PropTypes.bool,
+    bookmarked: PropTypes.bool,
+    handleBookmark: PropTypes.func
 }
 
 export default SANQuiz

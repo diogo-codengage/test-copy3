@@ -12,11 +12,14 @@ const renderTabBar = ({
     nextResource,
     prevResource,
     onPrev,
-    onNext
+    onNext,
+    bookmarked,
+    handleBookmark
 }) => (props, DefaultTabBar) => (
     <ESLessonHeader
         rate={rate}
-        onBookmarked={() => alert('onBookmarked')}
+        bookmarked={bookmarked}
+        onBookmarked={handleBookmark}
         leftChildren={
             <ESLessonHeaderLeft
                 title={title}
@@ -31,6 +34,8 @@ const renderTabBar = ({
                 nextLesson={nextResource}
                 onPrevious={onPrev}
                 onNext={onNext}
+                bookmarked={bookmarked}
+                onBookmarked={handleBookmark}
             />
         }
     >

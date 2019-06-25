@@ -9,6 +9,7 @@ import ESLessonHeader, {
 
 import { usePortalContext } from 'Pages/Portal/Context'
 import SANQuiz from 'Components/Quiz'
+import { useClassroomContext } from '../Context'
 
 const SANClassroomMock = () => {
     const { t } = useTranslation('esanar')
@@ -19,6 +20,7 @@ const SANClassroomMock = () => {
         onNavigation,
         currentModule
     } = usePortalContext()
+    const { handleBookmark, bookmarked } = useClassroomContext()
 
     return (
         <div className='classroom__mock'>
@@ -43,7 +45,12 @@ const SANClassroomMock = () => {
                     />
                 }
             />
-            <SANQuiz quiz={currentResource.quiz} mock />
+            <SANQuiz
+                quiz={currentResource.quiz}
+                bookmarked={bookmarked}
+                handleBookmark={handleBookmark}
+                mock
+            />
         </div>
     )
 }

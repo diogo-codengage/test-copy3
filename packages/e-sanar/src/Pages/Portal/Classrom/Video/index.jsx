@@ -16,6 +16,7 @@ import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
 import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
 import { usePortalContext } from 'Pages/Portal/Context'
+import { useClassroomContext } from '../Context'
 
 const SANClassroomVideo = () => {
     const { t } = useTranslation('esanar')
@@ -32,10 +33,21 @@ const SANClassroomVideo = () => {
         onNavigation,
         currentModule
     } = usePortalContext()
+    const { handleBookmark, bookmarked } = useClassroomContext()
+
+    const [quizBookmarked, setQuizBookmarked] = useState()
     const [rate, setRate] = useState()
     const [playlistVideo, setPlaylistVideo] = useState()
 
     const { id: enrollmentId } = getEnrollment()
+
+    const handleQuizBookmark = () => {
+        handleBookmark({
+            resourceId: currentResource.quiz.id,
+            resourceType: 'Quiz'
+        })
+        setQuizBookmarked(oldQuizBookmarked => !oldQuizBookmarked)
+    }
 
     const handleRate = value => {
         setRate(value)
@@ -96,6 +108,8 @@ const SANClassroomVideo = () => {
                     image: currentResource.video.thumbnails.medium.url
                 }
             ])
+            currentResource.quiz &&
+                setQuizBookmarked(currentResource.quiz.bookmarked)
         }
     }, [currentResource])
 
@@ -132,6 +146,8 @@ const SANClassroomVideo = () => {
                     tabBarGutter={0}
                     defaultActiveKey='1'
                     renderTabBar={renderTabBar({
+                        bookmarked,
+                        handleBookmark,
                         nextResource: nextResource && nextResource.title,
                         prevResource: prevResource && prevResource.title,
                         onPrev: onNavigation('prev'),
@@ -150,7 +166,11 @@ const SANClassroomVideo = () => {
                     })}
                 >
                     <ESTabPane tab={t('classroom.questions')} key='1'>
-                        <SANQuiz quiz={currentResource.quiz} />
+                        <SANQuiz
+                            quiz={currentResource.quiz}
+                            bookmarked={quizBookmarked}
+                            handleBookmark={handleQuizBookmark}
+                        />
                     </ESTabPane>
                     <ESTabPane
                         tab={t('classroom.discussions')}

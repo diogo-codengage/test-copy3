@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useReducer } from 'react'
+import React, {
+    createContext,
+    useContext,
+    useEffect,
+    useReducer,
+    useState
+} from 'react'
 
 import { withRouter } from 'react-router-dom'
 
@@ -7,6 +13,7 @@ import { useApolloContext } from 'Hooks/apollo'
 import { useAuthContext } from 'Hooks/auth'
 import { usePortalContext } from '../Context'
 import { GET_MODULE } from 'Apollo/Classroom/queries/module'
+import { CREATE_BOOKMARK } from 'Apollo/Classroom/mutations/bookmark'
 
 const Context = createContext()
 
@@ -37,12 +44,36 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         menuIndex,
         setIndexMenu,
         currentModule,
-        setDarkMode
+        setDarkMode,
+        currentResource
     } = usePortalContext()
     const [state] = useReducer(reducer, initialState)
-    const { getEnrollment } = useAuthContext()
+    const { getEnrollment, me } = useAuthContext()
 
     const { id: enrollmentId } = getEnrollment(0)
+
+    const [bookmarked, setBookmarked] = useState()
+
+    const handleBookmark = async ({ resourceId, resourceType }) => {
+        await client.mutate({
+            mutation: CREATE_BOOKMARK,
+            variables: {
+                resourceId: resourceId
+                    ? resourceId
+                    : getResource(currentResource).id,
+                resourceType: resourceType
+                    ? resourceType
+                    : currentResource.resource_type,
+                userId: me.id
+            }
+        })
+        !resourceId && setBookmarked(oldBookmarked => !oldBookmarked)
+    }
+
+    useEffect(() => {
+        currentResource &&
+            setBookmarked(getResource(currentResource).bookmarked)
+    }, [currentResource])
 
     useEffect(() => {
         setIndexMenu(9)
@@ -126,7 +157,9 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
     ])
 
     const value = {
-        state
+        state,
+        handleBookmark,
+        bookmarked
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next'
 import { ESRow, ESCol } from '../../Atoms/Grid'
 import ESTypography from '../../Atoms/Typography'
 import ESRate from '../../Atoms/Rate'
-import ESButton from '../../Atoms/Button'
-import ESEvaIcon from '../../Atoms/EvaIcon'
+
+import ESBookmark from './Bookmark'
 
 const ESLessonHeader = ({
     className,
@@ -16,7 +16,8 @@ const ESLessonHeader = ({
     leftChildren,
     rightChildren,
     rate,
-    onBookmarked
+    onBookmarked,
+    bookmarked
 }) => {
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-lesson-header', className)
@@ -32,7 +33,7 @@ const ESLessonHeader = ({
                 <ESCol
                     xs={24}
                     md={12}
-                    lg={7}
+                    lg={children ? 7 : 12}
                     className='es-lesson-header__left'
                 >
                     {leftChildren}
@@ -45,15 +46,9 @@ const ESLessonHeader = ({
                     </ESTypography>
                     <ESRate {...rate} />
                 </div>
-                <ESButton
-                    size='small'
-                    variant='text'
-                    color='white'
-                    onClick={onBookmarked}
-                    circle
-                >
-                    <ESEvaIcon name='heart-outline' />
-                </ESButton>
+                <ESBookmark
+                    {...{ bookmarked, onBookmarked, hideLabel: true }}
+                />
             </ESCol>
             {children && (
                 <ESCol
@@ -69,7 +64,7 @@ const ESLessonHeader = ({
                 <ESCol
                     xs={24}
                     md={12}
-                    lg={9}
+                    lg={children ? 9 : 12}
                     className='es-lesson-header__right'
                 >
                     {rightChildren}
@@ -82,7 +77,9 @@ const ESLessonHeader = ({
 ESLessonHeader.propTypes = {
     className: PropTypes.string,
     rightChildren: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-    leftChildren: PropTypes.oneOfType([PropTypes.node, PropTypes.string])
+    leftChildren: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+    bookmarked: PropTypes.bool,
+    onBookmarked: PropTypes.func
 }
 ESLessonHeader.defaultProps = {}
 

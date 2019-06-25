@@ -12,7 +12,18 @@ import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
 const SANSubheader = forwardRef(
-    ({ total, index, questions, mock, stopwatch }, ref) => {
+    (
+        {
+            total,
+            index,
+            questions,
+            mock,
+            stopwatch,
+            bookmarked,
+            handleBookmark
+        },
+        ref
+    ) => {
         const { t } = useTranslation('esanar')
         const [visible, setVisible] = useState(false)
 
@@ -71,8 +82,20 @@ const SANSubheader = forwardRef(
                             variant='text'
                             color='white'
                             className='mr-sm'
+                            onClick={handleBookmark}
                         >
-                            <ESEvaIcon name='heart-outline' />
+                            {bookmarked ? (
+                                <ESEvaIcon
+                                    name='heart'
+                                    color='secondary'
+                                    key='quiz-bookmarked'
+                                />
+                            ) : (
+                                <ESEvaIcon
+                                    name='heart-outline'
+                                    key='quiz-not-bookmarked'
+                                />
+                            )}
                             {t('classroom.favoriteQuestion')}
                         </ESButton>
                         <ESButton
