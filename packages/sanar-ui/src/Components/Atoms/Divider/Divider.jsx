@@ -4,8 +4,10 @@ import PropTypes from 'prop-types'
 
 import { Divider } from 'antd'
 
-const ESDivider = ({ className, ...props }) => {
-    const classes = classNames('es-divider', className)
+const ESDivider = ({ className, color, ...props }) => {
+    const classes = classNames('es-divider', className, {
+        'es-divider__grey': color === 'grey'
+    })
     return <Divider className={classes} {...props} />
 }
 
