@@ -32,16 +32,30 @@ const SANFooter = () => {
     const [openTerms, setOpenTerms] = useState(false)
     const [openPrivacy, setOpenPrivacy] = useState(false)
 
+    const handleCloseTerms = () => setOpenTerms(false)
+
+    const handleOpenTerms = e => {
+        e.preventDefault()
+        setOpenTerms(true)
+    }
+
+    const handleClosePrivacy = () => setOpenPrivacy(false)
+
+    const handleOpenPrivacy = e => {
+        e.preventDefault()
+        setOpenPrivacy(true)
+    }
+
     return (
         <>
             <ESModalTabs
                 visible={openTerms}
-                onCancel={() => setOpenTerms(false)}
+                onCancel={handleCloseTerms}
                 content={modalTermsContent}
             />
             <ESModalTabs
                 visible={openPrivacy}
-                onCancel={() => setOpenPrivacy(false)}
+                onCancel={handleClosePrivacy}
                 content={modalTermsContent}
             />
             <ANTDLayout.Footer
@@ -164,11 +178,11 @@ const SANFooter = () => {
                             type={darkMode ? 'light' : 'default'}
                             strong
                         >
-                            <a onClick={() => setOpenTerms(true)}>
+                            <a onClick={handleOpenTerms} href='foo'>
                                 {t('footer.termsOfUse')}
                             </a>
                             {' | '}
-                            <a onClick={() => setOpenPrivacy(true)}>
+                            <a onClick={handleOpenPrivacy} href='foo'>
                                 {t('footer.privacyPolicy')}
                             </a>
                         </ESTypography>
