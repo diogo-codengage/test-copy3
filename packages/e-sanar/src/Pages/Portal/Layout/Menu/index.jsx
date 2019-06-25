@@ -11,14 +11,18 @@ import SANInitial from './Initial'
 import SANNotifications from './Notifications'
 import SANCourseChange from './CourseChange'
 import SANMyAccount from './MyAccount'
+import SANClassPlaylist from './ClassPlaylist'
+import { usePortalContext } from 'Pages/Portal/Context'
 // import SANSearch from './Search'
 
 const intlPath = 'mainMenu.title.'
 
-const MenuContent = ({ index, setTab, showContinueBar, handleBack }) => {
+const toDarkMode = [6, 9]
+
+const MenuContent = ({ indexMenu, setTab, showContinueBar, handleBack }) => {
     const { t } = useTranslation('esanar')
 
-    switch (index) {
+    switch (indexMenu) {
         case 0:
             return <SANInitial {...{ setTab }} />
         case 1:
@@ -29,6 +33,8 @@ const MenuContent = ({ index, setTab, showContinueBar, handleBack }) => {
             return <SANMyAccount {...{ handleBack }} />
         // case 8:
         //     return <SANSearch />
+        case 9:
+            return <SANClassPlaylist />
         default:
             return (
                 <div className='pl-md pr-md mb-md'>
@@ -51,52 +57,56 @@ const MenuContent = ({ index, setTab, showContinueBar, handleBack }) => {
 const SANMenu = ({ history }) => {
     const { t } = useTranslation('esanar')
     const [theme, setTheme] = useState('light')
-    const [index, setIndex] = useState(0)
+    const { indexMenu, setIndexMenu } = usePortalContext()
     const [title, setTitle] = useState(t(`${intlPath}menu`))
 
-    useMemo(() => (index === 6 ? setTheme('dark') : setTheme('primary')), [
-        index
-    ])
+    useMemo(
+        () =>
+            toDarkMode.includes(indexMenu)
+                ? setTheme('dark')
+                : setTheme('primary'),
+        [indexMenu]
+    )
 
     const handleBack = () => {
-        setIndex(0)
+        setIndexMenu(0)
         setTitle(t(`${intlPath}menu`))
     }
 
-    const setTab = index => {
-        switch (index) {
+    const setTab = indexMenu => {
+        switch (indexMenu) {
             case 0:
-                setIndex(index)
+                setIndexMenu(indexMenu)
                 history.push('/aluno/curso')
                 setTitle(t(`${intlPath}menu`))
                 break
             case 1:
-                setIndex(index)
+                setIndexMenu(indexMenu)
                 setTitle(t(`${intlPath}notifications`))
                 break
             case 5:
                 history.push('/aluno/banco-questoes')
                 break
             case 6:
-                setIndex(index)
+                setIndexMenu(indexMenu)
                 setTitle(t(`${intlPath}studying`))
                 break
             case 7:
-                setIndex(index)
+                setIndexMenu(indexMenu)
                 setTitle(t(`${intlPath}myAccount`))
                 break
             case 8:
-                setIndex(index)
+                setIndexMenu(indexMenu)
                 setTitle(t(`${intlPath}search`))
                 break
             default:
-                setIndex(index)
+                setIndexMenu(indexMenu)
                 setTitle(t(`${intlPath}menu`))
         }
     }
 
     const handleInitialClick = () => {
-        setIndex(index)
+        setIndexMenu(indexMenu)
         setTitle(t(`${intlPath}menu`))
     }
 
@@ -112,7 +122,7 @@ const SANMenu = ({ history }) => {
             showContinueBar
             className='san-main-menu'
         >
-            <MenuContent {...{ index, setTab, handleBack }} />
+            <MenuContent {...{ indexMenu, setTab, handleBack }} />
         </ESMainMenu>
     )
 }

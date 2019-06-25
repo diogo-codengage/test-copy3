@@ -12,10 +12,10 @@ import { useAuthContext } from 'Hooks/auth'
 import { GET_RATING } from 'Apollo/Classroom/queries/rating'
 import { CREATE_RATING } from 'Apollo/Classroom/mutations/rate'
 import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
-import { useClassroomContext } from '../Context'
 
 import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
+import { usePortalContext } from 'Pages/Portal/Context'
 
 const SANClassroomVideo = () => {
     const { t } = useTranslation('esanar')
@@ -25,7 +25,7 @@ const SANClassroomVideo = () => {
         getEnrollment
     } = useAuthContext()
     const client = useApolloContext()
-    const { current } = useClassroomContext()
+    const { currentResource } = usePortalContext()
     const [rate, setRate] = useState()
     const [playlistVideo, setPlaylistVideo] = useState()
 
@@ -36,8 +36,8 @@ const SANClassroomVideo = () => {
         client.mutate({
             mutation: CREATE_RATING,
             variables: {
-                resourceId: current.video.id,
-                resourceType: current.resource_type,
+                resourceId: currentResource.video.id,
+                resourceType: currentResource.resource_type,
                 userId,
                 rating: { value, type: 'numeric' }
             }
@@ -45,15 +45,15 @@ const SANClassroomVideo = () => {
     }
 
     const handleProgress = percentage => () => {
-        const timeInSeconds = playerRef && playerRef.current.position()
+        const timeInSeconds = playerRef && playerRef.currentResource.position()
         client.mutate({
             mutation: CREATE_PROGRESS,
             variables: {
                 percentage,
                 timeInSeconds: parseInt(timeInSeconds),
                 enrollmentId,
-                resourceId: current.video.id,
-                resourceType: current.resource_type
+                resourceId: currentResource.video.id,
+                resourceType: currentResource.resource_type
             }
         })
     }
@@ -66,7 +66,7 @@ const SANClassroomVideo = () => {
                 } = await client.query({
                     query: GET_RATING,
                     variables: {
-                        resourceId: current.video.id,
+                        resourceId: currentResource.video.id,
                         userId
                     }
                 })
@@ -77,21 +77,21 @@ const SANClassroomVideo = () => {
             }
         }
         fetchData()
-    }, [client, current, t, userId])
+    }, [client, currentResource, t, userId])
 
     useEffect(() => {
-        if (current) {
-            const playler = current.video.providers.data.find(
+        if (currentResource) {
+            const playler = currentResource.video.providers.data.find(
                 provider => provider.code === 'jwplayer'
             )
             setPlaylistVideo([
                 {
                     ...(playler && { file: playler.files.smil.url }),
-                    image: current.video.thumbnails.medium.url
+                    image: currentResource.video.thumbnails.medium.url
                 }
             ])
         }
-    }, [current])
+    }, [currentResource])
 
     return (
         <div className='classroom__video'>
@@ -103,10 +103,10 @@ const SANClassroomVideo = () => {
                 playerScript='/jwplayer/jwplayer.js'
                 licenseKey={process.env.REACT_APP_JWPLAYER}
                 isMuted={false}
-                title={current.video.title}
+                title={currentResource.video.title}
                 subtitle={`${t('global.subject')} 3, ${t(
                     'global.activity'
-                )} ${current.index + 1}`}
+                )} ${currentResource.index + 1}`}
                 rate={{
                     value: rate,
                     onChange: handleRate
@@ -119,17 +119,18 @@ const SANClassroomVideo = () => {
                 onSeventyFivePercent={handleProgress(75)}
                 onOneHundredPercent={handleProgress(100)}
             />
-            {current.quiz && (
+            {currentResource.quiz && (
                 <ESTabs
                     dark
                     center
                     tabBarGutter={0}
                     defaultActiveKey='1'
                     renderTabBar={renderTabBar({
-                        title: current.video.title,
+                        title: currentResource.video.title,
                         subtitle: `${t('global.subject')} 3, ${t(
                             'global.activity'
-                        )} ${current.index + 1}`,
+                        )} ${currentResource.index + 1}`,
+                        label: t('classroom.rateClass'),
                         rate: {
                             value: rate,
                             onChange: handleRate
@@ -137,7 +138,7 @@ const SANClassroomVideo = () => {
                     })}
                 >
                     <ESTabPane tab={t('classroom.questions')} key='1'>
-                        <SANQuiz quiz={current.quiz} />
+                        <SANQuiz quiz={currentResource.quiz} />
                     </ESTabPane>
                     <ESTabPane
                         tab={t('classroom.discussions')}
