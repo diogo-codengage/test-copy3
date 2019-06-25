@@ -24,7 +24,7 @@ import SANQuestionsFilterAdvanced from './Advanced'
 
 const intlPath = 'questionBase.filter.'
 
-const SANQuestionsFilterSelects = () => {
+const SANQuestionsFilterSelects = ({ defaultOpen }) => {
     const { getEnrollment } = useAuthContext()
     const { formState } = useQuestionsContext()
     const { t } = useTranslation('esanar')
@@ -142,7 +142,7 @@ const SANQuestionsFilterSelects = () => {
                         </Query>
                     </ESCol>
                 </ESRow>
-                <SANQuestionsFilterAdvanced />
+                <SANQuestionsFilterAdvanced defaultOpen={defaultOpen} />
             </SANPortalPagesContainer>
         </div>
     )
