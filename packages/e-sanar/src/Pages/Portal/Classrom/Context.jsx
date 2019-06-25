@@ -10,6 +10,7 @@ import * as R from 'ramda'
 import { withRouter } from 'react-router-dom'
 
 import { useApolloContext } from 'Hooks/apollo'
+import { useAuthContext } from 'Hooks/auth'
 import { GET_LEVEL_CONTENT } from 'Apollo/Classroom/queries/level-content'
 import { getClassRoute } from 'Utils/getClassRoute'
 // import { usePortalContext } from 'Pages/Portal/Context'
@@ -37,6 +38,9 @@ function reducer(state, action) {
 
 const ClassroomProvider = ({ children, match: { params }, history }) => {
     const client = useApolloContext()
+    const {
+        me: { id: userId }
+    } = useAuthContext()
     // const {
     //     setPlaylist,
     //     setCurrentResourceIndex,
@@ -52,14 +56,13 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
             if (!params.id) return dispatch({ type: 'error' })
             try {
                 const {
-                    data: {
-                        levelContent: { data }
-                    }
+                    data: { levelContent }
                 } = await client.query({
                     query: GET_LEVEL_CONTENT,
                     fetchPolicy: 'network-only',
                     variables: {
-                        levelId: params.id
+                        levelId: params.id,
+                        userId
                     }
                 })
 
@@ -76,17 +79,12 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
 
                 // setCurrentModule(module)
 
-                const { level_contents } = module
-                const ordered = R.sortBy(R.prop('index'), level_contents.data)
-
-                console.log(data)
+                const ordered = R.sortBy(R.prop('index'), levelContent.data)
 
                 console.log({
                     progress: module.progress,
-                    levelContent: level_contents.data
+                    levelContent: levelContent.data
                 })
-
-                setCurrent(ordered[module.progress.done])
 
                 const map = ordered
                     .map((level, index) => ({
@@ -108,17 +106,17 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
                         return level
                     })
 
-                setCurrent(map[map.length - 1])
-                const type = map[map.length - 1].resource_type
+                setCurrent(map[1])
+                const type = map[1].resource_type
 
                 dispatch({ type: 'success', payload: map })
                 history.push(
                     `/aluno/sala-aula/${params.id}/${getClassRoute(type)}/${
-                        map[map.length - 1][type.toLowerCase()].id
+                        map[1][type.toLowerCase()].id
                     }/`
                 )
             } catch (err) {
-                dispatch({ type: 'error' })
+                dispatch({ type: 'error', payload: err })
             }
         }
         fetchData()

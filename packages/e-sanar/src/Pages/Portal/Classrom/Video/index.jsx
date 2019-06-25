@@ -70,7 +70,8 @@ const SANClassroomVideo = () => {
                         userId
                     }
                 })
-                setRate(rating && rating.value)
+
+                setRate(rating && rating.rating.value)
             } catch (e) {
                 message.error(t('classroom.failLoadRating'))
             }
@@ -110,9 +111,9 @@ const SANClassroomVideo = () => {
                     value: rate,
                     onChange: handleRate
                 }}
-                onOpenMenu={console.log('onOpenMenu')}
-                onNext={console.log('onNext')}
-                onPrevious={console.log('onPrevious')}
+                onOpenMenu={() => console.log('onOpenMenu')}
+                onNext={() => console.log('onNext')}
+                onPrevious={() => console.log('onPrevious')}
                 onTwentyFivePercent={handleProgress(25)}
                 onFiftyPercent={handleProgress(50)}
                 onSeventyFivePercent={handleProgress(75)}
@@ -128,7 +129,6 @@ const SANClassroomVideo = () => {
                         subtitle: `${t('global.subject')} 3, ${t(
                             'global.activity'
                         )} ${current.index + 1}`,
-                        label: t('classroom.rateClass'),
                         rate: {
                             value: rate,
                             onChange: handleRate

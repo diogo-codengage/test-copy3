@@ -121,5 +121,8 @@ export default {
         rateClass: 'Avaliar aula',
         next: 'Próximo',
         previous: 'Anterior'
+    },
+    lessonHeader: {
+        rateClass: 'Avaliar aula'
     }
 }

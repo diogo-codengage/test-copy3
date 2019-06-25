@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import { Layout as ANTDLayout, Divider as ANTDivider } from 'antd'
 import { useTranslation } from 'react-i18next'
 
@@ -17,11 +18,14 @@ const SANFooter = () => {
     const { t } = useTranslation('esanar')
 
     //Vini, add your context call here and replace it.
-    const dark = false;
+    const dark = false
 
     return (
         <ANTDLayout.Footer
-            className={`san-portal-layout__footer--${dark ? 'dark' : 'light'}`}
+            className={classNames(
+                'san-portal-layout__footer',
+                `san-portal-layout__footer--${dark ? 'dark' : 'light'}`
+            )}
         >
             <ANTDivider
                 className={`san-portal-layout__footer--divider${

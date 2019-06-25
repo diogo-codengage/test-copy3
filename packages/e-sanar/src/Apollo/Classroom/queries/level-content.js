@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const GET_LEVEL_CONTENT = gql`
-    query levelContent($levelId: String!) {
-        levelContent(levelId: $levelId) {
+    query levelContent($levelId: String!, $userId: ID) {
+        levelContent(levelId: $levelId, userId: $userId) {
             data {
                 index
                 resource_type
