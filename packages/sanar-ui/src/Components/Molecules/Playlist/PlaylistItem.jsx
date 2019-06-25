@@ -11,36 +11,34 @@ const icons = {
     Quiz: 'edit-outline'
 }
 
-const ESPlaylist = ({
-    className,
-    index,
-    type,
-    description,
-    time,
-    finish,
-    current
-}) => {
+const ESPlaylist = ({ className, index, item, onClick }) => {
+    const { title, time, finish } = item[item.resource_type.toLowerCase()]
     const classes = classNames(
         'es-playlist-list__item',
         {
             'es-playlist-list__item--finish': finish,
-            'es-playlist-list__item--current': current
+            'es-playlist-list__item--current': item.current
         },
         className
     )
+
     return (
-        <div className={classes}>
+        <div className={classes} onClick={() => onClick(item)}>
             <div className='d-flex align-items-center w-100'>
                 <ESTypography variant='overline' className='index'>
-                    {index}
+                    {index + 1}
                 </ESTypography>
-                <ESEvaIcon size='large' name={icons[type]} className='icon' />
+                <ESEvaIcon
+                    size='large'
+                    name={icons[item.resource_type] || 'play-circle-outline'}
+                    className='icon'
+                />
                 <ESTypography
                     ellipsis
                     variant='subtitle2'
                     className='description'
                 >
-                    {description}
+                    {title}
                 </ESTypography>
             </div>
             {time && (
