@@ -54,7 +54,7 @@ ESLessonHeaderLeft.propTypes = {
     subtitle: PropTypes.string.isRequired,
     rate: PropTypes.shape({
         value: PropTypes.any,
-        onChange: PropTypes
+        onChange: PropTypes.func
     }),
     onClick: PropTypes.func.isRequired
 }

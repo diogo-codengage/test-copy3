@@ -9,12 +9,21 @@
     }
 
     &__bookmark {
+        flex: 1;
         display: none;
         align-items: center;
         color: @white-8;
+        & > div {
+            display: flex;
+            align-items: center;
+        }
 
         & .es-rate {
             margin: 0 @margin-xs;
+        }
+
+        @media (max-width: @screen-sm) {
+            justify-content: space-between;
         }
 
         @media (max-width: @screen-md) {
@@ -33,7 +42,7 @@
             top: 0;
         }
 
-        @media (max-width: @screen-md) {
+        @media (max-width: @screen-sm) {
             & h5 {
                 margin-right: 35px;
             }

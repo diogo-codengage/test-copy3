@@ -38,10 +38,12 @@ const ESLessonHeader = ({
                 </ESCol>
             )}
             <ESCol className='es-lesson-header__bookmark'>
-                <ESTypography variant='subtitle2'>
-                    {t('lessonHeader.rateClass')}:
-                </ESTypography>
-                <ESRate {...rate} />
+                <div>
+                    <ESTypography variant='subtitle2'>
+                        {t('lessonHeader.rateClass')}:
+                    </ESTypography>
+                    <ESRate {...rate} />
+                </div>
                 <ESButton
                     size='small'
                     variant='text'
