@@ -2,8 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
-import { Trans, useTranslation } from 'react-i18next'
-import i18n from '../../../../Config/i18n'
+import { useTranslation } from 'react-i18next'
 
 import ESTypography from '../../../Atoms/Typography'
 import ESEvaIcon from '../../../Atoms/EvaIcon'

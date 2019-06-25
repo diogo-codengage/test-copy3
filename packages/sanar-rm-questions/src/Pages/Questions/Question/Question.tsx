@@ -5,7 +5,7 @@ import { getQuestionsQuery } from '../../../Apollo/Questions/get-questions'
 import { useQuestionsContext } from '../QuestionsContext'
 import { questionAnswer } from '../../../Apollo/Questions/questionAnswer'
 import { questionSkip } from '../../../Apollo/Questions/questionSkip'
-import { QuestionsInputFilter } from '../../../Apollo/QuestionsInputFilter'
+import { QuestionsInputFilter } from '../../../Apollo/Questions/QuestionsInputFilter'
 
 export const Question = () => {
 
@@ -79,7 +79,8 @@ export const Question = () => {
     }
 
     const onConfirmResponse = (alternativeId) => {
-
+        console.log('onConfirmResponse')
+        console.log(alternativeId)
         const answerId = questionsCtx.currentQuestion.alternatives.data
             .find(alternative => alternative.correct === true).id
 

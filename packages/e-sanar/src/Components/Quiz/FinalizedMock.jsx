@@ -24,8 +24,8 @@ const SANQuizFinalized = ({ correct, wrong, skipped, total, time }) => {
     }
 
     return (
-        <SANPortalPagesContainer className='video-quiz__finalized'>
-            <ESPracticeCompleted values={summary} className='mb-xl mt-sm' />
+        <SANPortalPagesContainer className='video-quiz__finalized--mock'>
+            <ESPracticeCompleted values={summary} />
         </SANPortalPagesContainer>
     )
 }

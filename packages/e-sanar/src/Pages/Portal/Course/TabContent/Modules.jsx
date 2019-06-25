@@ -151,7 +151,7 @@ const SANCourseModules = ({ history }) => {
                                         <ESCardCourseModule
                                             className='san-tab-course-content__continue--card'
                                             moduleName={`${t(
-                                                'courseDetails.tabContent.modules.singularName'
+                                                'courseDetails.tabContent.modules.module.key'
                                             )} ${item.index + 1}`}
                                             title={item.name}
                                             badge={

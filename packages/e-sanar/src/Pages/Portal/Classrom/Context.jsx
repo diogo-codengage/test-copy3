@@ -10,8 +10,12 @@ import * as R from 'ramda'
 import { withRouter } from 'react-router-dom'
 
 import { useApolloContext } from 'Hooks/apollo'
+import { useAuthContext } from 'Hooks/auth'
 import { GET_LEVEL_CONTENT } from 'Apollo/Classroom/queries/level-content'
+import { getClassRoute } from 'Utils/getClassRoute'
 // import { usePortalContext } from 'Pages/Portal/Context'
+// import { usePortalContext } from '../Context'
+// import { GET_MODULE } from 'Apollo/Classroom/queries/module'
 
 const Context = createContext()
 
@@ -32,22 +36,17 @@ function reducer(state, action) {
     }
 }
 
-const getSubRoute = type => {
-    switch (type) {
-        case 'Video':
-            return 'video'
-        case 'Document':
-            return 'documento'
-        case 'Quiz':
-            return 'simulado'
-        default:
-            throw new Error()
-    }
-}
-
 const ClassroomProvider = ({ children, match: { params }, history }) => {
     const client = useApolloContext()
-    // const { setPlaylist } = usePortalContext()
+    const {
+        me: { id: userId }
+    } = useAuthContext()
+    // const {
+    //     setPlaylist,
+    //     setCurrentResourceIndex,
+    //     setCurrentModule
+    // } = usePortalContext()
+
     const [current, setCurrent] = useState({})
     const [state, dispatch] = useReducer(reducer, initialState)
 
@@ -57,18 +56,35 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
             if (!params.id) return dispatch({ type: 'error' })
             try {
                 const {
-                    data: {
-                        levelContent: { data }
-                    }
+                    data: { levelContent }
                 } = await client.query({
                     query: GET_LEVEL_CONTENT,
                     fetchPolicy: 'network-only',
                     variables: {
-                        levelId: params.id
+                        levelId: params.id,
+                        userId
                     }
                 })
 
-                const ordered = R.sortBy(R.prop('index'), data)
+                // const {
+                //     data: { module }
+                // } = await client.query({
+                //     query: GET_MODULE,
+                //     fetchPolicy: 'network-only',
+                //     variables: {
+                //         enrollmentId: '5d09125504bf68004bec3406',
+                //         id: '5d0ad69c7f018f00114ac688'
+                //     }
+                // })
+
+                // setCurrentModule(module)
+
+                const ordered = R.sortBy(R.prop('index'), levelContent.data)
+
+                console.log({
+                    progress: module.progress,
+                    levelContent: levelContent.data
+                })
 
                 const map = ordered
                     .map((level, index) => ({
@@ -90,17 +106,17 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
                         return level
                     })
 
-                setCurrent(map[map.length - 1])
-                const type = map[map.length - 1].resource_type
+                setCurrent(map[1])
+                const type = map[1].resource_type
 
                 dispatch({ type: 'success', payload: map })
                 history.push(
-                    `/aluno/sala-aula/${params.id}/${getSubRoute(type)}/${
-                        map[map.length - 1][type.toLowerCase()].id
+                    `/aluno/sala-aula/${params.id}/${getClassRoute(type)}/${
+                        map[1][type.toLowerCase()].id
                     }/`
                 )
             } catch (err) {
-                dispatch({ type: 'error' })
+                dispatch({ type: 'error', payload: err })
             }
         }
         fetchData()
