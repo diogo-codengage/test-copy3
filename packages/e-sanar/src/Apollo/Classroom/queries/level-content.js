@@ -43,6 +43,7 @@ export const GET_LEVEL_CONTENT = gql`
                         url
                         size
                     }
+                    bookmarked
                 }
                 quiz {
                     title
