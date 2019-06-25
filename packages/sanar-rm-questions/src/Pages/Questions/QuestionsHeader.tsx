@@ -1,19 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { RMHeader } from '../../Components/RMHeader'
 import { QuestionPageType, useQuestionsContext } from './QuestionsContext'
 import { RMSplashLoader } from '../../Components/RMSplashLoader'
 
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
+import ESModal from 'sanar-ui/dist/Components/Atoms/Modal'
+
+import { isLocalhost } from '../../Util/environment'
 
 export const QuestionsHeader = () => {
 
     const {
         loading,
-        isFromCourse,
         course,
         currentPage,
         setCurrentPage
     } = useQuestionsContext()
+
+    const [showModalFinish, setShowModalFinish] = useState(false)
+
+    const isFromCourse = () => {
+        return !!course
+    }
 
     if(loading)
         return <RMSplashLoader />
@@ -34,7 +42,7 @@ export const QuestionsHeader = () => {
 
     if( currentPage === QuestionPageType.Question){
 
-        if(isFromCourse) {
+        if(isFromCourse()) {
 
             menuAction = <ESButton
                 color='primary'
@@ -43,7 +51,9 @@ export const QuestionsHeader = () => {
                 blockOnlyMobile
                 onClick={
                     () => {
-                        // console.log('TODO: voltar para o curso')
+                        const uri = `${ isLocalhost() ? 'http://localhost:8080': ''}`
+                            + `/#/meus-cursos/${course.enrollmentId}/modulos/${course.moduleId}/${course.contentId}`
+                        window.open(uri, '_self')
                     }
                 }
             >VOLTAR PARA AULA</ESButton>
@@ -55,7 +65,7 @@ export const QuestionsHeader = () => {
                 variant='solid'
                 uppercase
                 blockOnlyMobile
-                onClick={() => setCurrentPage(QuestionPageType.EndSession)}
+                onClick={() => setShowModalFinish(true) }
             >FINALIZAR PRÁTICA</ESButton>
 
         }
@@ -74,8 +84,40 @@ export const QuestionsHeader = () => {
 
     }
 
-    return <RMHeader
-        title={isFromCourse() ? course.moduleName : 'Área de Prática'}
-        rightElement={menuAction}
-    />
+    return <>
+        <RMHeader
+            title={isFromCourse() ? course.moduleName : 'Área de Prática'}
+            rightElement={menuAction}
+        />
+        <ESModal
+            title={'Encerrar aula'}
+            visible={showModalFinish}
+            centered={'Centered'}
+            onCancel={() => {setShowModalFinish(false)}}
+        >
+            <p>Tem certeza que deseja sair da página de prática?</p>
+
+            <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                <ESButton
+                    color='outlined'
+                    variant='text'
+                    uppercase
+                    blockOnlyMobile
+                    onClick={()=> {setShowModalFinish(false)}}
+                >VOLTAR</ESButton>
+                <ESButton
+                    color='primary'
+                    variant='solid'
+                    uppercase
+                    blockOnlyMobile
+                    onClick={()=> {
+                        setShowModalFinish(false)
+                        window.open('/', '_self')
+                    }}
+                >CONFIRMAR</ESButton>
+
+            </div>
+        </ESModal>
+
+    </>
 }

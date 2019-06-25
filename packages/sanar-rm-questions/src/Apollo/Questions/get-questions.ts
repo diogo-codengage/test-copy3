@@ -1,5 +1,5 @@
 import { gql } from 'apollo-boost'
-import { QuestionsInputFilter } from '../QuestionsInputFilter'
+import { QuestionsInputFilter } from './QuestionsInputFilter'
 
 export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
 

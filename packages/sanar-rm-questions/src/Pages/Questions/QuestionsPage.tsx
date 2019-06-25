@@ -68,7 +68,6 @@ export const QuestionsPage = (props: IProps) => {
         loading,
         setLoading,
 
-        isFromCourse: () => !!course,
         course,
 
         currentPage,

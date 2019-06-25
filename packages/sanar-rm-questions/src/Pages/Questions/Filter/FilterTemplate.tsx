@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import ESCardSelectFilter from 'sanar-ui/dist/Components/Molecules/CardSelectFilter'
 import { ESCol, ESRow } from 'sanar-ui/dist/Components/Atoms/Grid'
@@ -23,7 +23,7 @@ const RMInputContainer = ({ label, input }) =>
         {
             width: '100%',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
         }
     }>
         {label}{input}
@@ -44,12 +44,12 @@ export const FilterTemplate = () => {
         //
         // allTags,
         allSpecialties,
-        allSubSpecialties,
+        // allSubSpecialties,
         // selectedSpecialties,
         // selectedSubSpecialties,
         // setSelectedSubSpecialties,
         setSelectedTags,
-        selectedTags,
+        // selectedTags,
         setAllSubSpecialties,
         setAllSpecialties,
         setAllTags
@@ -63,44 +63,30 @@ export const FilterTemplate = () => {
         questionsCtx.setCurrentQuestion(null)
     }
 
-    useEffect(() => {
-        // setSelectedSubSpecialties(selectedSubSpecialties.filter(
-        //     ss => allSubSpecialties
-        //         .find(inAll => inAll.value === ss.value)))
-    }, [allSubSpecialties])
-
-    useEffect(() => {
-        // const _selectedSpecialties: Speciality[] = [].concat(questionsCtx.selectedSpecialties)
-        // const _selectedSubSpecialties = [].concat(questionsCtx.selectedSubSpecialties)
-        // questionsCtx.selectedTags.forEach(tag => {
-        //     const specialtiesFromTags: Speciality[] = questionsCtx.allSpecialties.filter(s => s.tags.find(t => t.value === tag.value))
-        //     const subSpecialtiesFromTags: Speciality[] = questionsCtx.allSubSpecialties.filter(s => s.tags.find(t => t.value === tag.value))
-        //     specialtiesFromTags.forEach(toAdd => {
-        //         const has = _selectedSpecialties.find(s => s.value === toAdd.value)
-        //         if (!has) _selectedSpecialties.push(toAdd)
-        //     })
-        //     subSpecialtiesFromTags.forEach(toAdd => {
-        //         const has = _selectedSubSpecialties.find(s => s.value === toAdd.value)
-        //         if (!has) _selectedSubSpecialties.push(toAdd)
-        //     })
-        //     questionsCtx.setSelectedSpecialties(_selectedSpecialties)
-        //     questionsCtx.setSelectedSubSpecialties(_selectedSubSpecialties)
-        // })
-    }, [selectedTags])
-
-    useEffect(() => {
-        // setAllSubSpecialties(selectedSpecialties.flatMap(s => s.children))
-    }, [allSubSpecialties])
+    interface HasValue {
+        value: string,
+    }
+    const distinctFilter = (value:HasValue, index: number, arr: HasValue[]): boolean => {
+        const items =  arr.filter(v => v.value === value.value);
+        if (items.length > 1){
+            return (items[0] === value)
+        }
+        return true;
+    }
 
     if (allSpecialties.length === 0) {
         setAllSpecialties(specialties
+            .filter(distinctFilter)
             .sort((o1,o2) => (o1.label.localeCompare(o2.label))))
         setAllSubSpecialties(specialties.flatMap(s => s.children)
+            .filter(distinctFilter)
             .sort((o1,o2) => (o1.label.localeCompare(o2.label)))
         )
-        setAllTags(specialties.flatMap(s => s.tags).concat( specialties.flatMap(s => s.children).flatMap( s=>  s.tags))
-            .sort((o1,o2) => (o1.label.localeCompare(o2.label)))
-        )
+        setAllTags(specialties.flatMap(s => s.tags)
+            .concat(specialties.flatMap(s => s.children)
+                .flatMap( s=>  s.tags))
+            .filter(distinctFilter)
+            .sort((o1,o2) => (o1.label.localeCompare(o2.label))))
     }
 
     const changeSelectedTags = (newSelectedTags) => {
@@ -118,6 +104,7 @@ export const FilterTemplate = () => {
                         image={iconSpecialties}
                         items={questionsCtx.allSpecialties}
                         onChange={v => {
+                            console.log( {v} , questionsCtx.selectedSpecialties )
                             questionsCtx.setSelectedSpecialties(v)
                             clearQuestions()
                         }}
