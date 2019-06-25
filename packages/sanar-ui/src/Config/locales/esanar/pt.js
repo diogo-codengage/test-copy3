@@ -313,7 +313,10 @@ export default {
         correct: 'Corretas',
         wrong: 'Erradas',
         skipped: 'Puladas',
-        quizFinalized: 'Quiz finalizado'
+        quizFinalized: 'Quiz finalizado',
+        bookmarkDocument: 'Favoritar material',
+        next: 'Próxima',
+        previous: 'Anterior'
     },
     footer: {
         helpButton: 'Precisa de ajuda?',

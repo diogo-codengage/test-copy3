@@ -8,6 +8,7 @@ import ESButton from '../../Atoms/Button'
 import { ESRow, ESCol } from '../../Atoms/Grid'
 
 const ESLessonHeaderExtra = ({
+    bookmarked,
     bookmarkLabel,
     className,
     previousLesson,
@@ -31,11 +32,15 @@ const ESLessonHeaderExtra = ({
                     block
                     className='bookmark'
                 >
-                    <ESEvaIcon name='heart-outline' />
+                    {bookmarked ? (
+                        <ESEvaIcon name='heart' key='bookmarked' />
+                    ) : (
+                        <ESEvaIcon name='heart-outline' key='not-bookmarked' />
+                    )}
                     {bookmarkLabel || t('classroom.header.extra.bookmark')}
                 </ESButton>
             </ESCol>
-            <ESCol xs={12} sm={8}>
+            <ESCol xs={12} sm={6}>
                 <ESButton
                     size='small'
                     variant='outlined'
@@ -47,7 +52,7 @@ const ESLessonHeaderExtra = ({
                     {previousLesson}
                 </ESButton>
             </ESCol>
-            <ESCol xs={12} sm={8}>
+            <ESCol xs={12} sm={6}>
                 <ESButton
                     size='small'
                     variant='outlined'
@@ -64,6 +69,7 @@ const ESLessonHeaderExtra = ({
 }
 
 ESLessonHeaderExtra.propTypes = {
+    bookmarked: PropTypes.book,
     bookmarkLabel: PropTypes.string,
     className: PropTypes.string,
     previousLesson: PropTypes.string,
@@ -73,9 +79,9 @@ ESLessonHeaderExtra.propTypes = {
     onBookmarked: PropTypes.func
 }
 
-ESLessonHeaderLeft.defaultProps = {
+ESLessonHeaderExtra.defaultProps = {
     previousLesson: 'Previous',
     nextLesson: 'Next'
 }
 
-export default ESLessonHeaderLeft
+export default ESLessonHeaderExtra

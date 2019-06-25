@@ -1,17 +1,39 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import ESLessonHeader, {
     ESLessonHeaderExtra
 } from 'sanar-ui/dist/Components/Molecules/LessonHeader'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import ESPdfReader from 'sanar-ui/dist/Components/Atoms/PdfReader'
-// import { useClassroomContext } from '../Context'
+import { useClassroomContext } from '../Context'
+import { useAuthContext } from 'Hooks/auth'
+import { CREATE_BOOKMARK } from 'Apollo/Classroom/mutations/bookmark'
+import { useApolloContext } from 'Hooks/apollo'
+import { useTranslation } from 'react-i18next'
 
 const SANClassRoomDocument = () => {
-    // const [content, setContent] = useState({})
-
-    // const { state, current } = useClassroomContext()
+    const { me } = useAuthContext()
+    const { t } = useTranslation('esanar')
+    const { current } = useClassroomContext()
+    const [bookmarked, setBookmarked] = useState(
+        current && current.document && current.document.bookmarked
+    )
+    const client = useApolloContext()
 
     // const handleNext = () => {}
+
+    const handleBookmarking = async () => {
+        
+        await client.mutate({
+            mutation: CREATE_BOOKMARK,
+            variables: {
+                resourceId: current.document.id,
+                resourceType: current.resource_type,
+                userId: me.id
+            }
+        })
+
+        setBookmarked(!bookmarked)
+    }
 
     return (
         <div
@@ -26,29 +48,47 @@ const SANClassRoomDocument = () => {
                 leftChildren={
                     <>
                         <ESTypography ellipsis level={5}>
-                            Aula 001
+                            {current &&
+                                current.document &&
+                                current.document.title}
                         </ESTypography>
                         <div className='subtitle'>
                             <ESTypography
                                 variant='subtitle2'
                                 className='subtitle__path'
                                 ellipsis
-                            >
-                                Subtitulo aula 001
-                            </ESTypography>
+                            />
                         </div>
                     </>
                 }
                 rightChildren={
                     <ESLessonHeaderExtra
-                        previousLesson='Anterior'
-                        nextLesson='Próxima'
-                        bookmarkLabel='Favoritar material'
+                        previousLesson={t('classroom.previous')}
+                        nextLesson={t('classroom.next')}
+                        bookmarkLabel={t('classroom.bookmarkDocument')}
+                        bookmarked={bookmarked}
+                        onBookmarked={handleBookmarking}
                     />
                 }
             />
-            <div style={{ height: '100%', width: '100%' }}>
-                <ESPdfReader url='https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf' />
+            <div
+                style={{
+                    height: '100%',
+                    width: '100%',
+                    display: 'flex',
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+            >
+                <ESPdfReader
+                    url={
+                        current &&
+                        current.document &&
+                        current.document.file &&
+                        current.document.file.url
+                    }
+                />
             </div>
         </div>
     )
