@@ -313,14 +313,17 @@ export default {
         correct: 'Corretas',
         wrong: 'Erradas',
         skipped: 'Puladas',
-        quizFinalized: 'Quiz finalizado'
+        quizFinalized: 'Quiz finalizado',
+        bookmarkDocument: 'Favoritar material',
+        next: 'Próxima',
+        previous: 'Anterior'
     },
     footer: {
         helpButton: 'Precisa de ajuda?',
-        phone: '71 3052-4831',
-        email: 'atendimento@e-sanar.com.b',
+        phone: '0 800 327 0035',
+        email: 'atendimento@editorasanar.com.br',
         attendance: 'Atendimento de Seg. a Sex. das 09h às 18h',
-        copyright: 'Copyright © E-sanar. Todos os direitos reservados.',
+        copyright: 'Copyright © Sanar. Todos os direitos reservados.',
         termsOfUse: 'Termos de Uso',
         privacyPolicy: 'Política de Privacidade'
     }

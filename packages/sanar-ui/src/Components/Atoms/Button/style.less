@@ -16,6 +16,11 @@
     align-items: center;
     justify-content: center;
 
+    & span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     &__variant {
         &--outlined {
             background-color: transparent;
@@ -54,6 +59,25 @@
                     opacity: 0.3;
                     border-color: @primary-color;
                     color: @primary-color;
+                }
+            }
+
+            &.secondary {
+                border-color: @secondary-color;
+                color: @secondary-color;
+
+                &:focus,
+                &:hover {
+                    background-color: @secondary-color !important;
+                }
+
+                &:active {
+                    background-color: @secondary-color !important;
+                }
+                &[disabled] {
+                    opacity: 0.3;
+                    border-color: @secondary-color;
+                    color: @secondary-color;
                 }
             }
 
@@ -129,6 +153,11 @@
                 border-color: @white-7 !important;
                 color: @white-7 !important;
             }
+
+            &.secondary {
+                background-color: @secondary-color;
+                color: @grey-7;
+            }
         }
 
         &--text {
@@ -181,6 +210,10 @@
                 background-color: transparent !important;
                 border-color: @white-7 !important;
                 color: @white-7 !important;
+            }
+            &.secondary {
+                background: transparent !important;
+                color: @secondary-color;
             }
         }
     }

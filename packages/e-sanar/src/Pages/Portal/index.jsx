@@ -11,6 +11,7 @@ import SANPortalLayout from './Layout'
 import SANCoursePage from './Course'
 import SANQuestionsPage from './Questions'
 import SANClassroomPage from './Classrom'
+import { SANPortalProvider } from './Context'
 
 const SANPortalRoutes = ({ match: { url } }) => {
     const { setMe } = useAuthContext()
@@ -22,29 +23,31 @@ const SANPortalRoutes = ({ match: { url } }) => {
                     {loading ? (
                         <ESSplashLoader />
                     ) : (
-                        <SANPortalLayout>
-                            <Switch>
-                                <Route
-                                    path={`${url}/curso`}
-                                    strict
-                                    component={SANCoursePage}
-                                />
-                                <Route
-                                    path={`${url}/banco-questoes`}
-                                    component={SANQuestionsPage}
-                                />
-                                <Route
-                                    path={`${url}/sala-aula/:id`}
-                                    component={SANClassroomPage}
-                                />
-                                <Route
-                                    path={[`${url}/`, `${url}`]}
-                                    render={() => (
-                                        <Redirect to={`${url}/curso`} />
-                                    )}
-                                />
-                            </Switch>
-                        </SANPortalLayout>
+                        <SANPortalProvider>
+                            <SANPortalLayout>
+                                <Switch>
+                                    <Route
+                                        path={`${url}/curso`}
+                                        strict
+                                        component={SANCoursePage}
+                                    />
+                                    <Route
+                                        path={`${url}/banco-questoes`}
+                                        component={SANQuestionsPage}
+                                    />
+                                    <Route
+                                        path={`${url}/sala-aula/:moduleId/:type?/:resourceId?`}
+                                        component={SANClassroomPage}
+                                    />
+                                    <Route
+                                        path={[`${url}/`, `${url}`]}
+                                        render={() => (
+                                            <Redirect to={`${url}/curso`} />
+                                        )}
+                                    />
+                                </Switch>
+                            </SANPortalLayout>
+                        </SANPortalProvider>
                     )}
                 </>
             )}

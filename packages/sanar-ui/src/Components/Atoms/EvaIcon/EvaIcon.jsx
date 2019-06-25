@@ -29,7 +29,8 @@ ESEvaIcon.propTypes = Object.assign(
             'error',
             'info',
             'default',
-            'light'
+            'light',
+            'grey'
         ]),
     }
 )

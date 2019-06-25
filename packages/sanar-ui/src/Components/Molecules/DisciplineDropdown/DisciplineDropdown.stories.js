@@ -5,20 +5,31 @@ import { object } from '@storybook/addon-knobs'
 
 const items = [
     {
-        description: 'Lorem ipsum dolor sit amet',
-        active: false,
-        completed: true
+        id: '123',
+        name: 'Odontologia Pratica',
+        progress: {
+            total: 3,
+            done: 1,
+            status: 'low'
+        }
     },
     {
-        description: 'Dolor sit amet',
-        active: true,
-        completed: false,
-        incomplete: true
+        id: '123',
+        name: 'Cirurgia Geral',
+        progress: {
+            total: 3,
+            done: 1,
+            status: 'low'
+        }
     },
     {
-        description: 'Ipsum dolor sit amet',
-        active: false,
-        completed: false
+        id: '123',
+        name: 'Ortopedia pediátrica',
+        progress: {
+            total: 3,
+            done: 1,
+            status: 'low'
+        }
     }
 ]
 

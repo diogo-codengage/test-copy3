@@ -7,6 +7,7 @@ import ESStopwatch from 'sanar-ui/dist/Components/Atoms/Stopwatch'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
+import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
@@ -19,49 +20,71 @@ const SANSubheader = forwardRef(
 
         return (
             <SANPortalPagesContainer className='video-quiz__subheader'>
-                <div className='video-quiz__subheader--left'>
-                    <ESTypography level={4} className='mr-xs text-white'>
-                        {`${t('classroom.question')} ${index + 1}`}
-                    </ESTypography>
-                    <ESTypography variant='body1' className='text-white-6'>
-                        {total > 999 ? `/ 999+` : `/ ${total}`}
-                    </ESTypography>
-                </div>
-                <div className='d-flex align-items-center'>
-                    <ESButton
-                        size='small'
-                        variant='outlined'
-                        color='white'
-                        onClick={toggleVisible}
+                <ESRow type='flex' justify='space-between' className='w-100'>
+                    <ESCol
+                        xs={24}
+                        sm={7}
+                        md={8}
+                        className='video-quiz__subheader--left'
                     >
-                        <ESEvaIcon name='map-outline' />
-                        {t('classroom.questionMap')}
-                    </ESButton>
-                    {stopwatch && (
-                        <ESStopwatch ref={ref} dark className='ml-lg' />
-                    )}
-                    <ESQuestionMap
-                        visible={visible}
-                        items={questions}
-                        current={index}
-                        onCancel={toggleVisible}
-                        mock={mock}
-                    />
-                </div>
-                <span className='d-flex align-items-center'>
-                    <ESButton
-                        size='small'
-                        variant='text'
-                        color='white'
-                        className='mr-sm'
+                        <ESTypography level={4} className='mr-xs text-white'>
+                            {`${t('classroom.question')} ${index + 1}`}
+                        </ESTypography>
+                        <ESTypography variant='body1' className='text-white-6'>
+                            {total > 999 ? `/ 999+` : `/ ${total}`}
+                        </ESTypography>
+                    </ESCol>
+                    <ESCol
+                        xs={24}
+                        sm={8}
+                        md={8}
+                        className='video-quiz__subheader--center'
                     >
-                        <ESEvaIcon name='heart-outline' />
-                        {t('classroom.favoriteQuestion')}
-                    </ESButton>
-                    <ESButton size='small' variant='text' color='white'>
-                        <ESEvaIcon name='more-vertical-outline' />
-                    </ESButton>
-                </span>
+                        <ESButton
+                            size='small'
+                            variant='outlined'
+                            color='white'
+                            onClick={toggleVisible}
+                        >
+                            <ESEvaIcon name='map-outline' />
+                            {t('classroom.questionMap')}
+                        </ESButton>
+                        {stopwatch && (
+                            <ESStopwatch ref={ref} dark className='ml-lg' />
+                        )}
+                        <ESQuestionMap
+                            visible={visible}
+                            items={questions}
+                            current={index}
+                            onCancel={toggleVisible}
+                            mock={mock}
+                        />
+                    </ESCol>
+                    <ESCol
+                        xs={24}
+                        sm={9}
+                        md={8}
+                        className='video-quiz__subheader--right'
+                    >
+                        <ESButton
+                            size='small'
+                            variant='text'
+                            color='white'
+                            className='mr-sm'
+                        >
+                            <ESEvaIcon name='heart-outline' />
+                            {t('classroom.favoriteQuestion')}
+                        </ESButton>
+                        <ESButton
+                            circle
+                            size='small'
+                            variant='text'
+                            color='white'
+                        >
+                            <ESEvaIcon name='more-vertical-outline' />
+                        </ESButton>
+                    </ESCol>
+                </ESRow>
             </SANPortalPagesContainer>
         )
     }

@@ -80,7 +80,8 @@ ESTypography.propTypes = {
         'success',
         'muted',
         'default',
-        'light'
+        'light',
+        'secondary'
     ])
 }
 

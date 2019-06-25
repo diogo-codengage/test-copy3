@@ -32,10 +32,35 @@
         justify-content: space-between;
         margin-top: @margin-md;
 
+        &--center,
+        &--right,
         &--left {
             display: flex;
             align-items: center;
             white-space: nowrap;
+        }
+
+        &--center {
+            justify-content: center;
+        }
+
+        &--right {
+            justify-content: flex-end;
+        }
+
+        @media (max-width: @screen-sm) {
+            &--left {
+                order: 1;
+            }
+            &--center {
+                order: 3;
+                justify-content: center;
+            }
+            &--right {
+                order: 2;
+                justify-content: space-between;
+                margin: @margin-sm 0;
+            }
         }
     }
 

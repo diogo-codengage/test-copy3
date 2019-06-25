@@ -1,19 +1,26 @@
 import React from 'react'
-
-import { Switch, Route } from 'react-router-dom'
-
 import ESSpin from 'sanar-ui/dist/Components/Atoms/Spin'
-
 import SANClassroomVideo from './Video'
-import SANClassroomMock from './Mock'
 import { useClassroomContext, withClassroomProvider } from './Context'
+import { usePortalContext } from '../Context'
 
-const SANClassroomPage = ({ match: { url } }) => {
+const renderResourceContent = resource => {
+    switch (resource.resource_type) {
+        case 'Video':
+            return <SANClassroomVideo />
+        default:
+            return <h1>Mock</h1>
+    }
+}
+
+const SANClassroomPage = ({ match: { params } }) => {
     const {
-        state: { loading, error }
+        state: { error }
     } = useClassroomContext()
 
-    if (loading)
+    const { currentResource, resourcesLoading } = usePortalContext()
+
+    if (resourcesLoading || !currentResource)
         return (
             <div className='classroom'>
                 <ESSpin className='classroom__loader' />
@@ -22,23 +29,10 @@ const SANClassroomPage = ({ match: { url } }) => {
 
     if (error) return <div className='classroom'>{`Error: ${error}`}</div>
 
+    // moduleId type resourceId
     return (
         <div className='classroom'>
-            <Switch>
-                <Route
-                    path={`${url}/video/:id`}
-                    component={SANClassroomVideo}
-                />
-                <Route
-                    path={`${url}/documento/:id`}
-                    render={() => <div>SANClassromDocument</div>}
-                    // component={SANClassroomDocument}
-                />
-                <Route
-                    path={`${url}/simulado/:id`}
-                    component={SANClassroomMock}
-                />
-            </Switch>
+            {renderResourceContent(currentResource)}
         </div>
     )
 }

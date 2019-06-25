@@ -29,7 +29,8 @@ const ESQuestion = ({
     stats,
     isHistoric,
     propsNext,
-    propsPrev
+    propsPrev,
+    labelMonitor
 }) => {
     const [striped, setStripe] = useState({})
     const [selected, setSelect] = useState()
@@ -190,7 +191,10 @@ const ESQuestion = ({
                 </div>
 
                 {question && comment && answer ? (
-                    <ESQuestionComment {...comment} />
+                    <ESQuestionComment
+                        {...comment}
+                        labelMonitor={labelMonitor}
+                    />
                 ) : (
                     undefined
                 )}
@@ -225,6 +229,7 @@ ESQuestion.propTypes = {
     onlyStep: PropTypes.bool,
     full: PropTypes.bool,
     isHistoric: PropTypes.bool,
+    labelMonitor: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     stats: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.string,
