@@ -14,7 +14,7 @@ const ESLessonHeaderExtra = ({
     className,
     previousLesson,
     nextLesson,
-    onPrevious,
+    onPrev,
     onNext
 }) => (
     <ESRow className={className} type='flex' gutter={12}>
@@ -23,11 +23,11 @@ const ESLessonHeaderExtra = ({
                 <ESBookmark {...{ bookmarked, bookmarkLabel, onBookmarked }} />
             </ESCol>
         )}
-        <ESCol xs={12} sm={6}>
+        <ESCol xs={12} sm={onBookmarked ? 6 : 7}>
             <ESButton
                 size='small'
                 variant='outlined'
-                onClick={onPrevious}
+                onClick={onPrev}
                 color='white'
                 block
                 disabled={!previousLesson}
@@ -36,7 +36,7 @@ const ESLessonHeaderExtra = ({
                 {previousLesson}
             </ESButton>
         </ESCol>
-        <ESCol xs={12} sm={6}>
+        <ESCol xs={12} sm={onBookmarked ? 6 : 7}>
             <ESButton
                 size='small'
                 variant='outlined'

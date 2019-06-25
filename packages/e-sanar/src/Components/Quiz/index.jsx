@@ -132,11 +132,11 @@ const SANQuiz = ({
     }
 
     useEffect(() => {
-        if (stopwatchRef && stopwatchRef.current) {
+        if (stopwatchRef.current) {
             stopwatchRef.current.start()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [stopwatchRef.current])
+    }, [stopwatchRef.current, data])
 
     useEffect(() => {
         setIsFull(width <= 992)

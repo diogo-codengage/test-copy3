@@ -1,4 +1,5 @@
 import React, { useState, forwardRef } from 'react'
+import classNames from 'classnames'
 
 import { useTranslation } from 'react-i18next'
 
@@ -60,9 +61,13 @@ const SANSubheader = forwardRef(
                             <ESEvaIcon name='map-outline' />
                             {t('classroom.questionMap')}
                         </ESButton>
-                        {stopwatch && (
-                            <ESStopwatch ref={ref} dark className='ml-lg' />
-                        )}
+                        <ESStopwatch
+                            ref={ref}
+                            dark
+                            className={classNames('ml-lg', {
+                                hide: !stopwatch
+                            })}
+                        />
                         <ESQuestionMap
                             visible={visible}
                             items={questions}

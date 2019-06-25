@@ -32,7 +32,7 @@ const renderTabBar = ({
             <ESLessonHeaderExtra
                 previousLesson={prevResource}
                 nextLesson={nextResource}
-                onPrevious={onPrev}
+                onPrev={onPrev}
                 onNext={onNext}
                 bookmarked={bookmarked}
                 onBookmarked={handleBookmark}
