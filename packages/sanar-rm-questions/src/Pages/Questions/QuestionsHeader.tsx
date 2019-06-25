@@ -72,18 +72,6 @@ export const QuestionsHeader = () => {
 
     }
 
-    if( currentPage === QuestionPageType.EndSession) {
-
-        menuAction = <ESButton
-            color='primary'
-            variant='solid'
-            uppercase
-            blockOnlyMobile
-            onClick={() => setCurrentPage(QuestionPageType.Filter)}
-        >Tentar novamente</ESButton>
-
-    }
-
     return <>
         <RMHeader
             title={isFromCourse() ? course.moduleName : 'Área de Prática'}

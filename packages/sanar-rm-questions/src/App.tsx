@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.less'
-import { RMGraphQLProvider } from './Apollo/RMGraphQLProvider'
+import { RMGraphQLProvider } from './Apollo/Apollo/RMGraphQLProvider'
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
 import 'sanar-ui/dist/Config/i18n'
 import { QuestionsPage } from './Pages/Questions/QuestionsPage'

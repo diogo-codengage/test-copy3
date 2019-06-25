@@ -1,30 +1,26 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { QuestionTemplate } from './QuestionTemplate'
-import { ApolloContext } from 'react-apollo'
-import { getQuestionsQuery } from '../../../Apollo/Questions/get-questions'
 import { useQuestionsContext } from '../QuestionsContext'
-import { questionAnswer } from '../../../Apollo/Questions/questionAnswer'
-import { questionSkip } from '../../../Apollo/Questions/questionSkip'
-import { QuestionsInputFilter } from '../../../Apollo/Questions/QuestionsInputFilter'
+import { QuestionsInputFilter } from '../../../Apollo/Apollo/Questions/QuestionsInputFilter'
+import { BFFService } from '../../../Apollo/BFFService'
 
 export const Question = () => {
 
     const questionsCtx = useQuestionsContext()
-    const { client } = useContext(ApolloContext)
 
     const [stats, setStats] = useState()
     const [loading, setLoading] = useState(false)
 
-    const getFilters = (): QuestionsInputFilter  => {
+    const getParamsFromFilters = (): QuestionsInputFilter  => {
         return  {
             tagsIds: questionsCtx.selectedTags.map( t => t.value),
-            state: questionsCtx.formFilterState.selectedYear,
+            states: questionsCtx.selectedStates.map(s => s.value),
             specialtiesIds: questionsCtx.selectedSpecialties
                 .map(s => s.value)
                 .concat(questionsCtx.selectedSubSpecialties
                     .map(s => s.value)),
-            isCommentedByExpert: questionsCtx.formFilterState.isCommentedByExpert,
-            year: questionsCtx.formFilterState.selectedYear ? parseInt(questionsCtx.formFilterState.selectedYear.format('YYYY')) : null
+            isCommentedByExpert: questionsCtx.isCommentedByExpert,
+            years: questionsCtx.selectedYears.map(v => v.value)
         }
     }
 
@@ -49,24 +45,14 @@ export const Question = () => {
     }
 
     const loadMoreQuestions = () => {
-        const filters = getFilters();
-        console.log({filters})
-        client.query(
-            {
-                query: getQuestionsQuery(filters),
-                fetchPolicy: 'no-cache'
-            })
+        const filters = getParamsFromFilters();
+        BFFService.loadMoreQuestions(filters)
             .then(({ data }) => pushQuestions(data.questions.data))
     }
 
-    const onSkipQuestion = ({id: questionId}) => {
+    const onSkipQuestion = ({id}) => {
         loadNextQuestion()
-
-        client.mutate({
-            mutation: questionSkip,
-            variables: {questionId},
-        }).then(() => {})
-
+        BFFService.skipQuestion(id)
         questionsCtx.increaseTotalSkipped()
     }
 
@@ -79,37 +65,22 @@ export const Question = () => {
     }
 
     const onConfirmResponse = (alternativeId) => {
-        console.log('onConfirmResponse')
-        console.log(alternativeId)
         const answerId = questionsCtx.currentQuestion.alternatives.data
             .find(alternative => alternative.correct === true).id
-
-        if(!alternativeId){
-            return
-        }
-
         const correct = alternativeId === answerId
         const questionId = questionsCtx.currentQuestion.id;
-
         setLoading(true)
-        client.mutate({mutation: questionAnswer, variables: {
-
-            alternativeId, correct, questionId}})
-            .then(({data, errors}) => {
-                console.log({data, errors})
-
-                setStats(data.questionAnswer.stats.alternatives)
-                setLoading(false)
-
-                if(correct) {
-                    questionsCtx.increaseTotalCorrect()
-                }else {
-                    questionsCtx.increaseTotalWrong()
-                }
-
-                questionsCtx.setCurrentAnswerId(answerId)
-
-            })
+        BFFService.confirmResponse({alternativeId, correct, questionId})
+        .then(({data}) => {
+            setStats(data.questionAnswer.stats.alternatives)
+            setLoading(false)
+            if(correct) {
+                questionsCtx.increaseTotalCorrect()
+            }else {
+                questionsCtx.increaseTotalWrong()
+            }
+            questionsCtx.setCurrentAnswerId(answerId)
+        })
     }
 
     return (

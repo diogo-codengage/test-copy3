@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
     QuestionsContext,
-    IFormFilterState,
     QuestionPageType,
     IQuestionsContext,
     VideoParams
 } from './QuestionsContext'
 import { QuestionsTemplate } from './QuestionsTemplate'
 import { RouteComponentProps } from 'react-router'
+import { BFFService } from '../../Apollo/BFFService'
 
 interface IRouteProps {
     videoParams
@@ -37,14 +37,13 @@ export const QuestionsPage = (props: IProps) => {
 
     const [specialties, setSpecialties] = useState()
 
-    const [formFilterState, setFormFilterState] = useState<IFormFilterState>({
-        selectedState: null,
-        selectedYear: null,
-        isCommentedByExpert: false
-    })
     const [selectedSpecialties, setSelectedSpecialties] = useState([])
     const [selectedSubSpecialties, setSelectedSubSpecialties] = useState([])
     const [selectedTags, setSelectedTags] = useState([])
+
+    const [selectedStates, setSelectedStates] = useState([]);
+    const [selectedYears, setSelectedYears] = useState([])
+    const [isCommentedByExpert, setCommentedByExpert] = useState(false);
 
     const [allSpecialties, setAllSpecialties] = useState([])
     const [allSubSpecialties, setAllSubSpecialties] = useState([])
@@ -63,6 +62,20 @@ export const QuestionsPage = (props: IProps) => {
     const increaseTotalWrong = () => {
         setTotalWrong(totalWrong + 1)
     }
+
+
+    const onInit = () => {
+        BFFService.getSpecialties().then((specialties) => {
+            setSpecialties(specialties)
+        });
+        // BFFService.getTags().then((specialties) => {
+        //     setT(specialties)
+        // });
+    }
+
+    useEffect(() => {
+        onInit()
+    }, [])
 
     const value: IQuestionsContext = {
         loading,
@@ -93,9 +106,6 @@ export const QuestionsPage = (props: IProps) => {
         specialties,
         setSpecialties,
 
-        formFilterState,
-        setFormFilterState,
-
         selectedSpecialties,
         setSelectedSpecialties,
         selectedSubSpecialties,
@@ -108,6 +118,13 @@ export const QuestionsPage = (props: IProps) => {
         setAllSubSpecialties,
         allTags,
         setAllTags,
+
+        selectedStates,
+        setSelectedStates,
+        selectedYears,
+        setSelectedYears,
+        isCommentedByExpert,
+        setCommentedByExpert,
 
         showAdvancedFilters,
         setShowAdvancedFilters,

@@ -1,7 +1,7 @@
 export interface QuestionsInputFilter {
     specialtiesIds?: string[],
     tagsIds?: string[],
-    state?: string,
-    year?: number,
+    states?: string[],
+    years?: string[],
     isCommentedByExpert?: boolean;
 }

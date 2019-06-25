@@ -32,7 +32,7 @@ const abreviations = [
     'SE',
     'TO']
 
-export const BRAZIL_STATES: State[] = abreviations.map(s =>
+export const BRAZIL_STATES: State[] = abreviations.sort().map(s =>
     ({
         value: s,
         label: s,

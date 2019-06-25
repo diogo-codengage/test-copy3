@@ -1,5 +1,5 @@
 import { gql } from 'apollo-boost'
-import { QuestionsInputFilter } from './QuestionsInputFilter'
+import { QuestionsInputFilter } from '../../QuestionsInputFilter'
 
 export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
 
@@ -9,8 +9,8 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
         where.isCommentedByExpert = true;
     }
 
-    if(filter.year) {
-        where.year = filter.year
+    if(filter.years.length > 0) {
+        // where.year = filter.year
     }
 
     const whereFilter = ` ,where: "${JSON.stringify(where).replace(/"/g, '\\"') }" `
@@ -22,6 +22,7 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
                     id,
                     statement,
                     type,
+                    year,
                     alternatives {
                         data {
                             id,

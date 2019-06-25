@@ -1,18 +1,12 @@
 import { createContext, useContext } from 'react'
-import { Question } from '../../Apollo/Questions/question'
-import { Speciality } from '../../Apollo/Questions/speciality'
-import { Tag } from '../../Apollo/Questions/tag'
+import { Question } from '../../Apollo/Apollo/Questions/question'
+import { Speciality } from '../../Apollo/Apollo/Questions/speciality'
+import { Tag } from '../../Apollo/Apollo/Questions/tag'
+import { ISelectOption } from '../../Components/ESSelect'
 
 export enum QuestionPageType {
     Filter,
     Question,
-    EndSession,
-}
-
-export interface IFormFilterState {
-    selectedState: any,
-    selectedYear: any,
-    isCommentedByExpert: boolean
 }
 
 export interface VideoParams {
@@ -22,7 +16,6 @@ export interface VideoParams {
     moduleName: string;
     subSpecialtyName: string;
     specialtyName: string;
-
 }
 
 export interface IQuestionsContext {
@@ -57,8 +50,12 @@ export interface IQuestionsContext {
     specialties: Speciality[]
     setSpecialties: (specialties: Speciality[]) => void
 
-    formFilterState: IFormFilterState
-    setFormFilterState: (filters: IFormFilterState) => void
+    selectedStates: ISelectOption[]
+    setSelectedStates: (values: ISelectOption[]) => void
+    selectedYears: ISelectOption[]
+    setSelectedYears: (values: ISelectOption[]) => void
+    isCommentedByExpert: boolean
+    setCommentedByExpert: (value: boolean) => void
 
     selectedSpecialties: Speciality[]
     setSelectedSpecialties: (selectedSpecialties: Speciality[]) => void
