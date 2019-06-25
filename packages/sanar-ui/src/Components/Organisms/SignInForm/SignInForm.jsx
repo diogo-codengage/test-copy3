@@ -87,7 +87,7 @@ const ESSignInForm = ({
                 <ESForm
                     form={form}
                     onSubmit={signIn}
-                    customValidator={validator()}
+                    customValidator={() => validator()}
                 >
                     <ESRow className='es-sign-in-form--social' gutter={16}>
                         <ESCol xs={24} sm={12}>
