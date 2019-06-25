@@ -50,6 +50,8 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
     const [current, setCurrent] = useState({})
     const [state, dispatch] = useReducer(reducer, initialState)
 
+    const { me } = useAuthContext()
+
     useEffect(() => {
         const fetchData = async () => {
             dispatch({ type: 'loading' })
@@ -120,7 +122,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
             }
         }
         fetchData()
-    }, [params.id, client, history])
+    }, [params.id, client, history, me])
 
     const value = {
         state,
