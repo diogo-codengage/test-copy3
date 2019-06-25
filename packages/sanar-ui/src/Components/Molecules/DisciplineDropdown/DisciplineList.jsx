@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESTypography from '../../Atoms/Typography'
 
-const ESDisciplineList = ({ className, items, onSelect }) => {
+const ESDisciplineList = ({ className, items, activeId, onSelect }) => {
     const classes = classNames(
         'es-discipline-dropdown__menu__content',
         className
@@ -12,13 +12,14 @@ const ESDisciplineList = ({ className, items, onSelect }) => {
 
     const renderItems = useCallback(
         (item, index) => {
+            const { total, done } = item.progress
             const classes = classNames(
                 'es-discipline-dropdown__menu__content--item',
                 {
                     'es-discipline-dropdown__menu__content--item--active':
-                        item.active,
+                        item.id === activeId,
                     'es-discipline-dropdown__menu__content--item--has-suffix':
-                        item.completed || item.incomplete
+                        done > 0
                 }
             )
 
@@ -28,14 +29,14 @@ const ESDisciplineList = ({ className, items, onSelect }) => {
                     key={index}
                     onClick={() => onSelect(item)}
                 >
-                    {item.completed ? (
+                    {total == done ? (
                         <ESEvaIcon name='checkmark-outline' />
                     ) : (
-                        item.incomplete && <ESEvaIcon name='minus-outline' />
+                        done > 0 && <ESEvaIcon name='minus-outline' />
                     )}
                     <ESTypography variant='body2'>
                         {`${index + 1} - `}
-                        {item.description}
+                        {item.name}
                     </ESTypography>
                 </div>
             )

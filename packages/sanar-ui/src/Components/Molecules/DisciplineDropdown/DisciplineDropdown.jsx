@@ -7,30 +7,54 @@ import ESCircleProgress from '../../Atoms/CircleProgress'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESDisciplineList from './DisciplineList'
 import ESTypography from '../../Atoms/Typography'
+import ESSkeleton from '../../Atoms/Skeleton'
 
-const ESDisciplineDropdown = ({ className, items, onSelect }) => {
+const ESDisciplineDropdown = ({
+    className,
+    items,
+    activeItem,
+    loading,
+    onSelect
+}) => {
     const classes = classNames('es-discipline-dropdown', className)
     const [open, setOpen] = useState(false)
 
     const totalDisicplines = items.length
-    const currentDiscipline = items.findIndex(item => item.active) + 1
-    const activeDiscipline = items.find(item => item.active).description
+    const currentDiscipline =
+        items.findIndex(item => item.progress.done < item.progress.total) + 1
 
-    const calcProgress = () =>
-        items.filter(item => item.completed).length === items.length
-            ? 100
-            : (currentDiscipline * 100) / totalDisicplines
+    const calcProgress = () => 0
+    items.filter(item => item.progress.done === item.progress.total).length ===
+    items.length
+        ? 100
+        : (currentDiscipline * 100) / totalDisicplines
 
     const openControl = useCallback(() => {
         setOpen(!open)
     }, [open])
 
-    return (
+    const onSelectItem = item => {
+        setOpen(false)
+        onSelect(item)
+    }
+
+    return loading ? (
+        <div className='es-discipline-dropdown--loading'>
+            <ESSkeleton dark avatar paragraph={{ rows: 0 }} active />
+        </div>
+    ) : (
         <ESDropdown
-            overlay={<ESDisciplineList onSelect={onSelect} items={items} />}
+            overlay={
+                <ESDisciplineList
+                    onSelect={onSelectItem}
+                    activeId={activeItem.id}
+                    items={items}
+                />
+            }
             className={classes}
             trigger={['click']}
             onVisibleChange={openControl}
+            visible={open}
         >
             <div className='es-discipline-dropdown__menu'>
                 <div className='d-flex align-items-center'>
@@ -56,7 +80,7 @@ const ESDisciplineDropdown = ({ className, items, onSelect }) => {
                         trailColor='grey'
                     />
                     <ESTypography variant='body2'>
-                        {activeDiscipline}
+                        {activeItem.name}
                     </ESTypography>
                 </div>
 
