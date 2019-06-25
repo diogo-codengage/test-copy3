@@ -36,8 +36,7 @@ const items = [
         id: 5,
         type: 'Video',
         description: 'Nome da aula grande fica lorem ipsum bla etc',
-        time: '15:00',
-        current: true
+        time: '15:00'
     },
     {
         id: 6,
@@ -74,7 +73,12 @@ storiesOf('Molecules.Playlist', module)
         () => (
             <ESPlaylistList>
                 {items.map((item, i) => (
-                    <ESPlaylistItem key={item.id} index={i + 1} {...item} />
+                    <ESPlaylistItem
+                        key={item.id}
+                        index={i + 1}
+                        {...item}
+                        current={i === 4}
+                    />
                 ))}
             </ESPlaylistList>
         ),
@@ -86,7 +90,7 @@ storiesOf('Molecules.Playlist', module)
             }
         }
     )
-    .add('Controlled', () => <ESPlaylist items={items} />, {
+    .add('Controlled', () => <ESPlaylist items={items} current={4} />, {
         style: {
             backgroundColor: '#242938',
             padding: 20,

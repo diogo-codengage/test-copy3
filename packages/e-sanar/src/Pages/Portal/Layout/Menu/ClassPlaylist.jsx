@@ -42,18 +42,12 @@ const SANClassPlaylist = ({ history }) => {
         const {
             level_contents: { data: playlist }
         } = currentModule
-        if (!resourcesLoading && playlist.length > 0 && currentResource) {
-            playlist.map(item => {
-                return item.index === currentResource.index
-                    ? (item.current = true)
-                    : (item.current = false)
-            })
-        }
 
         return (
             <ESPlaylist
-                loading={resourcesLoading || playlist.length <= 0}
+                loading={resourcesLoading}
                 items={playlist}
+                currentIndex={currentResource && currentResource.index}
                 goToResource={goToResource}
             />
         )

@@ -11,13 +11,13 @@ const icons = {
     Quiz: 'edit-outline'
 }
 
-const ESPlaylist = ({ className, index, item, onClick }) => {
+const ESPlaylist = ({ className, index, item, current, onClick }) => {
     const { title, time, finish } = item[item.resource_type.toLowerCase()]
     const classes = classNames(
         'es-playlist-list__item',
         {
             'es-playlist-list__item--finish': finish,
-            'es-playlist-list__item--current': item.current
+            'es-playlist-list__item--current': current
         },
         className
     )
@@ -55,7 +55,8 @@ ESPlaylist.propTypes = {
     index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     type: PropTypes.oneOf(Object.keys(icons)),
     description: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-    time: PropTypes.oneOfType([PropTypes.node, PropTypes.string])
+    time: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+    current: PropTypes.bool
 }
 ESPlaylist.defaultProps = {}
 
