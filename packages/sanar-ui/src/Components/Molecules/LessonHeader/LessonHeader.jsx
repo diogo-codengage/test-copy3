@@ -20,12 +20,13 @@ const ESLessonHeader = ({
 }) => {
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-lesson-header', className)
+
     return (
         <ESRow
             className={classes}
             type='flex'
             justify='space-between'
-            align='middle'
+            align='bottom'
         >
             {leftChildren && (
                 <ESCol
@@ -58,7 +59,7 @@ const ESLessonHeader = ({
                 <ESCol
                     xs={24}
                     md={24}
-                    lg={8}
+                    lg={{ span: 8, push: 1 }}
                     className='es-lesson-header__center'
                 >
                     {children}

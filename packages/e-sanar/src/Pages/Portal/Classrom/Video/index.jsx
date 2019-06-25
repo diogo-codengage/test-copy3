@@ -123,6 +123,7 @@ const SANClassroomVideo = () => {
                 <ESTabs
                     dark
                     center
+                    tabBarGutter={0}
                     defaultActiveKey='1'
                     renderTabBar={renderTabBar({
                         title: current.video.title,
