@@ -1,5 +1,4 @@
 import React from 'react'
-import classNames from 'classnames'
 import { Layout as ANTDLayout, Divider as ANTDivider } from 'antd'
 import { useTranslation } from 'react-i18next'
 
@@ -13,23 +12,21 @@ import logoSvg from 'assets/images/logo.svg'
 import whiteLogo from 'assets/images/white-logo.svg'
 
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
+import { usePortalContext } from '../Context'
 
 const SANFooter = () => {
     const { t } = useTranslation('esanar')
-
-    //Vini, add your context call here and replace it.
-    const dark = false
+    const { darkMode } = usePortalContext()
 
     return (
         <ANTDLayout.Footer
-            className={classNames(
-                'san-portal-layout__footer',
-                `san-portal-layout__footer--${dark ? 'dark' : 'light'}`
-            )}
+            className={`san-portal-layout__footer--${
+                darkMode ? 'dark' : 'light'
+            }`}
         >
             <ANTDivider
                 className={`san-portal-layout__footer--divider${
-                    dark ? '-dark' : ''
+                    darkMode ? '-dark' : ''
                 }`}
             />
             <SANPortalPagesContainer>
@@ -46,7 +43,7 @@ const SANFooter = () => {
                         lg={3}
                         className='san-portal-layout__footer--contact--logo'
                     >
-                        <img src={dark ? whiteLogo : logoSvg} alt='' />
+                        <img src={darkMode ? whiteLogo : logoSvg} alt='' />
                     </ESCol>
                     <ESCol
                         xs={24}
@@ -60,7 +57,7 @@ const SANFooter = () => {
                             size='xsmall'
                             uppercase
                             bold
-                            color={dark ? 'light' : 'default'}
+                            color={darkMode ? 'light' : 'default'}
                             variant='outlined'
                         >
                             <ESTypography className='san-portal-layout__footer--contact--help-button'>
@@ -77,9 +74,9 @@ const SANFooter = () => {
                     >
                         <ESEvaIcon
                             name='phone-outline'
-                            color={dark ? 'light' : 'default'}
+                            color={darkMode ? 'light' : 'default'}
                         />
-                        <ESTypography type={dark ? 'light' : 'default'}>
+                        <ESTypography type={darkMode ? 'light' : 'default'}>
                             {t('footer.phone')}
                         </ESTypography>
                     </ESCol>
@@ -92,9 +89,9 @@ const SANFooter = () => {
                     >
                         <ESEvaIcon
                             name='email-outline'
-                            color={dark ? 'light' : 'default'}
+                            color={darkMode ? 'light' : 'default'}
                         />
-                        <ESTypography type={dark ? 'light' : 'default'}>
+                        <ESTypography type={darkMode ? 'light' : 'default'}>
                             {t('footer.email')}
                         </ESTypography>
                     </ESCol>
@@ -107,7 +104,7 @@ const SANFooter = () => {
                     >
                         <ESTypography
                             variant='caption'
-                            type={dark ? 'light' : 'default'}
+                            type={darkMode ? 'light' : 'default'}
                         >
                             {t('footer.attendance')}
                         </ESTypography>
@@ -116,7 +113,7 @@ const SANFooter = () => {
             </SANPortalPagesContainer>
             <ANTDivider
                 className={
-                    dark ? 'san-portal-layout__footer--divider-dark' : null
+                    darkMode ? 'san-portal-layout__footer--divider-dark' : null
                 }
             />
             <ESRow
@@ -128,7 +125,7 @@ const SANFooter = () => {
                 <ESCol>
                     <ESTypography
                         variant='caption'
-                        type={dark ? 'light' : 'default'}
+                        type={darkMode ? 'light' : 'default'}
                     >
                         {t('footer.copyright')}
                     </ESTypography>
@@ -136,7 +133,7 @@ const SANFooter = () => {
                 <ESCol>
                     <ESTypography
                         variant='caption'
-                        type={dark ? 'light' : 'default'}
+                        type={darkMode ? 'light' : 'default'}
                         strong
                     >
                         <a href='foo'>{t('footer.termsOfUse')}</a>
