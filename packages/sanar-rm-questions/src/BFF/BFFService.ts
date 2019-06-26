@@ -8,16 +8,16 @@ import { questionAnswer } from './Apollo/Mutations/questionAnswer'
 import { Tag } from './tag'
 
 
-interface HasValue {
-    value: string,
-}
-const distinctFilter = (value:HasValue, index: number, arr: HasValue[]): boolean => {
-    const items =  arr.filter(v => v.value === value.value);
-    if (items.length > 1){
-        return (items[0] === value)
-    }
-    return true;
-}
+// interface HasValue {
+//     value: string,
+// }
+// const distinctFilter = (value:HasValue, index: number, arr: HasValue[]): boolean => {
+//     const items =  arr.filter(v => v.value === value.value);
+//     if (items.length > 1){
+//         return (items[0] === value)
+//     }
+//     return true;
+// }
 
 const normalizeSpecialties = (list) => {
 

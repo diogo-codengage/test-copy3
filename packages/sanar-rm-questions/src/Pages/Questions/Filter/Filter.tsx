@@ -1,7 +1,6 @@
 import React from 'react'
 import { FilterTemplate, IFilterTemplateProps } from './FilterTemplate'
 import { useQuestionsContext } from '../QuestionsContext'
-import { ESSelect } from '../../../Components/ESSelect'
 import { Speciality } from '../../../BFF/speciality'
 
 export const Filter: React.FC = () => {

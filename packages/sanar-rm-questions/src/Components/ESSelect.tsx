@@ -57,7 +57,7 @@ export const ESSelect: React.FC<IProps> = (props) => {
                     <Checkbox
                         style={{ padding: 5, marginLeft: 8 }}
                         key={s.value}
-                        checked={!!props.defaultValue.find((e: ISelectOption) => e.value == s.value)}
+                        checked={!!props.defaultValue.find((e: ISelectOption) => e.value === s.value)}
                         onChange={e => onchange(e, s)}
                     >{s.label}</Checkbox>
                 )}
