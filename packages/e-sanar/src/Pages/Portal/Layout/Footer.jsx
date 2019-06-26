@@ -26,9 +26,8 @@ const modalTermsContent = [
     }
 ]
 
-const SANFooter = () => {
+const SANFooter = ({ darkMode }) => {
     const { t } = useTranslation('esanar')
-    const { darkMode } = usePortalContext()
     const [openTerms, setOpenTerms] = useState(false)
     const [openPrivacy, setOpenPrivacy] = useState(false)
 
