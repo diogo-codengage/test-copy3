@@ -113,7 +113,7 @@ const ESJwPlayer = forwardRef(
             if (player.getWidth() > 1024) {
                 player.resize('100vw', '100vh')
             } else {
-                player.resize('100vw', 'calc(100vh - 160px)')
+                player.resize('100vw', 'calc(100vh - 205px)')
             }
 
             setIsReady(true)
