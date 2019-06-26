@@ -2,7 +2,7 @@ import React from 'react'
 
 const { NODE_ENV } = process.env
 
-export const HeathCheck: React.FC = () => {
+export const HealthCheck: React.FC = () => {
 
     return (
         <>
