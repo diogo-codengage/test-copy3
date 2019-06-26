@@ -4,6 +4,7 @@ import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
 import 'sanar-ui/dist/Config/i18n'
 import { QuestionsPage } from './Pages/Questions/QuestionsPage'
 import { HomePage } from './Pages/Home/HomePage'
+import { HeathCheck } from './Pages/HealthCheck/HealthCheck'
 
 const App: React.FC = () => {
     return (
@@ -21,6 +22,11 @@ const App: React.FC = () => {
                         <Route
                             path={`/pratica-curso/:videoParams`}
                             component={QuestionsPage}
+                        />
+                        <Route
+                            path={`/health`}
+                            exact
+                            component={HeathCheck}
                         />
                         <Route
                             path={`/*`}
