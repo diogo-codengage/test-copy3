@@ -1,35 +1,64 @@
-import React, { useContext } from 'react'
-import { FilterTemplate } from './FilterTemplate'
-import { GET_FILTERS } from '../../../Apollo/Questions/get-filters'
+import React from 'react'
+import { FilterTemplate, IFilterTemplateProps } from './FilterTemplate'
 import { useQuestionsContext } from '../QuestionsContext'
-import { ApolloContext } from 'react-apollo'
+import { Speciality } from '../../../BFF/speciality'
 
-const normalizeSpecialties = (list) => {
+export const Filter: React.FC = () => {
 
-    list.forEach(e => e.tags = e.tags.data)
-    const roots = list.filter(s => s.parent === null)
-    roots.forEach(e => e.children = [])
+    const ctx = useQuestionsContext()
 
-    list.filter(s => s.parent !== null)
-        .forEach(child => roots.find(r => r.value === child.parent.value).children.push(child))
-
-    return roots
-}
-
-export const Filter = () => {
-    const questionsCtx = useQuestionsContext()
-    const { client } = useContext(ApolloContext)
-    const hasSpecialties = !!questionsCtx.specialties
-
-    if (hasSpecialties) {
-        return <FilterTemplate/>
-    } else {
-        questionsCtx.setLoading(true)
-        client.query({ query: GET_FILTERS }).then(({ data }) => {
-            questionsCtx.setSpecialties(normalizeSpecialties(data.specialties.data))
-            questionsCtx.setLoading(false)
-        })
-        return <></>
+    const clearQuestions = () => {
+        ctx.setQuestions([])
+        ctx.setCurrentQuestion(null)
+        ctx.setCurrentAnswerId(null)
     }
 
+    const params: IFilterTemplateProps = {
+
+        allSpecialties: ctx.allSpecialties,
+        allSubSpecialties: ctx.allSubSpecialties,
+        allTags: ctx.allTags,
+
+        setSelectedSpecialties: (specialities: Speciality[]) => {
+            ctx.setSelectedSpecialties(specialities)
+            ctx.setAllSubSpecialties( specialities.flatMap(s => s.children) )
+            clearQuestions()
+        },
+        setSelectedSubSpecialties: v => {
+            ctx.setSelectedSubSpecialties(v)
+            clearQuestions()
+        },
+        setSelectedTags: v => {
+            ctx.setSelectedTags(v)
+            clearQuestions()
+        },
+        setSelectedStates: v => {
+            ctx.setSelectedStates(v)
+            clearQuestions()
+        },
+        setSelectedYears: v => {
+            console.log( {years: v})
+            ctx.setSelectedYears(v)
+            clearQuestions()
+        },
+        setCommentedByExpert: v => {
+            ctx.setCommentedByExpert(v)
+            clearQuestions()
+        },
+
+        selectedSpecialties: ctx.selectedSpecialties,
+        selectedSubSpecialties: ctx.selectedSubSpecialties,
+        selectedTags: ctx.selectedTags,
+        selectedStates: ctx.selectedStates,
+        selectedYears: ctx.selectedYears,
+        isCommentedByExpert: ctx.isCommentedByExpert,
+
+        showAdvancedFilters: ctx.showAdvancedFilters,
+        setShowAdvancedFilters: ctx.setShowAdvancedFilters
+
+    } as IFilterTemplateProps
+
+    return (
+        <FilterTemplate {...params} />
+    )
 }

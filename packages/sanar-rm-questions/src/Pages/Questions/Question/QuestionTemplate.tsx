@@ -53,6 +53,7 @@ export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: 
             >Ver filtros</ESButton>
             }
         </div>
+
         <ESQuestion
             loading={loading || !currentQuestion}
             question={currentQuestion}
@@ -63,6 +64,7 @@ export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: 
             onNext={onNext}
             onJump={onJump}
             onlyStep={true}
+            labelMonitor={'Ninja Sanar'}
         />
 
     </RMContainer>

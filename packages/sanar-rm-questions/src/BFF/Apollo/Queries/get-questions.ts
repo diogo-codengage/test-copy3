@@ -1,18 +1,40 @@
 import { gql } from 'apollo-boost'
-import { QuestionsInputFilter } from './QuestionsInputFilter'
+import { QuestionsInputFilter } from '../../QuestionsInputFilter'
 
 export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
 
     const where:any = {};
 
+    //institution_id: { inq: [] as string[] },
+
+    if(filter.specialtiesIds.length > 0) {
+        where.specialty_ids = {
+            inq : filter.specialtiesIds
+        }
+    }
+
+    if(filter.tagsIds.length > 0) {
+        where.tag_ids = {
+            inq : filter.tagsIds
+        }
+    }
+
+    if(filter.states.length > 0){
+        where['institution_states'] = {
+            inq : filter.states
+        }
+    }
+
+    if(filter.years.length > 0) {
+        where.year = {
+            inq: filter.years.map(parseInt)
+        }
+    }
     if(filter.isCommentedByExpert) {
         where.isCommentedByExpert = true;
     }
 
-    if(filter.year) {
-        where.year = filter.year
-    }
-
+    console.log({where})
     const whereFilter = ` ,where: "${JSON.stringify(where).replace(/"/g, '\\"') }" `
 
     const queryWithParams = `
@@ -22,6 +44,7 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
                     id,
                     statement,
                     type,
+                    year,
                     alternatives {
                         data {
                             id,
