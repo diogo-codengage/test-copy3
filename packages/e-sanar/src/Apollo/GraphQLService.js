@@ -9,9 +9,30 @@ const getCurrentTokenSession = () => {
     })
 }
 
+const errorHandler = async ({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+        graphQLErrors.map(({ message, locations, path }) =>
+            console.log(
+                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+            )
+        )
+
+    if (networkError) {
+        console.log(`[Network error]: ${JSON.stringify(networkError)}`)
+        switch (networkError.code) {
+            case 'NotAuthorizedException':
+                await Auth.signOut()
+                window.location.reload()
+                break
+            default:
+                window.location.reload()
+        }
+    }
+}
+
 const client = new ApolloClient({
     uri: 'http://165.22.9.231:4002/graphql',
-    onError: console.log,
+    onError: errorHandler,
     request: async operation =>
         operation.setContext({
             headers: {

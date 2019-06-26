@@ -16,8 +16,10 @@ import { SANPortalProvider } from './Context'
 const SANPortalRoutes = ({ match: { url } }) => {
     const { setMe } = useAuthContext()
 
+    const handleCompleted = ({ me }) => setMe(me)
+
     return (
-        <Query query={GET_ME} onCompleted={({ me }) => setMe(me)}>
+        <Query query={GET_ME} onCompleted={handleCompleted}>
             {({ loading }) => (
                 <>
                     {loading ? (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -16,6 +16,15 @@ const ESModalTabs = ({ className, visible, onCancel, content }) => {
         setTabPosition(width > 1023 ? 'left' : 'top')
     }, [width])
 
+    const renderItem = useCallback(
+        (item, index) => (
+            <ESTabPane tab={item.title} key={index}>
+                {item.content}
+            </ESTabPane>
+        ),
+        [content]
+    )
+
     return (
         <ESModal
             visible={visible}
@@ -28,11 +37,7 @@ const ESModalTabs = ({ className, visible, onCancel, content }) => {
             <div className='es-modal-tabs__content'>
                 <ESBrandHeader size={width > 1023 ? 'large' : 'small'} />
                 <ESTabs tabPosition={tabPosition}>
-                    {content.map((item, index) => (
-                        <ESTabPane tab={item.title} key={index}>
-                            {item.content}
-                        </ESTabPane>
-                    ))}
+                    {content.map(renderItem)}
                 </ESTabs>
             </div>
         </ESModal>
