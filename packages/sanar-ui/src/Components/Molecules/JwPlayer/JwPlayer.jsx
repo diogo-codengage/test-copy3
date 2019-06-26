@@ -52,8 +52,11 @@ const ESJwPlayer = forwardRef(
         const wrapperRef = useRef()
         const { t } = useTranslation('sanarui')
         const [isReady, setIsReady] = useState(false)
+        const [error, setError] = useState(false)
         const [isPause, setIsPause] = useState(false)
         const classes = classNames('es-jw-player', className)
+
+        const handleSetupError = () => setError(true)
 
         const handleReady = e => {
             const player = getPlayer(playerId)
@@ -91,6 +94,7 @@ const ESJwPlayer = forwardRef(
                 )
 
             player.on('error', function() {
+                setError(true)
                 player.load({
                     file:
                         '//content.jwplatform.com/videos/7RtXk3vl-52qL9xLP.mp4',
@@ -125,12 +129,14 @@ const ESJwPlayer = forwardRef(
 
         return (
             <div className={classes} ref={wrapperRef}>
-                <ESSpin
-                    dark
-                    spinning={!isReady}
-                    className='es-jw-player__loader'
-                    style={{ height: `${height}px` }}
-                />
+                {!error && (
+                    <ESSpin
+                        dark
+                        spinning={!isReady}
+                        className='es-jw-player__loader'
+                        style={{ height: `${height}px` }}
+                    />
+                )}
                 {isReady && (
                     <div
                         className={classNames('es-jw-player__header', {
@@ -191,6 +197,7 @@ const ESJwPlayer = forwardRef(
                     {...props}
                     ref={playerRef}
                     onReady={handleReady}
+                    onSetupError={handleSetupError}
                     playerId={playerId}
                 />
             </div>

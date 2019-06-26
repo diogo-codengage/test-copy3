@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import ESJwPlayer from 'sanar-ui/dist/Components/Molecules/JwPlayer'
 import ESTabs, { ESTabPane } from 'sanar-ui/dist/Components/Atoms/Tabs'
+import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 
 import { useApolloContext } from 'Hooks/apollo'
 
@@ -79,6 +80,15 @@ const SANClassroomVideo = () => {
         })
     }
 
+    const askQuestions = () => {
+        const lessonHeader = document.getElementById('es-lesson-header')
+        lessonHeader &&
+            lessonHeader.scrollIntoView({
+                block: 'start',
+                behavior: 'smooth'
+            })
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -118,30 +128,54 @@ const SANClassroomVideo = () => {
 
     return (
         <div className='classroom__video'>
-            <ESJwPlayer
-                type='html5'
-                ref={playerRef}
-                playerId='playerId'
-                playlist={playlistVideo}
-                playerScript='/jwplayer/jwplayer.js'
-                licenseKey={process.env.REACT_APP_JWPLAYER}
-                isMuted={false}
-                title={currentResource.video.title}
-                subtitle={`${t('global.subject')} 3, ${t(
-                    'global.activity'
-                )} ${currentResource.index + 1}`}
-                rate={{
-                    value: rate,
-                    onChange: handleRate
-                }}
-                onOpenMenu={() => setOpenMenu(!openMenu)}
-                onNext={() => console.log('onNext')}
-                onPrevious={() => console.log('onPrevious')}
-                onTwentyFivePercent={handleProgress(25)}
-                onFiftyPercent={handleProgress(50)}
-                onSeventyFivePercent={handleProgress(75)}
-                onOneHundredPercent={handleProgress(100)}
-            />
+            <div className='classroom__video-container'>
+                <ESJwPlayer
+                    type='html5'
+                    ref={playerRef}
+                    playerId='playerId'
+                    playlist={playlistVideo}
+                    playerScript='/jwplayer/jwplayer.js'
+                    licenseKey={process.env.REACT_APP_JWPLAYER}
+                    isMuted={false}
+                    title={currentResource.video.title}
+                    subtitle={`${t('global.subject')} 3, ${t(
+                        'global.activity'
+                    )} ${currentResource.index + 1}`}
+                    rate={{
+                        value: rate,
+                        onChange: handleRate
+                    }}
+                    onOpenMenu={() => setOpenMenu(!openMenu)}
+                    onNext={() => console.log('onNext')}
+                    onPrevious={() => console.log('onPrevious')}
+                    onTwentyFivePercent={handleProgress(25)}
+                    onFiftyPercent={handleProgress(50)}
+                    onSeventyFivePercent={handleProgress(75)}
+                    onOneHundredPercent={handleProgress(100)}
+                />
+                <div className='classroom__video-container--buttons'>
+                    <ESButton
+                        size='small'
+                        uppercase
+                        bold
+                        variant='solid'
+                        className='questions'
+                        onClick={askQuestions}
+                    >
+                        Fazer Questões
+                    </ESButton>
+                    <ESButton
+                        size='small'
+                        uppercase
+                        bold
+                        variant='outlined'
+                        color='white'
+                        disabled
+                    >
+                        Ver discussões
+                    </ESButton>
+                </div>
+            </div>
             {currentResource.quiz && (
                 <ESTabs
                     dark

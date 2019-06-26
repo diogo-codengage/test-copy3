@@ -12,6 +12,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
+    "lint": "eslint --max-warnings 0 --ext js,ts,tsx src",
     "postbuild": "mv build questoes && mkdir build && mv -v questoes build/",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"

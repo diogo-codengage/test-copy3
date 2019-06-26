@@ -8,44 +8,47 @@ import ESRate from '../../Atoms/Rate'
 import ESButton from '../../Atoms/Button'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 
-const ESLessonHeaderLeft = ({ title, subtitle, rate, onClick }) => {
+const ESLessonHeaderLeft = ({ title, subtitle, rate, onClick, hasTabs }) => {
     const { t } = useTranslation('sanarui')
 
     return (
-        <>
-            <ESTypography ellipsis level={5}>
-                {title}
-            </ESTypography>
-            <div className='subtitle'>
-                <ESTypography
-                    variant='subtitle2'
-                    className='subtitle__path'
-                    ellipsis
-                >
-                    {subtitle}
-                </ESTypography>
-                {rate && (
-                    <>
-                        <ESTypography
-                            variant='subtitle2'
-                            className='subtitle__rate'
-                        >
-                            {t('lessonHeader.rateClass')}:
-                        </ESTypography>
-                        <ESRate {...rate} />
-                    </>
-                )}
-            </div>
+        <div className='container'>
             <ESButton
                 onClick={onClick}
                 circle
-                size='small'
                 variant='text'
-                className='open-menu'
+                className={classNames('open-menu', {
+                    'open-menu__has-tabs': hasTabs
+                })}
             >
                 <ESEvaIcon name='menu-outline' />
             </ESButton>
-        </>
+            <div className='text'>
+                <ESTypography ellipsis level={5}>
+                    {title}
+                </ESTypography>
+                <div className='subtitle'>
+                    <ESTypography
+                        variant='subtitle2'
+                        className='subtitle__path'
+                        ellipsis
+                    >
+                        {subtitle}
+                    </ESTypography>
+                    {rate && (
+                        <>
+                            <ESTypography
+                                variant='subtitle2'
+                                className='subtitle__rate'
+                            >
+                                {t('lessonHeader.rateClass')}:
+                            </ESTypography>
+                            <ESRate {...rate} />
+                        </>
+                    )}
+                </div>
+            </div>
+        </div>
     )
 }
 

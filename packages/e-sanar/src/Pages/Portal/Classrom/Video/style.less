@@ -1,3 +1,30 @@
 .classroom__video {
     margin-bottom: @margin-md;
+
+    &-container {
+        position: relative;
+
+        &--buttons {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            bottom: 8px;
+            left: ~'calc(100% / 2 - 155px)';
+
+            & .questions {
+                margin-right: @margin-md;
+                background-color: @secondary-color;
+                color: @grey-7;
+
+                &:hover {
+                    background-color: darken(@secondary-color, 5);
+                }
+            }
+        }
+        @media (max-width: @screen-xl) {
+            &--buttons {
+                display: none;
+            }
+        }
+    }
 }

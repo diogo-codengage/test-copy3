@@ -26,6 +26,7 @@ const renderTabBar = ({
                 subtitle={subtitle}
                 rate={rate}
                 onClick={() => alert('open menu')}
+                hasTabs
             />
         }
         rightChildren={
