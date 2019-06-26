@@ -34,7 +34,7 @@ const SANClassroomVideo = () => {
         currentModule
     } = usePortalContext()
 
-    const { openMenu, setOpenMenu } = useLayoutContext()
+    const { setOpenMenu } = useLayoutContext()
     const { handleBookmark, bookmarked, handleProgress } = useClassroomContext()
 
     const [quizBookmarked, setQuizBookmarked] = useState()
@@ -142,7 +142,7 @@ const SANClassroomVideo = () => {
                         value: rate,
                         onChange: handleRate
                     }}
-                    onOpenMenu={() => setOpenMenu(!openMenu)}
+                    onOpenMenu={() => setOpenMenu(oldOpenMenu => !oldOpenMenu)}
                     onNext={onNavigation('prev')}
                     onPrevious={onNavigation('next')}
                     onTwentyFivePercent={onProgress(25)}

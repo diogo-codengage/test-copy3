@@ -1,9 +1,7 @@
 .es-lesson-header {
     background: @grey-solid-8;
     width: 100%;
-    // padding: @padding-md;
     box-shadow: 0 3px 6px @grey-3;
-    position: fixed;
 
     .es-typography {
         color: @white;
@@ -23,6 +21,10 @@
         & > div {
             display: flex;
             align-items: center;
+        }
+
+        &.no-rate {
+            justify-content: center;
         }
 
         & .es-rate {

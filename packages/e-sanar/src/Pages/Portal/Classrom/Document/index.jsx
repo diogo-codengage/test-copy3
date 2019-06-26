@@ -47,7 +47,7 @@ const SANClassRoomDocument = () => {
                         )} ${currentModule.index + 1}, ${t(
                             'global.activity'
                         )} ${currentResource.index + 1}`}
-                        onClick={() => setOpenMenu(true)}
+                        onClick={() => setOpenMenu(oldOpenMenu => !oldOpenMenu)}
                     />
                 }
                 rightChildren={
