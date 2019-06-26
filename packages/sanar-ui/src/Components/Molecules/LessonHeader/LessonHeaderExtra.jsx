@@ -19,7 +19,7 @@ const ESLessonHeaderExtra = ({
 }) => (
     <ESRow className={className} type='flex' gutter={12}>
         {onBookmarked && (
-            <ESCol>
+            <ESCol className='bookmark'>
                 <ESBookmark {...{ bookmarked, bookmarkLabel, onBookmarked }} />
             </ESCol>
         )}

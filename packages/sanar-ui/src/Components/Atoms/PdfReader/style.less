@@ -11,5 +11,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
+        @media (max-width: @screen-xs) {
+            flex-direction: column;
+            margin-top: @margin-sm;
+        }
     }
 }

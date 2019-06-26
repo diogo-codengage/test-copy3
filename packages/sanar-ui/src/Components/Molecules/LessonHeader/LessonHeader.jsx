@@ -34,7 +34,7 @@ const ESLessonHeader = ({
                 <ESCol
                     xs={24}
                     md={12}
-                    lg={children ? 7 : 12}
+                    lg={children ? 7 : 13}
                     className='es-lesson-header__left'
                 >
                     {leftChildren}
@@ -65,7 +65,7 @@ const ESLessonHeader = ({
                 <ESCol
                     xs={24}
                     md={12}
-                    lg={children ? 9 : 12}
+                    lg={children ? 9 : 11}
                     className='es-lesson-header__right'
                 >
                     {rightChildren}
