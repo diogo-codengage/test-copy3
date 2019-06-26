@@ -10,6 +10,7 @@ import ESLessonHeader, {
 import { usePortalContext } from 'Pages/Portal/Context'
 import SANQuiz from 'Components/Quiz'
 import { useClassroomContext } from '../Context'
+import { useLayoutContext } from '../../Layout/Context'
 
 const SANClassroomMock = () => {
     const { t } = useTranslation('esanar')
@@ -21,6 +22,7 @@ const SANClassroomMock = () => {
         currentModule
     } = usePortalContext()
     const { handleBookmark, bookmarked } = useClassroomContext()
+    const { setOpenMenu } = useLayoutContext()
 
     return (
         <div className='classroom__mock'>
@@ -33,7 +35,7 @@ const SANClassroomMock = () => {
                         )} ${currentModule.index + 1}, ${t(
                             'global.activity'
                         )} ${currentResource.index + 1}`}
-                        onClick={() => alert('open menu')}
+                        onClick={() => setOpenMenu(true)}
                     />
                 }
                 rightChildren={

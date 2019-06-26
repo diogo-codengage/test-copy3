@@ -10,6 +10,7 @@ import ESPdfReader from 'sanar-ui/dist/Components/Atoms/PdfReader'
 
 import { usePortalContext } from 'Pages/Portal/Context'
 import { useClassroomContext } from '../Context'
+import { useLayoutContext } from '../../Layout/Context'
 
 const SANClassRoomDocument = () => {
     const { t } = useTranslation('esanar')
@@ -21,6 +22,7 @@ const SANClassRoomDocument = () => {
         currentModule
     } = usePortalContext()
     const { handleBookmark, bookmarked } = useClassroomContext()
+    const { setOpenMenu } = useLayoutContext()
 
     return (
         <div className='classroom__document'>
@@ -35,7 +37,7 @@ const SANClassRoomDocument = () => {
                         )} ${currentModule.index + 1}, ${t(
                             'global.activity'
                         )} ${currentResource.index + 1}`}
-                        onClick={() => alert('open menu')}
+                        onClick={() => setOpenMenu(true)}
                     />
                 }
                 rightChildren={
