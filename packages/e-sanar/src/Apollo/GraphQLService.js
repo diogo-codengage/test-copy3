@@ -29,7 +29,6 @@ const errorHandler = async ({ graphQLErrors, networkError }) => {
                 window.location.reload()
                 break
             default:
-                window.location.reload()
         }
     }
 }

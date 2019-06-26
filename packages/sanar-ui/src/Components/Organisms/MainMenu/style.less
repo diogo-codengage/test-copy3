@@ -20,7 +20,7 @@
     }
 
     & .backdrop {
-        transition: all 0.5s ease-in;
+        transition: transform 0.3s ease-in-out;
         bottom: 0;
         background-color: rgba(0, 0, 0, 0.75);
         top: 0;
@@ -38,7 +38,7 @@
 
     &__classroom {
         .es-main-menu__sidebar-left {
-            transition: transform 0.5s ease-in;
+            transition: transform 0.3s ease-in-out;
         }
 
         .es-main-menu__content {
@@ -73,7 +73,7 @@
         width: 304px;
         height: ~'calc(100% + 8px)';
         overflow: hidden;
-        transition: transform 0.5s ease-in;
+        transition: transform 0.3s ease-in-out;
 
         // Sempre que não houver espaço deixará "scrollavel", mesmo em desktop.
         &--scrollable {

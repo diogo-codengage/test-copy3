@@ -40,15 +40,21 @@ const ESLessonHeader = ({
                     {leftChildren}
                 </ESCol>
             )}
-            <ESCol className='es-lesson-header__bookmark'>
-                <div>
-                    <ESTypography variant='subtitle2'>
-                        {t('lessonHeader.rateClass')}:
-                    </ESTypography>
-                    <ESRate {...rate} />
-                </div>
+            <ESCol
+                className={classNames('es-lesson-header__bookmark', {
+                    'no-rate': !rate
+                })}
+            >
+                {rate && (
+                    <div>
+                        <ESTypography variant='subtitle2'>
+                            {t('lessonHeader.rateClass')}:
+                        </ESTypography>
+                        <ESRate {...rate} />
+                    </div>
+                )}
                 <ESBookmark
-                    {...{ bookmarked, onBookmarked, hideLabel: true }}
+                    {...{ bookmarked, onBookmarked, hideLabel: !!rate }}
                 />
             </ESCol>
             {children && (
