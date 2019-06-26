@@ -93,12 +93,12 @@ const ESMainMenu = ({
     }, [contextProp])
 
     useEffect(() => {
-        setToggle(openProp)
+        setToggle(true)
     }, [openProp])
 
-    useEffect(() => {
-        onOpenOrClose(toggle)
-    }, [toggle])
+    // useEffect(() => {
+    //     onOpenOrClose(toggle)
+    // }, [toggle])
 
     useEffect(() => {
         setTheme(themeProp)
