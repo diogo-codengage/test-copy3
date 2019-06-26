@@ -110,6 +110,12 @@ const ESJwPlayer = forwardRef(
                 setIsPause(false)
             })
 
+            if (player.getWidth() > 1024) {
+                player.resize('100vw', '100vh')
+            } else {
+                player.resize('100vw', 'calc(100vh - 160px)')
+            }
+
             setIsReady(true)
             player.setCaptions(captions)
             onReady && onReady(e)
