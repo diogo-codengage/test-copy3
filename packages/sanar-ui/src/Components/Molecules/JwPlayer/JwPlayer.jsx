@@ -1,4 +1,10 @@
-import React, { useState, forwardRef, useRef, useImperativeHandle } from 'react'
+import React, {
+    useState,
+    forwardRef,
+    useRef,
+    useImperativeHandle,
+    useMemo
+} from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -10,6 +16,7 @@ import ESButton from '../../Atoms/Button'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESTypography from '../../Atoms/Typography'
 import ESRate from '../../Atoms/Rate'
+import ESSpin from '../../Atoms/Spin'
 
 const captions = {
     textColor: '#edc26d',
@@ -42,6 +49,7 @@ const ESJwPlayer = forwardRef(
         ref
     ) => {
         const playerRef = useRef()
+        const wrapperRef = useRef()
         const { t } = useTranslation('sanarui')
         const [isReady, setIsReady] = useState(false)
         const [isPause, setIsPause] = useState(false)
@@ -108,47 +116,62 @@ const ESJwPlayer = forwardRef(
             position: () => getPlayer(playerId).getPosition()
         }))
 
+        const height = useMemo(
+            () =>
+                wrapperRef.current &&
+                parseInt(wrapperRef.current.clientWidth * 0.56),
+            [wrapperRef.current]
+        )
+
         return (
-            <div className={classes}>
-                <div
-                    className={classNames('es-jw-player__header', {
-                        ['has-header']: isReady && isPause
-                    })}
-                >
-                    <div className='es-jw-player__header--left'>
-                        <ESButton
-                            onClick={onOpenMenu}
-                            circle
-                            size='medium'
-                            variant='text'
-                            className={classNames({ ['visible']: isReady })}
-                        >
-                            <ESEvaIcon name='menu-outline' />
-                        </ESButton>
-                        <div>
-                            <ESTypography level={5} className='title'>
-                                {title}
-                            </ESTypography>
-                            <ESTypography
-                                variant='subtitle2'
-                                className='subtitle'
+            <div className={classes} ref={wrapperRef}>
+                <ESSpin
+                    dark
+                    spinning={!isReady}
+                    className='es-jw-player__loader'
+                    style={{ height: `${height}px` }}
+                />
+                {isReady && (
+                    <div
+                        className={classNames('es-jw-player__header', {
+                            ['has-header']: isReady && isPause
+                        })}
+                    >
+                        <div className='es-jw-player__header--left'>
+                            <ESButton
+                                onClick={onOpenMenu}
+                                circle
+                                size='medium'
+                                variant='text'
+                                className={classNames({ ['visible']: isReady })}
                             >
-                                {subtitle}
-                            </ESTypography>
+                                <ESEvaIcon name='menu-outline' />
+                            </ESButton>
+                            <div>
+                                <ESTypography level={5} className='title'>
+                                    {title}
+                                </ESTypography>
+                                <ESTypography
+                                    variant='subtitle2'
+                                    className='subtitle'
+                                >
+                                    {subtitle}
+                                </ESTypography>
+                            </div>
+                        </div>
+                        <div className='es-jw-player__header--right'>
+                            <div>
+                                <ESTypography
+                                    variant='subtitle2'
+                                    className='mr-xs ml-xs'
+                                >
+                                    {t('jwplayer.rateClass')}:
+                                </ESTypography>
+                                <ESRate {...rate} />
+                            </div>
                         </div>
                     </div>
-                    <div className='es-jw-player__header--right'>
-                        <div>
-                            <ESTypography
-                                variant='subtitle2'
-                                className='mr-xs ml-xs'
-                            >
-                                {t('jwplayer.rateClass')}:
-                            </ESTypography>
-                            <ESRate {...rate} />
-                        </div>
-                    </div>
-                </div>
+                )}
 
                 {isReady && isPause && (
                     <>

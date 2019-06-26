@@ -32,7 +32,7 @@ const SANClassroomPage = ({ match: { params } }) => {
     if (resourcesLoading || !currentResource)
         return (
             <div className='classroom'>
-                <ESSpin className='classroom__loader' />
+                <ESSpin className='classroom__loader' dark />
             </div>
         )
 
