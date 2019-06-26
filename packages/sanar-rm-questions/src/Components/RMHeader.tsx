@@ -18,13 +18,10 @@ const RMHeaderTemplate = ({ title, rightElement, className }: IProp) => {
     const [showModalBackToHome, setShowModalBackToHome] = useState(false)
 
     return (
-
         <div className={className}>
-
             <div id="logo-fixed" className="logo">
                 <img alt='logo' src={logo}/>
             </div>
-
             <RMContainer>
                 <div className='container'>
                     <div className="logo">
@@ -45,7 +42,6 @@ const RMHeaderTemplate = ({ title, rightElement, className }: IProp) => {
                     </div>
                 </div>
             </RMContainer>
-
             <ESModal
                 title={'Sair'}
                 visible={showModalBackToHome}
@@ -55,7 +51,6 @@ const RMHeaderTemplate = ({ title, rightElement, className }: IProp) => {
                 }}
             >
                 <p>Tem certeza que deseja sair da página de prática?</p>
-
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <ESButton
                         color='outlined'
@@ -76,7 +71,6 @@ const RMHeaderTemplate = ({ title, rightElement, className }: IProp) => {
                             window.open('/', '_self')
                         }}
                     >CONFIRMAR</ESButton>
-
                 </div>
             </ESModal>
         </div>
