@@ -14,6 +14,7 @@ import { useAuthContext } from 'Hooks/auth'
 import { usePortalContext } from '../Context'
 import { GET_MODULE } from 'Apollo/Classroom/queries/module'
 import { CREATE_BOOKMARK } from 'Apollo/Classroom/mutations/bookmark'
+import { useLayoutContext } from '../Layout/Context'
 
 const Context = createContext()
 
@@ -41,12 +42,11 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         setCurrentResource,
         getResource,
         setResourcesLoading,
-        menuIndex,
-        setIndexMenu,
         currentModule,
-        setDarkMode,
         currentResource
     } = usePortalContext()
+
+    const { menuIndex, setIndexMenu, setDarkMode, setTest } = useLayoutContext()
     const [state] = useReducer(reducer, initialState)
     const { getEnrollment, me } = useAuthContext()
 

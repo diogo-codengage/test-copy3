@@ -8,8 +8,6 @@ export const usePortalContext = () => useContext(Context)
 
 const PortalProvider = ({ children, history }) => {
     const [resourcesLoading, setResourcesLoading] = useState(false)
-    const [darkMode, setDarkMode] = useState(false)
-    const [indexMenu, setIndexMenu] = useState(0)
 
     const [currentModule, setCurrentModule] = useState(null)
 
@@ -70,8 +68,6 @@ const PortalProvider = ({ children, history }) => {
     }
 
     const value = {
-        darkMode,
-        setDarkMode,
         currentModule,
         setCurrentModule,
         resourcesLoading,
@@ -83,8 +79,6 @@ const PortalProvider = ({ children, history }) => {
         setPrevResource,
         nextResource,
         setNextResource,
-        indexMenu,
-        setIndexMenu,
         onNavigation
     }
 
