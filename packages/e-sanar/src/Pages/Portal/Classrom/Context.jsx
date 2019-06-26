@@ -14,6 +14,7 @@ import { useAuthContext } from 'Hooks/auth'
 import { usePortalContext } from '../Context'
 import { GET_MODULE } from 'Apollo/Classroom/queries/module'
 import { CREATE_BOOKMARK } from 'Apollo/Classroom/mutations/bookmark'
+import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
 import { useLayoutContext } from '../Layout/Context'
 
 const Context = createContext()
@@ -50,7 +51,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
     const [state] = useReducer(reducer, initialState)
     const { getEnrollment, me } = useAuthContext()
 
-    const { id: enrollmentId } = getEnrollment(0)
+    const { id: enrollmentId } = getEnrollment()
 
     const [bookmarked, setBookmarked] = useState()
 
@@ -70,10 +71,33 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         !resourceId && setBookmarked(oldBookmarked => !oldBookmarked)
     }
 
+    const handleProgress = ({
+        timeInSeconds,
+        percentage,
+        resourceId,
+        resourceType
+    }) => {
+        if (currentResource) {
+            client.mutate({
+                mutation: CREATE_PROGRESS,
+                variables: {
+                    ...(timeInSeconds && {
+                        timeInSeconds
+                    }),
+                    percentage,
+                    enrollmentId,
+                    resourceId,
+                    resourceType: currentResource.resource_type
+                }
+            })
+        }
+    }
+
     useEffect(() => {
         currentResource &&
             setBookmarked(getResource(currentResource).bookmarked)
-    }, [currentResource, getResource])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentResource])
 
     useEffect(() => {
         setIndexMenu(9)
@@ -159,7 +183,8 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
     const value = {
         state,
         handleBookmark,
-        bookmarked
+        bookmarked,
+        handleProgress
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

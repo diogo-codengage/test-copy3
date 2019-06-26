@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -20,7 +20,17 @@ const SANClassroomMock = () => {
         onNavigation,
         currentModule
     } = usePortalContext()
-    const { handleBookmark, bookmarked } = useClassroomContext()
+    const { handleBookmark, bookmarked, handleProgress } = useClassroomContext()
+
+    useEffect(() => {
+        if (currentResource) {
+            handleProgress({
+                percentage: 100,
+                resourceId: currentResource.quiz.id
+            })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentResource.video])
 
     return (
         <div className='classroom__mock'>
