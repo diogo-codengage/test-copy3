@@ -29,7 +29,11 @@
                     }
                 }
 
-                &:hover {
+                &-disabled {
+                    color: @white-4 !important;
+                }
+
+                &:hover:not('.ant-tabs-tab-disabled') {
                     font-weight: bold;
                 }
             }

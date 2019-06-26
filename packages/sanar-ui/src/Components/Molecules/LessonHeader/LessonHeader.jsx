@@ -24,6 +24,7 @@ const ESLessonHeader = ({
 
     return (
         <ESRow
+            id='es-lesson-header'
             className={classes}
             type='flex'
             justify='space-between'
