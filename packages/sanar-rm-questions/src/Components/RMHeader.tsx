@@ -28,7 +28,7 @@ const RMHeaderTemplate = ({ title, rightElement, className }: IProp) => {
             <RMContainer>
                 <div className='container'>
                     <div className="logo">
-                        <a href="#" onClick={(e) => {
+                        <a href="/" onClick={(e) => {
                             e.preventDefault()
                             setShowModalBackToHome(true)
                         }}>
