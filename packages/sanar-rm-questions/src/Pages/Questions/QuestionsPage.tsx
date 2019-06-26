@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import {
     QuestionsContext,
@@ -8,24 +8,27 @@ import {
 } from './QuestionsContext'
 import { QuestionsTemplate } from './QuestionsTemplate'
 import { RouteComponentProps } from 'react-router'
-import { BFFService } from '../../Apollo/BFFService'
+import { BFFService } from '../../BFF/BFFService'
 
 interface IRouteProps {
     videoParams
 }
 
-interface IProps extends RouteComponentProps<IRouteProps>{
+interface IProps extends RouteComponentProps<IRouteProps> {
 }
 
 export const QuestionsPage = (props: IProps) => {
+
+    const [started, setStarted] = useState(false)
+
     const [loading, setLoading] = useState(false)
 
     let course: VideoParams = null
-    if(props.match.params.videoParams){
-        course = JSON.parse(atob(props.match.params.videoParams));
+    if (props.match.params.videoParams) {
+        course = JSON.parse(atob(props.match.params.videoParams))
     }
 
-    const [currentPage, setCurrentPage] = useState( !!course ? QuestionPageType.Question : QuestionPageType.Filter)
+    const [currentPage, setCurrentPage] = useState(!!course ? QuestionPageType.Question : QuestionPageType.Filter)
 
     const [currentQuestion, setCurrentQuestion] = useState()
     const [currentAnswerId, setCurrentAnswerId] = useState()
@@ -41,15 +44,15 @@ export const QuestionsPage = (props: IProps) => {
     const [selectedSubSpecialties, setSelectedSubSpecialties] = useState([])
     const [selectedTags, setSelectedTags] = useState([])
 
-    const [selectedStates, setSelectedStates] = useState([]);
+    const [selectedStates, setSelectedStates] = useState([])
     const [selectedYears, setSelectedYears] = useState([])
-    const [isCommentedByExpert, setCommentedByExpert] = useState(false);
+    const [isCommentedByExpert, setCommentedByExpert] = useState(false)
 
     const [allSpecialties, setAllSpecialties] = useState([])
     const [allSubSpecialties, setAllSubSpecialties] = useState([])
     const [allTags, setAllTags] = useState([])
 
-    const [ showAdvancedFilters, setShowAdvancedFilters ] = useState(false)
+    const [showAdvancedFilters, setShowAdvancedFilters] = useState(false)
 
     const increaseTotalCorrect = () => {
         setTotalCorrect(totalCorrect + 1)
@@ -63,19 +66,24 @@ export const QuestionsPage = (props: IProps) => {
         setTotalWrong(totalWrong + 1)
     }
 
-
     const onInit = () => {
+
+        console.log('on init')
+
         BFFService.getSpecialties().then((specialties) => {
-            setSpecialties(specialties)
+            console.log('on init end')
+            console.log({specialties})
+            setAllSpecialties(specialties)
+        })
+        BFFService.getTags().then((tags) => {
+            setAllTags(tags)
         });
-        // BFFService.getTags().then((specialties) => {
-        //     setT(specialties)
-        // });
     }
 
-    useEffect(() => {
+    if (!started) {
         onInit()
-    }, [])
+        setStarted(true)
+    }
 
     const value: IQuestionsContext = {
         loading,
@@ -127,7 +135,7 @@ export const QuestionsPage = (props: IProps) => {
         setCommentedByExpert,
 
         showAdvancedFilters,
-        setShowAdvancedFilters,
+        setShowAdvancedFilters
     }
 
     return (

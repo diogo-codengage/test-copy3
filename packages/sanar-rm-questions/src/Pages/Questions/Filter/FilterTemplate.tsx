@@ -17,9 +17,10 @@ import { YEARS } from './years'
 
 import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 import { ESSelect, ISelectOption } from '../../../Components/ESSelect'
-import { Speciality } from '../../../Apollo/Apollo/Questions/speciality'
-import { Tag } from '../../../Apollo/Apollo/Questions/tag'
+
 import { FilterInputContainer } from './FilterInputContainer'
+import { Speciality } from '../../../BFF/speciality'
+import { Tag } from '../../../BFF/tag'
 
 export interface IFilterTemplateProps {
     allSpecialties: Speciality[],
@@ -79,7 +80,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
                         filterName="Tema"
                         image={iconTheme}
                         items={props.allTags}
-                        onChange={props}
+                        onChange={props.setSelectedTags}
                         value={props.selectedTags}
                         labelSelecteds={props.selectedTags.map(e => e.label).join(', ') }
                     />
@@ -105,8 +106,9 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
                                     style={{ width: '100%' }}
                                     mode={'multiple'}
                                     defaultValue={props.selectedStates}
-                                    onSelect={props.selectedStates}
+                                    onSelect={props.setSelectedStates}
                                     options={BRAZIL_STATES}
+                                    placeholder={ props.selectedStates.map(v => v.label).join(', ') }
                                 >
                                 </ESSelect>
                             </FilterInputContainer>
@@ -120,6 +122,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
                                     defaultValue={props.selectedYears}
                                     onSelect={props.setSelectedYears}
                                     options={YEARS}
+                                    placeholder={ props.selectedYears.map(v => v.label).join(', ') }
                                     />
                             </FilterInputContainer>
                         </ESCol>

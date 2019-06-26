@@ -1,11 +1,12 @@
-import { GET_SPECIALTIES, GET_TAGS } from './Apollo/Questions/get-filters'
+import { Speciality } from './speciality'
 import { apolloClient } from './Apollo/RMGraphQLProvider'
-import { Tag } from './Apollo/Questions/tag'
-import { Speciality } from './Apollo/Questions/speciality'
-import { questionSkip } from './Apollo/Questions/questionSkip'
-import { getQuestionsQuery } from './Apollo/Questions/get-questions'
-import { QuestionsInputFilter } from './Apollo/Questions/QuestionsInputFilter'
-import { questionAnswer } from './Apollo/Questions/questionAnswer'
+import { GET_SPECIALTIES, GET_TAGS } from './Apollo/Queries/get-filters'
+import { questionSkip } from './Apollo/Mutations/questionSkip'
+import { QuestionsInputFilter } from './QuestionsInputFilter'
+import { getQuestionsQuery } from './Apollo/Queries/get-questions'
+import { questionAnswer } from './Apollo/Mutations/questionAnswer'
+import { Tag } from './tag'
+
 
 interface HasValue {
     value: string,
@@ -20,7 +21,7 @@ const distinctFilter = (value:HasValue, index: number, arr: HasValue[]): boolean
 
 const normalizeSpecialties = (list) => {
 
-    list.forEach(e => e.tags = e.tags.data)
+    // list.forEach(e => e.tags = e.tags.data)
     const roots = list.filter(s => s.parent === null)
     roots.forEach(e => e.children = [])
 
@@ -41,7 +42,7 @@ const getSpecialties = ():Promise<Speciality[]> => {
 }
 
 const getTags = async ():Promise<Tag[]> => {
-    return apolloClient.query({query: GET_SPECIALTIES})
+    return apolloClient.query({query: GET_TAGS})
         .then(({data}) => data.tags.data)
         .then( (values:[]) => values.sort(
             (o1:Tag ,o2:Tag) => (o1.label.localeCompare(o2.label)))

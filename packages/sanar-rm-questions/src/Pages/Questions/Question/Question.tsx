@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { QuestionTemplate } from './QuestionTemplate'
 import { useQuestionsContext } from '../QuestionsContext'
-import { QuestionsInputFilter } from '../../../Apollo/Apollo/Questions/QuestionsInputFilter'
-import { BFFService } from '../../../Apollo/BFFService'
+import { QuestionsInputFilter } from '../../../BFF/QuestionsInputFilter'
+import { BFFService } from '../../../BFF/BFFService'
 
 export const Question = () => {
 

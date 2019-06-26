@@ -1,8 +1,8 @@
 import { createContext, useContext } from 'react'
-import { Question } from '../../Apollo/Apollo/Questions/question'
-import { Speciality } from '../../Apollo/Apollo/Questions/speciality'
-import { Tag } from '../../Apollo/Apollo/Questions/tag'
 import { ISelectOption } from '../../Components/ESSelect'
+import { Question } from '../../BFF/question'
+import { Speciality } from '../../BFF/speciality'
+import { Tag } from '../../BFF/tag'
 
 export enum QuestionPageType {
     Filter,

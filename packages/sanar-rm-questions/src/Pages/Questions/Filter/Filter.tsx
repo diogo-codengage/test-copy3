@@ -1,6 +1,8 @@
 import React from 'react'
 import { FilterTemplate, IFilterTemplateProps } from './FilterTemplate'
 import { useQuestionsContext } from '../QuestionsContext'
+import { ESSelect } from '../../../Components/ESSelect'
+import { Speciality } from '../../../BFF/speciality'
 
 export const Filter: React.FC = () => {
 
@@ -18,12 +20,13 @@ export const Filter: React.FC = () => {
         allSubSpecialties: ctx.allSubSpecialties,
         allTags: ctx.allTags,
 
-        setSelectedSpecialties: v => {
-            ctx.setSelectedSpecialties(v)
+        setSelectedSpecialties: (specialities: Speciality[]) => {
+            ctx.setSelectedSpecialties(specialities)
+            ctx.setAllSubSpecialties( specialities.flatMap(s => s.children) )
             clearQuestions()
         },
         setSelectedSubSpecialties: v => {
-            ctx.setSelectedSpecialties(v)
+            ctx.setSelectedSubSpecialties(v)
             clearQuestions()
         },
         setSelectedTags: v => {
@@ -35,6 +38,7 @@ export const Filter: React.FC = () => {
             clearQuestions()
         },
         setSelectedYears: v => {
+            console.log( {years: v})
             ctx.setSelectedYears(v)
             clearQuestions()
         },
