@@ -12,7 +12,6 @@ import { useApolloContext } from 'Hooks/apollo'
 import { useAuthContext } from 'Hooks/auth'
 import { GET_RATING } from 'Apollo/Classroom/queries/rating'
 import { CREATE_RATING } from 'Apollo/Classroom/mutations/rate'
-import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
 
 import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
@@ -24,8 +23,7 @@ const SANClassroomVideo = () => {
     const { t } = useTranslation('esanar')
     const playerRef = useRef()
     const {
-        me: { id: userId },
-        getEnrollment
+        me: { id: userId }
     } = useAuthContext()
     const client = useApolloContext()
     const {
@@ -37,13 +35,14 @@ const SANClassroomVideo = () => {
     } = usePortalContext()
 
     const { openMenu, setOpenMenu } = useLayoutContext()
-    const { handleBookmark, bookmarked } = useClassroomContext()
+    const { handleBookmark, bookmarked, handleProgress } = useClassroomContext()
 
     const [quizBookmarked, setQuizBookmarked] = useState()
     const [rate, setRate] = useState()
     const [playlistVideo, setPlaylistVideo] = useState()
+    const [videoError, seVideoError] = useState()
 
-    const { id: enrollmentId } = getEnrollment()
+    const handleVideoError = () => seVideoError(true)
 
     const handleQuizBookmark = () => {
         handleBookmark({
@@ -66,18 +65,16 @@ const SANClassroomVideo = () => {
         })
     }
 
-    const handleProgress = percentage => () => {
-        const timeInSeconds = playerRef && playerRef.currentResource.position()
-        client.mutate({
-            mutation: CREATE_PROGRESS,
-            variables: {
-                percentage,
+    const onProgress = percentage => () => {
+        if (!videoError) {
+            const timeInSeconds =
+                playerRef && playerRef.currentResource.position()
+            handleProgress({
                 timeInSeconds: parseInt(timeInSeconds),
-                enrollmentId,
-                resourceId: currentResource.video.id,
-                resourceType: currentResource.resource_type
-            }
-        })
+                percentage,
+                resourceId: currentResource.video.id
+            })
+        }
     }
 
     const askQuestions = () => {
@@ -130,7 +127,7 @@ const SANClassroomVideo = () => {
         <div className='classroom__video'>
             <div className='classroom__video-container'>
                 <ESJwPlayer
-                    type='html5'
+                    onError={handleVideoError}
                     ref={playerRef}
                     playerId='playerId'
                     playlist={playlistVideo}
@@ -146,12 +143,12 @@ const SANClassroomVideo = () => {
                         onChange: handleRate
                     }}
                     onOpenMenu={() => setOpenMenu(!openMenu)}
-                    onNext={() => console.log('onNext')}
-                    onPrevious={() => console.log('onPrevious')}
-                    onTwentyFivePercent={handleProgress(25)}
-                    onFiftyPercent={handleProgress(50)}
-                    onSeventyFivePercent={handleProgress(75)}
-                    onOneHundredPercent={handleProgress(100)}
+                    onNext={onNavigation('prev')}
+                    onPrevious={onNavigation('next')}
+                    onTwentyFivePercent={onProgress(25)}
+                    onFiftyPercent={onProgress(50)}
+                    onSeventyFivePercent={onProgress(75)}
+                    onOneHundredPercent={onProgress(100)}
                 />
                 <div className='classroom__video-container--buttons'>
                     <ESButton

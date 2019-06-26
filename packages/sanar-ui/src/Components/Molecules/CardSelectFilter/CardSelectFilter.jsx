@@ -1,4 +1,10 @@
-import React, { useState, useRef, forwardRef } from 'react'
+import React, {
+    useState,
+    useRef,
+    forwardRef,
+    useMemo,
+    useCallback
+} from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -17,92 +23,10 @@ import ESDivider from '../../Atoms/Divider'
 import ESTypography from '../../Atoms/Typography'
 import ESCard from '../Card'
 
-const Badge = ({ count, ...props }) => (
-    <div className='badge' {...props}>
-        {count > 99 ? '99+' : count}
-    </div>
-)
+import ESCardSelectFilterMenu from './CardSelectFilterMenu'
 
-const Items = forwardRef(
-    (
-        {
-            items,
-            value,
-            handleSelectAll,
-            handleClear,
-            handleChange,
-            search,
-            width = 426
-        },
-        ref
-    ) => {
-        const { t } = useTranslation('sanarui')
-
-        const onChange = item => e => handleChange(item, e)
-
-        const checkValue = item => val => val.value === item.value
-
-        const filtered = search
-            ? items.filter(item =>
-                  item.label.toLowerCase().match(search.toLowerCase())
-              )
-            : items
-
-        const rows = filtered.map(item => (
-            <ESCheckbox
-                key={item.id}
-                onChange={onChange(item)}
-                checked={!!value.find(checkValue(item))}
-                className='es-card-select-filter__menu__items--item'
-            >
-                {item.label}
-            </ESCheckbox>
-        ))
-
-        return (
-            <div ref={ref}>
-                <ESCard className='es-card-select-filter__menu' tabIndex={1}>
-                    <div className='es-card-select-filter__menu--buttons'>
-                        <ESButton
-                            onClick={handleSelectAll(filtered)}
-                            bold
-                            variant='text'
-                            size='xsmall'
-                            className='mr-sm'
-                        >
-                            {t('cardSelectFilter.selectAll')}
-                        </ESButton>
-                        <ESButton
-                            onClick={handleClear}
-                            bold
-                            variant='text'
-                            size='xsmall'
-                            disabled={!value.length}
-                        >
-                            {t('cardSelectFilter.clearSelect')}
-                        </ESButton>
-                    </div>
-                    <ESDivider />
-                    <Scrollbars
-                        autoHeight
-                        autoHeightMax={198}
-                        style={{ width }}
-                    >
-                        <div className='es-card-select-filter__menu__items'>
-                            {rows.length ? (
-                                rows
-                            ) : (
-                                <Empty
-                                    className='mt-md'
-                                    style={{ height: 206 }}
-                                />
-                            )}
-                        </div>
-                    </Scrollbars>
-                </ESCard>
-            </div>
-        )
-    }
+const Badge = ({ count }) => (
+    <div className='badge'>{count > 99 ? '99+' : count}</div>
 )
 
 const ESCardSelectFilter = ({
@@ -189,21 +113,27 @@ const ESCardSelectFilter = ({
         clickOutside
     ])
 
-    const makePlaceholder =
-        value.length && !open
-            ? `${value.length} ${labelSelecteds}`
-            : open
-            ? t('global.filter')
-            : placeholder
+    const makePlaceholder = useMemo(
+        () =>
+            value.length && !open
+                ? `${value.length} ${labelSelecteds}`
+                : open
+                ? t('global.filter')
+                : placeholder,
+        [value, open]
+    )
 
-    const suffixIcon =
-        open && value.length ? (
-            <Badge count={value.length} />
-        ) : open ? (
-            undefined
-        ) : (
-            <ESEvaIcon name='plus-outline' />
-        )
+    const suffixIcon = useMemo(
+        () =>
+            open && value.length ? (
+                <Badge count={value.length} />
+            ) : open ? (
+                undefined
+            ) : (
+                <ESEvaIcon name='plus-outline' />
+            ),
+        [value, open]
+    )
 
     return (
         <ESCard className={classes}>
@@ -214,7 +144,7 @@ const ESCardSelectFilter = ({
                     visible={open}
                     getPopupContainer={() => dropdownRef && dropdownRef.current}
                     overlay={
-                        <Items
+                        <ESCardSelectFilterMenu
                             ref={menuRef}
                             {...{
                                 items,

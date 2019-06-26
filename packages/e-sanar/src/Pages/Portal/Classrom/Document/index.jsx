@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -21,8 +21,18 @@ const SANClassRoomDocument = () => {
         onNavigation,
         currentModule
     } = usePortalContext()
-    const { handleBookmark, bookmarked } = useClassroomContext()
+    const { handleBookmark, bookmarked, handleProgress } = useClassroomContext()
     const { setOpenMenu } = useLayoutContext()
+
+    useEffect(() => {
+        if (currentResource) {
+            handleProgress({
+                percentage: 100,
+                resourceId: currentResource.document.id
+            })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentResource.document])
 
     return (
         <div className='classroom__document'>
