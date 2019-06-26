@@ -69,13 +69,12 @@ export const QuestionsPage = (props: IProps) => {
     }
 
     const onInit = () => {
+        setLoading(true)
         BFFService.getSpecialties().then((specialties) => {
-            console.log('on init end')
-            console.log({specialties})
+            setLoading(false)
             setAllSpecialties(specialties)
-        })
-        BFFService.getTags().then((tags) => {
-            setAllTags(tags)
+            setAllTags(specialties.flatMap(s => s.tags).concat( specialties
+                .flatMap(s => s.children).flatMap(s => s.tags)));
         })
     }
 
