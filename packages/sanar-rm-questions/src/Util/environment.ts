@@ -9,7 +9,7 @@ export const isDevEnvironment = () => {
 }
 
 export const isProdEnvironment = () => {
-    return NODE_ENV !== 'development'
+    return NODE_ENV === 'production'
 }
 
 
