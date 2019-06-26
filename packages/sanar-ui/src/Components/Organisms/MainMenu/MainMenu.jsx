@@ -46,7 +46,10 @@ const ESMainMenu = ({
     theme: themeProp,
     showContinueBar: showContinueBarProp,
     logo,
-    onHome
+    onHome,
+    context: contextProp,
+    open: openProp,
+    onOpenOrClose
 }) => {
     const {
         position,
@@ -57,18 +60,45 @@ const ESMainMenu = ({
         staticToolbar,
         showContinueBar,
         setShowContinueBar,
-        onClose
+        onClose,
+        width,
+        context,
+        setContext
     } = useMainMenuContext()
 
     const classes = classNames(
         'es-main-menu',
         `es-main-menu__${theme}`,
-        className
+        className,
+        {
+            'es-main-menu__classroom': context === 'classroom'
+        }
     )
     const classesContent = classNames('es-main-menu__content', {
-        open: (staticToolbar || position === 'bottom') && toggle,
-        close: (staticToolbar || position === 'bottom') && !toggle
+        open:
+            (staticToolbar ||
+                position === 'bottom' ||
+                context === 'classroom') &&
+            toggle,
+        close:
+            (staticToolbar ||
+                position === 'bottom' ||
+                context === 'classroom') &&
+            !toggle
     })
+
+    useEffect(() => {
+        setContext(contextProp)
+        setToggle(false)
+    }, [contextProp])
+
+    useEffect(() => {
+        setToggle(openProp)
+    }, [openProp])
+
+    useEffect(() => {
+        onOpenOrClose(toggle)
+    }, [toggle])
 
     useEffect(() => {
         setTheme(themeProp)
@@ -79,15 +109,23 @@ const ESMainMenu = ({
     }, [showContinueBarProp])
 
     const initialClick = e => {
-        setToggle(true)
+        if (width <= 1365 || context === 'classroom') {
+            setToggle(!toggle)
+        } else {
+            setToggle(true)
+        }
+
         onInitialClick && onInitialClick(e)
-        setTheme('primary')
+        // setTheme('primary')
     }
 
     const searchClick = e => {
         setToggle(true)
         onSearchClick && onSearchClick(e)
-        setTheme('light')
+
+        if (context !== 'classroom') {
+            setTheme('light')
+        }
     }
 
     const initialBottomClick = e => {
@@ -102,6 +140,13 @@ const ESMainMenu = ({
 
     return (
         <div className={classes}>
+            <div className={classesContent}>
+                <MainMenuContentHeader title={title} />
+                <div className='es-main-menu__content--scrollable'>
+                    {children}
+                </div>
+            </div>
+
             {position === 'left' ? (
                 <div className='es-main-menu__sidebar-left'>
                     <div className='es-main-menu__sidebar-left--actions'>
@@ -131,14 +176,9 @@ const ESMainMenu = ({
                     </div>
                 </>
             )}
-
-            <div className={classesContent}>
-                <MainMenuContentHeader title={title} />
-                <div className='es-main-menu__content--scrollable'>
-                    {children}
-                </div>
-            </div>
-            {staticToolbar && <div onClick={onClose} className='backdrop' />}
+            {(staticToolbar || context === 'classroom') && (
+                <div onClick={onClose} className='backdrop' />
+            )}
         </div>
     )
 }

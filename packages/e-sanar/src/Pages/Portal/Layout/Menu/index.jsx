@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter } from 'react-router'
@@ -12,7 +12,7 @@ import SANNotifications from './Notifications'
 import SANCourseChange from './CourseChange'
 import SANMyAccount from './MyAccount'
 import SANClassPlaylist from './ClassPlaylist'
-import { usePortalContext } from 'Pages/Portal/Context'
+import { useLayoutContext } from '../../Layout/Context'
 // import SANSearch from './Search'
 
 const intlPath = 'mainMenu.title.'
@@ -57,12 +57,18 @@ const MenuContent = ({ indexMenu, setTab, showContinueBar, handleBack }) => {
 const SANMenu = ({ history }) => {
     const { t } = useTranslation('esanar')
     const [theme, setTheme] = useState('light')
-    const { indexMenu, setIndexMenu } = usePortalContext()
+    const {
+        indexMenu,
+        setIndexMenu,
+        darkMode,
+        openMenu,
+        setOpenMenu
+    } = useLayoutContext()
     const [title, setTitle] = useState(t(`${intlPath}menu`))
 
     useMemo(
         () =>
-            toDarkMode.includes(indexMenu)
+            toDarkMode.includes(indexMenu) || darkMode
                 ? setTheme('dark')
                 : setTheme('primary'),
         [indexMenu]
@@ -112,6 +118,10 @@ const SANMenu = ({ history }) => {
 
     const handleHome = () => history.push('/aluno/curso')
 
+    const onOpenOrClose = isOpen => {
+        setOpenMenu(isOpen)
+    }
+
     return (
         <ESMainMenu
             // onSearchClick={() => setTab(8)}
@@ -120,7 +130,10 @@ const SANMenu = ({ history }) => {
             title={title}
             theme={theme}
             showContinueBar
+            context={darkMode ? 'classroom' : ''}
             className='san-main-menu'
+            open={openMenu}
+            onOpenOrClose={onOpenOrClose}
         >
             <MenuContent {...{ indexMenu, setTab, handleBack }} />
         </ESMainMenu>

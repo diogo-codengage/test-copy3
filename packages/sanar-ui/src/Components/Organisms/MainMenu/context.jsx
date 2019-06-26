@@ -9,6 +9,7 @@ export const useMainMenuContext = () => useContext(Context)
 export const MainMenuProvider = ({ children }) => {
     const [toggle, setToggle] = useState(false)
     const [theme, setTheme] = useState('primary')
+    const [context, setContext] = useState(null)
     const [position, setPosition] = useState('left')
     const [showClose, setShowClose] = useState()
     const [showContinueBar, setShowContinueBar] = useState()
@@ -18,14 +19,14 @@ export const MainMenuProvider = ({ children }) => {
     useEffect(() => {
         setPosition(width <= 1024 ? 'bottom' : 'left')
         setShowContinueBar(width <= 1024)
-        setToggle(width >= 1365), [width]
+        setToggle(width >= 1365 && context !== 'classroom'), [width]
         setStaticToolbar(width >= 1025 && width <= 1365)
         setShowClose(width <= 1365)
     }, [width])
 
     const onClose = () => {
         setToggle(false)
-        setTheme('primary')
+        // setTheme('primary')
     }
 
     const value = {
@@ -38,7 +39,10 @@ export const MainMenuProvider = ({ children }) => {
         staticToolbar,
         showContinueBar,
         setShowContinueBar,
-        onClose
+        onClose,
+        width,
+        context,
+        setContext
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

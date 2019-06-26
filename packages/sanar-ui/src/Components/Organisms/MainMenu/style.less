@@ -31,9 +31,40 @@
         visibility: hidden;
     }
 
-    &__content.open + .backdrop {
+    &__content.open + &__sidebar-left + .backdrop {
         visibility: visible;
         opacity: 1;
+    }
+
+    &__classroom {
+        .es-main-menu__sidebar-left {
+            transition: transform 0.5s ease-in;
+        }
+
+        .es-main-menu__content {
+            &.open + .es-main-menu__sidebar-left {
+                transform: translateX(0);
+            }
+            &.close + .es-main-menu__sidebar-left {
+                transform: translateX(-56px);
+            }
+        }
+
+        .es-main-menu {
+            &__content {
+                &.close {
+                    transform: translateX(-360px);
+                }
+
+                &.open {
+                    transform: translateX(0);
+                }
+            }
+        }
+
+        // .es-main-menu__sidebar-left {
+        //     background: red !important;
+        // }
     }
 
     &__content {
