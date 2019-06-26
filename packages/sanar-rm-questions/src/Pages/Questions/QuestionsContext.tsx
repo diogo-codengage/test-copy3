@@ -34,8 +34,11 @@ export interface IQuestionsContext {
     currentAnswerId?: string
     setCurrentAnswerId: (answerId?: string) => void
 
-    questions: Question[],
+    questions: Question[]
     setQuestions: (questions: Question[]) => void
+
+    questionsRequests: number,
+    setQuestionsRequests: (value: number) => void,
 
     totalCorrect: number
     totalWrong: number

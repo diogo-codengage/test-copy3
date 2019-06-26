@@ -22,7 +22,9 @@ const RMHeaderTemplate = ({ title , rightElement, className }: IProp) => {
             <RMContainer>
                 <div className='container'>
                     <div className="logo">
-                        <img alt='logo' src={logo}/>
+                        <a href="/">
+                            <img alt='logo' src={logo}/>
+                        </a>
                     </div>
                     <div className="title">
                         <ESTypography

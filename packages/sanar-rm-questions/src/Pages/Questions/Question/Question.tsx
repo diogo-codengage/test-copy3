@@ -45,9 +45,12 @@ export const Question = () => {
     }
 
     const loadMoreQuestions = () => {
-        const filters = getParamsFromFilters();
+        const filters = getParamsFromFilters()
         BFFService.loadMoreQuestions(filters)
-            .then(({ data }) => pushQuestions(data.questions.data))
+            .then(function({ data }) {
+                questionsCtx.setQuestionsRequests(questionsCtx.questionsRequests + 1)
+                return pushQuestions(data.questions.data)
+            })
     }
 
     const onSkipQuestion = ({id}) => {
@@ -61,14 +64,14 @@ export const Question = () => {
     }
 
     if(! questionsCtx.currentQuestion) {
-        loadMoreQuestions();
+        loadMoreQuestions()
     }
 
     const onConfirmResponse = (alternativeId) => {
         const answerId = questionsCtx.currentQuestion.alternatives.data
             .find(alternative => alternative.correct === true).id
         const correct = alternativeId === answerId
-        const questionId = questionsCtx.currentQuestion.id;
+        const questionId = questionsCtx.currentQuestion.id
         setLoading(true)
         BFFService.confirmResponse({alternativeId, correct, questionId})
         .then(({data}) => {
