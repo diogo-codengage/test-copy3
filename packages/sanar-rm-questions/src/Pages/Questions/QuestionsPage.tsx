@@ -69,9 +69,6 @@ export const QuestionsPage = (props: IProps) => {
     }
 
     const onInit = () => {
-
-        console.log('on init')
-
         BFFService.getSpecialties().then((specialties) => {
             console.log('on init end')
             console.log({specialties})
@@ -79,7 +76,7 @@ export const QuestionsPage = (props: IProps) => {
         })
         BFFService.getTags().then((tags) => {
             setAllTags(tags)
-        });
+        })
     }
 
     if (!started) {
@@ -141,6 +138,13 @@ export const QuestionsPage = (props: IProps) => {
 
         showAdvancedFilters,
         setShowAdvancedFilters
+    }
+
+    //check all load
+    if(!!course) {
+        if(loading !== (allSpecialties.length === 0 || allTags.length === 0)){
+            setLoading(!loading)
+        }
     }
 
     return (

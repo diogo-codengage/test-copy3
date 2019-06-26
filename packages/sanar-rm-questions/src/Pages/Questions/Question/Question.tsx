@@ -3,6 +3,7 @@ import { QuestionTemplate } from './QuestionTemplate'
 import { useQuestionsContext } from '../QuestionsContext'
 import { QuestionsInputFilter } from '../../../BFF/QuestionsInputFilter'
 import { BFFService } from '../../../BFF/BFFService'
+import { normalizeString } from '../../../Util/normalizeString'
 
 export const Question = () => {
 
@@ -11,16 +12,56 @@ export const Question = () => {
     const [stats, setStats] = useState()
     const [loading, setLoading] = useState(false)
 
+    const getParams = async ():Promise<QuestionsInputFilter> => {
+        if(!!questionsCtx.course) {
+            return getParamsFromCourse()
+        }
+        return getParamsFromFilters()
+    }
+
+    const normalizeEndCompare = (o1: string, o2: string) =>{
+        return  normalizeString(o1) === normalizeString(o2)
+    }
+
+    const getParamsFromCourse = async ():Promise<QuestionsInputFilter> => {
+
+        const tagsIds = questionsCtx.allTags
+            .filter(t => normalizeEndCompare(t.label,questionsCtx.course.moduleName))
+            .map(v => { console.log(v); return v})
+            .map(t => t.value)
+
+        const specialtiesIds = questionsCtx.allSpecialties.flatMap(s => s.children)
+            .filter(v => normalizeEndCompare(v.label,questionsCtx.course.subSpecialtyName))
+            .map(v => { console.log(v); return v})
+            .map(v => v.value)
+
+        console.log('Filter from course',{
+            specialtyName: questionsCtx.course.specialtyName,
+            subSpecialtyName: questionsCtx.course.subSpecialtyName,
+            moduleName: questionsCtx.course.moduleName,
+            tagsIds,
+            specialtiesIds,
+        })
+
+        return {
+            specialtiesIds,
+            tagsIds,
+            states: [],
+            years: [],
+            isCommentedByExpert: null,
+        }
+    }
+
     const getParamsFromFilters = (): QuestionsInputFilter  => {
         return  {
-            tagsIds: questionsCtx.selectedTags.map( t => t.value),
-            states: questionsCtx.selectedStates.map(s => s.value),
             specialtiesIds: questionsCtx.selectedSpecialties
                 .map(s => s.value)
                 .concat(questionsCtx.selectedSubSpecialties
                     .map(s => s.value)),
+            tagsIds: questionsCtx.selectedTags.map( t => t.value),
+            states: questionsCtx.selectedStates.map(s => s.value),
+            years: questionsCtx.selectedYears.map(v => v.value),
             isCommentedByExpert: questionsCtx.isCommentedByExpert,
-            years: questionsCtx.selectedYears.map(v => v.value)
         }
     }
 
@@ -44,8 +85,8 @@ export const Question = () => {
         questionsCtx.setCurrentAnswerId(null)
     }
 
-    const loadMoreQuestions = () => {
-        const filters = getParamsFromFilters()
+    const loadMoreQuestions = async () => {
+        const filters = await getParams()
         BFFService.loadMoreQuestions(filters)
             .then(function({ data }) {
                 questionsCtx.setQuestionsRequests(questionsCtx.questionsRequests + 1)

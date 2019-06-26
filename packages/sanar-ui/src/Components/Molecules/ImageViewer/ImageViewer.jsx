@@ -50,7 +50,7 @@ const ESImageViewer = ({ className, images, alt }) => {
 
             <ESModal
                 closable={false}
-                centered
+                centered={true}
                 className={classesModal}
                 onCancel={() => setOpen(false)}
                 visible={open}

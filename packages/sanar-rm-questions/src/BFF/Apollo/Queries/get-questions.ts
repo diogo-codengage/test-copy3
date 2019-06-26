@@ -34,7 +34,7 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
         where.isCommentedByExpert = true;
     }
 
-    console.log({where})
+    console.log( JSON.stringify({where}, null, 4) )
     const whereFilter = ` ,where: "${JSON.stringify(where).replace(/"/g, '\\"') }" `
 
     const queryWithParams = `
