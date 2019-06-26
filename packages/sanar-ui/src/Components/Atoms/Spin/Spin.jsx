@@ -4,8 +4,12 @@ import PropTypes from 'prop-types'
 
 import { Spin } from 'antd'
 
-const ESSpin = ({ className, flex, minHeight, style, ...props }) => {
-    const classes = classNames('es-spin', { 'es-spin__flex': flex }, className)
+const ESSpin = ({ className, flex, minHeight, style, dark, ...props }) => {
+    const classes = classNames(
+        'es-spin',
+        { 'es-spin__flex': flex, 'es-spin__dark': dark },
+        className
+    )
     const styles = {
         ...style,
         ...(minHeight && { minHeight })

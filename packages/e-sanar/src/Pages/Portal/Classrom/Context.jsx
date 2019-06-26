@@ -1,12 +1,19 @@
-import React, { createContext, useContext, useEffect, useReducer } from 'react'
+import React, {
+    createContext,
+    useContext,
+    useEffect,
+    useReducer,
+    useState
+} from 'react'
 
-import * as R from 'ramda'
 import { withRouter } from 'react-router-dom'
 
+import { formatPlaylist } from 'Utils/formatPlaylist'
 import { useApolloContext } from 'Hooks/apollo'
 import { useAuthContext } from 'Hooks/auth'
 import { usePortalContext } from '../Context'
 import { GET_MODULE } from 'Apollo/Classroom/queries/module'
+import { CREATE_BOOKMARK } from 'Apollo/Classroom/mutations/bookmark'
 
 const Context = createContext()
 
@@ -37,12 +44,36 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         menuIndex,
         setIndexMenu,
         currentModule,
-        setDarkMode
+        setDarkMode,
+        currentResource
     } = usePortalContext()
     const [state] = useReducer(reducer, initialState)
-    const { getEnrollment } = useAuthContext()
+    const { getEnrollment, me } = useAuthContext()
 
     const { id: enrollmentId } = getEnrollment(0)
+
+    const [bookmarked, setBookmarked] = useState()
+
+    const handleBookmark = async ({ resourceId, resourceType }) => {
+        await client.mutate({
+            mutation: CREATE_BOOKMARK,
+            variables: {
+                resourceId: resourceId
+                    ? resourceId
+                    : getResource(currentResource).id,
+                resourceType: resourceType
+                    ? resourceType
+                    : currentResource.resource_type,
+                userId: me.id
+            }
+        })
+        !resourceId && setBookmarked(oldBookmarked => !oldBookmarked)
+    }
+
+    useEffect(() => {
+        currentResource &&
+            setBookmarked(getResource(currentResource).bookmarked)
+    }, [currentResource, getResource])
 
     useEffect(() => {
         setIndexMenu(9)
@@ -63,48 +94,15 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
                     data: { module: requestedModule }
                 } = await client.query({
                     query: GET_MODULE,
-                    fetchPolicy: 'network-only',
                     variables: {
                         enrollmentId,
                         id: params.moduleId
                     }
                 })
 
-                const ordered = R.sortBy(
-                    R.prop('index'),
+                const formattedLevels = formatPlaylist(
                     requestedModule.level_contents.data
                 )
-
-                const formattedLevels = ordered
-                    .map((level, index) => {
-                        return {
-                            ...level,
-                            ...(ordered[index + 1] &&
-                                ordered[index + 1]['resource_type'] ===
-                                    'Quiz' && {
-                                    quiz: ordered[index + 1].quiz
-                                })
-                        }
-                    })
-                    .filter((level, index) => {
-                        if (
-                            level['resource_type'] === 'Quiz' &&
-                            ordered[index - 1] &&
-                            ordered[index - 1]['resource_type'] === 'Video' &&
-                            index < ordered.length
-                        ) {
-                            return null
-                        }
-
-                        return level
-                    })
-                    .map((level, index) => {
-                        //TODO: Is this the best way?
-                        return {
-                            ...level,
-                            index
-                        }
-                    })
 
                 const module = {
                     ...requestedModule,
@@ -132,17 +130,16 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
 
                     setCurrentResource(lessons[module.progress.done])
                 } else {
-                    const resource = lessons.find(item => {
-                        return getResource(item).id === params.resourceId
-                    })
+                    const resource = lessons.find(
+                        item => getResource(item).id === params.resourceId
+                    )
 
                     setCurrentResource(resource)
                 }
-
-                setResourcesLoading(false)
             } catch (err) {
                 console.log(err)
             }
+            setResourcesLoading(false)
         }
         fetchData()
     }, [
@@ -160,7 +157,9 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
     ])
 
     const value = {
-        state
+        state,
+        handleBookmark,
+        bookmarked
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

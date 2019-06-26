@@ -1,20 +1,23 @@
 import React, { useState } from 'react'
-import { Layout as ANTDLayout, Divider as ANTDivider } from 'antd'
+import classNames from 'classnames'
+
+import { Layout as ANTDLayout } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
+import ESDivider from 'sanar-ui/dist/Components/Atoms/Divider'
+import ESModalTabs from 'sanar-ui/dist/Components/Organisms/ModalTabs'
+import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 
 import { SANPortalPagesContainer } from '../Layout'
 
 import logoSvg from 'assets/images/logo.svg'
 import whiteLogo from 'assets/images/white-logo.svg'
 
-import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import { usePortalContext } from '../Context'
 import ESTermsAndPrivacy from 'assets/TermsAndPrivacy'
-import ESModalTabs from 'sanar-ui/dist/Components/Organisms/ModalTabs'
 
 const modalTermsContent = [
     {
@@ -29,24 +32,39 @@ const SANFooter = () => {
     const [openTerms, setOpenTerms] = useState(false)
     const [openPrivacy, setOpenPrivacy] = useState(false)
 
+    const handleCloseTerms = () => setOpenTerms(false)
+
+    const handleOpenTerms = e => {
+        e.preventDefault()
+        setOpenTerms(true)
+    }
+
+    const handleClosePrivacy = () => setOpenPrivacy(false)
+
+    const handleOpenPrivacy = e => {
+        e.preventDefault()
+        setOpenPrivacy(true)
+    }
+
     return (
         <>
             <ESModalTabs
                 visible={openTerms}
-                onCancel={() => setOpenTerms(false)}
+                onCancel={handleCloseTerms}
                 content={modalTermsContent}
             />
             <ESModalTabs
                 visible={openPrivacy}
-                onCancel={() => setOpenPrivacy(false)}
+                onCancel={handleClosePrivacy}
                 content={modalTermsContent}
             />
             <ANTDLayout.Footer
-                className={`san-portal-layout__footer--${
-                    darkMode ? 'dark' : 'light'
-                }`}
+                className={classNames(
+                    'san-portal-layout__footer',
+                    `san-portal-layout__footer--${darkMode ? 'dark' : 'light'}`
+                )}
             >
-                <ANTDivider
+                <ESDivider
                     className={`san-portal-layout__footer--divider${
                         darkMode ? '-dark' : ''
                     }`}
@@ -133,7 +151,7 @@ const SANFooter = () => {
                         </ESCol>
                     </ESRow>
                 </SANPortalPagesContainer>
-                <ANTDivider
+                <ESDivider
                     className={
                         darkMode
                             ? 'san-portal-layout__footer--divider-dark'
@@ -160,11 +178,11 @@ const SANFooter = () => {
                             type={darkMode ? 'light' : 'default'}
                             strong
                         >
-                            <a onClick={() => setOpenTerms(true)}>
+                            <a onClick={handleOpenTerms} href='foo'>
                                 {t('footer.termsOfUse')}
                             </a>
                             {' | '}
-                            <a onClick={() => setOpenPrivacy(true)}>
+                            <a onClick={handleOpenPrivacy} href='foo'>
                                 {t('footer.privacyPolicy')}
                             </a>
                         </ESTypography>

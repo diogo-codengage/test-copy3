@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import ESModal from '../../Atoms/Modal'
 import ESTabs, { ESTabPane } from '../../Atoms/Tabs'
 import ESBrandHeader from '../../Atoms/BrandHeader'
-import ESTypography from '../../Atoms/Typography'
 import useWindowSize from '../../../Hooks/useWindowSize'
 
 const ESModalTabs = ({ className, visible, onCancel, content }) => {
@@ -24,7 +23,7 @@ const ESModalTabs = ({ className, visible, onCancel, content }) => {
             closable
             maskClosable
             className={classes}
-            width={width > 1023 && '75vw'}
+            width={width > 1023 ? '75vw' : 'auto'}
         >
             <div className='es-modal-tabs__content'>
                 <ESBrandHeader size={width > 1023 ? 'large' : 'small'} />
@@ -43,10 +42,7 @@ const ESModalTabs = ({ className, visible, onCancel, content }) => {
 ESModalTabs.propTypes = {
     className: PropTypes.string,
     visible: PropTypes.bool,
-    content: PropTypes.shape({
-        title: PropTypes.string,
-        content: PropTypes.node
-    })
+    content: PropTypes.any
 }
 ESModalTabs.defaultProps = {}
 

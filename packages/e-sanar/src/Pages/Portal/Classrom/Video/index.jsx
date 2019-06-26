@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import ESJwPlayer from 'sanar-ui/dist/Components/Molecules/JwPlayer'
 import ESTabs, { ESTabPane } from 'sanar-ui/dist/Components/Atoms/Tabs'
+import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 
 import { useApolloContext } from 'Hooks/apollo'
 
@@ -16,6 +17,7 @@ import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
 import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
 import { usePortalContext } from 'Pages/Portal/Context'
+import { useClassroomContext } from '../Context'
 
 const SANClassroomVideo = () => {
     const { t } = useTranslation('esanar')
@@ -25,11 +27,28 @@ const SANClassroomVideo = () => {
         getEnrollment
     } = useAuthContext()
     const client = useApolloContext()
-    const { currentResource } = usePortalContext()
+    const {
+        currentResource,
+        nextResource,
+        prevResource,
+        onNavigation,
+        currentModule
+    } = usePortalContext()
+    const { handleBookmark, bookmarked } = useClassroomContext()
+
+    const [quizBookmarked, setQuizBookmarked] = useState()
     const [rate, setRate] = useState()
     const [playlistVideo, setPlaylistVideo] = useState()
 
     const { id: enrollmentId } = getEnrollment()
+
+    const handleQuizBookmark = () => {
+        handleBookmark({
+            resourceId: currentResource.quiz.id,
+            resourceType: 'Quiz'
+        })
+        setQuizBookmarked(oldQuizBookmarked => !oldQuizBookmarked)
+    }
 
     const handleRate = value => {
         setRate(value)
@@ -56,6 +75,15 @@ const SANClassroomVideo = () => {
                 resourceType: currentResource.resource_type
             }
         })
+    }
+
+    const askQuestions = () => {
+        const lessonHeader = document.getElementById('es-lesson-header')
+        lessonHeader &&
+            lessonHeader.scrollIntoView({
+                block: 'start',
+                behavior: 'smooth'
+            })
     }
 
     useEffect(() => {
@@ -90,35 +118,61 @@ const SANClassroomVideo = () => {
                     image: currentResource.video.thumbnails.medium.url
                 }
             ])
+            currentResource.quiz &&
+                setQuizBookmarked(currentResource.quiz.bookmarked)
         }
     }, [currentResource])
 
     return (
         <div className='classroom__video'>
-            <ESJwPlayer
-                type='html5'
-                ref={playerRef}
-                playerId='playerId'
-                playlist={playlistVideo}
-                playerScript='/jwplayer/jwplayer.js'
-                licenseKey={process.env.REACT_APP_JWPLAYER}
-                isMuted={false}
-                title={currentResource.video.title}
-                subtitle={`${t('global.subject')} 3, ${t(
-                    'global.activity'
-                )} ${currentResource.index + 1}`}
-                rate={{
-                    value: rate,
-                    onChange: handleRate
-                }}
-                onOpenMenu={() => console.log('onOpenMenu')}
-                onNext={() => console.log('onNext')}
-                onPrevious={() => console.log('onPrevious')}
-                onTwentyFivePercent={handleProgress(25)}
-                onFiftyPercent={handleProgress(50)}
-                onSeventyFivePercent={handleProgress(75)}
-                onOneHundredPercent={handleProgress(100)}
-            />
+            <div className='classroom__video-container'>
+                <ESJwPlayer
+                    type='html5'
+                    ref={playerRef}
+                    playerId='playerId'
+                    playlist={playlistVideo}
+                    playerScript='/jwplayer/jwplayer.js'
+                    licenseKey={process.env.REACT_APP_JWPLAYER}
+                    isMuted={false}
+                    title={currentResource.video.title}
+                    subtitle={`${t('global.subject')} 3, ${t(
+                        'global.activity'
+                    )} ${currentResource.index + 1}`}
+                    rate={{
+                        value: rate,
+                        onChange: handleRate
+                    }}
+                    onOpenMenu={() => console.log('onOpenMenu')}
+                    onNext={() => console.log('onNext')}
+                    onPrevious={() => console.log('onPrevious')}
+                    onTwentyFivePercent={handleProgress(25)}
+                    onFiftyPercent={handleProgress(50)}
+                    onSeventyFivePercent={handleProgress(75)}
+                    onOneHundredPercent={handleProgress(100)}
+                />
+                <div className='classroom__video-container--buttons'>
+                    <ESButton
+                        size='small'
+                        uppercase
+                        bold
+                        variant='solid'
+                        className='questions'
+                        onClick={askQuestions}
+                    >
+                        Fazer Questões
+                    </ESButton>
+                    <ESButton
+                        size='small'
+                        uppercase
+                        bold
+                        variant='outlined'
+                        color='white'
+                        disabled
+                    >
+                        Ver discussões
+                    </ESButton>
+                </div>
+            </div>
             {currentResource.quiz && (
                 <ESTabs
                     dark
@@ -126,8 +180,16 @@ const SANClassroomVideo = () => {
                     tabBarGutter={0}
                     defaultActiveKey='1'
                     renderTabBar={renderTabBar({
+                        bookmarked,
+                        handleBookmark,
+                        nextResource: nextResource && nextResource.title,
+                        prevResource: prevResource && prevResource.title,
+                        onPrev: onNavigation('prev'),
+                        onNext: onNavigation('next'),
                         title: currentResource.video.title,
-                        subtitle: `${t('global.subject')} 3, ${t(
+                        subtitle: `${t(
+                            'global.subject'
+                        )} ${currentModule.index + 1}, ${t(
                             'global.activity'
                         )} ${currentResource.index + 1}`,
                         label: t('classroom.rateClass'),
@@ -138,7 +200,11 @@ const SANClassroomVideo = () => {
                     })}
                 >
                     <ESTabPane tab={t('classroom.questions')} key='1'>
-                        <SANQuiz quiz={currentResource.quiz} />
+                        <SANQuiz
+                            quiz={currentResource.quiz}
+                            bookmarked={quizBookmarked}
+                            handleBookmark={handleQuizBookmark}
+                        />
                     </ESTabPane>
                     <ESTabPane
                         tab={t('classroom.discussions')}

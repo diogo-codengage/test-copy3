@@ -12,6 +12,7 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            padding: 0;
 
             & .es-circle-progress:not(:last-child) {
                 margin-right: @margin-sm;
@@ -42,6 +43,10 @@
 
         &--center {
             justify-content: center;
+
+            & .hide {
+                display: none;
+            }
         }
 
         &--right {

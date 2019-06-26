@@ -6,12 +6,12 @@ import ESLessonHeader, {
     ESLessonHeaderExtra,
     ESLessonHeaderLeft
 } from 'sanar-ui/dist/Components/Molecules/LessonHeader'
+import ESPdfReader from 'sanar-ui/dist/Components/Atoms/PdfReader'
 
 import { usePortalContext } from 'Pages/Portal/Context'
-import SANQuiz from 'Components/Quiz'
 import { useClassroomContext } from '../Context'
 
-const SANClassroomMock = () => {
+const SANClassRoomDocument = () => {
     const { t } = useTranslation('esanar')
     const {
         currentResource,
@@ -23,11 +23,13 @@ const SANClassroomMock = () => {
     const { handleBookmark, bookmarked } = useClassroomContext()
 
     return (
-        <div className='classroom__mock'>
+        <div className='classroom__document'>
             <ESLessonHeader
+                bookmarked={bookmarked}
+                onBookmarked={handleBookmark}
                 leftChildren={
                     <ESLessonHeaderLeft
-                        title={currentResource.quiz.title}
+                        title={currentResource.document.title}
                         subtitle={`${t(
                             'global.subject'
                         )} ${currentModule.index + 1}, ${t(
@@ -42,17 +44,22 @@ const SANClassroomMock = () => {
                         nextLesson={nextResource && nextResource.title}
                         onPrev={onNavigation('prev')}
                         onNext={onNavigation('next')}
+                        bookmarkLabel={t('classroom.bookmarkDocument')}
+                        bookmarked={bookmarked}
+                        onBookmarked={handleBookmark}
                     />
                 }
             />
-            <SANQuiz
-                quiz={currentResource.quiz}
-                bookmarked={bookmarked}
-                handleBookmark={handleBookmark}
-                mock
+            <ESPdfReader
+                url={
+                    currentResource &&
+                    currentResource.document &&
+                    currentResource.document.file &&
+                    currentResource.document.file.url
+                }
             />
         </div>
     )
 }
 
-export default SANClassroomMock
+export default SANClassRoomDocument

@@ -7,14 +7,29 @@ import { useTranslation } from 'react-i18next'
 import ESPlaylistList from './PlaylistList'
 import ESPlaylistItem from './PlaylistItem'
 import ESTypography from '../../Atoms/Typography'
-import { Spin } from 'antd'
 import ESSkeleton from '../../Atoms/Skeleton/Skeleton'
 
-const ESPlaylist = ({ className, items, loading, goToResource }) => {
+const ESPlaylist = ({
+    className,
+    items,
+    loading,
+    currentIndex,
+    goToResource
+}) => {
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-playlist', className)
 
-    const current = items.find(item => item.current)
+    const current = items[currentIndex]
+
+    const renderItem = (item, index) => (
+        <ESPlaylistItem
+            key={index}
+            index={index}
+            item={item}
+            onClick={goToResource}
+            current={currentIndex === index}
+        />
+    )
 
     return loading ? (
         <>
@@ -56,18 +71,7 @@ const ESPlaylist = ({ className, items, loading, goToResource }) => {
                     </div>
                 </div>
             )}
-            <ESPlaylistList>
-                {items.map((item, i) => {
-                    return (
-                        <ESPlaylistItem
-                            key={i}
-                            index={i}
-                            item={item}
-                            onClick={goToResource}
-                        />
-                    )
-                })}
-            </ESPlaylistList>
+            <ESPlaylistList>{items.map(renderItem)}</ESPlaylistList>
         </div>
     )
 }

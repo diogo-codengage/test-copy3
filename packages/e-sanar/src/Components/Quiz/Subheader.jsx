@@ -1,4 +1,5 @@
 import React, { useState, forwardRef } from 'react'
+import classNames from 'classnames'
 
 import { useTranslation } from 'react-i18next'
 
@@ -12,7 +13,18 @@ import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
 const SANSubheader = forwardRef(
-    ({ total, index, questions, mock, stopwatch }, ref) => {
+    (
+        {
+            total,
+            index,
+            questions,
+            mock,
+            stopwatch,
+            bookmarked,
+            handleBookmark
+        },
+        ref
+    ) => {
         const { t } = useTranslation('esanar')
         const [visible, setVisible] = useState(false)
 
@@ -49,9 +61,13 @@ const SANSubheader = forwardRef(
                             <ESEvaIcon name='map-outline' />
                             {t('classroom.questionMap')}
                         </ESButton>
-                        {stopwatch && (
-                            <ESStopwatch ref={ref} dark className='ml-lg' />
-                        )}
+                        <ESStopwatch
+                            ref={ref}
+                            dark
+                            className={classNames('ml-lg', {
+                                hide: !stopwatch
+                            })}
+                        />
                         <ESQuestionMap
                             visible={visible}
                             items={questions}
@@ -71,8 +87,20 @@ const SANSubheader = forwardRef(
                             variant='text'
                             color='white'
                             className='mr-sm'
+                            onClick={handleBookmark}
                         >
-                            <ESEvaIcon name='heart-outline' />
+                            {bookmarked ? (
+                                <ESEvaIcon
+                                    name='heart'
+                                    color='secondary'
+                                    key='quiz-bookmarked'
+                                />
+                            ) : (
+                                <ESEvaIcon
+                                    name='heart-outline'
+                                    key='quiz-not-bookmarked'
+                                />
+                            )}
                             {t('classroom.favoriteQuestion')}
                         </ESButton>
                         <ESButton

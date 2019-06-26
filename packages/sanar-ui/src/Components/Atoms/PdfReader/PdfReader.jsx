@@ -1,39 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ESTypography from '../Typography'
-import './style.less'
-import ESButton from '../Button'
+import classNames from 'classnames'
+
 import { useTranslation } from 'react-i18next'
 
-const ESPdfReader = ({ url }) => {
+import ESTypography from '../Typography'
+import ESButton from '../Button'
+
+const ESPdfReader = ({ url, className }) => {
     const { t } = useTranslation('sanarui')
+    const classes = classNames('es-pdf-reader', className)
+
+    const openPdf = () => window.open(url)
 
     return (
-        <div style={{ height: '100%', width: '100%', paddingBottom: '5%' }}>
-            <embed
-                src={url}
-                type='application/pdf'
-                style={{ height: '95%', width: '100%' }}
-            />
-            <div
-                style={{
-                    height: '2%',
-                    width: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexDirection: 'row',
-                    padding: 10
-                }}
-            >
+        <div className={classes}>
+            <embed src={url} type='application/pdf' />
+            <div className='es-pdf-reader__footer'>
                 <ESTypography type='light' variant='caption'>
                     {t('pdfReader.problemRenderingPdf')}
                 </ESTypography>
-                <ESButton
-                    variant='text'
-                    color='secondary'
-                    onClick={() => window.open(url)}
-                >
+                <ESButton variant='text' color='secondary' onClick={openPdf}>
                     <ESTypography variant='caption' type='secondary' strong>
                         {t('pdfReader.clickAndDownload')}
                     </ESTypography>
@@ -44,6 +31,7 @@ const ESPdfReader = ({ url }) => {
 }
 
 ESPdfReader.propTypes = {
+    className: PropTypes.string,
     url: PropTypes.string.isRequired
 }
 ESPdfReader.defaultProps = {}
