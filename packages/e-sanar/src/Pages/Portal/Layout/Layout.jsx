@@ -6,11 +6,7 @@ import { Scrollbars } from 'react-custom-scrollbars'
 
 import SANFooter from './Footer'
 import SANMenu from './Menu'
-import {
-    SANLayoutProvider,
-    useLayoutContext,
-    withLayoutProvider
-} from './Context'
+import { useLayoutContext, withLayoutProvider } from './Context'
 
 const SANPortalLayout = ({ children }) => {
     const { darkMode } = useLayoutContext()

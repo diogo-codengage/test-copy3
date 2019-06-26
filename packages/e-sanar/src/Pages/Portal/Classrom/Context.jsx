@@ -46,7 +46,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         currentResource
     } = usePortalContext()
 
-    const { menuIndex, setIndexMenu, setDarkMode, setTest } = useLayoutContext()
+    const { menuIndex, setIndexMenu, setDarkMode } = useLayoutContext()
     const [state] = useReducer(reducer, initialState)
     const { getEnrollment, me } = useAuthContext()
 

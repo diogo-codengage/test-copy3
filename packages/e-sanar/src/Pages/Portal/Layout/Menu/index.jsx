@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter } from 'react-router'
@@ -71,7 +71,7 @@ const SANMenu = ({ history }) => {
             toDarkMode.includes(indexMenu) || darkMode
                 ? setTheme('dark')
                 : setTheme('primary'),
-        [indexMenu]
+        [indexMenu, darkMode]
     )
 
     const handleBack = () => {

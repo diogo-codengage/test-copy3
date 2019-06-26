@@ -16,7 +16,6 @@ import { SANPortalPagesContainer } from '../Layout'
 import logoSvg from 'assets/images/logo.svg'
 import whiteLogo from 'assets/images/white-logo.svg'
 
-import { usePortalContext } from '../Context'
 import ESTermsAndPrivacy from 'assets/TermsAndPrivacy'
 
 const modalTermsContent = [
