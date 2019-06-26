@@ -34,6 +34,8 @@ export const QuestionsPage = (props: IProps) => {
     const [currentAnswerId, setCurrentAnswerId] = useState()
     const [questions, setQuestions] = useState([])
 
+    const [questionsRequests, setQuestionsRequests] = useState(0)
+
     const [totalCorrect, setTotalCorrect] = useState(0)
     const [totalWrong, setTotalWrong] = useState(0)
     const [totalSkipped, setTotalSkipped] = useState(0)
@@ -67,9 +69,6 @@ export const QuestionsPage = (props: IProps) => {
     }
 
     const onInit = () => {
-
-        console.log('on init')
-
         BFFService.getSpecialties().then((specialties) => {
             console.log('on init end')
             console.log({specialties})
@@ -77,7 +76,7 @@ export const QuestionsPage = (props: IProps) => {
         })
         BFFService.getTags().then((tags) => {
             setAllTags(tags)
-        });
+        })
     }
 
     if (!started) {
@@ -100,6 +99,9 @@ export const QuestionsPage = (props: IProps) => {
         setCurrentAnswerId,
         questions,
         setQuestions,
+
+        questionsRequests,
+        setQuestionsRequests,
 
         totalCorrect,
         totalWrong,
@@ -136,6 +138,13 @@ export const QuestionsPage = (props: IProps) => {
 
         showAdvancedFilters,
         setShowAdvancedFilters
+    }
+
+    //check all load
+    if(!!course) {
+        if(loading !== (allSpecialties.length === 0 || allTags.length === 0)){
+            setLoading(!loading)
+        }
     }
 
     return (

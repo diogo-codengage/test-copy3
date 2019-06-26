@@ -14,7 +14,9 @@ export const QuestionsHeader = () => {
         loading,
         course,
         currentPage,
-        setCurrentPage
+        setCurrentPage,
+
+        questionsRequests,
     } = useQuestionsContext()
 
     const [showModalFinish, setShowModalFinish] = useState(false)
@@ -36,7 +38,7 @@ export const QuestionsHeader = () => {
             uppercase
             blockOnlyMobile
             onClick={() => setCurrentPage(QuestionPageType.Question)}
-        >INICIAR PRÁTICA</ESButton>
+        > {questionsRequests === 0 ? 'INICIAR PRÁTICA' : 'VOLTAR A PRÁTICA'} </ESButton>
 
     }
 

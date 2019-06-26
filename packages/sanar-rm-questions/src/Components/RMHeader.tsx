@@ -1,28 +1,36 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { RMContainer } from './RMContainer'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import logo from '../assets/images/logo.png'
 import styled from 'styled-components'
 import { IStyledComponent } from '../Theme/IStyledComponent'
 
-interface IProp extends IStyledComponent{
+import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
+import ESModal from 'sanar-ui/dist/Components/Atoms/Modal'
+
+interface IProp extends IStyledComponent {
     title?: string
     rightElement?: ReactNode
 }
 
-const RMHeaderTemplate = ({ title , rightElement, className }: IProp) => {
+const RMHeaderTemplate = ({ title, rightElement, className }: IProp) => {
+
+    const [showModalBackToHome, setShowModalBackToHome] = useState(false)
+
     return (
-
         <div className={className}>
-
             <div id="logo-fixed" className="logo">
                 <img alt='logo' src={logo}/>
             </div>
-
             <RMContainer>
                 <div className='container'>
                     <div className="logo">
-                        <img alt='logo' src={logo}/>
+                        <a href="/" onClick={(e) => {
+                            e.preventDefault()
+                            setShowModalBackToHome(true)
+                        }}>
+                            <img alt='logo' src={logo}/>
+                        </a>
                     </div>
                     <div className="title">
                         <ESTypography
@@ -34,6 +42,37 @@ const RMHeaderTemplate = ({ title , rightElement, className }: IProp) => {
                     </div>
                 </div>
             </RMContainer>
+            <ESModal
+                title={'Sair'}
+                visible={showModalBackToHome}
+                centered={'Centered'}
+                onCancel={() => {
+                    setShowModalBackToHome(false)
+                }}
+            >
+                <p>Tem certeza que deseja sair da página de prática?</p>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <ESButton
+                        color='outlined'
+                        variant='text'
+                        uppercase
+                        blockOnlyMobile
+                        onClick={() => {
+                            setShowModalBackToHome(false)
+                        }}
+                    >VOLTAR</ESButton>
+                    <ESButton
+                        color='primary'
+                        variant='solid'
+                        uppercase
+                        blockOnlyMobile
+                        onClick={() => {
+                            setShowModalBackToHome(false)
+                            window.open('/', '_self')
+                        }}
+                    >CONFIRMAR</ESButton>
+                </div>
+            </ESModal>
         </div>
     )
 }
@@ -100,4 +139,4 @@ export const RMHeader = styled(RMHeaderTemplate)`
 
     }
     
-` as React.FC<IProp>;
+` as React.FC<IProp>
