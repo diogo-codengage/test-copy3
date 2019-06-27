@@ -75,7 +75,7 @@ const SANCourseContinue = ({ history }) => {
                                 'courseDetails.tabContent.continue.nextModule'
                             )}
                         />
-                        <ESCardCourseModule
+                        {/* <ESCardCourseModule
                             className='san-tab-course-content__continue--card'
                             moduleName={`${t(
                                 'courseDetails.tabContent.modules.module.key'
@@ -89,7 +89,7 @@ const SANCourseContinue = ({ history }) => {
                             moduleTime={`${next_module.duration || 0}min`}
                             image={next_module.cover_picture}
                             onClick={goClassroomNext(next_module)}
-                        />
+                        /> */}
                     </ESCol>
                 </ESRow>
             </SANPortalPagesContainer>

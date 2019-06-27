@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter } from 'react-router'
@@ -11,9 +11,8 @@ import SANInitial from './Initial'
 import SANNotifications from './Notifications'
 import SANCourseChange from './CourseChange'
 import SANMyAccount from './MyAccount'
-import SANClassPlaylist from './ClassPlaylist'
+import SANClassPlaylist, { SANClassPlaylistMenuHeader } from './ClassPlaylist'
 import { useLayoutContext } from '../../Layout/Context'
-// import SANSearch from './Search'
 
 const intlPath = 'mainMenu.title.'
 
@@ -79,6 +78,14 @@ const SANMenu = ({ history }) => {
         setTitle(t(`${intlPath}menu`))
     }
 
+    useEffect(() => {
+        if (indexMenu === 9) {
+            setTitle(<SANClassPlaylistMenuHeader />)
+        } else {
+            setTab(indexMenu)
+        }
+    }, [indexMenu])
+
     const setTab = indexMenu => {
         switch (indexMenu) {
             case 0:
@@ -105,6 +112,10 @@ const SANMenu = ({ history }) => {
                 setIndexMenu(indexMenu)
                 setTitle(t(`${intlPath}search`))
                 break
+            case 9:
+                setTitle(<h1>Heheh</h1>)
+                setIndexMenu(indexMenu)
+                break
             default:
                 setIndexMenu(indexMenu)
                 setTitle(t(`${intlPath}menu`))
@@ -119,7 +130,7 @@ const SANMenu = ({ history }) => {
     const handleHome = () => history.push('/aluno/curso')
 
     const onOpenOrClose = isOpen => {
-        setOpenMenu(isOpen)
+        // setOpenMenu(isOpen)
     }
 
     return (

@@ -93,7 +93,7 @@ const ESMainMenu = ({
     }, [contextProp])
 
     useEffect(() => {
-        setToggle(true)
+        setToggle(openProp)
     }, [openProp])
 
     // useEffect(() => {
@@ -141,7 +141,12 @@ const ESMainMenu = ({
     return (
         <div className={classes}>
             <div className={classesContent}>
-                <MainMenuContentHeader title={title} />
+                {typeof title === 'string' ? (
+                    <MainMenuContentHeader title={title} />
+                ) : (
+                    title
+                )}
+
                 <div className='es-main-menu__content--scrollable'>
                     {children}
                 </div>

@@ -13,6 +13,44 @@ import ESDivider from 'sanar-ui/dist/Components/Atoms/Divider'
 import { GET_MODULES } from 'Apollo/CourseDetails/queries/modules'
 import { useApolloContext } from 'Hooks/apollo'
 
+import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
+import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
+
+import { useLayoutContext } from '../../Layout/Context'
+
+export const SANClassPlaylistMenuHeader = withRouter(({ history }) => {
+    const { setOpenMenu } = useLayoutContext()
+
+    return (
+        <>
+            <div className='d-flex justify-content-between align-items-center pl-md pt-md pr-md pb-xs'>
+                <ESButton
+                    variant='text'
+                    color='white'
+                    className='pl-no'
+                    uppercase
+                    onClick={() => history.push('/aluno')}
+                >
+                    <ESEvaIcon className='mr-xs' name='arrow-back-outline' />
+                    <ESTypography variant='caption'>
+                        Voltar para início
+                    </ESTypography>
+                </ESButton>
+                <ESButton
+                    variant='text'
+                    color='white'
+                    className='pl-no pr-no'
+                    uppercase
+                    onClick={() => setOpenMenu(old => !old)}
+                >
+                    <ESEvaIcon name='close-outline' />
+                </ESButton>
+            </div>
+            <ESDivider className='mt-no mb-sm' color='grey' />
+        </>
+    )
+})
+
 const SANClassPlaylist = ({ history }) => {
     const {
         currentModule,
@@ -22,6 +60,8 @@ const SANClassPlaylist = ({ history }) => {
         getResource
     } = usePortalContext()
 
+    const { openMenu, setOpenMenu } = useLayoutContext()
+
     const [modules, setModules] = useState(null)
     const { getEnrollment } = useAuthContext()
     const client = useApolloContext()
@@ -29,6 +69,7 @@ const SANClassPlaylist = ({ history }) => {
 
     const goToResource = resource => {
         setCurrentResource(resource)
+        setOpenMenu(oldOpenMenu => !oldOpenMenu)
         history.push(
             `/aluno/sala-aula/${
                 currentModule.id
@@ -78,7 +119,7 @@ const SANClassPlaylist = ({ history }) => {
 
     return (
         <div>
-            <div className='pl-md pr-md pt-md'>
+            <div className='pl-md pr-md'>
                 <ESTypography className='mb-xs text-white-6' variant='overline'>
                     {course.knowledge_area}
                 </ESTypography>
