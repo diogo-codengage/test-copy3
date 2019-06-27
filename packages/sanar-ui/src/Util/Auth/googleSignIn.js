@@ -3,9 +3,9 @@ import { Auth } from 'aws-amplify'
 // To federated sign in from Google
 
 const esGoogleSignIn = () => {
-    const ga = window.gapi.auth2.getAuthInstance()
-    return ga.signIn().then(
+    return Auth.federatedSignIn({ provider: 'Google' }).then(
         googleUser => {
+            console.log(googleUser);
             return getAWSCredentials(googleUser)
         },
         error => {
@@ -29,7 +29,7 @@ const initGapi = () => {
     g.load('auth2', function() {
         g.auth2.init({
             client_id:
-                '130280626733-4o5vr2s4a4hjoaa9i8mrjcjl9a8qhepc.apps.googleusercontent.com',
+                '807324955316-01gamhmmlffq8oc15r2huvnrahigdi5v.apps.googleusercontent.com',
             // authorized scopes
             scope: 'profile email openid'
         })
@@ -37,6 +37,8 @@ const initGapi = () => {
 }
 
 const getAWSCredentials = async googleUser => {
+    console.log('Starting signIn with Google Button...');
+    /*
     const { id_token, expires_at } = googleUser.getAuthResponse()
     const profile = googleUser.getBasicProfile()
     let user = {
@@ -45,6 +47,8 @@ const getAWSCredentials = async googleUser => {
     }
 
     await Auth.federatedSignIn('google', { token: id_token, expires_at }, user)
+    */
+    await Auth.federatedSignIn({ provider: 'Google' })
 }
 
 export default esGoogleSignIn

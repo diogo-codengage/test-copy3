@@ -75,6 +75,9 @@ const ESSignInForm = ({
             })
             .catch(() => {
                 setLoading(false)
+                message.error(
+                    'Ocorreu um erro ao logar-se utilizando o Facebook.'
+                )
             })
     }
 

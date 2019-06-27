@@ -1,19 +1,15 @@
-import { Auth } from 'aws-amplify'
 import CustomSessionStorage from './customSessionStorage'
 import CustomLocalStorage from './customLocalStorage'
 
 const esConfigureAuthStorage = () => {
     const item = JSON.parse(localStorage.getItem('es-keep-me-logged-in'))
-
+    let storage
     if (!item) {
-        Auth.configure({
-            storage: CustomSessionStorage
-        })
+        storage = CustomSessionStorage
     } else {
-        Auth.configure({
-            storage: CustomLocalStorage
-        })
+        storage = CustomLocalStorage
     }
+    return storage;
 }
 
 export default esConfigureAuthStorage
