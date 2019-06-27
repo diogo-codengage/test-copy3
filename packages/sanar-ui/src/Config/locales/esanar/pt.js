@@ -316,7 +316,9 @@ export default {
         quizFinalized: 'Quiz finalizado',
         bookmarkDocument: 'Favoritar material',
         next: 'Próxima',
-        previous: 'Anterior'
+        previous: 'Anterior',
+        askQuestions: 'Fazer Questões',
+        viewDiscussions: 'Ver discussões'
     },
     footer: {
         helpButton: 'Precisa de ajuda?',
