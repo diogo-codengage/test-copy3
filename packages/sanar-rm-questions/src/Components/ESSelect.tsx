@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Card, Checkbox, Dropdown, Input } from 'antd'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import { CheckboxChangeEvent } from 'antd/es/checkbox'
+import { normalizeString } from '../Util/normalizeString'
 
 export interface ISelectOption {
     label: string;
@@ -32,7 +33,6 @@ export const ESSelect: React.FC<IProps> = (props) => {
             props.onSelect(props.defaultValue.filter((v: ISelectOption) => v.value !== s.value))
         }
         e.preventDefault();
-        setText('')
     }
 
     const items =
@@ -45,14 +45,16 @@ export const ESSelect: React.FC<IProps> = (props) => {
                     padding: 10,
                     maxHeight: 250,
                     overflow: 'auto',
-                    borderRadius: 2
+                    borderRadius: 2,
+                    minWidth: 300,
+                    minHeight: 50,
                 }
             }><span></span>
                 {props.options.filter(v => {
                     if (text.length === 0) {
                         return true
                     }
-                    return v.value.toLowerCase().indexOf(text.toLowerCase()) > -1
+                    return normalizeString(v.label).indexOf(normalizeString(text)) > -1
                 }).map(s =>
                     <Checkbox
                         style={{ padding: 5, marginLeft: 8 }}
@@ -67,7 +69,14 @@ export const ESSelect: React.FC<IProps> = (props) => {
 
     return (
         <>
-            <Dropdown overlay={items}>
+            <Dropdown
+                overlay={items} trigger={['click']}
+                onVisibleChange={ visible => {
+                    if(!visible){
+                        setText('')
+                    }
+                }}
+            >
                 <Input
                     onChange={event1 => setText(event1.target.value)}
                     value={text}

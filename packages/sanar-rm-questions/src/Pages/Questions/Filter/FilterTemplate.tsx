@@ -54,6 +54,13 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
     const isSmall = width < 768
     const cardSpan = isSmall ? 24 : 8
 
+    let placeholderInstitutions  = '';
+    if(props.selectedInstitutions.length === 1){
+        placeholderInstitutions = props.selectedInstitutions[0].label;
+    }
+    if(props.selectedInstitutions.length > 1){
+        placeholderInstitutions = `${props.selectedInstitutions.length} selecionadas`;
+    }
 
     let allTags = props.allTags;
     let allSpecialties = props.allSpecialties;
@@ -126,7 +133,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
                                     defaultValue={props.selectedInstitutions}
                                     onSelect={props.setSelectedInstitutions}
                                     options={props.allInstitutions}
-                                    placeholder={ props.selectedInstitutions.map(v => v.label).join(', ') }
+                                    placeholder={ placeholderInstitutions }
                                 >
                                 </ESSelect>
                             </FilterInputContainer>
