@@ -54,6 +54,9 @@ export const QuestionsPage = (props: IProps) => {
     const [allSubSpecialties, setAllSubSpecialties] = useState([])
     const [allTags, setAllTags] = useState([])
 
+    const[ allInstitutions, setAllInstitutions] = useState([])
+    const[ selectedInstitutions, setSelectedInstitutions ] = useState([])
+
     const [showAdvancedFilters, setShowAdvancedFilters] = useState(false)
 
     const increaseTotalCorrect = () => {
@@ -76,6 +79,7 @@ export const QuestionsPage = (props: IProps) => {
             setAllTags(specialties.flatMap(s => s.tags).concat( specialties
                 .flatMap(s => s.children).flatMap(s => s.tags)));
         })
+        BFFService.getInstitutions().then(setAllInstitutions)
     }
 
     if (!started) {
@@ -128,6 +132,11 @@ export const QuestionsPage = (props: IProps) => {
         allTags,
         setAllTags,
 
+        allInstitutions,
+        setAllInstitutions,
+        selectedInstitutions,
+        setSelectedInstitutions,
+
         selectedStates,
         setSelectedStates,
         selectedYears,
@@ -136,12 +145,11 @@ export const QuestionsPage = (props: IProps) => {
         setCommentedByExpert,
 
         showAdvancedFilters,
-        setShowAdvancedFilters
+        setShowAdvancedFilters,
     }
 
-    //check all load
     if(!!course) {
-        if(loading !== (allSpecialties.length === 0 || allTags.length === 0)){
+        if(loading !== (allSpecialties.length === 0)){
             setLoading(!loading)
         }
     }

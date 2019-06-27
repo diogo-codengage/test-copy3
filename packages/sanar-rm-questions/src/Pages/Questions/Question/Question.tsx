@@ -34,16 +34,9 @@ export const Question = () => {
             .filter(v => normalizeEndCompare(v.label,questionsCtx.course.subSpecialtyName))
             .map(v => v.value)
 
-        console.log('Filter from course',{
-            specialtyName: questionsCtx.course.specialtyName,
-            subSpecialtyName: questionsCtx.course.subSpecialtyName,
-            moduleName: questionsCtx.course.moduleName,
-            tagsIds,
-            specialtiesIds,
-        })
-
         return {
             specialtiesIds,
+            institutionsIds: [],
             tagsIds,
             states: [],
             years: [],
@@ -57,6 +50,7 @@ export const Question = () => {
                 .map(s => s.value)
                 .concat(questionsCtx.selectedSubSpecialties
                     .map(s => s.value)),
+            institutionsIds: questionsCtx.selectedInstitutions.map( i => i.value ),
             tagsIds: questionsCtx.selectedTags.map( t => t.value),
             states: questionsCtx.selectedStates.map(s => s.value),
             years: questionsCtx.selectedYears.map(v => v.value),

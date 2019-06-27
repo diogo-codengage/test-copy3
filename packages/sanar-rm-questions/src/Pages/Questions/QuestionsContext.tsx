@@ -60,6 +60,11 @@ export interface IQuestionsContext {
     isCommentedByExpert: boolean
     setCommentedByExpert: (value: boolean) => void
 
+    allInstitutions: ISelectOption[]
+    setAllInstitutions:  (values: ISelectOption[]) => void
+    selectedInstitutions: ISelectOption[]
+    setSelectedInstitutions: (values: ISelectOption[]) => void
+
     selectedSpecialties: Speciality[]
     setSelectedSpecialties: (selectedSpecialties: Speciality[]) => void
     selectedSubSpecialties: Speciality[]
@@ -76,7 +81,6 @@ export interface IQuestionsContext {
 
     showAdvancedFilters: boolean
     setShowAdvancedFilters: (showAdvancedFilters: boolean) => void
-
 }
 
 export const QuestionsContext = createContext<IQuestionsContext>(null)

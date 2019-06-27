@@ -1,5 +1,16 @@
 import gql from 'graphql-tag'
 
+export const GET_INSTITUTIONS= gql`
+query {
+  institutions {
+    data {
+        value: id
+        label: name
+    }
+  }
+}
+`
+
 export const GET_SPECIALTIES = gql`
     {
         specialties: specialties {
@@ -10,7 +21,6 @@ export const GET_SPECIALTIES = gql`
                 }
             }
         }
-
     }
 
     fragment specialtyFragment on Specialty {
