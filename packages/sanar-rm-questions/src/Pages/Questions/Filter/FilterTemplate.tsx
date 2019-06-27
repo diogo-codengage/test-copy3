@@ -51,6 +51,21 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
     const isSmall = width < 768
     const cardSpan = isSmall ? 24 : 8
 
+
+    let allTags = props.allTags;
+    let allSpecialties = props.allSpecialties;
+
+    if(props.selectedTags.length > 0) {
+        allSpecialties = allSpecialties.filter(v => {
+            return !!v.tags.concat(v.children.flatMap(c => c.tags))
+                .map( t => t.value).find(v => props.selectedTags.map(t => t.value).includes(v))
+        });
+    }
+
+    if(props.selectedSpecialties.length > 0) {
+        allTags = props.selectedSpecialties.flatMap(s => s.tags).concat( props.selectedSpecialties.flatMap(s => s.children).flatMap(s => s.tags) )
+    }
+
     return <>
         <RMContainer>
             <ESRow gutter={24} style={{ marginBottom: 12 }}>
@@ -59,7 +74,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
                         style={{marginTop: isSmall ?  20 : 0 }}
                         filterName="Especialidade"
                         image={iconSpecialties}
-                        items={props.allSpecialties}
+                        items={allSpecialties}
                         onChange={props.setSelectedSpecialties}
                         value={props.selectedSpecialties}
                         labelSelecteds={props.selectedSpecialties.map(e => e.label).join(', ') }
@@ -79,7 +94,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
                     <ESCardSelectFilter
                         filterName="Tema"
                         image={iconTheme}
-                        items={props.allTags}
+                        items={allTags}
                         onChange={props.setSelectedTags}
                         value={props.selectedTags}
                         labelSelecteds={props.selectedTags.map(e => e.label).join(', ') }
