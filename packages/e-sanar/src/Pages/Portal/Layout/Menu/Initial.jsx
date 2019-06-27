@@ -21,9 +21,11 @@ const SANInitial = ({ setTab, history }) => {
 
     const { course, last_accessed } = getEnrollment()
 
-    const moduleReference = `${t('global.subject')} ${
-        last_accessed.module_order
-    }, ${t('global.activity')} ${last_accessed.resource_order}`
+    const moduleReference = `${t(
+        'global.subject'
+    )} ${last_accessed.module_order + 1}, ${t(
+        'global.activity'
+    )} ${last_accessed.resource_order + 1}`
 
     const goClassroom = () =>
         history.push(
