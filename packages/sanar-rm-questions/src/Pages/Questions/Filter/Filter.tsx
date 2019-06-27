@@ -55,7 +55,11 @@ export const Filter: React.FC = () => {
         isCommentedByExpert: ctx.isCommentedByExpert,
 
         showAdvancedFilters: ctx.showAdvancedFilters,
-        setShowAdvancedFilters: ctx.setShowAdvancedFilters
+        setShowAdvancedFilters: ctx.setShowAdvancedFilters,
+
+        allInstitutions: ctx.allInstitutions,
+        selectedInstitutions: ctx.selectedInstitutions,
+        setSelectedInstitutions: ctx.setSelectedInstitutions,
 
     } as IFilterTemplateProps
 

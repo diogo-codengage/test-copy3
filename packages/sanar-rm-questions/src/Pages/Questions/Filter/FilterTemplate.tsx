@@ -12,7 +12,6 @@ import iconSubSpecialties from '../../../assets/images/icon-subspecialties.png'
 import iconTheme from '../../../assets/images/icon-theme.png'
 
 import { RMContainer } from '../../../Components/RMContainer'
-import { BRAZIL_STATES } from './brazil-states'
 import { YEARS } from './years'
 
 import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
@@ -40,6 +39,10 @@ export interface IFilterTemplateProps {
     selectedStates: ISelectOption[],
     selectedYears: ISelectOption[],
     isCommentedByExpert: boolean,
+
+    allInstitutions: ISelectOption[]
+    selectedInstitutions: ISelectOption[]
+    setSelectedInstitutions: (values: ISelectOption[]) => void
 
     showAdvancedFilters: boolean,
     setShowAdvancedFilters: (value: boolean) => {},
@@ -116,17 +119,29 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
                     <ESRow gutter={24} style={{ margin: isSmall ? 0 : 60 }}>
                         <ESCol span={cardSpan}>
                             <FilterInputContainer
-                                label={'Estado'}>
+                                label={'Instituição'}>
                                 <ESSelect
                                     style={{ width: '100%' }}
                                     mode={'multiple'}
-                                    defaultValue={props.selectedStates}
-                                    onSelect={props.setSelectedStates}
-                                    options={BRAZIL_STATES}
-                                    placeholder={ props.selectedStates.map(v => v.label).join(', ') }
+                                    defaultValue={props.selectedInstitutions}
+                                    onSelect={props.setSelectedInstitutions}
+                                    options={props.allInstitutions}
+                                    placeholder={ props.selectedInstitutions.map(v => v.label).join(', ') }
                                 >
                                 </ESSelect>
                             </FilterInputContainer>
+                            {/*<FilterInputContainer*/}
+                            {/*    label={'Estado'}>*/}
+                            {/*    <ESSelect*/}
+                            {/*        style={{ width: '100%' }}*/}
+                            {/*        mode={'multiple'}*/}
+                            {/*        defaultValue={props.selectedStates}*/}
+                            {/*        onSelect={props.setSelectedStates}*/}
+                            {/*        options={BRAZIL_STATES}*/}
+                            {/*        placeholder={ props.selectedStates.map(v => v.label).join(', ') }*/}
+                            {/*    >*/}
+                            {/*    </ESSelect>*/}
+                            {/*</FilterInputContainer>*/}
                         </ESCol>
                         <ESCol span={cardSpan}>
                             <FilterInputContainer

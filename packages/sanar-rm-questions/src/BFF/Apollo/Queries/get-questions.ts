@@ -14,14 +14,21 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
     }
 
     if(filter.tagsIds.length > 0) {
-        where.tag_ids = {
+        where.tag_id = {
             inq : filter.tagsIds
         }
     }
 
     if(filter.states.length > 0){
-        where['institution_states'] = {
-            inq : filter.states
+        // where['state'] = null //filter.states[0].toLowerCase();
+        // where['state'] = {
+        //     inq : filter.states
+        // }
+    }
+
+    if(filter.institutionsIds.length > 0){
+        where.institution_id = {
+            inq : filter.institutionsIds
         }
     }
 
@@ -39,7 +46,7 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
 
     const queryWithParams = `
         {
-            questions(limit:20, random:true ${whereFilter}){
+            questions(limit: 3, random:true ${whereFilter}){
                 data {
                     id,
                     statement,
