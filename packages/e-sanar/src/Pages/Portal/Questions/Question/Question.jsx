@@ -68,15 +68,11 @@ const SANQuestionPage = ({ history }) => {
         const newQuestions = questions.slice(1)
 
         setQuestions(newQuestions)
+        setResponse(initialState)
         startStopwatch()
 
-        if (newQuestions.length <= 1) {
-            fetchQuestions(true)
-            setResponse(initialState)
-        } else if (newQuestions.length === 2) {
-            fetchQuestions(false)
-        } else {
-            setResponse(initialState)
+        if (!newQuestions.length) {
+            history.push('/aluno/banco-questoes/finalizado')
         }
     }
 
