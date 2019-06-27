@@ -46,7 +46,7 @@ const PortalProvider = ({ children, history }) => {
     }, [currentResource, currentModule])
 
     const onNavigation = dir => () => {
-        if (dir === 'prev') {
+        if (dir === 'prev' && prevResource) {
             setCurrentResource(prevResource)
             history.push(
                 `/aluno/sala-aula/${
@@ -55,7 +55,7 @@ const PortalProvider = ({ children, history }) => {
                     getResource(prevResource).id
                 }`
             )
-        } else {
+        } else if (nextResource) {
             setCurrentResource(nextResource)
             history.push(
                 `/aluno/sala-aula/${

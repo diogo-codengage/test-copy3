@@ -172,8 +172,8 @@ const SANClassroomVideo = () => {
                         onChange: debounceRate
                     }}
                     onOpenMenu={() => setOpenMenu(oldOpenMenu => !oldOpenMenu)}
-                    onNext={onNavigation('prev')}
-                    onPrevious={onNavigation('next')}
+                    onNext={onNavigation('next')}
+                    onPrevious={onNavigation('prev')}
                     onTwentyFivePercent={() => debounceProgress(25)}
                     onFiftyPercent={() => debounceProgress(50)}
                     onSeventyFivePercent={() => debounceProgress(75)}
