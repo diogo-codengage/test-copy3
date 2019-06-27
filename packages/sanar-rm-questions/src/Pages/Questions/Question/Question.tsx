@@ -45,8 +45,12 @@ export const Question = () => {
     }
 
     const getParamsFromFilters = (): QuestionsInputFilter  => {
+
+        const idsSelectedSubSpecialties = questionsCtx.selectedSubSpecialties.map(ss => ss.value);
+
         return  {
             specialtiesIds: questionsCtx.selectedSpecialties
+                .filter( s => !s.children.map(ss => ss.value).find(ss => idsSelectedSubSpecialties.includes(ss) ) )
                 .map(s => s.value)
                 .concat(questionsCtx.selectedSubSpecialties
                     .map(s => s.value)),
