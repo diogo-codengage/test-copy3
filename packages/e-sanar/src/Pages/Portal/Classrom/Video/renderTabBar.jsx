@@ -14,7 +14,8 @@ const renderTabBar = ({
     onPrev,
     onNext,
     bookmarked,
-    handleBookmark
+    handleBookmark,
+    onClick
 }) => (props, DefaultTabBar) => (
     <ESLessonHeader
         rate={rate}
@@ -25,8 +26,7 @@ const renderTabBar = ({
                 title={title}
                 subtitle={subtitle}
                 rate={rate}
-                onClick={() => alert('open menu')}
-                hasTabs
+                onClick={onClick}
             />
         }
         rightChildren={

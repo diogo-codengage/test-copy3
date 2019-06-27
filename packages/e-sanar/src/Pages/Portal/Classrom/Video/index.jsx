@@ -213,6 +213,7 @@ const SANClassroomVideo = () => {
                     renderTabBar={renderTabBar({
                         bookmarked,
                         handleBookmark,
+                        onClick: () => setOpenMenu(oldOpenMenu => !oldOpenMenu),
                         nextResource: nextResource && nextResource.title,
                         prevResource: prevResource && prevResource.title,
                         onPrev: onNavigation('prev'),
