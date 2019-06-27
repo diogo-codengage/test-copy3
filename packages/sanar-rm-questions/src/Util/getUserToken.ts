@@ -1,18 +1,19 @@
-import Auth from '@aws-amplify/auth'
-import Amplify from 'aws-amplify'
+// import Auth from '@aws-amplify/auth'
+// import Amplify from 'aws-amplify'
 import { isLocalhost } from './environment'
 
-Amplify.configure({
-    Auth: {
-        userPoolId: 'us-east-1_EJnJD6R02',
-        userPoolWebClientId: '2uk58uan46uqeqct7lm6osnlck'
-    }
-})
+// Amplify.configure({
+//     Auth: {
+//         userPoolId: 'us-east-1_EJnJD6R02',
+//         userPoolWebClientId: '2uk58uan46uqeqct7lm6osnlck'
+//     }
+// })
 
 export const getUserToken = async () => {
     if (isLocalhost()) {
-        const user = await Auth.signIn('testesanar@gmail.com', 'sanar123')
-        return user.signInUserSession.idToken.jwtToken
+        // const user = await Auth.signIn('testesanar@gmail.com', 'sanar123')
+        // return user.signInUserSession.idToken.jwtToken
+        return 'vsBZQe81SW48tZyuy0j6jZ44JngfkQFk35hnakWg3BbGDB73xiIr6XjsSBkSDRi3'
     } else {
 
         const goToLogin = () => {

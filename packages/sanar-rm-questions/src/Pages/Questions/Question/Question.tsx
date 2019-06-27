@@ -4,6 +4,7 @@ import { useQuestionsContext } from '../QuestionsContext'
 import { QuestionsInputFilter } from '../../../BFF/QuestionsInputFilter'
 import { BFFService } from '../../../BFF/BFFService'
 import { normalizeString } from '../../../Util/normalizeString'
+import { toCorrelacaoTagName } from '../../../Util/corelacaoEntrePlataformas'
 
 export const Question = () => {
 
@@ -26,13 +27,11 @@ export const Question = () => {
     const getParamsFromCourse = async ():Promise<QuestionsInputFilter> => {
 
         const tagsIds = questionsCtx.allTags
-            .filter(t => normalizeEndCompare(t.label,questionsCtx.course.moduleName))
-            .map(v => { console.log(v); return v})
+            .filter(t => normalizeEndCompare(t.label, toCorrelacaoTagName(questionsCtx.course.moduleName)))
             .map(t => t.value)
 
         const specialtiesIds = questionsCtx.allSpecialties.flatMap(s => s.children)
             .filter(v => normalizeEndCompare(v.label,questionsCtx.course.subSpecialtyName))
-            .map(v => { console.log(v); return v})
             .map(v => v.value)
 
         console.log('Filter from course',{
