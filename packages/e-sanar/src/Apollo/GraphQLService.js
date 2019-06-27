@@ -5,7 +5,7 @@ import { Auth } from 'aws-amplify'
 
 const getCurrentTokenSession = () => {
     return Auth.currentSession().then(response => {
-        return `${response.accessToken.jwtToken}`
+        return `${response.idToken.jwtToken}`
     })
 }
 

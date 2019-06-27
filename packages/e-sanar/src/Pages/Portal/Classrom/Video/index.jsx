@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
+import classNames from 'classnames'
 import { message } from 'antd'
 import { useTranslation } from 'react-i18next'
 
@@ -124,7 +125,11 @@ const SANClassroomVideo = () => {
     }, [currentResource])
 
     return (
-        <div className='classroom__video'>
+        <div
+            className={classNames('classroom__video', {
+                'classroom__video--no-quiz': !currentResource.quiz
+            })}
+        >
             <div className='classroom__video-container'>
                 <ESJwPlayer
                     onError={handleVideoError}
@@ -150,28 +155,30 @@ const SANClassroomVideo = () => {
                     onSeventyFivePercent={onProgress(75)}
                     onOneHundredPercent={onProgress(100)}
                 />
-                <div className='classroom__video-container--buttons'>
-                    <ESButton
-                        size='small'
-                        uppercase
-                        bold
-                        variant='solid'
-                        className='questions'
-                        onClick={askQuestions}
-                    >
-                        Fazer Questões
-                    </ESButton>
-                    <ESButton
-                        size='small'
-                        uppercase
-                        bold
-                        variant='outlined'
-                        color='white'
-                        disabled
-                    >
-                        Ver discussões
-                    </ESButton>
-                </div>
+                {currentResource.quiz && (
+                    <div className='classroom__video-container--buttons'>
+                        <ESButton
+                            size='small'
+                            uppercase
+                            bold
+                            variant='solid'
+                            className='questions'
+                            onClick={askQuestions}
+                        >
+                            {t('classroom.askQuestions')}
+                        </ESButton>
+                        <ESButton
+                            size='small'
+                            uppercase
+                            bold
+                            variant='outlined'
+                            color='white'
+                            disabled
+                        >
+                            {t('classroom.viewDiscussions')}
+                        </ESButton>
+                    </div>
+                )}
             </div>
             {currentResource.quiz && (
                 <ESTabs

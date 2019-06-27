@@ -85,8 +85,8 @@
                 border-color: @white-3;
                 color: @white-7;
 
-                &:focus,
-                &:hover {
+                &:focus:not(disabled),
+                &:hover:not(disabled) {
                     background-color: @white-4;
                     color: @white-10;
                 }
@@ -97,6 +97,7 @@
                 }
                 &[disabled] {
                     background-color: transparent;
+                    border-color: @white-3;
                     opacity: 0.3;
                 }
             }
