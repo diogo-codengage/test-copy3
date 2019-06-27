@@ -23,6 +23,11 @@ export const GET_MODULE = gql`
                         bookmarked
                         title
                         durationInSeconds
+                        progress {
+                            id
+                            percentage
+                            timeInSeconds
+                        }
                         thumbnails {
                             small {
                                 url
@@ -51,6 +56,10 @@ export const GET_MODULE = gql`
                         id
                         bookmarked
                         title
+                        progress {
+                            id
+                            percentage
+                        }
                         file {
                             id
                             mime_type
@@ -62,6 +71,10 @@ export const GET_MODULE = gql`
                         id
                         bookmarked
                         title
+                        progress {
+                            id
+                            percentage
+                        }
                         questionItems {
                             data {
                                 question {
