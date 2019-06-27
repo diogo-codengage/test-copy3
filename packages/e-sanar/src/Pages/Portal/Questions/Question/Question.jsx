@@ -31,7 +31,6 @@ const SANQuestionPage = ({ history }) => {
         setCorrectQuestions,
         stopwatchRef,
         setCurrentIndex,
-        fetchQuestions,
         firstLoad,
         setQuestions,
         questions

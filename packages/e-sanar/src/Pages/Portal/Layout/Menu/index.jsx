@@ -56,13 +56,7 @@ const MenuContent = ({ indexMenu, setTab, showContinueBar, handleBack }) => {
 const SANMenu = ({ history }) => {
     const { t } = useTranslation('esanar')
     const [theme, setTheme] = useState('light')
-    const {
-        indexMenu,
-        setIndexMenu,
-        darkMode,
-        openMenu,
-        setOpenMenu
-    } = useLayoutContext()
+    const { indexMenu, setIndexMenu, darkMode, openMenu } = useLayoutContext()
     const [title, setTitle] = useState(t(`${intlPath}menu`))
 
     useMemo(
@@ -84,6 +78,7 @@ const SANMenu = ({ history }) => {
         } else {
             setTab(indexMenu)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [indexMenu])
 
     const setTab = indexMenu => {

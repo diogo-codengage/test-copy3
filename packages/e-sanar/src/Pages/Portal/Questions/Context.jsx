@@ -80,7 +80,6 @@ const QuestionsProvider = ({ children, location: { pathname } }) => {
 
     const fetchQuestions = async (load, reset) => {
         load && setFirstLoad(true)
-        const oldQuestions = questions || []
         const {
             data: {
                 questions: { data, count = 0 }

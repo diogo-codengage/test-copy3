@@ -60,7 +60,7 @@ const SANClassPlaylist = ({ history }) => {
         getResource
     } = usePortalContext()
 
-    const { openMenu, setOpenMenu } = useLayoutContext()
+    const { setOpenMenu } = useLayoutContext()
 
     const [modules, setModules] = useState(null)
     const { getEnrollment } = useAuthContext()
