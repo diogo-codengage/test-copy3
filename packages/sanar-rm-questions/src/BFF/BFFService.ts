@@ -54,6 +54,10 @@ const getInstitutions = () => {
         .then((items: ISelectOption[]) => {
             return items.sort((o1, o2) => (o1.label.localeCompare(o2.label)))
         })
+        .then( (items: ISelectOption[]) => {
+            items.forEach(i => i.label = i.label.toLocaleUpperCase());
+            return items;
+        })
 }
 
 export const BFFService = {
