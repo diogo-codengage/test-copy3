@@ -18,14 +18,6 @@ const Context = createContext()
 
 export const useQuestionsContext = () => useContext(Context)
 
-const uniqBy = (a, key) => {
-    const seen = new Set()
-    return a.filter(item => {
-        const k = key(item)
-        return seen.has(k) ? false : seen.add(k)
-    })
-}
-
 const QuestionsProvider = ({ children, location: { pathname } }) => {
     const client = useApolloContext()
     const [limit] = useState(20)
@@ -88,7 +80,6 @@ const QuestionsProvider = ({ children, location: { pathname } }) => {
 
     const fetchQuestions = async (load, reset) => {
         load && setFirstLoad(true)
-        const oldQuestions = questions || []
         const {
             data: {
                 questions: { data, count = 0 }
@@ -106,14 +97,6 @@ const QuestionsProvider = ({ children, location: { pathname } }) => {
         if (reset) {
             setTotalQuestions(count)
             setQuestions(data)
-        } else {
-            const newQuestions = uniqBy(
-                [...oldQuestions, ...data],
-                item => item.id
-            )
-
-            setTotalQuestions(oldTotal => oldTotal + count)
-            setQuestions(newQuestions)
         }
 
         setFirstLoad(false)
@@ -146,7 +129,6 @@ const QuestionsProvider = ({ children, location: { pathname } }) => {
         totalQuestions,
         setTotalQuestions,
         reset,
-        fetchQuestions,
         questions,
         setQuestions,
         firstLoad

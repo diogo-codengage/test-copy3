@@ -103,11 +103,15 @@ const ESQuestion = ({
         return `${parseInt(statistic.percent)}%`
     }
 
-    const handleStripe = index => () =>
+    const handleStripe = (index, alternativeId) => () => {
+        if (selected === alternativeId) {
+            setSelect()
+        }
         setStripe({
             ...striped,
             [index]: !striped[index]
         })
+    }
 
     useEffect(() => {
         setStripe({})
@@ -176,7 +180,10 @@ const ESQuestion = ({
                                         {...alternative}
                                         index={index}
                                         striped={striped[index]}
-                                        handleStripe={handleStripe(index)}
+                                        handleStripe={handleStripe(
+                                            index,
+                                            alternative.id
+                                        )}
                                         percent={getPercent(alternative.id)}
                                         onSelect={handleSelect(index)}
                                         status={verifyStatus(
