@@ -17,6 +17,8 @@ export const QuestionsHeader = () => {
         setCurrentPage,
 
         questionsRequests,
+        setCurrentQuestion,
+        setCurrentAnswerId
     } = useQuestionsContext()
 
     const [showModalFinish, setShowModalFinish] = useState(false)
@@ -25,8 +27,8 @@ export const QuestionsHeader = () => {
         return !!course
     }
 
-    if(loading)
-        return <RMSplashLoader />
+    if (loading)
+        return <RMSplashLoader/>
 
     let menuAction = <span/>
 
@@ -37,14 +39,18 @@ export const QuestionsHeader = () => {
             variant='solid'
             uppercase
             blockOnlyMobile
-            onClick={() => setCurrentPage(QuestionPageType.Question)}
+            onClick={() => {
+                setCurrentQuestion(null)
+                setCurrentAnswerId(null)
+                setCurrentPage(QuestionPageType.Question)
+            }}
         > {questionsRequests === 0 ? 'INICIAR PRÁTICA' : 'VOLTAR A PRÁTICA'} </ESButton>
 
     }
 
-    if( currentPage === QuestionPageType.Question){
+    if (currentPage === QuestionPageType.Question) {
 
-        if(isFromCourse()) {
+        if (isFromCourse()) {
 
             menuAction = <ESButton
                 color='primary'
@@ -53,7 +59,7 @@ export const QuestionsHeader = () => {
                 blockOnlyMobile
                 onClick={
                     () => {
-                        const uri = `${ isLocalhost() ? 'http://localhost:8080': ''}`
+                        const uri = `${isLocalhost() ? 'http://localhost:8080' : ''}`
                             + `/#/meus-cursos/${course.enrollmentId}/modulos/${course.moduleId}/${course.contentId}?back`
                         window.open(uri, '_self')
                     }
@@ -67,7 +73,7 @@ export const QuestionsHeader = () => {
                 variant='solid'
                 uppercase
                 blockOnlyMobile
-                onClick={() => setShowModalFinish(true) }
+                onClick={() => setShowModalFinish(true)}
             >FINALIZAR PRÁTICA</ESButton>
 
         }
@@ -83,24 +89,28 @@ export const QuestionsHeader = () => {
             title={'Encerrar aula'}
             visible={showModalFinish}
             centered={'Centered'}
-            onCancel={() => {setShowModalFinish(false)}}
+            onCancel={() => {
+                setShowModalFinish(false)
+            }}
         >
             <p>Tem certeza que deseja sair da página de prática?</p>
 
-            <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <ESButton
                     color='outlined'
                     variant='text'
                     uppercase
                     blockOnlyMobile
-                    onClick={()=> {setShowModalFinish(false)}}
+                    onClick={() => {
+                        setShowModalFinish(false)
+                    }}
                 >VOLTAR</ESButton>
                 <ESButton
                     color='primary'
                     variant='solid'
                     uppercase
                     blockOnlyMobile
-                    onClick={()=> {
+                    onClick={() => {
                         setShowModalFinish(false)
                         window.open('/', '_self')
                     }}

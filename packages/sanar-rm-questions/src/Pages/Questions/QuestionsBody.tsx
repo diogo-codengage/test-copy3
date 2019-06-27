@@ -11,5 +11,4 @@ export const QuestionsBody = () => {
     } else {
         return <Question/>
     }
-
 }
