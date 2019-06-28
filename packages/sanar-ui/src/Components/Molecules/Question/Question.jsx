@@ -13,6 +13,8 @@ import ESCard from '../Card'
 import ESQuestionFooter from './Footer'
 import ESQuestionComment from './Comment'
 
+const arrSkeleton = [0, 1, 2, 3, 4]
+
 const ESQuestion = ({
     answer,
     defaultSelected,
@@ -30,7 +32,8 @@ const ESQuestion = ({
     isHistoric,
     propsNext,
     propsPrev,
-    labelMonitor
+    labelMonitor,
+    skipSeeAnswer
 }) => {
     const [striped, setStripe] = useState({})
     const [selected, setSelect] = useState()
@@ -71,7 +74,7 @@ const ESQuestion = ({
     }
 
     const verifyStatus = (row, answer) => {
-        if (answer) {
+        if (answer && !skipSeeAnswer) {
             if (answer === selected) {
                 if (selected === row) {
                     return 'correct'
@@ -112,6 +115,30 @@ const ESQuestion = ({
             [index]: !striped[index]
         })
     }
+
+    const renderSkeleton = (_, i) => (
+        <Skeleton
+            key={i}
+            active
+            loading={!question}
+            avatar={{ size: 32, shape: 'circle' }}
+            paragraph={false}
+            className='mt-lg'
+        />
+    )
+
+    const renderAlternative = (alternative, index) => (
+        <ESAlternative
+            key={alternative.id}
+            {...alternative}
+            index={index}
+            striped={striped[index]}
+            handleStripe={handleStripe(index, alternative.id)}
+            percent={getPercent(alternative.id)}
+            onSelect={handleSelect(index)}
+            status={verifyStatus(alternative.id, answer)}
+        />
+    )
 
     useEffect(() => {
         setStripe({})
@@ -160,44 +187,12 @@ const ESQuestion = ({
                             </>
                         )}
                     </Skeleton>
-                    {!question ? (
-                        [0, 1, 2, 3, 4].map((_, i) => (
-                            <Skeleton
-                                key={i}
-                                active
-                                loading={!question}
-                                avatar={{ size: 32, shape: 'circle' }}
-                                paragraph={false}
-                                className='mt-lg'
-                            />
-                        ))
-                    ) : (
-                        <>
-                            {question.alternatives.data.map(
-                                (alternative, index) => (
-                                    <ESAlternative
-                                        key={alternative.id}
-                                        {...alternative}
-                                        index={index}
-                                        striped={striped[index]}
-                                        handleStripe={handleStripe(
-                                            index,
-                                            alternative.id
-                                        )}
-                                        percent={getPercent(alternative.id)}
-                                        onSelect={handleSelect(index)}
-                                        status={verifyStatus(
-                                            alternative.id,
-                                            answer
-                                        )}
-                                    />
-                                )
-                            )}
-                        </>
-                    )}
+                    {!question
+                        ? arrSkeleton.map(renderSkeleton)
+                        : question.alternatives.data.map(renderAlternative)}
                 </div>
 
-                {question && comment && answer ? (
+                {question && comment && answer && !skipSeeAnswer ? (
                     <ESQuestionComment
                         {...comment}
                         labelMonitor={labelMonitor}
@@ -236,6 +231,7 @@ ESQuestion.propTypes = {
     onlyStep: PropTypes.bool,
     full: PropTypes.bool,
     isHistoric: PropTypes.bool,
+    skipSeeAnswer: PropTypes.bool,
     labelMonitor: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     stats: PropTypes.arrayOf(
         PropTypes.shape({
