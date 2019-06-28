@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react'
-import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 
 import { LocaleProvider as ANTLocaleProvider } from 'antd'
 import pt_FR from 'antd/lib/locale-provider/pt_BR'
