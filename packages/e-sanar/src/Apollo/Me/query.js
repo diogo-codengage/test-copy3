@@ -9,7 +9,6 @@ export const GET_ME = gql`
             enrollments {
                 id
                 contract
-                progress_percentage
                 next_module {
                     id
                     name

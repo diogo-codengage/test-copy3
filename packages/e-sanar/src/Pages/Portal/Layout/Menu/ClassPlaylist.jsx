@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
+
 import { withRouter } from 'react-router'
+import { Query } from 'react-apollo'
 
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import ESDisciplineDropdown from 'sanar-ui/dist/Components/Molecules/DisciplineDropdown'
@@ -12,11 +14,46 @@ import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 
 import { usePortalContext } from 'Pages/Portal/Context'
 import { GET_MODULES } from 'Apollo/CourseDetails/queries/modules'
+import { GET_ENROLLMENT_PROGRESS } from 'Apollo/Me/enrollment-progress'
 import { useAuthContext } from 'Hooks/auth'
 import { useApolloContext } from 'Hooks/apollo'
 import { getClassRoute } from 'Utils/getClassRoute'
 
 import { useLayoutContext } from '../../Layout/Context'
+
+const CommonProgress = () => {
+    const { getEnrollment } = useAuthContext()
+
+    const { id: enrollmentId } = getEnrollment()
+
+    return (
+        <Query
+            query={GET_ENROLLMENT_PROGRESS}
+            fetchPolicy='cache-and-network'
+            variables={{ enrollmentId }}
+        >
+            {({ loading, error, data }) => {
+                if (error) return `Error! ${error.message}`
+
+                return (
+                    <ESCommonBadge
+                        count={
+                            !loading
+                                ? Number(
+                                      data.enrollmentProgress.progress_percentage.toFixed(
+                                          0
+                                      )
+                                  )
+                                : 0
+                        }
+                        status='warning'
+                        suffix='%'
+                    />
+                )
+            }}
+        </Query>
+    )
+}
 
 export const SANClassPlaylistMenuHeader = withRouter(({ history }) => {
     const { setOpenMenu, setMenuTab } = useLayoutContext()
@@ -69,7 +106,7 @@ const SANClassPlaylist = ({ history }) => {
     const { setOpenMenu } = useLayoutContext()
 
     const [modules, setModules] = useState(null)
-    const { course, progress_percentage, id } = getEnrollment()
+    const { course, id } = getEnrollment()
 
     const goToResource = resource => {
         setCurrentResource(resource)
@@ -142,11 +179,7 @@ const SANClassPlaylist = ({ history }) => {
                     >
                         Progresso do curso
                     </ESTypography>
-                    <ESCommonBadge
-                        count={progress_percentage.toFixed(0)}
-                        status='warning'
-                        suffix='%'
-                    />
+                    <CommonProgress />
                 </div>
                 <ESDivider color='grey' type='horizontal' />
             </div>
