@@ -8,7 +8,8 @@ export default {
         send: 'Enviar',
         continue: 'Continuar',
         subject: 'Disciplina',
-        activity: 'Aula'
+        activity: 'Aula',
+        confirm: 'Confirmar'
     },
     auth: {
         accessAccount: 'Acessar conta',
@@ -19,6 +20,8 @@ export default {
         login: 'Entrar',
         title: 'Ou entre com os dados abaixo',
         newPassword: 'Nova senha',
+        currentPassword: 'Senha atual',
+        messageChangeSuccess: 'Senha alterada com sucesso!',
         marketing: {
             title:
                 'Tenha uma experiência de excelência nos seus estudos e na sua carreira',
