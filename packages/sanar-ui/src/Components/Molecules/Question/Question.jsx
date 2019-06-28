@@ -32,7 +32,8 @@ const ESQuestion = ({
     isHistoric,
     propsNext,
     propsPrev,
-    labelMonitor
+    labelMonitor,
+    skipSeeAnswer
 }) => {
     const [striped, setStripe] = useState({})
     const [selected, setSelect] = useState()
@@ -73,7 +74,7 @@ const ESQuestion = ({
     }
 
     const verifyStatus = (row, answer) => {
-        if (answer) {
+        if (answer && !skipSeeAnswer) {
             if (answer === selected) {
                 if (selected === row) {
                     return 'correct'
@@ -191,7 +192,7 @@ const ESQuestion = ({
                         : question.alternatives.data.map(renderAlternative)}
                 </div>
 
-                {question && comment && answer ? (
+                {question && comment && answer && !skipSeeAnswer ? (
                     <ESQuestionComment
                         {...comment}
                         labelMonitor={labelMonitor}
@@ -230,6 +231,7 @@ ESQuestion.propTypes = {
     onlyStep: PropTypes.bool,
     full: PropTypes.bool,
     isHistoric: PropTypes.bool,
+    skipSeeAnswer: PropTypes.bool,
     labelMonitor: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     stats: PropTypes.arrayOf(
         PropTypes.shape({

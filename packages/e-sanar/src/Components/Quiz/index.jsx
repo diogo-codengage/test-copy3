@@ -69,6 +69,7 @@ const SANQuiz = ({
     }
 
     const handleNext = isCorrect => {
+        console.log('1', isCorrect)
         if (index === questions.length - 1) return
         setIndex(oldIndex => ++oldIndex)
 
@@ -200,6 +201,8 @@ const SANQuiz = ({
                                     onPrevious={handlePrevious}
                                     loading={loadingMutation}
                                     isHistoric={isFinish}
+                                    skipSeeAnswer={mock && !isFinish}
+                                    onlyStep={mock && !isFinish}
                                     {...responses[index]}
                                     propsNext={{
                                         disabled: index === questions.length - 1
