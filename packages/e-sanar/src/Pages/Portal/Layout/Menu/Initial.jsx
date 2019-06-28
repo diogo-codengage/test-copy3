@@ -34,6 +34,10 @@ const SANInitial = ({ setTab, history }) => {
             )}/${last_accessed.resource_id}`
         )
 
+    const renderNextContent = e => {
+        setTab(Number(e.key))
+    }
+
     return (
         <>
             <div className='pl-md pr-md'>
@@ -45,7 +49,7 @@ const SANInitial = ({ setTab, history }) => {
                     onClick={goClassroom}
                 />
             </div>
-            <ESNavigationList onClick={e => setTab(Number(e.key))}>
+            <ESNavigationList onClick={renderNextContent}>
                 <ESNavigationListItem
                     key={0}
                     title={t(`${intlPath}init`)}

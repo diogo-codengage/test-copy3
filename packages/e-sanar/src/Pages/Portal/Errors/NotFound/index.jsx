@@ -10,7 +10,7 @@ const ESNotFoundError = () => {
     return (
         <div className='notfound'>
             <div className='notfound__container'>
-                <img src={image} className='notfound__image' />
+                <img alt='not-found' src={image} className='notfound__image' />
                 <ESTypography
                     variant='body1'
                     strong

@@ -63,7 +63,8 @@ const SANMenu = ({ history }) => {
         openMenu,
         setMenuTab,
         menuTitle,
-        setMenuTitle
+        setMenuTitle,
+        setOpenMenu
     } = useLayoutContext()
 
     useMemo(
@@ -80,14 +81,14 @@ const SANMenu = ({ history }) => {
     }
 
     const handleInitialClick = () => {
-        setMenuTab(indexMenu)
         setMenuTitle(t(`${intlPath}menu`))
     }
 
     const handleHome = () => history.push('/aluno/curso')
 
     const onOpenOrClose = isOpen => {
-        // setOpenMenu(isOpen)
+        console.log(isOpen)
+        setOpenMenu(isOpen)
     }
 
     return (
