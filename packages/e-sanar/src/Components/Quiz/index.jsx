@@ -202,7 +202,6 @@ const SANQuiz = ({
                                     loading={loadingMutation}
                                     isHistoric={isFinish}
                                     skipSeeAnswer={mock && !isFinish}
-                                    onlyStep={mock && !isFinish}
                                     {...responses[index]}
                                     propsNext={{
                                         disabled: index === questions.length - 1
