@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router'
 
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'

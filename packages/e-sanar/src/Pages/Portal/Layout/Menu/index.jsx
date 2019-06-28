@@ -18,12 +18,13 @@ const intlPath = 'mainMenu.title.'
 
 const toDarkMode = [6, 9]
 
-const MenuContent = ({ indexMenu, setMenuTab, handleBack }) => {
+//TODO: Improve setTab
+const MenuContent = ({ indexMenu, setMenuTab: setTab, handleBack }) => {
     const { t } = useTranslation('esanar')
 
     switch (indexMenu) {
         case 0:
-            return <SANInitial {...{ setMenuTab }} />
+            return <SANInitial {...{ setTab }} />
         case 1:
             return <SANNotifications {...{ handleBack }} />
         case 6:
@@ -43,7 +44,7 @@ const MenuContent = ({ indexMenu, setMenuTab, handleBack }) => {
                         variant='outlined'
                         color='white'
                         block
-                        onClick={() => setMenuTab(0)}
+                        onClick={() => setTab(0)}
                     >
                         <ESEvaIcon name='arrow-back-outline' />
                         {t('mainMenu.back')}

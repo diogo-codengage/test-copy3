@@ -106,6 +106,7 @@ const SANMyAccount = ({ handleBack, history }) => {
                     key='1'
                     title={t(`${intlPath}changePassword`)}
                     icon={<ESEvaIcon name='lock-outline' color='default' />}
+                    onClick={() => history.push('/aluno/minha-conta/')}
                 />
             </ESNavigationList>
             {/*FIXME: <div className='pl-md pr-md'>
