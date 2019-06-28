@@ -14,6 +14,7 @@ import SANPortalRoutes from 'Pages/Portal'
 import PrivateRoute from 'Pages/Portal/Private/Private'
 
 import { esConfigureAuthStorage } from 'sanar-ui/dist/Util/Auth'
+import ESNotFoundError from 'Pages/Portal/Errors/NotFound'
 
 //TODO Start use lazy loading
 const SANApp = () => {
@@ -31,10 +32,11 @@ const SANApp = () => {
                             path='/aluno'
                             component={SANPortalRoutes}
                         />
-                        <Route
+                        {/* <Route
                             path='*'
                             render={() => <Redirect to='/aluno' />}
-                        />
+                        /> */}
+                        <Route component={ESNotFoundError} />
                     </Switch>
                 </Router>
             </ANTLocaleProvider>
