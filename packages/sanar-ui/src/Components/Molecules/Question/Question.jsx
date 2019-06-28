@@ -13,6 +13,8 @@ import ESCard from '../Card'
 import ESQuestionFooter from './Footer'
 import ESQuestionComment from './Comment'
 
+const arrSkeleton = [0, 1, 2, 3, 4]
+
 const ESQuestion = ({
     answer,
     defaultSelected,
@@ -113,6 +115,30 @@ const ESQuestion = ({
         })
     }
 
+    const renderSkeleton = (_, i) => (
+        <Skeleton
+            key={i}
+            active
+            loading={!question}
+            avatar={{ size: 32, shape: 'circle' }}
+            paragraph={false}
+            className='mt-lg'
+        />
+    )
+
+    const renderAlternative = (alternative, index) => (
+        <ESAlternative
+            key={alternative.id}
+            {...alternative}
+            index={index}
+            striped={striped[index]}
+            handleStripe={handleStripe(index, alternative.id)}
+            percent={getPercent(alternative.id)}
+            onSelect={handleSelect(index)}
+            status={verifyStatus(alternative.id, answer)}
+        />
+    )
+
     useEffect(() => {
         setStripe({})
     }, [question])
@@ -160,41 +186,9 @@ const ESQuestion = ({
                             </>
                         )}
                     </Skeleton>
-                    {!question ? (
-                        [0, 1, 2, 3, 4].map((_, i) => (
-                            <Skeleton
-                                key={i}
-                                active
-                                loading={!question}
-                                avatar={{ size: 32, shape: 'circle' }}
-                                paragraph={false}
-                                className='mt-lg'
-                            />
-                        ))
-                    ) : (
-                        <>
-                            {question.alternatives.data.map(
-                                (alternative, index) => (
-                                    <ESAlternative
-                                        key={alternative.id}
-                                        {...alternative}
-                                        index={index}
-                                        striped={striped[index]}
-                                        handleStripe={handleStripe(
-                                            index,
-                                            alternative.id
-                                        )}
-                                        percent={getPercent(alternative.id)}
-                                        onSelect={handleSelect(index)}
-                                        status={verifyStatus(
-                                            alternative.id,
-                                            answer
-                                        )}
-                                    />
-                                )
-                            )}
-                        </>
-                    )}
+                    {!question
+                        ? arrSkeleton.map(renderSkeleton)
+                        : question.alternatives.data.map(renderAlternative)}
                 </div>
 
                 {question && comment && answer ? (
