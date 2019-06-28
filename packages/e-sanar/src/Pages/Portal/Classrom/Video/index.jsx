@@ -177,7 +177,7 @@ const SANClassroomVideo = () => {
                         value: rate,
                         onChange: debounceRate
                     }}
-                    onOpenMenu={() => openMenu()}
+                    onOpenMenu={openMenu}
                     onNext={onNavigation('next')}
                     onPrevious={onNavigation('prev')}
                     onTwentyFivePercent={() => debounceProgress(25)}
@@ -220,7 +220,7 @@ const SANClassroomVideo = () => {
                     renderTabBar={renderTabBar({
                         bookmarked,
                         handleBookmark,
-                        onClick: () => openMenu(),
+                        onClick: openMenu,
                         nextResource: nextResource && nextResource.title,
                         prevResource: prevResource && prevResource.title,
                         onPrev: onNavigation('prev'),

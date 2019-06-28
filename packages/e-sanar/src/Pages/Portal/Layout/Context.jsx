@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { SANClassPlaylistMenuHeader } from './Menu/ClassPlaylist'
@@ -17,12 +17,17 @@ const LayoutProvider = ({ children, history }) => {
     const [openMenu, setOpenMenu] = useState(false)
     const [menuTitle, setMenuTitle] = useState(t(`${intlPath}menu`))
 
+    useEffect(() => {
+        console.log({ openMenu })
+    }, [openMenu])
+
     const setMenuTab = index => {
         switch (index) {
             case 0:
                 setIndexMenu(index)
-                // history.push('/aluno/curso')
+                history.push('/aluno/curso')
                 setMenuTitle(t(`${intlPath}menu`))
+                setOpenMenu(old => !old)
                 break
             case 1:
                 setIndexMenu(index)
@@ -30,6 +35,7 @@ const LayoutProvider = ({ children, history }) => {
                 break
             case 5:
                 history.push('/aluno/banco-questoes')
+                setOpenMenu(old => !old)
                 break
             case 6:
                 setIndexMenu(index)
@@ -48,7 +54,7 @@ const LayoutProvider = ({ children, history }) => {
                 setIndexMenu(index)
                 break
             default:
-                setIndexMenu(index)
+                setIndexMenu(0)
                 setMenuTitle(t(`${intlPath}menu`))
         }
     }

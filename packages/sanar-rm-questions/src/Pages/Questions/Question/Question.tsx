@@ -63,6 +63,11 @@ export const Question = () => {
     }
 
     const pushQuestions = (moreQuestions) => {
+
+        if(questionsCtx.questions.length > 1){
+            return;
+        }
+        console.log('pushQuestions')
         let questions = questionsCtx.questions
 
         questions.push(...moreQuestions)
@@ -83,12 +88,13 @@ export const Question = () => {
     }
 
     const loadMoreQuestions = async () => {
-        const filters = await getParams()
-        BFFService.loadMoreQuestions(filters)
-            .then(function({ data }) {
-                questionsCtx.setQuestionsRequests(questionsCtx.questionsRequests + 1)
-                return pushQuestions(data.questions.data)
-            })
+            const filters = await getParams()
+            BFFService.loadMoreQuestions(filters)
+                .then(function({ data }) {
+                    questionsCtx.setQuestionsRequests(questionsCtx.questionsRequests + 1)
+                    return pushQuestions(data.questions.data)
+                })
+
     }
 
     const onSkipQuestion = ({id}) => {
@@ -101,7 +107,7 @@ export const Question = () => {
         loadNextQuestion()
     }
 
-    if(! questionsCtx.currentQuestion) {
+    if(!questionsCtx.currentQuestion) {
         loadMoreQuestions()
     }
 

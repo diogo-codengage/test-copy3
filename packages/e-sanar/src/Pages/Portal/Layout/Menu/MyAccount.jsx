@@ -20,6 +20,7 @@ import { useAuthContext } from 'Hooks/auth'
 import SANLogout from 'Components/ModalLogout'
 import SANFeedback from 'Components/ModalFeedback'
 import ESTermsAndPrivacy from 'assets/TermsAndPrivacy'
+import { useLayoutContext } from '../Context'
 
 const intlPath = 'mainMenu.myAccount.'
 
@@ -36,6 +37,7 @@ const SANMyAccount = ({ handleBack, history }) => {
     const [open, setOpen] = useState(false)
     const [openFeedback, setOpenFeedback] = useState(false)
     const [openModalTerms, setOpenModalTerms] = useState(false)
+    const { setOpenMenu } = useLayoutContext()
 
     const handleOtherLinks = ({ key }) => {
         setOpen(Number(key) === 2)
@@ -47,9 +49,19 @@ const SANMyAccount = ({ handleBack, history }) => {
 
     const leaveAccount = () => {
         Auth.signOut().then(() => {
-            // localStorage.removeItem('es-keep-me-logged-in')
             history.push('/')
         })
+    }
+
+    const navIntoMyAccount = ({ key }) => {
+        switch (Number(key)) {
+            case 1:
+                history.push('/aluno/minha-conta/')
+                setOpenMenu(old => !old)
+                break
+            default:
+                history.push('/aluno/minha-conta/')
+        }
     }
 
     return (
@@ -96,7 +108,7 @@ const SANMyAccount = ({ handleBack, history }) => {
             >
                 {t(`${intlPath}management`)}
             </ESTypography>
-            <ESNavigationList onClick={console.log}>
+            <ESNavigationList onClick={navIntoMyAccount}>
                 {/*FIXME: <ESNavigationListItem
                     key='0'
                     title={t(`${intlPath}myData`)}
@@ -106,7 +118,6 @@ const SANMyAccount = ({ handleBack, history }) => {
                     key='1'
                     title={t(`${intlPath}changePassword`)}
                     icon={<ESEvaIcon name='lock-outline' color='default' />}
-                    onClick={() => history.push('/aluno/minha-conta/')}
                 />
             </ESNavigationList>
             {/*FIXME: <div className='pl-md pr-md'>

@@ -45,12 +45,16 @@ const SANInitial = ({ setTab, history }) => {
         })
     }
 
+    const renderNextContent = e => {
+        setTab(Number(e.key))
+    }
+
     return (
         <>
             <div className='pl-md pr-md'>
                 <ESLeftOff {...leftProps} />
             </div>
-            <ESNavigationList onClick={e => setTab(Number(e.key))}>
+            <ESNavigationList onClick={renderNextContent}>
                 <ESNavigationListItem
                     key={0}
                     title={t(`${intlPath}init`)}

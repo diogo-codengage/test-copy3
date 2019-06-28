@@ -26,10 +26,8 @@ export const ESSelect: React.FC<IProps> = (props) => {
 
     const onchange = (e: CheckboxChangeEvent, s: ISelectOption) => {
         if (e.target.checked) {
-            console.log('add')
             props.onSelect([...props.defaultValue, s])
         } else {
-            console.log('remove')
             props.onSelect(props.defaultValue.filter((v: ISelectOption) => v.value !== s.value))
         }
         e.preventDefault();

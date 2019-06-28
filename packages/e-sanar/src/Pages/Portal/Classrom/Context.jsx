@@ -39,7 +39,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
 
     const openMenu = () => {
         setMenuTab(9)
-        setOpenMenu(oldOpenMenu => !oldOpenMenu)
+        setOpenMenu(old => !old)
     }
 
     const handleBookmark = async ({ resourceId, resourceType }) => {

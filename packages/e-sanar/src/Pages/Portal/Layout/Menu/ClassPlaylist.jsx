@@ -55,12 +55,11 @@ const CommonProgress = () => {
     )
 }
 
-export const SANClassPlaylistMenuHeader = withRouter(({ history }) => {
+export const SANClassPlaylistMenuHeader = () => {
     const { setOpenMenu, setMenuTab } = useLayoutContext()
 
     const exitClassroom = () => {
         setMenuTab(0)
-        history.push('/aluno')
     }
 
     return (
@@ -91,7 +90,7 @@ export const SANClassPlaylistMenuHeader = withRouter(({ history }) => {
             <ESDivider className='mt-no mb-sm' color='grey' />
         </>
     )
-})
+}
 
 const SANClassPlaylist = ({ history }) => {
     const client = useApolloContext()
