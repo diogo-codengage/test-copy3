@@ -18,7 +18,7 @@ const SANClassroomMock = () => {
         nextResource,
         prevResource,
         onNavigation,
-        currentModule
+        state: { currentModule }
     } = usePortalContext()
     const {
         handleBookmark,

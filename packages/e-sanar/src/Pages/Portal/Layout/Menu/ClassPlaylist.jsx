@@ -57,20 +57,19 @@ export const SANClassPlaylistMenuHeader = withRouter(({ history }) => {
 })
 
 const SANClassPlaylist = ({ history }) => {
+    const client = useApolloContext()
     const {
-        currentModule,
         currentResource,
         setCurrentResource,
-        resourcesLoading,
+        state: { loading, currentModule },
         getResource
     } = usePortalContext()
 
+    const { getEnrollment } = useAuthContext()
     const { setOpenMenu } = useLayoutContext()
 
     const [modules, setModules] = useState(null)
-    const { getEnrollment } = useAuthContext()
-    const client = useApolloContext()
-    const { course, progress_percentage, id } = getEnrollment(0)
+    const { course, progress_percentage, id } = getEnrollment()
 
     const goToResource = resource => {
         setCurrentResource(resource)
@@ -91,7 +90,7 @@ const SANClassPlaylist = ({ history }) => {
 
         return (
             <ESPlaylist
-                loading={resourcesLoading}
+                loading={loading}
                 items={playlist}
                 currentIndex={currentResource && currentResource.index}
                 goToResource={goToResource}
@@ -172,7 +171,7 @@ const SANClassPlaylist = ({ history }) => {
                             onSelect={onSelect}
                             activeItem={currentModule}
                             items={modules.data}
-                            loading={resourcesLoading}
+                            loading={loading}
                         />
                     </div>
                     {renderPlaylist()}

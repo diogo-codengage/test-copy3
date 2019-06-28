@@ -1,27 +1,53 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, {
+    createContext,
+    useContext,
+    useState,
+    useEffect,
+    useReducer
+} from 'react'
 
 import { withRouter } from 'react-router-dom'
+
+import { getClassRoute } from 'Utils/getClassRoute'
 
 const Context = createContext()
 
 export const usePortalContext = () => useContext(Context)
 
+const initialState = {
+    loading: true,
+    success: false,
+    error: false,
+    currentModule: null
+}
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'loading':
+            return { ...state, loading: true }
+        case 'success':
+            return { ...state, loading: false, currentModule: action.payload }
+        case 'error':
+            return { ...state, loading: false, error: action.payload || true }
+        default:
+            throw new Error()
+    }
+}
+
 const PortalProvider = ({ children, history }) => {
-    const [resourcesLoading, setResourcesLoading] = useState(false)
-
-    const [currentModule, setCurrentModule] = useState(null)
-
     const [prevResource, setPrevResource] = useState(null)
     const [currentResource, setCurrentResource] = useState(null)
     const [nextResource, setNextResource] = useState(null)
 
+    const [state, dispatch] = useReducer(reducer, initialState)
+
     const getResource = item => item[item.resource_type.toLowerCase()]
 
     useEffect(() => {
-        if (currentResource && currentModule) {
+        if (currentResource && state.currentModule) {
             const {
                 level_contents: { data: resources }
-            } = currentModule
+            } = state.currentModule
 
             const currentIndex = resources.findIndex(
                 item => getResource(item).id === getResource(currentResource).id
@@ -43,7 +69,7 @@ const PortalProvider = ({ children, history }) => {
                   })
                 : setNextResource()
         }
-    }, [currentResource, currentModule])
+    }, [currentResource, state.currentModule])
 
     const onNavigation = dir => () => {
         if (dir === 'prev' && prevResource) {
@@ -55,20 +81,15 @@ const PortalProvider = ({ children, history }) => {
         }
     }
 
-    const goClassroom = resource =>
+    const goClassroom = resource => {
+        const type = getClassRoute(resource.resource_type)
+        const resourceId = getResource(nextResource).id
         history.push(
-            `/aluno/sala-aula/${
-                currentModule.id
-            }/${nextResource.resource_type.toLowerCase()}/${
-                getResource(nextResource).id
-            }`
+            `/aluno/sala-aula/${state.currentModule.id}/${type}/${resourceId}`
         )
+    }
 
     const value = {
-        currentModule,
-        setCurrentModule,
-        resourcesLoading,
-        setResourcesLoading,
         getResource,
         currentResource,
         setCurrentResource,
@@ -76,7 +97,9 @@ const PortalProvider = ({ children, history }) => {
         setPrevResource,
         nextResource,
         setNextResource,
-        onNavigation
+        onNavigation,
+        state,
+        dispatch
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

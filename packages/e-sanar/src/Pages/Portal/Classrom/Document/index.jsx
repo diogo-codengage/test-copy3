@@ -18,7 +18,7 @@ const SANClassRoomDocument = () => {
         nextResource,
         prevResource,
         onNavigation,
-        currentModule
+        state: { currentModule }
     } = usePortalContext()
     const {
         handleBookmark,

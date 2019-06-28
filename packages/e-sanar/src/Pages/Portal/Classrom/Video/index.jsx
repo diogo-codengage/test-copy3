@@ -32,7 +32,7 @@ const SANClassroomVideo = () => {
         nextResource,
         prevResource,
         onNavigation,
-        currentModule
+        state: { currentModule }
     } = usePortalContext()
 
     const {
