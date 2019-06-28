@@ -27,6 +27,7 @@ const renderTabBar = ({
                 subtitle={subtitle}
                 rate={rate}
                 onClick={onClick}
+                hasTabs
             />
         }
         rightChildren={

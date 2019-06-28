@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
 
 import ESTypography from '../../Atoms/Typography'
@@ -7,7 +8,7 @@ import ESRate from '../../Atoms/Rate'
 import ESButton from '../../Atoms/Button'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 
-const ESLessonHeaderLeft = ({ title, subtitle, rate, onClick }) => {
+const ESLessonHeaderLeft = ({ title, subtitle, rate, onClick, hasTabs }) => {
     const { t } = useTranslation('sanarui')
 
     return (
@@ -16,7 +17,9 @@ const ESLessonHeaderLeft = ({ title, subtitle, rate, onClick }) => {
                 onClick={onClick}
                 circle
                 variant='text'
-                className='open-menu'
+                className={classNames('open-menu', {
+                    'open-menu__has-tabs': hasTabs
+                })}
             >
                 <ESEvaIcon name='menu-outline' />
             </ESButton>
