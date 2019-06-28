@@ -318,7 +318,9 @@ export default {
         next: 'Próxima',
         previous: 'Anterior',
         askQuestions: 'Fazer Questões',
-        viewDiscussions: 'Ver discussões'
+        viewDiscussions: 'Ver discussões',
+        failHandleBookmark: 'Ocorreu um erro ao favoritar conteúdo.',
+        failLoadClassroom: 'Ocorreu um erro ao carregar sala de aula.'
     },
     footer: {
         helpButton: 'Precisa de ajuda?',

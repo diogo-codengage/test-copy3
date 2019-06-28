@@ -7,6 +7,8 @@ import React, {
 } from 'react'
 
 import { withRouter } from 'react-router-dom'
+import { message } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 import { formatPlaylist } from 'Utils/formatPlaylist'
 import { useApolloContext } from 'Hooks/apollo'
@@ -38,6 +40,7 @@ function reducer(state, action) {
 
 const ClassroomProvider = ({ children, match: { params }, history }) => {
     const client = useApolloContext()
+    const { t } = useTranslation('esanar')
     const {
         setCurrentModule,
         setCurrentResource,
@@ -61,19 +64,23 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
     }
 
     const handleBookmark = async ({ resourceId, resourceType }) => {
-        await client.mutate({
-            mutation: CREATE_BOOKMARK,
-            variables: {
-                resourceId: resourceId
-                    ? resourceId
-                    : getResource(currentResource).id,
-                resourceType: resourceType
-                    ? resourceType
-                    : currentResource.resource_type,
-                userId: me.id
-            }
-        })
-        !resourceId && setBookmarked(oldBookmarked => !oldBookmarked)
+        try {
+            await client.mutate({
+                mutation: CREATE_BOOKMARK,
+                variables: {
+                    resourceId: resourceId
+                        ? resourceId
+                        : getResource(currentResource).id,
+                    resourceType: resourceType
+                        ? resourceType
+                        : currentResource.resource_type,
+                    userId: me.id
+                }
+            })
+            !resourceId && setBookmarked(oldBookmarked => !oldBookmarked)
+        } catch {
+            message.error(t('classroom.failHandleBookmark'))
+        }
     }
 
     const handleProgress = ({
@@ -165,23 +172,19 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
                     setCurrentResource(resource)
                 }
             } catch (err) {
-                console.log(err)
+                console.error(err)
+                message.error(t('classroom.failLoadClassroom'))
             }
             setResourcesLoading(false)
         }
         fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
-        params.moduleId,
-        client,
-        history,
         currentModule,
         enrollmentId,
-        getResource,
+        params.moduleId,
         params.resourceId,
-        params.type,
-        setCurrentModule,
-        setCurrentResource,
-        setResourcesLoading
+        params.type
     ])
 
     const value = {

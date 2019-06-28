@@ -5,16 +5,16 @@ import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import ESDisciplineDropdown from 'sanar-ui/dist/Components/Molecules/DisciplineDropdown'
 import ESPlaylist from 'sanar-ui/dist/Components/Molecules/Playlist'
 import ESSkeleton from 'sanar-ui/dist/Components/Atoms/Skeleton'
-import { usePortalContext } from 'Pages/Portal/Context'
-import { useAuthContext } from 'Hooks/auth'
-
 import ESCommonBadge from 'sanar-ui/dist/Components/Atoms/CommonBadge'
 import ESDivider from 'sanar-ui/dist/Components/Atoms/Divider'
-import { GET_MODULES } from 'Apollo/CourseDetails/queries/modules'
-import { useApolloContext } from 'Hooks/apollo'
-
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
+
+import { usePortalContext } from 'Pages/Portal/Context'
+import { GET_MODULES } from 'Apollo/CourseDetails/queries/modules'
+import { useAuthContext } from 'Hooks/auth'
+import { useApolloContext } from 'Hooks/apollo'
+import { getClassRoute } from 'Utils/getClassRoute'
 
 import { useLayoutContext } from '../../Layout/Context'
 
@@ -119,7 +119,10 @@ const SANClassPlaylist = ({ history }) => {
     }, [modules, client, course.id, id])
 
     const onSelect = item => {
-        history.push(`/aluno/sala-aula/${item.id}`)
+        const type = getClassRoute(item.last_resource_type)
+        history.push(
+            `/aluno/sala-aula/${item.id}/${type}/${item.last_resource_id}`
+        )
     }
 
     return (

@@ -48,24 +48,21 @@ const PortalProvider = ({ children, history }) => {
     const onNavigation = dir => () => {
         if (dir === 'prev' && prevResource) {
             setCurrentResource(prevResource)
-            history.push(
-                `/aluno/sala-aula/${
-                    currentModule.id
-                }/${prevResource.resource_type.toLowerCase()}/${
-                    getResource(prevResource).id
-                }`
-            )
+            goClassroom(prevResource)
         } else if (nextResource) {
             setCurrentResource(nextResource)
-            history.push(
-                `/aluno/sala-aula/${
-                    currentModule.id
-                }/${nextResource.resource_type.toLowerCase()}/${
-                    getResource(nextResource).id
-                }`
-            )
+            goClassroom(nextResource)
         }
     }
+
+    const goClassroom = resource =>
+        history.push(
+            `/aluno/sala-aula/${
+                currentModule.id
+            }/${nextResource.resource_type.toLowerCase()}/${
+                getResource(nextResource).id
+            }`
+        )
 
     const value = {
         currentModule,
