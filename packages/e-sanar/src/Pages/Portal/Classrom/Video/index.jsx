@@ -73,9 +73,12 @@ const SANClassroomVideo = () => {
         })
     }
 
-    const onProgress = percentage => {
+    const onProgress = (percentage = 0) => {
         const videoPercentage =
-            currentResource && currentResource.video.progress.percentage
+            (currentResource &&
+                currentResource.video.progress &&
+                currentResource.video.progress.percentage) ||
+            0
         if (!videoError && percentage !== videoPercentage) {
             const timeInSeconds = playerRef && playerRef.current.position()
             handleProgress({
@@ -167,9 +170,9 @@ const SANClassroomVideo = () => {
                     licenseKey={process.env.REACT_APP_JWPLAYER}
                     isMuted={false}
                     title={currentResource.video.title}
-                    subtitle={`${t('global.subject')} 3, ${t(
-                        'global.activity'
-                    )} ${currentResource.index + 1}`}
+                    subtitle={`${t('global.subject')} ${currentModule.index +
+                        1}, ${t('global.activity')} ${currentResource.index +
+                        1}`}
                     rate={{
                         value: rate,
                         onChange: debounceRate
@@ -181,6 +184,7 @@ const SANClassroomVideo = () => {
                     onFiftyPercent={() => debounceProgress(50)}
                     onSeventyFivePercent={() => debounceProgress(75)}
                     onOneHundredPercent={() => debounceProgress(100)}
+                    onFirstFrame={() => debounceProgress(1)}
                 />
                 {currentResource.quiz && (
                     <div className='classroom__video-container--buttons'>

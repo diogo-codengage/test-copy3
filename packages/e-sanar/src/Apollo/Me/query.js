@@ -22,22 +22,6 @@ export const GET_ME = gql`
                         total
                     }
                 }
-                last_accessed {
-                    last_accessed_at
-                    resource_type
-                    module_id
-                    resource_id
-                    module_order
-                    resource_order
-                    module_title
-                    module_progress {
-                        done
-                        total
-                        status
-                    }
-                    thumbnail
-                    path
-                }
                 bookmarks {
                     data {
                         resource_type

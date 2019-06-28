@@ -9,7 +9,8 @@ export default {
         continue: 'Continuar',
         subject: 'Disciplina',
         activity: 'Aula',
-        confirm: 'Confirmar'
+        confirm: 'Confirmar',
+        failLoadLastAccessed: 'Erro ao carregar "Continuar onde parei".'
     },
     auth: {
         accessAccount: 'Acessar conta',

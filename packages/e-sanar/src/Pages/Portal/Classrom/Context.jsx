@@ -26,7 +26,8 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         getResource,
         currentModule,
         currentResource,
-        dispatch
+        dispatch,
+        fetchLastAccessed
     } = usePortalContext()
 
     const { setMenuTab, setDarkMode, setOpenMenu } = useLayoutContext()
@@ -94,6 +95,11 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         return () => {
             setDarkMode(false)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        return fetchLastAccessed
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

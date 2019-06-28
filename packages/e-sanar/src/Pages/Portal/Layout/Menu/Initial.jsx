@@ -11,39 +11,44 @@ import {
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 
 import { useAuthContext } from 'Hooks/auth'
+import { usePortalContext } from 'Pages/Portal/Context'
 import { getClassRoute } from 'Utils/getClassRoute'
 
 const intlPath = 'mainMenu.initial.'
 
 const SANInitial = ({ setTab, history }) => {
+    const { lastAccessed } = usePortalContext()
     const { getEnrollment } = useAuthContext()
     const { t } = useTranslation('esanar')
 
-    const { course, last_accessed } = getEnrollment()
+    const { course } = getEnrollment()
 
-    const moduleReference = `${t(
-        'global.subject'
-    )} ${last_accessed.module_order + 1}, ${t(
-        'global.activity'
-    )} ${last_accessed.resource_order + 1}`
+    const moduleReference = last =>
+        `${t('global.subject')} ${last.module_order + 1}, ${t(
+            'global.activity'
+        )} ${last.resource_order + 1}`
 
     const goClassroom = () =>
         history.push(
-            `/aluno/sala-aula/${last_accessed.module_id}/${getClassRoute(
-                last_accessed.resource_type
-            )}/${last_accessed.resource_id}`
+            `/aluno/sala-aula/${lastAccessed.module_id}/${getClassRoute(
+                lastAccessed.resource_type
+            )}/${lastAccessed.resource_id}`
         )
+
+    const leftProps = {
+        title: course.name,
+        ...(lastAccessed && {
+            classReference: lastAccessed.module_title,
+            thumbnail: lastAccessed.thumbnail,
+            moduleReference: moduleReference(lastAccessed),
+            onClick: goClassroom
+        })
+    }
 
     return (
         <>
             <div className='pl-md pr-md'>
-                <ESLeftOff
-                    title={course.name}
-                    classReference={last_accessed.module_title}
-                    moduleReference={moduleReference}
-                    thumbnail={last_accessed.thumbnail}
-                    onClick={goClassroom}
-                />
+                <ESLeftOff {...leftProps} />
             </div>
             <ESNavigationList onClick={e => setTab(Number(e.key))}>
                 <ESNavigationListItem

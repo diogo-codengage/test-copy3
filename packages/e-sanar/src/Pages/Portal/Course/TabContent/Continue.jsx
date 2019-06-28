@@ -9,18 +9,20 @@ import ESCardCourseModule from 'sanar-ui/dist/Components/Molecules/CardCourseMod
 
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
+import { usePortalContext } from 'Pages/Portal/Context'
 import { useAuthContext } from 'Hooks/auth'
 import { getClassRoute } from 'Utils/getClassRoute'
 
 const SANCourseContinue = ({ history }) => {
     const { getEnrollment } = useAuthContext()
     const { t } = useTranslation('esanar')
+    const { lastAccessed } = usePortalContext()
 
-    const { last_accessed, next_module } = getEnrollment()
+    const { next_module } = getEnrollment()
 
-    const percentProgressLast = last_accessed
-        ? (last_accessed.module_progress.done * 100) /
-          last_accessed.module_progress.total
+    const percentProgressLast = lastAccessed
+        ? (lastAccessed.module_progress.done * 100) /
+          lastAccessed.module_progress.total
         : 0
 
     const percentProgressNext =
@@ -43,6 +45,20 @@ const SANCourseContinue = ({ history }) => {
             ? `${module.module_progress.done}/${module.module_progress.total}`
             : '0/0'
 
+    const leftProps = {
+        ...(lastAccessed && {
+            moduleName: `${t(
+                'courseDetails.tabContent.modules.module.key'
+            )} ${lastAccessed.module_order + 1}`,
+            title: lastAccessed.module_title,
+            badge: getBadge(lastAccessed),
+            progress: percentProgressLast,
+            moduleTime: `${lastAccessed.duration || 0}min`,
+            image: lastAccessed.thumbnail,
+            onClick: goClassroomLast(lastAccessed)
+        })
+    }
+
     return (
         <div className='san-tab-course-content__continue'>
             <SANPortalPagesContainer>
@@ -55,18 +71,10 @@ const SANCourseContinue = ({ history }) => {
                         />
                         <ESCardCourseModule
                             className='san-tab-course-content__continue--card'
-                            moduleName={`${t(
-                                'courseDetails.tabContent.modules.module.key'
-                            )} ${last_accessed.module_order + 1}`}
-                            title={last_accessed.module_title}
-                            badge={getBadge(last_accessed)}
-                            progress={percentProgressLast}
+                            {...leftProps}
                             actionName={t(
                                 'courseDetails.tabContent.cardModuleAction'
                             )}
-                            moduleTime={`${last_accessed.duration || 0}min`}
-                            image={last_accessed.thumbnail}
-                            onClick={goClassroomLast(last_accessed)}
                         />
                     </ESCol>
                     <ESCol xs={24} md={12}>

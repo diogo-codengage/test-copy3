@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { withRouter } from 'react-router'
 
+import { withRouter } from 'react-router'
+import { Auth } from 'aws-amplify'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -18,7 +19,6 @@ import ESModalTabs from 'sanar-ui/dist/Components/Organisms/ModalTabs'
 import { useAuthContext } from 'Hooks/auth'
 import SANLogout from 'Components/ModalLogout'
 import SANFeedback from 'Components/ModalFeedback'
-import { Auth } from 'aws-amplify'
 import ESTermsAndPrivacy from 'assets/TermsAndPrivacy'
 
 const intlPath = 'mainMenu.myAccount.'
