@@ -13,7 +13,7 @@ const AWSAmplifyConfig = {
         oauth: {
             domain: 'sanar-dev.auth.us-east-1.amazoncognito.com',
             scope: ['email', 'profile'],
-            redirectSignIn: 'https://a3192596.ngrok.io/',
+            redirectSignIn: 'https://d2bvrr6jfh8qt0.cloudfront.net/',
             redirectSignOut: undefined,
             responseType: 'code',
             options: undefined
