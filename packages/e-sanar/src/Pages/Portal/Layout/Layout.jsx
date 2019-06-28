@@ -16,7 +16,8 @@ const SANPortalLayout = ({ children }) => {
     const { width } = useWindowSize()
 
     const classes = classNames('san-portal-layout', {
-        'san-portal-layout--continue-bar': true
+        'san-portal-layout--continue-bar': true,
+        'san-portal-layout__classroom': darkMode
     })
 
     const classesScrollArea = classNames('san-portal-layout__scroll', {

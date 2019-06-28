@@ -47,13 +47,18 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         currentResource
     } = usePortalContext()
 
-    const { menuIndex, setIndexMenu, setDarkMode } = useLayoutContext()
+    const { setMenuTab, setDarkMode, setOpenMenu } = useLayoutContext()
     const [state] = useReducer(reducer, initialState)
     const { getEnrollment, me } = useAuthContext()
 
     const { id: enrollmentId } = getEnrollment()
 
     const [bookmarked, setBookmarked] = useState()
+
+    const openMenu = () => {
+        setMenuTab(9)
+        setOpenMenu(oldOpenMenu => !oldOpenMenu)
+    }
 
     const handleBookmark = async ({ resourceId, resourceType }) => {
         await client.mutate({
@@ -100,13 +105,12 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
     }, [currentResource])
 
     useEffect(() => {
-        setIndexMenu(9)
         setDarkMode(true)
+
         return () => {
-            setIndexMenu(0)
             setDarkMode(false)
         }
-    }, [menuIndex, setIndexMenu, setDarkMode])
+    }, [setDarkMode, setMenuTab])
 
     useEffect(() => {
         if (currentModule && currentModule.id === params.moduleId) return
@@ -184,7 +188,8 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         state,
         handleBookmark,
         bookmarked,
-        handleProgress
+        handleProgress,
+        openMenu
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

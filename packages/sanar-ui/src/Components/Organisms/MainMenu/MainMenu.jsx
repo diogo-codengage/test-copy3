@@ -163,23 +163,25 @@ const ESMainMenu = ({
                     <img className='logo' src={logo} />
                 </div>
             ) : (
-                <>
-                    {showContinueBar && (
-                        <ESCardContinueCourse
-                            className='es-main-menu__continue'
-                            module='Continuar no Módulo 1, aula 2'
-                            description='Per aumento de cachacis, eu reclamis.'
-                            borderRadius={false}
-                        />
-                    )}
-                    <div className='es-main-menu__sidebar-bottom'>
-                        <HomeButton onClick={onHome} />
-                        {onSearchClick && (
-                            <SearchButton onClick={searchBottomClick} />
+                context !== 'classroom' && (
+                    <>
+                        {showContinueBar && (
+                            <ESCardContinueCourse
+                                className='es-main-menu__continue'
+                                module='Continuar no Módulo 1, aula 2'
+                                description='Per aumento de cachacis, eu reclamis.'
+                                borderRadius={false}
+                            />
                         )}
-                        <InitalButton onClick={initialBottomClick} />
-                    </div>
-                </>
+                        <div className='es-main-menu__sidebar-bottom'>
+                            <HomeButton onClick={onHome} />
+                            {onSearchClick && (
+                                <SearchButton onClick={searchBottomClick} />
+                            )}
+                            <InitalButton onClick={initialBottomClick} />
+                        </div>
+                    </>
+                )
             )}
             {(staticToolbar || context === 'classroom') && (
                 <div onClick={onClose} className='backdrop' />
