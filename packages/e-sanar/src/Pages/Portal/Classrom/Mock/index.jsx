@@ -24,7 +24,8 @@ const SANClassroomMock = () => {
         handleBookmark,
         bookmarked,
         handleProgress,
-        openMenu
+        openMenu,
+        stopwatchRef
     } = useClassroomContext()
 
     useEffect(() => {
@@ -64,6 +65,7 @@ const SANClassroomMock = () => {
                 quiz={currentResource.quiz}
                 bookmarked={bookmarked}
                 handleBookmark={handleBookmark}
+                stopwatchRef={stopwatchRef}
                 mock
             />
         </div>

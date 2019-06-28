@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, {
+    createContext,
+    useContext,
+    useState,
+    useRef,
+    useEffect
+} from 'react'
 import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { SANClassPlaylistMenuHeader } from './Menu/ClassPlaylist'
@@ -17,8 +23,14 @@ const LayoutProvider = ({ children, history }) => {
     const [openMenu, setOpenMenu] = useState(false)
     const [menuTitle, setMenuTitle] = useState(t(`${intlPath}menu`))
 
+    const stopwatchRef = useRef()
+
     useEffect(() => {
-        console.log({ openMenu })
+        if (stopwatchRef && stopwatchRef.current) {
+            !openMenu
+                ? stopwatchRef.current.start()
+                : stopwatchRef.current.pause()
+        }
     }, [openMenu])
 
     const setMenuTab = index => {
@@ -68,7 +80,8 @@ const LayoutProvider = ({ children, history }) => {
         setOpenMenu,
         setMenuTab,
         menuTitle,
-        setMenuTitle
+        setMenuTitle,
+        stopwatchRef
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>
