@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { withRouter } from 'react-router'
 
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
@@ -19,7 +19,12 @@ import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import { useLayoutContext } from '../../Layout/Context'
 
 export const SANClassPlaylistMenuHeader = withRouter(({ history }) => {
-    const { setOpenMenu } = useLayoutContext()
+    const { setOpenMenu, setMenuTab } = useLayoutContext()
+
+    const exitClassroom = () => {
+        setMenuTab(0)
+        history.push('/aluno')
+    }
 
     return (
         <>
@@ -29,7 +34,7 @@ export const SANClassPlaylistMenuHeader = withRouter(({ history }) => {
                     color='white'
                     className='pl-no'
                     uppercase
-                    onClick={() => history.push('/aluno')}
+                    onClick={exitClassroom}
                 >
                     <ESEvaIcon className='mr-xs' name='arrow-back-outline' />
                     <ESTypography variant='caption'>

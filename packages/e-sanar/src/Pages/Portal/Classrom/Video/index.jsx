@@ -19,7 +19,6 @@ import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
 import { usePortalContext } from 'Pages/Portal/Context'
 import { useClassroomContext } from '../Context'
-import { useLayoutContext } from '../../Layout/Context'
 
 const SANClassroomVideo = () => {
     const { t } = useTranslation('esanar')
@@ -36,8 +35,12 @@ const SANClassroomVideo = () => {
         currentModule
     } = usePortalContext()
 
-    const { setOpenMenu } = useLayoutContext()
-    const { handleBookmark, bookmarked, handleProgress } = useClassroomContext()
+    const {
+        handleBookmark,
+        bookmarked,
+        handleProgress,
+        openMenu
+    } = useClassroomContext()
 
     const [quizBookmarked, setQuizBookmarked] = useState()
     const [rate, setRate] = useState()
@@ -171,7 +174,7 @@ const SANClassroomVideo = () => {
                         value: rate,
                         onChange: debounceRate
                     }}
-                    onOpenMenu={() => setOpenMenu(oldOpenMenu => !oldOpenMenu)}
+                    onOpenMenu={() => openMenu()}
                     onNext={onNavigation('next')}
                     onPrevious={onNavigation('prev')}
                     onTwentyFivePercent={() => debounceProgress(25)}
@@ -213,7 +216,7 @@ const SANClassroomVideo = () => {
                     renderTabBar={renderTabBar({
                         bookmarked,
                         handleBookmark,
-                        onClick: () => setOpenMenu(oldOpenMenu => !oldOpenMenu),
+                        onClick: () => openMenu(),
                         nextResource: nextResource && nextResource.title,
                         prevResource: prevResource && prevResource.title,
                         onPrev: onNavigation('prev'),
