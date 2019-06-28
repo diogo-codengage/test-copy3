@@ -328,5 +328,25 @@ export default {
         copyright: 'Copyright © Sanar. Todos os direitos reservados.',
         termsOfUse: 'Termos de Uso',
         privacyPolicy: 'Política de Privacidade'
+    },
+    errors: {
+        tryAgain: 'Tentar novamente',
+        mainPage: 'Página principal',
+        navigateBack: 'Página anterior',
+        notFound: {
+            title: 'Oops! Não encontramos o que você buscou.',
+            subTitle:
+                'A página que você tentou acessar está indisponível ou não existe.'
+        },
+        authorization: {
+            title: 'Acesso negado/proibido',
+            subTitle:
+                'Desculpe, mas você não tem permissão para acessar essa página.'
+        },
+        default: {
+            title: 'Alguma coisa está errada...',
+            subTitle:
+                'Nosso time já identificou o problema e está trabalhando para resolvê-lo! Por favor, tente novamente em alguns minutos.'
+        }
     }
 }
