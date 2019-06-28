@@ -15,6 +15,7 @@ import { useAuthContext } from 'Hooks/auth'
 import SANQuizSubheader from './Subheader'
 import SANQuizFinalizedMock from './FinalizedMock'
 import SANQuizFinalizedQuiz from './FinalizedQuiz'
+import { useLayoutContext } from 'Pages/Portal/Layout/Context';
 
 const SANQuiz = ({
     quiz: {
@@ -22,9 +23,10 @@ const SANQuiz = ({
     },
     mock,
     bookmarked,
-    handleBookmark
+    handleBookmark,
+    stopwatchRef
 }) => {
-    const stopwatchRef = useRef()
+    // const stopwatchRef = useRef()
     const { me } = useAuthContext()
     const { width } = useWindowSize()
     const [isFull, setIsFull] = useState(width <= 992)
@@ -133,11 +135,11 @@ const SANQuiz = ({
     }
 
     useEffect(() => {
-        if (stopwatchRef.current) {
+        if (stopwatchRef && stopwatchRef.current) {
             stopwatchRef.current.start()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [stopwatchRef.current, data])
+    }, [stopwatchRef, data])
 
     useEffect(() => {
         setIsFull(width <= 992)
@@ -162,7 +164,7 @@ const SANQuiz = ({
     ])
 
     const time = useMemo(
-        () => isFinish && stopwatchRef.current && stopwatchRef.current.time(),
+        () => isFinish && stopwatchRef && stopwatchRef.current && stopwatchRef.current.time(),
         [isFinish]
     )
 
