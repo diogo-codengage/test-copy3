@@ -48,6 +48,8 @@ export interface IFilterTemplateProps {
     setShowAdvancedFilters: (value: boolean) => {},
 }
 
+const sortByLabel = (o1: ISelectOption, o2: ISelectOption) => o1.label.localeCompare(o2.label);
+
 export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
 
     const { width } = useWindowSize()
@@ -62,8 +64,9 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
         placeholderInstitutions = `${props.selectedInstitutions.length} selecionadas`;
     }
 
-    let allTags = props.allTags;
+    let allTags = props.allTags.sort(sortByLabel);
     let allSpecialties = props.allSpecialties;
+    let allSubSpecialties = props.allSpecialties.flatMap(s => s.children).sort(sortByLabel);
 
     if(props.selectedTags.length > 0) {
         allSpecialties = allSpecialties.filter(v => {
@@ -73,7 +76,8 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
     }
 
     if(props.selectedSpecialties.length > 0) {
-        allTags = props.selectedSpecialties.flatMap(s => s.tags).concat( props.selectedSpecialties.flatMap(s => s.children).flatMap(s => s.tags) )
+        allTags = props.selectedSpecialties.flatMap(s => s.tags).concat( props.selectedSpecialties.flatMap(s => s.children).flatMap(s => s.tags)).sort(sortByLabel)
+        allSubSpecialties = props.selectedSpecialties.flatMap( s => s.children);
     }
 
     return <>
@@ -94,7 +98,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
                     <ESCardSelectFilter
                         filterName="Subespecialidade"
                         image={iconSubSpecialties}
-                        items={props.allSubSpecialties}
+                        items={allSubSpecialties}
                         onChange={props.setSelectedSubSpecialties}
                         value={props.selectedSubSpecialties}
                         labelSelecteds={ props.selectedSubSpecialties.map(e => e.label).join(', ') }

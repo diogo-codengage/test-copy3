@@ -46,7 +46,7 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
 
     const queryWithParams = `
         {
-            questions(limit: 3, random:true ${whereFilter}){
+            questions(limit: 10, random:true ${whereFilter}){
                 data {
                     id,
                     statement,
