@@ -8,13 +8,13 @@ const ESDefaultError = () => {
     const { t } = useTranslation('esanar')
 
     return (
-        <div className='default'>
-            <div className='default__container'>
+        <div className='default-error'>
+            <div className='default-error__container'>
                 <img src={image} className='default__image' />
                 <ESTypography
                     variant='body1'
                     strong
-                    className='default__title'
+                    className='default-error__title'
                     ellipsis={{ rows: 2, expandable: false }}
                 >
                     {t('errors.default.title')}
@@ -22,7 +22,7 @@ const ESDefaultError = () => {
                 <ESTypography
                     variant='body2'
                     ellipsis={{ rows: 4, expandable: false }}
-                    className='default__subtitle'
+                    className='default-error__subtitle'
                 >
                     {t('errors.default.subTitle')}
                 </ESTypography>
@@ -34,7 +34,7 @@ const ESDefaultError = () => {
                 variant='solid'
                 size='small'
                 bold
-                className='default__button'
+                className='default-error__button'
             >
                 {t('errors.tryAgain')}
             </ESButton>
