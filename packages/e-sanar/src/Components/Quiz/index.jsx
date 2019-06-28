@@ -69,7 +69,7 @@ const SANQuiz = ({
     }
 
     const handleNext = isCorrect => {
-        console.log('1', isCorrect)
+        window.scrollTo(0, 0)
         if (index === questions.length - 1) return
         setIndex(oldIndex => ++oldIndex)
 
