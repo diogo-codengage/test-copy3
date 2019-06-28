@@ -152,7 +152,7 @@ const SANClassroomVideo = () => {
                 playerRef.current.seek(seconds > 10 ? seconds - 10 : seconds)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentResource, playerRef.current, videoReady])
+    }, [currentResource, playerRef, videoReady])
 
     return (
         <div
