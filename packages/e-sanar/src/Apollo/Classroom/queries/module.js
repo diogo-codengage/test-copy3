@@ -29,12 +29,10 @@ export const GET_MODULE = gql`
                             timeInSeconds
                         }
                         thumbnails {
-                            small {
-                                url
-                            }
-                            medium {
-                                url
-                            }
+                            small
+                            medium
+                            large
+                            original
                         }
                         providers {
                             data {

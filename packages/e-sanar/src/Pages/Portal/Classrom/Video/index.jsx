@@ -132,7 +132,7 @@ const SANClassroomVideo = () => {
             setPlaylistVideo([
                 {
                     ...(playler && { file: playler.files.smil.url }),
-                    image: currentResource.video.thumbnails.medium.url
+                    image: currentResource.video.thumbnails.large
                 }
             ])
             currentResource.quiz &&
