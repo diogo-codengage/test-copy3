@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, forwardRef, useImperativeHandle } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -11,6 +11,8 @@ import ESButton from '../../Atoms/Button'
 
 import MainMenuContentHeader from './MainMenuContentHeader'
 import ESCardContinueCourse from '../../Atoms/CardContinueCourse/CardContinueCourse'
+
+import { Scrollbars } from 'react-custom-scrollbars'
 
 const SideButton = ({ name, ...props }) => {
     const { theme } = useMainMenuContext()
@@ -74,6 +76,16 @@ const ESMainMenu = ({
             'es-main-menu__classroom': context === 'classroom'
         }
     )
+
+    const scrollableClasses = classNames(
+        'es-main-menu__content--scrollable',
+        className,
+        {
+            'es-main-menu__content--scrollable--element':
+                typeof title !== 'string'
+        }
+    )
+
     const classesContent = classNames('es-main-menu__content', {
         open:
             (staticToolbar ||
@@ -105,6 +117,10 @@ const ESMainMenu = ({
         setShowContinueBar(showContinueBarProp)
     }, [showContinueBarProp])
 
+    useEffect(() => {
+        !toggle && onOpenOrClose(openProp)
+    }, [toggle])
+
     const initialClick = e => {
         if (width <= 1365 || context === 'classroom') {
             setToggle(!toggle)
@@ -135,6 +151,14 @@ const ESMainMenu = ({
         searchClick(e)
     }
 
+    // useEffect(() => {
+    //     console.log(ref)
+    // }, [ref])
+
+    // useImperativeHandle(ref, () => ({
+    //     toggle: e => console.log(e)
+    // }))
+
     return (
         <div className={classes}>
             <div className={classesContent}>
@@ -144,8 +168,10 @@ const ESMainMenu = ({
                     title
                 )}
 
-                <div className='es-main-menu__content--scrollable'>
-                    {children}
+                <div className={scrollableClasses}>
+                    <Scrollbars renderTrackHorizontal={() => <div />}>
+                        {children}
+                    </Scrollbars>
                 </div>
             </div>
 
@@ -181,7 +207,13 @@ const ESMainMenu = ({
                 )
             )}
             {(staticToolbar || context === 'classroom') && (
-                <div onClick={onClose} className='backdrop' />
+                <div
+                    onClick={() => {
+                        onClose()
+                        onOpenOrClose(false)
+                    }}
+                    className='backdrop'
+                />
             )}
         </div>
     )

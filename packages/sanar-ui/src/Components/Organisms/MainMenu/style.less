@@ -78,8 +78,11 @@
 
         // Sempre que não houver espaço deixará "scrollavel", mesmo em desktop.
         &--scrollable {
-            max-height: ~'calc(100% - 135px)';
-            overflow-y: auto;
+            height: ~'calc(100% - 64px)';
+
+            &--element {
+                height: ~'calc(100% - 46px)';
+            }
         }
 
         &.open {

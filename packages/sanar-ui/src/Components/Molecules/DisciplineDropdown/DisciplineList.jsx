@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
+import { Scrollbars } from 'react-custom-scrollbars'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESTypography from '../../Atoms/Typography'
 
@@ -53,7 +54,13 @@ const ESDisciplineList = ({ className, items, activeId, onSelect, width }) => {
         [items]
     )
 
-    return <div className={classes}>{items.map(renderItems)}</div>
+    return (
+        <div className={classes}>
+            <Scrollbars renderTrackHorizontal={() => <div />}>
+                {items.map(renderItems)}
+            </Scrollbars>
+        </div>
+    )
 }
 
 ESDisciplineList.proptypes = {}
