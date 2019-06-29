@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import { append } from 'ramda'
@@ -15,7 +15,6 @@ import { useAuthContext } from 'Hooks/auth'
 import SANQuizSubheader from './Subheader'
 import SANQuizFinalizedMock from './FinalizedMock'
 import SANQuizFinalizedQuiz from './FinalizedQuiz'
-import { useLayoutContext } from 'Pages/Portal/Layout/Context';
 
 const SANQuiz = ({
     quiz: {
@@ -164,8 +163,12 @@ const SANQuiz = ({
     ])
 
     const time = useMemo(
-        () => isFinish && stopwatchRef && stopwatchRef.current && stopwatchRef.current.time(),
-        [isFinish]
+        () =>
+            isFinish &&
+            stopwatchRef &&
+            stopwatchRef.current &&
+            stopwatchRef.current.time(),
+        [isFinish, stopwatchRef]
     )
 
     return (

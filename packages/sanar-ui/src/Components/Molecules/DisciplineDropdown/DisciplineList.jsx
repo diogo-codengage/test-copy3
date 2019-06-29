@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESTypography from '../../Atoms/Typography'
 
-const ESDisciplineList = ({ className, items, activeId, onSelect }) => {
+const ESDisciplineList = ({ className, items, activeId, onSelect, width }) => {
     const classes = classNames(
         'es-discipline-dropdown__menu__content',
         className
@@ -12,6 +12,14 @@ const ESDisciplineList = ({ className, items, activeId, onSelect }) => {
 
     const renderItems = useCallback(
         (item, index) => {
+            //TODO: remove validation when the BFF returns non null object to progress
+            if (!item.progress) {
+                item.progress = {
+                    done: 0,
+                    total: 1
+                }
+            }
+
             const { total, done } = item.progress
             const classes = classNames(
                 'es-discipline-dropdown__menu__content--item',
@@ -28,6 +36,7 @@ const ESDisciplineList = ({ className, items, activeId, onSelect }) => {
                     className={classes}
                     key={index}
                     onClick={() => onSelect(item)}
+                    style={{ width }}
                 >
                     {total == done ? (
                         <ESEvaIcon name='checkmark-outline' />

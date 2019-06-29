@@ -95,7 +95,7 @@ const SANCourseContinue = ({ history }) => {
                                 'courseDetails.tabContent.cardModuleAction'
                             )}
                             moduleTime={`${next_module.duration || 0}min`}
-                            image={next_module.cover_picture}
+                            image={next_module.cover_picture_url}
                             onClick={goClassroomNext(next_module)}
                         />
                     </ESCol>

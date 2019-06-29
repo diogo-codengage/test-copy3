@@ -183,7 +183,7 @@ const SANCourseModules = ({ history }) => {
                                             }
                                             moduleTime={`${item.duration ||
                                                 0}min`}
-                                            image={item.cover_picture}
+                                            image={item.cover_picture_url}
                                             onClick={goClassrom(item)}
                                         />
                                     </ESCol>

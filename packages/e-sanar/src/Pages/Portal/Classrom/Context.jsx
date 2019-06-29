@@ -1,10 +1,4 @@
-import React, {
-    createContext,
-    useContext,
-    useEffect,
-    useState,
-    useRef
-} from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
 import { withRouter } from 'react-router-dom'
 import { message } from 'antd'
@@ -36,7 +30,12 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         fetchLastAccessed
     } = usePortalContext()
 
-    const { setMenuTab, setDarkMode, setOpenMenu, stopwatchRef } = useLayoutContext()
+    const {
+        setMenuTab,
+        setDarkMode,
+        setOpenMenu,
+        stopwatchRef
+    } = useLayoutContext()
     const { getEnrollment, me } = useAuthContext()
 
     const { id: enrollmentId } = getEnrollment()
