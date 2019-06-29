@@ -9,6 +9,10 @@ export const GET_ME = gql`
             enrollments {
                 id
                 contract
+                ranking{
+                    position
+                    points
+                }
                 next_module {
                     id
                     name

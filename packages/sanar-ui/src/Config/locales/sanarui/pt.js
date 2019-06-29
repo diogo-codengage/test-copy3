@@ -8,7 +8,8 @@ export default {
         sendFeedback: 'Enviar feedback'
     },
     mainMenu: {
-        leftOff: 'Continuar onde parei'
+        leftOff: 'Continuar onde parei',
+        rankingPoints: 'pontos'
     },
     cardSelectFilter: {
         selectAll: 'Selecionar todos',

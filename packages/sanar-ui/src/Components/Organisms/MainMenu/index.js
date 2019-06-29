@@ -1,5 +1,6 @@
 export { default } from './MainMenu'
 export { default as ESLeftOff } from './LeftOff/LeftOff'
+export { default as ESRanking } from './Ranking/Ranking'
 export { default as ESAvatarMenu } from './Avatar/Avatar'
 export { default as ESNotificationList } from './Notification/NotificationList'
 export { default as ESNotificationItem } from './Notification/NotificationItem'
