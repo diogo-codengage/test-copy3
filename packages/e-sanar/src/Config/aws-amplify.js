@@ -15,8 +15,8 @@ const AWSAmplifyConfig = {
         oauth: {
             domain: 'sanar-dev.auth.us-east-1.amazoncognito.com',
             scope: ['email', 'profile', 'openid'],
-            // redirectSignIn: 'https://d2bvrr6jfh8qt0.cloudfront.net/',
-            redirectSignIn: 'http://localhost:3000/',
+            redirectSignIn: 'https://d2bvrr6jfh8qt0.cloudfront.net/',
+            // redirectSignIn: 'http://localhost:3000/',
             redirectSignOut: undefined,
             responseType: 'code',
             options: undefined
