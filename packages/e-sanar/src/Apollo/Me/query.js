@@ -15,7 +15,7 @@ export const GET_ME = gql`
                     slug
                     index
                     durantion
-                    cover_picture
+                    cover_picture_url
                     progress {
                         done
                         total

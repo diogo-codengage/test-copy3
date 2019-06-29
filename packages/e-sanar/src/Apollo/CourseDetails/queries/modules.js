@@ -9,7 +9,7 @@ export const GET_MODULES = gql`
                 slug
                 index
                 durantion
-                cover_picture
+                cover_picture_url
                 last_resource_id
                 last_resource_type
                 progress {
