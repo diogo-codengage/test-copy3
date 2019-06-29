@@ -9,13 +9,17 @@ export const GET_ME = gql`
             enrollments {
                 id
                 contract
+                ranking{
+                    position
+                    points
+                }
                 next_module {
                     id
                     name
                     slug
                     index
                     durantion
-                    cover_picture
+                    cover_picture_url
                     progress {
                         done
                         total

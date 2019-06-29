@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import {
     ESNavigationList,
     ESNavigationListItem,
+    ESRanking,
     ESLeftOff
 } from 'sanar-ui/dist/Components/Organisms/MainMenu'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
@@ -21,7 +22,7 @@ const SANInitial = ({ setTab, history }) => {
     const { getEnrollment } = useAuthContext()
     const { t } = useTranslation('esanar')
 
-    const { course } = getEnrollment()
+    const { course, ranking } = getEnrollment()
 
     const moduleReference = last =>
         `${t('global.subject')} ${last.module_order + 1}, ${t(
@@ -45,12 +46,20 @@ const SANInitial = ({ setTab, history }) => {
         })
     }
 
+    const rankingProps = {
+        ranking: ranking.position,
+        score: ranking.points
+    }
+
     const renderNextContent = e => {
         setTab(Number(e.key))
     }
 
     return (
         <>
+            <div className='pl-md pr-md mb-md'>
+                <ESRanking {...rankingProps} />
+            </div>
             <div className='pl-md pr-md'>
                 <ESLeftOff {...leftProps} />
             </div>
