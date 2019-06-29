@@ -5,19 +5,19 @@ import { isDevEnvironment, isLocalhost, isProdEnvironment } from '../../Util/env
 import { getUserToken } from '../../Util/getUserToken'
 
 const getGraphqlUri = () => {
-    const local = 'http://elb-sanar-residencia-app-bff-qa-53c18f15ca666731.elb.us-east-1.amazonaws.com:4000/graphql';
+    // const local = 'http://elb-sanar-residencia-app-bff-qa-53c18f15ca666731.elb.us-east-1.amazonaws.com:4000/graphql';
     // const dev = 'https://bff.sanarresidenciamedica.com.br/dev/graphql';
-    // const prod = 'https://bff.sanarresidenciamedica.com.br/prod/graphql';
+    const prod = 'https://bff.sanarresidenciamedica.com.br/prod/graphql';
 
     switch(true) {
         case isLocalhost():
-            return local
+            return prod;
         case isProdEnvironment():
-            return local;
+            return prod;
         case isDevEnvironment():
-            return local; // TODO: fix this, change to dev
+            return prod; // TODO: fix this, change to dev
         default:
-            return local;
+            return prod;
     }
 }
 
