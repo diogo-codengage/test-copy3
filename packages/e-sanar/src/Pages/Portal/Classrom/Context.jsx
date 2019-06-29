@@ -1,13 +1,10 @@
-import React, {
-    createContext,
-    useContext,
-    useEffect,
-    useReducer,
-    useState
-} from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
 import { withRouter } from 'react-router-dom'
+import { message } from 'antd'
+import { useTranslation } from 'react-i18next'
 
+import { getClassRoute } from 'Utils/getClassRoute'
 import { formatPlaylist } from 'Utils/formatPlaylist'
 import { useApolloContext } from 'Hooks/apollo'
 import { useAuthContext } from 'Hooks/auth'
@@ -21,54 +18,47 @@ const Context = createContext()
 
 export const useClassroomContext = () => useContext(Context)
 
-const initialState = { loading: true, success: false, error: false }
-
-function reducer(state, action) {
-    switch (action.type) {
-        case 'loading':
-            return { ...state, loading: true }
-        case 'success':
-            return { ...state, loading: false, level: action.payload }
-        case 'error':
-            return { ...state, loading: false, error: action.payload || true }
-        default:
-            throw new Error()
-    }
-}
-
 const ClassroomProvider = ({ children, match: { params }, history }) => {
     const client = useApolloContext()
+    const { t } = useTranslation('esanar')
     const {
-        setCurrentModule,
         setCurrentResource,
         getResource,
-        setResourcesLoading,
         currentModule,
-        currentResource
+        currentResource,
+        dispatch
     } = usePortalContext()
 
-    const { menuIndex, setIndexMenu, setDarkMode } = useLayoutContext()
-    const [state] = useReducer(reducer, initialState)
+    const { setMenuTab, setDarkMode, setOpenMenu } = useLayoutContext()
     const { getEnrollment, me } = useAuthContext()
 
     const { id: enrollmentId } = getEnrollment()
 
     const [bookmarked, setBookmarked] = useState()
 
+    const openMenu = () => {
+        setMenuTab(9)
+        setOpenMenu(old => !old)
+    }
+
     const handleBookmark = async ({ resourceId, resourceType }) => {
-        await client.mutate({
-            mutation: CREATE_BOOKMARK,
-            variables: {
-                resourceId: resourceId
-                    ? resourceId
-                    : getResource(currentResource).id,
-                resourceType: resourceType
-                    ? resourceType
-                    : currentResource.resource_type,
-                userId: me.id
-            }
-        })
-        !resourceId && setBookmarked(oldBookmarked => !oldBookmarked)
+        try {
+            await client.mutate({
+                mutation: CREATE_BOOKMARK,
+                variables: {
+                    resourceId: resourceId
+                        ? resourceId
+                        : getResource(currentResource).id,
+                    resourceType: resourceType
+                        ? resourceType
+                        : currentResource.resource_type,
+                    userId: me.id
+                }
+            })
+            !resourceId && setBookmarked(oldBookmarked => !oldBookmarked)
+        } catch {
+            message.error(t('classroom.failHandleBookmark'))
+        }
     }
 
     const handleProgress = ({
@@ -100,19 +90,18 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
     }, [currentResource])
 
     useEffect(() => {
-        setIndexMenu(9)
         setDarkMode(true)
         return () => {
-            setIndexMenu(0)
             setDarkMode(false)
         }
-    }, [menuIndex, setIndexMenu, setDarkMode])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
         if (currentModule && currentModule.id === params.moduleId) return
 
-        setResourcesLoading(true)
         const fetchData = async () => {
+            dispatch({ type: 'loading' })
             try {
                 const {
                     data: { module: requestedModule }
@@ -135,7 +124,10 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
                     }
                 }
 
-                setCurrentModule(module)
+                dispatch({
+                    type: 'success',
+                    payload: module
+                })
 
                 const {
                     level_contents: { data: lessons }
@@ -143,16 +135,15 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
 
                 if (!params.type && !params.resourceId) {
                     const resource = lessons[module.progress.done]
+                    const type = getClassRoute(resource.resource_type)
+
+                    setCurrentResource(lessons[module.progress.done])
 
                     history.push(
-                        `/aluno/sala-aula/${
-                            module.id
-                        }/${resource.resource_type.toLowerCase()}/${
+                        `/aluno/sala-aula/${module.id}/${type}/${
                             getResource(resource).id
                         }`
                     )
-
-                    setCurrentResource(lessons[module.progress.done])
                 } else {
                     const resource = lessons.find(
                         item => getResource(item).id === params.resourceId
@@ -160,31 +151,27 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
 
                     setCurrentResource(resource)
                 }
-            } catch (err) {
-                console.log(err)
+            } catch (error) {
+                console.error(error)
+                message.error(t('classroom.failLoadClassroom'))
+                dispatch({ type: 'loading', payload: error })
             }
-            setResourcesLoading(false)
         }
         fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
-        params.moduleId,
-        client,
-        history,
         currentModule,
         enrollmentId,
-        getResource,
+        params.moduleId,
         params.resourceId,
-        params.type,
-        setCurrentModule,
-        setCurrentResource,
-        setResourcesLoading
+        params.type
     ])
 
     const value = {
-        state,
         handleBookmark,
         bookmarked,
-        handleProgress
+        handleProgress,
+        openMenu
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

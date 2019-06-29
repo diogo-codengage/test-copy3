@@ -13,13 +13,13 @@ import SANCourseChange from './CourseChange'
 import SANMyAccount from './MyAccount'
 import SANClassPlaylist from './ClassPlaylist'
 import { useLayoutContext } from '../../Layout/Context'
-// import SANSearch from './Search'
 
 const intlPath = 'mainMenu.title.'
 
 const toDarkMode = [6, 9]
 
-const MenuContent = ({ indexMenu, setTab, showContinueBar, handleBack }) => {
+//TODO: Improve setTab
+const MenuContent = ({ indexMenu, setMenuTab: setTab, handleBack }) => {
     const { t } = useTranslation('esanar')
 
     switch (indexMenu) {
@@ -59,12 +59,13 @@ const SANMenu = ({ history }) => {
     const [theme, setTheme] = useState('light')
     const {
         indexMenu,
-        setIndexMenu,
         darkMode,
         openMenu,
+        setMenuTab,
+        menuTitle,
+        setMenuTitle,
         setOpenMenu
     } = useLayoutContext()
-    const [title, setTitle] = useState(t(`${intlPath}menu`))
 
     useMemo(
         () =>
@@ -75,59 +76,27 @@ const SANMenu = ({ history }) => {
     )
 
     const handleBack = () => {
-        setIndexMenu(0)
-        setTitle(t(`${intlPath}menu`))
-    }
-
-    const setTab = indexMenu => {
-        switch (indexMenu) {
-            case 0:
-                setIndexMenu(indexMenu)
-                history.push('/aluno/curso')
-                setTitle(t(`${intlPath}menu`))
-                break
-            case 1:
-                setIndexMenu(indexMenu)
-                setTitle(t(`${intlPath}notifications`))
-                break
-            case 5:
-                history.push('/aluno/banco-questoes')
-                break
-            case 6:
-                setIndexMenu(indexMenu)
-                setTitle(t(`${intlPath}studying`))
-                break
-            case 7:
-                setIndexMenu(indexMenu)
-                setTitle(t(`${intlPath}myAccount`))
-                break
-            case 8:
-                setIndexMenu(indexMenu)
-                setTitle(t(`${intlPath}search`))
-                break
-            default:
-                setIndexMenu(indexMenu)
-                setTitle(t(`${intlPath}menu`))
-        }
+        setMenuTab(0)
+        setMenuTitle(t(`${intlPath}menu`))
     }
 
     const handleInitialClick = () => {
-        setIndexMenu(indexMenu)
-        setTitle(t(`${intlPath}menu`))
+        setMenuTitle(t(`${intlPath}menu`))
     }
 
     const handleHome = () => history.push('/aluno/curso')
 
     const onOpenOrClose = isOpen => {
+        console.log(isOpen)
         setOpenMenu(isOpen)
     }
 
     return (
         <ESMainMenu
-            // onSearchClick={() => setTab(8)}
+            // onSearchClick={() => setMenuTab(8)}
             onInitialClick={handleInitialClick}
             onHome={handleHome}
-            title={title}
+            title={menuTitle}
             theme={theme}
             showContinueBar
             context={darkMode ? 'classroom' : ''}
@@ -135,7 +104,7 @@ const SANMenu = ({ history }) => {
             open={openMenu}
             onOpenOrClose={onOpenOrClose}
         >
-            <MenuContent {...{ indexMenu, setTab, handleBack }} />
+            <MenuContent {...{ indexMenu, setMenuTab, handleBack }} />
         </ESMainMenu>
     )
 }

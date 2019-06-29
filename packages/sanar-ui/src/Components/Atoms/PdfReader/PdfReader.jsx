@@ -20,10 +20,14 @@ const ESPdfReader = ({ url, className }) => {
                 <ESTypography type='light' variant='caption'>
                     {t('pdfReader.problemRenderingPdf')}
                 </ESTypography>
-                <ESButton variant='text' color='secondary' onClick={openPdf}>
-                    <ESTypography variant='caption' type='secondary' strong>
-                        {t('pdfReader.clickAndDownload')}
-                    </ESTypography>
+                <ESButton
+                    variant='text'
+                    color='secondary'
+                    size='xsmall'
+                    onClick={openPdf}
+                    bold
+                >
+                    {t('pdfReader.clickAndDownload')}
                 </ESButton>
             </div>
         </div>

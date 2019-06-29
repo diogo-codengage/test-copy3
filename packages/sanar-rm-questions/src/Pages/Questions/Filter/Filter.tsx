@@ -1,4 +1,4 @@
-import React from 'react'
+import React  from 'react'
 import { FilterTemplate, IFilterTemplateProps } from './FilterTemplate'
 import { useQuestionsContext } from '../QuestionsContext'
 import { Speciality } from '../../../BFF/speciality'
@@ -30,6 +30,7 @@ export const Filter: React.FC = () => {
         },
         setSelectedTags: v => {
             ctx.setSelectedTags(v)
+
             clearQuestions()
         },
         setSelectedStates: v => {
@@ -54,7 +55,11 @@ export const Filter: React.FC = () => {
         isCommentedByExpert: ctx.isCommentedByExpert,
 
         showAdvancedFilters: ctx.showAdvancedFilters,
-        setShowAdvancedFilters: ctx.setShowAdvancedFilters
+        setShowAdvancedFilters: ctx.setShowAdvancedFilters,
+
+        allInstitutions: ctx.allInstitutions,
+        selectedInstitutions: ctx.selectedInstitutions,
+        setSelectedInstitutions: ctx.setSelectedInstitutions,
 
     } as IFilterTemplateProps
 

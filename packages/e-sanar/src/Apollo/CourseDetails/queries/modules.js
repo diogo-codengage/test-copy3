@@ -10,10 +10,11 @@ export const GET_MODULES = gql`
                 index
                 durantion
                 cover_picture
+                last_resource_id
+                last_resource_type
                 progress {
                     done
                     total
-                    # status
                 }
             }
             count

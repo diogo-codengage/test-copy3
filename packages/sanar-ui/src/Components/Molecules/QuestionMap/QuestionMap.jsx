@@ -70,8 +70,18 @@ const ESQuestionMap = ({
                 {items.map(renderCircle)}
             </div>
             <div className='es-question-map__subtitle'>
-                <Subtitle status='correct' label={t('questionMap.correct')} />
-                <Subtitle status='wrong' label={t('questionMap.wrong')} />
+                {!mock && (
+                    <>
+                        <Subtitle
+                            status='correct'
+                            label={t('questionMap.correct')}
+                        />
+                        <Subtitle
+                            status='wrong'
+                            label={t('questionMap.wrong')}
+                        />
+                    </>
+                )}
                 <Subtitle status='current' label={t('questionMap.whereIs')} />
                 {mock && (
                     <Subtitle

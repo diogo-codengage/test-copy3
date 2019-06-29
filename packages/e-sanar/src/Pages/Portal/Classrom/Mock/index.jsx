@@ -10,7 +10,6 @@ import ESLessonHeader, {
 import { usePortalContext } from 'Pages/Portal/Context'
 import SANQuiz from 'Components/Quiz'
 import { useClassroomContext } from '../Context'
-import { useLayoutContext } from '../../Layout/Context'
 
 const SANClassroomMock = () => {
     const { t } = useTranslation('esanar')
@@ -19,10 +18,14 @@ const SANClassroomMock = () => {
         nextResource,
         prevResource,
         onNavigation,
-        currentModule
+        state: { currentModule }
     } = usePortalContext()
-    const { handleBookmark, bookmarked, handleProgress } = useClassroomContext()
-    const { setOpenMenu } = useLayoutContext()
+    const {
+        handleBookmark,
+        bookmarked,
+        handleProgress,
+        openMenu
+    } = useClassroomContext()
 
     useEffect(() => {
         if (currentResource) {
@@ -45,7 +48,7 @@ const SANClassroomMock = () => {
                         )} ${currentModule.index + 1}, ${t(
                             'global.activity'
                         )} ${currentResource.index + 1}`}
-                        onClick={() => setOpenMenu(oldOpenMenu => !oldOpenMenu)}
+                        onClick={() => openMenu()}
                     />
                 }
                 rightChildren={

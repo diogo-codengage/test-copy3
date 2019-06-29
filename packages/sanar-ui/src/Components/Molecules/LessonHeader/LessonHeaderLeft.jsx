@@ -1,6 +1,6 @@
 import React from 'react'
-import classNames from 'classnames'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
 
 import ESTypography from '../../Atoms/Typography'

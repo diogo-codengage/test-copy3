@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 
+import classNames from 'classnames'
 import { message } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 import ESJwPlayer from 'sanar-ui/dist/Components/Molecules/JwPlayer'
 import ESTabs, { ESTabPane } from 'sanar-ui/dist/Components/Atoms/Tabs'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
+import { createDebounce } from 'sanar-ui/dist/Util/Debounce'
 
 import { useApolloContext } from 'Hooks/apollo'
 
@@ -17,7 +19,6 @@ import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
 import { usePortalContext } from 'Pages/Portal/Context'
 import { useClassroomContext } from '../Context'
-import { useLayoutContext } from '../../Layout/Context'
 
 const SANClassroomVideo = () => {
     const { t } = useTranslation('esanar')
@@ -31,18 +32,25 @@ const SANClassroomVideo = () => {
         nextResource,
         prevResource,
         onNavigation,
-        currentModule
+        state: { currentModule }
     } = usePortalContext()
 
-    const { setOpenMenu } = useLayoutContext()
-    const { handleBookmark, bookmarked, handleProgress } = useClassroomContext()
+    const {
+        handleBookmark,
+        bookmarked,
+        handleProgress,
+        openMenu
+    } = useClassroomContext()
 
     const [quizBookmarked, setQuizBookmarked] = useState()
     const [rate, setRate] = useState()
     const [playlistVideo, setPlaylistVideo] = useState()
     const [videoError, seVideoError] = useState()
+    const [videoReady, seVideoReady] = useState()
 
     const handleVideoError = () => seVideoError(true)
+
+    const handleVideoReady = () => seVideoReady(true)
 
     const handleQuizBookmark = () => {
         handleBookmark({
@@ -65,10 +73,11 @@ const SANClassroomVideo = () => {
         })
     }
 
-    const onProgress = percentage => () => {
-        if (!videoError) {
-            const timeInSeconds =
-                playerRef && playerRef.currentResource.position()
+    const onProgress = percentage => {
+        const videoPercentage =
+            currentResource && currentResource.video.progress.percentage
+        if (!videoError && percentage !== videoPercentage) {
+            const timeInSeconds = playerRef && playerRef.current.position()
             handleProgress({
                 timeInSeconds: parseInt(timeInSeconds),
                 percentage,
@@ -85,6 +94,9 @@ const SANClassroomVideo = () => {
                 behavior: 'smooth'
             })
     }
+
+    const debounceProgress = createDebounce(onProgress, 500)
+    const debounceRate = createDebounce(handleRate, 1000)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -105,7 +117,8 @@ const SANClassroomVideo = () => {
             }
         }
         fetchData()
-    }, [client, currentResource, t, userId])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentResource, userId])
 
     useEffect(() => {
         if (currentResource) {
@@ -123,11 +136,30 @@ const SANClassroomVideo = () => {
         }
     }, [currentResource])
 
+    useEffect(() => {
+        if (
+            currentResource.video &&
+            currentResource.video.progress &&
+            videoReady &&
+            playerRef.current
+        ) {
+            const seconds = currentResource.video.progress.timeInSeconds
+            playerRef &&
+                playerRef.current.seek(seconds > 10 ? seconds - 10 : seconds)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentResource, playerRef.current, videoReady])
+
     return (
-        <div className='classroom__video'>
+        <div
+            className={classNames('classroom__video', {
+                'classroom__video--no-quiz': !currentResource.quiz
+            })}
+        >
             <div className='classroom__video-container'>
                 <ESJwPlayer
                     onError={handleVideoError}
+                    onReady={handleVideoReady}
                     ref={playerRef}
                     playerId='playerId'
                     playlist={playlistVideo}
@@ -140,38 +172,40 @@ const SANClassroomVideo = () => {
                     )} ${currentResource.index + 1}`}
                     rate={{
                         value: rate,
-                        onChange: handleRate
+                        onChange: debounceRate
                     }}
-                    onOpenMenu={() => setOpenMenu(oldOpenMenu => !oldOpenMenu)}
-                    onNext={onNavigation('prev')}
-                    onPrevious={onNavigation('next')}
-                    onTwentyFivePercent={onProgress(25)}
-                    onFiftyPercent={onProgress(50)}
-                    onSeventyFivePercent={onProgress(75)}
-                    onOneHundredPercent={onProgress(100)}
+                    onOpenMenu={openMenu}
+                    onNext={onNavigation('next')}
+                    onPrevious={onNavigation('prev')}
+                    onTwentyFivePercent={() => debounceProgress(25)}
+                    onFiftyPercent={() => debounceProgress(50)}
+                    onSeventyFivePercent={() => debounceProgress(75)}
+                    onOneHundredPercent={() => debounceProgress(100)}
                 />
-                <div className='classroom__video-container--buttons'>
-                    <ESButton
-                        size='small'
-                        uppercase
-                        bold
-                        variant='solid'
-                        className='questions'
-                        onClick={askQuestions}
-                    >
-                        Fazer Questões
-                    </ESButton>
-                    <ESButton
-                        size='small'
-                        uppercase
-                        bold
-                        variant='outlined'
-                        color='white'
-                        disabled
-                    >
-                        Ver discussões
-                    </ESButton>
-                </div>
+                {currentResource.quiz && (
+                    <div className='classroom__video-container--buttons'>
+                        <ESButton
+                            size='small'
+                            uppercase
+                            bold
+                            variant='solid'
+                            className='questions'
+                            onClick={askQuestions}
+                        >
+                            {t('classroom.askQuestions')}
+                        </ESButton>
+                        <ESButton
+                            size='small'
+                            uppercase
+                            bold
+                            variant='outlined'
+                            color='white'
+                            disabled
+                        >
+                            {t('classroom.viewDiscussions')}
+                        </ESButton>
+                    </div>
+                )}
             </div>
             {currentResource.quiz && (
                 <ESTabs
@@ -182,6 +216,7 @@ const SANClassroomVideo = () => {
                     renderTabBar={renderTabBar({
                         bookmarked,
                         handleBookmark,
+                        onClick: openMenu,
                         nextResource: nextResource && nextResource.title,
                         prevResource: prevResource && prevResource.title,
                         onPrev: onNavigation('prev'),

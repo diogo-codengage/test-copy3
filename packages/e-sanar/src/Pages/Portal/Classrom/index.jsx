@@ -1,8 +1,10 @@
 import React from 'react'
 
+import { Redirect } from 'react-router-dom'
+
 import ESSpin from 'sanar-ui/dist/Components/Atoms/Spin'
 
-import { useClassroomContext, withClassroomProvider } from './Context'
+import { withClassroomProvider } from './Context'
 import { usePortalContext } from '../Context'
 
 import SANClassroomVideo from './Video'
@@ -18,18 +20,17 @@ const renderResourceContent = resource => {
         case 'Quiz':
             return <SANClassroomMock />
         default:
-            return <h1>Mock</h1>
+            return <Redirect to='/aluno/curso' />
     }
 }
 
-const SANClassroomPage = ({ match: { params } }) => {
+const SANClassroomPage = () => {
     const {
-        state: { error }
-    } = useClassroomContext()
+        currentResource,
+        state: { error, loading }
+    } = usePortalContext()
 
-    const { currentResource, resourcesLoading } = usePortalContext()
-
-    if (resourcesLoading || !currentResource)
+    if (loading || !currentResource)
         return (
             <div className='classroom'>
                 <ESSpin className='classroom__loader' dark />
@@ -38,7 +39,6 @@ const SANClassroomPage = ({ match: { params } }) => {
 
     if (error) return <div className='classroom'>{`Error: ${error}`}</div>
 
-    // moduleId type resourceId
     return (
         <div className='classroom'>
             {renderResourceContent(currentResource)}

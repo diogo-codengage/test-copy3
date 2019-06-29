@@ -13,6 +13,7 @@ import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 
 import { GET_MODULES } from 'Apollo/CourseDetails/queries/modules'
 import { useAuthContext } from 'Hooks/auth'
+import { getClassRoute } from 'Utils/getClassRoute'
 
 //FIXME: const responsive = [
 //     {
@@ -59,7 +60,12 @@ const SANCourseModules = ({ history }) => {
         id: enrollmentId
     } = getEnrollment()
 
-    const goClassrom = id => () => history.push(`/aluno/sala-aula/${id}`)
+    const goClassrom = module => () => {
+        const type = getClassRoute(module.last_resource_type)
+        history.push(
+            `/aluno/sala-aula/${module.id}/${type}/${module.last_resource_id}`
+        )
+    }
 
     return (
         <Query
@@ -178,7 +184,7 @@ const SANCourseModules = ({ history }) => {
                                             moduleTime={`${item.duration ||
                                                 0}min`}
                                             image={item.cover_picture}
-                                            onClick={goClassrom(item.id)}
+                                            onClick={goClassrom(item)}
                                         />
                                     </ESCol>
                                 ))}

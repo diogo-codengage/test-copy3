@@ -21,9 +21,11 @@ const SANInitial = ({ setTab, history }) => {
 
     const { course, last_accessed } = getEnrollment()
 
-    const moduleReference = `${t('global.subject')} ${
-        last_accessed.module_order
-    }, ${t('global.activity')} ${last_accessed.resource_order}`
+    const moduleReference = `${t(
+        'global.subject'
+    )} ${last_accessed.module_order + 1}, ${t(
+        'global.activity'
+    )} ${last_accessed.resource_order + 1}`
 
     const goClassroom = () =>
         history.push(
@@ -31,6 +33,10 @@ const SANInitial = ({ setTab, history }) => {
                 last_accessed.resource_type
             )}/${last_accessed.resource_id}`
         )
+
+    const renderNextContent = e => {
+        setTab(Number(e.key))
+    }
 
     return (
         <>
@@ -43,7 +49,7 @@ const SANInitial = ({ setTab, history }) => {
                     onClick={goClassroom}
                 />
             </div>
-            <ESNavigationList onClick={e => setTab(Number(e.key))}>
+            <ESNavigationList onClick={renderNextContent}>
                 <ESNavigationListItem
                     key={0}
                     title={t(`${intlPath}init`)}

@@ -93,12 +93,9 @@ const ESMainMenu = ({
     }, [contextProp])
 
     useEffect(() => {
-        setToggle(true)
+        setToggle(!openProp)
+        onOpenOrClose(toggle)
     }, [openProp])
-
-    // useEffect(() => {
-    //     onOpenOrClose(toggle)
-    // }, [toggle])
 
     useEffect(() => {
         setTheme(themeProp)
@@ -141,7 +138,12 @@ const ESMainMenu = ({
     return (
         <div className={classes}>
             <div className={classesContent}>
-                <MainMenuContentHeader title={title} />
+                {typeof title === 'string' ? (
+                    <MainMenuContentHeader title={title} />
+                ) : (
+                    title
+                )}
+
                 <div className='es-main-menu__content--scrollable'>
                     {children}
                 </div>
@@ -158,23 +160,25 @@ const ESMainMenu = ({
                     <img className='logo' src={logo} />
                 </div>
             ) : (
-                <>
-                    {showContinueBar && (
-                        <ESCardContinueCourse
-                            className='es-main-menu__continue'
-                            module='Continuar no Módulo 1, aula 2'
-                            description='Per aumento de cachacis, eu reclamis.'
-                            borderRadius={false}
-                        />
-                    )}
-                    <div className='es-main-menu__sidebar-bottom'>
-                        <HomeButton onClick={onHome} />
-                        {onSearchClick && (
-                            <SearchButton onClick={searchBottomClick} />
+                context !== 'classroom' && (
+                    <>
+                        {showContinueBar && (
+                            <ESCardContinueCourse
+                                className='es-main-menu__continue'
+                                module='Continuar no Módulo 1, aula 2'
+                                description='Per aumento de cachacis, eu reclamis.'
+                                borderRadius={false}
+                            />
                         )}
-                        <InitalButton onClick={initialBottomClick} />
-                    </div>
-                </>
+                        <div className='es-main-menu__sidebar-bottom'>
+                            <HomeButton onClick={onHome} />
+                            {onSearchClick && (
+                                <SearchButton onClick={searchBottomClick} />
+                            )}
+                            <InitalButton onClick={initialBottomClick} />
+                        </div>
+                    </>
+                )
             )}
             {(staticToolbar || context === 'classroom') && (
                 <div onClick={onClose} className='backdrop' />

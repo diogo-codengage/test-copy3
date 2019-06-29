@@ -5,6 +5,13 @@
     overflow-y: auto;
     background: @white;
 
+    &--without-brand-header {
+        &,
+        .es-password-recovery-template__content {
+            padding-top: @padding-sm;
+        }
+    }
+
     &__header {
         position: fixed;
         top: 0;

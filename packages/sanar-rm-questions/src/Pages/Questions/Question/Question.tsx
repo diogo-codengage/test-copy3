@@ -4,6 +4,7 @@ import { useQuestionsContext } from '../QuestionsContext'
 import { QuestionsInputFilter } from '../../../BFF/QuestionsInputFilter'
 import { BFFService } from '../../../BFF/BFFService'
 import { normalizeString } from '../../../Util/normalizeString'
+import { toCorrelacaoTagName } from '../../../Util/corelacaoEntrePlataformas'
 
 export const Question = () => {
 
@@ -26,25 +27,16 @@ export const Question = () => {
     const getParamsFromCourse = async ():Promise<QuestionsInputFilter> => {
 
         const tagsIds = questionsCtx.allTags
-            .filter(t => normalizeEndCompare(t.label,questionsCtx.course.moduleName))
-            .map(v => { console.log(v); return v})
+            .filter(t => normalizeEndCompare(t.label, toCorrelacaoTagName(questionsCtx.course.moduleName)))
             .map(t => t.value)
 
         const specialtiesIds = questionsCtx.allSpecialties.flatMap(s => s.children)
             .filter(v => normalizeEndCompare(v.label,questionsCtx.course.subSpecialtyName))
-            .map(v => { console.log(v); return v})
             .map(v => v.value)
-
-        console.log('Filter from course',{
-            specialtyName: questionsCtx.course.specialtyName,
-            subSpecialtyName: questionsCtx.course.subSpecialtyName,
-            moduleName: questionsCtx.course.moduleName,
-            tagsIds,
-            specialtiesIds,
-        })
 
         return {
             specialtiesIds,
+            institutionsIds: [],
             tagsIds,
             states: [],
             years: [],
@@ -53,11 +45,16 @@ export const Question = () => {
     }
 
     const getParamsFromFilters = (): QuestionsInputFilter  => {
+
+        const idsSelectedSubSpecialties = questionsCtx.selectedSubSpecialties.map(ss => ss.value);
+
         return  {
             specialtiesIds: questionsCtx.selectedSpecialties
+                .filter( s => !s.children.map(ss => ss.value).find(ss => idsSelectedSubSpecialties.includes(ss) ) )
                 .map(s => s.value)
                 .concat(questionsCtx.selectedSubSpecialties
                     .map(s => s.value)),
+            institutionsIds: questionsCtx.selectedInstitutions.map( i => i.value ),
             tagsIds: questionsCtx.selectedTags.map( t => t.value),
             states: questionsCtx.selectedStates.map(s => s.value),
             years: questionsCtx.selectedYears.map(v => v.value),
@@ -66,6 +63,11 @@ export const Question = () => {
     }
 
     const pushQuestions = (moreQuestions) => {
+
+        if(questionsCtx.questions.length > 1){
+            return;
+        }
+        console.log('pushQuestions')
         let questions = questionsCtx.questions
 
         questions.push(...moreQuestions)
@@ -86,12 +88,13 @@ export const Question = () => {
     }
 
     const loadMoreQuestions = async () => {
-        const filters = await getParams()
-        BFFService.loadMoreQuestions(filters)
-            .then(function({ data }) {
-                questionsCtx.setQuestionsRequests(questionsCtx.questionsRequests + 1)
-                return pushQuestions(data.questions.data)
-            })
+            const filters = await getParams()
+            BFFService.loadMoreQuestions(filters)
+                .then(function({ data }) {
+                    questionsCtx.setQuestionsRequests(questionsCtx.questionsRequests + 1)
+                    return pushQuestions(data.questions.data)
+                })
+
     }
 
     const onSkipQuestion = ({id}) => {
@@ -104,7 +107,7 @@ export const Question = () => {
         loadNextQuestion()
     }
 
-    if(! questionsCtx.currentQuestion) {
+    if(!questionsCtx.currentQuestion) {
         loadMoreQuestions()
     }
 
