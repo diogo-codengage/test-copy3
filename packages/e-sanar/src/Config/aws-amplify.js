@@ -1,4 +1,6 @@
 import { esConfigureAuthStorage } from 'sanar-ui/dist/Util/Auth'
+import debug from 'debug'
+const logger = debug('sanar::aws-amplify-config');
 
 const AWSAmplifyConfig = {
     Auth: {
@@ -12,13 +14,16 @@ const AWSAmplifyConfig = {
         storage: esConfigureAuthStorage(),
         oauth: {
             domain: 'sanar-dev.auth.us-east-1.amazoncognito.com',
-            scope: ['email', 'profile'],
-            redirectSignIn: 'https://d2bvrr6jfh8qt0.cloudfront.net/',
+            scope: ['email', 'profile', 'openid'],
+            // redirectSignIn: 'https://d2bvrr6jfh8qt0.cloudfront.net/',
+            redirectSignIn: 'http://localhost:3000/',
             redirectSignOut: undefined,
             responseType: 'code',
             options: undefined
         }
     }
 }
+
+logger('AWS configuration: %o', AWSAmplifyConfig);
 
 export default AWSAmplifyConfig

@@ -11,6 +11,7 @@ import image from 'assets/images/logo.svg'
 import './App.less'
 import SANAuth from 'Pages/Auth'
 import SANPortalRoutes from 'Pages/Portal'
+import SAHome from 'Pages/Portal/Home'
 import PrivateRoute from 'Pages/Portal/Private/Private'
 
 import { esConfigureAuthStorage } from 'sanar-ui/dist/Util/Auth'
@@ -32,10 +33,10 @@ const SANApp = () => {
                             path='/aluno'
                             component={SANPortalRoutes}
                         />
-                        {/* <Route
-                            path='*'
-                            render={() => <Redirect to='/aluno' />}
-                        /> */}
+                        <Route
+                            path='/'
+                            component={SAHome}
+                        />
                         <Route component={ESNotFoundError} />
                     </Switch>
                 </Router>
