@@ -62,8 +62,8 @@ const Initial = ({ setIndex }) => (
     <>
         <div className='pl-md pr-md mb-md'>
             <ESRanking
-                ranking='120'
-                score='56007'
+                ranking={120}
+                score={56007}
             />
         </div>
         <div className='pl-md pr-md'>

@@ -3,14 +3,20 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import ESBrandHeader from '../../Atoms/BrandHeader'
 import ESTypography from '../../Atoms/Typography'
+import ESCollapse from '../../Atoms/Collapse'
+import ESCollapsePanel from '../../Atoms/Collapse/CollapsePanel'
+
+import { select, text, boolean } from '@storybook/addon-knobs'
+
+
+const positionOptions = {
+    Left: 'left',
+    Right: 'right'
+}
 
 const ESHelpCenterTemplate = ({
     className,
-    image,
-    title,
-    subtitle,
     actionsMargin,
-    actions,
     brandHeader
 }) => {
     const classes = classNames('es-help-center-template', className, {
@@ -33,23 +39,51 @@ const ESHelpCenterTemplate = ({
             )}
             <div className='es-help-center-template__content'>
                 <div className={classesInfo}>
-                    <img src={image} />
                     <ESTypography
                         className='es-help-center-template__content__infos--title mb-md'
                         level={4}
                     >
-                        {title}
+                        Sobre a plataforma
                     </ESTypography>
                     <ESTypography
                         className='es-help-center-template__content__infos--subtitle'
                         variant='subtitle2'
                     >
-                        {subtitle}
+                        Perguntas sobre o acesso.....
                     </ESTypography>
-                </div>
-
-                <div className='es-help-center-template__content__actions'>
-                    {actions}
+                    <ESCollapse
+                        bordered={boolean('Bordered', true)}
+                        accordion={boolean('Accordion', false)}
+                        expandIconPosition={select(
+                            'Expand Icon Position',
+                            positionOptions,
+                            'right'
+                        )}
+                    >
+                        <ESCollapsePanel
+                            header={text('Header', 'Enquanto tempo meu acesso é liberado?')}
+                            disabled={boolean('Disabled', false)}
+                            showArrow={boolean('Show arrow', true)}
+                            customKey='1'
+                        >
+                            <p>
+                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
+                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
+                                accumsan disputationi eu sit. Vide electram sadipscing et per.
+                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
+                                Delegadis gente finis, bibendum egestas augue arcu ut est.
+                            </p>
+                        </ESCollapsePanel>
+                        <ESCollapsePanel header='Durante quanto tempo tenho acesso ao curso?' customKey='2'>
+                            <p>
+                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
+                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
+                                accumsan disputationi eu sit. Vide electram sadipscing et per.
+                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
+                                Delegadis gente finis, bibendum egestas augue arcu ut est.
+                            </p>
+                        </ESCollapsePanel>
+                    </ESCollapse>
                 </div>
             </div>
         </div>
@@ -58,10 +92,6 @@ const ESHelpCenterTemplate = ({
 
 ESHelpCenterTemplate.propTypes = {
     className: PropTypes.string,
-    title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    image: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    actions: PropTypes.element,
     actionsMargin: PropTypes.oneOf(['default', 'large']),
     brandHeader: PropTypes.bool
 }
