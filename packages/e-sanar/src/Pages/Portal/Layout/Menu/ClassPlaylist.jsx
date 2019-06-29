@@ -107,6 +107,19 @@ const SANClassPlaylist = ({ history }) => {
     const [modules, setModules] = useState(null)
     const { course, id } = getEnrollment()
 
+    const progressTest = ({ level_contents: { data: lessons } }) => {
+        if (!currentModule) return 0
+
+        let count = lessons.reduce((accumulator, currentValue, index, arr) => {
+            if (!getResource(currentValue).progress) return accumulator
+
+            return (accumulator += getResource(currentValue).progress
+                .percentage)
+        }, 0)
+
+        return ((count / lessons.length) * 100) / 100
+    }
+
     const goToResource = resource => {
         setCurrentResource(resource)
         setOpenMenu(oldOpenMenu => !oldOpenMenu)
@@ -204,6 +217,7 @@ const SANClassPlaylist = ({ history }) => {
                             activeItem={currentModule}
                             items={modules.data}
                             loading={loading}
+                            progress={progressTest(currentModule)}
                         />
                     </div>
                     {renderPlaylist()}
