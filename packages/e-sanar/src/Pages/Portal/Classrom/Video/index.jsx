@@ -79,7 +79,7 @@ const SANClassroomVideo = () => {
                 currentResource.video.progress &&
                 currentResource.video.progress.percentage) ||
             0
-        if (!videoError && percentage !== videoPercentage) {
+        if (!videoError && percentage !== videoPercentage && videoReady) {
             const timeInSeconds = playerRef && playerRef.current.position()
             handleProgress({
                 timeInSeconds: parseInt(timeInSeconds),
@@ -108,6 +108,7 @@ const SANClassroomVideo = () => {
                     data: { rating }
                 } = await client.query({
                     query: GET_RATING,
+                    fetchPolicy: 'network-only',
                     variables: {
                         resourceId: currentResource.video.id,
                         userId
@@ -151,7 +152,7 @@ const SANClassroomVideo = () => {
                 playerRef.current.seek(seconds > 10 ? seconds - 10 : seconds)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentResource, playerRef.current, videoReady])
+    }, [currentResource, playerRef, videoReady])
 
     return (
         <div

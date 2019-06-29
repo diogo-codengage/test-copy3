@@ -66,7 +66,7 @@ const PortalProvider = ({ children, history }) => {
 
     const goClassroom = resource => {
         const type = getClassRoute(resource.resource_type)
-        const resourceId = getResource(nextResource).id
+        const resourceId = getResource(resource).id
         history.push(
             `/aluno/sala-aula/${state.currentModule.id}/${type}/${resourceId}`
         )
