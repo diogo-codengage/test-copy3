@@ -105,7 +105,7 @@ const ESMainMenu = ({
     }, [contextProp])
 
     useEffect(() => {
-        setToggle(!openProp)
+        setToggle(openProp)
         // onOpenOrClose(toggle)
     }, [openProp])
 
