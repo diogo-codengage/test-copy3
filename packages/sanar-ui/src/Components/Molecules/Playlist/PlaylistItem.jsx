@@ -41,7 +41,9 @@ const ESPlaylist = ({ className, index, item, current, onClick }) => {
                 <ESTypography
                     ellipsis
                     variant='subtitle2'
-                    className='description'
+                    className={classNames('description', {
+                        'description--time': durationInSeconds
+                    })}
                 >
                     {title}
                 </ESTypography>
