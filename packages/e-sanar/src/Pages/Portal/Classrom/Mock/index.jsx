@@ -38,7 +38,7 @@ const SANClassroomMock = () => {
                         )} ${currentModule.index + 1}, ${t(
                             'global.activity'
                         )} ${currentResource.index + 1}`}
-                        onClick={() => openMenu()}
+                        onClick={openMenu}
                     />
                 }
                 rightChildren={
