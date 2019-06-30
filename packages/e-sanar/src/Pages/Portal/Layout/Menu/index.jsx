@@ -64,7 +64,8 @@ const SANMenu = ({ history }) => {
         setMenuTab,
         menuTitle,
         setMenuTitle,
-        setOpenMenu
+        setOpenMenu,
+        setIndexMenu
     } = useLayoutContext()
 
     useMemo(
@@ -76,7 +77,7 @@ const SANMenu = ({ history }) => {
     )
 
     const handleBack = () => {
-        setMenuTab(0)
+        setIndexMenu(0)
         setMenuTitle(t(`${intlPath}menu`))
     }
 
