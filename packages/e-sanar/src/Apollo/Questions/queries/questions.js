@@ -9,6 +9,9 @@ export const GET_QUESTIONS = gql`
         $examIds: [ID]
         $years: [Int]
         $limit: Int
+        $answeredByUser: String
+        $notAnsweredByUser: String
+        $isCommentedByExpert: Boolean
     ) {
         questions(
             courseIds: $courseIds
@@ -18,6 +21,9 @@ export const GET_QUESTIONS = gql`
             examIds: $examIds
             years: $years
             limit: $limit
+            answeredByUser: $answeredByUser
+            notAnsweredByUser: $notAnsweredByUser
+            isCommentedByExpert: $isCommentedByExpert
         ) {
             count
             data {

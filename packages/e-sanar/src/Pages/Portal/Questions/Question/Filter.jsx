@@ -7,12 +7,16 @@ import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
 import { useQuestionsContext } from '../Context'
+import { useAuthContext } from 'Hooks/auth'
 import SANQuestionsFilterSelects from '../Filter/Selects'
 import { makeFilter } from '../Filter'
 import SANSubheader from './Subheader'
 
 const SANQuestionDetailsPage = ({ form, history }) => {
     const { t } = useTranslation('esanar')
+    const {
+        me: { id }
+    } = useAuthContext()
     const { filter, setFilter, setFormState } = useQuestionsContext()
 
     const handleSubmit = e => {
@@ -20,7 +24,7 @@ const SANQuestionDetailsPage = ({ form, history }) => {
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 setFormState(values)
-                const newFilters = makeFilter(values)
+                const newFilters = makeFilter(values, id)
                 if (
                     Object.keys(newFilters).length &&
                     JSON.stringify(filter) !== JSON.stringify(newFilters)
