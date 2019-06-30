@@ -53,7 +53,7 @@ const SANCourseModules = ({ history }) => {
     const { t } = useTranslation('esanar')
     const { getEnrollment } = useAuthContext()
     const [current, setCurrent] = useState(1)
-    const [pageSize] = useState(10)
+    const [pageSize] = useState(12)
 
     const {
         course: { id: courseId },
