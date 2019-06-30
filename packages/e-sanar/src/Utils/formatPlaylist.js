@@ -4,6 +4,17 @@ export const formatPlaylist = arr => {
     const ordered = sortBy(prop('index'), arr)
 
     return ordered
+        .map(level => {
+            if (
+                level.resource_type === 'Quiz' &&
+                !level.quiz.questionItems.data.length
+            ) {
+                return null
+            } else {
+                return level
+            }
+        })
+        .filter(level => level && level)
         .map((level, index) => ({
             ...level,
             ...(ordered[index + 1] &&
