@@ -8,9 +8,11 @@ import ESQuestion from 'sanar-ui/dist/Components/Molecules/Question'
 
 import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
+import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
 import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
+import { useApolloContext } from 'Hooks/apollo'
 import { useAuthContext } from 'Hooks/auth'
 import SANQuizSubheader from './Subheader'
 import SANQuizFinalizedMock from './FinalizedMock'
@@ -18,7 +20,8 @@ import SANQuizFinalizedQuiz from './FinalizedQuiz'
 
 const SANQuiz = ({
     quiz: {
-        questionItems: { data }
+        questionItems: { data },
+        id: resourceId
     },
     mock,
     bookmarked,
@@ -26,7 +29,8 @@ const SANQuiz = ({
     stopwatchRef
 }) => {
     // const stopwatchRef = useRef()
-    const { me } = useAuthContext()
+    const client = useApolloContext()
+    const { me, getEnrollment } = useAuthContext()
     const { width } = useWindowSize()
     const [isFull, setIsFull] = useState(width <= 992)
     const [responses, setResponses] = useState([])
@@ -39,6 +43,20 @@ const SANQuiz = ({
         skipped: 0,
         total: 0
     })
+
+    const { id: enrollmentId } = getEnrollment()
+
+    const handleProgress = percentage => {
+        client.mutate({
+            mutation: CREATE_PROGRESS,
+            variables: {
+                percentage,
+                enrollmentId,
+                resourceId,
+                resourceType: 'Quiz'
+            }
+        })
+    }
 
     const handleConfirm = mutation => alternative => {
         setSelect(alternative)
@@ -131,6 +149,8 @@ const SANQuiz = ({
                 defaultSelected: selected
             }
         ])
+
+        handleProgress((1 * 100) / questions.length)
     }
 
     useEffect(() => {

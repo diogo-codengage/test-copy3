@@ -23,20 +23,9 @@ const SANClassroomMock = () => {
     const {
         handleBookmark,
         bookmarked,
-        handleProgress,
         openMenu,
         stopwatchRef
     } = useClassroomContext()
-
-    useEffect(() => {
-        if (currentResource) {
-            handleProgress({
-                percentage: 100,
-                resourceId: currentResource.quiz.id
-            })
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentResource.video])
 
     return (
         <div className='classroom__mock'>
