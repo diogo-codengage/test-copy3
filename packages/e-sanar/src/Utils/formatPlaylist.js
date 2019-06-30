@@ -3,7 +3,7 @@ import { sortBy, prop } from 'ramda'
 export const formatPlaylist = arr => {
     const ordered = sortBy(prop('index'), arr)
 
-    return ordered
+    const noEmpty = ordered
         .map(level => {
             if (
                 level.resource_type === 'Quiz' &&
@@ -15,19 +15,21 @@ export const formatPlaylist = arr => {
             }
         })
         .filter(level => level && level)
+
+    return noEmpty
         .map((level, index) => ({
             ...level,
-            ...(ordered[index + 1] &&
-                ordered[index + 1]['resource_type'] === 'Quiz' && {
-                    quiz: ordered[index + 1].quiz
+            ...(noEmpty[index + 1] &&
+                noEmpty[index + 1]['resource_type'] === 'Quiz' && {
+                    quiz: noEmpty[index + 1].quiz
                 })
         }))
         .filter((level, index) => {
             if (
                 level['resource_type'] === 'Quiz' &&
-                ordered[index - 1] &&
-                ordered[index - 1]['resource_type'] === 'Video' &&
-                index < ordered.length
+                noEmpty[index - 1] &&
+                noEmpty[index - 1]['resource_type'] === 'Video' &&
+                index < noEmpty.length
             ) {
                 return null
             }
