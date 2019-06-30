@@ -109,15 +109,29 @@ const SANClassPlaylist = ({ history }) => {
 
     const progressTest = ({ level_contents: { data: lessons } }) => {
         if (!currentModule) return 0
+        let counter = 0
 
-        let count = lessons.reduce((accumulator, currentValue, index, arr) => {
-            if (!getResource(currentValue).progress) return accumulator
+        const count = lessons.reduce(
+            (accumulator, currentValue, index, arr) => {
+                const resource = getResource(currentValue)
+                if (!resource.progress) return accumulator
 
-            return (accumulator += getResource(currentValue).progress
-                .percentage)
-        }, 0)
+                if (
+                    currentValue.resource_type === 'Video' &&
+                    currentValue.quiz
+                ) {
+                    counter += 2
+                    return (accumulator +=
+                        resource.progress.percentage +
+                        currentValue.quiz.progress.percentage)
+                }
 
-        return ((count / lessons.length) * 100) / 100
+                counter++
+                return (accumulator += resource.progress.percentage)
+            },
+            0
+        )
+        return ((count / counter) * 100) / 100
     }
 
     const goToResource = resource => {

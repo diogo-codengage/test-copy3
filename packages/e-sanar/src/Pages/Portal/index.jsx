@@ -23,6 +23,7 @@ const SANPortalRoutes = ({ match: { url } }) => {
 
     useEffect(() => {
         return () => client.cache.reset()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
