@@ -15,6 +15,7 @@ const ESCardNextLive = ({ className, title, date, actions, ...props }) => {
                     className='es-card-next-live__title mb-xs'
                     variant='body2'
                     strong
+                    ellipsis={{ rows: 2 }}
                 >
                     {title}
                 </ESTypography>

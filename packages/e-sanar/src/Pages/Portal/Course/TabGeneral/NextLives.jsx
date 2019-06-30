@@ -73,7 +73,7 @@ const SANNextLives = () => {
     return (
         <SANPortalPagesContainer className='next-lives'>
             <ESTypography strong className='next-lives__title fc-grey-8'>
-                {t('courseDetails.nextLivesTitle')}
+                {t('courseDetails.othersLivesTitle')}
             </ESTypography>
             {lives.length ? (
                 <ESNextLives>{lives.map(renderLive)}</ESNextLives>

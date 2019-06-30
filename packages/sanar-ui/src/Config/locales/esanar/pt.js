@@ -156,7 +156,7 @@ export default {
         livesTitle: 'Lives',
         livesSubtitle:
             'Veja as lives que ainda vão acontecer e as que já rolaram',
-        nextLivesTitle: 'Próximas lives',
+        othersLivesTitle: 'Outras lives',
         remembered: 'Lembrado',
         remember: 'Lembrar',
         viewLive: 'Ver live',
