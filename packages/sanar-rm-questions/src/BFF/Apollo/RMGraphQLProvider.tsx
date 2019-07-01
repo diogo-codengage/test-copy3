@@ -27,7 +27,7 @@ export const apolloClient = new ApolloClient({
     request: async operation => {
         operation.setContext({
             headers: {
-                Authorization: await getUserToken()
+                Authorization: 'vfNk0q77CVMOApMqOaOaGD6OrT9huzArKbOqzfTd2AYHTyZM2dGroVDbDdQOHaJv'
             }
         })
     }
