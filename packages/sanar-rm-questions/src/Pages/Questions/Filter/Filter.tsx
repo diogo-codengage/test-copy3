@@ -22,6 +22,11 @@ export const Filter: React.FC = () => {
         setSelectedSpecialties: (specialities: Speciality[]) => {
             ctx.setSelectedSpecialties(specialities)
             ctx.setAllSubSpecialties( specialities.flatMap(s => s.children) )
+            if(ctx.selectedSubSpecialties.length > 0 && specialities.length > 0){
+                ctx.setSelectedSubSpecialties( ctx.selectedSubSpecialties.filter( ss => {
+                    return specialities.flatMap(s => s.children).map(s => s.value).includes(ss.value);
+                }))
+            }
             clearQuestions()
         },
         setSelectedSubSpecialties: v => {

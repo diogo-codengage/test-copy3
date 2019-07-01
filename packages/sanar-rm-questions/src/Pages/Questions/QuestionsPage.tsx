@@ -96,6 +96,8 @@ export const QuestionsPage = (props: IProps) => {
             .then(function({ data }) {
                 setQuestionsRequests(questionsRequests + 1)
                 return pushQuestions(data.questions.data, clearOld)
+            }).catch((e) => {
+                return false;
             })
     }
 
@@ -149,7 +151,7 @@ export const QuestionsPage = (props: IProps) => {
     }
 
     const pushQuestions = (moreQuestions, clearOld) => {
-        if(questions.length > 1){
+        if(!clearOld && questions.length > 1){
             return;
         }
         let _questions = []
@@ -161,7 +163,7 @@ export const QuestionsPage = (props: IProps) => {
 
         setQuestions(_questions)
 
-        return Promise.resolve(_questions.length > 0)
+        return Promise.resolve(moreQuestions.length > 0)
     }
 
     const value: IQuestionsContext = {
