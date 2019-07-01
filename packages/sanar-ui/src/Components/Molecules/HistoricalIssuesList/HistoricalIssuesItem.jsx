@@ -7,13 +7,23 @@ import editSvg from '../../../assets/images/historical-issues/edit.svg'
 
 import ESTypography from '../../Atoms/Typography'
 
-const ESHistoricalIssuesItem = ({ className, title, subtitle, image }) => {
+const ESHistoricalIssuesItem = ({
+    className,
+    title,
+    subtitle,
+    image,
+    ...props
+}) => {
     const classes = classNames('es-historical-issues-item', className)
     return (
-        <div className={classes}>
-            <img
+        <div className={classes} {...props}>
+            <div
                 className='es-historical-issues-item__img'
-                src={image ? image : historicalIssuesSvg}
+                style={{
+                    backgroundImage: `url(${
+                        image ? image : historicalIssuesSvg
+                    })`
+                }}
             />
             <div className='es-historical-issues-item__content'>
                 <ESTypography

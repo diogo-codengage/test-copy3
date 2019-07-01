@@ -32,11 +32,18 @@ const SANQuestionsHistoric = () => {
         }
     }
 
+    const getImage = images => {
+        if (images && images.data && images.data.length) {
+            return images.data[0].sizedImages.small.url
+        }
+    }
+
     const renderItem = answer => (
         <ESHistoricalIssuesItem
             key={answer.id}
             title={answer.question.statement}
             subtitle={getSubtitle(answer)}
+            image={getImage(answer.question.images)}
         />
     )
 
