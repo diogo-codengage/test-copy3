@@ -12,10 +12,10 @@ const getGraphqlUri = () => {
     switch(true) {
         case isLocalhost():
             return local;
-        case isProdEnvironment():
-            return prod;
         case isDevEnvironment():
             return local; // TODO: fix this, change to dev
+        case isProdEnvironment():
+            return prod;
         default:
             return prod;
     }
