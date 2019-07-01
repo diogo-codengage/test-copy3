@@ -14,9 +14,9 @@ const getGraphqlUri = () => {
         case isDevEnvironment():
             return local; // TODO: fix this, change to dev
         case isProdEnvironment():
-            return prod;
+            return local;
         default:
-            return prod;
+            return local;
     }
 }
 
