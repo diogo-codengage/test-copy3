@@ -134,12 +134,12 @@ export const QuestionsHeader = () => {
         </ESModal>
 
         <ESModal
-            title={'Opps'}
+            title={'Opa'}
             visible={showModalNoQuestionsForFilter}
             centered={'Centered'}
             onCancel={() => () => setShowModalNoQuestionsForFilter(false) }
         >
-            <p>Opps, não existem questões para o filtro atual.</p>
+            <p>Opa, não existem questões para o filtro atual.</p>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <ESButton
