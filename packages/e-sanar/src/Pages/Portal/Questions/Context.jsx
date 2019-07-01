@@ -18,7 +18,7 @@ const Context = createContext()
 
 export const useQuestionsContext = () => useContext(Context)
 
-const QuestionsProvider = ({ children, location: { pathname } }) => {
+const QuestionsProvider = ({ children, location: { pathname }, history }) => {
     const client = useApolloContext()
     const [limit] = useState(20)
     const [firstLoad, setFirstLoad] = useState(false)
@@ -34,6 +34,7 @@ const QuestionsProvider = ({ children, location: { pathname } }) => {
     const [correctQuestions, setCorrectQuestions] = useState(0)
     const [totalQuestions, setTotalQuestions] = useState(0)
     const [currentIndex, setCurrentIndex] = useState(1)
+    const [loadedItems, setLoadedItems] = useState(0)
 
     const totalAnsweredQuestions = useMemo(
         () => skippedQuestions + wrongQuestions + correctQuestions,
@@ -78,7 +79,7 @@ const QuestionsProvider = ({ children, location: { pathname } }) => {
         }
     }
 
-    const fetchQuestions = async (load, reset) => {
+    const fetchQuestions = async (load, reset, skip = 0) => {
         load && setFirstLoad(true)
         const {
             data: {
@@ -90,13 +91,19 @@ const QuestionsProvider = ({ children, location: { pathname } }) => {
             variables: {
                 ...filter,
                 courseIds: [course.id],
-                limit
+                limit,
+                skip: loadedItems
             }
         })
 
         if (reset) {
             setTotalQuestions(count)
             setQuestions(data)
+            setLoadedItems(data.length)
+        } else {
+            const aggregate = [...questions, ...data]
+            setLoadedItems(old => old + data.length)
+            setQuestions(aggregate)
         }
 
         setFirstLoad(false)
@@ -109,6 +116,20 @@ const QuestionsProvider = ({ children, location: { pathname } }) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter])
+
+    useEffect(() => {
+        const paths = pathname.split('/')
+        if (paths[paths.length - 1] === 'pratica') {
+            if (totalQuestions > currentIndex) {
+                if (questions.length <= 2) {
+                    fetchQuestions(false)
+                }
+            } else {
+                history.push('/aluno/banco-questoes/finalizado')
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [questions])
 
     const value = {
         filter,
@@ -131,7 +152,8 @@ const QuestionsProvider = ({ children, location: { pathname } }) => {
         reset,
         questions,
         setQuestions,
-        firstLoad
+        firstLoad,
+        fetchQuestions
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>
