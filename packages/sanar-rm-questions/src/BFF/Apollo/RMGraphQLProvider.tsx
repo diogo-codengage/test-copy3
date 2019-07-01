@@ -4,7 +4,7 @@ import { ApolloProvider } from 'react-apollo'
 import { isDevEnvironment, isLocalhost, isProdEnvironment } from '../../Util/environment'
 
 const getGraphqlUri = () => {
-    const prod = 'http://nlb-residencia-qa-aa2d4c0241e3f160.elb.us-east-1.amazonaws.com/graphql';
+    const prod = 'https://bff2.sanarresidenciamedica.com.br/graphql';
     // const dev = 'https://bff.sanarresidenciamedica.com.br/dev/graphql';
     //const prod = 'https://bff.sanarresidenciamedica.com.br/prod/graphql';
 
