@@ -134,7 +134,7 @@ export const QuestionsHeader = () => {
         </ESModal>
 
         <ESModal
-            title={'Opa'}
+            title={'Parece que algo deu errado'}
             visible={showModalNoQuestionsForFilter}
             centered={'Centered'}
             onCancel={() => () => setShowModalNoQuestionsForFilter(false) }
