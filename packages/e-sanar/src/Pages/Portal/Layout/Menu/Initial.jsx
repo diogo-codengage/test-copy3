@@ -6,33 +6,50 @@ import { useTranslation } from 'react-i18next'
 import {
     ESNavigationList,
     ESNavigationListItem,
+    ESRanking,
     ESLeftOff
 } from 'sanar-ui/dist/Components/Organisms/MainMenu'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 
 import { useAuthContext } from 'Hooks/auth'
+import { usePortalContext } from 'Pages/Portal/Context'
 import { getClassRoute } from 'Utils/getClassRoute'
 
 const intlPath = 'mainMenu.initial.'
 
 const SANInitial = ({ setTab, history }) => {
+    const { lastAccessed } = usePortalContext()
     const { getEnrollment } = useAuthContext()
     const { t } = useTranslation('esanar')
 
-    const { course, last_accessed } = getEnrollment()
+    const { course, ranking } = getEnrollment()
 
-    const moduleReference = `${t(
-        'global.subject'
-    )} ${last_accessed.module_order + 1}, ${t(
-        'global.activity'
-    )} ${last_accessed.resource_order + 1}`
+    const moduleReference = last =>
+        `${t('global.subject')} ${last.module_order + 1}, ${t(
+            'global.activity'
+        )} ${last.resource_order + 1}`
 
     const goClassroom = () =>
         history.push(
-            `/aluno/sala-aula/${last_accessed.module_id}/${getClassRoute(
-                last_accessed.resource_type
-            )}/${last_accessed.resource_id}`
+            `/aluno/sala-aula/${lastAccessed.module_id}/${getClassRoute(
+                lastAccessed.resource_type
+            )}/${lastAccessed.resource_id}`
         )
+
+    const leftProps = {
+        title: course.name,
+        ...(lastAccessed && {
+            classReference: lastAccessed.module_title,
+            thumbnail: lastAccessed.thumbnail,
+            moduleReference: moduleReference(lastAccessed),
+            onClick: goClassroom
+        })
+    }
+
+    const rankingProps = {
+        ranking: ranking.position,
+        score: ranking.points
+    }
 
     const renderNextContent = e => {
         setTab(Number(e.key))
@@ -40,14 +57,11 @@ const SANInitial = ({ setTab, history }) => {
 
     return (
         <>
+            <div className='pl-md pr-md mb-md'>
+                <ESRanking {...rankingProps} />
+            </div>
             <div className='pl-md pr-md'>
-                <ESLeftOff
-                    title={course.name}
-                    classReference={last_accessed.module_title}
-                    moduleReference={moduleReference}
-                    thumbnail={last_accessed.thumbnail}
-                    onClick={goClassroom}
-                />
+                <ESLeftOff {...leftProps} />
             </div>
             <ESNavigationList onClick={renderNextContent}>
                 <ESNavigationListItem

@@ -4,17 +4,17 @@ import { ApolloProvider } from 'react-apollo'
 import { isDevEnvironment, isLocalhost, isProdEnvironment } from '../../Util/environment'
 
 const getGraphqlUri = () => {
-    const prod = 'https://bff2.sanarresidenciamedica.com.br/graphql';
+    const local = 'https://bff2.sanarresidenciamedica.com.br/graphql';
     // const dev = 'https://bff.sanarresidenciamedica.com.br/dev/graphql';
     //const prod = 'https://bff.sanarresidenciamedica.com.br/prod/graphql';
 
     switch(true) {
         case isLocalhost():
-            return prod;
+            return local;
+        case isDevEnvironment():
+            return local; // TODO: fix this, change to dev
         case isProdEnvironment():
             return prod;
-        case isDevEnvironment():
-            return prod; // TODO: fix this, change to dev
         default:
             return prod;
     }

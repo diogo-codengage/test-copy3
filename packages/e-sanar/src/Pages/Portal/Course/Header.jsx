@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Query } from 'react-apollo'
+
 import { PageHeader as ANTPageHeader } from 'antd'
 import { SANPortalPagesContainer } from '../Layout'
 
@@ -11,13 +13,49 @@ import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 
 import { useTranslation } from 'react-i18next'
 import { useAuthContext } from 'Hooks/auth'
+import { GET_ENROLLMENT_PROGRESS } from 'Apollo/Me/enrollment-progress'
+
+const SANEnrollmentProgress = () => {
+    const { t } = useTranslation('esanar')
+    const { getEnrollment } = useAuthContext()
+
+    const { id: enrollmentId } = getEnrollment()
+
+    return (
+        <Query
+            query={GET_ENROLLMENT_PROGRESS}
+            fetchPolicy='cache-and-network'
+            variables={{ enrollmentId }}
+        >
+            {({ loading, error, data }) => {
+                if (error) return `Error! ${error.message}`
+
+                return (
+                    <ESProgressBar
+                        loading={loading}
+                        title={t('courseDetails.progressbarTitle')}
+                        percent={
+                            !loading
+                                ? Number(
+                                      data.enrollmentProgress.progress_percentage.toFixed(
+                                          0
+                                      )
+                                  )
+                                : 0
+                        }
+                    />
+                )
+            }}
+        </Query>
+    )
+}
 
 const SANCourseHeader = () => {
     const { t } = useTranslation('esanar')
 
     const { getEnrollment } = useAuthContext()
 
-    const { course, certificate, progress_percentage } = getEnrollment()
+    const { course, certificate } = getEnrollment()
 
     return (
         <ANTPageHeader className='header'>
@@ -67,12 +105,7 @@ const SANCourseHeader = () => {
                     >
                         <ESRow gutter={20} type='flex' justify='center'>
                             <ESCol xs={24} sm={16} md={14} lg={15}>
-                                <ESProgressBar
-                                    title={t('courseDetails.progressbarTitle')}
-                                    percent={Number(
-                                        progress_percentage.toFixed(0)
-                                    )}
-                                />
+                                <SANEnrollmentProgress />
                             </ESCol>
 
                             <ESTooltip

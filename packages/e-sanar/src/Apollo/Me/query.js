@@ -9,34 +9,21 @@ export const GET_ME = gql`
             enrollments {
                 id
                 contract
-                progress_percentage
+                ranking {
+                    position
+                    points
+                }
                 next_module {
                     id
                     name
                     slug
                     index
                     durantion
-                    cover_picture
+                    cover_picture_url
                     progress {
                         done
                         total
                     }
-                }
-                last_accessed {
-                    last_accessed_at
-                    resource_type
-                    module_id
-                    resource_id
-                    module_order
-                    resource_order
-                    module_title
-                    module_progress {
-                        done
-                        total
-                        status
-                    }
-                    thumbnail
-                    path
                 }
                 bookmarks {
                     data {

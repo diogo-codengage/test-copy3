@@ -9,7 +9,8 @@ export default {
         continue: 'Continuar',
         subject: 'Disciplina',
         activity: 'Aula',
-        confirm: 'Confirmar'
+        confirm: 'Confirmar',
+        failLoadLastAccessed: 'Erro ao carregar "Continuar onde parei".'
     },
     auth: {
         accessAccount: 'Acessar conta',
@@ -155,7 +156,7 @@ export default {
         livesTitle: 'Lives',
         livesSubtitle:
             'Veja as lives que ainda vão acontecer e as que já rolaram',
-        nextLivesTitle: 'Próximas lives',
+        othersLivesTitle: 'Outras lives',
         remembered: 'Lembrado',
         remember: 'Lembrar',
         viewLive: 'Ver live',

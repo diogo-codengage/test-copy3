@@ -134,7 +134,7 @@ const ESQuestion = ({
             index={index}
             striped={striped[index]}
             handleStripe={handleStripe(index, alternative.id)}
-            percent={getPercent(alternative.id)}
+            percent={!skipSeeAnswer ? getPercent(alternative.id) : undefined}
             onSelect={handleSelect(index)}
             status={verifyStatus(alternative.id, answer)}
         />

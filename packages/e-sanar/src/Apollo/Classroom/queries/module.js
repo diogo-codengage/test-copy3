@@ -8,7 +8,7 @@ export const GET_MODULE = gql`
             slug
             index
             durantion
-            cover_picture
+            cover_picture_url
             progress {
                 done
                 total
@@ -29,12 +29,10 @@ export const GET_MODULE = gql`
                             timeInSeconds
                         }
                         thumbnails {
-                            small {
-                                url
-                            }
-                            medium {
-                                url
-                            }
+                            small
+                            medium
+                            large
+                            original
                         }
                         providers {
                             data {

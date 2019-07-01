@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
+
 import ESCard from '../Card'
 import ESProgress from '../../Atoms/Progress'
 import ESTypography from '../../Atoms/Typography'
@@ -8,6 +9,7 @@ import ESButton from '../../Atoms/Button'
 import { ESRow, ESCol } from '../../Atoms/Grid'
 import ESEvaIcon from '../../Atoms/EvaIcon/EvaIcon'
 import ESCommonBadge from '../../Atoms/CommonBadge'
+import ESSkeleton from '../../Atoms/Skeleton'
 
 const ESCardCourseModule = ({
     className,
@@ -45,10 +47,17 @@ const ESCardCourseModule = ({
             <>
                 <div className='es-car-course-module__content'>
                     <div className='es-car-course-module__content__module-data'>
-                        <ESTypography variant='overline' className='mb-xs'>
-                            {moduleName}
-                        </ESTypography>
-                        <ESTypography strong>{title}</ESTypography>
+                        <ESSkeleton
+                            loading={!title}
+                            paragraph={{ rows: 2 }}
+                            title={false}
+                            dark
+                        >
+                            <ESTypography variant='overline' className='mb-xs'>
+                                {moduleName}
+                            </ESTypography>
+                            <ESTypography strong>{title}</ESTypography>
+                        </ESSkeleton>
                     </div>
                     <div className='es-car-course-module__content__image-container'>
                         <div
@@ -56,7 +65,7 @@ const ESCardCourseModule = ({
                             style={{ backgroundImage: `url(${image})` }}
                         />
                     </div>
-                    {!disabled && (
+                    {!disabled && badge && (
                         <ESCommonBadge
                             className='es-car-course-module__content__badge'
                             status='warning'
@@ -71,12 +80,14 @@ const ESCardCourseModule = ({
                     />
                 </div>
                 <ESRow type='flex' align='middle' justify='space-between'>
-                    <ESCol>
-                        <ESTypography variant='caption' muted>
-                            {moduleTime}
-                        </ESTypography>
-                    </ESCol>
-                    <ESCol>{renderBasedOnDisabled(disabled)}</ESCol>
+                    <ESSkeleton loading={!moduleTime} paragraph={false}>
+                        <ESCol>
+                            <ESTypography variant='caption' muted>
+                                {moduleTime}
+                            </ESTypography>
+                        </ESCol>
+                        <ESCol>{renderBasedOnDisabled(disabled)}</ESCol>
+                    </ESSkeleton>
                 </ESRow>
             </>
         </ESCard>

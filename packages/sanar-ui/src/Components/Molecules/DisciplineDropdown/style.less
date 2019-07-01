@@ -1,7 +1,13 @@
 .es-discipline-dropdown {
+    position: relative;
+
     .ant-progress-text {
         font-weight: normal;
         font-size: 1.5em;
+    }
+
+    .ant-dropdown {
+        width: 100%;
     }
 
     &--loading {
@@ -38,7 +44,10 @@
             background: @white-1-solid;
             border-radius: @border-radius-base;
             border: 1px solid @white-3;
-            width: ~'calc(100vw - 32px)' !important;
+            height: 35vh;
+            max-height: 500px;
+            overflow-y: auto;
+            overflow-x: hidden;
 
             .es-typography {
                 color: @white-6;
@@ -91,6 +100,6 @@
     }
 
     @media (min-width: 1025px) {
-        max-width: 272px;
+        // max-width: 272px;
     }
 }

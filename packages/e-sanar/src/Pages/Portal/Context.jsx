@@ -7,8 +7,13 @@ import React, {
 } from 'react'
 
 import { withRouter } from 'react-router-dom'
+import { message } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 import { getClassRoute } from 'Utils/getClassRoute'
+import { useApolloContext } from 'Hooks/apollo'
+import { useAuthContext } from 'Hooks/auth'
+import { GET_LAST_ACCESSED } from 'Apollo/Me/last-accessed'
 
 const Context = createContext()
 
@@ -21,7 +26,7 @@ const initialState = {
     currentModule: null
 }
 
-function reducer(state, action) {
+const reducer = (state, action) => {
     switch (action.type) {
         case 'loading':
             return { ...state, loading: true }
@@ -35,13 +40,60 @@ function reducer(state, action) {
 }
 
 const PortalProvider = ({ children, history }) => {
+    const client = useApolloContext()
+    const { t } = useTranslation('esanar')
+    const { getEnrollment } = useAuthContext()
     const [prevResource, setPrevResource] = useState(null)
     const [currentResource, setCurrentResource] = useState(null)
     const [nextResource, setNextResource] = useState(null)
+    const [lastAccessed, setLastAccessed] = useState(null)
 
     const [state, dispatch] = useReducer(reducer, initialState)
 
+    const { id: enrollmentId } = getEnrollment()
+
     const getResource = item => item[item.resource_type.toLowerCase()]
+
+    const onNavigation = dir => () => {
+        if (dir === 'prev' && prevResource) {
+            setCurrentResource(prevResource)
+            goClassroom(prevResource)
+        } else if (nextResource) {
+            setCurrentResource(nextResource)
+            goClassroom(nextResource)
+        }
+    }
+
+    const goClassroom = resource => {
+        const type = getClassRoute(resource.resource_type)
+        const resourceId = getResource(resource).id
+        history.push(
+            `/aluno/sala-aula/${state.currentModule.id}/${type}/${resourceId}`
+        )
+    }
+
+    const fetchLastAccessed = async () => {
+        try {
+            const {
+                data: { lastAccessed }
+            } = await client.query({
+                query: GET_LAST_ACCESSED,
+                fetchPolicy: 'network-only',
+                variables: {
+                    enrollmentId
+                }
+            })
+            setLastAccessed(lastAccessed)
+        } catch (error) {
+            console.error(error)
+            message.error(t('global.failLoadLastAccessed'))
+        }
+    }
+
+    useEffect(() => {
+        fetchLastAccessed()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [enrollmentId])
 
     useEffect(() => {
         if (currentResource && state.currentModule) {
@@ -71,24 +123,6 @@ const PortalProvider = ({ children, history }) => {
         }
     }, [currentResource, state.currentModule])
 
-    const onNavigation = dir => () => {
-        if (dir === 'prev' && prevResource) {
-            setCurrentResource(prevResource)
-            goClassroom(prevResource)
-        } else if (nextResource) {
-            setCurrentResource(nextResource)
-            goClassroom(nextResource)
-        }
-    }
-
-    const goClassroom = resource => {
-        const type = getClassRoute(resource.resource_type)
-        const resourceId = getResource(nextResource).id
-        history.push(
-            `/aluno/sala-aula/${state.currentModule.id}/${type}/${resourceId}`
-        )
-    }
-
     const value = {
         getResource,
         currentResource,
@@ -99,7 +133,9 @@ const PortalProvider = ({ children, history }) => {
         setNextResource,
         onNavigation,
         state,
-        dispatch
+        dispatch,
+        lastAccessed,
+        fetchLastAccessed
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

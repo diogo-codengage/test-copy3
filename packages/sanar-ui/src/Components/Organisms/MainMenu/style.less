@@ -1,4 +1,5 @@
 @import './LeftOff/style.less';
+@import './Ranking/style.less';
 @import './NavigationList/style.less';
 @import './Avatar/style.less';
 @import './Notification/style.less';
@@ -77,8 +78,11 @@
 
         // Sempre que não houver espaço deixará "scrollavel", mesmo em desktop.
         &--scrollable {
-            max-height: ~'calc(100% - 135px)';
-            overflow-y: auto;
+            height: ~'calc(100% - 128px)';
+
+            &--element {
+                height: ~'calc(100% - 100px)';
+            }
         }
 
         &.open {

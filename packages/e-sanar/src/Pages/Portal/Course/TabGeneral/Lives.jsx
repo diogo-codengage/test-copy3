@@ -5,6 +5,7 @@ import { format } from 'date-fns'
 
 import ESLiveSection from 'sanar-ui/dist/Components/Molecules/LiveSection'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
+import ESEmpty from 'sanar-ui/dist/Components/Atoms/Empty'
 
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 import { useAuthContext } from 'Hooks/auth'
@@ -19,9 +20,10 @@ const SANLives = () => {
 
     const live = lives[0]
 
-    const date = format(live.release_date, 'DD/MM/YYYY')
+    const date = live && format(live.release_date, 'DD/MM/YYYY')
 
-    const link = `https://www.youtube.com/embed/${live.link.split('=')[1]}`
+    const link =
+        live && `https://www.youtube.com/embed/${live.link.split('=')[1]}`
 
     return (
         <SANPortalPagesContainer className='lives mt-lg'>
@@ -29,28 +31,32 @@ const SANLives = () => {
                 title={t('courseDetails.livesTitle')}
                 subtitle={t('courseDetails.livesSubtitle')}
             />
-            <ESLiveSection
-                status={live.status}
-                videoSrc={link}
-                description={live.description}
-                title={live.title}
-                date={date}
-                linkedin={live.professors[0].linkedin}
-                avatar={live.professors[0].profile_picture}
-                name={live.professors[0].name}
-                formation={live.professors[0].resume}
-                //FIXME: action={
-                //     <ESButton
-                //         size='xsmall'
-                //         block
-                //         bold
-                //         uppercase
-                //         variant='outlined'
-                //     >
-                //         {t('courseDetails.seePreviousLives')}
-                //     </ESButton>
-                // }
-            />
+            {live ? (
+                <ESLiveSection
+                    status={live.status}
+                    videoSrc={link}
+                    description={live.description}
+                    title={live.title}
+                    date={date}
+                    linkedin={live.professors[0].linkedin}
+                    avatar={live.professors[0].profile_picture}
+                    name={live.professors[0].name}
+                    formation={live.professors[0].resume}
+                    //FIXME: action={
+                    //     <ESButton
+                    //         size='xsmall'
+                    //         block
+                    //         bold
+                    //         uppercase
+                    //         variant='outlined'
+                    //     >
+                    //         {t('courseDetails.seePreviousLives')}
+                    //     </ESButton>
+                    // }
+                />
+            ) : (
+                <ESEmpty />
+            )}
             <ANTDivider />
         </SANPortalPagesContainer>
     )

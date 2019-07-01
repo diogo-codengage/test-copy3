@@ -32,6 +32,21 @@ const SANQuestionsHistoric = () => {
         }
     }
 
+    const getImage = images => {
+        if (images && images.data && images.data.length) {
+            return images.data[0].sizedImages.small.url
+        }
+    }
+
+    const renderItem = answer => (
+        <ESHistoricalIssuesItem
+            key={answer.id}
+            title={answer.question.statement}
+            subtitle={getSubtitle(answer)}
+            image={getImage(answer.question.images)}
+        />
+    )
+
     return (
         <Query
             query={GET_HISTORIC_QUESTIONS}
@@ -56,27 +71,18 @@ const SANQuestionsHistoric = () => {
                                 {data.length ? (
                                     <>
                                         <ESHistoricalIssuesList>
-                                            {data.map(answer => (
-                                                <ESHistoricalIssuesItem
-                                                    key={answer.id}
-                                                    title={
-                                                        answer.question
-                                                            .statement
-                                                    }
-                                                    subtitle={getSubtitle(
-                                                        answer
-                                                    )}
-                                                />
-                                            ))}
+                                            {data.map(renderItem)}
                                         </ESHistoricalIssuesList>
-                                        <div className='d-flex justify-content-center'>
-                                            <ESPagination
-                                                total={count}
-                                                current={current}
-                                                onChange={setCurrent}
-                                                className='pb-lg mt-xl'
-                                            />
-                                        </div>
+                                        {count > pageSize && (
+                                            <div className='d-flex justify-content-center'>
+                                                <ESPagination
+                                                    total={count}
+                                                    current={current}
+                                                    onChange={setCurrent}
+                                                    className='pb-lg mt-xl'
+                                                />
+                                            </div>
+                                        )}
                                     </>
                                 ) : (
                                     <ESEmpty

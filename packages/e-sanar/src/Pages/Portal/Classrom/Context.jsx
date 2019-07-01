@@ -26,10 +26,16 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         getResource,
         currentModule,
         currentResource,
-        dispatch
+        dispatch,
+        fetchLastAccessed
     } = usePortalContext()
 
-    const { setMenuTab, setDarkMode, setOpenMenu } = useLayoutContext()
+    const {
+        setMenuTab,
+        setDarkMode,
+        setOpenMenu,
+        stopwatchRef
+    } = useLayoutContext()
     const { getEnrollment, me } = useAuthContext()
 
     const { id: enrollmentId } = getEnrollment()
@@ -94,6 +100,11 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         return () => {
             setDarkMode(false)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        return fetchLastAccessed
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -171,7 +182,8 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         handleBookmark,
         bookmarked,
         handleProgress,
-        openMenu
+        openMenu,
+        stopwatchRef
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

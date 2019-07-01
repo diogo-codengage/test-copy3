@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import { append } from 'ramda'
@@ -8,9 +8,11 @@ import ESQuestion from 'sanar-ui/dist/Components/Molecules/Question'
 
 import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
+import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
 import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
+import { useApolloContext } from 'Hooks/apollo'
 import { useAuthContext } from 'Hooks/auth'
 import SANQuizSubheader from './Subheader'
 import SANQuizFinalizedMock from './FinalizedMock'
@@ -18,14 +20,17 @@ import SANQuizFinalizedQuiz from './FinalizedQuiz'
 
 const SANQuiz = ({
     quiz: {
-        questionItems: { data }
+        questionItems: { data },
+        id: resourceId
     },
     mock,
     bookmarked,
-    handleBookmark
+    handleBookmark,
+    stopwatchRef
 }) => {
-    const stopwatchRef = useRef()
-    const { me } = useAuthContext()
+    // const stopwatchRef = useRef()
+    const client = useApolloContext()
+    const { me, getEnrollment } = useAuthContext()
     const { width } = useWindowSize()
     const [isFull, setIsFull] = useState(width <= 992)
     const [responses, setResponses] = useState([])
@@ -38,6 +43,20 @@ const SANQuiz = ({
         skipped: 0,
         total: 0
     })
+
+    const { id: enrollmentId } = getEnrollment()
+
+    const handleProgress = percentage => {
+        client.mutate({
+            mutation: CREATE_PROGRESS,
+            variables: {
+                percentage,
+                enrollmentId,
+                resourceId,
+                resourceType: 'Quiz'
+            }
+        })
+    }
 
     const handleConfirm = mutation => alternative => {
         setSelect(alternative)
@@ -130,14 +149,16 @@ const SANQuiz = ({
                 defaultSelected: selected
             }
         ])
+
+        handleProgress((1 * 100) / questions.length)
     }
 
     useEffect(() => {
-        if (stopwatchRef.current) {
+        if (stopwatchRef && stopwatchRef.current) {
             stopwatchRef.current.start()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [stopwatchRef.current, data])
+    }, [stopwatchRef, data])
 
     useEffect(() => {
         setIsFull(width <= 992)
@@ -162,8 +183,12 @@ const SANQuiz = ({
     ])
 
     const time = useMemo(
-        () => isFinish && stopwatchRef.current && stopwatchRef.current.time(),
-        [isFinish]
+        () =>
+            isFinish &&
+            stopwatchRef &&
+            stopwatchRef.current &&
+            stopwatchRef.current.time(),
+        [isFinish, stopwatchRef]
     )
 
     return (
@@ -202,7 +227,6 @@ const SANQuiz = ({
                                     loading={loadingMutation}
                                     isHistoric={isFinish}
                                     skipSeeAnswer={mock && !isFinish}
-                                    onlyStep={mock && !isFinish}
                                     {...responses[index]}
                                     propsNext={{
                                         disabled: index === questions.length - 1

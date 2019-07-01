@@ -73,10 +73,13 @@ const SANClassroomVideo = () => {
         })
     }
 
-    const onProgress = percentage => {
+    const onProgress = (percentage = 0) => {
         const videoPercentage =
-            currentResource && currentResource.video.progress.percentage
-        if (!videoError && percentage !== videoPercentage) {
+            (currentResource &&
+                currentResource.video.progress &&
+                currentResource.video.progress.percentage) ||
+            0
+        if (!videoError && percentage !== videoPercentage && videoReady) {
             const timeInSeconds = playerRef && playerRef.current.position()
             handleProgress({
                 timeInSeconds: parseInt(timeInSeconds),
@@ -105,6 +108,7 @@ const SANClassroomVideo = () => {
                     data: { rating }
                 } = await client.query({
                     query: GET_RATING,
+                    fetchPolicy: 'network-only',
                     variables: {
                         resourceId: currentResource.video.id,
                         userId
@@ -128,7 +132,7 @@ const SANClassroomVideo = () => {
             setPlaylistVideo([
                 {
                     ...(playler && { file: playler.files.smil.url }),
-                    image: currentResource.video.thumbnails.medium.url
+                    image: currentResource.video.thumbnails.large
                 }
             ])
             currentResource.quiz &&
@@ -148,7 +152,7 @@ const SANClassroomVideo = () => {
                 playerRef.current.seek(seconds > 10 ? seconds - 10 : seconds)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentResource, playerRef.current, videoReady])
+    }, [currentResource, playerRef, videoReady])
 
     return (
         <div
@@ -167,9 +171,9 @@ const SANClassroomVideo = () => {
                     licenseKey={process.env.REACT_APP_JWPLAYER}
                     isMuted={false}
                     title={currentResource.video.title}
-                    subtitle={`${t('global.subject')} 3, ${t(
-                        'global.activity'
-                    )} ${currentResource.index + 1}`}
+                    subtitle={`${t('global.subject')} ${currentModule.index +
+                        1}, ${t('global.activity')} ${currentResource.index +
+                        1}`}
                     rate={{
                         value: rate,
                         onChange: debounceRate
@@ -181,6 +185,7 @@ const SANClassroomVideo = () => {
                     onFiftyPercent={() => debounceProgress(50)}
                     onSeventyFivePercent={() => debounceProgress(75)}
                     onOneHundredPercent={() => debounceProgress(100)}
+                    onFirstFrame={() => debounceProgress(1)}
                 />
                 {currentResource.quiz && (
                     <div className='classroom__video-container--buttons'>
