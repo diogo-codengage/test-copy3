@@ -19,7 +19,7 @@ const getGraphqlUri = () => {
         default:
             return prod;
     }
-}O
+}
 
 export const apolloClient = new ApolloClient({
     uri: getGraphqlUri(),
