@@ -10,6 +10,8 @@ export default {
         subject: 'Disciplina',
         activity: 'Aula',
         confirm: 'Confirmar',
+        yes: 'Sim',
+        no: 'Não',
         failLoadLastAccessed: 'Erro ao carregar "Continuar onde parei".'
     },
     auth: {
@@ -242,7 +244,11 @@ export default {
             saveQuestion: 'Salvar questão',
             seeFilters: 'Ver filtros',
             empty:
-                'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos'
+                'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos',
+            goOut: {
+                title: 'Ops! Você está saindo da prática.',
+                subtitle: 'Deseja realmente encerrar a prática?'
+            }
         },
         historic: {
             title: 'Histórico de questões',

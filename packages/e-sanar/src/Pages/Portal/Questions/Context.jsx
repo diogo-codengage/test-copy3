@@ -111,9 +111,7 @@ const QuestionsProvider = ({ children, location: { pathname }, history }) => {
 
     useEffect(() => {
         const paths = pathname.split('/')
-        if (paths[paths.length - 1] === 'pratica') {
-            fetchQuestions(true, true)
-        }
+        paths[paths.length - 1] === 'pratica' && fetchQuestions(true, true)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filter])
 
@@ -121,10 +119,8 @@ const QuestionsProvider = ({ children, location: { pathname }, history }) => {
         const paths = pathname.split('/')
         if (paths[paths.length - 1] === 'pratica') {
             if (totalQuestions > currentIndex) {
-                if (questions.length <= 2) {
-                    fetchQuestions(false)
-                }
-            } else {
+                questions.length <= 2 && fetchQuestions(false)
+            } else if (totalQuestions > 0 && currentIndex > 0) {
                 history.push('/aluno/banco-questoes/finalizado')
             }
         }
