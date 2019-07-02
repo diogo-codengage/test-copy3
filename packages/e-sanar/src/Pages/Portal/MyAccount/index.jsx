@@ -7,24 +7,38 @@ import SANMyAccountHelpCenter from './HelpCenter'
 
 
 const SANMyAccountPage = ({ match: { url } }) => {
-    return (
-        <div className='my-account-page'>
-            <Switch>
-                <Route
-                    path={`${url}/central-ajuda`}
-                    component={SANMyAccountHelpCenter}
-                />
-                <Route
-                    path={`${url}/alterar-senha`}
-                    component={SANMyAccountChangePassword}
-                />
-                <Route
-                    path={[`${url}/`, `${url}`]}
-                    render={() => <Redirect to={`${url}/alterar-senha`} />}
-                />
-            </Switch>
-        </div>
-    )
+    if(url.includes('central-ajuda') ){
+        return (
+            <div className='help-center'>
+                <Switch>
+                    <Route
+                        path={`${url}/central-ajuda`}
+                        component={SANMyAccountHelpCenter}
+                    />
+                    <Route
+                        path={[`${url}/`, `${url}`]}
+                        render={() => <Redirect to={`${url}/central-ajuda`} />}
+                    />
+                </Switch>
+            </div>
+        )
+    } else {
+        return (
+            <div className='my-account-page'>
+                <Switch>
+                    <Route
+                        path={`${url}/alterar-senha`}
+                        component={SANMyAccountChangePassword}
+                    />
+                    <Route
+                        path={[`${url}/`, `${url}`]}
+                        render={() => <Redirect to={`${url}/alterar-senha`} />}
+                    />
+                </Switch>
+            </div>
+        )
+    }
+    
 }
 
 export default SANMyAccountPage
