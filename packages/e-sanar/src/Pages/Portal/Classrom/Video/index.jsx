@@ -67,7 +67,6 @@ const SANClassroomVideo = () => {
             variables: {
                 resourceId: currentResource.video.id,
                 resourceType: currentResource.resource_type,
-                userId,
                 rating: { value, type: 'numeric' }
             }
         })

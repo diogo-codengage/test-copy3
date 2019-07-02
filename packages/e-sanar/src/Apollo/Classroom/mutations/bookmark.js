@@ -7,13 +7,14 @@ export const CREATE_BOOKMARK = gql`
         $userId: String!
     ) {
         createBookmarks(
-            input: {
-                resource_id: $resourceId
-                resource_type: $resourceType
-                owner_id: $userId
-            }
+            input: { resource_id: $resourceId, resource_type: $resourceType }
         ) {
-            status
+            bookmark {
+                id
+                resource_type
+                resource_id
+                owner_id
+            }
         }
     }
 `
