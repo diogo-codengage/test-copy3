@@ -6,7 +6,7 @@ import { isDevEnvironment, isLocalhost, isProdEnvironment } from '../../Util/env
 const getGraphqlUri = () => {
     const local = 'https://bff2.sanarresidenciamedica.com.br/graphql';
     // const dev = 'https://bff.sanarresidenciamedica.com.br/dev/graphql';
-    //const prod = 'https://bff.sanarresidenciamedica.com.br/prod/graphql';
+    const prod = 'https://bff.sanarresidenciamedica.com.br/prod/graphql';
 
     switch(true) {
         case isLocalhost():
