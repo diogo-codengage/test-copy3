@@ -59,6 +59,7 @@ export default {
     },
     mainMenu: {
         back: 'Voltar ao menu principal',
+        continueCourse: 'Continuar na Disciplina {{module}}, aula {{class}}',
         title: {
             menu: 'Menu',
             notifications: 'Notificações',
