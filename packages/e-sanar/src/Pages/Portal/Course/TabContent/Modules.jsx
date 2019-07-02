@@ -121,7 +121,7 @@ const SANCourseModules = ({ history }) => {
 
                             <ESSessionTitle
                                 title={`${count} ${t(
-                                    'courseDetails.tabContent.modules.title.key',
+                                    'courseDetails.tabContent.discipline.title.key',
                                     { count }
                                 )}`}
                                 //FIXME: extraOnLeft
@@ -157,7 +157,7 @@ const SANCourseModules = ({ history }) => {
                                         <ESCardCourseModule
                                             className='san-tab-course-content__continue--card'
                                             moduleName={`${t(
-                                                'courseDetails.tabContent.modules.module.key'
+                                                'courseDetails.tabContent.discipline.discipline.key'
                                             )} ${item.index + 1}`}
                                             title={item.name}
                                             badge={
