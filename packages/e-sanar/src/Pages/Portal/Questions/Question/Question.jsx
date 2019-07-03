@@ -63,16 +63,13 @@ const SANQuestionPage = ({ history }) => {
 
     const handleNext = (isCorrect, isJump) => {
         window.scrollTo(0, 0)
-        setCurrentIndex(oldIndex => ++oldIndex)
         const newQuestions = questions.slice(1)
 
         setQuestions(newQuestions)
+        setCurrentIndex(oldIndex => ++oldIndex)
+
         setResponse(initialState)
         startStopwatch()
-
-        if (!newQuestions.length) {
-            history.push('/aluno/banco-questoes/finalizado')
-        }
     }
 
     const callbackAnswer = ({

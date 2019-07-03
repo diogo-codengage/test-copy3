@@ -67,7 +67,6 @@ const SANClassroomVideo = () => {
             variables: {
                 resourceId: currentResource.video.id,
                 resourceType: currentResource.resource_type,
-                userId,
                 rating: { value, type: 'numeric' }
             }
         })
@@ -79,7 +78,8 @@ const SANClassroomVideo = () => {
                 currentResource.video.progress &&
                 currentResource.video.progress.percentage) ||
             0
-        if (!videoError && percentage !== videoPercentage && videoReady) {
+
+        if (!videoError && percentage > videoPercentage) {
             const timeInSeconds = playerRef && playerRef.current.position()
             handleProgress({
                 timeInSeconds: parseInt(timeInSeconds),

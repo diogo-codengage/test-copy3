@@ -10,6 +10,8 @@ export default {
         subject: 'Disciplina',
         activity: 'Aula',
         confirm: 'Confirmar',
+        yes: 'Sim',
+        no: 'Não',
         failLoadLastAccessed: 'Erro ao carregar "Continuar onde parei".'
     },
     auth: {
@@ -57,6 +59,7 @@ export default {
     },
     mainMenu: {
         back: 'Voltar ao menu principal',
+        continueCourse: 'Continuar na Disciplina {{module}}, aula {{class}}',
         title: {
             menu: 'Menu',
             notifications: 'Notificações',
@@ -171,7 +174,7 @@ export default {
             cardModuleAction: 'Ver aulas',
             continue: {
                 whereStopped: 'Onde você parou',
-                nextModule: 'Próximo módulo'
+                nextDiscipline: 'Próximo disciplina'
             },
             professors: {
                 title: 'Professores',
@@ -179,18 +182,18 @@ export default {
                     'Conheça os especialistas que vão te ajudar no seu aprendizado',
                 buttonLoadMore: 'Carregar mais'
             },
-            modules: {
+            discipline: {
                 title: {
                     key: 'disciplina',
                     key_plural: 'disciplinas',
                     keyWithCount: '{{count}} disciplina',
                     keyWithCount_plural: '{{count}} disciplinas'
                 },
-                module: {
-                    key: 'Módulo',
-                    key_plural: 'Módulos',
-                    keyWithCount: '{{count}} módulo',
-                    keyWithCount_plural: '{{count}} módulos'
+                discipline: {
+                    key: 'Disciplina',
+                    key_plural: 'Disciplinas',
+                    keyWithCount: '{{count}} disciplina',
+                    keyWithCount_plural: '{{count}} disciplinas'
                 },
                 whatCourseHas: 'O que esse curso possui',
                 whatCourseHasSubtitle:
@@ -242,7 +245,11 @@ export default {
             saveQuestion: 'Salvar questão',
             seeFilters: 'Ver filtros',
             empty:
-                'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos'
+                'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos',
+            goOut: {
+                title: 'Ops! Você está saindo da prática.',
+                subtitle: 'Deseja realmente encerrar a prática?'
+            }
         },
         historic: {
             title: 'Histórico de questões',
