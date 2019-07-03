@@ -125,7 +125,7 @@ const QuestionsProvider = ({ children, location: { pathname }, history }) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [questions])
+    }, [currentIndex])
 
     const value = {
         filter,
