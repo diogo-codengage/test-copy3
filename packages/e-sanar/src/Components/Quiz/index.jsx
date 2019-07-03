@@ -13,6 +13,7 @@ import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
 import { CREATE_BOOKMARK } from 'Apollo/Classroom/mutations/bookmark'
 import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
+import { GET_BOOKMARK } from 'Apollo/Classroom/queries/bookmark'
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
 import { useApolloContext } from 'Hooks/apollo'
@@ -198,10 +199,27 @@ const SANQuiz = ({
 
     useEffect(() => {
         if (questions[index]) {
-            setBookmark(questions[index].bookmarked)
+            const fetchData = async () => {
+                try {
+                    const {
+                        data: { bookmark }
+                    } = await client.query({
+                        query: GET_BOOKMARK,
+                        fetchPolicy: 'network-only',
+                        variables: {
+                            resourceId: questions[index].id
+                        }
+                    })
+
+                    setBookmark(!!bookmark)
+                } catch (err) {
+                    console.error(err)
+                }
+            }
+            fetchData()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [index])
+    }, [index, questions])
 
     const isFinish = useMemo(() => responses.length === questions.length, [
         responses,
