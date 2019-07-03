@@ -17,6 +17,8 @@ import { useAuthContext } from 'Hooks/auth'
 import SANQuizSubheader from './Subheader'
 import SANQuizFinalizedMock from './FinalizedMock'
 import SANQuizFinalizedQuiz from './FinalizedQuiz'
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
+import { useTranslation } from 'react-i18next'
 
 const SANQuiz = ({
     quiz: {
@@ -29,6 +31,7 @@ const SANQuiz = ({
     stopwatchRef
 }) => {
     // const stopwatchRef = useRef()
+    const { t } = useTranslation()
     const client = useApolloContext()
     const { me, getEnrollment } = useAuthContext()
     const { width } = useWindowSize()
@@ -197,7 +200,13 @@ const SANQuiz = ({
                 answerQuestion,
                 { loading: loadingMutation, error: errorMutation }
             ) => {
-                if (errorMutation) return `Error! ${errorMutation}`
+                if (errorMutation)
+                    return (
+                        <SANErrorPiece
+                            message={t('classroom.mock.errorAnswering')}
+                            dark={true}
+                        />
+                    )
                 return (
                     <div className='video-quiz'>
                         {isFinish && mock && (

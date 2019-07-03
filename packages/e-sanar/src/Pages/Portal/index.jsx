@@ -14,6 +14,7 @@ import SANQuestionsPage from './Questions'
 import SANClassroomPage from './Classrom'
 import SANMyAccountChangePassword from './MyAccount'
 import { SANPortalProvider } from './Context'
+import ESDefaultError from '../Portal/Errors/Default'
 
 const SANPortalRoutes = ({ match: { url } }) => {
     const client = useApolloContext()
@@ -28,10 +29,12 @@ const SANPortalRoutes = ({ match: { url } }) => {
 
     return (
         <Query query={GET_ME} onCompleted={handleCompleted}>
-            {({ loading }) => (
+            {({ loading, error }) => (
                 <>
-                    {loading ? (
+                    {loading && !error ? (
                         <ESSplashLoader />
+                    ) : !loading && error ? (
+                        <ESDefaultError />
                     ) : (
                         <SANPortalProvider>
                             <SANPortalLayout>

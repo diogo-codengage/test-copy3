@@ -95,10 +95,12 @@ export const SANClassPlaylistMenuHeader = () => {
 const SANClassPlaylist = ({ history }) => {
     const client = useApolloContext()
     const {
+        error,
         currentResource,
         setCurrentResource,
         state: { loading, currentModule },
-        getResource
+        getResource,
+        setError
     } = usePortalContext()
 
     const { getEnrollment } = useAuthContext()
@@ -163,16 +165,20 @@ const SANClassPlaylist = ({ history }) => {
 
     useEffect(() => {
         const getModules = async () => {
-            const {
-                data: { modules }
-            } = await client.query({
-                query: GET_MODULES,
-                fetchPolicy: 'network-only',
-                variables: {
-                    courseId: course.id,
-                    enrollmentId: id
-                }
-            })
+            try {
+                const {
+                    data: { modules }
+                } = await client.query({
+                    query: GET_MODULES,
+                    fetchPolicy: 'network-only',
+                    variables: {
+                        courseId: course.id,
+                        enrollmentId: id
+                    }
+                })
+            } catch (error) {
+                setError(error)
+            }
 
             setModules(modules)
         }
@@ -209,34 +215,39 @@ const SANClassPlaylist = ({ history }) => {
                 </div>
                 <ESDivider color='grey' type='horizontal' />
             </div>
-            {!currentModule || !modules ? (
-                <ESSkeleton className='pl-md pr-md' active avatar dark />
-            ) : (
-                <>
-                    <div className='d-flex justify-content-between mb-xs pl-md pr-md'>
-                        <ESTypography transform='uppercase' variant='caption'>
-                            Disciplina
-                        </ESTypography>
-                        <ESTypography
-                            className='text-white-6'
-                            variant='caption'
-                        >
-                            {currentModule.index + 1}/{modules.count}
-                        </ESTypography>
-                    </div>
-                    <div className='pl-md pr-md'>
-                        <ESDisciplineDropdown
-                            className='mb-lg'
-                            onSelect={onSelect}
-                            activeItem={currentModule}
-                            items={modules.data}
-                            loading={loading}
-                            progress={progressTest(currentModule)}
-                        />
-                    </div>
-                    {renderPlaylist()}
-                </>
-            )}
+            <>
+                {!currentModule || !modules ? (
+                    <ESSkeleton className='pl-md pr-md' active avatar dark />
+                ) : (
+                    <>
+                        <div className='d-flex justify-content-between mb-xs pl-md pr-md'>
+                            <ESTypography
+                                transform='uppercase'
+                                variant='caption'
+                            >
+                                Disciplina
+                            </ESTypography>
+                            <ESTypography
+                                className='text-white-6'
+                                variant='caption'
+                            >
+                                {currentModule.index + 1}/{modules.count}
+                            </ESTypography>
+                        </div>
+                        <div className='pl-md pr-md'>
+                            <ESDisciplineDropdown
+                                className='mb-lg'
+                                onSelect={onSelect}
+                                activeItem={currentModule}
+                                items={modules.data}
+                                loading={loading}
+                                progress={progressTest(currentModule)}
+                            />
+                        </div>
+                        {renderPlaylist()}
+                    </>
+                )}
+            </>
         </div>
     )
 }

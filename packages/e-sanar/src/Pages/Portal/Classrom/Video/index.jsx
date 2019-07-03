@@ -19,6 +19,7 @@ import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
 import { usePortalContext } from 'Pages/Portal/Context'
 import { useClassroomContext } from '../Context'
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 
 const SANClassroomVideo = () => {
     const { t } = useTranslation('esanar')
@@ -29,6 +30,7 @@ const SANClassroomVideo = () => {
     const client = useApolloContext()
     const {
         currentResource,
+        error,
         nextResource,
         prevResource,
         onNavigation,
@@ -154,7 +156,11 @@ const SANClassroomVideo = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentResource, playerRef, videoReady])
 
-    return (
+    return error ? (
+        <div className='classroom__video'>
+            <SANErrorPiece message={t('classroom.error')} dark={true} />
+        </div>
+    ) : (
         <div
             className={classNames('classroom__video', {
                 'classroom__video--no-quiz': !currentResource.quiz
