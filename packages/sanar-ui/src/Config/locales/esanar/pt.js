@@ -249,7 +249,8 @@ export default {
             goOut: {
                 title: 'Ops! Você está saindo da prática.',
                 subtitle: 'Deseja realmente encerrar a prática?'
-            }
+            },
+            failHandleBookmark: 'Ocorreu um erro ao favoritar questão.'
         },
         historic: {
             title: 'Histórico de questões',
