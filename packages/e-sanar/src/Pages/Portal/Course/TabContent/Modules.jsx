@@ -14,6 +14,7 @@ import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 import { GET_MODULES } from 'Apollo/CourseDetails/queries/modules'
 import { useAuthContext } from 'Hooks/auth'
 import { getClassRoute } from 'Utils/getClassRoute'
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 
 //FIXME: const responsive = [
 //     {
@@ -79,7 +80,14 @@ const SANCourseModules = ({ history }) => {
         >
             {({ loading, error, data: { modules } }) => {
                 if (loading) return <ESSpin spinning flex minHeight={375} />
-                if (error) return `Error! ${error}`
+                if (error)
+                    return (
+                        <SANErrorPiece
+                            message={t(
+                                'courseDetails.tabContent.modules.error.defaultMessage'
+                            )}
+                        />
+                    )
                 const { data, count } = modules
                 return (
                     <div className='san-tab-course-content__modules pt-md pb-lg'>

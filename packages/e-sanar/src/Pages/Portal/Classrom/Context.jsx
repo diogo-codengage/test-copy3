@@ -29,7 +29,8 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         currentModule,
         currentResource,
         dispatch,
-        fetchLastAccessed
+        fetchLastAccessed,
+        setError
     } = usePortalContext()
 
     const {
@@ -190,6 +191,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
             } catch (error) {
                 console.error(error)
                 message.error(t('classroom.failLoadClassroom'))
+                setError(error)
                 dispatch({ type: 'loading', payload: error })
             }
         }
