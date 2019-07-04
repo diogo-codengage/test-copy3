@@ -41,6 +41,10 @@ export default {
             subtitle: 'Cadastre uma nova senha preenchendo os campos abaixo:',
             confirmPassword: 'Confirme sua senha'
         },
+        createNewPassword: {
+            title: 'Crie uma nova senha',
+            button: 'Criar senha'
+        },
         passwordResetSent: {
             title: 'Enviado com sucesso!',
             subtitle: 'Um link de recuperação foi enviado para:',
