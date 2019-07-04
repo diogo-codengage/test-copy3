@@ -157,7 +157,7 @@ const SANQuestionPage = ({ history }) => {
             setBookmark(questions[0].bookmarked)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentIndex])
+    }, [currentIndex, questions])
 
     if (!firstLoad && (!questions || !questions.length)) {
         return <SANEmptyQuestions />
