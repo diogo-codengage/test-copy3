@@ -16,8 +16,6 @@ import { useLayoutContext } from '../../Layout/Context'
 import { usePortalContext } from 'Pages/Portal/Context'
 import { getClassRoute } from 'Utils/getClassRoute'
 
-const intlPath = 'mainMenu.title.'
-
 const toDarkMode = [6, 9]
 
 //TODO: Improve setTab
@@ -57,17 +55,15 @@ const MenuContent = ({ indexMenu, setMenuTab: setTab, handleBack }) => {
 }
 
 const SANMenu = ({ history }) => {
-    const { t } = useTranslation('esanar')
     const [theme, setTheme] = useState('light')
+    const { t } = useTranslation('esanar')
     const {
         indexMenu,
         darkMode,
-        openMenu,
         setMenuTab,
         menuTitle,
-        setMenuTitle,
-        setOpenMenu,
-        setIndexMenu
+        menuRef,
+        setMenuIsOpen
     } = useLayoutContext()
     const { lastAccessed } = usePortalContext()
 
@@ -80,20 +76,14 @@ const SANMenu = ({ history }) => {
     )
 
     const handleBack = () => {
-        setIndexMenu(0)
-        setMenuTitle(t(`${intlPath}menu`))
+        setMenuTab()
     }
 
     const handleInitialClick = () => {
-        setMenuTitle(t(`${intlPath}menu`))
+        setMenuTab()
     }
 
     const handleHome = () => history.push('/aluno/curso')
-
-    const onOpenOrClose = isOpen => {
-        console.log(isOpen)
-        setOpenMenu(isOpen)
-    }
 
     const goClassroom = () =>
         history.push(
@@ -115,7 +105,7 @@ const SANMenu = ({ history }) => {
 
     return (
         <ESMainMenu
-            // onSearchClick={() => setMenuTab(8)}
+            ref={menuRef}
             onInitialClick={handleInitialClick}
             onHome={handleHome}
             title={menuTitle}
@@ -123,9 +113,8 @@ const SANMenu = ({ history }) => {
             showContinueBar
             context={darkMode ? 'classroom' : ''}
             className='san-main-menu'
-            open={openMenu}
-            onOpenOrClose={onOpenOrClose}
             continueCourseProps={continueCourseProps}
+            onOpenOrClose={setMenuIsOpen}
         >
             <MenuContent {...{ indexMenu, setMenuTab, handleBack }} />
         </ESMainMenu>

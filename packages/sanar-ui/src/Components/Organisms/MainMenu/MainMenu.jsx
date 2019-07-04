@@ -139,7 +139,6 @@ const ESMainMenu = forwardRef(
 
         const handleOpenOrClose = (action = !toggle) => {
             if (width > 1365 && context !== 'classroom') return
-            console.log(action)
             setToggle(action)
         }
 

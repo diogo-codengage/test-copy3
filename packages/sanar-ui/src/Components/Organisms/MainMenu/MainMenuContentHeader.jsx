@@ -8,8 +8,8 @@ import ESTypography from '../../Atoms/Typography'
 
 import { useMainMenuContext } from './context'
 
-const ESMainMenuContentHeader = ({ className, title }) => {
-    const { showClose, onClose } = useMainMenuContext()
+const ESMainMenuContentHeader = ({ className, title, onClose }) => {
+    const { showClose } = useMainMenuContext()
     const classes = classNames('es-main-menu__content--header', className)
 
     return (

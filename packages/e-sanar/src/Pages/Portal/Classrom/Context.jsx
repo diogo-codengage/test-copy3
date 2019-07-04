@@ -32,12 +32,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         fetchLastAccessed
     } = usePortalContext()
 
-    const {
-        setMenuTab,
-        setDarkMode,
-        setOpenMenu,
-        stopwatchRef
-    } = useLayoutContext()
+    const { setMenuTab, setDarkMode, stopwatchRef } = useLayoutContext()
     const { getEnrollment, me } = useAuthContext()
 
     const { id: enrollmentId } = getEnrollment()
@@ -46,7 +41,6 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
 
     const openMenu = () => {
         setMenuTab(9)
-        setOpenMenu(old => !old)
     }
 
     const handleBookmark = async ({ resourceId, resourceType }) => {
@@ -69,12 +63,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         }
     }
 
-    const handleProgress = ({
-        timeInSeconds,
-        percentage,
-        resourceId,
-        resourceType
-    }) => {
+    const handleProgress = ({ timeInSeconds, percentage, resourceId }) => {
         if (currentResource) {
             client.mutate({
                 mutation: CREATE_PROGRESS,
@@ -188,7 +177,6 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
                     setCurrentResource(resource)
                 }
             } catch (error) {
-                console.error(error)
                 message.error(t('classroom.failLoadClassroom'))
                 dispatch({ type: 'loading', payload: error })
             }

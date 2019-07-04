@@ -56,7 +56,7 @@ const CommonProgress = () => {
 }
 
 export const SANClassPlaylistMenuHeader = () => {
-    const { setOpenMenu, setMenuTab } = useLayoutContext()
+    const { menuRef, setMenuTab } = useLayoutContext()
 
     const exitClassroom = () => {
         setMenuTab(0)
@@ -82,7 +82,7 @@ export const SANClassPlaylistMenuHeader = () => {
                     color='white'
                     className='pl-no pr-no'
                     uppercase
-                    onClick={() => setOpenMenu(old => !old)}
+                    onClick={() => menuRef.current.setToggle()}
                 >
                     <ESEvaIcon name='close-outline' />
                 </ESButton>
@@ -102,7 +102,7 @@ const SANClassPlaylist = ({ history }) => {
     } = usePortalContext()
 
     const { getEnrollment } = useAuthContext()
-    const { setOpenMenu } = useLayoutContext()
+    const { menuRef } = useLayoutContext()
 
     const [modules, setModules] = useState(null)
     const { course, id } = getEnrollment()
@@ -111,32 +111,26 @@ const SANClassPlaylist = ({ history }) => {
         if (!currentModule) return 0
         let counter = 0
 
-        const count = lessons.reduce(
-            (accumulator, currentValue, index, arr) => {
-                const resource = getResource(currentValue)
-                if (!resource.progress) return accumulator
+        const count = lessons.reduce((accumulator, currentValue) => {
+            const resource = getResource(currentValue)
+            if (!resource.progress) return accumulator
 
-                if (
-                    currentValue.resource_type === 'Video' &&
-                    currentValue.quiz
-                ) {
-                    counter += 2
-                    return (accumulator +=
-                        resource.progress.percentage +
-                        currentValue.quiz.progress.percentage)
-                }
+            if (currentValue.resource_type === 'Video' && currentValue.quiz) {
+                counter += 2
+                return (accumulator +=
+                    resource.progress.percentage +
+                    currentValue.quiz.progress.percentage)
+            }
 
-                counter++
-                return (accumulator += resource.progress.percentage)
-            },
-            0
-        )
+            counter++
+            return (accumulator += resource.progress.percentage)
+        }, 0)
         return ((count / counter) * 100) / 100
     }
 
     const goToResource = resource => {
         setCurrentResource(resource)
-        setOpenMenu(oldOpenMenu => !oldOpenMenu)
+        menuRef.current.setToggle()
         history.push(
             `/aluno/sala-aula/${
                 currentModule.id
@@ -160,6 +154,10 @@ const SANClassPlaylist = ({ history }) => {
             />
         )
     }
+
+    const getModulePositionInModules = () =>
+        `${modules.data.findIndex(item => currentModule.id === item.id) + 1}
+        /${modules.count}`
 
     useEffect(() => {
         const getModules = async () => {
@@ -221,7 +219,7 @@ const SANClassPlaylist = ({ history }) => {
                             className='text-white-6'
                             variant='caption'
                         >
-                            {currentModule.index + 1}/{modules.count}
+                            {!loading && getModulePositionInModules()}
                         </ESTypography>
                     </div>
                     <div className='pl-md pr-md'>
