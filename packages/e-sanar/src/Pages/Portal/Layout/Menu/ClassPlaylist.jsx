@@ -139,12 +139,11 @@ const SANClassPlaylist = ({ history }) => {
     }
 
     const goToResource = resource => {
+        const type = getClassRoute(resource.resource_type)
         setCurrentResource(resource)
         setOpenMenu(oldOpenMenu => !oldOpenMenu)
         history.push(
-            `/aluno/sala-aula/${
-                currentModule.id
-            }/${resource.resource_type.toLowerCase()}/${
+            `/aluno/sala-aula/${currentModule.id}/${type}/${
                 getResource(resource).id
             }`
         )
