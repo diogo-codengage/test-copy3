@@ -49,6 +49,7 @@ const PortalProvider = ({ children, history }) => {
     const [lastAccessed, setLastAccessed] = useState(null)
 
     const [state, dispatch] = useReducer(reducer, initialState)
+    const [error, setError] = useState(null)
 
     const { id: enrollmentId } = getEnrollment()
 
@@ -87,6 +88,7 @@ const PortalProvider = ({ children, history }) => {
         } catch (error) {
             console.error(error)
             message.error(t('global.failLoadLastAccessed'))
+            setError(error)
         }
     }
 
@@ -124,9 +126,11 @@ const PortalProvider = ({ children, history }) => {
     }, [currentResource, state.currentModule])
 
     const value = {
+        error,
         getResource,
         currentResource,
         setCurrentResource,
+        setError,
         prevResource,
         setPrevResource,
         nextResource,

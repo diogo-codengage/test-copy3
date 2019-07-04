@@ -29,7 +29,8 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         currentModule,
         currentResource,
         dispatch,
-        fetchLastAccessed
+        fetchLastAccessed,
+        setError
     } = usePortalContext()
 
     const { setMenuTab, setDarkMode, stopwatchRef } = useLayoutContext()
@@ -178,6 +179,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
                 }
             } catch (error) {
                 message.error(t('classroom.failLoadClassroom'))
+                setError(error)
                 dispatch({ type: 'loading', payload: error })
             }
         }

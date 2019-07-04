@@ -21,6 +21,7 @@ import { useAuthContext } from 'Hooks/auth'
 import SANQuizSubheader from './Subheader'
 import SANQuizFinalizedMock from './FinalizedMock'
 import SANQuizFinalizedQuiz from './FinalizedQuiz'
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 
 const SANQuiz = ({
     quiz: {
@@ -28,7 +29,8 @@ const SANQuiz = ({
         id: resourceId
     },
     mock,
-    stopwatchRef
+    stopwatchRef,
+    parentVideoId
 }) => {
     const { t } = useTranslation('esanar')
     const client = useApolloContext()
@@ -56,7 +58,8 @@ const SANQuiz = ({
                 percentage,
                 enrollmentId,
                 resourceId,
-                resourceType: 'Quiz'
+                resourceType: 'Quiz',
+                parentVideoId
             }
         })
     }
@@ -241,7 +244,13 @@ const SANQuiz = ({
                 answerQuestion,
                 { loading: loadingMutation, error: errorMutation }
             ) => {
-                if (errorMutation) return `Error! ${errorMutation}`
+                if (errorMutation)
+                    return (
+                        <SANErrorPiece
+                            message={t('classroom.mock.errorAnswering')}
+                            dark={true}
+                        />
+                    )
                 return (
                     <div className='video-quiz'>
                         {isFinish && mock && (

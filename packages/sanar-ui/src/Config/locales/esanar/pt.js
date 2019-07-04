@@ -178,7 +178,12 @@ export default {
             cardModuleAction: 'Ver aulas',
             continue: {
                 whereStopped: 'Onde você parou',
-                nextDiscipline: 'Próximo disciplina'
+                nextDiscipline: 'Próximo disciplina',
+                nextModule: 'Próximo módulo',
+                error: {
+                    defaultMessage:
+                        'Ocorreu um erro ao tentar trazer o último conteúdo acessado.'
+                }
             },
             professors: {
                 title: 'Professores',
@@ -206,6 +211,10 @@ export default {
                     done: 'Concluídas',
                     all: 'Todas',
                     incomplete: 'Incompleto'
+                },
+                error: {
+                    defaultMessage:
+                        'Ocorreu um erro ao carregar suas disciplinas.'
                 }
             }
         },
@@ -336,7 +345,19 @@ export default {
         askQuestions: 'Fazer Questões',
         viewDiscussions: 'Ver discussões',
         failHandleBookmark: 'Ocorreu um erro ao favoritar conteúdo.',
-        failLoadClassroom: 'Ocorreu um erro ao carregar sala de aula.'
+        failLoadClassroom: 'Ocorreu um erro ao carregar sala de aula.',
+        error: 'Ocorreu um erro ao carregar este vídeo.',
+        document: {
+            error: 'Ocorreu um erro ao carregar este documento.'
+        },
+        mock: {
+            error: 'Ocorreu um erro ao carregar o simulado.',
+            errorAnswering: 'Ocorreu um erro ao tentar responder esta questão.'
+        },
+        classPlaylist: {
+            courseError: 'Ocorreu um erro ao carregar os dados deste curso.',
+            modulesError: 'Ocorreu um erro ao carregar as disciplinas deste curso.'
+        },
     },
     footer: {
         helpButton: 'Precisa de ajuda?',

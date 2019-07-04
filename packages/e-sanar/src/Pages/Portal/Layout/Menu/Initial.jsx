@@ -14,11 +14,12 @@ import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import { useAuthContext } from 'Hooks/auth'
 import { usePortalContext } from 'Pages/Portal/Context'
 import { getClassRoute } from 'Utils/getClassRoute'
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 
 const intlPath = 'mainMenu.initial.'
 
 const SANInitial = ({ setTab, history }) => {
-    const { lastAccessed } = usePortalContext()
+    const { lastAccessed, error } = usePortalContext()
     const { getEnrollment } = useAuthContext()
     const { t } = useTranslation('esanar')
 
@@ -61,7 +62,17 @@ const SANInitial = ({ setTab, history }) => {
                 <ESRanking {...rankingProps} />
             </div>
             <div className='pl-md pr-md'>
-                <ESLeftOff {...leftProps} />
+                {!error ? (
+                    <ESLeftOff {...leftProps} />
+                ) : (
+                    <div className='san-portal-layout__error-card'>
+                        <SANErrorPiece
+                            message={t(
+                                'courseDetails.tabContent.continue.error.defaultMessage'
+                            )}
+                        />
+                    </div>
+                )}
             </div>
             <ESNavigationList onClick={renderNextContent}>
                 <ESNavigationListItem
