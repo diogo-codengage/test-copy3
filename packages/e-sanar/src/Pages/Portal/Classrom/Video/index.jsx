@@ -235,7 +235,10 @@ const SANClassroomVideo = () => {
                     })}
                 >
                     <ESTabPane tab={t('classroom.questions')} key='1'>
-                        <SANQuiz quiz={currentResource.quiz} />
+                        <SANQuiz
+                            quiz={currentResource.quiz}
+                            parentVideoId={currentResource.video.id}
+                        />
                     </ESTabPane>
                     <ESTabPane
                         tab={t('classroom.discussions')}

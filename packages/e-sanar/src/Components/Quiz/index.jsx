@@ -29,7 +29,8 @@ const SANQuiz = ({
         id: resourceId
     },
     mock,
-    stopwatchRef
+    stopwatchRef,
+    parentVideoId
 }) => {
     const { t } = useTranslation('esanar')
     const client = useApolloContext()
@@ -57,7 +58,8 @@ const SANQuiz = ({
                 percentage,
                 enrollmentId,
                 resourceId,
-                resourceType: 'Quiz'
+                resourceType: 'Quiz',
+                parentVideoId
             }
         })
     }
