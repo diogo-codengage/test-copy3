@@ -15,7 +15,10 @@ const ESPdfReader = ({ url, className }) => {
 
     return (
         <div className={classes}>
-            <embed src={url} type='application/pdf' />
+            {/* <embed src={url} type='application/pdf' /> */}
+            <iframe
+                src={`https://drive.google.com/viewerng/viewer?url=${url}?pid=explorer&efh=false&a=v&chrome=false&embedded=true`}
+            />
             <div className='es-pdf-reader__footer'>
                 <ESTypography type='light' variant='caption'>
                     {t('pdfReader.problemRenderingPdf')}
