@@ -89,7 +89,7 @@ const SANCourseContinue = ({ history }) => {
                             <ESCardCourseModule
                                 className='san-tab-course-content__continue--card'
                                 moduleName={`${t(
-                                    'courseDetails.tabContent.modules.module.key'
+                                    'courseDetails.tabContent.discipline.discipline.key'
                                 )} ${next_module.index + 1}`}
                                 title={next_module.name}
                                 badge={getBadge(next_module, 'progress')}
