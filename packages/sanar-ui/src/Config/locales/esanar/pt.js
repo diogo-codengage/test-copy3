@@ -258,7 +258,8 @@ export default {
             goOut: {
                 title: 'Ops! Você está saindo da prática.',
                 subtitle: 'Deseja realmente encerrar a prática?'
-            }
+            },
+            failHandleBookmark: 'Ocorreu um erro ao favoritar questão.'
         },
         historic: {
             title: 'Histórico de questões',
@@ -348,7 +349,11 @@ export default {
         mock: {
             error: 'Ocorreu um erro ao carregar o simulado.',
             errorAnswering: 'Ocorreu um erro ao tentar responder esta questão.'
-        }
+        },
+        classPlaylist: {
+            courseError: 'Ocorreu um erro ao carregar os dados deste curso.',
+            modulesError: 'Ocorreu um erro ao carregar as disciplinas deste curso.'
+        },
     },
     footer: {
         helpButton: 'Precisa de ajuda?',

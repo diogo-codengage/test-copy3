@@ -33,7 +33,7 @@ const QuestionsProvider = ({ children, location: { pathname }, history }) => {
     const [wrongQuestions, setWrongQuestions] = useState(0)
     const [correctQuestions, setCorrectQuestions] = useState(0)
     const [totalQuestions, setTotalQuestions] = useState(0)
-    const [currentIndex, setCurrentIndex] = useState(1)
+    const [currentIndex, setCurrentIndex] = useState(0)
     const [loadedItems, setLoadedItems] = useState(0)
 
     const totalAnsweredQuestions = useMemo(
@@ -100,6 +100,7 @@ const QuestionsProvider = ({ children, location: { pathname }, history }) => {
             setTotalQuestions(count)
             setQuestions(data)
             setLoadedItems(data.length)
+            setCurrentIndex(1)
         } else {
             const aggregate = [...questions, ...data]
             setLoadedItems(old => old + data.length)

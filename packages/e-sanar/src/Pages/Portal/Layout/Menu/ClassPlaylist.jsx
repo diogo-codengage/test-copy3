@@ -20,10 +20,11 @@ import { useApolloContext } from 'Hooks/apollo'
 import { getClassRoute } from 'Utils/getClassRoute'
 
 import { useLayoutContext } from '../../Layout/Context'
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
+import { useTranslation } from 'react-i18next'
 
 const CommonProgress = () => {
     const { getEnrollment } = useAuthContext()
-
     const { id: enrollmentId } = getEnrollment()
 
     return (
@@ -99,15 +100,16 @@ const SANClassPlaylist = ({ history }) => {
         currentResource,
         setCurrentResource,
         state: { loading, currentModule },
-        getResource,
-        setError
+        getResource
     } = usePortalContext()
 
     const { getEnrollment } = useAuthContext()
     const { setOpenMenu } = useLayoutContext()
 
+    const [modulesError, setModulesError] = useState(null)
     const [modules, setModules] = useState(null)
     const { course, id } = getEnrollment()
+    const { t } = useTranslation('esanar')
 
     const progressTest = ({ level_contents: { data: lessons } }) => {
         if (!currentModule) return 0
@@ -176,11 +178,11 @@ const SANClassPlaylist = ({ history }) => {
                         enrollmentId: id
                     }
                 })
-            } catch (error) {
-                setError(error)
-            }
 
-            setModules(modules)
+                setModules(modules)
+            } catch (error) {
+                setModulesError(error)
+            }
         }
 
         getModules()
@@ -195,30 +197,40 @@ const SANClassPlaylist = ({ history }) => {
 
     return (
         <div>
-            <div className='pl-md pr-md'>
-                <ESTypography className='mb-xs text-white-6' variant='overline'>
-                    {course.knowledge_area}
-                </ESTypography>
-                <ESTypography className='mb-xs' strong ellipsis level={5}>
-                    {course.name}
-                </ESTypography>
-                <div className='d-flex justify-content-between align-items-center'>
+            {!error ? (
+                <div className='pl-md pr-md'>
                     <ESTypography
-                        className='text-white-6'
-                        strong
-                        ellipsis
-                        variant='caption'
+                        className='mb-xs text-white-6'
+                        variant='overline'
                     >
-                        Progresso do curso
+                        {course.knowledge_area}
                     </ESTypography>
-                    <CommonProgress />
+                    <ESTypography className='mb-xs' strong ellipsis level={5}>
+                        {course.name}
+                    </ESTypography>
+                    <div className='d-flex justify-content-between align-items-center'>
+                        <ESTypography
+                            className='text-white-6'
+                            strong
+                            ellipsis
+                            variant='caption'
+                        >
+                            Progresso do curso
+                        </ESTypography>
+                        <CommonProgress />
+                    </div>
+                    <ESDivider color='grey' type='horizontal' />
                 </div>
-                <ESDivider color='grey' type='horizontal' />
-            </div>
+            ) : (
+                <SANErrorPiece
+                    message={t('classroom.classPlaylist.courseError')}
+                    dark={true}
+                />
+            )}
             <>
-                {!currentModule || !modules ? (
+                {(!currentModule || !modules) && !modulesError ? (
                     <ESSkeleton className='pl-md pr-md' active avatar dark />
-                ) : (
+                ) : currentModule && modules && !error ? (
                     <>
                         <div className='d-flex justify-content-between mb-xs pl-md pr-md'>
                             <ESTypography
@@ -246,6 +258,11 @@ const SANClassPlaylist = ({ history }) => {
                         </div>
                         {renderPlaylist()}
                     </>
+                ) : (
+                    <SANErrorPiece
+                        message={t('classroom.classPlaylist.modulesError')}
+                        dark={true}
+                    />
                 )}
             </>
         </div>

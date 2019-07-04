@@ -10,68 +10,46 @@ import ESLessonHeader, {
 import { usePortalContext } from 'Pages/Portal/Context'
 import SANQuiz from 'Components/Quiz'
 import { useClassroomContext } from '../Context'
-import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 
 const SANClassroomMock = () => {
     const { t } = useTranslation('esanar')
     const {
-        error,
         currentResource,
         nextResource,
         prevResource,
         onNavigation,
         state: { currentModule }
     } = usePortalContext()
-    const {
-        handleBookmark,
-        bookmarked,
-        openMenu,
-        stopwatchRef
-    } = useClassroomContext()
+    const { openMenu, stopwatchRef } = useClassroomContext()
 
     return (
-        <div>
-            {error ? (
-                <div className='classroom__mock'>
-                    <SANErrorPiece
-                        message={t('classroom.mock.error')}
-                        dark={true}
+        <div className='classroom__mock'>
+            <ESLessonHeader
+                leftChildren={
+                    <ESLessonHeaderLeft
+                        title={currentResource.quiz.title}
+                        subtitle={`${t(
+                            'global.subject'
+                        )} ${currentModule.index + 1}, ${t(
+                            'global.activity'
+                        )} ${currentResource.index + 1}`}
+                        onClick={openMenu}
                     />
-                </div>
-            ) : (
-                <div className='classroom__mock'>
-                    <ESLessonHeader
-                        leftChildren={
-                            <ESLessonHeaderLeft
-                                title={currentResource.quiz.title}
-                                subtitle={`${t(
-                                    'global.subject'
-                                )} ${currentModule.index + 1}, ${t(
-                                    'global.activity'
-                                )} ${currentResource.index + 1}`}
-                                onClick={openMenu}
-                            />
-                        }
-                        rightChildren={
-                            <ESLessonHeaderExtra
-                                previousLesson={
-                                    prevResource && prevResource.title
-                                }
-                                nextLesson={nextResource && nextResource.title}
-                                onPrev={onNavigation('prev')}
-                                onNext={onNavigation('next')}
-                            />
-                        }
+                }
+                rightChildren={
+                    <ESLessonHeaderExtra
+                        previousLesson={prevResource && prevResource.title}
+                        nextLesson={nextResource && nextResource.title}
+                        onPrev={onNavigation('prev')}
+                        onNext={onNavigation('next')}
                     />
-                    <SANQuiz
-                        quiz={currentResource.quiz}
-                        bookmarked={bookmarked}
-                        handleBookmark={handleBookmark}
-                        stopwatchRef={stopwatchRef}
-                        mock
-                    />
-                </div>
-            )}
+                }
+            />
+            <SANQuiz
+                quiz={currentResource.quiz}
+                stopwatchRef={stopwatchRef}
+                mock
+            />
         </div>
     )
 }

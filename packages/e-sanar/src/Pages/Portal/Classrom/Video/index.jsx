@@ -44,7 +44,6 @@ const SANClassroomVideo = () => {
         openMenu
     } = useClassroomContext()
 
-    const [quizBookmarked, setQuizBookmarked] = useState()
     const [rate, setRate] = useState()
     const [playlistVideo, setPlaylistVideo] = useState()
     const [videoError, seVideoError] = useState()
@@ -53,14 +52,6 @@ const SANClassroomVideo = () => {
     const handleVideoError = () => seVideoError(true)
 
     const handleVideoReady = () => seVideoReady(true)
-
-    const handleQuizBookmark = () => {
-        handleBookmark({
-            resourceId: currentResource.quiz.id,
-            resourceType: 'Quiz'
-        })
-        setQuizBookmarked(oldQuizBookmarked => !oldQuizBookmarked)
-    }
 
     const handleRate = value => {
         setRate(value)
@@ -137,8 +128,6 @@ const SANClassroomVideo = () => {
                     image: currentResource.video.thumbnails.large
                 }
             ])
-            currentResource.quiz &&
-                setQuizBookmarked(currentResource.quiz.bookmarked)
         }
     }, [currentResource])
 
@@ -246,11 +235,7 @@ const SANClassroomVideo = () => {
                     })}
                 >
                     <ESTabPane tab={t('classroom.questions')} key='1'>
-                        <SANQuiz
-                            quiz={currentResource.quiz}
-                            bookmarked={quizBookmarked}
-                            handleBookmark={handleQuizBookmark}
-                        />
+                        <SANQuiz quiz={currentResource.quiz} />
                     </ESTabPane>
                     <ESTabPane
                         tab={t('classroom.discussions')}
