@@ -9,6 +9,9 @@ import {
 import { QuestionsTemplate } from './QuestionsTemplate'
 import { RouteComponentProps } from 'react-router'
 import { BFFService } from '../../BFF/BFFService'
+import { QuestionsInputFilter } from '../../BFF/QuestionsInputFilter'
+import { normalizeString } from '../../Util/normalizeString'
+import { toCorrelacaoTagName } from '../../Util/corelacaoEntrePlataformas'
 
 interface IRouteProps {
     videoParams
@@ -87,6 +90,82 @@ export const QuestionsPage = (props: IProps) => {
         setStarted(true)
     }
 
+    const loadMoreQuestions = async (clearOld: boolean) => {
+        const filters = await getParams()
+        return  BFFService.loadMoreQuestions(filters)
+            .then(function({ data }) {
+                setQuestionsRequests(questionsRequests + 1)
+                return pushQuestions(data.questions.data, clearOld)
+            }).catch((e) => {
+                return false;
+            })
+    }
+
+    const getParams = async ():Promise<QuestionsInputFilter> => {
+        if(!!course) {
+            return getParamsFromCourse()
+        }
+        return getParamsFromFilters()
+    }
+
+    const normalizeEndCompare = (o1: string, o2: string) =>{
+        return  normalizeString(o1) === normalizeString(o2)
+    }
+
+    const getParamsFromCourse = async ():Promise<QuestionsInputFilter> => {
+
+        const tagsIds = allTags
+            .filter(t => normalizeEndCompare(t.label, toCorrelacaoTagName(course.moduleName)))
+            .map(t => t.value)
+
+        const specialtiesIds = allSpecialties.flatMap(s => s.children)
+            .filter(v => normalizeEndCompare(v.label,course.subSpecialtyName))
+            .map(v => v.value)
+
+        return {
+            specialtiesIds,
+            institutionsIds: [],
+            tagsIds,
+            states: [],
+            years: [],
+            isCommentedByExpert: null,
+        }
+    }
+
+    const getParamsFromFilters = (): QuestionsInputFilter  => {
+
+        const idsSelectedSubSpecialties = selectedSubSpecialties.map(ss => ss.value);
+
+        return  {
+            specialtiesIds: selectedSpecialties
+                .filter( s => !s.children.map(ss => ss.value).find(ss => idsSelectedSubSpecialties.includes(ss) ) )
+                .map(s => s.value)
+                .concat(selectedSubSpecialties
+                    .map(s => s.value)),
+            institutionsIds: selectedInstitutions.map( i => i.value ),
+            tagsIds: selectedTags.map( t => t.value),
+            states: selectedStates.map(s => s.value),
+            years: selectedYears.map(v => v.value),
+            isCommentedByExpert: isCommentedByExpert,
+        }
+    }
+
+    const pushQuestions = (moreQuestions, clearOld) => {
+        if(!clearOld && questions.length > 1){
+            return;
+        }
+        let _questions = []
+
+        if(!clearOld){
+            _questions.push(...questions)
+        }
+        _questions.push(...moreQuestions)
+
+        setQuestions(_questions)
+
+        return Promise.resolve(moreQuestions.length > 0)
+    }
+
     const value: IQuestionsContext = {
         loading,
         setLoading,
@@ -146,6 +225,8 @@ export const QuestionsPage = (props: IProps) => {
 
         showAdvancedFilters,
         setShowAdvancedFilters,
+
+        loadMoreQuestions,
     }
 
     if(!!course) {

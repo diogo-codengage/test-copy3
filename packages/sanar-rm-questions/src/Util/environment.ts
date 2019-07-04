@@ -5,7 +5,8 @@ export const isLocalhost = () => {
 }
 
 export const isDevEnvironment = () => {
-    return NODE_ENV === 'development'
+    // return NODE_ENV === 'development'
+    return window.location.href.indexOf('plataforma-cursos-residencia-dev') > -1;
 }
 
 export const isProdEnvironment = () => {

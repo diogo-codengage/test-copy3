@@ -13,6 +13,8 @@ import SANCourseChange from './CourseChange'
 import SANMyAccount from './MyAccount'
 import SANClassPlaylist from './ClassPlaylist'
 import { useLayoutContext } from '../../Layout/Context'
+import { usePortalContext } from 'Pages/Portal/Context'
+import { getClassRoute } from 'Utils/getClassRoute'
 
 const intlPath = 'mainMenu.title.'
 
@@ -67,6 +69,7 @@ const SANMenu = ({ history }) => {
         setOpenMenu,
         setIndexMenu
     } = useLayoutContext()
+    const { lastAccessed } = usePortalContext()
 
     useMemo(
         () =>
@@ -92,6 +95,24 @@ const SANMenu = ({ history }) => {
         setOpenMenu(isOpen)
     }
 
+    const goClassroom = () =>
+        history.push(
+            `/aluno/sala-aula/${lastAccessed.module_id}/${getClassRoute(
+                lastAccessed.resource_type
+            )}/${lastAccessed.resource_id}`
+        )
+
+    const continueCourseProps = {
+        ...(lastAccessed && {
+            module: t('mainMenu.continueCourse', {
+                module: lastAccessed.module_order + 1,
+                class: lastAccessed.resource_order + 1
+            }),
+            description: lastAccessed.module_title,
+            onContinue: goClassroom
+        })
+    }
+
     return (
         <ESMainMenu
             // onSearchClick={() => setMenuTab(8)}
@@ -104,6 +125,7 @@ const SANMenu = ({ history }) => {
             className='san-main-menu'
             open={openMenu}
             onOpenOrClose={onOpenOrClose}
+            continueCourseProps={continueCourseProps}
         >
             <MenuContent {...{ indexMenu, setMenuTab, handleBack }} />
         </ESMainMenu>

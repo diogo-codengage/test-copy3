@@ -89,6 +89,7 @@ export const GET_MODULE = gql`
                                             text
                                         }
                                     }
+                                    bookmarked
                                     images {
                                         data {
                                             id

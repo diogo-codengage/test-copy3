@@ -81,7 +81,7 @@ const SANQuestionHeader = ({ history }) => {
                                 variant='outlined'
                                 uppercase
                                 bold
-                                onClick={() => validatePractice()}
+                                onClick={validatePractice}
                             >
                                 {t(`${intlPath}endPracticeButton`)}
                             </ESButton>

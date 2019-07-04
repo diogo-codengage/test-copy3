@@ -40,18 +40,18 @@ const SANCourseContinue = ({ history }) => {
     const goClassroomNext = module => () =>
         history.push(`/aluno/sala-aula/${module.id}`)
 
-    const getBadge = module =>
-        module && module.module_progress
-            ? `${module.module_progress.done}/${module.module_progress.total}`
+    const getBadge = (module, path) =>
+        module && module[path]
+            ? `${module[path].done}/${module[path].total}`
             : '0/0'
 
     const leftProps = {
         ...(lastAccessed && {
             moduleName: `${t(
-                'courseDetails.tabContent.modules.module.key'
+                'courseDetails.tabContent.discipline.discipline.key'
             )} ${lastAccessed.module_order + 1}`,
             title: lastAccessed.module_title,
-            badge: getBadge(lastAccessed),
+            badge: getBadge(lastAccessed, 'module_progress'),
             progress: percentProgressLast,
             moduleTime: `${lastAccessed.duration || 0}min`,
             image: lastAccessed.thumbnail,
@@ -80,16 +80,16 @@ const SANCourseContinue = ({ history }) => {
                     <ESCol xs={24} md={12}>
                         <SessionTitle
                             title={t(
-                                'courseDetails.tabContent.continue.nextModule'
+                                'courseDetails.tabContent.continue.nextDiscipline'
                             )}
                         />
                         <ESCardCourseModule
                             className='san-tab-course-content__continue--card'
                             moduleName={`${t(
-                                'courseDetails.tabContent.modules.module.key'
+                                'courseDetails.tabContent.discipline.discipline.key'
                             )} ${next_module.index + 1}`}
                             title={next_module.name}
-                            badge={getBadge(next_module)}
+                            badge={getBadge(next_module, 'progress')}
                             progress={percentProgressNext}
                             actionName={t(
                                 'courseDetails.tabContent.cardModuleAction'

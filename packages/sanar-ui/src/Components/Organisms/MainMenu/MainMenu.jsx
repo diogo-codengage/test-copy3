@@ -51,7 +51,8 @@ const ESMainMenu = ({
     onHome,
     context: contextProp,
     open: openProp,
-    onOpenOrClose
+    onOpenOrClose,
+    continueCourseProps
 }) => {
     const {
         position,
@@ -191,8 +192,7 @@ const ESMainMenu = ({
                         {showContinueBar && (
                             <ESCardContinueCourse
                                 className='es-main-menu__continue'
-                                module='Continuar no Módulo 1, aula 2'
-                                description='Per aumento de cachacis, eu reclamis.'
+                                {...continueCourseProps}
                                 borderRadius={false}
                             />
                         )}
@@ -226,7 +226,12 @@ ESMainMenu.propTypes = {
     onSearchClick: PropTypes.func,
     onHome: PropTypes.func,
     showContinueBar: PropTypes.bool,
-    logo: PropTypes.string
+    logo: PropTypes.string,
+    continueCourseProps: PropTypes.shape({
+        onContinue: PropTypes.func,
+        module: PropTypes.string,
+        description: PropTypes.string
+    })
 }
 ESMainMenu.defaultProps = {
     theme: 'primary',

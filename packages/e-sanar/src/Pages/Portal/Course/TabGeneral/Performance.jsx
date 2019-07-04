@@ -20,13 +20,13 @@ import { useAuthContext } from 'Hooks/auth'
 
 const statusColor = {
     high: 'success',
-    avarage: 'warning',
+    medium: 'warning',
     low: 'danger'
 }
 
 const statusCommitment = {
     high: niceSvg,
-    avarage: midSvg,
+    medium: midSvg,
     low: lowSvg
 }
 

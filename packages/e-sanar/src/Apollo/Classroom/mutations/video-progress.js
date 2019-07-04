@@ -17,7 +17,11 @@ export const CREATE_PROGRESS = gql`
                 enrollment_id: $enrollmentId
             }
         ) {
-            status
+            progress {
+                id
+                percentage
+                timeInSeconds
+            }
         }
     }
 `

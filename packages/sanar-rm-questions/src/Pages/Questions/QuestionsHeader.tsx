@@ -18,10 +18,15 @@ export const QuestionsHeader = () => {
 
         questionsRequests,
         setCurrentQuestion,
-        setCurrentAnswerId
+        setCurrentAnswerId,
+
+        loadMoreQuestions,
     } = useQuestionsContext()
 
+    const [loadingQuestions, setLoadingQuestions] = useState(false)
+
     const [showModalFinish, setShowModalFinish] = useState(false)
+    const [showModalNoQuestionsForFilter, setShowModalNoQuestionsForFilter ] = useState(false)
 
     const isFromCourse = () => {
         return !!course
@@ -39,10 +44,19 @@ export const QuestionsHeader = () => {
             variant='solid'
             uppercase
             blockOnlyMobile
+            loading={loadingQuestions}
             onClick={() => {
-                setCurrentQuestion(null)
-                setCurrentAnswerId(null)
-                setCurrentPage(QuestionPageType.Question)
+                setLoadingQuestions(true)
+                loadMoreQuestions(true).then( success => {
+                    setLoadingQuestions(false)
+                    if(success){
+                        setCurrentQuestion(null)
+                        setCurrentAnswerId(null)
+                        setCurrentPage(QuestionPageType.Question)
+                    } else {
+                        setShowModalNoQuestionsForFilter(true)
+                    }
+                })
             }}
         > {questionsRequests === 0 ? 'INICIAR PRÁTICA' : 'VOLTAR A PRÁTICA'} </ESButton>
 
@@ -116,6 +130,25 @@ export const QuestionsHeader = () => {
                     }}
                 >CONFIRMAR</ESButton>
 
+            </div>
+        </ESModal>
+
+        <ESModal
+            title={'Parece que algo deu errado'}
+            visible={showModalNoQuestionsForFilter}
+            centered={'Centered'}
+            onCancel={() => () => setShowModalNoQuestionsForFilter(false) }
+        >
+            <p>Opa, não existem questões para o filtro atual.</p>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <ESButton
+                    color='primary'
+                    variant='solid'
+                    uppercase
+                    blockOnlyMobile
+                    onClick={() => setShowModalNoQuestionsForFilter(false) }
+                >OK</ESButton>
             </div>
         </ESModal>
 

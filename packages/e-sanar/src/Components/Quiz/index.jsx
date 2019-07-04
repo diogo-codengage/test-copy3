@@ -3,13 +3,17 @@ import PropTypes from 'prop-types'
 
 import { append } from 'ramda'
 import { Mutation } from 'react-apollo'
+import { message } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 import ESQuestion from 'sanar-ui/dist/Components/Molecules/Question'
 
 import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
 import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
+import { CREATE_BOOKMARK } from 'Apollo/Classroom/mutations/bookmark'
 import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
+import { GET_BOOKMARK } from 'Apollo/Classroom/queries/bookmark'
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
 import { useApolloContext } from 'Hooks/apollo'
@@ -24,11 +28,9 @@ const SANQuiz = ({
         id: resourceId
     },
     mock,
-    bookmarked,
-    handleBookmark,
     stopwatchRef
 }) => {
-    // const stopwatchRef = useRef()
+    const { t } = useTranslation('esanar')
     const client = useApolloContext()
     const { me, getEnrollment } = useAuthContext()
     const { width } = useWindowSize()
@@ -37,6 +39,7 @@ const SANQuiz = ({
     const [questions, setQuestions] = useState([])
     const [index, setIndex] = useState(0)
     const [selected, setSelect] = useState()
+    const [bookmarked, setBookmark] = useState()
     const [stats, setStats] = useState({
         correct: 0,
         wrong: 0,
@@ -56,6 +59,23 @@ const SANQuiz = ({
                 resourceType: 'Quiz'
             }
         })
+    }
+
+    const handleBookmark = async () => {
+        try {
+            const {
+                data: { createBookmarks }
+            } = await client.mutate({
+                mutation: CREATE_BOOKMARK,
+                variables: {
+                    resourceId: questions[index].id,
+                    resourceType: 'Question'
+                }
+            })
+            setBookmark(!!createBookmarks)
+        } catch {
+            message.error(t('classroom.failHandleBookmark'))
+        }
     }
 
     const handleConfirm = mutation => alternative => {
@@ -177,6 +197,30 @@ const SANQuiz = ({
         }))
     }, [data])
 
+    useEffect(() => {
+        if (questions[index]) {
+            const fetchData = async () => {
+                try {
+                    const {
+                        data: { bookmark }
+                    } = await client.query({
+                        query: GET_BOOKMARK,
+                        fetchPolicy: 'network-only',
+                        variables: {
+                            resourceId: questions[index].id
+                        }
+                    })
+
+                    setBookmark(!!bookmark)
+                } catch (err) {
+                    console.error(err)
+                }
+            }
+            fetchData()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [index, questions])
+
     const isFinish = useMemo(() => responses.length === questions.length, [
         responses,
         questions
@@ -246,9 +290,7 @@ const SANQuiz = ({
 
 SANQuiz.propTypes = {
     quiz: PropTypes.object.isRequired,
-    mock: PropTypes.bool,
-    bookmarked: PropTypes.bool,
-    handleBookmark: PropTypes.func
+    mock: PropTypes.bool
 }
 
 export default SANQuiz
