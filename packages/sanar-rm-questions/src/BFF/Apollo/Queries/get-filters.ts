@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 export const GET_INSTITUTIONS= gql`
 query {
-  institutions {
+  institutions (limit: 1000) {
     data {
         value: id
         label: name
@@ -13,7 +13,7 @@ query {
 
 export const GET_SPECIALTIES = gql`
     {
-        specialties: specialties {
+        specialties: specialties (limit: 1000) {
             data {
                 ...specialtyFragment
                 parent {
