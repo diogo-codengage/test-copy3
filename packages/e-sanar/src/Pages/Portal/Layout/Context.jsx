@@ -3,7 +3,8 @@ import React, {
     useContext,
     useState,
     useRef,
-    useEffect
+    useEffect,
+    useReducer
 } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -15,73 +16,128 @@ export const useLayoutContext = () => useContext(Context)
 
 const intlPath = 'mainMenu.title.'
 
+const initialState = {
+    indexMenu: 0,
+    menuTitle: 'Menu'
+}
+
+const reducer = (state, { payload, type }) => {
+    switch (type) {
+        case 'changeMenuTab':
+            return {
+                ...state,
+                ...payload
+            }
+        default:
+            return state
+    }
+}
+
 const LayoutProvider = ({ children, history }) => {
     const { t } = useTranslation('esanar')
-
     const [darkMode, setDarkMode] = useState(false)
-    const [indexMenu, setIndexMenu] = useState(0)
-    const [openMenu, setOpenMenu] = useState(false)
-    const [menuTitle, setMenuTitle] = useState(t(`${intlPath}menu`))
-
+    const [menuIsOpen, setMenuIsOpen] = useState(false)
     const stopwatchRef = useRef()
+    const menuRef = useRef({})
+
+    const [state, dispatch] = useReducer(reducer, initialState)
 
     useEffect(() => {
         if (stopwatchRef && stopwatchRef.current) {
-            !openMenu
+            !menuIsOpen
                 ? stopwatchRef.current.start()
                 : stopwatchRef.current.pause()
         }
-    }, [openMenu])
+    }, [menuIsOpen])
+
+    const menuOpenOrClose = (action = false) => {
+        menuRef.current.setToggle()
+    }
 
     const setMenuTab = index => {
         switch (index) {
             case 0:
-                setIndexMenu(index)
+                dispatch({
+                    type: 'changeMenuTab',
+                    payload: {
+                        indexMenu: index,
+                        menuTitle: t(`${intlPath}menu`)
+                    }
+                })
+                menuOpenOrClose()
                 history.push('/aluno/curso')
-                setMenuTitle(t(`${intlPath}menu`))
-                setOpenMenu(old => !old)
                 break
             case 1:
-                setIndexMenu(index)
-                setMenuTitle(t(`${intlPath}notifications`))
+                dispatch({
+                    type: 'changeMenuTab',
+                    payload: {
+                        indexMenu: index,
+                        menuTitle: t(`${intlPath}notifications`)
+                    }
+                })
                 break
             case 5:
                 history.push('/aluno/banco-questoes')
-                setOpenMenu(old => !old)
+                menuOpenOrClose()
                 break
             case 6:
-                setIndexMenu(index)
-                setMenuTitle(t(`${intlPath}studying`))
+                dispatch({
+                    type: 'changeMenuTab',
+                    payload: {
+                        indexMenu: index,
+                        menuTitle: t(`${intlPath}studying`)
+                    }
+                })
                 break
             case 7:
-                setIndexMenu(index)
-                setMenuTitle(t(`${intlPath}myAccount`))
+                dispatch({
+                    type: 'changeMenuTab',
+                    payload: {
+                        indexMenu: index,
+                        menuTitle: t(`${intlPath}myAccount`)
+                    }
+                })
                 break
             case 8:
-                setIndexMenu(index)
-                setMenuTitle(t(`${intlPath}search`))
+                dispatch({
+                    type: 'changeMenuTab',
+                    payload: {
+                        indexMenu: index,
+                        menuTitle: t(`${intlPath}search`)
+                    }
+                })
                 break
             case 9:
-                setMenuTitle(<SANClassPlaylistMenuHeader />)
-                setIndexMenu(index)
+                dispatch({
+                    type: 'changeMenuTab',
+                    payload: {
+                        indexMenu: index,
+                        menuTitle: <SANClassPlaylistMenuHeader />
+                    }
+                })
+                menuOpenOrClose()
                 break
             default:
-                setIndexMenu(0)
-                setMenuTitle(t(`${intlPath}menu`))
+                dispatch({
+                    type: 'changeMenuTab',
+                    payload: {
+                        indexMenu: 0,
+                        menuTitle: t(`${intlPath}menu`)
+                    }
+                })
         }
     }
 
     const value = {
         darkMode,
         setDarkMode,
-        indexMenu,
-        setIndexMenu,
-        openMenu,
-        setOpenMenu,
+        indexMenu: state.indexMenu,
         setMenuTab,
-        menuTitle,
-        setMenuTitle,
-        stopwatchRef
+        menuTitle: state.menuTitle,
+        stopwatchRef,
+        menuRef,
+        menuOpenOrClose,
+        setMenuIsOpen
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>
