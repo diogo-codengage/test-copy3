@@ -19,7 +19,7 @@ import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 const intlPath = 'mainMenu.initial.'
 
 const SANInitial = ({ setTab, history }) => {
-    const { lastAccessed, error } = usePortalContext()
+    const { lastAccessed, error, currentModule } = usePortalContext()
     const { getEnrollment } = useAuthContext()
     const { t } = useTranslation('esanar')
 
@@ -41,7 +41,9 @@ const SANInitial = ({ setTab, history }) => {
         title: course.name,
         ...(lastAccessed && {
             classReference: lastAccessed.module_title,
-            thumbnail: lastAccessed.thumbnail,
+            thumbnail:
+                lastAccessed.thumbnail ||
+                (currentModule && currentModule.cover_picture_url),
             moduleReference: moduleReference(lastAccessed),
             onClick: goClassroom
         })
