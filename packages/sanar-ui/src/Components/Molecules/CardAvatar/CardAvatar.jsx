@@ -16,18 +16,20 @@ const ESCardAvatar = ({
     ...props
 }) => {
     const classes = classNames('es-card-avatar', className)
+
+    const img = image.replace('(', '%28').replace(')', '%29')
     return (
         <ESCard className={classes}>
             <div
                 className='es-card-avatar__header'
-                style={{ backgroundImage: `url(${image})` }}
+                style={{ backgroundImage: `url(${img})` }}
             >
                 {actions}
             </div>
             {image ? (
                 <div
                     className='es-card-avatar--avatar'
-                    style={{ backgroundImage: `url(${image})` }}
+                    style={{ backgroundImage: `url(${img})` }}
                 />
             ) : (
                 <Avatar
