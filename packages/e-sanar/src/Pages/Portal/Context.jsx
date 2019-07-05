@@ -14,6 +14,7 @@ import { getClassRoute } from 'Utils/getClassRoute'
 import { useApolloContext } from 'Hooks/apollo'
 import { useAuthContext } from 'Hooks/auth'
 import { GET_LAST_ACCESSED } from 'Apollo/Me/last-accessed'
+import { GET_MODULE } from 'Apollo/Classroom/queries/module'
 
 const Context = createContext()
 
@@ -47,9 +48,10 @@ const PortalProvider = ({ children, history }) => {
     const [currentResource, setCurrentResource] = useState(null)
     const [nextResource, setNextResource] = useState(null)
     const [lastAccessed, setLastAccessed] = useState(null)
+    const [error, setError] = useState(null)
+    const [currentModule, setCurrentModule] = useState(null)
 
     const [state, dispatch] = useReducer(reducer, initialState)
-    const [error, setError] = useState(null)
 
     const { id: enrollmentId } = getEnrollment()
 
@@ -92,10 +94,37 @@ const PortalProvider = ({ children, history }) => {
         }
     }
 
+    const fetchCurrentModule = async () => {
+        try {
+            if (lastAccessed) {
+                const { module_id } = lastAccessed
+
+                const {
+                    data: { module }
+                } = await client.query({
+                    query: GET_MODULE,
+                    fetchPolicy: 'network-only',
+                    variables: {
+                        id: module_id,
+                        enrollmentId
+                    }
+                })
+
+                setCurrentModule(module)
+            }
+        } catch (err) {
+            setError(err)
+        }
+    }
+
     useEffect(() => {
         fetchLastAccessed()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [enrollmentId])
+
+    useEffect(() => {
+        fetchCurrentModule()
+    }, [lastAccessed])
 
     useEffect(() => {
         if (currentResource && state.currentModule) {
@@ -139,7 +168,8 @@ const PortalProvider = ({ children, history }) => {
         state,
         dispatch,
         lastAccessed,
-        fetchLastAccessed
+        fetchLastAccessed,
+        currentModule
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

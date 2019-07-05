@@ -18,7 +18,9 @@ import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 const SANCourseContinue = ({ history }) => {
     const { getEnrollment } = useAuthContext()
     const { t } = useTranslation('esanar')
-    const { lastAccessed, error } = usePortalContext()
+    const { lastAccessed, error, currentModule } = usePortalContext()
+
+    console.log(currentModule)
 
     const { next_module } = getEnrollment()
 
@@ -56,7 +58,9 @@ const SANCourseContinue = ({ history }) => {
             badge: getBadge(lastAccessed, 'module_progress'),
             progress: percentProgressLast,
             moduleTime: `${lastAccessed.duration || 0}min`,
-            image: lastAccessed.thumbnail,
+            image:
+                lastAccessed.thumbnail ||
+                (currentModule && currentModule.cover_picture_url),
             onClick: goClassroomLast(lastAccessed)
         })
     }
