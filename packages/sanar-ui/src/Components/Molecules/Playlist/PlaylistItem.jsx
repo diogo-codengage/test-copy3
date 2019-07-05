@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import ESTypography from '../../Atoms/Typography'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 
-import { esUtilConvertSecondsToTime } from 'sanar-ui/dist/Util/Date'
+import { esUtilConvertSecondsToTime } from '../../../Util/Date'
 
 const icons = {
     Video: 'play-circle-outline',
