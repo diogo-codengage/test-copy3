@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
+import { message } from 'antd'
 import { Mutation } from 'react-apollo'
 import { useTranslation } from 'react-i18next'
 
@@ -10,6 +11,7 @@ import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
 import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
+import { CREATE_BOOKMARK } from 'Apollo/Classroom/mutations/bookmark'
 
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
@@ -17,6 +19,7 @@ import SANEmptyQuestions from './Empty'
 import SANSubheader from './Subheader'
 import { useQuestionsContext } from '../Context'
 import { useAuthContext } from 'Hooks/auth'
+import { useApolloContext } from 'Hooks/apollo'
 
 const initialState = {
     answer: null,
@@ -25,6 +28,7 @@ const initialState = {
 }
 
 const SANQuestionPage = ({ history }) => {
+    const client = useApolloContext()
     const {
         setSkippedQuestions,
         setWrongQuestions,
@@ -33,7 +37,8 @@ const SANQuestionPage = ({ history }) => {
         setCurrentIndex,
         firstLoad,
         setQuestions,
-        questions
+        questions,
+        currentIndex
     } = useQuestionsContext()
 
     const { t } = useTranslation('esanar')
@@ -41,6 +46,7 @@ const SANQuestionPage = ({ history }) => {
     const [isFull, setIsFull] = useState(width <= 992)
     const [response, setResponse] = useState(initialState)
     const [selected, setSelect] = useState()
+    const [bookmarked, setBookmark] = useState()
 
     const { me } = useAuthContext()
 
@@ -113,6 +119,23 @@ const SANQuestionPage = ({ history }) => {
         pauseStopwatch()
     }
 
+    const handleBookmark = async () => {
+        try {
+            const {
+                data: { createBookmarks }
+            } = await client.mutate({
+                mutation: CREATE_BOOKMARK,
+                variables: {
+                    resourceId: questions[0].id,
+                    resourceType: 'Question'
+                }
+            })
+            setBookmark(!!createBookmarks)
+        } catch {
+            message.error(t('questionBase.question.failHandleBookmark'))
+        }
+    }
+
     useEffect(() => {
         if (
             !firstLoad &&
@@ -128,6 +151,13 @@ const SANQuestionPage = ({ history }) => {
     useEffect(() => {
         setIsFull(width <= 992)
     }, [width])
+
+    useEffect(() => {
+        if (questions && questions.length) {
+            setBookmark(questions[0].bookmarked)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentIndex, questions])
 
     if (!firstLoad && (!questions || !questions.length)) {
         return <SANEmptyQuestions />
@@ -149,9 +179,20 @@ const SANQuestionPage = ({ history }) => {
                                         size='small'
                                         variant='text'
                                         bold
-                                        disabled
+                                        onClick={handleBookmark}
                                     >
-                                        <ESEvaIcon name='heart-outline' />
+                                        {bookmarked ? (
+                                            <ESEvaIcon
+                                                name='heart'
+                                                color='error'
+                                                key='quiz-bookmarked'
+                                            />
+                                        ) : (
+                                            <ESEvaIcon
+                                                name='heart-outline'
+                                                key='quiz-not-bookmarked'
+                                            />
+                                        )}
                                         {t(
                                             'questionBase.question.saveQuestion'
                                         )}

@@ -25,13 +25,15 @@ const SANPracticeCompletedPage = ({ history }) => {
             )
             history.push('./filtro')
         }
-    })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
         return () => {
             reset()
         }
-    })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const getAverageTime = time =>
         esUtilConvertSecondsToTime(

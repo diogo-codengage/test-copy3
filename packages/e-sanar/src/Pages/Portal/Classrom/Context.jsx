@@ -9,10 +9,12 @@ import { formatPlaylist } from 'Utils/formatPlaylist'
 import { useApolloContext } from 'Hooks/apollo'
 import { useAuthContext } from 'Hooks/auth'
 import { usePortalContext } from '../Context'
+import { useLayoutContext } from '../Layout/Context'
+
 import { GET_MODULE } from 'Apollo/Classroom/queries/module'
 import { CREATE_BOOKMARK } from 'Apollo/Classroom/mutations/bookmark'
 import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
-import { useLayoutContext } from '../Layout/Context'
+import { GET_BOOKMARK } from 'Apollo/Classroom/queries/bookmark'
 
 const Context = createContext()
 
@@ -27,7 +29,8 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         currentModule,
         currentResource,
         dispatch,
-        fetchLastAccessed
+        fetchLastAccessed,
+        setError
     } = usePortalContext()
 
     const {
@@ -40,7 +43,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
 
     const { id: enrollmentId } = getEnrollment()
 
-    const [bookmarked, setBookmarked] = useState()
+    const [bookmarked, setBookmark] = useState()
 
     const openMenu = () => {
         setMenuTab(9)
@@ -61,7 +64,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
                     userId: me.id
                 }
             })
-            !resourceId && setBookmarked(oldBookmarked => !oldBookmarked)
+            !resourceId && setBookmark(oldBookmarked => !oldBookmarked)
         } catch {
             message.error(t('classroom.failHandleBookmark'))
         }
@@ -89,11 +92,10 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         }
     }
 
-    useEffect(() => {
-        currentResource &&
-            setBookmarked(getResource(currentResource).bookmarked)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentResource])
+    // useEffect(() => {
+    //     currentResource && setBookmark(getResource(currentResource).bookmarked)
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [currentResource])
 
     useEffect(() => {
         setDarkMode(true)
@@ -107,6 +109,30 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         return fetchLastAccessed
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        if (currentResource) {
+            const fetchData = async () => {
+                try {
+                    const {
+                        data: { bookmark }
+                    } = await client.query({
+                        query: GET_BOOKMARK,
+                        fetchPolicy: 'network-only',
+                        variables: {
+                            resourceId: getResource(currentResource).id
+                        }
+                    })
+
+                    setBookmark(!!bookmark)
+                } catch (err) {
+                    console.error(err)
+                }
+            }
+            fetchData()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentResource])
 
     useEffect(() => {
         if (currentModule && currentModule.id === params.moduleId) return
@@ -165,6 +191,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
             } catch (error) {
                 console.error(error)
                 message.error(t('classroom.failLoadClassroom'))
+                setError(error)
                 dispatch({ type: 'loading', payload: error })
             }
         }

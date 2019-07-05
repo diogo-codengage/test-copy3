@@ -13,10 +13,12 @@ import { usePortalContext } from 'Pages/Portal/Context'
 import { useAuthContext } from 'Hooks/auth'
 import { getClassRoute } from 'Utils/getClassRoute'
 
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
+
 const SANCourseContinue = ({ history }) => {
     const { getEnrollment } = useAuthContext()
     const { t } = useTranslation('esanar')
-    const { lastAccessed } = usePortalContext()
+    const { lastAccessed, error } = usePortalContext()
 
     const { next_module } = getEnrollment()
 
@@ -62,44 +64,52 @@ const SANCourseContinue = ({ history }) => {
     return (
         <div className='san-tab-course-content__continue'>
             <SANPortalPagesContainer>
-                <ESRow gutter={24}>
-                    <ESCol xs={24} md={12}>
-                        <SessionTitle
-                            title={t(
-                                'courseDetails.tabContent.continue.whereStopped'
-                            )}
-                        />
-                        <ESCardCourseModule
-                            className='san-tab-course-content__continue--card'
-                            {...leftProps}
-                            actionName={t(
-                                'courseDetails.tabContent.cardModuleAction'
-                            )}
-                        />
-                    </ESCol>
-                    <ESCol xs={24} md={12}>
-                        <SessionTitle
-                            title={t(
-                                'courseDetails.tabContent.continue.nextDiscipline'
-                            )}
-                        />
-                        <ESCardCourseModule
-                            className='san-tab-course-content__continue--card'
-                            moduleName={`${t(
-                                'courseDetails.tabContent.discipline.discipline.key'
-                            )} ${next_module.index + 1}`}
-                            title={next_module.name}
-                            badge={getBadge(next_module, 'progress')}
-                            progress={percentProgressNext}
-                            actionName={t(
-                                'courseDetails.tabContent.cardModuleAction'
-                            )}
-                            moduleTime={`${next_module.duration || 0}min`}
-                            image={next_module.cover_picture_url}
-                            onClick={goClassroomNext(next_module)}
-                        />
-                    </ESCol>
-                </ESRow>
+                {!error ? (
+                    <ESRow gutter={24}>
+                        <ESCol xs={24} md={12}>
+                            <SessionTitle
+                                title={t(
+                                    'courseDetails.tabContent.continue.whereStopped'
+                                )}
+                            />
+                            <ESCardCourseModule
+                                className='san-tab-course-content__continue--card'
+                                {...leftProps}
+                                actionName={t(
+                                    'courseDetails.tabContent.cardModuleAction'
+                                )}
+                            />
+                        </ESCol>
+                        <ESCol xs={24} md={12}>
+                            <SessionTitle
+                                title={t(
+                                    'courseDetails.tabContent.continue.nextModule'
+                                )}
+                            />
+                            <ESCardCourseModule
+                                className='san-tab-course-content__continue--card'
+                                moduleName={`${t(
+                                    'courseDetails.tabContent.discipline.discipline.key'
+                                )} ${next_module.index + 1}`}
+                                title={next_module.name}
+                                badge={getBadge(next_module, 'progress')}
+                                progress={percentProgressNext}
+                                actionName={t(
+                                    'courseDetails.tabContent.cardModuleAction'
+                                )}
+                                moduleTime={`${next_module.duration || 0}min`}
+                                image={next_module.cover_picture_url}
+                                onClick={goClassroomNext(next_module)}
+                            />
+                        </ESCol>
+                    </ESRow>
+                ) : (
+                    <SANErrorPiece
+                        message={t(
+                            'courseDetails.tabContent.continue.error.defaultMessage'
+                        )}
+                    />
+                )}
             </SANPortalPagesContainer>
         </div>
     )

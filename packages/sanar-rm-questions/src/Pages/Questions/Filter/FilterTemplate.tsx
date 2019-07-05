@@ -20,6 +20,7 @@ import { ESSelect, ISelectOption } from '../../../Components/ESSelect'
 import { FilterInputContainer } from './FilterInputContainer'
 import { Speciality } from '../../../BFF/speciality'
 import { Tag } from '../../../BFF/tag'
+import { createDistinctFilter } from '../../../Util/distinct'
 
 export interface IFilterTemplateProps {
     allSpecialties: Speciality[],
@@ -64,7 +65,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
         placeholderInstitutions = `${props.selectedInstitutions.length} selecionadas`;
     }
 
-    let allTags = props.allTags.sort(sortByLabel);
+    let allTags = props.allTags.filter(createDistinctFilter<Tag>(t => t.value)).sort(sortByLabel);
     let allSpecialties = props.allSpecialties;
     let allSubSpecialties = props.allSpecialties.flatMap(s => s.children).sort(sortByLabel);
 

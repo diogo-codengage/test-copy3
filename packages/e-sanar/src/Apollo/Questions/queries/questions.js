@@ -40,6 +40,7 @@ export const GET_QUESTIONS = gql`
                         text
                     }
                 }
+                bookmarked
                 images {
                     data {
                         id

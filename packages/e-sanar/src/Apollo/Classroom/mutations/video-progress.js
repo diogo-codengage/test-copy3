@@ -7,6 +7,7 @@ export const CREATE_PROGRESS = gql`
         $percentage: Int
         $timeInSeconds: Int
         $enrollmentId: String!
+        $parentVideoId: String
     ) {
         createProgress(
             input: {
@@ -15,6 +16,7 @@ export const CREATE_PROGRESS = gql`
                 percentage: $percentage
                 time_in_seconds: $timeInSeconds
                 enrollment_id: $enrollmentId
+                parent_video_id: $parentVideoId
             }
         ) {
             progress {

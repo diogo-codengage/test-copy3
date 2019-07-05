@@ -20,12 +20,7 @@ const SANClassroomMock = () => {
         onNavigation,
         state: { currentModule }
     } = usePortalContext()
-    const {
-        handleBookmark,
-        bookmarked,
-        openMenu,
-        stopwatchRef
-    } = useClassroomContext()
+    const { openMenu, stopwatchRef } = useClassroomContext()
 
     return (
         <div className='classroom__mock'>
@@ -52,8 +47,6 @@ const SANClassroomMock = () => {
             />
             <SANQuiz
                 quiz={currentResource.quiz}
-                bookmarked={bookmarked}
-                handleBookmark={handleBookmark}
                 stopwatchRef={stopwatchRef}
                 mock
             />

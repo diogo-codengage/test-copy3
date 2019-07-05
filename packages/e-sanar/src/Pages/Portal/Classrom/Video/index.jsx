@@ -19,6 +19,7 @@ import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
 import { usePortalContext } from 'Pages/Portal/Context'
 import { useClassroomContext } from '../Context'
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 
 const SANClassroomVideo = () => {
     const { t } = useTranslation('esanar')
@@ -29,6 +30,7 @@ const SANClassroomVideo = () => {
     const client = useApolloContext()
     const {
         currentResource,
+        error,
         nextResource,
         prevResource,
         onNavigation,
@@ -42,7 +44,6 @@ const SANClassroomVideo = () => {
         openMenu
     } = useClassroomContext()
 
-    const [quizBookmarked, setQuizBookmarked] = useState()
     const [rate, setRate] = useState()
     const [playlistVideo, setPlaylistVideo] = useState()
     const [videoError, seVideoError] = useState()
@@ -51,14 +52,6 @@ const SANClassroomVideo = () => {
     const handleVideoError = () => seVideoError(true)
 
     const handleVideoReady = () => seVideoReady(true)
-
-    const handleQuizBookmark = () => {
-        handleBookmark({
-            resourceId: currentResource.quiz.id,
-            resourceType: 'Quiz'
-        })
-        setQuizBookmarked(oldQuizBookmarked => !oldQuizBookmarked)
-    }
 
     const handleRate = value => {
         setRate(value)
@@ -135,8 +128,6 @@ const SANClassroomVideo = () => {
                     image: currentResource.video.thumbnails.large
                 }
             ])
-            currentResource.quiz &&
-                setQuizBookmarked(currentResource.quiz.bookmarked)
         }
     }, [currentResource])
 
@@ -154,7 +145,11 @@ const SANClassroomVideo = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentResource, playerRef, videoReady])
 
-    return (
+    return error ? (
+        <div className='classroom__video'>
+            <SANErrorPiece message={t('classroom.error')} dark={true} />
+        </div>
+    ) : (
         <div
             className={classNames('classroom__video', {
                 'classroom__video--no-quiz': !currentResource.quiz
@@ -242,8 +237,7 @@ const SANClassroomVideo = () => {
                     <ESTabPane tab={t('classroom.questions')} key='1'>
                         <SANQuiz
                             quiz={currentResource.quiz}
-                            bookmarked={quizBookmarked}
-                            handleBookmark={handleQuizBookmark}
+                            parentVideoId={currentResource.video.id}
                         />
                     </ESTabPane>
                     <ESTabPane

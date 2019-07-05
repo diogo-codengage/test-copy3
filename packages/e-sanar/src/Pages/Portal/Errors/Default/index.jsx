@@ -10,7 +10,7 @@ const ESDefaultError = () => {
     return (
         <div className='default-error'>
             <div className='default-error__container'>
-                <img src={image} className='default__image' />
+                <img src={image} alt='' className='default__image' />
                 <ESTypography
                     variant='body1'
                     strong

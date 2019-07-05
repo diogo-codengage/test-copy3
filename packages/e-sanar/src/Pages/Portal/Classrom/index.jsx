@@ -10,6 +10,7 @@ import { usePortalContext } from '../Context'
 import SANClassroomVideo from './Video'
 import SANClassroomDocument from './Document'
 import SANClassroomMock from './Mock'
+import ESDefaultError from '../Errors/Default'
 
 const renderResourceContent = resource => {
     switch (resource.resource_type) {
@@ -37,7 +38,7 @@ const SANClassroomPage = () => {
             </div>
         )
 
-    if (error) return <div className='classroom'>{`Error: ${error}`}</div>
+    if (error) return <ESDefaultError />
 
     return (
         <div className='classroom'>
