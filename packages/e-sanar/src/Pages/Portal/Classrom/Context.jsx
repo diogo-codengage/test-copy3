@@ -37,7 +37,8 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         setMenuTab,
         setDarkMode,
         stopwatchRef,
-        menuOpenOrClose
+        menuOpenOrClose,
+        setPageContext
     } = useLayoutContext()
     const { getEnrollment, me } = useAuthContext()
 
@@ -91,6 +92,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         setDarkMode(true)
         return () => {
             setDarkMode(false)
+            setPageContext(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
