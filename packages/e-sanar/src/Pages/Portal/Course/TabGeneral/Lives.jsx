@@ -33,7 +33,6 @@ const SANLives = () => {
             />
             {live ? (
                 <ESLiveSection
-                    status={live.status}
                     videoSrc={link}
                     description={live.description}
                     title={live.title}

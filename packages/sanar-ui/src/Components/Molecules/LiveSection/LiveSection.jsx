@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Avatar } from 'antd'
 
 import { ESRow, ESCol } from '../../Atoms/Grid'
 import ESEvaIcon from '../../Atoms/EvaIcon'
+import ESSkeleton from '../../Atoms/Skeleton'
 import ESTypography from '../../Atoms/Typography'
 
 const ESInstructor = ({ avatar, labelLive, linkedin, formation, name }) => (
@@ -56,9 +57,10 @@ const ESLiveSection = ({
     action,
     formation,
     linkedin,
-    status,
+    online,
     labelAoVivo
 }) => {
+    const [loading, setLoading] = useState(true)
     const classes = classNames('es-live-section', className)
 
     return (
@@ -71,7 +73,7 @@ const ESLiveSection = ({
                 className='es-live-section__player'
             >
                 <div>
-                    {status === 'active' && (
+                    {online && (
                         <ESTypography
                             className='aovivo'
                             variant='caption'
@@ -80,7 +82,15 @@ const ESLiveSection = ({
                             {labelAoVivo}
                         </ESTypography>
                     )}
+                    <ESSkeleton
+                        active
+                        loading={loading}
+                        title={false}
+                        paragraph={false}
+                        avatar={{ shape: 'square', size: 400 }}
+                    />
                     <iframe
+                        onLoad={() => setLoading(false)}
                         width='100%'
                         height='100%'
                         src={videoSrc}
@@ -133,7 +143,7 @@ const ESLiveSection = ({
 }
 
 ESLiveSection.propTypes = {
-    status: PropTypes.oneOf(['active']),
+    online: PropTypes.bool,
     videoSrc: PropTypes.string,
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     labelLive: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
