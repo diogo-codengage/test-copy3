@@ -15,10 +15,12 @@ import { useAuthContext } from 'Hooks/auth'
 
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 import SANQuestionsHistoricHeader from './Header'
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 
 const SANQuestionsHistoric = () => {
     const [current, setCurrent] = useState(1)
     const [pageSize] = useState(10)
+    const [err, setErr] = useState(null)
     const {
         me: { id }
     } = useAuthContext()
@@ -46,6 +48,9 @@ const SANQuestionsHistoric = () => {
             image={getImage(answer.question.images)}
         />
     )
+    const handleErr = err => {
+        setErr(err)
+    }
 
     return (
         <Query
@@ -55,9 +60,17 @@ const SANQuestionsHistoric = () => {
                 limit: pageSize,
                 skip: pageSize * current - pageSize
             }}
+            onError={handleErr}
         >
             {({ loading, error, data }) => {
-                if (error) throw new Error(error)
+                if (error || err)
+                    return (
+                        <div className='questions-historic__err-container'>
+                            <SANErrorPiece
+                                message={t('questionBase.historic.error')}
+                            />
+                        </div>
+                    )
 
                 const count = !loading ? data.userAnswers.count : 0
                 const userAnswers = !loading ? data.userAnswers.data : []
