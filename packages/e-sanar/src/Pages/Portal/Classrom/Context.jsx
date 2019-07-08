@@ -33,7 +33,12 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         setError
     } = usePortalContext()
 
-    const { setMenuTab, setDarkMode, stopwatchRef } = useLayoutContext()
+    const {
+        setMenuTab,
+        setDarkMode,
+        stopwatchRef,
+        menuOpenOrClose
+    } = useLayoutContext()
     const { getEnrollment, me } = useAuthContext()
 
     const { id: enrollmentId } = getEnrollment()
@@ -42,6 +47,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
 
     const openMenu = () => {
         setMenuTab(9)
+        menuOpenOrClose()
     }
 
     const handleBookmark = async ({ resourceId, resourceType }) => {
@@ -80,11 +86,6 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
             })
         }
     }
-
-    // useEffect(() => {
-    //     currentResource && setBookmark(getResource(currentResource).bookmarked)
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [currentResource])
 
     useEffect(() => {
         setDarkMode(true)

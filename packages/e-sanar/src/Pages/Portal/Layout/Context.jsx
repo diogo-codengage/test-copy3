@@ -37,6 +37,7 @@ const LayoutProvider = ({ children, history }) => {
     const { t } = useTranslation('esanar')
     const [darkMode, setDarkMode] = useState(false)
     const [menuIsOpen, setMenuIsOpen] = useState(false)
+    const [pageContext, setPageContext] = useState(null)
     const stopwatchRef = useRef()
     const menuRef = useRef({})
 
@@ -50,8 +51,8 @@ const LayoutProvider = ({ children, history }) => {
         }
     }, [menuIsOpen])
 
-    const menuOpenOrClose = (action = false) => {
-        menuRef.current.setToggle()
+    const menuOpenOrClose = action => {
+        menuRef.current.setToggle(action)
     }
 
     const setMenuTab = index => {
@@ -64,7 +65,6 @@ const LayoutProvider = ({ children, history }) => {
                         menuTitle: t(`${intlPath}menu`)
                     }
                 })
-                menuOpenOrClose()
                 history.push('/aluno/curso')
                 break
             case 1:
@@ -78,7 +78,6 @@ const LayoutProvider = ({ children, history }) => {
                 break
             case 5:
                 history.push('/aluno/banco-questoes')
-                menuOpenOrClose()
                 break
             case 6:
                 dispatch({
@@ -115,7 +114,6 @@ const LayoutProvider = ({ children, history }) => {
                         menuTitle: <SANClassPlaylistMenuHeader />
                     }
                 })
-                menuOpenOrClose()
                 break
             default:
                 dispatch({
@@ -137,7 +135,9 @@ const LayoutProvider = ({ children, history }) => {
         stopwatchRef,
         menuRef,
         menuOpenOrClose,
-        setMenuIsOpen
+        setMenuIsOpen,
+        pageContext,
+        setPageContext
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>
