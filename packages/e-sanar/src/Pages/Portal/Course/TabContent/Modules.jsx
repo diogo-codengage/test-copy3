@@ -4,7 +4,9 @@ import { withRouter } from 'react-router-dom'
 import { Query } from 'react-apollo'
 import { useTranslation } from 'react-i18next'
 
-import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
+import ESListView, {
+    ESListViewItem
+} from 'sanar-ui/dist/Components/Atoms/ListView'
 import ESPagination from 'sanar-ui/dist/Components/Atoms/Pagination'
 import ESSpin from 'sanar-ui/dist/Components/Atoms/Spin'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
@@ -68,8 +70,8 @@ const SANCourseModules = ({ history }) => {
         )
     }
 
-    const renderDiscipline = (item, index) => (
-        <ESCol key={index} xs={12} md={8} lg={8} xl={6}>
+    const renderDiscipline = item => (
+        <ESListViewItem key={item.key}>
             <ESCardCourseModule
                 className='san-tab-course-content__continue--card'
                 moduleName={`${t(
@@ -95,7 +97,7 @@ const SANCourseModules = ({ history }) => {
                 image={item.cover_picture_url}
                 onClick={goClassrom(item)}
             />
-        </ESCol>
+        </ESListViewItem>
     )
 
     return (
@@ -183,13 +185,24 @@ const SANCourseModules = ({ history }) => {
                                 //     </ESRadioGroup>
                                 // }
                             />
-                            <ESRow gutter={24}>
-                                {data.map(renderDiscipline)}
-                            </ESRow>
-                            <ESPagination
-                                total={count}
-                                current={current}
-                                onChange={setCurrent}
+                            <ESListView
+                                grid={{
+                                    gutter: 24,
+                                    xs: 1,
+                                    sm: 2,
+                                    md: 3,
+                                    xl: 4
+                                }}
+                                loading={loading}
+                                dataSource={data}
+                                renderItem={renderDiscipline}
+                                footer={
+                                    <ESPagination
+                                        total={count}
+                                        current={current}
+                                        onChange={setCurrent}
+                                    />
+                                }
                             />
                         </SANPortalPagesContainer>
                     </div>
