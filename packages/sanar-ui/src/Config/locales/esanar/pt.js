@@ -268,7 +268,8 @@ export default {
         historic: {
             title: 'Histórico de questões',
             subtitle: 'Confira as últimas questões respondidas por você',
-            empty: 'Não há histórico'
+            empty: 'Não há histórico',
+            error: 'Ocorreu um erro ao mostrar o histórico de questões.'
         },
         filter: {
             title: 'Banco de questões',
