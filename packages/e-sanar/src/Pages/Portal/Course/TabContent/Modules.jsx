@@ -68,6 +68,36 @@ const SANCourseModules = ({ history }) => {
         )
     }
 
+    const renderDiscipline = (item, index) => (
+        <ESCol key={index} xs={12} md={8} lg={8} xl={6}>
+            <ESCardCourseModule
+                className='san-tab-course-content__continue--card'
+                moduleName={`${t(
+                    'courseDetails.tabContent.discipline.discipline.key'
+                )} ${item.index}`}
+                title={item.name}
+                badge={
+                    item.progress
+                        ? `${item.progress.done}/${item.progress.total}`
+                        : '0/0'
+                }
+                progress={
+                    item.progress
+                        ? (item.progress.done * 100) / item.progress.total
+                        : 0
+                }
+                actionName={
+                    <span className='san-tab-course-content__modules--card-action'>
+                        {t('courseDetails.tabContent.cardModuleAction')}
+                    </span>
+                }
+                moduleTime={`${item.duration || 0}min`}
+                image={item.cover_picture_url}
+                onClick={goClassrom(item)}
+            />
+        </ESCol>
+    )
+
     return (
         <Query
             query={GET_MODULES}
@@ -154,48 +184,7 @@ const SANCourseModules = ({ history }) => {
                                 // }
                             />
                             <ESRow gutter={24}>
-                                {data.map((item, index) => (
-                                    <ESCol
-                                        key={index}
-                                        xs={12}
-                                        md={8}
-                                        lg={8}
-                                        xl={6}
-                                    >
-                                        <ESCardCourseModule
-                                            className='san-tab-course-content__continue--card'
-                                            moduleName={`${t(
-                                                'courseDetails.tabContent.discipline.discipline.key'
-                                            )} ${item.index + 1}`}
-                                            title={item.name}
-                                            badge={
-                                                item.progress
-                                                    ? `${item.progress.done}/${
-                                                          item.progress.total
-                                                      }`
-                                                    : '0/0'
-                                            }
-                                            progress={
-                                                item.progress
-                                                    ? (item.progress.done *
-                                                          100) /
-                                                      item.progress.total
-                                                    : 0
-                                            }
-                                            actionName={
-                                                <span className='san-tab-course-content__modules--card-action'>
-                                                    {t(
-                                                        'courseDetails.tabContent.cardModuleAction'
-                                                    )}
-                                                </span>
-                                            }
-                                            moduleTime={`${item.duration ||
-                                                0}min`}
-                                            image={item.cover_picture_url}
-                                            onClick={goClassrom(item)}
-                                        />
-                                    </ESCol>
-                                ))}
+                                {data.map(renderDiscipline)}
                             </ESRow>
                             <ESPagination
                                 total={count}
