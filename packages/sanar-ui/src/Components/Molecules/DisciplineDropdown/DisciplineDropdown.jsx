@@ -72,9 +72,9 @@ const ESDisciplineDropdown = ({
                                     name='checkmark-outline'
                                 />
                             ) : (
-                                `${items.findIndex(
-                                    item => item.id === activeItem.id
-                                ) + 1}`
+                                <ESTypography variant='caption'>
+                                    {progress.toFixed(0)}
+                                </ESTypography>
                             )
                         }
                         percent={progress}
