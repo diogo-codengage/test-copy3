@@ -31,6 +31,15 @@ export const MainMenuProvider = ({ children }) => {
         setShowClose(width <= 1365)
     }, [width])
 
+    useEffect(() => {
+        if (context === 'classroom') {
+            setToggle(false)
+            setShowContinueBar(false)
+        } else if (width >= 1365) {
+            setToggle(true)
+        }
+    }, [context])
+
     const value = {
         position,
         theme,

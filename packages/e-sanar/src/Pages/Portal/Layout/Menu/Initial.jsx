@@ -15,12 +15,14 @@ import { useAuthContext } from 'Hooks/auth'
 import { usePortalContext } from 'Pages/Portal/Context'
 import { getClassRoute } from 'Utils/getClassRoute'
 import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
+import { useLayoutContext } from '../../Layout/Context'
 
 const intlPath = 'mainMenu.initial.'
 
 const SANInitial = ({ setTab, history }) => {
     const { lastAccessed, error } = usePortalContext()
     const { getEnrollment } = useAuthContext()
+    const { menuOpenOrClose } = useLayoutContext()
     const { t } = useTranslation('esanar')
 
     const { course, ranking } = getEnrollment()
@@ -79,6 +81,7 @@ const SANInitial = ({ setTab, history }) => {
                     key={0}
                     title={t(`${intlPath}init`)}
                     icon={<ESEvaIcon name='home-outline' color='default' />}
+                    onClick={() => menuOpenOrClose()}
                 />
                 {/*FIXME: <ESNavigationListItem
                     key={1}
@@ -110,6 +113,7 @@ const SANInitial = ({ setTab, history }) => {
                     key={5}
                     title={t(`${intlPath}questions`)}
                     icon={<ESEvaIcon name='edit-outline' color='default' />}
+                    onClick={() => menuOpenOrClose()}
                 />
                 {/*FIXME: <ESNavigationListItem
                     key={6}

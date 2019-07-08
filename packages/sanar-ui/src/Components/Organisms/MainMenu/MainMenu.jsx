@@ -129,7 +129,7 @@ const ESMainMenu = forwardRef(
 
         const initialBottomClick = e => {
             handleOpenOrClose(true)
-            // initialClick(e)
+            initialClick(e)
         }
 
         const searchBottomClick = e => {
@@ -138,7 +138,10 @@ const ESMainMenu = forwardRef(
         }
 
         const handleOpenOrClose = (action = !toggle) => {
-            if (width > 1365 && context !== 'classroom') return
+            if (width >= 1365 && context != 'classroom') {
+                setToggle(true)
+                return
+            }
             setToggle(action)
         }
 
@@ -183,13 +186,14 @@ const ESMainMenu = forwardRef(
                 ) : (
                     context !== 'classroom' && (
                         <>
-                            {showContinueBar && (
-                                <ESCardContinueCourse
-                                    className='es-main-menu__continue'
-                                    {...continueCourseProps}
-                                    borderRadius={false}
-                                />
-                            )}
+                            {showContinueBar &&
+                                context !== 'questionPractice' && (
+                                    <ESCardContinueCourse
+                                        className='es-main-menu__continue'
+                                        {...continueCourseProps}
+                                        borderRadius={false}
+                                    />
+                                )}
                             <div className='es-main-menu__sidebar-bottom'>
                                 <HomeButton onClick={onHome} />
                                 {onSearchClick && (

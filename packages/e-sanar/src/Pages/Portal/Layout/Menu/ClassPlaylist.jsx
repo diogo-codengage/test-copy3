@@ -20,6 +20,7 @@ import { useApolloContext } from 'Hooks/apollo'
 import { getClassRoute } from 'Utils/getClassRoute'
 
 import { useLayoutContext } from '../../Layout/Context'
+import { useTranslation } from 'react-i18next'
 
 const CommonProgress = () => {
     const { getEnrollment } = useAuthContext()
@@ -56,7 +57,8 @@ const CommonProgress = () => {
 }
 
 export const SANClassPlaylistMenuHeader = () => {
-    const { menuRef, setMenuTab } = useLayoutContext()
+    const { menuOpenOrClose, setMenuTab } = useLayoutContext()
+    const { t } = useTranslation('esanar')
 
     const exitClassroom = () => {
         setMenuTab(0)
@@ -74,7 +76,7 @@ export const SANClassPlaylistMenuHeader = () => {
                 >
                     <ESEvaIcon className='mr-xs' name='arrow-back-outline' />
                     <ESTypography variant='caption'>
-                        Voltar para início
+                        {t('classroom.classPlaylist.goToBegin')}
                     </ESTypography>
                 </ESButton>
                 <ESButton
@@ -82,7 +84,7 @@ export const SANClassPlaylistMenuHeader = () => {
                     color='white'
                     className='pl-no pr-no'
                     uppercase
-                    onClick={() => menuRef.current.setToggle()}
+                    onClick={() => menuOpenOrClose()}
                 >
                     <ESEvaIcon name='close-outline' />
                 </ESButton>
@@ -93,6 +95,7 @@ export const SANClassPlaylistMenuHeader = () => {
 }
 
 const SANClassPlaylist = ({ history }) => {
+    const { t } = useTranslation('esanar')
     const client = useApolloContext()
     const {
         currentResource,
@@ -102,7 +105,7 @@ const SANClassPlaylist = ({ history }) => {
     } = usePortalContext()
 
     const { getEnrollment } = useAuthContext()
-    const { menuRef } = useLayoutContext()
+    const { menuOpenOrClose } = useLayoutContext()
 
     const [modules, setModules] = useState(null)
     const { course, id } = getEnrollment()
@@ -131,7 +134,7 @@ const SANClassPlaylist = ({ history }) => {
     const goToResource = resource => {
         const type = getClassRoute(resource.resource_type)
         setCurrentResource(resource)
-        menuRef.current.setToggle()
+        menuOpenOrClose()
         history.push(
             `/aluno/sala-aula/${currentModule.id}/${type}/${
                 getResource(resource).id
@@ -155,7 +158,7 @@ const SANClassPlaylist = ({ history }) => {
     }
 
     const getModulePositionInModules = () =>
-        `${modules.data.findIndex(item => currentModule.id === item.id) + 1}
+        `${modules.data.findIndex(item => currentModule.id === item.id)}
         /${modules.count}`
 
     useEffect(() => {
@@ -200,7 +203,7 @@ const SANClassPlaylist = ({ history }) => {
                         ellipsis
                         variant='caption'
                     >
-                        Progresso do curso
+                        {t('courseDetails.progressbarTitle')}
                     </ESTypography>
                     <CommonProgress />
                 </div>
@@ -212,7 +215,7 @@ const SANClassPlaylist = ({ history }) => {
                 <>
                     <div className='d-flex justify-content-between mb-xs pl-md pr-md'>
                         <ESTypography transform='uppercase' variant='caption'>
-                            Disciplina
+                            {t('global.subject')}
                         </ESTypography>
                         <ESTypography
                             className='text-white-6'
