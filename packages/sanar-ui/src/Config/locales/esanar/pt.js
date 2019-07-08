@@ -356,8 +356,10 @@ export default {
         },
         classPlaylist: {
             courseError: 'Ocorreu um erro ao carregar os dados deste curso.',
-            modulesError: 'Ocorreu um erro ao carregar as disciplinas deste curso.'
-        },
+            modulesError:
+                'Ocorreu um erro ao carregar as disciplinas deste curso.',
+            goToBegin: 'Voltar para o início'
+        }
     },
     footer: {
         helpButton: 'Precisa de ajuda?',
