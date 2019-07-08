@@ -55,23 +55,23 @@ const SANQuestionsHistoric = () => {
                 limit: pageSize,
                 skip: pageSize * current - pageSize
             }}
-            fetchPolicy='cache-and-network'
-            skip={!id}
         >
-            {({ loading, error, data: { userAnswers } }) => {
-                if (loading) return <ESSpin spinning flex />
-                if (error) return `Error! ${error}`
-                const { data, count } = userAnswers
+            {({ loading, error, data }) => {
+                if (error) throw new Error(error)
 
+                const count = !loading ? data.userAnswers.count : 0
+                const userAnswers = !loading ? data.userAnswers.data : []
                 return (
                     <>
                         <SANQuestionsHistoricHeader />
                         <div className='questions-historic'>
                             <SANPortalPagesContainer>
-                                {data.length ? (
+                                {loading ? (
+                                    <ESSpin spinning flex />
+                                ) : userAnswers.length ? (
                                     <>
                                         <ESHistoricalIssuesList>
-                                            {data.map(renderItem)}
+                                            {userAnswers.map(renderItem)}
                                         </ESHistoricalIssuesList>
                                         {count > pageSize && (
                                             <div className='d-flex justify-content-center'>
