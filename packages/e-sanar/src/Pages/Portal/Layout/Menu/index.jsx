@@ -63,17 +63,20 @@ const SANMenu = ({ history }) => {
         setMenuTab,
         menuTitle,
         menuRef,
-        setMenuIsOpen
+        setMenuIsOpen,
+        pageContext,
+        setPageContext
     } = useLayoutContext()
     const { lastAccessed } = usePortalContext()
 
-    useMemo(
-        () =>
-            toDarkMode.includes(indexMenu) || darkMode
-                ? setTheme('dark')
-                : setTheme('primary'),
-        [indexMenu, darkMode]
-    )
+    useMemo(() => {
+        toDarkMode.includes(indexMenu) || darkMode
+            ? setTheme('dark')
+            : setTheme('primary')
+
+        darkMode && setPageContext('classroom')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [indexMenu, darkMode])
 
     const handleBack = () => {
         setMenuTab()
@@ -111,7 +114,7 @@ const SANMenu = ({ history }) => {
             title={menuTitle}
             theme={theme}
             showContinueBar
-            context={darkMode ? 'classroom' : ''}
+            context={pageContext}
             className='san-main-menu'
             continueCourseProps={continueCourseProps}
             onOpenOrClose={setMenuIsOpen}
