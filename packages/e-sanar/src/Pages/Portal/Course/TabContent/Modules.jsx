@@ -8,7 +8,6 @@ import ESListView, {
     ESListViewItem
 } from 'sanar-ui/dist/Components/Atoms/ListView'
 import ESPagination from 'sanar-ui/dist/Components/Atoms/Pagination'
-import ESSpin from 'sanar-ui/dist/Components/Atoms/Spin'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import ESCardCourseModule from 'sanar-ui/dist/Components/Molecules/CardCourseModule'
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
@@ -71,7 +70,7 @@ const SANCourseModules = ({ history }) => {
     }
 
     const renderDiscipline = item => (
-        <ESListViewItem key={item.key}>
+        <ESListViewItem>
             <ESCardCourseModule
                 className='san-tab-course-content__continue--card'
                 moduleName={`${t(
@@ -110,9 +109,8 @@ const SANCourseModules = ({ history }) => {
                 skip: pageSize * current - pageSize
             }}
         >
-            {({ loading, error, data: { modules } }) => {
-                if (loading) return <ESSpin spinning flex minHeight={375} />
-                if (error)
+            {({ loading, error, fetchMore, data }) => {
+                if (error) {
                     return (
                         <SANErrorPiece
                             message={t(
@@ -120,7 +118,10 @@ const SANCourseModules = ({ history }) => {
                             )}
                         />
                     )
-                const { data, count } = modules
+                }
+
+                const count = !loading ? data.modules.count : 0
+                const modules = !loading ? data.modules.data : []
                 return (
                     <div className='san-tab-course-content__modules pt-md pb-lg'>
                         <SANPortalPagesContainer>
@@ -194,7 +195,7 @@ const SANCourseModules = ({ history }) => {
                                     xl: 4
                                 }}
                                 loading={loading}
-                                dataSource={data}
+                                dataSource={modules}
                                 renderItem={renderDiscipline}
                                 footer={
                                     <ESPagination
