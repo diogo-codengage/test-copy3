@@ -43,7 +43,7 @@ const SANInitial = ({ setTab, history }) => {
         title: course.name,
         ...(lastAccessed && {
             classReference: lastAccessed.module_title,
-            thumbnail: lastAccessed.thumbnail,
+            thumbnail: lastAccessed.thumbnail || lastAccessed.cover_picture_url,
             moduleReference: moduleReference(lastAccessed),
             onClick: goClassroom
         })

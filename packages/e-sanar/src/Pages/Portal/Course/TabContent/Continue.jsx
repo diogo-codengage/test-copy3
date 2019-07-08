@@ -56,7 +56,7 @@ const SANCourseContinue = ({ history }) => {
             badge: getBadge(lastAccessed, 'module_progress'),
             progress: percentProgressLast,
             moduleTime: `${lastAccessed.duration || 0}min`,
-            image: lastAccessed.thumbnail,
+            image: lastAccessed.thumbnail || lastAccessed.cover_picture_url,
             onClick: goClassroomLast(lastAccessed)
         })
     }

@@ -100,7 +100,7 @@ const QuestionsProvider = ({ children, location: { pathname }, history }) => {
             setTotalQuestions(count)
             setQuestions(data)
             setLoadedItems(data.length)
-            setCurrentIndex(1)
+            setCurrentIndex(data.length ? 1 : 0)
         } else {
             const aggregate = [...questions, ...data]
             setLoadedItems(old => old + data.length)

@@ -47,9 +47,9 @@ const PortalProvider = ({ children, history }) => {
     const [currentResource, setCurrentResource] = useState(null)
     const [nextResource, setNextResource] = useState(null)
     const [lastAccessed, setLastAccessed] = useState(null)
+    const [error, setError] = useState(null)
 
     const [state, dispatch] = useReducer(reducer, initialState)
-    const [error, setError] = useState(null)
 
     const { id: enrollmentId } = getEnrollment()
 
