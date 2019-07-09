@@ -3,11 +3,11 @@
 if [ "$CI_BRANCH" = "master" ];
 then
   NODE_ENV='production'
-  echo 'production environment'
+  yarn esanar:build:production
 elif [ "$CI_BRANCH" = "staging" ]
 then
   NODE_ENV='staging'
-  echo 'production environment'
+  yarn esanar:build:staging
 else
   NODE_ENV='development'
   yarn esanar:build:development
