@@ -3,7 +3,8 @@ import React, {
     forwardRef,
     useRef,
     useImperativeHandle,
-    useMemo
+    useMemo,
+    useEffect
 } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
@@ -17,6 +18,8 @@ import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESTypography from '../../Atoms/Typography'
 import ESRate from '../../Atoms/Rate'
 import ESSpin from '../../Atoms/Spin'
+
+import useWindowSize from '../../../Hooks/useWindowSize'
 
 const captions = {
     textColor: '#edc26d',
@@ -51,6 +54,7 @@ const ESJwPlayer = forwardRef(
         const playerRef = useRef()
         const wrapperRef = useRef()
         const { t } = useTranslation('sanarui')
+        const { width } = useWindowSize()
         const [isReady, setIsReady] = useState(false)
         const [error, setError] = useState(false)
         const [isPause, setIsPause] = useState(false)
@@ -113,7 +117,7 @@ const ESJwPlayer = forwardRef(
             if (player.getWidth() > 1024) {
                 player.resize('100vw', '100vh')
             } else {
-                player.resize('100vw', 'calc(100vh - 205px)')
+                player.resize('100vw', 'calc(100vh - 100px)')
             }
 
             setIsReady(true)
@@ -133,6 +137,16 @@ const ESJwPlayer = forwardRef(
                 parseInt(wrapperRef.current.clientWidth * 0.56),
             [wrapperRef.current]
         )
+
+        useEffect(() => {
+            if (width < 1024) {
+                const player = getPlayer(playerId)
+                player && player.resize('100vw', 'calc(100vh - 100px)')
+            } else {
+                const player = getPlayer(playerId)
+                player && player.resize('100vw', '100vh')
+            }
+        }, [width])
 
         return (
             <div className={classes} ref={wrapperRef}>

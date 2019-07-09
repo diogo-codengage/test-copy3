@@ -25,7 +25,6 @@ import ESJwPlayer from './JwPlayer'
 
 const Example = () => (
     <ESJwPlayer
-        ref={console.log}
         playerId='playerId'
         playlist='https://cdn.jwplayer.com/v2/media/yp34SRmf'
         playerScript='https://cdn.jwplayer.com/libraries/jX7FSJdG.js'
@@ -43,4 +42,8 @@ const Example = () => (
     />
 )
 
-storiesOf('Molecules.JwPlayer', module).add('Simple', () => <Example />)
+storiesOf('Molecules.JwPlayer', module).add('Simple', () => <Example />, {
+    style: {
+        padding: 0
+    }
+})
