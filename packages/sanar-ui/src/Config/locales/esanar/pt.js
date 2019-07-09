@@ -108,18 +108,6 @@ export default {
             markUnread: 'Marcar como não lida'
         }
     },
-    helpCenter:{
-        header:{
-            title:'Central de Ajuda',
-            subTitle:'Encontre aqui respostas para as principais dúvidas sobre a plataforma'
-        },
-        helpContent:[
-            { title:'Sobre a plataforma',subTitle:'Perguntas sobre o acesso e o funcionamento da plataforma'},
-            { title:'Sobre o curso e as aulas',subTitle:'Perguntas relacionadas ao curso e às aulas'},
-            { title:'Sobre cancelamento',subTitle:'Perguntas sobre cancelamentos de cursos'},
-            { title:'Outros tipos de perguntas',subTitle:'Perguntas sobre temas gerais e problemas técnicos'}
-        ]      
-    },
     courseDetails: {
         viewMyPerformance: 'Ver meu desempenho',
         myDevelopment: 'Meu desenvolvimento',

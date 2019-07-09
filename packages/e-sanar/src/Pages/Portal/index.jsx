@@ -13,7 +13,7 @@ import SANCoursePage from './Course'
 import SANQuestionsPage from './Questions'
 import SANClassroomPage from './Classrom'
 import SANMyAccountChangePassword from './MyAccount'
-import SANMyAccountHelpCenter from './MyAccount'
+import SANMyAccountHelpCenter from './MyAccount/HelpCenter'
 import { SANPortalProvider } from './Context'
 import ESDefaultError from '../Portal/Errors/Default'
 

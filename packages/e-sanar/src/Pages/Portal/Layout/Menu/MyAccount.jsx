@@ -61,7 +61,7 @@ const SANMyAccount = ({ handleBack, history }) => {
                 break
             case 2:
                 history.push('/aluno/central-ajuda/')
-                setOpenMenu(old => !old)
+                // setOpenMenu(old => !old)
                 break
             default:
                 history.push('/aluno/minha-conta/')
