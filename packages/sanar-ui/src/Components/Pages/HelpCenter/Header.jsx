@@ -1,12 +1,12 @@
 import React from 'react'
 
+import { useTranslation } from 'react-i18next'
+
 import ESTypography from '../../Atoms/Typography'
 import ESSessionTitle from '../../Molecules/SessionTitle'
 import ESInputSearch from '../../Atoms/Input/InputSearch'
-import { useTranslation } from 'react-i18next'
 
-
-const SANHelpHeader = (props) => {
+const HelpHeader = ({ getSearchData }) => {
     const { t } = useTranslation('sanarui')
 
     return (
@@ -20,14 +20,10 @@ const SANHelpHeader = (props) => {
                     }
                     subtitle={t('helpCenter.header.subTitle')}
                     extra={
-                        <div className='d-flex align-items-center'>
-                            <ESInputSearch
-                                onClick={(e)=>{props.getSearchData(e.target.value)}}
-                                onChange={(e)=>{props.getSearchData(e.target.value)}}
-                                placeholder={props.placeholder}
-                                enterButton={''}
-                            />
-                        </div>
+                        <ESInputSearch
+                            onChange={e => getSearchData(e.target.value)}
+                            placeholder={t('helpCenter.header.placeholder')}
+                        />
                     }
                 />
             </div>
@@ -35,4 +31,4 @@ const SANHelpHeader = (props) => {
     )
 }
 
-export default SANHelpHeader
+export default HelpHeader

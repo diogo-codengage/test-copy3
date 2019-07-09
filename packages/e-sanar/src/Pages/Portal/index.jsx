@@ -13,7 +13,7 @@ import SANCoursePage from './Course'
 import SANQuestionsPage from './Questions'
 import SANClassroomPage from './Classrom'
 import SANMyAccountChangePassword from './MyAccount'
-import SANMyAccountHelpCenter from './MyAccount/HelpCenter'
+import SANHelpCenter from './HelpCenter'
 import { SANPortalProvider } from './Context'
 import ESDefaultError from '../Portal/Errors/Default'
 
@@ -55,7 +55,7 @@ const SANPortalRoutes = ({ match: { url } }) => {
                                     />
                                     <Route
                                         path={`${url}/central-ajuda`}
-                                        component={SANMyAccountHelpCenter}
+                                        component={SANHelpCenter}
                                     />
                                     <Route
                                         path={`${url}/sala-aula/:moduleId/:type?/:resourceId?`}
