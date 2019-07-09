@@ -7,30 +7,20 @@ import ESCollapsePanel from '../../Atoms/Collapse/CollapsePanel'
 import SANHelpHeader from './Header'
 import questionsData from './questionsData.json';
 import { useTranslation } from 'react-i18next'
-import { select, text, boolean } from '@storybook/addon-knobs'
 
-const positionOptions = {
-    Left: 'left',
-    Right: 'right'
-}
+
 
 const ESHelpCenterTemplate = ({
-    className,
-    actionsMargin
+    bordered,
+    accordion,
+    expandIconPosition,
+    placeholder
 }) => {
-    const { t } = useTranslation('sanarui')
     let [helpCenterData, sethelpCenterData] = useState(questionsData);
 
-    const classes = classNames('es-help-center-template', className)
-
-    const classesInfo = classNames(
-        'es-help-center-template__content__infos',
-        className,
-        {
-            'es-help-center-template__content__infos--large-margin':
-                actionsMargin === 'large'
-        }
-    )
+    const { t } = useTranslation('sanarui')
+    const classes = classNames('es-help-center-template')
+    const classesInfo = classNames('es-help-center-template__content__infos','es-help-center-template__content__infos--large-margin')
 
     const getSearchData = (data) => {
         if(data === ''){
@@ -57,69 +47,69 @@ const ESHelpCenterTemplate = ({
 
     return (
         <div className={classes}>
-            <SANHelpHeader getSearchData={getSearchData}></SANHelpHeader>
+            <SANHelpHeader placeholder={placeholder} getSearchData={getSearchData}></SANHelpHeader>
             <div className='es-help-center-template__content'>
                 <div className={classesInfo}>
                     <ESSessionTitle
-                        title={text('Title', `${t('helpCenter.helpContent.0.title')}`)}
-                        subtitle={text('Subtitle',`${t('helpCenter.helpContent.0.subTitle')}`)}
+                        title={t('helpCenter.helpContent.0.title')}
+                        subtitle={t('helpCenter.helpContent.0.subTitle')}
                     />
                     <ESCollapse
                         className='mb-xxl'
-                        bordered={boolean('Bordered', true)}
-                        accordion={boolean('Accordion', false)}
-                        expandIconPosition={select('Expand Icon Position',positionOptions,'right')}
+                        bordered={bordered}
+                        accordion={accordion}
+                        expandIconPosition={expandIconPosition}
                     >
                         {helpCenterData.plataforma.map((plataforma, index) =>
-                            <ESCollapsePanel key={plataforma.title} header={text('Header',`${plataforma.title}`)} customKey={`${index}`} >
-                                <p>{plataforma.subtitle} </p>
+                        <ESCollapsePanel key={plataforma.title} header={plataforma.title} customKey={`${index}`} >
+                        <p>{plataforma.subtitle} </p>
                             </ESCollapsePanel>
                         )}
                     </ESCollapse>
                     <ESSessionTitle
-                        title={text('Title', `${t('helpCenter.helpContent.1.title')}`)}
-                        subtitle={text('Subtitle',`${t('helpCenter.helpContent.1.subTitle')}`)}
+                        title={t('helpCenter.helpContent.1.title')}
+                        subtitle={t('helpCenter.helpContent.1.subTitle')}
                     />
                     <ESCollapse
                         className='mb-xxl'
-                        bordered={boolean('Bordered', true)}
-                        accordion={boolean('Accordion', false)}
-                        expandIconPosition={select('Expand Icon Position',positionOptions,'right')}
+                        bordered={bordered}
+                        accordion={accordion}
+                        expandIconPosition={expandIconPosition}
                     >
                       {helpCenterData.cursos.map((cursos, index) =>
-                        <ESCollapsePanel key={cursos.title} header={text('Header',`${cursos.title}`)} customKey={`${index}`} >
+                        <ESCollapsePanel key={cursos.title} header={cursos.title} customKey={`${index}`} >
                             <p>{cursos.subtitle} </p>
                         </ESCollapsePanel>
                     )}
                     </ESCollapse>
                     <ESSessionTitle
-                        title={text('Title', `${t('helpCenter.helpContent.2.title')}`)}
-                        subtitle={text('Subtitle',`${t('helpCenter.helpContent.2.subTitle')}`)}
+                        title={t('helpCenter.helpContent.2.title')}
+                        subtitle={t('helpCenter.helpContent.2.subTitle')}
                     />
                     <ESCollapse
                         className='mb-xxl'
-                        bordered={boolean('Bordered', true)}
-                        accordion={boolean('Accordion', false)}
-                        expandIconPosition={select('Expand Icon Position',positionOptions,'right')}
+                        bordered={bordered}
+                        accordion={accordion}
+                        expandIconPosition={expandIconPosition}
                     >
                         {helpCenterData.cancelamento.map((cancelamento, index) =>
-                        <ESCollapsePanel key={cancelamento.title} header={text('Header',`${cancelamento.title}`)} customKey={`${index}`} >
+                        <ESCollapsePanel key={cancelamento.title} header={cancelamento.title} customKey={`${index}`} >
                             <p>{cancelamento.subtitle} </p>
                         </ESCollapsePanel>
                     )}
                     </ESCollapse>
                     <ESSessionTitle
-                        title={text('Title', `${t('helpCenter.helpContent.3.title')}`)}
-                        subtitle={text('Subtitle',`${t('helpCenter.helpContent.3.subTitle')}`)}
+                        title={t('helpCenter.helpContent.3.title')}
+                        subtitle={t('helpCenter.helpContent.3.subTitle')}
                     />
                     <ESCollapse
                         className='mb-xxl'
-                        bordered={boolean('Bordered', true)}
-                        accordion={boolean('Accordion', false)}
-                        expandIconPosition={select('Expand Icon Position',positionOptions,'right')}
+                        bordered={bordered}
+                        accordion={accordion}
+                        expandIconPosition={expandIconPosition}
                     >
                         {helpCenterData.outros.map((outros, index) =>
-                        <ESCollapsePanel key={outros.title} header={text('Header',`${outros.title}`)} customKey={`${index}`} >
+                        <ESCollapsePanel key={outros.title} header={outros.title} customKey={`${index}`} >
                             <p>{outros.subtitle} </p>
                         </ESCollapsePanel>
                     )}
@@ -131,11 +121,11 @@ const ESHelpCenterTemplate = ({
 }
 
 ESHelpCenterTemplate.propTypes = {
-    className: PropTypes.string,
-    actionsMargin: PropTypes.oneOf(['default', 'large'])
+    bordered: PropTypes.bool,
+    accordion: PropTypes.bool,
+    expandIconPosition: PropTypes.oneOf(['left', 'right']),
+    placeholder: PropTypes.string
 }
-ESHelpCenterTemplate.defaultProps = {
-    actionsMargin: 'default'
-}
+ESHelpCenterTemplate.defaultProps = {}
 
 export default ESHelpCenterTemplate

@@ -3,7 +3,6 @@ import React from 'react'
 import ESTypography from '../../Atoms/Typography'
 import ESSessionTitle from '../../Molecules/SessionTitle'
 import ESInputSearch from '../../Atoms/Input/InputSearch'
-import { text } from '@storybook/addon-knobs'
 import { useTranslation } from 'react-i18next'
 
 
@@ -25,8 +24,8 @@ const SANHelpHeader = (props) => {
                             <ESInputSearch
                                 onClick={(e)=>{props.getSearchData(e.target.value)}}
                                 onChange={(e)=>{props.getSearchData(e.target.value)}}
-                                placeholder={text('Placeholder', 'Como podemos ajudar?')}
-                                enterButton={text('Enter button', '')}
+                                placeholder={props.placeholder}
+                                enterButton={''}
                             />
                         </div>
                     }
