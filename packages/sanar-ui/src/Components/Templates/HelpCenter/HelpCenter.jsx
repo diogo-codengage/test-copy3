@@ -1,14 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import ESSessionTitle from '../../Molecules/SessionTitle'
 import ESCollapse from '../../Atoms/Collapse'
 import ESCollapsePanel from '../../Atoms/Collapse/CollapsePanel'
 import SANHelpHeader from './Header'
-
-
+import questionsData from './questionsData.json';
+import { useTranslation } from 'react-i18next'
 import { select, text, boolean } from '@storybook/addon-knobs'
-
 
 const positionOptions = {
     Left: 'left',
@@ -19,6 +18,9 @@ const ESHelpCenterTemplate = ({
     className,
     actionsMargin
 }) => {
+    const { t } = useTranslation('sanarui')
+    let [helpCenterData, sethelpCenterData] = useState(questionsData);
+
     const classes = classNames('es-help-center-template', className)
 
     const classesInfo = classNames(
@@ -30,246 +32,97 @@ const ESHelpCenterTemplate = ({
         }
     )
 
+    const getSearchData = (data) => {
+        if(data === ''){
+            sethelpCenterData(questionsData)
+        } else{
+            let dataFiltered = {}
+            dataFiltered.plataforma = questionFilter(questionsData.plataforma, data);
+            dataFiltered.cursos = questionFilter(questionsData.cursos, data);
+            dataFiltered.cancelamento = questionFilter(questionsData.cancelamento, data);
+            dataFiltered.outros = questionFilter(questionsData.outros, data);
+            sethelpCenterData(dataFiltered)
+        }
+    }
+
+    const questionFilter = (questionType, data) => {
+        return questionType.filter(function (item) {
+            return Object.values(item).map(function (value) {
+              return String(value);
+            }).find(function (value) {
+                return value.includes(data);
+            });
+          });
+    }
+
     return (
         <div className={classes}>
-            <SANHelpHeader></SANHelpHeader>
+            <SANHelpHeader getSearchData={getSearchData}></SANHelpHeader>
             <div className='es-help-center-template__content'>
                 <div className={classesInfo}>
                     <ESSessionTitle
-                        title={text('Title', 'Sobre a plataforma')}
-                        subtitle={text(
-                            'Subtitle',
-                            'Perguntas sobre o acesso e o funcionamento da plataforma'
-                        )}
+                        title={text('Title', `${t('helpCenter.helpContent.0.title')}`)}
+                        subtitle={text('Subtitle',`${t('helpCenter.helpContent.0.subTitle')}`)}
                     />
                     <ESCollapse
                         className='mb-xxl'
                         bordered={boolean('Bordered', true)}
                         accordion={boolean('Accordion', false)}
-                        expandIconPosition={select(
-                            'Expand Icon Position',
-                            positionOptions,
-                            'right'
-                        )}
+                        expandIconPosition={select('Expand Icon Position',positionOptions,'right')}
                     >
-                        <ESCollapsePanel
-                            header={text('Header', 'Enquanto tempo meu acesso é liberado?')}
-                            disabled={boolean('Disabled', false)}
-                            showArrow={boolean('Show arrow', true)}
-                            customKey='1'
-                        >
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
-                        </ESCollapsePanel>
-                        <ESCollapsePanel header='Durante quanto tempo tenho acesso ao curso?' customKey='2'>
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
-                        </ESCollapsePanel>
-                        <ESCollapsePanel header='Eu posso assistir o curso em qualquer lugar (Computador, celular, tablet)?' customKey='3'>
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
-                        </ESCollapsePanel>
-                        <ESCollapsePanel header='Como posso tirar dúvidas com os professores?' customKey='4'>
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
-                        </ESCollapsePanel>
-                        <ESCollapsePanel header='Como baixar o material complementar?' customKey='5'>
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
-                        </ESCollapsePanel>
+                        {helpCenterData.plataforma.map((plataforma, index) =>
+                            <ESCollapsePanel key={plataforma.title} header={text('Header',`${plataforma.title}`)} customKey={`${index}`} >
+                                <p>{plataforma.subtitle} </p>
+                            </ESCollapsePanel>
+                        )}
                     </ESCollapse>
                     <ESSessionTitle
-                        title={text('Title', 'Sobre o curso e as aulas')}
-                        subtitle={text(
-                            'Subtitle',
-                            'Perguntas relacionadas ao curso e às aulas'
-                        )}
+                        title={text('Title', `${t('helpCenter.helpContent.1.title')}`)}
+                        subtitle={text('Subtitle',`${t('helpCenter.helpContent.1.subTitle')}`)}
                     />
                     <ESCollapse
                         className='mb-xxl'
                         bordered={boolean('Bordered', true)}
                         accordion={boolean('Accordion', false)}
-                        expandIconPosition={select(
-                            'Expand Icon Position',
-                            positionOptions,
-                            'right'
-                        )}
+                        expandIconPosition={select('Expand Icon Position',positionOptions,'right')}
                     >
-                        <ESCollapsePanel
-                            header={text('Header', 'O curso possui aulas atualizadas?')}
-                            disabled={boolean('Disabled', false)}
-                            showArrow={boolean('Show arrow', true)}
-                            customKey='1'
-                        >
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
+                      {helpCenterData.cursos.map((cursos, index) =>
+                        <ESCollapsePanel key={cursos.title} header={text('Header',`${cursos.title}`)} customKey={`${index}`} >
+                            <p>{cursos.subtitle} </p>
                         </ESCollapsePanel>
-                        <ESCollapsePanel header='Eu posso baixar as vídeo aulas? E o material complementar?' customKey='2'>
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
-                        </ESCollapsePanel>
-                        <ESCollapsePanel header='Eu posso ver as aulas quantas vezes eu quiser?' customKey='3'>
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
-                        </ESCollapsePanel>
-                        <ESCollapsePanel header='Tem questões para treinar?' customKey='4'>
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
-                        </ESCollapsePanel>
-                        <ESCollapsePanel header='Qual a duração das aulas?' customKey='5'>
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
-                        </ESCollapsePanel>
-                        <ESCollapsePanel header='Tem certificado?' customKey='6'>
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
-                        </ESCollapsePanel>
-                        <ESCollapsePanel header='Posso trocar o curso?' customKey='7'>
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
-                        </ESCollapsePanel>
+                    )}
                     </ESCollapse>
                     <ESSessionTitle
-                        title={text('Title', 'Sobre cancelamento')}
-                        subtitle={text(
-                            'Subtitle',
-                            'Perguntas sobre cancelamentos de cursos'
-                        )}
+                        title={text('Title', `${t('helpCenter.helpContent.2.title')}`)}
+                        subtitle={text('Subtitle',`${t('helpCenter.helpContent.2.subTitle')}`)}
                     />
                     <ESCollapse
                         className='mb-xxl'
                         bordered={boolean('Bordered', true)}
                         accordion={boolean('Accordion', false)}
-                        expandIconPosition={select(
-                            'Expand Icon Position',
-                            positionOptions,
-                            'right'
-                        )}
+                        expandIconPosition={select('Expand Icon Position',positionOptions,'right')}
                     >
-                        <ESCollapsePanel
-                            header={text('Header', 'Não gostei do curso, posso solicitar cancelamento?')}
-                            disabled={boolean('Disabled', false)}
-                            showArrow={boolean('Show arrow', true)}
-                            customKey='1'
-                        >
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
+                        {helpCenterData.cancelamento.map((cancelamento, index) =>
+                        <ESCollapsePanel key={cancelamento.title} header={text('Header',`${cancelamento.title}`)} customKey={`${index}`} >
+                            <p>{cancelamento.subtitle} </p>
                         </ESCollapsePanel>
-                        <ESCollapsePanel header='Eu posso cancelar o curso e receber só as parcelas que faltam caso passe do prazo de solicitação?' customKey='2'>
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
-                        </ESCollapsePanel>
+                    )}
                     </ESCollapse>
                     <ESSessionTitle
-                        title={text('Title', 'Outros tipos de perguntas')}
-                        subtitle={text(
-                            'Subtitle',
-                            'Perguntas sobre temas gerais e problemas técnicos'
-                        )}
+                        title={text('Title', `${t('helpCenter.helpContent.3.title')}`)}
+                        subtitle={text('Subtitle',`${t('helpCenter.helpContent.3.subTitle')}`)}
                     />
                     <ESCollapse
                         className='mb-xxl'
                         bordered={boolean('Bordered', true)}
                         accordion={boolean('Accordion', false)}
-                        expandIconPosition={select(
-                            'Expand Icon Position',
-                            positionOptions,
-                            'right'
-                        )}
+                        expandIconPosition={select('Expand Icon Position',positionOptions,'right')}
                     >
-                        <ESCollapsePanel
-                            header={text('Header', 'O que são esses materiais complementares?')}
-                            disabled={boolean('Disabled', false)}
-                            showArrow={boolean('Show arrow', true)}
-                            customKey='1'
-                        >
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
+                        {helpCenterData.outros.map((outros, index) =>
+                        <ESCollapsePanel key={outros.title} header={text('Header',`${outros.title}`)} customKey={`${index}`} >
+                            <p>{outros.subtitle} </p>
                         </ESCollapsePanel>
-                        <ESCollapsePanel header='Estou com uma dúvida/problema técnico. Como posso entrar em contato?' customKey='2'>
-                            <p>
-                                Mussum Ipsum, cacilds vidis litro abertis. Praesent vel viverra
-                                nisi. Mauris aliquet nunc non turpis scelerisque, eget. Admodum
-                                accumsan disputationi eu sit. Vide electram sadipscing et per.
-                                Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-                                Delegadis gente finis, bibendum egestas augue arcu ut est.
-                            </p>
-                        </ESCollapsePanel>
+                    )}
                     </ESCollapse>
                 </div>
             </div>
