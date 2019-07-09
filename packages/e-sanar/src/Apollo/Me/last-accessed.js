@@ -10,6 +10,7 @@ export const GET_LAST_ACCESSED = gql`
             module_order
             resource_order
             module_title
+            cover_picture_url
             module_progress {
                 done
                 total

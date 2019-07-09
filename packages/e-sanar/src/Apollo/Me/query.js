@@ -9,7 +9,7 @@ export const GET_ME = gql`
             enrollments {
                 id
                 contract
-                ranking{
+                ranking {
                     position
                     points
                 }
@@ -52,12 +52,12 @@ export const GET_ME = gql`
                     progress {
                         done
                         total
-                        # status
+                        status
                     }
                     tests {
                         done
                         total
-                        # status
+                        status
                     }
                 }
                 course {

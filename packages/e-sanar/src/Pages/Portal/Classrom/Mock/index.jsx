@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -20,23 +20,7 @@ const SANClassroomMock = () => {
         onNavigation,
         state: { currentModule }
     } = usePortalContext()
-    const {
-        handleBookmark,
-        bookmarked,
-        handleProgress,
-        openMenu,
-        stopwatchRef
-    } = useClassroomContext()
-
-    useEffect(() => {
-        if (currentResource) {
-            handleProgress({
-                percentage: 100,
-                resourceId: currentResource.quiz.id
-            })
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentResource.video])
+    const { openMenu, stopwatchRef } = useClassroomContext()
 
     return (
         <div className='classroom__mock'>
@@ -49,7 +33,7 @@ const SANClassroomMock = () => {
                         )} ${currentModule.index + 1}, ${t(
                             'global.activity'
                         )} ${currentResource.index + 1}`}
-                        onClick={() => openMenu()}
+                        onClick={openMenu}
                     />
                 }
                 rightChildren={
@@ -63,8 +47,6 @@ const SANClassroomMock = () => {
             />
             <SANQuiz
                 quiz={currentResource.quiz}
-                bookmarked={bookmarked}
-                handleBookmark={handleBookmark}
                 stopwatchRef={stopwatchRef}
                 mock
             />

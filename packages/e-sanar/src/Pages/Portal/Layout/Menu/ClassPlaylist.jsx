@@ -20,6 +20,7 @@ import { useApolloContext } from 'Hooks/apollo'
 import { getClassRoute } from 'Utils/getClassRoute'
 
 import { useLayoutContext } from '../../Layout/Context'
+import { useTranslation } from 'react-i18next'
 
 const CommonProgress = () => {
     const { getEnrollment } = useAuthContext()
@@ -56,7 +57,8 @@ const CommonProgress = () => {
 }
 
 export const SANClassPlaylistMenuHeader = () => {
-    const { setOpenMenu, setMenuTab } = useLayoutContext()
+    const { menuOpenOrClose, setMenuTab } = useLayoutContext()
+    const { t } = useTranslation('esanar')
 
     const exitClassroom = () => {
         setMenuTab(0)
@@ -74,7 +76,7 @@ export const SANClassPlaylistMenuHeader = () => {
                 >
                     <ESEvaIcon className='mr-xs' name='arrow-back-outline' />
                     <ESTypography variant='caption'>
-                        Voltar para início
+                        {t('classroom.classPlaylist.goToBegin')}
                     </ESTypography>
                 </ESButton>
                 <ESButton
@@ -82,7 +84,7 @@ export const SANClassPlaylistMenuHeader = () => {
                     color='white'
                     className='pl-no pr-no'
                     uppercase
-                    onClick={() => setOpenMenu(old => !old)}
+                    onClick={() => menuOpenOrClose()}
                 >
                     <ESEvaIcon name='close-outline' />
                 </ESButton>
@@ -93,6 +95,7 @@ export const SANClassPlaylistMenuHeader = () => {
 }
 
 const SANClassPlaylist = ({ history }) => {
+    const { t } = useTranslation('esanar')
     const client = useApolloContext()
     const {
         currentResource,
@@ -102,18 +105,38 @@ const SANClassPlaylist = ({ history }) => {
     } = usePortalContext()
 
     const { getEnrollment } = useAuthContext()
-    const { setOpenMenu } = useLayoutContext()
+    const { menuOpenOrClose } = useLayoutContext()
 
     const [modules, setModules] = useState(null)
     const { course, id } = getEnrollment()
 
+    const progressTest = ({ level_contents: { data: lessons } }) => {
+        if (!currentModule) return 0
+        let counter = 0
+
+        const count = lessons.reduce((accumulator, currentValue) => {
+            const resource = getResource(currentValue)
+            if (!resource.progress) return accumulator
+
+            if (currentValue.resource_type === 'Video' && currentValue.quiz) {
+                counter += 2
+                return (accumulator +=
+                    resource.progress.percentage +
+                    currentValue.quiz.progress.percentage)
+            }
+
+            counter++
+            return (accumulator += resource.progress.percentage)
+        }, 0)
+        return ((count / counter) * 100) / 100
+    }
+
     const goToResource = resource => {
+        const type = getClassRoute(resource.resource_type)
         setCurrentResource(resource)
-        setOpenMenu(oldOpenMenu => !oldOpenMenu)
+        menuOpenOrClose()
         history.push(
-            `/aluno/sala-aula/${
-                currentModule.id
-            }/${resource.resource_type.toLowerCase()}/${
+            `/aluno/sala-aula/${currentModule.id}/${type}/${
                 getResource(resource).id
             }`
         )
@@ -133,6 +156,10 @@ const SANClassPlaylist = ({ history }) => {
             />
         )
     }
+
+    const getModulePositionInModules = () =>
+        `${modules.data.findIndex(item => currentModule.id === item.id)}
+        /${modules.count}`
 
     useEffect(() => {
         const getModules = async () => {
@@ -176,7 +203,7 @@ const SANClassPlaylist = ({ history }) => {
                         ellipsis
                         variant='caption'
                     >
-                        Progresso do curso
+                        {t('courseDetails.progressbarTitle')}
                     </ESTypography>
                     <CommonProgress />
                 </div>
@@ -188,13 +215,13 @@ const SANClassPlaylist = ({ history }) => {
                 <>
                     <div className='d-flex justify-content-between mb-xs pl-md pr-md'>
                         <ESTypography transform='uppercase' variant='caption'>
-                            Disciplina
+                            {t('global.subject')}
                         </ESTypography>
                         <ESTypography
                             className='text-white-6'
                             variant='caption'
                         >
-                            {currentModule.index + 1}/{modules.count}
+                            {!loading && getModulePositionInModules()}
                         </ESTypography>
                     </div>
                     <div className='pl-md pr-md'>
@@ -204,6 +231,7 @@ const SANClassPlaylist = ({ history }) => {
                             activeItem={currentModule}
                             items={modules.data}
                             loading={loading}
+                            progress={progressTest(currentModule)}
                         />
                     </div>
                     {renderPlaylist()}

@@ -17,7 +17,11 @@ const ESCardContinueCourse = ({
     return (
         <div onClick={onContinue} className={classes}>
             <div className='es-card-continue-course--texts'>
-                <ESTypography variant='caption' className='text-grey-6'>
+                <ESTypography
+                    variant='caption'
+                    className='text-grey-6'
+                    ellipsis
+                >
                     {module}
                 </ESTypography>
                 <ESTypography
@@ -30,7 +34,7 @@ const ESCardContinueCourse = ({
                 </ESTypography>
             </div>
 
-            <ESEvaIcon name='play-circle' size='large' />
+            <ESEvaIcon name='play-circle' size='xlarge' />
         </div>
     )
 }

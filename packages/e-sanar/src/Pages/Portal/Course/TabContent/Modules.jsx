@@ -4,9 +4,10 @@ import { withRouter } from 'react-router-dom'
 import { Query } from 'react-apollo'
 import { useTranslation } from 'react-i18next'
 
-import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
+import ESListView, {
+    ESListViewItem
+} from 'sanar-ui/dist/Components/Atoms/ListView'
 import ESPagination from 'sanar-ui/dist/Components/Atoms/Pagination'
-import ESSpin from 'sanar-ui/dist/Components/Atoms/Spin'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import ESCardCourseModule from 'sanar-ui/dist/Components/Molecules/CardCourseModule'
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
@@ -14,6 +15,7 @@ import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 import { GET_MODULES } from 'Apollo/CourseDetails/queries/modules'
 import { useAuthContext } from 'Hooks/auth'
 import { getClassRoute } from 'Utils/getClassRoute'
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 
 //FIXME: const responsive = [
 //     {
@@ -53,7 +55,7 @@ const SANCourseModules = ({ history }) => {
     const { t } = useTranslation('esanar')
     const { getEnrollment } = useAuthContext()
     const [current, setCurrent] = useState(1)
-    const [pageSize] = useState(10)
+    const [pageSize] = useState(12)
 
     const {
         course: { id: courseId },
@@ -67,6 +69,36 @@ const SANCourseModules = ({ history }) => {
         )
     }
 
+    const renderDiscipline = item => (
+        <ESListViewItem>
+            <ESCardCourseModule
+                className='san-tab-course-content__continue--card'
+                moduleName={`${t(
+                    'courseDetails.tabContent.discipline.discipline.key'
+                )} ${item.index}`}
+                title={item.name}
+                badge={
+                    item.progress
+                        ? `${item.progress.done}/${item.progress.total}`
+                        : '0/0'
+                }
+                progress={
+                    item.progress
+                        ? (item.progress.done * 100) / item.progress.total
+                        : 0
+                }
+                actionName={
+                    <span className='san-tab-course-content__modules--card-action'>
+                        {t('courseDetails.tabContent.cardModuleAction')}
+                    </span>
+                }
+                moduleTime={`${item.duration || 0}min`}
+                image={item.cover_picture_url}
+                onClick={goClassrom(item)}
+            />
+        </ESListViewItem>
+    )
+
     return (
         <Query
             query={GET_MODULES}
@@ -77,10 +109,19 @@ const SANCourseModules = ({ history }) => {
                 skip: pageSize * current - pageSize
             }}
         >
-            {({ loading, error, data: { modules } }) => {
-                if (loading) return <ESSpin spinning flex minHeight={375} />
-                if (error) return `Error! ${error}`
-                const { data, count } = modules
+            {({ loading, error, fetchMore, data }) => {
+                if (error) {
+                    return (
+                        <SANErrorPiece
+                            message={t(
+                                'courseDetails.tabContent.modules.error.defaultMessage'
+                            )}
+                        />
+                    )
+                }
+
+                const count = !loading ? data.modules.count : 0
+                const modules = !loading ? data.modules.data : []
                 return (
                     <div className='san-tab-course-content__modules pt-md pb-lg'>
                         <SANPortalPagesContainer>
@@ -121,7 +162,7 @@ const SANCourseModules = ({ history }) => {
 
                             <ESSessionTitle
                                 title={`${count} ${t(
-                                    'courseDetails.tabContent.modules.title.key',
+                                    'courseDetails.tabContent.discipline.title.key',
                                     { count }
                                 )}`}
                                 //FIXME: extraOnLeft
@@ -145,54 +186,24 @@ const SANCourseModules = ({ history }) => {
                                 //     </ESRadioGroup>
                                 // }
                             />
-                            <ESRow gutter={24}>
-                                {data.map((item, index) => (
-                                    <ESCol
-                                        key={index}
-                                        xs={12}
-                                        md={8}
-                                        lg={8}
-                                        xl={6}
-                                    >
-                                        <ESCardCourseModule
-                                            className='san-tab-course-content__continue--card'
-                                            moduleName={`${t(
-                                                'courseDetails.tabContent.modules.module.key'
-                                            )} ${item.index + 1}`}
-                                            title={item.name}
-                                            badge={
-                                                item.progress
-                                                    ? `${item.progress.done}/${
-                                                          item.progress.total
-                                                      }`
-                                                    : '0/0'
-                                            }
-                                            progress={
-                                                item.progress
-                                                    ? (item.progress.done *
-                                                          100) /
-                                                      item.progress.total
-                                                    : 0
-                                            }
-                                            actionName={
-                                                <span className='san-tab-course-content__modules--card-action'>
-                                                    {t(
-                                                        'courseDetails.tabContent.cardModuleAction'
-                                                    )}
-                                                </span>
-                                            }
-                                            moduleTime={`${item.duration ||
-                                                0}min`}
-                                            image={item.cover_picture}
-                                            onClick={goClassrom(item)}
-                                        />
-                                    </ESCol>
-                                ))}
-                            </ESRow>
-                            <ESPagination
-                                total={count}
-                                current={current}
-                                onChange={setCurrent}
+                            <ESListView
+                                grid={{
+                                    gutter: 24,
+                                    xs: 1,
+                                    sm: 2,
+                                    md: 3,
+                                    xl: 4
+                                }}
+                                loading={loading}
+                                dataSource={modules}
+                                renderItem={renderDiscipline}
+                                footer={
+                                    <ESPagination
+                                        total={count}
+                                        current={current}
+                                        onChange={setCurrent}
+                                    />
+                                }
                             />
                         </SANPortalPagesContainer>
                     </div>

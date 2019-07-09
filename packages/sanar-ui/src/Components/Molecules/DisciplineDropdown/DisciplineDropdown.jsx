@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useRef } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -14,20 +14,12 @@ const ESDisciplineDropdown = ({
     items,
     activeItem,
     loading,
-    onSelect
+    onSelect,
+    progress
 }) => {
     const classes = classNames('es-discipline-dropdown', className)
     const [open, setOpen] = useState(false)
-
-    const totalDisicplines = items.length
-    const currentDiscipline =
-        items.findIndex(item => item.progress.done < item.progress.total) + 1
-
-    const calcProgress = () => 0
-    items.filter(item => item.progress.done === item.progress.total).length ===
-    items.length
-        ? 100
-        : (currentDiscipline * 100) / totalDisicplines
+    const disciplineDropdownRef = useRef()
 
     const openControl = useCallback(() => {
         setOpen(!open)
@@ -44,11 +36,18 @@ const ESDisciplineDropdown = ({
         </div>
     ) : (
         <ESDropdown
+            getPopupContainer={() =>
+                disciplineDropdownRef && disciplineDropdownRef.current
+            }
             overlay={
                 <ESDisciplineList
                     onSelect={onSelectItem}
                     activeId={activeItem.id}
                     items={items}
+                    width={
+                        disciplineDropdownRef.current &&
+                        disciplineDropdownRef.current.offsetWidth
+                    }
                 />
             }
             className={classes}
@@ -56,13 +55,16 @@ const ESDisciplineDropdown = ({
             onVisibleChange={openControl}
             visible={open}
         >
-            <div className='es-discipline-dropdown__menu'>
+            <div
+                className='es-discipline-dropdown__menu'
+                ref={disciplineDropdownRef}
+            >
                 <div className='d-flex align-items-center'>
                     <ESCircleProgress
                         strokeWidth={8}
                         width={32}
                         format={() =>
-                            calcProgress() === 100 ? (
+                            progress === 100 ? (
                                 <ESEvaIcon
                                     className='es-discipline-dropdown__menu--all-completed'
                                     key={3}
@@ -70,10 +72,12 @@ const ESDisciplineDropdown = ({
                                     name='checkmark-outline'
                                 />
                             ) : (
-                                `${currentDiscipline}`
+                                <ESTypography variant='caption'>
+                                    {progress.toFixed(0)}
+                                </ESTypography>
                             )
                         }
-                        percent={calcProgress()}
+                        percent={progress}
                         className='mr-xs'
                         status='warning'
                         color='white'

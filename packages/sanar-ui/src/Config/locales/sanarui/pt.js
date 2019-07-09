@@ -8,7 +8,8 @@ export default {
         sendFeedback: 'Enviar feedback'
     },
     mainMenu: {
-        leftOff: 'Continuar onde parei'
+        leftOff: 'Continuar onde parei',
+        rankingPoints: 'pontos'
     },
     helpCenter:{
         header:{
@@ -140,5 +141,8 @@ export default {
     pdfReader: {
         problemRenderingPdf: 'Problemas ao visualizar esse material?',
         clickAndDownload: 'Clique aqui e faça o download.'
+    },
+    errorPiece: {
+        updateButton: 'Tentar novamente'
     }
 }

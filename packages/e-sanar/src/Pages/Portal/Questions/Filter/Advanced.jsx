@@ -129,7 +129,7 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
                                 className='no-margin'
                                 initialValue={formState && formState.progress}
                             >
-                                <ESRadioGroup disabled>
+                                <ESRadioGroup>
                                     <ESRow>
                                         <ESCol xs={24} md={6}>
                                             <ESRadio value={'1'}>
@@ -153,7 +153,7 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
                                             </ESRadio>
                                         </ESCol>
                                         <ESCol xs={24} md={6}>
-                                            <ESRadio value={'4'}>
+                                            <ESRadio value={'4'} disabled>
                                                 {t(
                                                     `${intlPath}progress.options.issuesMissed`
                                                 )}
@@ -165,15 +165,15 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
                         </ESCol>
                         <ESCol xs={24} lg={6}>
                             <ESFormItem
-                                name='justCommented'
+                                name='isCommentedByExpert'
                                 label={t(`${intlPath}justCommented`)}
                                 className='switch'
                                 valuePropName='checked'
                                 initialValue={
-                                    formState && formState.justCommented
+                                    formState && formState.isCommentedByExpert
                                 }
                             >
-                                <ESSwitch disabled />
+                                <ESSwitch />
                             </ESFormItem>
                         </ESCol>
                     </ESRow>

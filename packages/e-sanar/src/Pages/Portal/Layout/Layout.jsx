@@ -11,17 +11,21 @@ import SANFooter from './Footer'
 import SANMenu from './Menu'
 import { useLayoutContext, withLayoutProvider } from './Context'
 
+const withoutContinueBar = ['classroom', 'questionPractice']
+
 const SANPortalLayout = ({ children }) => {
-    const { darkMode } = useLayoutContext()
+    const { pageContext, darkMode } = useLayoutContext()
     const { width } = useWindowSize()
 
     const classes = classNames('san-portal-layout', {
-        'san-portal-layout--continue-bar': true,
-        'san-portal-layout__classroom': darkMode
+        'san-portal-layout--continue-bar': !withoutContinueBar.includes(
+            pageContext
+        ),
+        'san-portal-layout__classroom': pageContext === 'classroom'
     })
 
     const classesScrollArea = classNames('san-portal-layout__scroll', {
-        'san-portal-layout__scroll__classroom': darkMode
+        'san-portal-layout__scroll__classroom': pageContext === 'classroom'
     })
 
     const hasHeaderMobile = useMemo(() => width <= 1024, [width])

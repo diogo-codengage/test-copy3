@@ -37,7 +37,10 @@ const ESLeftOff = ({
                     </ESTypography>
                     <div className='es-left-off__class'>
                         <div className='es-left-off__class--img'>
-                            <img src={thumbnail} />
+                            <div
+                                className='es-left-off__class--img-background'
+                                style={{ backgroundImage: `url(${thumbnail})` }}
+                            />
                             <div className='es-left-off__class--img--overlay'>
                                 <ESEvaIcon name='play-circle' size='large' />
                             </div>

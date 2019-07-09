@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { Query } from 'react-apollo'
 
@@ -6,6 +6,7 @@ import ESSplashLoader from 'sanar-ui/dist/Components/Atoms/SplashLoader'
 
 import { GET_ME } from 'Apollo/Me/query'
 import { useAuthContext } from 'Hooks/auth'
+import { useApolloContext } from 'Hooks/apollo'
 
 import SANPortalLayout from './Layout'
 import SANCoursePage from './Course'
@@ -14,18 +15,27 @@ import SANClassroomPage from './Classrom'
 import SANMyAccountChangePassword from './MyAccount'
 import SANMyAccountHelpCenter from './MyAccount'
 import { SANPortalProvider } from './Context'
+import ESDefaultError from '../Portal/Errors/Default'
 
 const SANPortalRoutes = ({ match: { url } }) => {
+    const client = useApolloContext()
     const { setMe } = useAuthContext()
 
     const handleCompleted = ({ me }) => setMe(me)
 
+    useEffect(() => {
+        return () => client.cache.reset()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <Query query={GET_ME} onCompleted={handleCompleted}>
-            {({ loading }) => (
+            {({ loading, error }) => (
                 <>
-                    {loading ? (
+                    {loading && !error ? (
                         <ESSplashLoader />
+                    ) : !loading && error ? (
+                        <ESDefaultError />
                     ) : (
                         <SANPortalProvider>
                             <SANPortalLayout>

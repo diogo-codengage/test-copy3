@@ -37,7 +37,7 @@ const SANMyAccount = ({ handleBack, history }) => {
     const [open, setOpen] = useState(false)
     const [openFeedback, setOpenFeedback] = useState(false)
     const [openModalTerms, setOpenModalTerms] = useState(false)
-    const { setOpenMenu } = useLayoutContext()
+    const { menuOpenOrClose } = useLayoutContext()
 
     const handleOtherLinks = ({ key }) => {
         setOpen(Number(key) === 2)
@@ -57,7 +57,7 @@ const SANMyAccount = ({ handleBack, history }) => {
         switch (Number(key)) {
             case 1:
                 history.push('/aluno/minha-conta/')
-                setOpenMenu(old => !old)
+                menuOpenOrClose()
                 break
             case 2:
                 history.push('/aluno/central-ajuda/')

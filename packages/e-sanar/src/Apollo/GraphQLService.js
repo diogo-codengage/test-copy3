@@ -34,7 +34,7 @@ const errorHandler = async ({ graphQLErrors, networkError }) => {
 }
 
 const client = new ApolloClient({
-    uri: 'http://165.22.9.231:4002/graphql',
+    uri: process.env.REACT_APP_URL_API,
     onError: errorHandler,
     request: async operation =>
         operation.setContext({

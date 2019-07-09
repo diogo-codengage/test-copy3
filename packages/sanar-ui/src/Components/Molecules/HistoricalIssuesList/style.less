@@ -12,6 +12,11 @@
         border-bottom: 1px solid @grey-3;
         background-color: @white;
         height: 80px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: @white-1;
+        }
 
         &__content {
             padding: @padding-md;
@@ -38,7 +43,9 @@
             border-right: 1px solid @grey-3;
             width: 104px;
             min-width: 104px;
-            background-color: @grey-solid-2;
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
         }
 
         &:last-child {

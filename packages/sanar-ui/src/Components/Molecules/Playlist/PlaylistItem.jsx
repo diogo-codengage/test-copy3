@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import ESTypography from '../../Atoms/Typography'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 
+import { esUtilConvertSecondsToTime } from '../../../Util/Date'
+
 const icons = {
     Video: 'play-circle-outline',
     Document: 'book-open-outline',
@@ -12,11 +14,14 @@ const icons = {
 }
 
 const ESPlaylist = ({ className, index, item, current, onClick }) => {
-    const { title, time, finish } = item[item.resource_type.toLowerCase()]
+    const { title, progress, durationInSeconds } = item[
+        item.resource_type.toLowerCase()
+    ]
     const classes = classNames(
         'es-playlist-list__item',
         {
-            'es-playlist-list__item--finish': finish,
+            'es-playlist-list__item--finish':
+                progress && progress.percentage === 100,
             'es-playlist-list__item--current': current
         },
         className
@@ -36,14 +41,16 @@ const ESPlaylist = ({ className, index, item, current, onClick }) => {
                 <ESTypography
                     ellipsis
                     variant='subtitle2'
-                    className='description'
+                    className={classNames('description', {
+                        'description--time': durationInSeconds
+                    })}
                 >
                     {title}
                 </ESTypography>
             </div>
-            {time && (
+            {durationInSeconds && (
                 <ESTypography variant='overline' className='time'>
-                    {time}
+                    {esUtilConvertSecondsToTime(durationInSeconds)}
                 </ESTypography>
             )}
         </div>

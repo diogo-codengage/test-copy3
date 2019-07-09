@@ -48,6 +48,7 @@
 
             & .index {
                 width: 12px;
+                min-width: 12px;
                 text-align: center;
             }
 
@@ -57,13 +58,15 @@
             }
             & .description {
                 color: @white-6;
-                width: ~'calc(100% - 77px)';
+                &--time {
+                    width: ~'calc(100% - 95px)';
+                }
             }
             & .time {
                 color: @white-5;
                 position: absolute;
                 right: 16px;
-                top: ~'calc(100% - 31px)';
+                top: ~'calc(100% - 26px)';
             }
 
             &--finish .icon {

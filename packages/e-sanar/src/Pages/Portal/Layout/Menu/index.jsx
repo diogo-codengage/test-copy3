@@ -13,8 +13,8 @@ import SANCourseChange from './CourseChange'
 import SANMyAccount from './MyAccount'
 import SANClassPlaylist from './ClassPlaylist'
 import { useLayoutContext } from '../../Layout/Context'
-
-const intlPath = 'mainMenu.title.'
+import { usePortalContext } from 'Pages/Portal/Context'
+import { getClassRoute } from 'Utils/getClassRoute'
 
 const toDarkMode = [6, 9]
 
@@ -55,54 +55,69 @@ const MenuContent = ({ indexMenu, setMenuTab: setTab, handleBack }) => {
 }
 
 const SANMenu = ({ history }) => {
-    const { t } = useTranslation('esanar')
     const [theme, setTheme] = useState('light')
+    const { t } = useTranslation('esanar')
     const {
         indexMenu,
         darkMode,
-        openMenu,
         setMenuTab,
         menuTitle,
-        setMenuTitle,
-        setOpenMenu
+        menuRef,
+        setMenuIsOpen,
+        pageContext,
+        setPageContext
     } = useLayoutContext()
+    const { lastAccessed } = usePortalContext()
 
-    useMemo(
-        () =>
-            toDarkMode.includes(indexMenu) || darkMode
-                ? setTheme('dark')
-                : setTheme('primary'),
-        [indexMenu, darkMode]
-    )
+    useMemo(() => {
+        toDarkMode.includes(indexMenu) || darkMode
+            ? setTheme('dark')
+            : setTheme('primary')
+
+        darkMode && setPageContext('classroom')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [indexMenu, darkMode])
 
     const handleBack = () => {
-        setMenuTab(0)
-        setMenuTitle(t(`${intlPath}menu`))
+        setMenuTab()
     }
 
     const handleInitialClick = () => {
-        setMenuTitle(t(`${intlPath}menu`))
+        setMenuTab()
     }
 
     const handleHome = () => history.push('/aluno/curso')
 
-    const onOpenOrClose = isOpen => {
-        console.log(isOpen)
-        setOpenMenu(isOpen)
+    const goClassroom = () =>
+        history.push(
+            `/aluno/sala-aula/${lastAccessed.module_id}/${getClassRoute(
+                lastAccessed.resource_type
+            )}/${lastAccessed.resource_id}`
+        )
+
+    const continueCourseProps = {
+        ...(lastAccessed && {
+            module: t('mainMenu.continueCourse', {
+                module: lastAccessed.module_order + 1,
+                class: lastAccessed.resource_order + 1
+            }),
+            description: lastAccessed.module_title,
+            onContinue: goClassroom
+        })
     }
 
     return (
         <ESMainMenu
-            // onSearchClick={() => setMenuTab(8)}
+            ref={menuRef}
             onInitialClick={handleInitialClick}
             onHome={handleHome}
             title={menuTitle}
             theme={theme}
             showContinueBar
-            context={darkMode ? 'classroom' : ''}
+            context={pageContext}
             className='san-main-menu'
-            open={openMenu}
-            onOpenOrClose={onOpenOrClose}
+            continueCourseProps={continueCourseProps}
+            onOpenOrClose={setMenuIsOpen}
         >
             <MenuContent {...{ indexMenu, setMenuTab, handleBack }} />
         </ESMainMenu>

@@ -10,6 +10,8 @@ export default {
         subject: 'Disciplina',
         activity: 'Aula',
         confirm: 'Confirmar',
+        yes: 'Sim',
+        no: 'Não',
         failLoadLastAccessed: 'Erro ao carregar "Continuar onde parei".'
     },
     auth: {
@@ -41,6 +43,10 @@ export default {
             subtitle: 'Cadastre uma nova senha preenchendo os campos abaixo:',
             confirmPassword: 'Confirme sua senha'
         },
+        createNewPassword: {
+            title: 'Crie uma nova senha',
+            button: 'Criar senha'
+        },
         passwordResetSent: {
             title: 'Enviado com sucesso!',
             subtitle: 'Um link de recuperação foi enviado para:',
@@ -57,6 +63,7 @@ export default {
     },
     mainMenu: {
         back: 'Voltar ao menu principal',
+        continueCourse: 'Continuar na Disciplina {{module}}, aula {{class}}',
         title: {
             menu: 'Menu',
             notifications: 'Notificações',
@@ -168,7 +175,7 @@ export default {
         livesTitle: 'Lives',
         livesSubtitle:
             'Veja as lives que ainda vão acontecer e as que já rolaram',
-        nextLivesTitle: 'Próximas lives',
+        othersLivesTitle: 'Outras lives',
         remembered: 'Lembrado',
         remember: 'Lembrar',
         viewLive: 'Ver live',
@@ -183,7 +190,12 @@ export default {
             cardModuleAction: 'Ver aulas',
             continue: {
                 whereStopped: 'Onde você parou',
-                nextModule: 'Próximo módulo'
+                nextDiscipline: 'Próximo disciplina',
+                nextModule: 'Próximo módulo',
+                error: {
+                    defaultMessage:
+                        'Ocorreu um erro ao tentar trazer o último conteúdo acessado.'
+                }
             },
             professors: {
                 title: 'Professores',
@@ -191,18 +203,18 @@ export default {
                     'Conheça os especialistas que vão te ajudar no seu aprendizado',
                 buttonLoadMore: 'Carregar mais'
             },
-            modules: {
+            discipline: {
                 title: {
                     key: 'disciplina',
                     key_plural: 'disciplinas',
                     keyWithCount: '{{count}} disciplina',
                     keyWithCount_plural: '{{count}} disciplinas'
                 },
-                module: {
-                    key: 'Módulo',
-                    key_plural: 'Módulos',
-                    keyWithCount: '{{count}} módulo',
-                    keyWithCount_plural: '{{count}} módulos'
+                discipline: {
+                    key: 'Disciplina',
+                    key_plural: 'Disciplinas',
+                    keyWithCount: '{{count}} disciplina',
+                    keyWithCount_plural: '{{count}} disciplinas'
                 },
                 whatCourseHas: 'O que esse curso possui',
                 whatCourseHasSubtitle:
@@ -211,6 +223,10 @@ export default {
                     done: 'Concluídas',
                     all: 'Todas',
                     incomplete: 'Incompleto'
+                },
+                error: {
+                    defaultMessage:
+                        'Ocorreu um erro ao carregar suas disciplinas.'
                 }
             }
         },
@@ -254,12 +270,18 @@ export default {
             saveQuestion: 'Salvar questão',
             seeFilters: 'Ver filtros',
             empty:
-                'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos'
+                'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos',
+            goOut: {
+                title: 'Ops! Você está saindo da prática.',
+                subtitle: 'Deseja realmente encerrar a prática?'
+            },
+            failHandleBookmark: 'Ocorreu um erro ao favoritar questão.'
         },
         historic: {
             title: 'Histórico de questões',
             subtitle: 'Confira as últimas questões respondidas por você',
-            empty: 'Não há histórico'
+            empty: 'Não há histórico',
+            error: 'Ocorreu um erro ao mostrar o histórico de questões.'
         },
         filter: {
             title: 'Banco de questões',
@@ -336,7 +358,21 @@ export default {
         askQuestions: 'Fazer Questões',
         viewDiscussions: 'Ver discussões',
         failHandleBookmark: 'Ocorreu um erro ao favoritar conteúdo.',
-        failLoadClassroom: 'Ocorreu um erro ao carregar sala de aula.'
+        failLoadClassroom: 'Ocorreu um erro ao carregar sala de aula.',
+        error: 'Ocorreu um erro ao carregar este vídeo.',
+        document: {
+            error: 'Ocorreu um erro ao carregar este documento.'
+        },
+        mock: {
+            error: 'Ocorreu um erro ao carregar o simulado.',
+            errorAnswering: 'Ocorreu um erro ao tentar responder esta questão.'
+        },
+        classPlaylist: {
+            courseError: 'Ocorreu um erro ao carregar os dados deste curso.',
+            modulesError:
+                'Ocorreu um erro ao carregar as disciplinas deste curso.',
+            goToBegin: 'Voltar para o início'
+        }
     },
     footer: {
         helpButton: 'Precisa de ajuda?',

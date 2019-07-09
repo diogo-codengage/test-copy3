@@ -27,6 +27,17 @@ const SANCourseProfessors = () => {
 
     const { course } = getEnrollment()
 
+    const renderProfessor = (professor, index) => (
+        <ESCol className='mb-md' xs={24} sm={12} lg={6} key={index}>
+            <ESCardAvatar
+                name={professor.name}
+                formation={professor.resume}
+                image={professor.profile_picture}
+                actions={<Linkedin link={professor.linkedin} />}
+            />
+        </ESCol>
+    )
+
     return (
         <div className='san-tab-course-content__professors'>
             <SANPortalPagesContainer>
@@ -36,38 +47,23 @@ const SANCourseProfessors = () => {
                 />
 
                 <ESRow gutter={24} type='flex' justify='space-around'>
-                    {course.professors.map((professor, index) => {
-                        return (
-                            <ESCol
-                                className='mb-md'
-                                xs={24}
-                                sm={12}
-                                lg={6}
-                                key={index}
-                            >
-                                <ESCardAvatar
-                                    name={professor.name}
-                                    formation={professor.resume}
-                                    image={professor.profile_picture}
-                                    actions={
-                                        <Linkedin link={professor.linkedin} />
-                                    }
-                                />
-                            </ESCol>
-                        )
-                    })}
+                    {course.professors.map(renderProfessor)}
                 </ESRow>
-                <ESButton
-                    uppercase
-                    bold
-                    blockOnlyMobile
-                    size='xsmall'
-                    color='primary'
-                    variant='outlined'
-                    className='mt-md san-tab-course-content__professors--load-more'
-                >
-                    {t('courseDetails.tabContent.professors.buttonLoadMore')}
-                </ESButton>
+                {course.professors.length > 10 && (
+                    <ESButton
+                        uppercase
+                        bold
+                        blockOnlyMobile
+                        size='xsmall'
+                        color='primary'
+                        variant='outlined'
+                        className='mt-md san-tab-course-content__professors--load-more'
+                    >
+                        {t(
+                            'courseDetails.tabContent.professors.buttonLoadMore'
+                        )}
+                    </ESButton>
+                )}
             </SANPortalPagesContainer>
         </div>
     )
