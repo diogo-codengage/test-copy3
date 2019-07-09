@@ -36,8 +36,9 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
     const {
         setMenuTab,
         setDarkMode,
-        setOpenMenu,
-        stopwatchRef
+        stopwatchRef,
+        menuOpenOrClose,
+        setPageContext
     } = useLayoutContext()
     const { getEnrollment, me } = useAuthContext()
 
@@ -47,7 +48,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
 
     const openMenu = () => {
         setMenuTab(9)
-        setOpenMenu(old => !old)
+        menuOpenOrClose()
     }
 
     const handleBookmark = async ({ resourceId, resourceType }) => {
@@ -70,12 +71,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         }
     }
 
-    const handleProgress = ({
-        timeInSeconds,
-        percentage,
-        resourceId,
-        resourceType
-    }) => {
+    const handleProgress = ({ timeInSeconds, percentage, resourceId }) => {
         if (currentResource) {
             client.mutate({
                 mutation: CREATE_PROGRESS,
@@ -92,15 +88,11 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         }
     }
 
-    // useEffect(() => {
-    //     currentResource && setBookmark(getResource(currentResource).bookmarked)
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [currentResource])
-
     useEffect(() => {
         setDarkMode(true)
         return () => {
             setDarkMode(false)
+            setPageContext(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -189,7 +181,6 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
                     setCurrentResource(resource)
                 }
             } catch (error) {
-                console.error(error)
                 message.error(t('classroom.failLoadClassroom'))
                 setError(error)
                 dispatch({ type: 'loading', payload: error })

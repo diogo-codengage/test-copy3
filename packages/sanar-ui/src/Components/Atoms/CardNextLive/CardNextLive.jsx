@@ -9,7 +9,7 @@ const ESCardNextLive = ({ className, title, date, actions, ...props }) => {
     const classes = classNames('es-card-next-live', className)
 
     return (
-        <ESCard actions={actions} {...props}>
+        <ESCard actions={actions} {...props} className={classes}>
             <>
                 <ESTypography
                     className='es-card-next-live__title mb-xs'

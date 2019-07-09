@@ -43,6 +43,10 @@ export default {
             subtitle: 'Cadastre uma nova senha preenchendo os campos abaixo:',
             confirmPassword: 'Confirme sua senha'
         },
+        createNewPassword: {
+            title: 'Crie uma nova senha',
+            button: 'Criar senha'
+        },
         passwordResetSent: {
             title: 'Enviado com sucesso!',
             subtitle: 'Um link de recuperação foi enviado para:',
@@ -264,7 +268,8 @@ export default {
         historic: {
             title: 'Histórico de questões',
             subtitle: 'Confira as últimas questões respondidas por você',
-            empty: 'Não há histórico'
+            empty: 'Não há histórico',
+            error: 'Ocorreu um erro ao mostrar o histórico de questões.'
         },
         filter: {
             title: 'Banco de questões',
@@ -352,8 +357,10 @@ export default {
         },
         classPlaylist: {
             courseError: 'Ocorreu um erro ao carregar os dados deste curso.',
-            modulesError: 'Ocorreu um erro ao carregar as disciplinas deste curso.'
-        },
+            modulesError:
+                'Ocorreu um erro ao carregar as disciplinas deste curso.',
+            goToBegin: 'Voltar para o início'
+        }
     },
     footer: {
         helpButton: 'Precisa de ajuda?',

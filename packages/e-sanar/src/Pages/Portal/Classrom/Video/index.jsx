@@ -7,6 +7,10 @@ import { useTranslation } from 'react-i18next'
 import ESJwPlayer from 'sanar-ui/dist/Components/Molecules/JwPlayer'
 import ESTabs, { ESTabPane } from 'sanar-ui/dist/Components/Atoms/Tabs'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
+import ESLessonHeader, {
+    ESLessonHeaderExtra,
+    ESLessonHeaderLeft
+} from 'sanar-ui/dist/Components/Molecules/LessonHeader'
 import { createDebounce } from 'sanar-ui/dist/Util/Debounce'
 
 import { useApolloContext } from 'Hooks/apollo'
@@ -207,7 +211,7 @@ const SANClassroomVideo = () => {
                     </div>
                 )}
             </div>
-            {currentResource.quiz && (
+            {currentResource.quiz ? (
                 <ESTabs
                     dark
                     center
@@ -246,6 +250,37 @@ const SANClassroomVideo = () => {
                         disabled
                     />
                 </ESTabs>
+            ) : (
+                <ESLessonHeader
+                    rate={rate}
+                    bookmarked={bookmarked}
+                    onBookmarked={handleBookmark}
+                    leftChildren={
+                        <ESLessonHeaderLeft
+                            title={currentResource.video.title}
+                            subtitle={`${t(
+                                'global.subject'
+                            )} ${currentModule.index + 1}, ${t(
+                                'global.activity'
+                            )} ${currentResource.index + 1}`}
+                            onClick={openMenu}
+                            rate={{
+                                value: rate,
+                                onChange: handleRate
+                            }}
+                        />
+                    }
+                    rightChildren={
+                        <ESLessonHeaderExtra
+                            previousLesson={prevResource && prevResource.title}
+                            nextLesson={nextResource && nextResource.title}
+                            onPrev={onNavigation('prev')}
+                            onNext={onNavigation('next')}
+                            bookmarked={bookmarked}
+                            onBookmarked={handleBookmark}
+                        />
+                    }
+                />
             )}
         </div>
     )

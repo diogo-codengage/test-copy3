@@ -1,4 +1,11 @@
-import React, { useEffect, useState, createContext, useContext } from 'react'
+import React, {
+    useEffect,
+    useState,
+    createContext,
+    useContext,
+    forwardRef,
+    useImperativeHandle
+} from 'react'
 
 import useWindowSize from '../../../Hooks/useWindowSize'
 
@@ -24,10 +31,14 @@ export const MainMenuProvider = ({ children }) => {
         setShowClose(width <= 1365)
     }, [width])
 
-    const onClose = () => {
-        setToggle(false)
-        // setTheme('primary')
-    }
+    useEffect(() => {
+        if (context === 'classroom') {
+            setToggle(false)
+            setShowContinueBar(false)
+        } else if (width >= 1365) {
+            setToggle(true)
+        }
+    }, [context])
 
     const value = {
         position,
@@ -39,7 +50,6 @@ export const MainMenuProvider = ({ children }) => {
         staticToolbar,
         showContinueBar,
         setShowContinueBar,
-        onClose,
         width,
         context,
         setContext
@@ -48,8 +58,11 @@ export const MainMenuProvider = ({ children }) => {
     return <Context.Provider value={value}>{children}</Context.Provider>
 }
 
-export const withMainMenuProvider = Component => props => (
-    <MainMenuProvider>
-        <Component {...props} />
-    </MainMenuProvider>
-)
+export const withMainMenuProvider = Component =>
+    forwardRef((props, ref) => {
+        return (
+            <MainMenuProvider>
+                <Component ref={ref} {...props} />
+            </MainMenuProvider>
+        )
+    })

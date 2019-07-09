@@ -20,11 +20,11 @@ import { useApolloContext } from 'Hooks/apollo'
 import { getClassRoute } from 'Utils/getClassRoute'
 
 import { useLayoutContext } from '../../Layout/Context'
-import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 import { useTranslation } from 'react-i18next'
 
 const CommonProgress = () => {
     const { getEnrollment } = useAuthContext()
+
     const { id: enrollmentId } = getEnrollment()
 
     return (
@@ -57,7 +57,8 @@ const CommonProgress = () => {
 }
 
 export const SANClassPlaylistMenuHeader = () => {
-    const { setOpenMenu, setMenuTab } = useLayoutContext()
+    const { menuOpenOrClose, setMenuTab } = useLayoutContext()
+    const { t } = useTranslation('esanar')
 
     const exitClassroom = () => {
         setMenuTab(0)
@@ -75,7 +76,7 @@ export const SANClassPlaylistMenuHeader = () => {
                 >
                     <ESEvaIcon className='mr-xs' name='arrow-back-outline' />
                     <ESTypography variant='caption'>
-                        Voltar para início
+                        {t('classroom.classPlaylist.goToBegin')}
                     </ESTypography>
                 </ESButton>
                 <ESButton
@@ -83,7 +84,7 @@ export const SANClassPlaylistMenuHeader = () => {
                     color='white'
                     className='pl-no pr-no'
                     uppercase
-                    onClick={() => setOpenMenu(old => !old)}
+                    onClick={() => menuOpenOrClose()}
                 >
                     <ESEvaIcon name='close-outline' />
                 </ESButton>
@@ -94,9 +95,9 @@ export const SANClassPlaylistMenuHeader = () => {
 }
 
 const SANClassPlaylist = ({ history }) => {
+    const { t } = useTranslation('esanar')
     const client = useApolloContext()
     const {
-        error,
         currentResource,
         setCurrentResource,
         state: { loading, currentModule },
@@ -104,47 +105,38 @@ const SANClassPlaylist = ({ history }) => {
     } = usePortalContext()
 
     const { getEnrollment } = useAuthContext()
-    const { setOpenMenu } = useLayoutContext()
+    const { menuOpenOrClose } = useLayoutContext()
 
-    const [modulesError, setModulesError] = useState(null)
     const [modules, setModules] = useState(null)
     const { course, id } = getEnrollment()
-    const { t } = useTranslation('esanar')
 
     const progressTest = ({ level_contents: { data: lessons } }) => {
         if (!currentModule) return 0
         let counter = 0
 
-        const count = lessons.reduce(
-            (accumulator, currentValue, index, arr) => {
-                const resource = getResource(currentValue)
-                if (!resource.progress) return accumulator
+        const count = lessons.reduce((accumulator, currentValue) => {
+            const resource = getResource(currentValue)
+            if (!resource.progress) return accumulator
 
-                if (
-                    currentValue.resource_type === 'Video' &&
-                    currentValue.quiz
-                ) {
-                    counter += 2
-                    return (accumulator +=
-                        resource.progress.percentage +
-                        currentValue.quiz.progress.percentage)
-                }
+            if (currentValue.resource_type === 'Video' && currentValue.quiz) {
+                counter += 2
+                return (accumulator +=
+                    resource.progress.percentage +
+                    currentValue.quiz.progress.percentage)
+            }
 
-                counter++
-                return (accumulator += resource.progress.percentage)
-            },
-            0
-        )
+            counter++
+            return (accumulator += resource.progress.percentage)
+        }, 0)
         return ((count / counter) * 100) / 100
     }
 
     const goToResource = resource => {
+        const type = getClassRoute(resource.resource_type)
         setCurrentResource(resource)
-        setOpenMenu(oldOpenMenu => !oldOpenMenu)
+        menuOpenOrClose()
         history.push(
-            `/aluno/sala-aula/${
-                currentModule.id
-            }/${resource.resource_type.toLowerCase()}/${
+            `/aluno/sala-aula/${currentModule.id}/${type}/${
                 getResource(resource).id
             }`
         )
@@ -165,24 +157,24 @@ const SANClassPlaylist = ({ history }) => {
         )
     }
 
+    const getModulePositionInModules = () =>
+        `${modules.data.findIndex(item => currentModule.id === item.id)}
+        /${modules.count}`
+
     useEffect(() => {
         const getModules = async () => {
-            try {
-                const {
-                    data: { modules }
-                } = await client.query({
-                    query: GET_MODULES,
-                    fetchPolicy: 'network-only',
-                    variables: {
-                        courseId: course.id,
-                        enrollmentId: id
-                    }
-                })
+            const {
+                data: { modules }
+            } = await client.query({
+                query: GET_MODULES,
+                fetchPolicy: 'network-only',
+                variables: {
+                    courseId: course.id,
+                    enrollmentId: id
+                }
+            })
 
-                setModules(modules)
-            } catch (error) {
-                setModulesError(error)
-            }
+            setModules(modules)
         }
 
         getModules()
@@ -197,74 +189,54 @@ const SANClassPlaylist = ({ history }) => {
 
     return (
         <div>
-            {!error ? (
-                <div className='pl-md pr-md'>
+            <div className='pl-md pr-md'>
+                <ESTypography className='mb-xs text-white-6' variant='overline'>
+                    {course.knowledge_area}
+                </ESTypography>
+                <ESTypography className='mb-xs' strong ellipsis level={5}>
+                    {course.name}
+                </ESTypography>
+                <div className='d-flex justify-content-between align-items-center'>
                     <ESTypography
-                        className='mb-xs text-white-6'
-                        variant='overline'
+                        className='text-white-6'
+                        strong
+                        ellipsis
+                        variant='caption'
                     >
-                        {course.knowledge_area}
+                        {t('courseDetails.progressbarTitle')}
                     </ESTypography>
-                    <ESTypography className='mb-xs' strong ellipsis level={5}>
-                        {course.name}
-                    </ESTypography>
-                    <div className='d-flex justify-content-between align-items-center'>
+                    <CommonProgress />
+                </div>
+                <ESDivider color='grey' type='horizontal' />
+            </div>
+            {!currentModule || !modules ? (
+                <ESSkeleton className='pl-md pr-md' active avatar dark />
+            ) : (
+                <>
+                    <div className='d-flex justify-content-between mb-xs pl-md pr-md'>
+                        <ESTypography transform='uppercase' variant='caption'>
+                            {t('global.subject')}
+                        </ESTypography>
                         <ESTypography
                             className='text-white-6'
-                            strong
-                            ellipsis
                             variant='caption'
                         >
-                            Progresso do curso
+                            {!loading && getModulePositionInModules()}
                         </ESTypography>
-                        <CommonProgress />
                     </div>
-                    <ESDivider color='grey' type='horizontal' />
-                </div>
-            ) : (
-                <SANErrorPiece
-                    message={t('classroom.classPlaylist.courseError')}
-                    dark={true}
-                />
+                    <div className='pl-md pr-md'>
+                        <ESDisciplineDropdown
+                            className='mb-lg'
+                            onSelect={onSelect}
+                            activeItem={currentModule}
+                            items={modules.data}
+                            loading={loading}
+                            progress={progressTest(currentModule)}
+                        />
+                    </div>
+                    {renderPlaylist()}
+                </>
             )}
-            <>
-                {(!currentModule || !modules) && !modulesError ? (
-                    <ESSkeleton className='pl-md pr-md' active avatar dark />
-                ) : currentModule && modules && !error ? (
-                    <>
-                        <div className='d-flex justify-content-between mb-xs pl-md pr-md'>
-                            <ESTypography
-                                transform='uppercase'
-                                variant='caption'
-                            >
-                                Disciplina
-                            </ESTypography>
-                            <ESTypography
-                                className='text-white-6'
-                                variant='caption'
-                            >
-                                {currentModule.index + 1}/{modules.count}
-                            </ESTypography>
-                        </div>
-                        <div className='pl-md pr-md'>
-                            <ESDisciplineDropdown
-                                className='mb-lg'
-                                onSelect={onSelect}
-                                activeItem={currentModule}
-                                items={modules.data}
-                                loading={loading}
-                                progress={progressTest(currentModule)}
-                            />
-                        </div>
-                        {renderPlaylist()}
-                    </>
-                ) : (
-                    <SANErrorPiece
-                        message={t('classroom.classPlaylist.modulesError')}
-                        dark={true}
-                    />
-                )}
-            </>
         </div>
     )
 }

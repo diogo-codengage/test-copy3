@@ -20,6 +20,7 @@ import SANSubheader from './Subheader'
 import { useQuestionsContext } from '../Context'
 import { useAuthContext } from 'Hooks/auth'
 import { useApolloContext } from 'Hooks/apollo'
+import { useLayoutContext } from '../../Layout/Context'
 
 const initialState = {
     answer: null,
@@ -41,6 +42,8 @@ const SANQuestionPage = ({ history }) => {
         currentIndex
     } = useQuestionsContext()
 
+    const { setPageContext } = useLayoutContext()
+
     const { t } = useTranslation('esanar')
     const { width } = useWindowSize()
     const [isFull, setIsFull] = useState(width <= 992)
@@ -49,6 +52,14 @@ const SANQuestionPage = ({ history }) => {
     const [bookmarked, setBookmark] = useState()
 
     const { me } = useAuthContext()
+
+    useEffect(() => {
+        setPageContext('questionPractice')
+
+        return () => {
+            setPageContext(null)
+        }
+    })
 
     const handleConfirm = mutation => alternative => {
         pauseStopwatch()
