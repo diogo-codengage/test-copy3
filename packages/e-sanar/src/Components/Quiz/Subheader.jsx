@@ -35,7 +35,7 @@ const SANSubheader = forwardRef(
                 <ESRow type='flex' justify='space-between' className='w-100'>
                     <ESCol
                         xs={24}
-                        sm={7}
+                        // sm={7}
                         md={8}
                         className='video-quiz__subheader--left'
                     >
@@ -48,7 +48,7 @@ const SANSubheader = forwardRef(
                     </ESCol>
                     <ESCol
                         xs={24}
-                        sm={8}
+                        // sm={8}
                         md={8}
                         className='video-quiz__subheader--center'
                     >
@@ -78,7 +78,7 @@ const SANSubheader = forwardRef(
                     </ESCol>
                     <ESCol
                         xs={24}
-                        sm={9}
+                        // sm={9}
                         md={8}
                         className='video-quiz__subheader--right'
                     >

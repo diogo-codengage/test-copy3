@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Avatar } from 'antd'
 
-import { ListViewItem } from '../../Atoms/ListView'
+import { ESListViewItem } from '../../Atoms/ListView'
 import { ESRow, ESCol } from '../../Atoms/Grid'
 
 const ESAvatarListItem = ({
