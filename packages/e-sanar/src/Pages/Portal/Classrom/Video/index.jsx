@@ -77,7 +77,10 @@ const SANClassroomVideo = () => {
             0
 
         if (!videoError && percentage > videoPercentage) {
-            const timeInSeconds = playerRef && playerRef.current.position()
+            const timeInSeconds =
+                playerRef && playerRef.current
+                    ? playerRef.current.position()
+                    : 0
             handleProgress({
                 timeInSeconds: parseInt(timeInSeconds),
                 percentage,
