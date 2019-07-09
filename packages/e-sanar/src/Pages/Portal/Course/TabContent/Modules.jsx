@@ -4,9 +4,10 @@ import { withRouter } from 'react-router-dom'
 import { Query } from 'react-apollo'
 import { useTranslation } from 'react-i18next'
 
-import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
+import ESListView, {
+    ESListViewItem
+} from 'sanar-ui/dist/Components/Atoms/ListView'
 import ESPagination from 'sanar-ui/dist/Components/Atoms/Pagination'
-import ESSpin from 'sanar-ui/dist/Components/Atoms/Spin'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import ESCardCourseModule from 'sanar-ui/dist/Components/Molecules/CardCourseModule'
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
@@ -68,8 +69,8 @@ const SANCourseModules = ({ history }) => {
         )
     }
 
-    const renderDiscipline = (item, index) => (
-        <ESCol key={index} xs={12} md={8} lg={8} xl={6}>
+    const renderDiscipline = item => (
+        <ESListViewItem>
             <ESCardCourseModule
                 className='san-tab-course-content__continue--card'
                 moduleName={`${t(
@@ -95,7 +96,7 @@ const SANCourseModules = ({ history }) => {
                 image={item.cover_picture_url}
                 onClick={goClassrom(item)}
             />
-        </ESCol>
+        </ESListViewItem>
     )
 
     return (
@@ -108,9 +109,8 @@ const SANCourseModules = ({ history }) => {
                 skip: pageSize * current - pageSize
             }}
         >
-            {({ loading, error, data: { modules } }) => {
-                if (loading) return <ESSpin spinning flex minHeight={375} />
-                if (error)
+            {({ loading, error, fetchMore, data }) => {
+                if (error) {
                     return (
                         <SANErrorPiece
                             message={t(
@@ -118,7 +118,10 @@ const SANCourseModules = ({ history }) => {
                             )}
                         />
                     )
-                const { data, count } = modules
+                }
+
+                const count = !loading ? data.modules.count : 0
+                const modules = !loading ? data.modules.data : []
                 return (
                     <div className='san-tab-course-content__modules pt-md pb-lg'>
                         <SANPortalPagesContainer>
@@ -183,13 +186,24 @@ const SANCourseModules = ({ history }) => {
                                 //     </ESRadioGroup>
                                 // }
                             />
-                            <ESRow gutter={24}>
-                                {data.map(renderDiscipline)}
-                            </ESRow>
-                            <ESPagination
-                                total={count}
-                                current={current}
-                                onChange={setCurrent}
+                            <ESListView
+                                grid={{
+                                    gutter: 24,
+                                    xs: 1,
+                                    sm: 2,
+                                    md: 3,
+                                    xl: 4
+                                }}
+                                loading={loading}
+                                dataSource={modules}
+                                renderItem={renderDiscipline}
+                                footer={
+                                    <ESPagination
+                                        total={count}
+                                        current={current}
+                                        onChange={setCurrent}
+                                    />
+                                }
                             />
                         </SANPortalPagesContainer>
                     </div>

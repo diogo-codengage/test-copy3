@@ -53,9 +53,11 @@ const ESLessonHeader = ({
                         <ESRate {...rate} />
                     </div>
                 )}
-                <ESBookmark
-                    {...{ bookmarked, onBookmarked, hideLabel: !!rate }}
-                />
+                {onBookmarked && (
+                    <ESBookmark
+                        {...{ bookmarked, onBookmarked, hideLabel: !!rate }}
+                    />
+                )}
             </ESCol>
             {children && (
                 <ESCol
