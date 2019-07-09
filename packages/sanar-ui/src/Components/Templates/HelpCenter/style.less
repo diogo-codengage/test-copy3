@@ -1,0 +1,76 @@
+.es-help-center-template {
+
+    &__header {
+        border-bottom: 1px solid @grey-3;
+        box-shadow: 0 1px 2px @grey-3;
+
+        & .es-session-title {
+            margin: 20px 0;
+
+            & .es-form-item {
+                margin: 0;
+            }
+        }
+    }
+
+    &__container {
+        width: 100%;
+        max-width: 1008px;
+        padding: 16px;
+        margin: 0 auto;
+    }
+
+    .ant-collapse-header{
+        background: @white;
+        font-weight: bold;
+        text-align: left;
+    }
+    .ant-collapse-content-box{
+        text-align: left;
+    }
+
+    &__content {
+        background: @grey-solid-2;
+        &__infos {
+
+            width: 100%;
+            max-width: 1008px;
+            padding: 16px;
+            margin: 0 auto;
+            margin-bottom: @margin-md;
+
+            &--large-margin {
+                margin-bottom: @margin-lg;
+            }
+
+            text-align: center;
+
+            &--title {
+                color: @grey-solid-9;
+            }
+
+            &--subtitle {
+                color: @grey-solid-7;
+            }
+
+            .es-typography {
+                text-align: left;
+            }
+
+        }
+        
+        
+
+        @media (min-width: @screen-md) {
+            // padding-top: 78px;
+
+            // &__infos {
+            //     &--large-margin {
+            //         margin-bottom: @margin-xxl;
+            //     }
+            // }
+        }
+    }
+
+
+}

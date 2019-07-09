@@ -10,6 +10,7 @@ import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESDivider from 'sanar-ui/dist/Components/Atoms/Divider'
 import ESModalTabs from 'sanar-ui/dist/Components/Organisms/ModalTabs'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
+import { createHashHistory } from 'history'
 
 import { SANPortalPagesContainer } from '../Layout'
 
@@ -43,6 +44,13 @@ const SANFooter = ({ darkMode }) => {
         e.preventDefault()
         setOpenPrivacy(true)
     }
+    
+    // TODO: check a better way to use History here....
+    const history = createHashHistory()
+    const goHelpCenter = () =>  {
+        history.push('/aluno/central-ajuda')
+    }
+
 
     return (
         <>
@@ -98,7 +106,7 @@ const SANFooter = ({ darkMode }) => {
                                 color={darkMode ? 'light' : 'default'}
                                 variant='outlined'
                             >
-                                <ESTypography className='san-portal-layout__footer--contact--help-button'>
+                                <ESTypography  onClick={goHelpCenter} href='foo' className='san-portal-layout__footer--contact--help-button'>
                                     {t('footer.helpButton')}
                                 </ESTypography>
                             </ESButton>
