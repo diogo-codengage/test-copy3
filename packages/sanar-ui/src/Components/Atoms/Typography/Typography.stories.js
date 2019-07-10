@@ -23,6 +23,11 @@ const typeOptions = {
     Muted: 'muted'
 }
 
+const transformOptions = {
+    Initial: 'initial',
+    Uppercase: 'uppercase'
+}
+
 const levelOptions = {
     '': '',
     1: 1,
@@ -52,6 +57,7 @@ storiesOf('Atoms.Typography', module).add('Simple', () => (
         level={select('Level', levelOptions, '')}
         type={select('Type', typeOptions, 'default')}
         variant={select('Variant', variantOptions, undefined)}
+        variant={select('Transform', transformOptions, undefined)}
     >
         Every year, I took a holiday. I went to Florence, this cafe on the banks
         of the Arno. Every fine evening, I would sit there and order a Fernet
@@ -61,5 +67,10 @@ storiesOf('Atoms.Typography', module).add('Simple', () => (
         it, that you were happy. I never wanted you to come back to Gotham. I
         always knew there was nothing here for you except pain and tragedy and I
         wanted something more for you than that. I still do.
+    </ESTypography>
+))
+.add('Dark', () => (
+    <ESTypography type='light'>
+        Another text in dark mode
     </ESTypography>
 ))

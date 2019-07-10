@@ -1,21 +1,9 @@
 import { Auth } from 'aws-amplify'
 
-const esFacebookSignIn = () => {
-    if (location.protocol === 'http:') {
-        return Promise.reject('Erro')
-    }
+const esFacebookSignIn = () => doLoginIntoCognito()
 
-    return getLoginStatus()
-        .then(response => {
-            return response.status === 'connected'
-                ? getFacebookUserData(response)
-                : requestFacebookLogin().then(getFacebookUserData)
-        })
-        .then(doLoginIntoCognito)
-}
-
-export const esFacebookCreateScript = () => {
-    window.fbAsyncInit = fbAsyncInit
+export const esFacebookCreateScript = key => {
+    window.fbAsyncInit = () => fbAsyncInit(key)
     const script = document.createElement('script')
     script.src = 'https://connect.facebook.net/en_US/sdk.js'
     script.async = true
@@ -65,18 +53,15 @@ const requestFacebookLogin = () => {
     })
 }
 
-const doLoginIntoCognito = ({ accessToken, expires_at, user }) => {
-    return Auth.federatedSignIn(
-        'facebook',
-        { token: accessToken, expires_at },
-        user
-    ).catch(err => console.log(err))
-}
+const doLoginIntoCognito = () =>
+    Auth.federatedSignIn({ provider: 'Facebook' }).catch(err =>
+        console.log(err)
+    )
 
-const fbAsyncInit = () => {
+const fbAsyncInit = key => {
     const fb = window.FB
     fb.init({
-        appId: '366889213954946',
+        appId: key,
         cookie: true,
         xfbml: true,
         version: 'v2.11'

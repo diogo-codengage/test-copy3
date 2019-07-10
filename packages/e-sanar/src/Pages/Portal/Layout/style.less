@@ -2,6 +2,20 @@
     min-height: 100vh !important;
     flex-direction: row;
 
+    &__classroom {
+        padding-bottom: 0 !important;
+    }
+
+    & .es-brand-header {
+        z-index: 1;
+    }
+
+    &__scroll {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
     &__container {
         width: 100%;
         max-width: 1008px;
@@ -14,13 +28,11 @@
     }
 
     & .ant-layout,
-    &__footer,
     &__content {
         background: @white !important;
     }
 
     &__content {
-        min-height: ~'calc(100% - 181px)';
         display: flex;
         flex-direction: column;
     }
@@ -28,13 +40,28 @@
     &__footer {
         padding: 0 !important;
 
-        &--divider {
+        & .es-divider:first-of-type {
             margin-top: 0;
         }
 
+        &--dark {
+            background-color: @grey-solid-9 !important;
+        }
+
+        &--light {
+            background-color: @grey-solid-1;
+        }
+
+        &--divider {
+            margin-top: 0;
+            &-dark {
+                background-color: @white-3;
+            }
+        }
+
         &--contact {
-            & .es-typography {
-                color: @grey-8;
+            &--help-button {
+                color: currentColor !important;
             }
 
             &--email,
@@ -57,12 +84,8 @@
         }
 
         &--copyright {
-            margin-top: @margin-lg;
+            margin: @margin-lg 0 0 0 !important;
             padding-bottom: @padding-lg;
-
-            & .es-typography {
-                color: @grey-8;
-            }
         }
     }
 
@@ -98,5 +121,32 @@
             text-align: center;
             justify-content: center;
         }
+    }
+
+    @media (min-width: 1024px) {
+        &__scroll {
+            margin-left: 56px;
+
+            &__classroom {
+                margin-left: 0 !important;
+            }
+        }
+    }
+
+    @media (min-width: 1365px) {
+        &__scroll {
+            margin-left: 360px;
+
+            &__classroom {
+                margin-left: 0 !important;
+            }
+        }
+    }
+
+    &__error-card {
+        padding: @padding-md;
+        border: 1px solid @white-3;
+        border-radius: @border-radius-base;
+        background-color: @white-1;
     }
 }

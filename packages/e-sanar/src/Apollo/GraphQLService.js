@@ -4,14 +4,38 @@ import { ApolloProvider } from 'react-apollo'
 import { Auth } from 'aws-amplify'
 
 const getCurrentTokenSession = () => {
-    return Auth.currentAuthenticatedUser().then(response => {
-        return `Bearer iambatman`
+    return Auth.currentSession().then(response => {
+        return `${response.idToken.jwtToken}`
     })
 }
 
+const errorHandler = async ({ graphQLErrors, networkError }) => {
+    if (graphQLErrors) {
+        graphQLErrors.map(({ message, locations, path }) =>
+            console.error(
+                '[GraphQL error]: Message: %o, Location: %o, Path: %o',
+                message,
+                locations,
+                path
+            )
+        )
+    }
+
+    if (networkError) {
+        console.error('[Network error]: %o', networkError)
+        switch (networkError.code) {
+            case 'NotAuthorizedException':
+                await Auth.signOut()
+                window.location.reload()
+                break
+            default:
+        }
+    }
+}
+
 const client = new ApolloClient({
-    uri: 'http://178.62.228.241:4000/graphql',
-    onError: console.log,
+    uri: process.env.REACT_APP_URL_API,
+    onError: errorHandler,
     request: async operation =>
         operation.setContext({
             headers: {

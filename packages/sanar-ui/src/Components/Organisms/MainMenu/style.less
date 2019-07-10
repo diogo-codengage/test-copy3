@@ -1,4 +1,5 @@
 @import './LeftOff/style.less';
+@import './Ranking/style.less';
 @import './NavigationList/style.less';
 @import './Avatar/style.less';
 @import './Notification/style.less';
@@ -20,7 +21,7 @@
     }
 
     & .backdrop {
-        transition: all 0.5s ease-in;
+        transition: transform 0.3s ease-in-out;
         bottom: 0;
         background-color: rgba(0, 0, 0, 0.75);
         top: 0;
@@ -31,9 +32,40 @@
         visibility: hidden;
     }
 
-    &__content.open + .backdrop {
+    &__content.open + &__sidebar-left + .backdrop {
         visibility: visible;
         opacity: 1;
+    }
+
+    &__classroom {
+        .es-main-menu__sidebar-left {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .es-main-menu__content {
+            &.open + .es-main-menu__sidebar-left {
+                transform: translateX(0);
+            }
+            &.close + .es-main-menu__sidebar-left {
+                transform: translateX(-56px);
+            }
+        }
+
+        .es-main-menu {
+            &__content {
+                &.close {
+                    transform: translateX(-360px);
+                }
+
+                &.open {
+                    transform: translateX(0);
+                }
+            }
+        }
+
+        // .es-main-menu__sidebar-left {
+        //     background: red !important;
+        // }
     }
 
     &__content {
@@ -42,21 +74,24 @@
         width: 304px;
         height: ~'calc(100% + 8px)';
         overflow: hidden;
-        transition: transform 0.5s ease-in;
+        transition: transform 0.3s ease-in-out;
 
         // Sempre que não houver espaço deixará "scrollavel", mesmo em desktop.
         &--scrollable {
-            max-height: ~'calc(100% - 135px)';
-            overflow-y: auto;
+            height: ~'calc(100% - 128px)';
+
+            &--element {
+                height: ~'calc(100% - 100px)';
+            }
         }
 
         &.open {
             width: 100%;
-            position: absolute;
+            position: fixed;
         }
 
         &.close {
-            position: absolute;
+            position: fixed;
             transform: translateX(-100%);
         }
 
@@ -110,6 +145,7 @@
             width: 56px;
             height: 100%;
             padding: @padding-md 0;
+            position: fixed;
             & img {
                 cursor: pointer;
                 max-width: 32px;
@@ -165,6 +201,13 @@
         background-color: @grey-solid-9;
         & .es-typography {
             color: @white-9;
+        }
+    }
+
+    @media (min-width: 1365px) {
+        &__content {
+            position: fixed;
+            left: 56px;
         }
     }
 }

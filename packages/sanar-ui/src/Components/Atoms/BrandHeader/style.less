@@ -3,4 +3,19 @@
     text-align: center;
     box-shadow: @es-shadow;
     padding: @padding-sm;
+
+    &--small {
+        img {
+            max-height: 24px;
+        }
+    }
+
+    &--large {
+        padding: @padding-xxl;
+    }
+
+    &__dark {
+        background-color: @grey-solid-9;
+        box-shadow: 0 1px 2px @grey-solid-10;
+    }
 }

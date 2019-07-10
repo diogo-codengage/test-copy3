@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import Tabs from 'antd/lib/tabs'
 import classNames from 'classnames'
 
-const ESTabs = ({ className, center, ...props }) => {
+const ESTabs = ({ className, center, dark, ...props }) => {
     const classes = classNames(
         'es-tabs',
         {
-            'es-tabs__center': center
+            'es-tabs__center': center,
+            'es-tabs__dark': dark
         },
         className
     )
@@ -21,7 +22,7 @@ ESTabs.propTypes = Object.assign(
         className: PropTypes.string,
         activeKey: PropTypes.string,
         animated: PropTypes.bool,
-        renderTabBar: PropTypes.node,
+        renderTabBar: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
         defaultActiveKey: PropTypes.string,
         hideAdd: PropTypes.bool,
         size: PropTypes.oneOf(['default', 'large', 'small']),
@@ -35,7 +36,8 @@ ESTabs.propTypes = Object.assign(
         onNextClick: PropTypes.func,
         onPrevClick: PropTypes.func,
         onTabClick: PropTypes.func,
-        center: PropTypes.bool
+        center: PropTypes.bool,
+        dark: PropTypes.bool
     }
 )
 

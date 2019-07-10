@@ -8,10 +8,10 @@ import { useTranslation } from 'react-i18next'
 const FacebookSVG = () => <img src={facebook} alt='Facebook Sign In' />
 
 // To federated sign in from Facebook
-const ESFacebookSignIn = ({ signIn, loading }) => {
+const ESFacebookSignIn = ({ signIn, loading, facebookKey }) => {
     const { t } = useTranslation('sanarui')
     useEffect(() => {
-        if (!window.FB) esFacebookCreateScript()
+        if (!window.FB) esFacebookCreateScript(facebookKey)
     }, [])
 
     return (

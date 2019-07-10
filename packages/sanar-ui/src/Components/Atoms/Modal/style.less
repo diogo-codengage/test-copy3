@@ -4,6 +4,10 @@
         font-weight: bold;
     }
 
+    & .ant-modal-header {
+        padding: 19px @margin-md 18px @margin-md;
+    }
+
     & .ant-modal-footer {
         border: none;
         padding: 0 @padding-lg @padding-lg @padding-lg;
@@ -17,5 +21,11 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
+    }
+}
+
+@media (max-width: @screen-md) {
+    .ant-modal {
+        max-width: calc(92vw);
     }
 }

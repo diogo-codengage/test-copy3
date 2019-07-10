@@ -79,7 +79,9 @@ ESTypography.propTypes = {
         'danger',
         'success',
         'muted',
-        'default'
+        'default',
+        'light',
+        'secondary'
     ])
 }
 

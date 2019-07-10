@@ -1,23 +1,25 @@
 import React from 'react'
 import ESComment from './Comment'
 import { storiesOf } from '@storybook/react'
+import { boolean } from '@storybook/addon-knobs'
 
 const comment = {
-    author: {
+    user: {
         name: 'San Holo',
-        avatar:
+        profile_picture:
             'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
     },
-    content: `We supply a series of design principles, practical patterns and high quality design
+    text: `We supply a series of design principles, practical patterns and high quality design
     resources (Sketch and Axure), to help people create their product prototypes beautifully
     and efficiently.`,
-    time: '24 dias'
+    time: '2019-07-07T08:40:51.620Z'
 }
 
 storiesOf('Molecules.Comment', module).add('Comment', () => (
     <ESComment
-        author={comment.author}
-        content={comment.content}
+        user={comment.user}
+        text={comment.text}
         time={comment.time}
+        monitor={boolean('Monitor', true)}
     />
 ))

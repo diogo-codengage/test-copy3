@@ -5,7 +5,14 @@ export default {
         back: 'Voltar',
         leave: 'Sair',
         loadMore: 'Carregar mais',
-        send: 'Enviar'
+        send: 'Enviar',
+        continue: 'Continuar',
+        subject: 'Disciplina',
+        activity: 'Aula',
+        confirm: 'Confirmar',
+        yes: 'Sim',
+        no: 'Não',
+        failLoadLastAccessed: 'Erro ao carregar "Continuar onde parei".'
     },
     auth: {
         accessAccount: 'Acessar conta',
@@ -16,6 +23,8 @@ export default {
         login: 'Entrar',
         title: 'Ou entre com os dados abaixo',
         newPassword: 'Nova senha',
+        currentPassword: 'Senha atual',
+        messageChangeSuccess: 'Senha alterada com sucesso!',
         marketing: {
             title:
                 'Tenha uma experiência de excelência nos seus estudos e na sua carreira',
@@ -34,6 +43,10 @@ export default {
             subtitle: 'Cadastre uma nova senha preenchendo os campos abaixo:',
             confirmPassword: 'Confirme sua senha'
         },
+        createNewPassword: {
+            title: 'Crie uma nova senha',
+            button: 'Criar senha'
+        },
         passwordResetSent: {
             title: 'Enviado com sucesso!',
             subtitle: 'Um link de recuperação foi enviado para:',
@@ -50,6 +63,7 @@ export default {
     },
     mainMenu: {
         back: 'Voltar ao menu principal',
+        continueCourse: 'Continuar na Disciplina {{module}}, aula {{class}}',
         title: {
             menu: 'Menu',
             notifications: 'Notificações',
@@ -149,7 +163,7 @@ export default {
         livesTitle: 'Lives',
         livesSubtitle:
             'Veja as lives que ainda vão acontecer e as que já rolaram',
-        nextLivesTitle: 'Próximas lives',
+        othersLivesTitle: 'Outras lives',
         remembered: 'Lembrado',
         remember: 'Lembrar',
         viewLive: 'Ver live',
@@ -164,7 +178,12 @@ export default {
             cardModuleAction: 'Ver aulas',
             continue: {
                 whereStopped: 'Onde você parou',
-                nextModule: 'Próximo módulo'
+                nextDiscipline: 'Próximo disciplina',
+                nextModule: 'Próximo módulo',
+                error: {
+                    defaultMessage:
+                        'Ocorreu um erro ao tentar trazer o último conteúdo acessado.'
+                }
             },
             professors: {
                 title: 'Professores',
@@ -172,14 +191,19 @@ export default {
                     'Conheça os especialistas que vão te ajudar no seu aprendizado',
                 buttonLoadMore: 'Carregar mais'
             },
-            modules: {
+            discipline: {
                 title: {
                     key: 'disciplina',
                     key_plural: 'disciplinas',
                     keyWithCount: '{{count}} disciplina',
                     keyWithCount_plural: '{{count}} disciplinas'
                 },
-                singularName: 'Módulo',
+                discipline: {
+                    key: 'Disciplina',
+                    key_plural: 'Disciplinas',
+                    keyWithCount: '{{count}} disciplina',
+                    keyWithCount_plural: '{{count}} disciplinas'
+                },
                 whatCourseHas: 'O que esse curso possui',
                 whatCourseHasSubtitle:
                     'Tudo o que você tem acesso na plataforma',
@@ -187,6 +211,10 @@ export default {
                     done: 'Concluídas',
                     all: 'Todas',
                     incomplete: 'Incompleto'
+                },
+                error: {
+                    defaultMessage:
+                        'Ocorreu um erro ao carregar suas disciplinas.'
                 }
             }
         },
@@ -215,19 +243,37 @@ export default {
         }
     },
     questionBase: {
+        hitoricButton: 'Histórico',
+        questionsButton: 'BANCO DE QUESTÕES',
+        completed: {
+            title: 'Resultado',
+            subtitle: 'Verifique como você se saiu nessa sessão prática'
+        },
         question: {
             title: 'Questões',
-            endPracticeButton: 'Encerrar prática'
+            endPracticeButton: 'Encerrar prática',
+            corrects: 'Corretas',
+            wrong: 'Erradas',
+            skipped: 'Puladas',
+            saveQuestion: 'Salvar questão',
+            seeFilters: 'Ver filtros',
+            empty:
+                'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos',
+            goOut: {
+                title: 'Ops! Você está saindo da prática.',
+                subtitle: 'Deseja realmente encerrar a prática?'
+            },
+            failHandleBookmark: 'Ocorreu um erro ao favoritar questão.'
         },
         historic: {
             title: 'Histórico de questões',
-            questionsButton: 'BANCO DE QUESTÕES',
-            empty: 'Não há histórico'
+            subtitle: 'Confira as últimas questões respondidas por você',
+            empty: 'Não há histórico',
+            error: 'Ocorreu um erro ao mostrar o histórico de questões.'
         },
         filter: {
             title: 'Banco de questões',
             subtitle: 'Hora de praticar tudo o que você aprendeu no curso',
-            hitoricButton: 'Histórico',
             startPracticeButton: 'Iniciar prática',
             subject: {
                 title: 'Assunto',
@@ -281,13 +327,68 @@ export default {
             }
         }
     },
+    classroom: {
+        rateClass: 'Avaliar aula',
+        question: 'Questão',
+        questions: 'Questões',
+        questionMap: 'Mapa de questões',
+        discussions: 'Discussões',
+        favoriteQuestion: 'Favoritar questão',
+        favoriteClass: 'Favoritar aula',
+        failLoadRating: 'Ocorreu um erro ao carregar a avaliação da aula.',
+        correct: 'Corretas',
+        wrong: 'Erradas',
+        skipped: 'Puladas',
+        quizFinalized: 'Quiz finalizado',
+        bookmarkDocument: 'Favoritar material',
+        next: 'Próxima',
+        previous: 'Anterior',
+        askQuestions: 'Fazer Questões',
+        viewDiscussions: 'Ver discussões',
+        failHandleBookmark: 'Ocorreu um erro ao favoritar conteúdo.',
+        failLoadClassroom: 'Ocorreu um erro ao carregar sala de aula.',
+        error: 'Ocorreu um erro ao carregar este vídeo.',
+        document: {
+            error: 'Ocorreu um erro ao carregar este documento.'
+        },
+        mock: {
+            error: 'Ocorreu um erro ao carregar o simulado.',
+            errorAnswering: 'Ocorreu um erro ao tentar responder esta questão.'
+        },
+        classPlaylist: {
+            courseError: 'Ocorreu um erro ao carregar os dados deste curso.',
+            modulesError:
+                'Ocorreu um erro ao carregar as disciplinas deste curso.',
+            goToBegin: 'Voltar para o início'
+        }
+    },
     footer: {
         helpButton: 'Precisa de ajuda?',
-        phone: '71 3052-4831',
-        email: 'atendimento@e-sanar.com.b',
+        phone: '0 800 327 0035',
+        email: 'atendimento@editorasanar.com.br',
         attendance: 'Atendimento de Seg. a Sex. das 09h às 18h',
-        copyright: 'Copyright © E-sanar. Todos os direitos reservados.',
+        copyright: 'Copyright © Sanar. Todos os direitos reservados.',
         termsOfUse: 'Termos de Uso',
         privacyPolicy: 'Política de Privacidade'
+    },
+    errors: {
+        tryAgain: 'Tentar novamente',
+        mainPage: 'Página principal',
+        navigateBack: 'Página anterior',
+        notFound: {
+            title: 'Oops! Não encontramos o que você buscou.',
+            subTitle:
+                'A página que você tentou acessar está indisponível ou não existe.'
+        },
+        authorization: {
+            title: 'Acesso negado/proibido',
+            subTitle:
+                'Desculpe, mas você não tem permissão para acessar essa página.'
+        },
+        default: {
+            title: 'Alguma coisa está errada...',
+            subTitle:
+                'Nosso time já identificou o problema e está trabalhando para resolvê-lo! Por favor, tente novamente em alguns minutos.'
+        }
     }
 }

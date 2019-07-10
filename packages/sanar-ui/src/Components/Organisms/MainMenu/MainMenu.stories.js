@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 
@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Layout, Radio } from 'antd'
 import ESMainMenu from './MainMenu'
+import ESRanking from './Ranking/Ranking'
 import ESLeftOff from './LeftOff/LeftOff'
 import ESAvatarMenu from './Avatar/Avatar'
 import ESNotificationList from './Notification/NotificationList'
@@ -59,6 +60,12 @@ const LayoutExample = ({ theme, setTheme }) => (
 
 const Initial = ({ setIndex }) => (
     <>
+        <div className='pl-md pr-md mb-md'>
+            <ESRanking
+                ranking={120}
+                score={56007}
+            />
+        </div>
         <div className='pl-md pr-md'>
             <ESLeftOff
                 title='Trilha Sanar Enfermagem'
@@ -409,7 +416,7 @@ const DemoMainMenu = () => {
     const [theme, setTheme] = useState('light')
     const [index, setIndex] = useState(0)
 
-    useMemo(() => (index === 6 ? setTheme('dark') : setTheme('primary')), [
+    useEffect(() => {index === 6 ? setTheme('dark') : setTheme('primary')}, [
         index
     ])
 

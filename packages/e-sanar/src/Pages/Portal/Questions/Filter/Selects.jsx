@@ -13,6 +13,7 @@ import moduloSvg from 'assets/images/questions/modulo.svg'
 import assuntoSvg from 'assets/images/questions/assunto.svg'
 import provaSvg from 'assets/images/questions/prova.svg'
 
+import { useQuestionsContext } from '../Context'
 import { useAuthContext } from 'Hooks/auth'
 import { GET_TAGS } from 'Apollo/Questions/queries/tags'
 import { GET_EXAMS } from 'Apollo/Questions/queries/exams'
@@ -23,33 +24,35 @@ import SANQuestionsFilterAdvanced from './Advanced'
 
 const intlPath = 'questionBase.filter.'
 
-const SANQuestionsFilterSelects = () => {
+const SANQuestionsFilterSelects = ({ defaultOpen }) => {
     const { getEnrollment } = useAuthContext()
+    const { formState } = useQuestionsContext()
     const { t } = useTranslation('esanar')
 
     const {
-        course: { id }
+        course: { id: courseId },
+        id: enrollmentId
     } = getEnrollment()
 
-    const mapItem = item => ({
-        label: item.name,
-        value: item.id
-    })
-
     const makeItems = ({ loading, data }, entity) =>
-        !loading && data ? data[entity].data.map(mapItem) : []
+        !loading && data ? data[entity].data : []
 
     return (
         <div className='questions-filter'>
             <SANPortalPagesContainer>
                 <ESRow gutter={24}>
                     <ESCol sm={24} md={12}>
-                        <Query query={GET_MODULES}>
+                        <Query
+                            query={GET_MODULES}
+                            variables={{
+                                courseId,
+                                enrollmentId
+                            }}
+                        >
                             {props => (
                                 <ESFormItem
                                     name='levels'
-                                    variables={{ courseId: id }}
-                                    skip={!id}
+                                    initialValue={formState && formState.levels}
                                 >
                                     <ESCardSelectFilter
                                         labelSelecteds={t(
@@ -71,7 +74,10 @@ const SANQuestionsFilterSelects = () => {
                     <ESCol sm={24} md={12}>
                         <Query query={GET_TAGS}>
                             {props => (
-                                <ESFormItem name='tags'>
+                                <ESFormItem
+                                    name='tags'
+                                    initialValue={formState && formState.tags}
+                                >
                                     <ESCardSelectFilter
                                         labelSelecteds={t(
                                             `${intlPath}subject.selecteds`
@@ -92,7 +98,11 @@ const SANQuestionsFilterSelects = () => {
                     <ESCol sm={24} md={12}>
                         <Query query={GET_BOARDS}>
                             {props => (
-                                <ESFormItem name='boards' className='mb-lg'>
+                                <ESFormItem
+                                    name='boards'
+                                    className='mb-lg'
+                                    initialValue={formState && formState.boards}
+                                >
                                     <ESCardSelectFilter
                                         labelSelecteds={t(
                                             `${intlPath}bank.selecteds`
@@ -111,7 +121,11 @@ const SANQuestionsFilterSelects = () => {
                     <ESCol sm={24} md={12}>
                         <Query query={GET_EXAMS}>
                             {props => (
-                                <ESFormItem name='exams' className='mb-lg'>
+                                <ESFormItem
+                                    name='exams'
+                                    className='mb-lg'
+                                    initialValue={formState && formState.exams}
+                                >
                                     <ESCardSelectFilter
                                         labelSelecteds={t(
                                             `${intlPath}test.selecteds`
@@ -128,7 +142,7 @@ const SANQuestionsFilterSelects = () => {
                         </Query>
                     </ESCol>
                 </ESRow>
-                <SANQuestionsFilterAdvanced />
+                <SANQuestionsFilterAdvanced defaultOpen={defaultOpen} />
             </SANPortalPagesContainer>
         </div>
     )

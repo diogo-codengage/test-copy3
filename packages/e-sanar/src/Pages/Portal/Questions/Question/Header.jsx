@@ -11,10 +11,48 @@ import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 
+import { useQuestionsContext } from '../Context'
+import { Modal } from 'antd'
+
 const intlPath = 'questionBase.question.'
 
-const SANQuestionHeader = ({ total, current, history }) => {
+const SANQuestionHeader = ({ history }) => {
+    const {
+        stopwatchRef,
+        totalQuestions,
+        currentIndex,
+        skippedQuestions,
+        totalAnsweredQuestions,
+        reset
+    } = useQuestionsContext()
     const { t } = useTranslation('esanar')
+
+    const validatePractice = () => {
+        if (
+            totalAnsweredQuestions === 0 ||
+            totalAnsweredQuestions === skippedQuestions
+        ) {
+            const modal = Modal.confirm({
+                centered: true,
+                title: 'Ops! Nenhuma questão foi respondida.',
+                content:
+                    'Que tal aprimorar seus conhecimentos reiniciando a prática?',
+                okText: 'Reiniciar prática',
+                cancelText: 'Encerrar',
+                onOk: () => {
+                    reset()
+                    modal.destroy()
+                },
+                onCancel: () => {
+                    reset()
+                    history.push('../filtro')
+                }
+            })
+            return
+        }
+
+        history.push('../finalizado')
+    }
 
     return (
         <div className='questions-question__header'>
@@ -23,25 +61,27 @@ const SANQuestionHeader = ({ total, current, history }) => {
                     title={
                         <div className='d-flex align-items-center'>
                             <ESTypography level={4} className='mr-xs'>
-                                {`${t(`${intlPath}title`)} ${current}`}
+                                {`${t(`${intlPath}title`)} ${currentIndex}`}
                             </ESTypography>
                             <ESTypography
                                 variant='body1'
                                 className='text-grey-6'
                             >
-                                {total > 999 ? `/ 999+` : `/ ${total}`}
+                                {totalQuestions > 999
+                                    ? `/ 999+`
+                                    : `/ ${totalQuestions}`}
                             </ESTypography>
                         </div>
                     }
                     extra={
                         <div className='d-flex align-items-center'>
-                            <ESStopwatch className='mr-lg' />
+                            <ESStopwatch className='mr-sm' ref={stopwatchRef} />
                             <ESButton
                                 size='small'
                                 variant='outlined'
                                 uppercase
                                 bold
-                                onClick={() => history.push('./filtro')}
+                                onClick={validatePractice}
                             >
                                 {t(`${intlPath}endPracticeButton`)}
                             </ESButton>

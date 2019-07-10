@@ -6,7 +6,6 @@ import ESButton from '../Button'
 import ESEvaIcon from '../EvaIcon'
 
 const customRenderElements = (current, type, originalElement) => {
-    console.log(type)
     switch (type) {
         case 'prev':
             return (

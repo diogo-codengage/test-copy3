@@ -1,34 +1,87 @@
 import React from 'react'
 
+import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import {
-    ESLeftOff,
     ESNavigationList,
-    ESNavigationListItem
+    ESNavigationListItem,
+    ESRanking,
+    ESLeftOff
 } from 'sanar-ui/dist/Components/Organisms/MainMenu'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 
+import { useAuthContext } from 'Hooks/auth'
+import { usePortalContext } from 'Pages/Portal/Context'
+import { getClassRoute } from 'Utils/getClassRoute'
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
+import { useLayoutContext } from '../../Layout/Context'
+
 const intlPath = 'mainMenu.initial.'
 
-const SANInitial = ({ setTab }) => {
+const SANInitial = ({ setTab, history }) => {
+    const { lastAccessed, error } = usePortalContext()
+    const { getEnrollment } = useAuthContext()
+    const { menuOpenOrClose } = useLayoutContext()
     const { t } = useTranslation('esanar')
+
+    const { course, ranking } = getEnrollment()
+
+    const moduleReference = last =>
+        `${t('global.subject')} ${last.module_order + 1}, ${t(
+            'global.activity'
+        )} ${last.resource_order + 1}`
+
+    const goClassroom = () =>
+        history.push(
+            `/aluno/sala-aula/${lastAccessed.module_id}/${getClassRoute(
+                lastAccessed.resource_type
+            )}/${lastAccessed.resource_id}`
+        )
+
+    const leftProps = {
+        title: course.name,
+        ...(lastAccessed && {
+            classReference: lastAccessed.module_title,
+            thumbnail: lastAccessed.thumbnail || lastAccessed.cover_picture_url,
+            moduleReference: moduleReference(lastAccessed),
+            onClick: goClassroom
+        })
+    }
+
+    const rankingProps = {
+        ranking: ranking.position,
+        score: ranking.points
+    }
+
+    const renderNextContent = e => {
+        setTab(Number(e.key))
+    }
 
     return (
         <>
-            <div className='pl-md pr-md'>
-                <ESLeftOff
-                    title='Trilha Sanar Enfermagem'
-                    classReference='Nome da aula exemplo'
-                    moduleReference='Módulo 2, aula 5'
-                    thumbnail='nopes'
-                />
+            <div className='pl-md pr-md mb-md'>
+                <ESRanking {...rankingProps} />
             </div>
-            <ESNavigationList onClick={e => setTab(Number(e.key))}>
+            <div className='pl-md pr-md'>
+                {!error ? (
+                    <ESLeftOff {...leftProps} />
+                ) : (
+                    <div className='san-portal-layout__error-card'>
+                        <SANErrorPiece
+                            message={t(
+                                'courseDetails.tabContent.continue.error.defaultMessage'
+                            )}
+                        />
+                    </div>
+                )}
+            </div>
+            <ESNavigationList onClick={renderNextContent}>
                 <ESNavigationListItem
                     key={0}
                     title={t(`${intlPath}init`)}
                     icon={<ESEvaIcon name='home-outline' color='default' />}
+                    onClick={() => menuOpenOrClose()}
                 />
                 {/*FIXME: <ESNavigationListItem
                     key={1}
@@ -60,6 +113,7 @@ const SANInitial = ({ setTab }) => {
                     key={5}
                     title={t(`${intlPath}questions`)}
                     icon={<ESEvaIcon name='edit-outline' color='default' />}
+                    onClick={() => menuOpenOrClose()}
                 />
                 {/*FIXME: <ESNavigationListItem
                     key={6}
@@ -76,4 +130,4 @@ const SANInitial = ({ setTab }) => {
     )
 }
 
-export default SANInitial
+export default withRouter(SANInitial)

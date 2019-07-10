@@ -1,6 +1,6 @@
 .es-eva-icon {
     & svg {
-        fill: currentColor;
+        fill: currentColor !important;
         width: 1em;
         height: 1em;
     }
@@ -25,11 +25,14 @@
         font-size: 24px;
     }
 
+    &--light {
+        color: @white-7;
+    }
     &--primary {
         color: @primary-color;
     }
     &--secondary {
-        color: @primary-color;
+        color: @secondary-color;
     }
     &--success {
         color: @success-color;
@@ -45,5 +48,8 @@
     }
     &--default {
         color: @normal-color;
+    }
+    &--grey {
+        color: @grey-7;
     }
 }

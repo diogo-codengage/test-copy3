@@ -1,0 +1,24 @@
+.es-skeleton {
+    &--dark {
+        .ant-skeleton-title,
+        .ant-skeleton-paragraph > li {
+            background: @white-3;
+        }
+
+        &.ant-skeleton-active .ant-skeleton-avatar,
+        &.ant-skeleton-active .ant-skeleton-content .ant-skeleton-title,
+        &.ant-skeleton-active
+            .ant-skeleton-content
+            .ant-skeleton-paragraph
+            > li {
+            background: linear-gradient(
+                90deg,
+                @white-2 25%,
+                @white-1 37%,
+                @white-2 63%
+            );
+            background-size: 400% 100%;
+            animation: ant-skeleton-loading 1.4s ease infinite;
+        }
+    }
+}

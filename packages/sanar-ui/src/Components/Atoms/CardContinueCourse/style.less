@@ -2,12 +2,19 @@
     width: 100%;
     background-color: @white-10;
     padding: @padding-sm @padding-md;
-    // margin: @margin-md 0;
     cursor: pointer;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    &--texts {
+        width: ~'calc(100% - 35px)';
+    }
+
+    &:hover {
+        background-color: @white-5;
+    }
 
     &--radius {
         border-radius: @border-radius-base;

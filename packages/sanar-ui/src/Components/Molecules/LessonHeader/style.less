@@ -1,0 +1,158 @@
+.es-lesson-header {
+    background: @grey-solid-8;
+    width: 100%;
+    box-shadow: 0 3px 6px @grey-3;
+
+    .es-typography {
+        color: @white;
+    }
+
+    &__left,
+    &__right {
+        padding: @padding-md;
+    }
+
+    &__bookmark {
+        flex: 1;
+        display: none;
+        align-items: center;
+        color: @white-8;
+        padding: 0 @padding-md;
+
+        & > div {
+            display: flex;
+            align-items: center;
+        }
+
+        &.no-rate {
+            justify-content: center;
+        }
+
+        & .es-rate {
+            margin: 0 @margin-xs;
+        }
+
+        @media (max-width: @screen-sm) {
+            justify-content: space-between;
+        }
+
+        @media (max-width: @screen-md) {
+            display: flex;
+        }
+    }
+
+    &__left {
+        & .container {
+            display: flex;
+
+            & .open-menu {
+                background-color: @secondary-color;
+                margin-right: @margin-lg;
+
+                @media (min-width: @screen-md) {
+                    &__has-tabs {
+                        display: none !important;
+                    }
+                }
+            }
+
+            @media (max-width: @screen-md) {
+                justify-content: space-between;
+
+                & .text {
+                    width: ~'calc(100% - 52px)';
+                    & h5 {
+                        font-size: @font-size-lg;
+                    }
+                }
+
+                & .open-menu {
+                    order: 2;
+                    margin: 0;
+                    width: 32px;
+                    height: 32px;
+                }
+            }
+            & .subtitle {
+                margin-top: @margin-xs;
+                display: flex;
+                align-items: flex-end;
+                &__path {
+                    color: @gold-1;
+                }
+                &__rate {
+                    color: @white-8;
+                    white-space: nowrap;
+                    &:before {
+                        content: '\2022';
+                        margin: 0 @margin-xs;
+                        color: @white-4;
+                    }
+                }
+                & .es-rate {
+                    margin-left: @margin-xs;
+                    white-space: nowrap;
+                }
+                @media (max-width: @screen-md) {
+                    &__rate,
+                    & .es-rate {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
+    &__center {
+        & .ant-tabs-bar {
+            margin: 0;
+        }
+        & .ant-tabs-tab {
+            height: 89px;
+            padding-top: 50px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        @media (max-width: @screen-lg) {
+            & .ant-tabs-tab {
+                height: 50px;
+                padding-top: 12px;
+            }
+        }
+    }
+
+    &__right > div {
+        justify-content: flex-end;
+
+        @media (max-width: @screen-md) {
+            justify-content: space-between;
+
+            & .bookmark {
+                display: none;
+            }
+        }
+
+        & .es-button.bookmark {
+            @media (max-width: @screen-xxl) {
+                & span {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    @media (max-width: @screen-lg) {
+        &__bookmark {
+            order: 2;
+        }
+        &__left {
+            order: 1;
+        }
+        &__center {
+            order: 4;
+        }
+        &__right {
+            order: 3;
+        }
+    }
+}

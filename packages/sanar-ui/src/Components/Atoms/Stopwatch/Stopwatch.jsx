@@ -8,12 +8,10 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import ESEvaIcon from '../EvaIcon'
-import ESIcon from '../Icon'
-import ESTypography from '../Typography'
 
 import useStopwatch from '../../../Hooks/useStopwatch'
 
-const formatTime = (hours, minutes, seconds) => {
+const formatTime = (hours, minutes, seconds, days) => {
     let finalHours
     let finalMinutes
     let finalSeconds
@@ -33,16 +31,28 @@ const formatTime = (hours, minutes, seconds) => {
     } else {
         finalSeconds = `0${seconds}`
     }
-    return `${finalHours}:${finalMinutes}:${finalSeconds}`
+    const formatted = `${finalHours}:${finalMinutes}:${finalSeconds}`
+
+    if (days) return `${days}d  - ${formatted}`
+    return formatted
 }
 
-const ESStopwatch = forwardRef(({ className, autoStart }, ref) => {
+const ESStopwatch = forwardRef(({ className, autoStart, dark }, ref) => {
     const [paused, setPaused] = useState(!autoStart)
-    const { hours, minutes, seconds, start, pause } = useStopwatch()
+    const {
+        hours,
+        minutes,
+        seconds,
+        start,
+        pause,
+        days,
+        reset
+    } = useStopwatch()
     const classes = classNames(
         'es-stopwatch',
         {
-            'es-stopwatch--stopped': paused
+            'es-stopwatch--stopped': paused,
+            'es-stopwatch--dark': dark
         },
         className
     )
@@ -63,7 +73,9 @@ const ESStopwatch = forwardRef(({ className, autoStart }, ref) => {
 
     useImperativeHandle(ref, () => ({
         start: () => handleStart(),
-        pause: () => handlePause()
+        pause: () => handlePause(),
+        time: () => formatTime(hours, minutes, seconds, days),
+        reset: () => reset()
     }))
 
     return (
@@ -73,14 +85,15 @@ const ESStopwatch = forwardRef(({ className, autoStart }, ref) => {
             ) : (
                 <ESEvaIcon key='2' name='clock-outline' />
             )}
-            <span>{formatTime(hours, minutes, seconds)}</span>
+            <span>{formatTime(hours, minutes, seconds, days)}</span>
         </div>
     )
 })
 
 ESStopwatch.propTypes = {
     className: PropTypes.string,
-    autoStart: PropTypes.bool
+    autoStart: PropTypes.bool,
+    dark: PropTypes.bool
 }
 ESStopwatch.defaultProps = {}
 

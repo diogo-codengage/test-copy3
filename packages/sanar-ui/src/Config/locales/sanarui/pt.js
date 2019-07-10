@@ -3,10 +3,40 @@ export default {
         filter: 'Filtrar',
         password: 'Senha',
         user: 'Usuário',
-        empty: 'Não há dados'
+        empty: 'Não há dados',
+        monitor: 'Monitor',
+        sendFeedback: 'Enviar feedback'
     },
     mainMenu: {
-        leftOff: 'Continuar onde parei'
+        leftOff: 'Continuar onde parei',
+        rankingPoints: 'pontos'
+    },
+    helpCenter: {
+        header: {
+            title: 'Central de Ajuda',
+            subTitle:
+                'Encontre aqui respostas para as principais dúvidas sobre a plataforma',
+            placeholder: 'Como podemos ajudar?'
+        },
+        helpContent: [
+            {
+                title: 'Sobre a plataforma',
+                subTitle:
+                    'Perguntas sobre o acesso e o funcionamento da plataforma'
+            },
+            {
+                title: 'Sobre o curso e as aulas',
+                subTitle: 'Perguntas relacionadas ao curso e às aulas'
+            },
+            {
+                title: 'Sobre cancelamento',
+                subTitle: 'Perguntas sobre cancelamentos de cursos'
+            },
+            {
+                title: 'Outros tipos de perguntas',
+                subTitle: 'Perguntas sobre temas gerais e problemas técnicos'
+            }
+        ]
     },
     cardSelectFilter: {
         selectAll: 'Selecionar todos',
@@ -89,5 +119,45 @@ export default {
         correct: 'Corretas:',
         wrong: 'Erradas:',
         skipped: 'Puladas:'
+    },
+    question: {
+        expertComment: 'Comentário do especialista',
+        confirm: 'Confirmar',
+        next: 'Próxima',
+        previous: 'Anterior',
+        jump: 'Pular'
+    },
+    classroom: {
+        header: {
+            extra: {
+                bookmark: 'Favoritar aula'
+            }
+        }
+    },
+    playlist: {
+        youAreIn: 'Você está em'
+    },
+    questionMap: {
+        title: 'Mapa de questões',
+        correct: 'Acertou',
+        wrong: 'Errou',
+        whereIs: 'Onde está',
+        answered: 'Respondida'
+    },
+    jwplayer: {
+        advance: 'Avançar 10 segundos',
+        rateClass: 'Avaliar aula',
+        next: 'Próximo',
+        previous: 'Anterior'
+    },
+    lessonHeader: {
+        rateClass: 'Avaliar aula'
+    },
+    pdfReader: {
+        problemRenderingPdf: 'Problemas ao visualizar esse material?',
+        clickAndDownload: 'Clique aqui e faça o download.'
+    },
+    errorPiece: {
+        updateButton: 'Tentar novamente'
     }
 }

@@ -1,27 +1,24 @@
 import gql from 'graphql-tag'
 
 export const GET_HISTORIC_QUESTIONS = gql`
-    query userAnswers($userId: ID!, $limit: Int, $skip: Int, $where: String) {
-        userAnswers(
-            userId: $userId
-            limit: $limit
-            skip: $skip
-            where: $where
-        ) {
+    query userAnswers($userId: ID!, $limit: Int, $skip: Int) {
+        userAnswers(userId: $userId, limit: $limit, skip: $skip) {
+            count
             data {
-                text_answer
+                id
                 correct
+                # alternatives that the user chose
+                alternatives {
+                    data {
+                        id
+                        text
+                    }
+                }
                 question {
                     id
                     statement
                     year
-                    observation
-                    type
-                    difficulty {
-                        level
-                        name
-                    }
-                    instituition {
+                    institution: instituition {
                         id
                         name
                     }
@@ -29,7 +26,35 @@ export const GET_HISTORIC_QUESTIONS = gql`
                         data {
                             id
                             text
-                            correct
+                        }
+                    }
+                    images {
+                        data {
+                            id
+                            sizedImages {
+                                id
+                                small {
+                                    id
+                                    filename
+                                    url
+                                    height
+                                    width
+                                }
+                                medium {
+                                    id
+                                    filename
+                                    url
+                                    height
+                                    width
+                                }
+                                large {
+                                    id
+                                    filename
+                                    url
+                                    height
+                                    width
+                                }
+                            }
                         }
                     }
                 }

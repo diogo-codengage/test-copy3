@@ -15,14 +15,42 @@ import { useAuthContext } from 'Hooks/auth'
 
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 import SANQuestionsHistoricHeader from './Header'
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 
 const SANQuestionsHistoric = () => {
     const [current, setCurrent] = useState(1)
     const [pageSize] = useState(10)
+    const [err, setErr] = useState(null)
     const {
         me: { id }
     } = useAuthContext()
     const { t } = useTranslation('esanar')
+
+    const getSubtitle = answer => {
+        if (answer.question.institution) {
+            return `${answer.question.institution.name}, ${
+                answer.question.year
+            }`
+        }
+    }
+
+    const getImage = images => {
+        if (images && images.data && images.data.length) {
+            return images.data[0].sizedImages.small.url
+        }
+    }
+
+    const renderItem = answer => (
+        <ESHistoricalIssuesItem
+            key={answer.id}
+            title={answer.question.statement}
+            subtitle={getSubtitle(answer)}
+            image={getImage(answer.question.images)}
+        />
+    )
+    const handleErr = err => {
+        setErr(err)
+    }
 
     return (
         <Query
@@ -32,44 +60,42 @@ const SANQuestionsHistoric = () => {
                 limit: pageSize,
                 skip: pageSize * current - pageSize
             }}
-            skip={!id}
+            onError={handleErr}
         >
-            {({ loading, error, data: { userAnswers } }) => {
-                if (loading) return <ESSpin spinning flex />
-                if (error) return `Error! ${error}`
-                const { data, count } = userAnswers
+            {({ loading, error, data }) => {
+                if (error || err)
+                    return (
+                        <div className='questions-historic__err-container'>
+                            <SANErrorPiece
+                                message={t('questionBase.historic.error')}
+                            />
+                        </div>
+                    )
+
+                const count = !loading ? data.userAnswers.count : 0
+                const userAnswers = !loading ? data.userAnswers.data : []
                 return (
                     <>
                         <SANQuestionsHistoricHeader />
                         <div className='questions-historic'>
                             <SANPortalPagesContainer>
-                                {data.length ? (
+                                {loading ? (
+                                    <ESSpin spinning flex />
+                                ) : userAnswers.length ? (
                                     <>
                                         <ESHistoricalIssuesList>
-                                            {data.userAnswers.data.map(
-                                                answer => (
-                                                    <ESHistoricalIssuesItem
-                                                        key={answer.id}
-                                                        title={
-                                                            answer.question
-                                                                .statement
-                                                        }
-                                                        subtitle={`${
-                                                            answer.question
-                                                                .statement
-                                                        }, ${answer.year}`}
-                                                    />
-                                                )
-                                            )}
+                                            {userAnswers.map(renderItem)}
                                         </ESHistoricalIssuesList>
-                                        <div className='d-flex justify-content-center'>
-                                            <ESPagination
-                                                total={count}
-                                                current={current}
-                                                onChange={setCurrent}
-                                                className='pb-lg mt-xl'
-                                            />
-                                        </div>
+                                        {count > pageSize && (
+                                            <div className='d-flex justify-content-center'>
+                                                <ESPagination
+                                                    total={count}
+                                                    current={current}
+                                                    onChange={setCurrent}
+                                                    className='pb-lg mt-xl'
+                                                />
+                                            </div>
+                                        )}
                                     </>
                                 ) : (
                                     <ESEmpty

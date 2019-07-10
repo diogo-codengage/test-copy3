@@ -28,6 +28,8 @@ const ESSignInForm = ({
     signInByGoogle,
     isKeepMeLoggedChecked,
     keepMeLogged,
+    facebookKey,
+    googleKey,
     form
 }) => {
     const { t } = useTranslation('sanarui')
@@ -75,6 +77,9 @@ const ESSignInForm = ({
             })
             .catch(() => {
                 setLoading(false)
+                message.error(
+                    'Ocorreu um erro ao logar-se utilizando o Facebook.'
+                )
             })
     }
 
@@ -87,18 +92,20 @@ const ESSignInForm = ({
                 <ESForm
                     form={form}
                     onSubmit={signIn}
-                    customValidator={validator()}
+                    customValidator={() => validator()}
                 >
                     <ESRow className='es-sign-in-form--social' gutter={16}>
                         <ESCol xs={24} sm={12}>
                             <ESFacebookSignIn
                                 signIn={signInFacebook}
+                                facebookKey={facebookKey}
                                 className='mb-md'
                             />
                         </ESCol>
                         <ESCol xs={24} sm={12}>
                             <ESGoogleSignIn
                                 signIn={signInGoogle}
+                                googleKey={googleKey}
                                 className='mb-lg'
                             />
                         </ESCol>
