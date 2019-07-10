@@ -28,6 +28,8 @@ const ESSignInForm = ({
     signInByGoogle,
     isKeepMeLoggedChecked,
     keepMeLogged,
+    facebookKey,
+    googleKey,
     form
 }) => {
     const { t } = useTranslation('sanarui')
@@ -96,12 +98,14 @@ const ESSignInForm = ({
                         <ESCol xs={24} sm={12}>
                             <ESFacebookSignIn
                                 signIn={signInFacebook}
+                                facebookKey={facebookKey}
                                 className='mb-md'
                             />
                         </ESCol>
                         <ESCol xs={24} sm={12}>
                             <ESGoogleSignIn
                                 signIn={signInGoogle}
+                                googleKey={googleKey}
                                 className='mb-lg'
                             />
                         </ESCol>

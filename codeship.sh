@@ -14,13 +14,3 @@ else
 fi
 
 export NODE_ENV
-
-# if [ $CI_BRANCH = "master" ];
-# then
-# yarn esanar:build:production
-# elif [$CI_BRANCH = "staging"]
-# then
-# yarn esanar:build:staging
-# else
-# yarn esanar:build:development
-# fi
