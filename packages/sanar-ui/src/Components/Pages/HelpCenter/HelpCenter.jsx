@@ -42,7 +42,7 @@ const ESHelpCenter = ({ className }) => {
                     return String(value)
                 })
                 .find(function(value) {
-                    return value.includes(data)
+                    return value.toLowerCase().includes(data.toLowerCase())
                 })
         })
     }
