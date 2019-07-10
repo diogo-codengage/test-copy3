@@ -19,6 +19,11 @@ const esSignIn = (email, password) => {
                         'sanarui:authMessages.notAuthorizedException'
                     )
                 })
+            case 'UserLambdaValidationException':
+                return Promise.reject({
+                    code: err.code,
+                    message: i18n.t('sanarui:authMessages.noEnrollment')
+                })
             default:
                 return Promise.reject({
                     code: err.code,
