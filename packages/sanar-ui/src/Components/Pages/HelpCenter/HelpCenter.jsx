@@ -16,6 +16,9 @@ const ESHelpCenter = ({ className }) => {
     const [helpCenterData, sethelpCenterData] = useState(questionsData)
     const classes = classNames(className, 'es-help-center-template')
 
+    const scroll = document.getElementById('san-scroll')
+    scroll.firstChild.scrollTo(0, 0)
+
     const getSearchData = data => {
         if (data === '') {
             sethelpCenterData(questionsData)
