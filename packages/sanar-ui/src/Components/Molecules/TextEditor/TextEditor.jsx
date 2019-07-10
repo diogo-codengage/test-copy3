@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
+import { useTranslation } from 'react-i18next'
 import CKEditor from 'ckeditor4-react'
 import { Avatar } from 'antd'
 
@@ -13,12 +14,13 @@ const height = 356
 const body = `
     font-size: 14px;
     font-family: Nunito Sans, sans-serif;
-    color: rgba(57, 63, 77, 1);
     line-height: 1.4;
-    margin: 16px
+    margin: 16px;
 `
 
-const contentsCss = [`body { ${body} }`]
+const contentsCss = (bodyStyle = {}, other = {}) => [
+    `body { ${body} ${bodyStyle} } ${other}`
+]
 
 const config = {
     removePlugins: 'elementspath, resize',
@@ -26,7 +28,7 @@ const config = {
     toolbar: [['Bold'], ['Italic'], ['Link'], ['Source']],
     toolbarLocation: 'bottom',
     uiColor: '#F7F9FA',
-    contentsCss,
+    contentsCss: contentsCss(),
     on: {
         instanceReady: function() {}
     }
@@ -52,20 +54,24 @@ const ESTextEditor = ({
     initialValue,
     onCancel,
     onSubmit,
-    labelSubmit,
-    labelCancel,
-    labelLetterCount,
     comment,
     onFocus,
     onBlur,
+    dark,
+    avatar,
     ...props
 }) => {
+    const { t } = useTranslation('sanarui')
+    const [isReady, setReady] = useState(false)
     const [data, setData] = useState()
     const [focus, setFocus] = useState(false)
     const [letter, setLetter] = useState('0')
     const classes = classNames(
         'es-text-editor',
-        { 'es-text-editor__comment': comment && !focus },
+        {
+            'es-text-editor__comment': comment && !focus,
+            'es-text-editor__dark': dark
+        },
         className
     )
 
@@ -104,15 +110,10 @@ const ESTextEditor = ({
         comment && !focus ? 52 : comment && focus ? 52 + 66 : height
     const heightIframe = comment ? 52 : height - 68
 
-    const css = `
-        body {
-            background-color: #f7f9fa;
-            ${body}
-        }
-        p {
-            margin-left: 40px;
-        }
-    `
+    const conditionalStyle = `background-color: ${
+        dark ? 'rgba(255, 255, 255, 0.05)' : '#fff'
+    };
+        color: ${dark ? 'rgba(255, 255, 255, 0.75)' : 'rgba(57, 63, 77, 1)'};`
 
     return (
         <div className={classes} style={{ height: heightCalculated }}>
@@ -120,51 +121,68 @@ const ESTextEditor = ({
                 {...props}
                 config={{
                     ...config,
+                    on: {
+                        instanceReady: function() {
+                            setReady(true)
+                        }
+                    },
                     height: heightIframe,
-                    contentsCss: comment ? css : contentsCss
+                    contentsCss: comment
+                        ? contentsCss(
+                              conditionalStyle,
+                              `p {
+                                margin-left: 40px;s
+                            }`
+                          )
+                        : contentsCss(conditionalStyle)
                 }}
                 data={data}
                 onChange={onChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
             />
-            {comment && (
-                <Avatar
-                    className='es-text-editor__comment--avatar'
-                    size={28}
-                    icon='user'
-                />
+            {isReady && (
+                <>
+                    {comment && (
+                        <Avatar
+                            className='es-text-editor__comment--avatar'
+                            size={28}
+                            icon='user'
+                            src={avatar}
+                        />
+                    )}
+                    <div className='es-text-editor__buttons'>
+                        <ESTypography variant='caption'>
+                            {`${t('textEditor.count')}: ${letter}`}
+                        </ESTypography>
+                        <div className='d-flex align-items-center'>
+                            <ESButton
+                                className='mr-md'
+                                variant='text'
+                                bold
+                                uppercase
+                                color={dark ? 'white' : 'default'}
+                                size='xsmall'
+                                disabled={!data}
+                                onClick={handleCancel}
+                            >
+                                {t('textEditor.cancel')}
+                            </ESButton>
+                            <ESButton
+                                variant='solid'
+                                bold
+                                uppercase
+                                color={dark ? 'white' : 'primary'}
+                                size='xsmall'
+                                disabled={!data}
+                                onClick={handleSubmit}
+                            >
+                                {t('textEditor.publish')}
+                            </ESButton>
+                        </div>
+                    </div>
+                </>
             )}
-            {!!letter && !!focus && (
-                <ESTypography
-                    variant='subtitle2'
-                    className='es-text-editor__count'
-                >
-                    {`${labelLetterCount} ${letter}`}
-                </ESTypography>
-            )}
-            <div className='es-text-editor__buttons'>
-                <ESButton
-                    className='mr-md'
-                    variant='text'
-                    bold
-                    uppercase
-                    size='xsmall'
-                    onClick={handleCancel}
-                >
-                    {labelCancel}
-                </ESButton>
-                <ESButton
-                    variant='solid'
-                    bold
-                    uppercase
-                    color='primary'
-                    size='xsmall'
-                    onClick={handleSubmit}
-                >
-                    {labelSubmit}
-                </ESButton>
-            </div>
         </div>
     )
 }
@@ -179,19 +197,15 @@ ESTextEditor.propTypes = {
     onFocus: PropTypes.func,
     readOnly: PropTypes.bool,
     type: PropTypes.oneOf(['classic', 'inline']),
-    labelCancel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    labelSubmit: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    labelLetterCount: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     onCancel: PropTypes.func,
     onSubmit: PropTypes.func,
-    comment: PropTypes.bool
+    comment: PropTypes.bool,
+    avatar: PropTypes.string
 }
+
 ESTextEditor.defaultProps = {
     type: 'classic',
     config,
-    labelCancel: 'Cancelar',
-    labelSubmit: 'Publicar pergunta',
-    labelLetterCount: 'Caracteres:',
     height
 }
 

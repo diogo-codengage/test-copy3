@@ -109,7 +109,8 @@ export default {
             'O link de redefinição da senha é inválido. Solicite um novo.',
         limitExceededException:
             'Você excedeu o límite de tentativas. Tente novamente mais tarde.',
-        passwordWasReseted: 'Senha alterada com sucesso!'
+        passwordWasReseted: 'Senha alterada com sucesso!',
+        noEnrollment: 'Não há matrículas para o usuário informado.'
     },
     practiceCompleted: {
         title: 'Prática finalizada',
@@ -159,5 +160,10 @@ export default {
     },
     errorPiece: {
         updateButton: 'Tentar novamente'
+    },
+    textEditor: {
+        cancel: 'Cancelar',
+        publish: 'Publicar',
+        count: 'Caracteres'
     }
 }
