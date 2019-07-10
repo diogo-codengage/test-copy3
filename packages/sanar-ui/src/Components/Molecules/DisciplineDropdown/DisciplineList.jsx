@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -10,6 +10,19 @@ const ESDisciplineList = ({ className, items, activeId, onSelect, width }) => {
         'es-discipline-dropdown__menu__content',
         className
     )
+
+    useEffect(() => {
+        let element = document.getElementById(activeId)
+
+        let parentElement = document.getElementById(
+            'es-discipline-dropdown__scrollable'
+        ).childNodes[0]
+
+        parentElement.scrollTo({
+            top: element.offsetTop,
+            left: 0
+        })
+    })
 
     const renderItems = useCallback(
         (item, index) => {
@@ -38,6 +51,7 @@ const ESDisciplineList = ({ className, items, activeId, onSelect, width }) => {
                     key={index}
                     onClick={() => onSelect(item)}
                     style={{ width }}
+                    id={item.id}
                 >
                     {total == done ? (
                         <ESEvaIcon name='checkmark-outline' />
@@ -55,8 +69,11 @@ const ESDisciplineList = ({ className, items, activeId, onSelect, width }) => {
     )
 
     return (
-        <div className={classes}>
-            <Scrollbars renderTrackHorizontal={() => <div />}>
+        <div className={classes} id='es-discipline-dropdown__menu__content'>
+            <Scrollbars
+                id='es-discipline-dropdown__scrollable'
+                renderTrackHorizontal={() => <div />}
+            >
                 {items.map(renderItems)}
             </Scrollbars>
         </div>
