@@ -127,6 +127,7 @@
                 background-color: darken(@primary-color, 20);
                 color: @white;
             }
+            &[disabled]:hover,
             &[disabled] {
                 background-color: @primary-color;
                 color: @white;
@@ -137,16 +138,19 @@
                 background-color: @white-7;
                 color: @grey-7;
 
-                &:focus,
-                &:hover {
+                &:focus:not(:disabled),
+                &:hover:not(:disabled) {
                     background-color: @white-10;
                 }
 
                 &:active {
                     background-color: @white-5;
                 }
+
+                &[disabled]:hover,
                 &[disabled] {
-                    opacity: 0.3;
+                    background-color: @white-7;
+                    color: @grey-7;
                 }
             }
             &.light {
@@ -177,6 +181,7 @@
                 color: @grey-7;
             }
 
+            &[disabled]:hover,
             &[disabled] {
                 background-color: transparent;
                 opacity: 0.3;
@@ -205,6 +210,11 @@
                 &:active {
                     background-color: @white-3;
                     color: @white-7;
+                }
+                &[disabled]:hover,
+                &[disabled] {
+                    color: @white-7;
+                    opacity: 0.3;
                 }
             }
             &.light {

@@ -159,5 +159,10 @@ export default {
     },
     errorPiece: {
         updateButton: 'Tentar novamente'
+    },
+    textEditor: {
+        cancel: 'Cancelar',
+        publish: 'Publicar',
+        count: 'Caracteres'
     }
 }
