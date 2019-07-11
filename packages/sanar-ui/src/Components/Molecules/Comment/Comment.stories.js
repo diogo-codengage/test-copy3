@@ -15,11 +15,30 @@ const comment = {
     time: '2019-07-07T08:40:51.620Z'
 }
 
-storiesOf('Molecules.Comment', module).add('Comment', () => (
-    <ESComment
-        user={comment.user}
-        text={comment.text}
-        time={comment.time}
-        monitor={boolean('Monitor', true)}
-    />
-))
+storiesOf('Molecules.Comment', module)
+    .add('Comment', () => (
+        <ESComment
+            user={comment.user}
+            text={comment.text}
+            time={comment.time}
+            monitor={boolean('Monitor', true)}
+        />
+    ))
+    .add(
+        'Comment dark',
+        () => (
+            <ESComment
+                user={comment.user}
+                text={comment.text}
+                time={comment.time}
+                monitor={boolean('Monitor', true)}
+                dark
+            />
+        ),
+        {
+            style: {
+                padding: 20,
+                backgroundColor: '#242938'
+            }
+        }
+    )
