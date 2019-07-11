@@ -1,0 +1,53 @@
+.es-comment-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__child {
+        margin-left: 56px;
+    }
+
+    & .es-comment + .es-button {
+        margin-left: 56px;
+    }
+
+    &--interaction {
+        display: flex;
+        align-items: center;
+
+        & .es-button {
+            margin-right: @margin-xs;
+            color: @white-3;
+        }
+    }
+
+    & .es-text-editor {
+        margin-bottom: @margin-sm;
+    }
+
+    & .es-text-editor {
+        margin-left: 56px;
+    }
+
+    & .ant-comment-inner {
+        padding-bottom: 0;
+    }
+
+    & .ant-comment-actions {
+        & > li:nth-child(2) {
+            margin: 0 @margin-sm;
+        }
+
+        & > li {
+            vertical-align: middle;
+        }
+
+        & > li:last-child {
+            float: right;
+        }
+
+        & .es-typography {
+            color: @white-6;
+        }
+    }
+}

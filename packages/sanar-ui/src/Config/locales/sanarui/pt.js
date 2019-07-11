@@ -165,5 +165,13 @@ export default {
         cancel: 'Cancelar',
         publish: 'Publicar',
         count: 'Caracteres'
+    },
+    commentList: {
+        reply: 'Responder',
+        exclude: 'Excluir',
+        report: 'Reportar',
+        viewReply: 'Ver {{count}} respostas',
+        loadMore: 'Carregar mais',
+        hideReplies: 'Ocultar respostas'
     }
 }

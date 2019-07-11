@@ -33,8 +33,23 @@ const Title = ({ name, monitor, labelMonitor }) => {
     )
 }
 
-const ESComment = ({ user, text, time, monitor, labelMonitor, className }) => {
-    const classes = classNames('es-comment', className)
+const ESComment = ({
+    user,
+    text,
+    time,
+    monitor,
+    actions,
+    labelMonitor,
+    dark,
+    className
+}) => {
+    const classes = classNames(
+        'es-comment',
+        {
+            'es-comment__dark': dark
+        },
+        className
+    )
 
     const diff =
         time &&
@@ -44,6 +59,7 @@ const ESComment = ({ user, text, time, monitor, labelMonitor, className }) => {
     return (
         <Comment
             className={classes}
+            actions={actions}
             author={
                 <Title
                     name={user && user.name}
@@ -72,7 +88,9 @@ ESComment.propTypes = {
     text: PropTypes.string,
     time: PropTypes.string,
     monitor: PropTypes.bool,
-    labelMonitor: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
+    actions: PropTypes.arrayOf(PropTypes.node),
+    labelMonitor: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    dark: PropTypes.bool
 }
 
 export default ESComment
