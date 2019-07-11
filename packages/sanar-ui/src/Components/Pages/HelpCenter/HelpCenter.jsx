@@ -17,7 +17,7 @@ const ESHelpCenter = ({ className }) => {
     const classes = classNames(className, 'es-help-center-template')
 
     const scroll = document.getElementById('san-scroll')
-    scroll.firstChild.scrollTo(0, 0)
+    if(scroll) {scroll.firstChild.scrollTo(0, 0)}
 
     const getSearchData = data => {
         if (data === '') {
