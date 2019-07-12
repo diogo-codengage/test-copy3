@@ -165,5 +165,22 @@ export default {
         cancel: 'Cancelar',
         publish: 'Publicar',
         count: 'Caracteres'
+    },
+    commentList: {
+        reply: 'Responder',
+        exclude: 'Excluir',
+        report: 'Reportar',
+        viewReply: 'Ver {{count}} respostas',
+        loadMore: 'Carregar mais',
+        hideReplies: 'Ocultar respostas',
+        answers: {
+            key: 'Resposta',
+            key_plural: 'Respostas',
+            keyWithCount: '{{count}} Resposta',
+            keyWithCount_plural: '{{count}} Respostas'
+        },
+        orderBy: 'Ordenar por',
+        orderByRecents: 'Mais recentes',
+        orderByRelevance: 'Relevância'
     }
 }
