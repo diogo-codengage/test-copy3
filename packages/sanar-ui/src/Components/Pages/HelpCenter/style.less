@@ -5,9 +5,11 @@
 
         & .es-session-title {
             margin: 20px 0;
+            flex-direction: column;
+            align-items: flex-start;
 
-            & .es-form-item {
-                margin: 0;
+            &__extra {
+                width: 100%;
             }
         }
     }
@@ -47,6 +49,25 @@
 
             .es-typography {
                 text-align: left;
+            }
+        }
+    }
+
+    .ant-collapse {
+        border-radius: 1px !important;
+    }
+
+    .ant-collapse > .ant-collapse-item:last-child {
+        border-radius: unset !important;
+    }
+
+    @media (min-width: @screen-md) {
+        .es-help-center-template__header .es-session-title {
+            flex-direction: row;
+            align-items: center;
+
+            &__extra {
+                width: auto;
             }
         }
     }

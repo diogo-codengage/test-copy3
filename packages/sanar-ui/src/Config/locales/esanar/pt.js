@@ -178,8 +178,7 @@ export default {
             cardModuleAction: 'Ver aulas',
             continue: {
                 whereStopped: 'Onde você parou',
-                nextDiscipline: 'Próximo disciplina',
-                nextModule: 'Próximo módulo',
+                nextDiscipline: 'Próxima disciplina',
                 error: {
                     defaultMessage:
                         'Ocorreu um erro ao tentar trazer o último conteúdo acessado.'
