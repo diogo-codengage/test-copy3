@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import classNames from 'classnames'
+import { ESCol, ESRow } from 'sanar-ui/dist/Components/Atoms/Grid'
 
 const intlPath = 'bookmark.subHeader.'
 
@@ -38,51 +39,75 @@ const SANBookmarkSubHeader = ({
     )
 
     return (
-        <div className='san-bookmark-page__subheader'>
-            {amount && (
-                <ESTypography variant='body2'>
-                    {amount}
-                    {t(`${intlPath}${amount > 1 ? 'plural' : 'single'}`)}
-                </ESTypography>
-            )}
-            <div className='san-bookmark-page__subheader--filter-area'>
-                <FilterItem
-                    name='all'
-                    onSelect={onSelectFilter}
-                    classes={selectedClasses}
-                />
-                <FilterItem
-                    name='videos'
-                    onSelect={onSelectFilter}
-                    classes={selectedClasses}
-                />
-                <FilterItem
-                    name='documents'
-                    onSelect={onSelectFilter}
-                    classes={selectedClasses}
-                />
-                <FilterItem
-                    name='questions'
-                    onSelect={onSelectFilter}
-                    classes={selectedClasses}
-                />
-            </div>
-            <div className='san-bookmark-page__subheader--visualization'>
+        <ESRow type='flex' align='middle' height={40}>
+            <ESCol sm={24} md={6}>
                 <div
-                    className={selectedVisualizationClasses('grid')}
-                    style={{ marginRight: 12 }}
-                    onClick={() => onSelectVisualization('grid')}
+                    style={{
+                        height: 40,
+                        display: 'flex',
+                        alignItems: 'center'
+                    }}
                 >
-                    <ESEvaIcon name='grid-outline' />
+                    {amount && (
+                        <ESTypography variant='body2'>
+                            {amount}
+                            {t(
+                                `${intlPath}${amount > 1 ? 'plural' : 'single'}`
+                            )}
+                        </ESTypography>
+                    )}
                 </div>
-                <div
-                    className={selectedVisualizationClasses('list')}
-                    onClick={() => onSelectVisualization('list')}
-                >
-                    <ESEvaIcon name='list-outline' />
+            </ESCol>
+            <ESCol sm={24} md={12}>
+                <ESRow type='flex' align='middle' justify='space-between'>
+                    <ESCol span={6}>
+                        <FilterItem
+                            name='all'
+                            onSelect={onSelectFilter}
+                            classes={selectedClasses}
+                        />
+                    </ESCol>
+                    <ESCol span={6}>
+                        <FilterItem
+                            name='videos'
+                            onSelect={onSelectFilter}
+                            classes={selectedClasses}
+                        />
+                    </ESCol>
+                    <ESCol span={6}>
+                        <FilterItem
+                            name='documents'
+                            onSelect={onSelectFilter}
+                            classes={selectedClasses}
+                        />
+                    </ESCol>
+                    <ESCol span={6}>
+                        <FilterItem
+                            name='questions'
+                            onSelect={onSelectFilter}
+                            classes={selectedClasses}
+                        />
+                    </ESCol>
+                </ESRow>
+            </ESCol>
+            <ESCol xs={0} sm={0} md={6}>
+                <div className='san-bookmark-page__subheader--visualization'>
+                    <div
+                        className={selectedVisualizationClasses('grid')}
+                        style={{ marginRight: 12 }}
+                        onClick={() => onSelectVisualization('grid')}
+                    >
+                        <ESEvaIcon name='grid-outline' />
+                    </div>
+                    <div
+                        className={selectedVisualizationClasses('list')}
+                        onClick={() => onSelectVisualization('list')}
+                    >
+                        <ESEvaIcon name='list-outline' />
+                    </div>
                 </div>
-            </div>
-        </div>
+            </ESCol>
+        </ESRow>
     )
 }
 
