@@ -75,7 +75,7 @@ export default {
             init: 'Início',
             notifications: 'Notificações',
             schedule: 'Cronograma',
-            saved: 'Salvos',
+            saved: 'Favoritos',
             performace: 'Desempenho',
             questions: 'Banco de questões',
             changeCourse: 'Trocar de curso',
@@ -240,6 +240,19 @@ export default {
                     first: 'Mais recentes primeiro'
                 }
             }
+        }
+    },
+    bookmark: {
+        title: 'Favoritos',
+        subtitle: 'Encontre aqui todos seus conteúdos favoritos',
+        search: 'Pesquisar favoritos',
+        subHeader: {
+            single: ' item favorito',
+            plural: ' itens favoritos',
+            all: 'Todos',
+            videos: 'Vídeos',
+            documents: 'Materiais',
+            questions: 'Questões'
         }
     },
     questionBase: {

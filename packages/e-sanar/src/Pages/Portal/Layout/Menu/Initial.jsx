@@ -98,17 +98,18 @@ const SANInitial = ({ setTab, history }) => {
                     icon={<ESEvaIcon name='calendar-outline' color='default' />}
                 />
                 <ESNavigationListItem
+                key={4}
+                title={t(`${intlPath}performace`)}
+                icon={
+                    <ESEvaIcon name='pie-chart-outline' color='default' />
+                }
+            /> */}
+                <ESNavigationListItem
                     key={3}
                     title={t(`${intlPath}saved`)}
                     icon={<ESEvaIcon name='heart-outline' color='default' />}
+                    onClick={() => menuOpenOrClose()}
                 />
-                <ESNavigationListItem
-                    key={4}
-                    title={t(`${intlPath}performace`)}
-                    icon={
-                        <ESEvaIcon name='pie-chart-outline' color='default' />
-                    }
-                /> */}
                 <ESNavigationListItem
                     key={5}
                     title={t(`${intlPath}questions`)}

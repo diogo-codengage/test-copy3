@@ -16,6 +16,7 @@ import SANMyAccountChangePassword from './MyAccount'
 import SANHelpCenter from './HelpCenter'
 import { SANPortalProvider } from './Context'
 import ESDefaultError from '../Portal/Errors/Default'
+import SANBookmarkPage from './Bookmark'
 
 const SANPortalRoutes = ({ match: { url } }) => {
     const client = useApolloContext()
@@ -48,6 +49,10 @@ const SANPortalRoutes = ({ match: { url } }) => {
                                     <Route
                                         path={`${url}/banco-questoes`}
                                         component={SANQuestionsPage}
+                                    />
+                                    <Route
+                                        path={`${url}/favoritos`}
+                                        component={SANBookmarkPage}
                                     />
                                     <Route
                                         path={`${url}/minha-conta`}
