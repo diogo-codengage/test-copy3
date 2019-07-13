@@ -28,11 +28,10 @@ const SANClassroomMock = () => {
                 leftChildren={
                     <ESLessonHeaderLeft
                         title={currentResource.quiz.title}
-                        subtitle={`${t(
-                            'global.subject'
-                        )} ${currentModule.index + 1}, ${t(
-                            'global.activity'
-                        )} ${currentResource.index + 1}`}
+                        subtitle={`${t('global.subject')} ${
+                            currentModule.index
+                        }, ${t('global.activity')} ${currentResource.index +
+                            1}`}
                         onClick={openMenu}
                     />
                 }

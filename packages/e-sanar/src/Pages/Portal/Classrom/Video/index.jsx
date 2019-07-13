@@ -173,9 +173,9 @@ const SANClassroomVideo = () => {
                     licenseKey={process.env.REACT_APP_JWPLAYER}
                     isMuted={false}
                     title={currentResource.video.title}
-                    subtitle={`${t('global.subject')} ${currentModule.index +
-                        1}, ${t('global.activity')} ${currentResource.index +
-                        1}`}
+                    subtitle={`${t('global.subject')} ${
+                        currentModule.index
+                    }, ${t('global.activity')} ${currentResource.index + 1}`}
                     rate={{
                         value: rate,
                         onChange: debounceRate

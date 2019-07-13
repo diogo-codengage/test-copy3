@@ -109,7 +109,8 @@ export default {
             'O link de redefinição da senha é inválido. Solicite um novo.',
         limitExceededException:
             'Você excedeu o límite de tentativas. Tente novamente mais tarde.',
-        passwordWasReseted: 'Senha alterada com sucesso!'
+        passwordWasReseted: 'Senha alterada com sucesso!',
+        noEnrollment: 'Não há matrículas para o usuário informado.'
     },
     practiceCompleted: {
         title: 'Prática finalizada',
@@ -159,5 +160,27 @@ export default {
     },
     errorPiece: {
         updateButton: 'Tentar novamente'
+    },
+    textEditor: {
+        cancel: 'Cancelar',
+        publish: 'Publicar',
+        count: 'Caracteres'
+    },
+    commentList: {
+        reply: 'Responder',
+        exclude: 'Excluir',
+        report: 'Reportar',
+        viewReply: 'Ver {{count}} respostas',
+        loadMore: 'Carregar mais',
+        hideReplies: 'Ocultar respostas',
+        answers: {
+            key: 'Resposta',
+            key_plural: 'Respostas',
+            keyWithCount: '{{count}} Resposta',
+            keyWithCount_plural: '{{count}} Respostas'
+        },
+        orderBy: 'Ordenar por',
+        orderByRecents: 'Mais recentes',
+        orderByRelevance: 'Relevância'
     }
 }

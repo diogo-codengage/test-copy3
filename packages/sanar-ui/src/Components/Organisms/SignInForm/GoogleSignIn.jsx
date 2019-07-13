@@ -7,14 +7,14 @@ import { useTranslation } from 'react-i18next'
 
 const GoogleSVG = () => <img src={google} alt='Google Sign In' />
 
-const ESGoogleSignIn = ({ className, signIn }) => {
+const ESGoogleSignIn = ({ className, signIn, googleKey }) => {
     const { t } = useTranslation('sanarui')
     useEffect(() => {
         const ga =
             window.gapi && window.gapi.auth2
                 ? window.gapi.auth2.getAuthInstance()
                 : null
-        if (!ga) esGoogleCreateScript()
+        if (!ga) esGoogleCreateScript(googleKey)
     }, [])
 
     return (

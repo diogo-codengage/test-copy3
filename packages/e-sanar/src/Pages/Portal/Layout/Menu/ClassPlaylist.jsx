@@ -158,7 +158,7 @@ const SANClassPlaylist = ({ history }) => {
     }
 
     const getModulePositionInModules = () =>
-        `${modules.data.findIndex(item => currentModule.id === item.id)}
+        `${modules.data.findIndex(item => currentModule.id === item.id) + 1}
         /${modules.count}`
 
     useEffect(() => {

@@ -111,7 +111,9 @@ const SANQuiz = ({
     }
 
     const handleNext = isCorrect => {
-        window.scrollTo(0, 0)
+        const scroll = document.getElementById('san-scroll')
+        scroll.firstChild.scrollTo(0, 0)
+
         if (index === questions.length - 1) return
         setIndex(oldIndex => ++oldIndex)
 
