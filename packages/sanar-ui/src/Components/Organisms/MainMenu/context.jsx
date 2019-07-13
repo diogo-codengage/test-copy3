@@ -26,7 +26,11 @@ export const MainMenuProvider = ({ children }) => {
     useEffect(() => {
         setPosition(width <= 1024 ? 'bottom' : 'left')
         setShowContinueBar(width <= 1024 && context !== 'classroom')
-        setToggle(width >= 1365 && context !== 'classroom'), [width]
+        setToggle(
+            (toggle && width < 1024) ||
+                (width >= 1365 && context !== 'classroom')
+        ),
+            [width]
         setStaticToolbar(width >= 1025 && width <= 1365)
         setShowClose(width <= 1365)
     }, [width])

@@ -60,6 +60,7 @@ const SANQuestionsHistoric = () => {
                 limit: pageSize,
                 skip: pageSize * current - pageSize
             }}
+            fetchPolicy='cache-and-network'
             onError={handleErr}
         >
             {({ loading, error, data }) => {
