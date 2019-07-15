@@ -60,9 +60,9 @@ const SANInitial = ({ setTab, history }) => {
 
     return (
         <>
-            <div className='pl-md pr-md mb-md'>
+            {/* <div className='pl-md pr-md mb-md'>
                 <ESRanking {...rankingProps} />
-            </div>
+            </div> */}
             <div className='pl-md pr-md'>
                 {!error ? (
                     <ESLeftOff {...leftProps} />
