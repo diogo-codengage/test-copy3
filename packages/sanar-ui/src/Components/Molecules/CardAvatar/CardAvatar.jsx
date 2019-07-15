@@ -53,7 +53,7 @@ ESCardAvatar.propTypes = {
     image: PropTypes.string,
     name: PropTypes.string.isRequired,
     formation: PropTypes.string,
-    actions: PropTypes.element
+    actions: PropTypes.node
 }
 ESCardAvatar.defaultProps = {}
 
