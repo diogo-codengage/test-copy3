@@ -182,5 +182,13 @@ export default {
         orderBy: 'Ordenar por',
         orderByRecents: 'Mais recentes',
         orderByRelevance: 'Relevância'
+    },
+    feedbackSimple: {
+        giveFeedback: 'Dar feedback',
+        title: 'O quer quer nos dizer?',
+        placeholder: 'Escreva aqui a sua mensagem',
+        checkbox:
+            'Permitir o contato da Sanar para tirar dúvidas sobre  o feedback.',
+        send: 'Enviar'
     }
 }
