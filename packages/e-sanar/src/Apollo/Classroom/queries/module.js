@@ -59,7 +59,6 @@ export const GET_MODULE = gql`
                             percentage
                         }
                         file {
-                            id
                             mime_type
                             url
                             size
