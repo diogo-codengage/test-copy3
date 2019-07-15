@@ -87,6 +87,8 @@ const SANSigninPage = ({ history }) => {
                         signInByEmail={esSignIn}
                         signInByFacebook={esFacebookSignIn}
                         signInByGoogle={esGoogleSignIn}
+                        facebookKey={process.env.REACT_APP_FACEBOOK_KEY}
+                        googleKey={process.env.REACT_APP_GOOGLE_KEY}
                     />
                 }
             />
