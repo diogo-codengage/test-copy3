@@ -13,7 +13,7 @@ const ESAvatarListItem = ({
     loading,
     className
 }) => (
-    <ListViewItem avatar loading={loading} className={className}>
+    <ESListViewItem avatar loading={loading} className={className}>
         <ESRow type='flex' className='es-avatar-list-item' gutter={16}>
             <ESCol>
                 <Avatar
@@ -26,7 +26,7 @@ const ESAvatarListItem = ({
                 {children}
             </ESCol>
         </ESRow>
-    </ListViewItem>
+    </ESListViewItem>
 )
 
 ESAvatarListItem.propTypes = {

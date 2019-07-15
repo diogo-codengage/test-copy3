@@ -1,26 +1,74 @@
-{ 
+{
     "plataforma": [
-        {"title":"Enquanto tempo meu acesso é liberado?", "subtitle":"Assim que seu pagamento for confirmado, você irá receber um email com as instruções de acesso informando a plataforma, login e senha."},
-        {"title":"Durante quanto tempo tenho acesso ao curso?", "subtitle":"Você vai ter acesso ao curso durante 1 (um) ano!"},
-        {"title":"Eu posso assistir o curso em qualquer lugar (Computador, celular, tablet)?", "subtitle":"Sim! Apesar de não termos um aplicativo, você pode acessar a plataforma do curso através do navegador do celular e tablet assim como no computador."},
-        {"title":"Como posso tirar dúvidas com os professores?", "subtitle":"No momento essa opção ainda não está habilitada, mas pode guardar todas as suas dúvidas que em breve os nosso professores poderão ser acionados para te ajudar."},
-        {"title":"Como baixar o material complementar?", "subtitle":"Na sua aula, os conteúdos para baixar estarão sinalizados com o símbolo de um livro. é só clicar nele que o pdf irá ser carregado, no lado superior direito haverá a opção para baixar  ou imprimir seu arquivo."}
+        {
+            "title": "Em quanto tempo meu acesso é liberado?",
+            "subtitle": "Assim que seu pagamento for confirmado, você irá receber um email com as instruções de acesso informando a plataforma, login e senha."
+        },
+        {
+            "title": "Durante quanto tempo tenho acesso ao curso?",
+            "subtitle": "Você vai ter acesso ao curso durante 1 (um) ano!"
+        },
+        {
+            "title": "Eu posso assistir o curso em qualquer lugar (Computador, celular, tablet)?",
+            "subtitle": "Sim! Apesar de não termos um aplicativo, você pode acessar a plataforma do curso através do navegador do celular e tablet assim como no computador."
+        },
+        {
+            "title": "Como posso tirar dúvidas com os professores?",
+            "subtitle": "No momento essa opção ainda não está habilitada, mas pode guardar todas as suas dúvidas que em breve os nosso professores poderão ser acionados para te ajudar."
+        },
+        {
+            "title": "Como baixar o material complementar?",
+            "subtitle": "Na sua aula, os conteúdos para baixar estarão sinalizados com o símbolo de um livro. É só clicar nele que o pdf irá ser carregado, no lado superior direito haverá a opção para baixar  ou imprimir seu arquivo."
+        }
     ],
     "cursos": [
-        {"title":"O curso possui aulas atualizadas?", "subtitle":"Sim! Todas as aulas do curso estão atualizadas e, durante o decorrer do seu acesso, se for necessário elas poderão ser atualizadas novamente! "},
-        {"title":"Eu posso baixar as vídeo aulas? E o material complementar?", "subtitle":"Não, as vídeo aulas não podem ser baixadas! Porém, todo material complementar pode ser baixado em pdf!"},
-        {"title":"Eu posso ver as aulas quantas vezes eu quiser?", "subtitle":"Sim! Apesar de não ser possível baixar as aulas ou assistir em mais de um aparelho de forma simultânea, você poderá assistir quantas vezes desejar."},
-        {"title":"Tem questões para treinar?", "subtitle":"Sim! Você tem duas formas de treinar respondendo questões. Uma delas é um pequeno simulado que você realiza ao final de cada módulo, você pode responder ele apenas uma vez e após responder tem acesso às questões. A outra forma é ir no banco de questões e filtrar quais conteúdos você deseja praticar."},
-        {"title":"Qual a duração das aulas?", "subtitle":"Nossa metodologia de ensino é direta ao ponto, por isso as aulas duram cerca de 15 a 20 minutos, para que você aprenda o que de fato cai na prova."},
-        {"title":"Tem certificado?", "subtitle":"Sim! Você pode gerar seu certificado na própria plataforma, assim que alcançar 80% ou mais das aulas assistidas."},
-        {"title":"Posso trocar o curso?", "subtitle":"O tempo para solicitação de troca, assim como o de cancelamento, é de 7 dias após a confirmação do curso."}
+        {
+            "title": "O curso possui aulas atualizadas?",
+            "subtitle": "Sim! Todas as aulas do curso estão atualizadas, e durante o decorrer do seu acesso, se for necessário elas poderão ser atualizadas novamente! "
+        },
+        {
+            "title": "Eu posso baixar as vídeo aulas? E o material complementar?",
+            "subtitle": "Não, as vídeo aulas não podem ser baixadas! Porém, todo material complementar pode ser baixado em pdf!"
+        },
+        {
+            "title": "Eu posso ver as aulas quantas vezes eu quiser?",
+            "subtitle": "Sim! Apesar de não ser possível baixar as aulas ou assistir em mais de um aparelho de forma simultânea, você poderá assistir quantas vezes desejar."
+        },
+        {
+            "title": "Tem questões para treinar?",
+            "subtitle": "Sim! Você tem duas formas de treinar respondendo questões. Uma delas é um pequeno simulado que você realiza ao final de cada módulo, você pode responder ele apenas uma vez e após responder tem acesso às questões. A outra forma é ir no banco de questões e filtrar quais conteúdos você deseja praticar."
+        },
+        {
+            "title": "Qual a duração das aulas?",
+            "subtitle": "Nossa metodologia de ensino é direta ao ponto, por isso as aulas duram cerca de 15 a 20 minutos, para que você aprenda o que de fato cai na prova."
+        },
+        {
+            "title": "Tem certificado?",
+            "subtitle": "Sim! Você pode gerar seu certificado na própria plataforma, assim que alcançar 80% ou mais das aulas assistidas."
+        },
+        {
+            "title": "Posso trocar o curso?",
+            "subtitle": "O tempo para solicitação de troca, assim como o de cancelamento, é de 7 dias após a confirmação do curso."
+        }
     ],
     "cancelamento": [
-        {"title":"Não gostei do curso, posso solicitar cancelamento?", "subtitle":"Caso você não goste do nosso curso, você tem um prazo de 7 dias após a confirmação do seu pagamento para solicitar o cancelamento, passando desse prazo não é mais possível cancelar o curso."},
-        {"title":"Eu posso cancelar o curso e receber só as parcelas que faltam caso passe do prazo de solicitação?", "subtitle":"Não. O curso é um bem adquirido como outro qualquer, o fato de ter sido parcelado o valor não quer dizer que o produto é no modelo de recorrência e pode ser cancelado a qualquer momento."}
+        {
+            "title": "Não gostei do curso, posso solicitar cancelamento?",
+            "subtitle": "Caso você não goste do nosso curso, você tem um prazo de 7 dias após a confirmação do seu pagamento para solicitar o cancelamento, passando desse prazo não é mais possível cancelar o curso."
+        },
+        {
+            "title": "Eu posso cancelar o curso e receber só as parcelas que faltam caso passe do prazo de solicitação?",
+            "subtitle": "Não. O curso é um bem adquirido como outro qualquer, o fato de ter sido parcelado o valor não quer dizer que o produto é no modelo de recorrência e pode ser cancelado a qualquer momento."
+        }
     ],
     "outros": [
-        {"title":"O que são esses materiais complementares?", "subtitle":"Os materiais complementares são slides das aulas, apostilas, resumos e conteúdos que os professores possam vir a indicar."},
-        {"title":"Estou com uma dúvida/problema técnico. Como posso entrar em contato?", "subtitle":"Se você tiver alguma dúvida entre em contato com a gente pelo e-mail: atendimento@editorasanar.com.br ou pelo telefone: 0800 327 0035  - *lembrando que esse canal é apenas para dúvidas relacionadas a plataforma, ou problemas técnicos."}
+        {
+            "title": "O que são esses materiais complementares?",
+            "subtitle": "Os materiais complementares são slides das aulas, apostilas, resumos e conteúdos que os professores possam vir a indicar."
+        },
+        {
+            "title": "Estou com uma dúvida/problema técnico. Como posso entrar em contato?",
+            "subtitle": "Se você tiver alguma dúvida entre em contato com a gente pelo e-mail: atendimento@editorasanar.com.br ou pelo telefone: 0800 327 0035  - *lembrando que esse canal é apenas para dúvidas relacionadas a plataforma, ou problemas técnicos."
+        }
     ]
 }

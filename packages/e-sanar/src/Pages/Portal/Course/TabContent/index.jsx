@@ -1,13 +1,15 @@
 import React from 'react'
 import SANCourseContinue from './Continue'
 import SANCourseModules from './Modules'
-import SANCourseProfessors from './Professors'
+import SANLives from './Lives'
+import SANNextLives from './NextLives'
 
 const SANCourseTabContent = () => (
     <div className='san-tab-course-content'>
         <SANCourseContinue />
         <SANCourseModules />
-        <SANCourseProfessors />
+        <SANLives />
+        <SANNextLives />
     </div>
 )
 

@@ -94,7 +94,7 @@ const ESSignInForm = ({
                     onSubmit={signIn}
                     customValidator={() => validator()}
                 >
-                    <ESRow className='es-sign-in-form--social' gutter={16}>
+                    {/* <ESRow className='es-sign-in-form--social' gutter={16}>
                         <ESCol xs={24} sm={12}>
                             <ESFacebookSignIn
                                 signIn={signInFacebook}
@@ -112,7 +112,7 @@ const ESSignInForm = ({
                     </ESRow>
                     <ESDivider className='mb-lg'>
                         <ESTypography variant='subtitle2'>{title}</ESTypography>
-                    </ESDivider>
+                    </ESDivider> */}
                     <ESFormItem
                         rules={[
                             {
