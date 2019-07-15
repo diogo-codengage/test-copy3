@@ -3,6 +3,7 @@ import classNames from 'classnames'
 
 import { Layout as ANTDLayout } from 'antd'
 import { useTranslation } from 'react-i18next'
+import { withRouter } from 'react-router-dom'
 
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
@@ -25,7 +26,7 @@ const modalTermsContent = [
     }
 ]
 
-const SANFooter = ({ darkMode }) => {
+const SANFooter = ({ darkMode, history }) => {
     const { t } = useTranslation('esanar')
     const [openTerms, setOpenTerms] = useState(false)
     const [openPrivacy, setOpenPrivacy] = useState(false)
@@ -43,6 +44,8 @@ const SANFooter = ({ darkMode }) => {
         e.preventDefault()
         setOpenPrivacy(true)
     }
+
+    const goHelpCenter = () => history.push('/aluno/central-ajuda')
 
     return (
         <>
@@ -95,6 +98,7 @@ const SANFooter = ({ darkMode }) => {
                                 size='xsmall'
                                 uppercase
                                 bold
+                                onClick={goHelpCenter}
                                 color={darkMode ? 'light' : 'default'}
                                 variant='outlined'
                             >
@@ -191,4 +195,4 @@ const SANFooter = ({ darkMode }) => {
     )
 }
 
-export default SANFooter
+export default withRouter(SANFooter)

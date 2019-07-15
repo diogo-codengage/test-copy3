@@ -32,12 +32,14 @@ const modalTermsContent = [
 ]
 
 const SANMyAccount = ({ handleBack, history }) => {
-    const { me } = useAuthContext()
+    const { me, getEnrollment } = useAuthContext()
     const { t } = useTranslation('esanar')
     const [open, setOpen] = useState(false)
     const [openFeedback, setOpenFeedback] = useState(false)
     const [openModalTerms, setOpenModalTerms] = useState(false)
     const { menuOpenOrClose } = useLayoutContext()
+
+    const { course } = getEnrollment()
 
     const handleOtherLinks = ({ key }) => {
         setOpen(Number(key) === 2)
@@ -57,6 +59,10 @@ const SANMyAccount = ({ handleBack, history }) => {
         switch (Number(key)) {
             case 1:
                 history.push('/aluno/minha-conta/')
+                menuOpenOrClose()
+                break
+            case 2:
+                history.push('/aluno/central-ajuda/')
                 menuOpenOrClose()
                 break
             default:
@@ -98,7 +104,7 @@ const SANMyAccount = ({ handleBack, history }) => {
                 <ESAvatarMenu
                     src={me.profile_picture}
                     title={me.name}
-                    subtitle='Enfermagem'
+                    subtitle={course.knowledge_area}
                 />
             </div>
 
@@ -117,6 +123,19 @@ const SANMyAccount = ({ handleBack, history }) => {
                 <ESNavigationListItem
                     key='1'
                     title={t(`${intlPath}changePassword`)}
+                    icon={<ESEvaIcon name='lock-outline' color='default' />}
+                />
+            </ESNavigationList>
+            <ESTypography
+                className='text-white-6 pl-md pr-md'
+                variant='overline'
+            >
+                {t(`${intlPath}help`)}
+            </ESTypography>
+            <ESNavigationList onClick={navIntoMyAccount}>
+                <ESNavigationListItem
+                    key='2'
+                    title={t(`${intlPath}helpCenter`)}
                     icon={<ESEvaIcon name='lock-outline' color='default' />}
                 />
             </ESNavigationList>

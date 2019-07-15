@@ -15,8 +15,7 @@ ESInputSearch.propTypes = Object.assign(
     { ...Search['propTypes'] },
     {
         className: PropTypes.string,
-        onSearch: PropTypes.func,
-        enterButton: PropTypes.bool
+        onSearch: PropTypes.func
     }
 )
 

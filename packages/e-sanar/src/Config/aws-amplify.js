@@ -1,6 +1,6 @@
 import { esConfigureAuthStorage } from 'sanar-ui/dist/Util/Auth'
 import debug from 'debug'
-const logger = debug('sanar::aws-amplify-config');
+const logger = debug('sanar::aws-amplify-config')
 
 const AWSAmplifyConfig = {
     Auth: {
@@ -13,10 +13,9 @@ const AWSAmplifyConfig = {
             process.env.REACT_APP_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID,
         storage: esConfigureAuthStorage(),
         oauth: {
-            domain: 'sanar-dev.auth.us-east-1.amazoncognito.com',
+            domain: process.env.REACT_APP_AWS_COGNITO_OAUTH_DOMAIN,
             scope: ['email', 'profile', 'openid'],
             redirectSignIn: 'https://d2bvrr6jfh8qt0.cloudfront.net/',
-            // redirectSignIn: 'http://localhost:3000/',
             redirectSignOut: undefined,
             responseType: 'code',
             options: undefined
@@ -24,6 +23,6 @@ const AWSAmplifyConfig = {
     }
 }
 
-logger('AWS configuration: %o', AWSAmplifyConfig);
+logger('AWS configuration: %o', AWSAmplifyConfig)
 
 export default AWSAmplifyConfig

@@ -11,19 +11,33 @@ import ESLessonHeader, {
     ESLessonHeaderExtra,
     ESLessonHeaderLeft
 } from 'sanar-ui/dist/Components/Molecules/LessonHeader'
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 import { createDebounce } from 'sanar-ui/dist/Util/Debounce'
 
 import { useApolloContext } from 'Hooks/apollo'
-
 import { useAuthContext } from 'Hooks/auth'
+
 import { GET_RATING } from 'Apollo/Classroom/queries/rating'
 import { CREATE_RATING } from 'Apollo/Classroom/mutations/rate'
 
+import { usePortalContext } from 'Pages/Portal/Context'
+
 import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
-import { usePortalContext } from 'Pages/Portal/Context'
+import SANDiscussion from './Discussion'
 import { useClassroomContext } from '../Context'
-import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
+
+const ButtonTab = ({ active, ...props }) => (
+    <ESButton
+        size='small'
+        uppercase
+        bold
+        color={!active ? 'white' : undefined}
+        variant={active ? 'solid' : 'outlined'}
+        className={classNames({ active: active })}
+        {...props}
+    />
+)
 
 const SANClassroomVideo = () => {
     const { t } = useTranslation('esanar')
@@ -52,6 +66,7 @@ const SANClassroomVideo = () => {
     const [playlistVideo, setPlaylistVideo] = useState()
     const [videoError, seVideoError] = useState()
     const [videoReady, seVideoReady] = useState()
+    const [activeKey, setActiveKey] = useState('1')
 
     const handleVideoError = () => seVideoError(true)
 
@@ -77,7 +92,10 @@ const SANClassroomVideo = () => {
             0
 
         if (!videoError && percentage > videoPercentage) {
-            const timeInSeconds = playerRef && playerRef.current.position()
+            const timeInSeconds =
+                playerRef && playerRef.current
+                    ? playerRef.current.position()
+                    : 0
             handleProgress({
                 timeInSeconds: parseInt(timeInSeconds),
                 percentage,
@@ -86,7 +104,8 @@ const SANClassroomVideo = () => {
         }
     }
 
-    const askQuestions = () => {
+    const goTab = key => () => {
+        setActiveKey(key)
         const lessonHeader = document.getElementById('es-lesson-header')
         lessonHeader &&
             lessonHeader.scrollIntoView({
@@ -170,9 +189,9 @@ const SANClassroomVideo = () => {
                     licenseKey={process.env.REACT_APP_JWPLAYER}
                     isMuted={false}
                     title={currentResource.video.title}
-                    subtitle={`${t('global.subject')} ${currentModule.index +
-                        1}, ${t('global.activity')} ${currentResource.index +
-                        1}`}
+                    subtitle={`${t('global.subject')} ${
+                        currentModule.index
+                    }, ${t('global.activity')} ${currentResource.index + 1}`}
                     rate={{
                         value: rate,
                         onChange: debounceRate
@@ -188,26 +207,18 @@ const SANClassroomVideo = () => {
                 />
                 {currentResource.quiz && (
                     <div className='classroom__video-container--buttons'>
-                        <ESButton
-                            size='small'
-                            uppercase
-                            bold
-                            variant='solid'
-                            className='questions'
-                            onClick={askQuestions}
+                        <ButtonTab
+                            onClick={goTab('1')}
+                            active={activeKey === '1'}
                         >
                             {t('classroom.askQuestions')}
-                        </ESButton>
-                        <ESButton
-                            size='small'
-                            uppercase
-                            bold
-                            variant='outlined'
-                            color='white'
-                            disabled
+                        </ButtonTab>
+                        <ButtonTab
+                            onClick={goTab('2')}
+                            active={activeKey === '2'}
                         >
                             {t('classroom.viewDiscussions')}
-                        </ESButton>
+                        </ButtonTab>
                     </div>
                 )}
             </div>
@@ -216,7 +227,8 @@ const SANClassroomVideo = () => {
                     dark
                     center
                     tabBarGutter={0}
-                    defaultActiveKey='1'
+                    onChange={setActiveKey}
+                    activeKey={activeKey}
                     renderTabBar={renderTabBar({
                         bookmarked,
                         handleBookmark,
@@ -244,11 +256,9 @@ const SANClassroomVideo = () => {
                             parentVideoId={currentResource.video.id}
                         />
                     </ESTabPane>
-                    <ESTabPane
-                        tab={t('classroom.discussions')}
-                        key='2'
-                        disabled
-                    />
+                    <ESTabPane tab={t('classroom.discussions')} key='2'>
+                        <SANDiscussion />
+                    </ESTabPane>
                 </ESTabs>
             ) : (
                 <ESLessonHeader
@@ -258,11 +268,10 @@ const SANClassroomVideo = () => {
                     leftChildren={
                         <ESLessonHeaderLeft
                             title={currentResource.video.title}
-                            subtitle={`${t(
-                                'global.subject'
-                            )} ${currentModule.index + 1}, ${t(
-                                'global.activity'
-                            )} ${currentResource.index + 1}`}
+                            subtitle={`${t('global.subject')} ${
+                                currentModule.index
+                            }, ${t('global.activity')} ${currentResource.index +
+                                1}`}
                             onClick={openMenu}
                             rate={{
                                 value: rate,

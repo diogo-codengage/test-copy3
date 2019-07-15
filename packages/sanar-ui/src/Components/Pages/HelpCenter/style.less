@@ -1,0 +1,74 @@
+.es-help-center-template {
+    &__header {
+        border-bottom: 1px solid @grey-3;
+        box-shadow: 0 1px 2px @grey-3;
+
+        & .es-session-title {
+            margin: 20px 0;
+            flex-direction: column;
+            align-items: flex-start;
+
+            &__extra {
+                width: 100%;
+            }
+        }
+    }
+
+    &__container {
+        width: 100%;
+        max-width: 1008px;
+        padding: 16px;
+        margin: 0 auto;
+    }
+
+    .ant-collapse-header {
+        background: @white;
+        font-weight: bold;
+        text-align: left;
+    }
+    .ant-collapse-content-box {
+        text-align: left;
+    }
+
+    &__content {
+        background: @grey-solid-2;
+        &__infos {
+            width: 100%;
+            max-width: 1008px;
+            padding: 16px;
+            margin: 0 auto;
+            text-align: center;
+
+            &--title {
+                color: @grey-solid-9;
+            }
+
+            &--subtitle {
+                color: @grey-solid-7;
+            }
+
+            .es-typography {
+                text-align: left;
+            }
+        }
+    }
+
+    .ant-collapse {
+        border-radius: 1px !important;
+    }
+
+    .ant-collapse > .ant-collapse-item:last-child {
+        border-radius: unset !important;
+    }
+
+    @media (min-width: @screen-md) {
+        .es-help-center-template__header .es-session-title {
+            flex-direction: row;
+            align-items: center;
+
+            &__extra {
+                width: auto;
+            }
+        }
+    }
+}

@@ -11,6 +11,33 @@ export default {
         leftOff: 'Continuar onde parei',
         rankingPoints: 'pontos'
     },
+    helpCenter: {
+        header: {
+            title: 'Central de Ajuda',
+            subTitle:
+                'Encontre aqui respostas para as principais dúvidas sobre a plataforma',
+            placeholder: 'Como podemos ajudar?'
+        },
+        helpContent: [
+            {
+                title: 'Sobre a plataforma',
+                subTitle:
+                    'Perguntas sobre o acesso e o funcionamento da plataforma'
+            },
+            {
+                title: 'Sobre o curso e as aulas',
+                subTitle: 'Perguntas relacionadas ao curso e às aulas'
+            },
+            {
+                title: 'Sobre cancelamento',
+                subTitle: 'Perguntas sobre cancelamentos de cursos'
+            },
+            {
+                title: 'Outros tipos de perguntas',
+                subTitle: 'Perguntas sobre temas gerais e problemas técnicos'
+            }
+        ]
+    },
     cardSelectFilter: {
         selectAll: 'Selecionar todos',
         clearSelect: 'Limpar seleção'
@@ -82,7 +109,8 @@ export default {
             'O link de redefinição da senha é inválido. Solicite um novo.',
         limitExceededException:
             'Você excedeu o límite de tentativas. Tente novamente mais tarde.',
-        passwordWasReseted: 'Senha alterada com sucesso!'
+        passwordWasReseted: 'Senha alterada com sucesso!',
+        noEnrollment: 'Não há matrículas para o usuário informado.'
     },
     practiceCompleted: {
         title: 'Prática finalizada',
@@ -132,5 +160,35 @@ export default {
     },
     errorPiece: {
         updateButton: 'Tentar novamente'
+    },
+    textEditor: {
+        cancel: 'Cancelar',
+        publish: 'Publicar',
+        count: 'Caracteres'
+    },
+    commentList: {
+        reply: 'Responder',
+        exclude: 'Excluir',
+        report: 'Reportar',
+        viewReply: 'Ver {{count}} respostas',
+        loadMore: 'Carregar mais',
+        hideReplies: 'Ocultar respostas',
+        answers: {
+            key: 'Resposta',
+            key_plural: 'Respostas',
+            keyWithCount: '{{count}} Resposta',
+            keyWithCount_plural: '{{count}} Respostas'
+        },
+        orderBy: 'Ordenar por',
+        orderByRecents: 'Mais recentes',
+        orderByRelevance: 'Relevância'
+    },
+    feedbackSimple: {
+        giveFeedback: 'Dar feedback',
+        title: 'O quer quer nos dizer?',
+        placeholder: 'Escreva aqui a sua mensagem',
+        checkbox:
+            'Permitir o contato da Sanar para tirar dúvidas sobre  o feedback.',
+        send: 'Enviar'
     }
 }

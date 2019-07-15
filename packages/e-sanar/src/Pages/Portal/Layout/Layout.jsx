@@ -35,7 +35,10 @@ const SANPortalLayout = ({ children }) => {
             <SANMenu showContinueBar />
             <Layout>
                 {hasHeaderMobile && <ESBrandHeader darkMode={darkMode} />}
-                <Scrollbars renderTrackHorizontal={() => <div />}>
+                <Scrollbars
+                    id='san-scroll'
+                    renderTrackHorizontal={() => <div />}
+                >
                     <div className={classesScrollArea}>
                         <Layout.Content className='san-portal-layout__content'>
                             {children}

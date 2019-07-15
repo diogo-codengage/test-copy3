@@ -51,7 +51,7 @@ const SANCourseContinue = ({ history }) => {
         ...(lastAccessed && {
             moduleName: `${t(
                 'courseDetails.tabContent.discipline.discipline.key'
-            )} ${lastAccessed.module_order + 1}`,
+            )} ${lastAccessed.module_order}`,
             title: lastAccessed.module_title,
             badge: getBadge(lastAccessed, 'module_progress'),
             progress: percentProgressLast,
@@ -83,14 +83,14 @@ const SANCourseContinue = ({ history }) => {
                         <ESCol xs={24} md={12}>
                             <SessionTitle
                                 title={t(
-                                    'courseDetails.tabContent.continue.nextModule'
+                                    'courseDetails.tabContent.continue.nextDiscipline'
                                 )}
                             />
                             <ESCardCourseModule
                                 className='san-tab-course-content__continue--card'
                                 moduleName={`${t(
                                     'courseDetails.tabContent.discipline.discipline.key'
-                                )} ${next_module.index + 1}`}
+                                )} ${next_module.index}`}
                                 title={next_module.name}
                                 badge={getBadge(next_module, 'progress')}
                                 progress={percentProgressNext}

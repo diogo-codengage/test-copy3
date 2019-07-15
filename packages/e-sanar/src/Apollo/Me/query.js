@@ -5,6 +5,7 @@ export const GET_ME = gql`
         me {
             id
             name
+            email
             profile_picture
             enrollments {
                 id

@@ -28,6 +28,8 @@ const ESSignInForm = ({
     signInByGoogle,
     isKeepMeLoggedChecked,
     keepMeLogged,
+    facebookKey,
+    googleKey,
     form
 }) => {
     const { t } = useTranslation('sanarui')
@@ -92,23 +94,25 @@ const ESSignInForm = ({
                     onSubmit={signIn}
                     customValidator={() => validator()}
                 >
-                    <ESRow className='es-sign-in-form--social' gutter={16}>
+                    {/* <ESRow className='es-sign-in-form--social' gutter={16}>
                         <ESCol xs={24} sm={12}>
                             <ESFacebookSignIn
                                 signIn={signInFacebook}
+                                facebookKey={facebookKey}
                                 className='mb-md'
                             />
                         </ESCol>
                         <ESCol xs={24} sm={12}>
                             <ESGoogleSignIn
                                 signIn={signInGoogle}
+                                googleKey={googleKey}
                                 className='mb-lg'
                             />
                         </ESCol>
                     </ESRow>
                     <ESDivider className='mb-lg'>
                         <ESTypography variant='subtitle2'>{title}</ESTypography>
-                    </ESDivider>
+                    </ESDivider> */}
                     <ESFormItem
                         rules={[
                             {

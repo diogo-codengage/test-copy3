@@ -13,6 +13,7 @@ import SANCoursePage from './Course'
 import SANQuestionsPage from './Questions'
 import SANClassroomPage from './Classrom'
 import SANMyAccountChangePassword from './MyAccount'
+import SANHelpCenter from './HelpCenter'
 import { SANPortalProvider } from './Context'
 import ESDefaultError from '../Portal/Errors/Default'
 
@@ -20,7 +21,13 @@ const SANPortalRoutes = ({ match: { url } }) => {
     const client = useApolloContext()
     const { setMe } = useAuthContext()
 
-    const handleCompleted = ({ me }) => setMe(me)
+    const handleCompleted = ({ me }) => {
+        setMe(me)
+        window.Conpass.init({
+            name: me.name,
+            email: me.email
+        })
+    }
 
     useEffect(() => {
         return () => client.cache.reset()
@@ -51,6 +58,10 @@ const SANPortalRoutes = ({ match: { url } }) => {
                                     <Route
                                         path={`${url}/minha-conta`}
                                         component={SANMyAccountChangePassword}
+                                    />
+                                    <Route
+                                        path={`${url}/central-ajuda`}
+                                        component={SANHelpCenter}
                                     />
                                     <Route
                                         path={`${url}/sala-aula/:moduleId/:type?/:resourceId?`}

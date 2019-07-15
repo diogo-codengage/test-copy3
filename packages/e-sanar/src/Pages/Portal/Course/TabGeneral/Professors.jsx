@@ -14,7 +14,7 @@ const Linkedin = ({ link }) => (
         target='_blank'
         href={link}
         rel='noopener noreferrer'
-        className='san-tab-course-content__professors--action'
+        className='professors--action'
     >
         <ESEvaIcon name='linkedin' size='xsmall' />
     </a>
@@ -39,14 +39,14 @@ const SANCourseProfessors = () => {
     )
 
     return (
-        <div className='san-tab-course-content__professors'>
+        <div className='professors'>
             <SANPortalPagesContainer>
                 <SessionTitle
                     title={t('courseDetails.tabContent.professors.title')}
                     subtitle={t('courseDetails.tabContent.professors.subtitle')}
                 />
 
-                <ESRow gutter={24} type='flex' justify='space-around'>
+                <ESRow gutter={24} type='flex' justify='center'>
                     {course.professors.map(renderProfessor)}
                 </ESRow>
                 {course.professors.length > 10 && (
@@ -57,7 +57,7 @@ const SANCourseProfessors = () => {
                         size='xsmall'
                         color='primary'
                         variant='outlined'
-                        className='mt-md san-tab-course-content__professors--load-more'
+                        className='mt-md professors--load-more'
                     >
                         {t(
                             'courseDetails.tabContent.professors.buttonLoadMore'
