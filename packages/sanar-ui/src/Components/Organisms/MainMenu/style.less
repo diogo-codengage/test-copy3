@@ -153,9 +153,13 @@
             height: 100%;
             padding: @padding-md 0;
             position: fixed;
-            & img {
-                cursor: pointer;
-                max-width: 32px;
+
+            &--actions {
+                @media (min-width: 1365px) {
+                    button {
+                        cursor: default;
+                    }
+                }
             }
         }
 
