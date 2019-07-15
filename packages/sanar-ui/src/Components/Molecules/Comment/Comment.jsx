@@ -33,8 +33,24 @@ const Title = ({ name, monitor, labelMonitor }) => {
     )
 }
 
-const ESComment = ({ user, text, time, monitor, labelMonitor, className }) => {
-    const classes = classNames('es-comment', className)
+const ESComment = ({
+    user,
+    text,
+    time,
+    monitor,
+    actions,
+    labelMonitor,
+    dark,
+    owner,
+    className
+}) => {
+    const classes = classNames(
+        'es-comment',
+        {
+            'es-comment__dark': dark
+        },
+        className
+    )
 
     const diff =
         time &&
@@ -44,6 +60,7 @@ const ESComment = ({ user, text, time, monitor, labelMonitor, className }) => {
     return (
         <Comment
             className={classes}
+            actions={actions}
             author={
                 <Title
                     name={user && user.name}
@@ -58,7 +75,16 @@ const ESComment = ({ user, text, time, monitor, labelMonitor, className }) => {
                     alt={user && user.name}
                 />
             }
-            content={<ESTypography variant='body2'>{text}</ESTypography>}
+            content={
+                <ESTypography variant='body2'>
+                    {owner && (
+                        <ESTypography component='span' variant='body2' strong>
+                            {`${owner} `}
+                        </ESTypography>
+                    )}
+                    <span dangerouslySetInnerHTML={{ __html: text }} />
+                </ESTypography>
+            }
             datetime={diff && diff}
         />
     )
@@ -72,7 +98,9 @@ ESComment.propTypes = {
     text: PropTypes.string,
     time: PropTypes.string,
     monitor: PropTypes.bool,
-    labelMonitor: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
+    actions: PropTypes.arrayOf(PropTypes.node),
+    labelMonitor: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    dark: PropTypes.bool
 }
 
 export default ESComment
