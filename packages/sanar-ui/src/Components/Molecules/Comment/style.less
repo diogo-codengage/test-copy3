@@ -35,4 +35,23 @@
             }
         }
     }
+
+    &__dark {
+        & .ant-comment-content {
+            &-detail .es-typography {
+                color: @grey-solid-2;
+            }
+
+            &-author {
+                &-name {
+                    & .es-typography {
+                        color: @white-7 !important;
+                    }
+                }
+                &-time {
+                    color: @white-5 !important;
+                }
+            }
+        }
+    }
 }
