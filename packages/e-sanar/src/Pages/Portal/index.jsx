@@ -21,7 +21,13 @@ const SANPortalRoutes = ({ match: { url } }) => {
     const client = useApolloContext()
     const { setMe } = useAuthContext()
 
-    const handleCompleted = ({ me }) => setMe(me)
+    const handleCompleted = ({ me }) => {
+        setMe(me)
+        window.Conpass.init({
+            name: me.name,
+            email: me.email
+        })
+    }
 
     useEffect(() => {
         return () => client.cache.reset()

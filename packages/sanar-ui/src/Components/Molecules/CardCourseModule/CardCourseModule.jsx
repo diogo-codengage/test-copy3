@@ -82,9 +82,9 @@ const ESCardCourseModule = ({
                 <ESRow type='flex' align='middle' justify='space-between'>
                     <ESSkeleton loading={!moduleTime} paragraph={false}>
                         <ESCol>
-                            <ESTypography variant='caption' muted>
+                            {/* <ESTypography variant='caption' muted>
                                 {moduleTime}
-                            </ESTypography>
+                            </ESTypography> */}
                         </ESCol>
                         <ESCol>{renderBasedOnDisabled(disabled)}</ESCol>
                     </ESSkeleton>
