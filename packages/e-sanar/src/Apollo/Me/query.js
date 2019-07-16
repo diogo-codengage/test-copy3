@@ -79,7 +79,6 @@ export const GET_ME = gql`
                             id
                             text
                             created_at
-                            answers
                             user {
                                 name
                                 id
