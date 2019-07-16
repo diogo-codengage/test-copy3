@@ -215,7 +215,7 @@ export default {
                 },
                 error: {
                     defaultMessage:
-                        'Ocorreu um erro ao carregar suas disciplinas.'
+                        'Ocorreu um erro ao carregar suas disciplinas. Tente novamente mais tarde.'
                 }
             }
         },
