@@ -31,15 +31,13 @@ const SANPortalLayout = ({ children }) => {
     return (
         <Layout className={classes}>
             <SANMenu showContinueBar />
-            <Layout>
+            <Layout className={classesContent}>
                 {hasHeaderMobile && <ESBrandHeader darkMode={darkMode} />}
 
-                {/* <div className={classesScrollArea}> */}
-                <Layout.Content className={classesContent}>
+                <Layout.Content className='d-flex flex-column'>
                     {children}
                 </Layout.Content>
                 <SANFooter darkMode={darkMode} />
-                {/* </div> */}
             </Layout>
         </Layout>
     )
