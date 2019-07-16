@@ -206,6 +206,7 @@ const SANCourseModules = ({ history }) => {
                                 renderItem={renderDiscipline}
                                 footer={
                                     <ESPagination
+                                        pageSize={pageSize}
                                         total={count}
                                         current={current}
                                         onChange={setCurrent}
