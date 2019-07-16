@@ -22,8 +22,8 @@ const SANPortalLayout = ({ children }) => {
         'san-portal-layout__classroom': pageContext === 'classroom'
     })
 
-    const classesScrollArea = classNames('san-portal-layout__scroll', {
-        'san-portal-layout__scroll__classroom': pageContext === 'classroom'
+    const classesContent = classNames('san-portal-layout__content', {
+        'san-portal-layout__content__classroom': pageContext === 'classroom'
     })
 
     const hasHeaderMobile = useMemo(() => width <= 1024, [width])
@@ -34,12 +34,12 @@ const SANPortalLayout = ({ children }) => {
             <Layout>
                 {hasHeaderMobile && <ESBrandHeader darkMode={darkMode} />}
 
-                <div className={classesScrollArea}>
-                    <Layout.Content className='san-portal-layout__content'>
-                        {children}
-                    </Layout.Content>
-                    <SANFooter darkMode={darkMode} />
-                </div>
+                {/* <div className={classesScrollArea}> */}
+                <Layout.Content className={classesContent}>
+                    {children}
+                </Layout.Content>
+                <SANFooter darkMode={darkMode} />
+                {/* </div> */}
             </Layout>
         </Layout>
     )

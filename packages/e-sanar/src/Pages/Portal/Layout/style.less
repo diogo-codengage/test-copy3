@@ -1,6 +1,6 @@
 .san-portal-layout {
     min-height: 100vh !important;
-    flex-direction: row;
+    // flex-direction: row;
 
     &__classroom {
         padding-bottom: 0 !important;
@@ -8,12 +8,6 @@
 
     & .es-brand-header {
         z-index: 1;
-    }
-
-    &__scroll {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
     }
 
     &__container {
@@ -30,6 +24,7 @@
     & .ant-layout,
     &__content {
         background: @white !important;
+        min-height: 100vh;
     }
 
     &__content {
@@ -124,22 +119,18 @@
     }
 
     @media (min-width: 1024px) {
-        &__scroll {
-            margin-left: 56px;
+        &__content {
+            padding-left: 56px;
 
             &__classroom {
-                margin-left: 0 !important;
+                padding-left: 0 !important;
             }
         }
     }
 
     @media (min-width: 1365px) {
-        &__scroll {
-            margin-left: 360px;
-
-            &__classroom {
-                margin-left: 0 !important;
-            }
+        &__content {
+            padding-left: 360px;
         }
     }
 
