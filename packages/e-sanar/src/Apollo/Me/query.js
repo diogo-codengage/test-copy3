@@ -26,16 +26,6 @@ export const GET_ME = gql`
                         total
                     }
                 }
-                bookmarks {
-                    data {
-                        resource_type
-                        resource {
-                            title
-                            path
-                        }
-                    }
-                    count
-                }
                 performance {
                     interaction {
                         id
@@ -73,19 +63,6 @@ export const GET_ME = gql`
                         profile_picture
                         linkedin
                         resume
-                    }
-                    comments {
-                        data {
-                            id
-                            text
-                            created_at
-                            user {
-                                name
-                                id
-                                profile_picture
-                            }
-                        }
-                        count
                     }
                     lives {
                         id
