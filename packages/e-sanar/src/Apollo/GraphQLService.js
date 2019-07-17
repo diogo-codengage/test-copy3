@@ -9,7 +9,7 @@ const getCurrentTokenSession = () => {
     })
 }
 
-const errorHandler = async ({ graphQLErrors, networkError }) => {
+const errorHandler = ({ graphQLErrors, networkError, forward, operation }) => {
     if (graphQLErrors) {
         graphQLErrors.map(({ message, locations, path }) =>
             console.error(
@@ -19,14 +19,14 @@ const errorHandler = async ({ graphQLErrors, networkError }) => {
                 path
             )
         )
+        return forward(operation)
     }
 
     if (networkError) {
         console.error('[Network error]: %o', networkError)
         switch (networkError.code) {
             case 'NotAuthorizedException':
-                await Auth.signOut()
-                window.location.reload()
+                Auth.signOut().then(() => window.location.reload())
                 break
             default:
         }

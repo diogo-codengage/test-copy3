@@ -79,13 +79,7 @@
         // Sempre que não houver espaço deixará "scrollavel", mesmo em desktop.
         &--scrollable {
             height: ~'calc(100% - 128px)';
-
-            > div {
-                > div {
-                    margin-right: -15px !important;
-                    margin-bottom: -15px !important;
-                }
-            }
+            overflow-y: auto;
 
             &--element {
                 height: ~'calc(100% - 100px)';
@@ -153,9 +147,13 @@
             height: 100%;
             padding: @padding-md 0;
             position: fixed;
-            & img {
-                cursor: pointer;
-                max-width: 32px;
+
+            &--actions {
+                @media (min-width: 1365px) {
+                    button {
+                        cursor: default;
+                    }
+                }
             }
         }
 

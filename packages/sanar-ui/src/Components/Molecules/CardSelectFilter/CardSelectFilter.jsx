@@ -130,7 +130,7 @@ const ESCardSelectFilter = ({
             ) : open ? (
                 undefined
             ) : (
-                <ESEvaIcon name='plus-outline' />
+                <ESEvaIcon name='plus-outline' onClick={onFocus} />
             ),
         [value, open]
     )

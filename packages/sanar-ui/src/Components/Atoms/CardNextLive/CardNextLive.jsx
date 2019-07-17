@@ -19,9 +19,11 @@ const ESCardNextLive = ({ className, title, date, actions, ...props }) => {
                 >
                     {title}
                 </ESTypography>
-                <ESTypography type='muted' variant='caption'>
-                    {date}
-                </ESTypography>
+                {date && (
+                    <ESTypography type='muted' variant='caption'>
+                        {date}
+                    </ESTypography>
+                )}
             </>
         </ESCard>
     )

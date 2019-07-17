@@ -79,8 +79,7 @@ const SANQuestionPage = ({ history }) => {
     }
 
     const handleNext = (isCorrect, isJump) => {
-        const scroll = document.getElementById('san-scroll')
-        scroll.firstChild.scrollTo(0, 0)
+        window.scrollTo(0, 0)
         const newQuestions = questions.slice(1)
 
         setQuestions(newQuestions)

@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 import {
     ESNavigationList,
     ESNavigationListItem,
-    ESRanking,
     ESLeftOff
 } from 'sanar-ui/dist/Components/Organisms/MainMenu'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
@@ -25,12 +24,12 @@ const SANInitial = ({ setTab, history }) => {
     const { menuOpenOrClose } = useLayoutContext()
     const { t } = useTranslation('esanar')
 
-    const { course, ranking } = getEnrollment()
+    const { course } = getEnrollment()
 
     const moduleReference = last =>
-        `${t('global.subject')} ${last.module_order + 1}, ${t(
-            'global.activity'
-        )} ${last.resource_order + 1}`
+        `${t('global.subject')} ${last.module_order}, ${t('global.activity')} ${
+            last.resource_order
+        }`
 
     const goClassroom = () =>
         history.push(
@@ -49,10 +48,10 @@ const SANInitial = ({ setTab, history }) => {
         })
     }
 
-    const rankingProps = {
-        ranking: ranking.position,
-        score: ranking.points
-    }
+    // const rankingProps = {
+    //     ranking: ranking.position,
+    //     score: ranking.points
+    // }
 
     const renderNextContent = e => {
         setTab(Number(e.key))
@@ -60,9 +59,9 @@ const SANInitial = ({ setTab, history }) => {
 
     return (
         <>
-            <div className='pl-md pr-md mb-md'>
+            {/* <div className='pl-md pr-md mb-md'>
                 <ESRanking {...rankingProps} />
-            </div>
+            </div> */}
             <div className='pl-md pr-md'>
                 {!error ? (
                     <ESLeftOff {...leftProps} />

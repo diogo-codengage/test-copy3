@@ -32,12 +32,14 @@ const modalTermsContent = [
 ]
 
 const SANMyAccount = ({ handleBack, history }) => {
-    const { me } = useAuthContext()
+    const { me, getEnrollment } = useAuthContext()
     const { t } = useTranslation('esanar')
     const [open, setOpen] = useState(false)
     const [openFeedback, setOpenFeedback] = useState(false)
     const [openModalTerms, setOpenModalTerms] = useState(false)
     const { menuOpenOrClose } = useLayoutContext()
+
+    const { course } = getEnrollment()
 
     const handleOtherLinks = ({ key }) => {
         setOpen(Number(key) === 2)
@@ -61,7 +63,7 @@ const SANMyAccount = ({ handleBack, history }) => {
                 break
             case 2:
                 history.push('/aluno/central-ajuda/')
-                // setOpenMenu(old => !old)
+                menuOpenOrClose()
                 break
             default:
                 history.push('/aluno/minha-conta/')
@@ -102,7 +104,7 @@ const SANMyAccount = ({ handleBack, history }) => {
                 <ESAvatarMenu
                     src={me.profile_picture}
                     title={me.name}
-                    subtitle='Enfermagem'
+                    subtitle={course.knowledge_area}
                 />
             </div>
 

@@ -85,7 +85,7 @@ const ESMainMenu = forwardRef(
             className,
             {
                 'es-main-menu__content--scrollable--element':
-                    typeof title !== 'string'
+                    typeof title !== 'string' || !showContinueBar
             }
         )
 
@@ -166,11 +166,7 @@ const ESMainMenu = forwardRef(
                         title
                     )}
 
-                    <div className={scrollableClasses}>
-                        <Scrollbars renderTrackHorizontal={() => <div />}>
-                            {children}
-                        </Scrollbars>
-                    </div>
+                    <div className={scrollableClasses}>{children}</div>
                 </div>
 
                 {position === 'left' ? (

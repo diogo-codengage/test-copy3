@@ -151,9 +151,9 @@ export default {
         recentCommentsOneCommentAction: 'PERGUNTAR',
         recentCommentsNoComments: 'Seja o primeiro a fazer uma pergunta!',
         recentCommentsNoCommentsAction: 'QUERO PERGUNTAR',
-        recentlySavedTitle: 'Salvos Recentemente',
-        recentlySavedSubtitle: 'Veja os dois últimos itens salvos recentemente',
-        recentlySavedButton: 'Ver todos os itens salvos',
+        recentlySavedTitle: 'Favoritos',
+        recentlySavedSubtitle: 'Veja os dois últimos itens favoritados',
+        recentlySavedButton: 'Ver todos os favoritos',
         recentlySavedOneItem:
             'Continue salvando mais itens para a sua coleção de conteúdos!',
         recentlySavedNoItems: 'Comece a salvar seus conteúdos favoritos!',
@@ -173,6 +173,8 @@ export default {
         downloadTooltip:
             'Complete {{percent}} do curso para disponibilizar o seu certificado.',
         tabGeneral: 'Visão Geral',
+        errorRecentlySaved:
+            'Ocorreu um erro ao tentar carregas os últimos favoritos. Tente novamente mais tarde.',
         tabContent: {
             title: 'Conteúdo',
             cardModuleAction: 'Ver aulas',
@@ -213,7 +215,7 @@ export default {
                 },
                 error: {
                     defaultMessage:
-                        'Ocorreu um erro ao carregar suas disciplinas.'
+                        'Ocorreu um erro ao carregar suas disciplinas. Tente novamente mais tarde.'
                 }
             }
         },

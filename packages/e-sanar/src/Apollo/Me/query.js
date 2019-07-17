@@ -5,6 +5,7 @@ export const GET_ME = gql`
         me {
             id
             name
+            email
             profile_picture
             enrollments {
                 id
@@ -24,16 +25,6 @@ export const GET_ME = gql`
                         done
                         total
                     }
-                }
-                bookmarks {
-                    data {
-                        resource_type
-                        resource {
-                            title
-                            path
-                        }
-                    }
-                    count
                 }
                 performance {
                     interaction {
@@ -72,20 +63,6 @@ export const GET_ME = gql`
                         profile_picture
                         linkedin
                         resume
-                    }
-                    comments {
-                        data {
-                            id
-                            text
-                            created_at
-                            answers
-                            user {
-                                name
-                                id
-                                profile_picture
-                            }
-                        }
-                        count
                     }
                     lives {
                         id

@@ -16,6 +16,9 @@ const ESHelpCenter = ({ className }) => {
     const [helpCenterData, sethelpCenterData] = useState(questionsData)
     const classes = classNames(className, 'es-help-center-template')
 
+    const scroll = document.getElementById('san-scroll')
+    if(scroll) {scroll.firstChild.scrollTo(0, 0)}
+
     const getSearchData = data => {
         if (data === '') {
             sethelpCenterData(questionsData)
@@ -42,7 +45,7 @@ const ESHelpCenter = ({ className }) => {
                     return String(value)
                 })
                 .find(function(value) {
-                    return value.includes(data)
+                    return value.toLowerCase().includes(data.toLowerCase())
                 })
         })
     }
