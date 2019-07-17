@@ -15,7 +15,7 @@ const SANBookmarksHeader = () => {
     const { t } = useTranslation('esanar')
 
     return (
-        <div className='san-bookmark-page__header'>
+        <div className='header'>
             <SANPortalPagesContainer>
                 <ESSessionTitle
                     title={
