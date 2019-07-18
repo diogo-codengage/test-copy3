@@ -3,6 +3,14 @@
     border-radius: @border-radius-base;
     background-color: @grey-1;
 
+    & .ant-spin-nested-loading {
+        height: 100%;
+        & .ant-spin-container {
+            height: 100%;
+            border-radius: @border-radius-base;
+        }
+    }
+
     &__comment--avatar {
         position: absolute;
         left: 16px;

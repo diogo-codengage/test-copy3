@@ -361,7 +361,12 @@ export default {
             modulesError:
                 'Ocorreu um erro ao carregar as disciplinas deste curso.',
             goToBegin: 'Voltar para o início'
-        }
+        },
+        failRemoveComment: 'Ocorreu um erro ao excluir seu comentário.',
+        failCreateComment: 'Ocorreu um erro ao criar seu comentário.',
+        failLoadRepliesComment: 'Ocorreu um erro ao carregar sub comentários.',
+        failInteractionComment:
+            'Ocorreu um erro ao dar like/dislike no comentário.'
     },
     footer: {
         helpButton: 'Precisa de ajuda?',

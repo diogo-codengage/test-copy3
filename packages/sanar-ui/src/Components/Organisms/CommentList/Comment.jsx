@@ -35,18 +35,26 @@ const Comment = ({
 
     const handleComment = text => {
         onComment &&
-            onComment({ text, parentId: comment.parent_id || comment.id })
+            onComment({
+                text,
+                parentId: comment.parent_id || comment.id,
+                user: comment.user.name
+            })
         setReplay(false)
     }
 
+    const handleLike = () => onLike(comment.id)
+
+    const handleDislike = () => onDislike(comment.id)
+
     const actions = [
         <InteractionButton
-            onClick={onLike}
+            onClick={handleLike}
             type='like'
             count={comment.likes_count}
         />,
         <InteractionButton
-            onClick={onDislike}
+            onClick={handleDislike}
             type='dislike'
             count={comment.dislikes_count}
         />,
@@ -63,16 +71,20 @@ const Comment = ({
         <ESDropdown
             overlay={
                 <ESMenu onClick={handleMenuClick}>
-                    <ESItem key='exclude'>
-                        <ESTypography strong>
-                            {t('commentList.exclude')}
-                        </ESTypography>
-                    </ESItem>
-                    <ESItem key='report'>
-                        <ESTypography strong>
-                            {t('commentList.report')}
-                        </ESTypography>
-                    </ESItem>
+                    {comment.commented_by_user && (
+                        <ESItem key='exclude'>
+                            <ESTypography strong>
+                                {t('commentList.exclude')}
+                            </ESTypography>
+                        </ESItem>
+                    )}
+                    {onReport && (
+                        <ESItem key='report'>
+                            <ESTypography strong>
+                                {t('commentList.report')}
+                            </ESTypography>
+                        </ESItem>
+                    )}
                 </ESMenu>
             }
             trigger={['click']}
@@ -89,6 +101,7 @@ const Comment = ({
                 dark
                 actions={actions}
                 {...comment}
+                monitor={comment.labels === 'expert'}
                 className={className}
             />
             {reply && (

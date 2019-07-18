@@ -17,6 +17,8 @@ const ESCommentList = ({
     onExclude,
     onReport,
     onComment,
+    onLike,
+    onDislike,
     onOrderBy,
     loadRepliesProps,
     hideRepliesProps,
@@ -35,7 +37,7 @@ const ESCommentList = ({
 
     const renderComment = (comment, index) => {
         let acc = []
-        if (comment.answers && comment.answers.length) {
+        if (comment && comment.answers && comment.answers.length) {
             acc = comment.answers.map(renderComment)
         }
 
@@ -50,10 +52,14 @@ const ESCommentList = ({
                     onExclude={onExclude}
                     onReport={onReport}
                     onComment={onComment}
+                    onLike={onLike}
+                    onDislike={onDislike}
                     comment={comment}
                 />
-                {comment.replies_count &&
-                (!comment.answers || !comment.answers.length) ? (
+                {(comment.replies_count &&
+                    (!comment.answers || !comment.answers.length)) ||
+                (comment.answers &&
+                    comment.replies_count > comment.answers.length) ? (
                     <ESButton
                         {...loadRepliesProps}
                         onClick={handleLoadReplies(comment.id)}
@@ -61,6 +67,7 @@ const ESCommentList = ({
                         variant='text'
                         color='primary'
                         bold
+                        className='secondary'
                     >
                         {t('commentList.viewReply', {
                             count: comment.replies_count
@@ -75,6 +82,7 @@ const ESCommentList = ({
                         variant='text'
                         color='primary'
                         bold
+                        className='secondary'
                     >
                         {t('commentList.hideReplies')}
                         <ESEvaIcon name='chevron-up-outline' key='up' />
@@ -96,7 +104,7 @@ const ESCommentList = ({
             <div className='es-comment-list__header'>
                 <ESTypography variant='subtitle2'>
                     {t('commentList.answers.keyWithCount', {
-                        count: comments.count
+                        count: comments.count || 0
                     })}
                 </ESTypography>
                 <ESDropdown
@@ -122,7 +130,9 @@ const ESCommentList = ({
                     </ESButton>
                 </ESDropdown>
             </div>
-            <div>{comments.data.map(renderComment)}</div>
+            <div style={{ width: '100%' }}>
+                {comments.data.map(renderComment)}
+            </div>
             {hasMore && (
                 <ESButton
                     size='xsmall'
@@ -130,7 +140,7 @@ const ESCommentList = ({
                     color='primary'
                     uppercase
                     bold
-                    className='mt-md'
+                    className='mt-md secondary'
                     {...loadMoreProps}
                 >
                     {t('commentList.loadMore')}
@@ -146,6 +156,8 @@ ESCommentList.propTypes = {
     onExclude: PropTypes.func,
     onReport: PropTypes.func,
     onComment: PropTypes.func,
+    onLike: PropTypes.func,
+    onDislike: PropTypes.func,
     onOrderBy: PropTypes.func,
     loadMoreProps: PropTypes.object,
     hideRepliesProps: PropTypes.object,

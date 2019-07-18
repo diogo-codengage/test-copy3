@@ -21,11 +21,11 @@ import { GET_RATING } from 'Apollo/Classroom/queries/rating'
 import { CREATE_RATING } from 'Apollo/Classroom/mutations/rate'
 
 import { usePortalContext } from 'Pages/Portal/Context'
+import { useClassroomContext } from '../Context'
 
 import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
 import SANDiscussion from './Discussion'
-import { useClassroomContext } from '../Context'
 
 const ButtonTab = ({ active, ...props }) => (
     <ESButton
@@ -257,7 +257,7 @@ const SANClassroomVideo = () => {
                         />
                     </ESTabPane>
                     <ESTabPane tab={t('classroom.discussions')} key='2'>
-                        <SANDiscussion />
+                        <SANDiscussion resourceId={currentResource.video.id} />
                     </ESTabPane>
                 </ESTabs>
             ) : (
