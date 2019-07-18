@@ -11,9 +11,10 @@ import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 import { useAuthContext } from 'Hooks/auth'
 
-const SANLives = ({ title, release_date, scheduled, link }) => {
+const SANLives = ({ title, release_date, link }) => {
     const { t } = useTranslation('esanar')
-    const date = format(new Date(release_date), 'DD/MM/YYYY [às] HH[h]')
+    const date =
+        release_date && format(new Date(release_date), 'DD/MM/YYYY [às] HH[h]')
 
     const canWatch = isBefore(new Date(release_date), new Date())
 

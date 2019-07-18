@@ -5,11 +5,11 @@ import ESTypography from '../../Atoms/Typography'
 import { useTranslation } from 'react-i18next'
 import errorImg from '../../../assets/images/errors/grey-error.svg'
 
-const SANErrorPiece = ({ message, action, dark }) => {
+const SANErrorPiece = ({ message, action, dark, ...props }) => {
     const { t } = useTranslation('sanarui')
 
     return (
-        <div className='san-error-piece'>
+        <div className='san-error-piece' {...props}>
             <img src={errorImg} />
             <ESTypography
                 variant='body2'

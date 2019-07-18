@@ -2,7 +2,12 @@ import gql from 'graphql-tag'
 
 export const GET_MODULES = gql`
     query Modules($courseId: ID!, $enrollmentId: ID!, $limit: Int, $skip: Int) {
-        modules(courseId: $courseId, enrollmentId: $enrollmentId, limit: $limit, skip: $skip) {
+        modules(
+            courseId: $courseId
+            enrollmentId: $enrollmentId
+            limit: $limit
+            skip: $skip
+        ) {
             data {
                 id
                 name

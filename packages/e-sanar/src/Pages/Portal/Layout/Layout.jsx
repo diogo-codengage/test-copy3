@@ -2,8 +2,6 @@ import React, { useMemo } from 'react'
 import { Layout } from 'antd'
 import classNames from 'classnames'
 
-import { Scrollbars } from 'react-custom-scrollbars'
-
 import ESBrandHeader from 'sanar-ui/dist/Components/Atoms/BrandHeader'
 import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
@@ -24,8 +22,8 @@ const SANPortalLayout = ({ children }) => {
         'san-portal-layout__classroom': pageContext === 'classroom'
     })
 
-    const classesScrollArea = classNames('san-portal-layout__scroll', {
-        'san-portal-layout__scroll__classroom': pageContext === 'classroom'
+    const classesContent = classNames('san-portal-layout__content', {
+        'san-portal-layout__content__classroom': pageContext === 'classroom'
     })
 
     const hasHeaderMobile = useMemo(() => width <= 1024, [width])
@@ -33,19 +31,13 @@ const SANPortalLayout = ({ children }) => {
     return (
         <Layout className={classes}>
             <SANMenu showContinueBar />
-            <Layout>
+            <Layout className={classesContent}>
                 {hasHeaderMobile && <ESBrandHeader darkMode={darkMode} />}
-                <Scrollbars
-                    id='san-scroll'
-                    renderTrackHorizontal={() => <div />}
-                >
-                    <div className={classesScrollArea}>
-                        <Layout.Content className='san-portal-layout__content'>
-                            {children}
-                        </Layout.Content>
-                        <SANFooter darkMode={darkMode} />
-                    </div>
-                </Scrollbars>
+
+                <Layout.Content className='d-flex flex-column'>
+                    {children}
+                </Layout.Content>
+                <SANFooter darkMode={darkMode} />
             </Layout>
         </Layout>
     )
