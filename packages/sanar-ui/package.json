@@ -38,9 +38,9 @@
         "jest-image-snapshot": "^2.8.1",
         "jest-puppeteer": "^4.1.1",
         "less-plugin-npm-import": "^2.1.0",
-        "puppeteer": "^1.14.0",
         "react-test-renderer": "^16.8.6",
-        "react-testing-library": "^6.1.2"
+        "react-testing-library": "^6.1.2",
+        "react-custom-scrollbars": "^4.2.1"
     },
     "dependencies": {
         "ckeditor4-react": "^0.1.1",

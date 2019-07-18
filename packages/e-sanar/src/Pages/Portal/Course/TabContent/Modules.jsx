@@ -8,6 +8,8 @@ import ESListView, {
     ESListViewItem
 } from 'sanar-ui/dist/Components/Atoms/ListView'
 import ESPagination from 'sanar-ui/dist/Components/Atoms/Pagination'
+import ESSpin from 'sanar-ui/dist/Components/Atoms/Spin'
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 import ESCardCourseModule from 'sanar-ui/dist/Components/Molecules/CardCourseModule'
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
@@ -15,7 +17,6 @@ import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 import { GET_MODULES } from 'Apollo/CourseDetails/queries/modules'
 import { useAuthContext } from 'Hooks/auth'
 import { getClassRoute } from 'Utils/getClassRoute'
-import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 
 //FIXME: const responsive = [
 //     {
@@ -109,19 +110,26 @@ const SANCourseModules = ({ history }) => {
                 skip: pageSize * current - pageSize
             }}
         >
-            {({ loading, error, fetchMore, data }) => {
+            {({ loading, error, data }) => {
+                if (loading) {
+                    return (
+                        <ESSpin
+                            className='w-100 d-flex justify-content-center align-items-center'
+                            style={{ height: 685 }}
+                        />
+                    )
+                }
                 if (error) {
                     return (
                         <SANErrorPiece
                             message={t(
-                                'courseDetails.tabContent.modules.error.defaultMessage'
+                                'courseDetails.tabContent.discipline.error.defaultMessage'
                             )}
                         />
                     )
                 }
 
-                const count = !loading ? data.modules.count : 0
-                const modules = !loading ? data.modules.data : []
+                const { count, data: modules } = data.modules
                 return (
                     <div className='san-tab-course-content__modules pt-md pb-lg'>
                         <SANPortalPagesContainer>
@@ -194,11 +202,11 @@ const SANCourseModules = ({ history }) => {
                                     md: 3,
                                     xl: 4
                                 }}
-                                loading={loading}
                                 dataSource={modules}
                                 renderItem={renderDiscipline}
                                 footer={
                                     <ESPagination
+                                        pageSize={pageSize}
                                         total={count}
                                         current={current}
                                         onChange={setCurrent}

@@ -33,7 +33,9 @@ const SANCourseProfessors = () => {
                 name={professor.name}
                 formation={professor.resume}
                 image={professor.profile_picture}
-                actions={<Linkedin link={professor.linkedin} />}
+                actions={
+                    professor.linkedin && <Linkedin link={professor.linkedin} />
+                }
             />
         </ESCol>
     )

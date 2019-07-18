@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 
 import classNames from 'classnames'
 import { message } from 'antd'
@@ -254,6 +254,7 @@ const SANClassroomVideo = () => {
                         <SANQuiz
                             quiz={currentResource.quiz}
                             parentVideoId={currentResource.video.id}
+                            scrollToOffsetElementPosition
                         />
                     </ESTabPane>
                     <ESTabPane tab={t('classroom.discussions')} key='2'>
