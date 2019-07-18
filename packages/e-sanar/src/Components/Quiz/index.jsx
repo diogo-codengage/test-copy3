@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 import { append } from 'ramda'
@@ -30,8 +30,11 @@ const SANQuiz = ({
     },
     mock,
     stopwatchRef,
-    parentVideoId
+    parentVideoId,
+    id,
+    scrollToOffsetElementPosition
 }) => {
+    const ref = useRef()
     const { t } = useTranslation('esanar')
     const client = useApolloContext()
     const { me, getEnrollment } = useAuthContext()
@@ -111,7 +114,14 @@ const SANQuiz = ({
     }
 
     const handleNext = isCorrect => {
-        window.scrollTo(0, 0)
+        if (scrollToOffsetElementPosition) {
+            window.scrollTo(
+                0,
+                ref.current.offsetTop + ref.current.offsetParent.offsetTop
+            )
+        } else {
+            window.scrollTo(0, 0)
+        }
 
         if (index === questions.length - 1) return
         setIndex(oldIndex => ++oldIndex)
@@ -253,7 +263,7 @@ const SANQuiz = ({
                         />
                     )
                 return (
-                    <div className='video-quiz'>
+                    <div ref={ref} className='video-quiz'>
                         {isFinish && mock && (
                             <SANQuizFinalizedMock {...stats} time={time} />
                         )}
@@ -300,7 +310,8 @@ const SANQuiz = ({
 
 SANQuiz.propTypes = {
     quiz: PropTypes.object.isRequired,
-    mock: PropTypes.bool
+    mock: PropTypes.bool,
+    scrollToOffsetElementPosition: PropTypes.bool
 }
 
 export default SANQuiz
