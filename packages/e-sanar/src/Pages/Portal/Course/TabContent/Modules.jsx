@@ -18,39 +18,7 @@ import { GET_MODULES } from 'Apollo/CourseDetails/queries/modules'
 import { useAuthContext } from 'Hooks/auth'
 import { getClassRoute } from 'Utils/getClassRoute'
 
-//FIXME: const responsive = [
-//     {
-//         breakpoint: 2500,
-//         settings: {
-//             slidesToShow: 3,
-//             variableWidth: true,
-//             arrows: true
-//         }
-//     },
-//     {
-//         breakpoint: 1920,
-//         settings: {
-//             slidesToShow: 3,
-//             variableWidth: true,
-//             arrows: true
-//         }
-//     },
-//     {
-//         breakpoint: 1280,
-//         settings: {
-//             variableWidth: true,
-//             slidesToShow: 2,
-//             arrows: true
-//         }
-//     },
-//     {
-//         breakpoint: 992,
-//         settings: {
-//             variableWidth: true,
-//             arrows: false
-//         }
-//     }
-// ]
+import ESDivider from 'sanar-ui/dist/Components/Atoms/Divider'
 
 const SANCourseModules = ({ history }) => {
     const { t } = useTranslation('esanar')
@@ -131,7 +99,7 @@ const SANCourseModules = ({ history }) => {
 
                 const { count, data: modules } = data.modules
                 return (
-                    <div className='san-tab-course-content__modules pt-md pb-lg'>
+                    <div className='san-tab-course-content__modules pt-md'>
                         <SANPortalPagesContainer>
                             {/*FIXME: <ESRow type='flex' align='middle' gutter={24}>
                                 <ESCol xs={24} md={10} lg={9} xxl={8}>
@@ -213,6 +181,7 @@ const SANCourseModules = ({ history }) => {
                                     />
                                 }
                             />
+                            <ESDivider className='mt-xxl mb-md' />
                         </SANPortalPagesContainer>
                     </div>
                 )
