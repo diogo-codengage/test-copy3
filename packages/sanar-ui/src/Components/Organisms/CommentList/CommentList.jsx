@@ -24,7 +24,8 @@ const ESCommentList = ({
     hideRepliesProps,
     loadMoreProps,
     hasMore,
-    className
+    className,
+    loading
 }) => {
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-comment-list', className)
@@ -107,28 +108,30 @@ const ESCommentList = ({
                         count: comments.count || 0
                     })}
                 </ESTypography>
-                <ESDropdown
-                    overlay={
-                        <ESMenu onClick={handleOrderBy}>
-                            <ESItem key='recents'>
-                                <ESTypography strong>
-                                    {t('commentList.orderByRecents')}
-                                </ESTypography>
-                            </ESItem>
-                            <ESItem key='relevance'>
-                                <ESTypography strong>
-                                    {t('commentList.orderByRelevance')}
-                                </ESTypography>
-                            </ESItem>
-                        </ESMenu>
-                    }
-                    trigger={['click']}
-                >
-                    <ESButton size='xsmall' variant='text' color='white'>
-                        {t('commentList.orderBy')}
-                        <ESEvaIcon name='chevron-down-outline' />
-                    </ESButton>
-                </ESDropdown>
+                {onOrderBy && (
+                    <ESDropdown
+                        overlay={
+                            <ESMenu onClick={handleOrderBy}>
+                                <ESItem key='recents'>
+                                    <ESTypography strong>
+                                        {t('commentList.orderByRecents')}
+                                    </ESTypography>
+                                </ESItem>
+                                <ESItem key='relevance'>
+                                    <ESTypography strong>
+                                        {t('commentList.orderByRelevance')}
+                                    </ESTypography>
+                                </ESItem>
+                            </ESMenu>
+                        }
+                        trigger={['click']}
+                    >
+                        <ESButton size='xsmall' variant='text' color='white'>
+                            {t('commentList.orderBy')}
+                            <ESEvaIcon name='chevron-down-outline' />
+                        </ESButton>
+                    </ESDropdown>
+                )}
             </div>
             <div style={{ width: '100%' }}>
                 {comments.data.map(renderComment)}
@@ -141,6 +144,7 @@ const ESCommentList = ({
                     uppercase
                     bold
                     className='mt-md secondary'
+                    loading={loading}
                     {...loadMoreProps}
                 >
                     {t('commentList.loadMore')}
@@ -162,7 +166,8 @@ ESCommentList.propTypes = {
     loadMoreProps: PropTypes.object,
     hideRepliesProps: PropTypes.object,
     loadRepliesProps: PropTypes.object,
-    hasMore: PropTypes.bool
+    hasMore: PropTypes.bool,
+    loading: PropTypes.bool
 }
 ESCommentList.defaultProps = {}
 

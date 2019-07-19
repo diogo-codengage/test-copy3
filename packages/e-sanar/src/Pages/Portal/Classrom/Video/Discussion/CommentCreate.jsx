@@ -26,8 +26,9 @@ const SANCommentCreate = ({ resourceId }) => {
                 },
                 update: (store, { data: { createComment } }) => {
                     try {
+                        const query = GET_COMMENTS
                         const data = store.readQuery({
-                            query: GET_COMMENTS
+                            query
                         })
 
                         data.comments.data = append(
@@ -37,7 +38,7 @@ const SANCommentCreate = ({ resourceId }) => {
                         data.comments.count++
 
                         store.writeQuery({
-                            query: GET_COMMENTS,
+                            query,
                             data
                         })
                     } catch (err) {

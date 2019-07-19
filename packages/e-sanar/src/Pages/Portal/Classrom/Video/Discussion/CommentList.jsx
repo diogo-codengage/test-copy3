@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Query } from 'react-apollo'
 import { message } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { append, filter, map } from 'ramda'
+import { append, filter, map, find } from 'ramda'
 
 import ESCommentList from 'sanar-ui/dist/Components/Organisms/CommentList'
 import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
@@ -20,8 +20,7 @@ import { GET_REPLIES_COMMENTS } from 'Apollo/Classroom/queries/replies-comments'
 const SANCommentList = ({ resourceId }) => {
     const client = useApolloContext()
     const { t } = useTranslation('esanar')
-    const [comments, setComments] = useState({})
-    const [skip] = useState(0)
+    const [comments, setComments] = useState({ data: [], count: 0 })
 
     const handleRemoveComment = async commentId => {
         try {
@@ -32,8 +31,9 @@ const SANCommentList = ({ resourceId }) => {
                 },
                 update: store => {
                     try {
+                        const query = GET_COMMENTS
                         const data = store.readQuery({
-                            query: GET_COMMENTS
+                            query
                         })
 
                         data.comments.data = filter(
@@ -43,7 +43,7 @@ const SANCommentList = ({ resourceId }) => {
                         data.comments.count--
 
                         store.writeQuery({
-                            query: GET_COMMENTS,
+                            query,
                             data
                         })
                     } catch (err) {
@@ -71,8 +71,9 @@ const SANCommentList = ({ resourceId }) => {
                 },
                 update: (store, { data: { createComment } }) => {
                     try {
+                        const query = GET_COMMENTS
                         const data = store.readQuery({
-                            query: GET_COMMENTS
+                            query
                         })
 
                         data.comments.data = append(
@@ -81,7 +82,7 @@ const SANCommentList = ({ resourceId }) => {
                         )
 
                         store.writeQuery({
-                            query: GET_COMMENTS,
+                            query,
                             data
                         })
                     } catch (err) {
@@ -96,19 +97,110 @@ const SANCommentList = ({ resourceId }) => {
         }
     }
 
-    const handleInteraction = interaction => async commentId => {
+    const handleInteraction = interaction => async ({
+        commentId,
+        parentId
+    }) => {
         try {
-            await client.mutate({
+            const {
+                data: { createInteraction }
+            } = await client.mutate({
                 mutation: CREATE_INTERACTION,
                 variables: {
                     interaction,
                     resourceId: commentId,
                     resourceType: 'Comment'
+                },
+                update: (
+                    store,
+                    {
+                        data: {
+                            createInteraction: {
+                                id,
+                                dislikes_count,
+                                likes_count
+                            }
+                        }
+                    }
+                ) => {
+                    try {
+                        const query = parentId
+                            ? GET_REPLIES_COMMENTS
+                            : GET_COMMENTS
+
+                        const field = parentId ? 'repliesComment' : 'comments'
+
+                        const data = store.readQuery({
+                            query
+                        })
+
+                        data[field].data = map(
+                            comment => ({
+                                ...comment,
+                                ...(comment.id === id && {
+                                    likes_count,
+                                    dislikes_count,
+                                    disliked_by_user:
+                                        interaction === 'dislike' &&
+                                        !comment.disliked_by_user,
+                                    liked_by_user:
+                                        interaction === 'like' &&
+                                        !comment.liked_by_user
+                                })
+                            }),
+                            data[field].data
+                        )
+
+                        store.writeQuery({
+                            query,
+                            data
+                        })
+                    } catch (err) {
+                        console.error(err.message)
+                    }
                 }
             })
+
+            if (parentId) {
+                updateReplyInteraction({
+                    parentId,
+                    interaction,
+                    createInteraction
+                })
+            }
         } catch {
             message.error(t('classroom.failInteractionComment'))
         }
+    }
+
+    const updateReplyInteraction = ({
+        parentId,
+        interaction,
+        createInteraction
+    }) => {
+        const comment = find(comment => comment.id === parentId)(comments.data)
+        const answers = map(
+            answer => ({
+                ...answer,
+                ...(answer.id === createInteraction.id && {
+                    likes_count: createInteraction.likes_count,
+                    dislikes_count: createInteraction.dislikes_count,
+                    disliked_by_user:
+                        interaction === 'dislike' && !answer.disliked_by_user,
+                    liked_by_user:
+                        interaction === 'like' && !answer.liked_by_user
+                })
+            }),
+            comment.answers
+        )
+        comment.answers = answers
+        setComments(oldComments => ({
+            ...oldComments,
+            ...map(
+                curr => (curr.id === comment.id ? comment : curr),
+                comments.data
+            )
+        }))
     }
 
     const changeSubComments = ({ parentId, answers = [], answer }) => {
@@ -161,6 +253,25 @@ const SANCommentList = ({ resourceId }) => {
         }
     }
 
+    const handleFetchMore = fetchMore => () =>
+        fetchMore({
+            variables: {
+                skip: comments.data.length
+            },
+            updateQuery: (prev, { fetchMoreResult }) => {
+                if (!fetchMoreResult) return prev
+                return Object.assign({}, prev, {
+                    comments: {
+                        ...prev.comments,
+                        data: [
+                            ...prev.comments.data,
+                            ...fetchMoreResult.comments.data
+                        ]
+                    }
+                })
+            }
+        })
+
     const handleCompleted = ({ comments }) => setComments(comments)
 
     return (
@@ -171,11 +282,11 @@ const SANCommentList = ({ resourceId }) => {
             variables={{
                 resourceId,
                 limit: 5,
-                skip
+                skip: 0
             }}
         >
-            {({ loading, error, fetchMore }) => {
-                if (loading)
+            {({ loading, error, fetchMore, data }) => {
+                if (loading && !data.comments)
                     return (
                         <ESSpin
                             dark
@@ -187,11 +298,11 @@ const SANCommentList = ({ resourceId }) => {
 
                 return (
                     <ESCommentList
+                        loading={loading}
                         comments={comments}
                         onExclude={handleRemoveComment}
                         onLike={handleInteraction('like')}
                         onDislike={handleInteraction('dislike')}
-                        onOrderBy={order => console.log('onOrderBy', order)}
                         onComment={handleSubComment}
                         loadRepliesProps={{
                             onClick: handleLoadReplies
@@ -200,29 +311,7 @@ const SANCommentList = ({ resourceId }) => {
                             onClick: handleHideReplies
                         }}
                         loadMoreProps={{
-                            onClick: () => {
-                                fetchMore({
-                                    variables: {
-                                        skip: comments.data.length
-                                    },
-                                    updateQuery: (
-                                        prev,
-                                        { fetchMoreResult }
-                                    ) => {
-                                        if (!fetchMoreResult) return prev
-                                        return Object.assign({}, prev, {
-                                            comments: {
-                                                ...prev.comments,
-                                                data: [
-                                                    ...prev.comments.data,
-                                                    ...fetchMoreResult.comments
-                                                        .data
-                                                ]
-                                            }
-                                        })
-                                    }
-                                })
-                            }
+                            onClick: handleFetchMore(fetchMore)
                         }}
                         hasMore={comments.count > comments.data.length}
                     />

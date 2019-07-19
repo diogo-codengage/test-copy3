@@ -12,7 +12,7 @@ export const GET_REPLIES_COMMENTS = gql`
             parentId: $parentId
             limit: $limit
             skip: $skip
-        ) {
+        ) @connection(key: "replies-comments") {
             count
             data {
                 id
