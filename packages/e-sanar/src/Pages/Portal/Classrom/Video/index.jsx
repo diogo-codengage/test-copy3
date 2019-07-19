@@ -27,17 +27,17 @@ import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
 import SANDiscussion from './Discussion'
 
-// const ButtonTab = ({ active, ...props }) => (
-//     <ESButton
-//         size='small'
-//         uppercase
-//         bold
-//         color={!active ? 'white' : undefined}
-//         variant={active ? 'solid' : 'outlined'}
-//         className={classNames({ active: active })}
-//         {...props}
-//     />
-// )
+const ButtonTab = ({ active, ...props }) => (
+    <ESButton
+        size='small'
+        uppercase
+        bold
+        color={!active ? 'white' : undefined}
+        variant={active ? 'solid' : 'outlined'}
+        className={classNames({ active: active })}
+        {...props}
+    />
+)
 
 const SANClassroomVideo = () => {
     const { t } = useTranslation('esanar')
@@ -207,38 +207,18 @@ const SANClassroomVideo = () => {
                 />
                 {currentResource.quiz && (
                     <div className='classroom__video-container--buttons'>
-                        {/* <ButtonTab
+                        <ButtonTab
                             onClick={goTab('1')}
                             active={activeKey === '1'}
                         >
                             {t('classroom.askQuestions')}
-                        </ButtonTab> */
-                        /* <ButtonTab
+                        </ButtonTab>
+                        <ButtonTab
                             onClick={goTab('2')}
                             active={activeKey === '2'}
                         >
                             {t('classroom.viewDiscussions')}
-                        </ButtonTab> */}
-                        <ESButton
-                            size='small'
-                            uppercase
-                            bold
-                            variant='solid'
-                            className='questions'
-                            onClick={goTab('1')}
-                        >
-                            {t('classroom.askQuestions')}
-                        </ESButton>
-                        <ESButton
-                            size='small'
-                            uppercase
-                            bold
-                            variant='outlined'
-                            color='white'
-                            disabled
-                        >
-                            {t('classroom.viewDiscussions')}
-                        </ESButton>
+                        </ButtonTab>
                     </div>
                 )}
             </div>
