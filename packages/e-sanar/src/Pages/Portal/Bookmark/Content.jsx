@@ -17,6 +17,7 @@ const SANBookmarkContent = ({
     visualization,
     getColumnAmount,
     navigateToResource,
+    onRemove,
     setFilter,
     setPage,
     setVisualization
@@ -67,9 +68,7 @@ const SANBookmarkContent = ({
                                             resource_id
                                         )
                                     }
-                                    onRemove={() =>
-                                        console.log('remove clicked')
-                                    }
+                                    onRemove={() => onRemove(resource_id, resource_type)}
                                 />
                             ) : (
                                 <ESBookmarkListItem

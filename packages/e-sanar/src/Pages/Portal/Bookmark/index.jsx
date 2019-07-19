@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { withRouter } from 'react-router-dom'
 import SANBookmarksHeader from './Header'
 import { useApolloContext } from 'Hooks/apollo'
 import { GET_BOOKMARKS } from 'Apollo/Bookmark/queries/bookmarks'
 import { useAuthContext } from 'Hooks/auth'
 import SANBookmarkContent from './Content'
+import { CHANGE_BOOKMARK } from 'Apollo/Bookmark/mutations/bookmark'
 
 const SANBookmarkPage = ({ history }) => {
     const [filter, setFilter] = useState(null)
@@ -12,35 +14,35 @@ const SANBookmarkPage = ({ history }) => {
     const [bookmarks, setBookmarks] = useState([])
     const [total, setTotal] = useState(0)
     const [page, setPage] = useState(1)
-    const { getEnrollment } = useAuthContext()
+    const { me, getEnrollment } = useAuthContext()
     const client = useApolloContext()
 
     const { id: enrollmentId } = getEnrollment()
 
-    useEffect(() => {
-        const fetchBookmarks = async () => {
-            setLoading(true)
-            const {
-                data: {
-                    bookmarks: { data, count }
-                }
-            } = await client.query({
-                query: GET_BOOKMARKS,
-                fetchPolicy: 'network-only',
-                variables: {
-                    enrollmentId,
-                    resourceType: filter
-                }
-            })
-
-            if (data && data.length) {
-                setBookmarks(data)
-                setTotal(count)
+    const fetchBookmarks = async () => {
+        setLoading(true)
+        const {
+            data: {
+                bookmarks: { data, count }
             }
+        } = await client.query({
+            query: GET_BOOKMARKS,
+            fetchPolicy: 'network-only',
+            variables: {
+                enrollmentId,
+                resourceType: filter
+            }
+        })
 
-            setLoading(false)
+        if (data && data.length) {
+            setBookmarks(data)
+            setTotal(count)
         }
 
+        setLoading(false)
+    }
+
+    useEffect(() => {
         fetchBookmarks()
     }, [filter, page])
 
@@ -74,8 +76,25 @@ const SANBookmarkPage = ({ history }) => {
                 )}/${resourceId}`
             )
         } else {
-            console.log('Questão...')
-            //ver qual tela vai ser enviada daqui
+            history.push(`/aluno/banco-questoes/perguntas/${resourceId}`)
+        }
+    }
+
+    const onRemove = async (resourceId, resourceType) => {
+        try {
+            setLoading(true)
+            await client.mutate({
+                mutation: CHANGE_BOOKMARK,
+                variables: {
+                    resourceId: resourceId,
+                    resourceType: resourceType,
+                    userId: me.id
+                }
+            })
+
+            await fetchBookmarks()
+        } catch (err) {
+            console.error(err)
         }
     }
 
@@ -91,6 +110,7 @@ const SANBookmarkPage = ({ history }) => {
                 visualization={visualization}
                 getColumnAmount={getColumnAmount}
                 navigateToResource={navigateToResource}
+                onRemove={onRemove}
                 setFilter={setFilter}
                 setPage={setPage}
                 setVisualization={setVisualization}
@@ -99,4 +119,5 @@ const SANBookmarkPage = ({ history }) => {
     )
 }
 
+// export default withRouter(SANBookmarkPage)
 export default SANBookmarkPage

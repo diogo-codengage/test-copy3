@@ -8,6 +8,7 @@ import SANQuestionsFilter from './Filter'
 import SANQuestionsHistoric from './Historic'
 import SANQuestionPage from './Question'
 import SANPracticeCompletedPage from './PracticeCompleted'
+import SANBookmarkedQuestion from './Bookmarked'
 
 const SANQuestions = ({ match: { url } }) => {
     return (
@@ -28,7 +29,12 @@ const SANQuestions = ({ match: { url } }) => {
                     />
                     <Route
                         path={`${url}/perguntas`}
+                        exact={true}
                         component={SANQuestionPage}
+                    />
+                    <Route
+                        path={`${url}/perguntas/:id?`}
+                        component={SANBookmarkedQuestion}
                     />
                     <Route
                         path={[`${url}/`, `${url}`]}

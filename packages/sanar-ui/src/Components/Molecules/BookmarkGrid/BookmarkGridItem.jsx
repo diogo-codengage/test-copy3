@@ -26,9 +26,9 @@ const ESBookmarkGridItem = ({
     onPress
 }) => {
     return (
-        <div className='es-favorite-grid__item' onClick={onPress}>
+        <div className='es-favorite-grid__item'>
             {resourceType && resourceType !== 'Question' && (
-                <ESTypography variant='body1' strong>
+                <ESTypography variant='body1' strong onClick={onPress}>
                     {title}
                 </ESTypography>
             )}
@@ -40,6 +40,7 @@ const ESBookmarkGridItem = ({
                     ellipsis={{ rows: 10, expandable: false }}
                     variant='subtitle2'
                     className='es-favorite-grid__item--preview'
+                    onClick={onPress}
                 >
                     {title}
                 </ESTypography>
