@@ -41,7 +41,7 @@ const SANCourseProfessors = () => {
     )
 
     return (
-        <div className='professors'>
+        // <div className='professors'>
             <SANPortalPagesContainer>
                 <SessionTitle
                     title={t('courseDetails.tabContent.professors.title')}
@@ -67,7 +67,7 @@ const SANCourseProfessors = () => {
                     </ESButton>
                 )}
             </SANPortalPagesContainer>
-        </div>
+        // </div>
     )
 }
 
