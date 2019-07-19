@@ -7,7 +7,7 @@ import SANProfessors from './Professors'
 const SANCourseTabGeneral = () => (
     <div className='san-tab-course-general'>
         <SANPerformance />
-        <SANInteractions />
+        {/* <SANInteractions /> */}
         <SANProfessors />
     </div>
 )
