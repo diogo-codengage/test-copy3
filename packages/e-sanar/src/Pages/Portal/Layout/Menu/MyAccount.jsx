@@ -58,11 +58,9 @@ const SANMyAccount = ({ handleBack, history }) => {
     const navIntoMyAccount = ({ key }) => {
         switch (Number(key)) {
             case 1:
-                history.push('/aluno/minha-conta/')
                 menuOpenOrClose()
                 break
             case 2:
-                history.push('/aluno/central-ajuda/')
                 menuOpenOrClose()
                 break
             default:
@@ -114,7 +112,7 @@ const SANMyAccount = ({ handleBack, history }) => {
             >
                 {t(`${intlPath}management`)}
             </ESTypography>
-            <ESNavigationList onClick={navIntoMyAccount}>
+            <ESNavigationList className='mb-md' onClick={navIntoMyAccount}>
                 {/*FIXME: <ESNavigationListItem
                     key='0'
                     title={t(`${intlPath}myData`)}
@@ -123,6 +121,7 @@ const SANMyAccount = ({ handleBack, history }) => {
                 <ESNavigationListItem
                     key='1'
                     title={t(`${intlPath}changePassword`)}
+                    to='/aluno/minha-conta/alterar-senha'
                     icon={<ESEvaIcon name='lock-outline' color='default' />}
                 />
             </ESNavigationList>
@@ -137,6 +136,7 @@ const SANMyAccount = ({ handleBack, history }) => {
                     key='2'
                     title={t(`${intlPath}helpCenter`)}
                     icon={<ESEvaIcon name='lock-outline' color='default' />}
+                    to='/aluno/central-ajuda'
                 />
             </ESNavigationList>
             {/*FIXME: <div className='pl-md pr-md'>
