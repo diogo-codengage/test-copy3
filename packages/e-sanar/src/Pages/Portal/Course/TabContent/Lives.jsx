@@ -20,7 +20,7 @@ const SANLives = () => {
 
     const live = lives[0]
 
-    const date = live && format(live.release_date, 'DD/MM/YYYY')
+    const date = live && format(live.start_at, 'DD/MM/YYYY')
 
     const link =
         live && `https://www.youtube.com/embed/${live.link.split('=')[1]}`
