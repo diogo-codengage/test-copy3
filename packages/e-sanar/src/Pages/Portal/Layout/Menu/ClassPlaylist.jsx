@@ -56,11 +56,12 @@ const CommonProgress = () => {
     )
 }
 
-export const SANClassPlaylistMenuHeader = () => {
+export const SANClassPlaylistMenuHeader = withRouter(({ history }) => {
     const { menuOpenOrClose, setMenuTab } = useLayoutContext()
     const { t } = useTranslation('esanar')
 
     const exitClassroom = () => {
+        history.push('/aluno')
         setMenuTab(0)
     }
 
@@ -92,7 +93,7 @@ export const SANClassPlaylistMenuHeader = () => {
             <ESDivider className='mt-no mb-sm' color='grey' />
         </>
     )
-}
+})
 
 const SANClassPlaylist = ({ history }) => {
     const { t } = useTranslation('esanar')
