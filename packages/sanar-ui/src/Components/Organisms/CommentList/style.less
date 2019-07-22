@@ -3,6 +3,14 @@
     flex-direction: column;
     align-items: center;
 
+    & .secondary {
+        color: @secondary-color;
+        &:hover {
+            color: fade(@secondary-color, 70);
+            background-color: transparent !important;
+        }
+    }
+
     &__header {
         display: flex;
         align-items: center;
@@ -35,6 +43,10 @@
         & .es-button {
             margin-right: @margin-xs;
             color: @white-3;
+
+            &.active {
+                color: @secondary-color;
+            }
         }
     }
 

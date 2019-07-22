@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import classNames from 'classnames'
 import { message } from 'antd'
@@ -21,11 +21,11 @@ import { GET_RATING } from 'Apollo/Classroom/queries/rating'
 import { CREATE_RATING } from 'Apollo/Classroom/mutations/rate'
 
 import { usePortalContext } from 'Pages/Portal/Context'
+import { useClassroomContext } from '../Context'
 
 import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
 import SANDiscussion from './Discussion'
-import { useClassroomContext } from '../Context'
 
 const ButtonTab = ({ active, ...props }) => (
     <ESButton
@@ -207,38 +207,18 @@ const SANClassroomVideo = () => {
                 />
                 {currentResource.quiz && (
                     <div className='classroom__video-container--buttons'>
-                        {/* <ButtonTab
+                        <ButtonTab
                             onClick={goTab('1')}
                             active={activeKey === '1'}
                         >
                             {t('classroom.askQuestions')}
-                        </ButtonTab> */
-                        /* <ButtonTab
+                        </ButtonTab>
+                        <ButtonTab
                             onClick={goTab('2')}
                             active={activeKey === '2'}
                         >
                             {t('classroom.viewDiscussions')}
-                        </ButtonTab> */}
-                        <ESButton
-                            size='small'
-                            uppercase
-                            bold
-                            variant='solid'
-                            className='questions'
-                            onClick={goTab('1')}
-                        >
-                            {t('classroom.askQuestions')}
-                        </ESButton>
-                        <ESButton
-                            size='small'
-                            uppercase
-                            bold
-                            variant='outlined'
-                            color='white'
-                            disabled
-                        >
-                            {t('classroom.viewDiscussions')}
-                        </ESButton>
+                        </ButtonTab>
                     </div>
                 )}
             </div>
@@ -274,15 +254,10 @@ const SANClassroomVideo = () => {
                         <SANQuiz
                             quiz={currentResource.quiz}
                             parentVideoId={currentResource.video.id}
-                            scrollToOffsetElementPosition
                         />
                     </ESTabPane>
-                    <ESTabPane
-                        tab={t('classroom.discussions')}
-                        key='2'
-                        disabled
-                    >
-                        {/* <SANDiscussion /> */}
+                    <ESTabPane tab={t('classroom.discussions')} key='2'>
+                        <SANDiscussion resourceId={currentResource.video.id} />
                     </ESTabPane>
                 </ESTabs>
             ) : (
