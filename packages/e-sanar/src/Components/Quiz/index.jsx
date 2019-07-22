@@ -58,7 +58,7 @@ const SANQuiz = ({
         client.mutate({
             mutation: CREATE_PROGRESS,
             variables: {
-                percentage,
+                percentage: Math.round(percentage),
                 enrollmentId,
                 resourceId,
                 resourceType: 'Quiz',

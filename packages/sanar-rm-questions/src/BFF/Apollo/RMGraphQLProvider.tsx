@@ -2,22 +2,20 @@ import React from 'react'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from 'react-apollo'
 import { isDevEnvironment, isLocalhost, isProdEnvironment } from '../../Util/environment'
-// import { getUserToken } from '../../Util/getUserToken'
+import { getUserToken } from '../../Util/getUserToken'
 
 const getGraphqlUri = () => {
-    const local = 'https://bff.sanarresidenciamedica.com.br/graphql';
-    // const dev = 'https://bff.sanarresidenciamedica.com.br/dev/graphql';
-    //const prod = 'https://bff.sanarresidenciamedica.com.br/prod/graphql';
+    const prod = 'https://bff.sanarresidenciamedica.com.br/graphql'
 
     switch(true) {
         case isLocalhost():
-            return local;
+            return prod // TODO: fix this, change to local
         case isDevEnvironment():
-            return local; // TODO: fix this, change to dev
+            return prod // TODO: fix this, change to dev
         case isProdEnvironment():
-            return local;
+            return prod
         default:
-            return local;
+            return prod
     }
 }
 
@@ -27,7 +25,7 @@ export const apolloClient = new ApolloClient({
     request: async operation => {
         operation.setContext({
             headers: {
-                Authorization: 'uav9AjTyU5lPWWclq5ZemZ2P7LnztNlu1FIl5RcFU5sextLu42hb5PEEHZ2thLa1'
+                Authorization: await getUserToken()
             }
         })
     }
