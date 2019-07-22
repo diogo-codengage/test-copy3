@@ -25,6 +25,7 @@ import { useClassroomContext } from '../Context'
 
 import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
+import { useClassroomContext } from '../Context'
 import SANDiscussion from './Discussion'
 
 const ButtonTab = ({ active, ...props }) => (

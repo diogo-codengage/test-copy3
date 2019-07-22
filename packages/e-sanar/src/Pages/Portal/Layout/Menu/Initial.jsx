@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { withRouter, NavLink } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -77,6 +77,7 @@ const SANInitial = ({ setTab, history, match }) => {
             </div>
             <ESNavigationList onClick={renderNextContent}>
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__home'
                     key={0}
                     title={t(`${intlPath}init`)}
                     icon={<ESEvaIcon name='home-outline' color='default' />}
@@ -110,6 +111,7 @@ const SANInitial = ({ setTab, history, match }) => {
                     }
                 /> */}
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__questions'
                     key={5}
                     title={t(`${intlPath}questions`)}
                     icon={<ESEvaIcon name='edit-outline' color='default' />}
@@ -122,6 +124,7 @@ const SANInitial = ({ setTab, history, match }) => {
                     icon={<ESEvaIcon name='swap-outline' color='default' />}
                 /> */}
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__my-account'
                     key={7}
                     title={t(`${intlPath}myAccount`)}
                     icon={<ESEvaIcon name='person-outline' color='default' />}
