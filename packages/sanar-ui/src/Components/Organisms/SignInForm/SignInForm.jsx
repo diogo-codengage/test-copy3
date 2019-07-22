@@ -44,7 +44,7 @@ const ESSignInForm = ({
             signInByEmail(email, password)
                 .then(response => {
                     setLoading(false)
-                    actProp()
+                    actProp(response)
                 })
                 .catch(error => {
                     setLoading(false)
