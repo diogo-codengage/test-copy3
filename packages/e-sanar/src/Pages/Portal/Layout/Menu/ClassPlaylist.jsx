@@ -232,6 +232,7 @@ const SANClassPlaylist = ({ history }) => {
                             items={modules.data}
                             loading={loading}
                             progress={progressTest(currentModule)}
+                            data-testid='san-menu-navigation__class-playlist__modules-dropdown'
                         />
                     </div>
                     {renderPlaylist()}

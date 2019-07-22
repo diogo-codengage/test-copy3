@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import classNames from 'classnames'
 import { message } from 'antd'
@@ -24,7 +24,6 @@ import { usePortalContext } from 'Pages/Portal/Context'
 
 import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
-import SANDiscussion from './Discussion'
 import { useClassroomContext } from '../Context'
 
 const ButtonTab = ({ active, ...props }) => (
