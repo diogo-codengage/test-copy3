@@ -31,8 +31,14 @@ const SANSigninPage = ({ history }) => {
     const [isKeepMeLoggedChecked, setIsKeepMeLoggedChecked] = useState(
         storedValue
     )
-    const action = () => {
+    const action = response => {
         history.push('/aluno')
+        if (window.Conpass) {
+            window.Conpass.init({
+                name: response.attributes.name,
+                email: response.attributes.email
+            })
+        }
     }
 
     const storeKeepMeLoggedIn = () => {
