@@ -21,7 +21,6 @@ import { GET_RATING } from 'Apollo/Classroom/queries/rating'
 import { CREATE_RATING } from 'Apollo/Classroom/mutations/rate'
 
 import { usePortalContext } from 'Pages/Portal/Context'
-import { useClassroomContext } from '../Context'
 
 import SANQuiz from 'Components/Quiz'
 import renderTabBar from './renderTabBar'
