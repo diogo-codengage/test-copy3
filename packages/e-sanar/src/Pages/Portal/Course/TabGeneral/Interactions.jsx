@@ -48,7 +48,11 @@ const SANInteractions = () => {
                     : bookmarkAvatar(item.resource_type)
             }
             title={item.resource_title}
-            description={`Módulo 2, aula 5`}
+            description={
+                item.resource_index && item.level_index
+                    ? `Módulo ${item.level_index}, aula ${item.resource_index}`
+                    : ''
+            }
         />
     )
 
@@ -85,7 +89,7 @@ const SANInteractions = () => {
 
                     return (
                         <ESCard
-                            className='mb-lg'
+                            className='mb-md'
                             actions={
                                 data.bookmarks &&
                                 data.bookmarks.count > 0 && [

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { withRouter } from 'react-router-dom'
+import { withRouter, NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -10,7 +10,7 @@ import {
 } from 'sanar-ui/dist/Components/Organisms/MainMenu'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 
-import { useAuthContext } from 'Hooks/auth'
+import { useAuthContext } from 'assets/Hooks/auth'
 import { usePortalContext } from 'Pages/Portal/Context'
 import { getClassRoute } from 'Utils/getClassRoute'
 import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
@@ -18,7 +18,7 @@ import { useLayoutContext } from '../../Layout/Context'
 
 const intlPath = 'mainMenu.initial.'
 
-const SANInitial = ({ setTab, history }) => {
+const SANInitial = ({ setTab, history, match }) => {
     const { lastAccessed, error } = usePortalContext()
     const { getEnrollment } = useAuthContext()
     const { menuOpenOrClose } = useLayoutContext()
@@ -81,6 +81,7 @@ const SANInitial = ({ setTab, history }) => {
                     title={t(`${intlPath}init`)}
                     icon={<ESEvaIcon name='home-outline' color='default' />}
                     onClick={() => menuOpenOrClose()}
+                    to='/aluno/curso'
                 />
                 {/*FIXME: <ESNavigationListItem
                     key={1}
@@ -114,6 +115,7 @@ const SANInitial = ({ setTab, history }) => {
                     title={t(`${intlPath}questions`)}
                     icon={<ESEvaIcon name='edit-outline' color='default' />}
                     onClick={() => menuOpenOrClose()}
+                    to='/aluno/banco-questoes'
                 />
                 {/*FIXME: <ESNavigationListItem
                     key={6}
