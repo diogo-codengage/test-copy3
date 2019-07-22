@@ -158,6 +158,7 @@ export default {
             'Continue salvando mais itens para a sua coleção de conteúdos!',
         recentlySavedNoItems: 'Comece a salvar seus conteúdos favoritos!',
         recentlySavedNoItemsAction: 'ADICIONAR EXEMPLO',
+        recentlySavedContentIndexes: 'Módulo {{module}}, aula {{class}}',
 
         seePreviousLives: 'Ver lives anteriores',
         livesTitle: 'Lives',
