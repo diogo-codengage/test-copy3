@@ -20,6 +20,7 @@ export const formatPlaylist = arr => {
         .map((level, index) => ({
             ...level,
             ...(noEmpty[index + 1] &&
+                noEmpty[index + 1].index === level.index &&
                 noEmpty[index + 1]['resource_type'] === 'Quiz' && {
                     quiz: noEmpty[index + 1].quiz
                 })
@@ -28,6 +29,7 @@ export const formatPlaylist = arr => {
             if (
                 level['resource_type'] === 'Quiz' &&
                 noEmpty[index - 1] &&
+                noEmpty[index - 1].index === level.index &&
                 noEmpty[index - 1]['resource_type'] === 'Video' &&
                 index < noEmpty.length
             ) {
