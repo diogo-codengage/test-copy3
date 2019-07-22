@@ -1,15 +1,20 @@
-import React, { useEffect, Children, useState } from 'react'
+import React, { useEffect } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import ESButton from '../../Atoms/Button'
 
 import { Form } from 'antd'
-import i18n from '../../../Config/i18n'
 
 import { withFormProvider, useFormContext } from './context'
 
-const ESForm = ({ className, form, customValidator, ...props }) => {
+const ESForm = ({
+    className,
+    form,
+    customValidator,
+    disableWhenInvalid,
+    ...props
+}) => {
     const classes = classNames('es-form', className)
     const { setForm } = useFormContext()
 
@@ -29,7 +34,9 @@ const ESForm = ({ className, form, customValidator, ...props }) => {
     }
 
     let kids = React.Children.map(props.children, Item => {
-        return Item.type === ESButton && Item.props.htmlType === 'submit' ? (
+        return Item.type === ESButton &&
+            Item.props.htmlType === 'submit' &&
+            disableWhenInvalid ? (
             <Item.type {...Item.props} disabled={invalidForm()} />
         ) : (
             Item

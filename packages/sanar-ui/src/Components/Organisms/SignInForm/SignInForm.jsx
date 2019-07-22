@@ -39,18 +39,20 @@ const ESSignInForm = ({
     const signIn = e => {
         e.preventDefault()
         setLoading(true)
-        form.validateFields().then(() => {
-            const { email, password } = form.getFieldsValue()
-            signInByEmail(email, password)
-                .then(response => {
-                    setLoading(false)
-                    actProp(response)
-                })
-                .catch(error => {
-                    setLoading(false)
-                    message.error(error.message)
-                })
-        })
+        form.validateFields()
+            .then(() => {
+                const { email, password } = form.getFieldsValue()
+                signInByEmail(email, password)
+                    .then(response => {
+                        setLoading(false)
+                        actProp(response)
+                    })
+                    .catch(error => {
+                        setLoading(false)
+                        message.error(error.message)
+                    })
+            })
+            .catch(() => setLoading(false))
     }
 
     const signInFacebook = () => {
@@ -83,17 +85,10 @@ const ESSignInForm = ({
             })
     }
 
-    const validator = () =>
-        !!(!form.isFieldTouched('email') || !form.isFieldTouched('password'))
-
     return (
         <div className={classes}>
             <Spin indicator={antIcon} spinning={loading}>
-                <ESForm
-                    form={form}
-                    onSubmit={signIn}
-                    customValidator={!!validator()}
-                >
+                <ESForm form={form} onSubmit={signIn}>
                     {/* <ESRow className='es-sign-in-form--social' gutter={16}>
                         <ESCol xs={24} sm={12}>
                             <ESFacebookSignIn
