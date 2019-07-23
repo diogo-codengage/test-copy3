@@ -5,13 +5,19 @@
     }
 
     &__badge {
-        background-color: @gold-1;
-        color: @gold-4;
         border-radius: @border-radius-base;
         margin-left: @margin-sm;
         padding: 1px 4px;
         font-weight: bold;
         font-size: @font-size-xs;
+        &--monitor {
+            background-color: @gold-1;
+            color: @gold-4;
+        }
+        &--you {
+            background-color: @grey-solid-5;
+            color: @grey-solid-9;
+        }
     }
 
     & .ant-comment {

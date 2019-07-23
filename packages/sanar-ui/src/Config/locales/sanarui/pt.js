@@ -5,7 +5,8 @@ export default {
         user: 'Usuário',
         empty: 'Não há dados',
         monitor: 'Monitor',
-        sendFeedback: 'Enviar feedback'
+        sendFeedback: 'Enviar feedback',
+        you: 'Você'
     },
     mainMenu: {
         leftOff: 'Continuar onde parei',
