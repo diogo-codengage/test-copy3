@@ -190,5 +190,9 @@ export default {
         checkbox:
             'Permitir o contato da Sanar para tirar dúvidas sobre  o feedback.',
         send: 'Enviar'
+    },
+    typography: {
+        seeMore: 'Ver mais',
+        seeLess: 'Ver menos'
     }
 }
