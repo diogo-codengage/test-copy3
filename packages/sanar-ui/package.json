@@ -38,14 +38,15 @@
         "jest-image-snapshot": "^2.8.1",
         "jest-puppeteer": "^4.1.1",
         "less-plugin-npm-import": "^2.1.0",
+        "react-custom-scrollbars": "^4.2.1",
         "react-test-renderer": "^16.8.6",
-        "react-testing-library": "^6.1.2",
-        "react-custom-scrollbars": "^4.2.1"
+        "react-testing-library": "^6.1.2"
     },
     "dependencies": {
         "ckeditor4-react": "^0.1.1",
         "pdfobject": "^2.1.1",
         "react-eva-icons": "^0.0.7",
-        "react-jw-player": "^1.19.0"
+        "react-jw-player": "^1.19.0",
+        "react-lines-ellipsis": "^0.14.1"
     }
 }
