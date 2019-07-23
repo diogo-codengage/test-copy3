@@ -174,10 +174,10 @@ export default {
         loadMore: 'Carregar mais',
         hideReplies: 'Ocultar respostas',
         answers: {
-            key: 'Resposta',
-            key_plural: 'Respostas',
-            keyWithCount: '{{count}} Resposta',
-            keyWithCount_plural: '{{count}} Respostas'
+            key: 'Comentário',
+            key_plural: 'Comentários',
+            keyWithCount: '{{count}} Comentário',
+            keyWithCount_plural: '{{count}} Comentários'
         },
         orderBy: 'Ordenar por',
         orderByRecents: 'Mais recentes',
