@@ -254,6 +254,7 @@ const SANClassroomVideo = () => {
                         <SANQuiz
                             quiz={currentResource.quiz}
                             parentVideoId={currentResource.video.id}
+                            scrollToOffsetElementPosition
                         />
                     </ESTabPane>
                     <ESTabPane tab={t('classroom.discussions')} key='2'>
