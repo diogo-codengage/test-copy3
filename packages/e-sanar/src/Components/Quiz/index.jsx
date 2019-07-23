@@ -31,7 +31,6 @@ const SANQuiz = ({
     mock,
     stopwatchRef,
     parentVideoId,
-    id,
     scrollToOffsetElementPosition
 }) => {
     const ref = useRef()
@@ -54,31 +53,33 @@ const SANQuiz = ({
 
     const { id: enrollmentId } = getEnrollment()
 
-    const handleProgress = percentage => {
-        client.mutate({
-            mutation: CREATE_PROGRESS,
-            variables: {
-                percentage: Math.round(percentage),
-                enrollmentId,
-                resourceId,
-                resourceType: 'Quiz',
-                parentVideoId
-            }
-        })
+    const handleProgress = async percentage => {
+        try {
+            await client.mutate({
+                mutation: CREATE_PROGRESS,
+                variables: {
+                    percentage: Math.round(percentage),
+                    enrollmentId,
+                    resourceId,
+                    resourceType: 'Quiz',
+                    parentVideoId
+                }
+            })
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     const handleBookmark = async () => {
         try {
-            const {
-                data: { createBookmarks }
-            } = await client.mutate({
+            setBookmark(old => !old)
+            client.mutate({
                 mutation: CREATE_BOOKMARK,
                 variables: {
                     resourceId: questions[index].id,
                     resourceType: 'Question'
                 }
             })
-            setBookmark(!!createBookmarks)
         } catch {
             message.error(t('classroom.failHandleBookmark'))
         }
@@ -158,8 +159,10 @@ const SANQuiz = ({
             alternative => alternative.correct
         )
 
+        const anchor = mock ? index - 1 : index
+
         const questionsMap = questions.map(question => {
-            if (question.id === questions[index].id) {
+            if (question.id === questions[anchor].id) {
                 return {
                     ...question,
                     status: correct.id === selected ? 'correct' : 'wrong'

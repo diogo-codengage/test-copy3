@@ -349,6 +349,7 @@ export default {
         viewDiscussions: 'Ver discussões',
         failHandleBookmark: 'Ocorreu um erro ao favoritar conteúdo.',
         failLoadClassroom: 'Ocorreu um erro ao carregar sala de aula.',
+        failRateClass: 'Ocorreu um erro ao avaliar a aula.',
         error: 'Ocorreu um erro ao carregar este vídeo.',
         document: {
             error: 'Ocorreu um erro ao carregar este documento.'
