@@ -72,16 +72,14 @@ const SANQuiz = ({
 
     const handleBookmark = async () => {
         try {
-            const {
-                data: { createBookmarks }
-            } = await client.mutate({
+            setBookmark(old => !old)
+            client.mutate({
                 mutation: CREATE_BOOKMARK,
                 variables: {
                     resourceId: questions[index].id,
                     resourceType: 'Question'
                 }
             })
-            setBookmark(!!createBookmarks)
         } catch {
             message.error(t('classroom.failHandleBookmark'))
         }

@@ -72,16 +72,20 @@ const SANClassroomVideo = () => {
 
     const handleVideoReady = () => seVideoReady(true)
 
-    const handleRate = value => {
-        setRate(value)
-        client.mutate({
-            mutation: CREATE_RATING,
-            variables: {
-                resourceId: currentResource.video.id,
-                resourceType: currentResource.resource_type,
-                rating: { value, type: 'numeric' }
-            }
-        })
+    const handleRate = async value => {
+        try {
+            setRate(value)
+            await client.mutate({
+                mutation: CREATE_RATING,
+                variables: {
+                    resourceId: currentResource.video.id,
+                    resourceType: currentResource.resource_type,
+                    rating: { value, type: 'numeric' }
+                }
+            })
+        } catch {
+            message.error(t('classroom.failRateClass'))
+        }
     }
 
     const onProgress = (percentage = 0) => {
