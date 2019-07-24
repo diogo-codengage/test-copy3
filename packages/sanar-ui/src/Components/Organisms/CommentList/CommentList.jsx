@@ -133,22 +133,41 @@ const ESCommentList = ({
                     </ESDropdown>
                 )}
             </div>
-            <div style={{ width: '100%' }}>
-                {comments.data.map(renderComment)}
-            </div>
-            {hasMore && (
-                <ESButton
-                    size='xsmall'
-                    variant='outlined'
-                    color='primary'
-                    uppercase
-                    bold
-                    className='mt-md secondary'
-                    loading={loading}
-                    {...loadMoreProps}
-                >
-                    {t('commentList.loadMore')}
-                </ESButton>
+            {comments.count > 0 ? (
+                <>
+                    <div style={{ width: '100%' }}>
+                        {comments.data.map(renderComment)}
+                    </div>
+                    {hasMore && (
+                        <ESButton
+                            size='xsmall'
+                            variant='outlined'
+                            color='primary'
+                            uppercase
+                            bold
+                            className='mt-md secondary'
+                            loading={loading}
+                            {...loadMoreProps}
+                        >
+                            {t('commentList.loadMore')}
+                        </ESButton>
+                    )}
+                </>
+            ) : (
+                <div className='es-comment-list__empty'>
+                    <ESTypography varinat='subtitle2'>
+                        {t('commentList.empty')}
+                    </ESTypography>
+                    <ESButton
+                        uppercase
+                        bold
+                        variant='text'
+                        size='xsmall'
+                        color='white'
+                    >
+                        {t('commentList.reply')}
+                    </ESButton>
+                </div>
             )}
         </div>
     )

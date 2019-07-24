@@ -182,7 +182,9 @@ export default {
         },
         orderBy: 'Ordenar por',
         orderByRecents: 'Mais recentes',
-        orderByRelevance: 'Relevância'
+        orderByRelevance: 'Relevância',
+        empty:
+            'Ainda não foi iniciada uma discussão nessa aula. Seja o primeiro a comentar.'
     },
     feedbackSimple: {
         giveFeedback: 'Dar feedback',
