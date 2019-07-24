@@ -5,7 +5,7 @@ import { isDevEnvironment, isLocalhost, isProdEnvironment } from '../../Util/env
 // import { getUserToken } from '../../Util/getUserToken'
 
 const getGraphqlUri = () => {
-    const local = 'https://bff.sanarresidenciamedica.com.br/graphql';
+    const local = 'http://nlb-residencia-qa-aa2d4c0241e3f160.elb.us-east-1.amazonaws.com/graphql';
     // const dev = 'https://bff.sanarresidenciamedica.com.br/dev/graphql';
     //const prod = 'https://bff.sanarresidenciamedica.com.br/prod/graphql';
 
@@ -27,7 +27,7 @@ export const apolloClient = new ApolloClient({
     request: async operation => {
         operation.setContext({
             headers: {
-                Authorization: 'uav9AjTyU5lPWWclq5ZemZ2P7LnztNlu1FIl5RcFU5sextLu42hb5PEEHZ2thLa1'
+                Authorization: 'BMXtYtzuP4o0bM5P6tXuADDZsP860pyAkjEGcrHmqzPW9vyPm449g8MYm5KO1GoT'
             }
         })
     }

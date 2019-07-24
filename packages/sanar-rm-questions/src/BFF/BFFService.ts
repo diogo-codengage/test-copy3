@@ -25,8 +25,6 @@ const getSpecialties = (): Promise<Speciality[]> => {
         .then((values: []) => values.sort(
             (o1: Speciality, o2: Speciality) => (o1.label.localeCompare(o2.label)))
         )
-    // .sort())
-    // .then( (values:[]) => values.filter(distinctFilter))
 }
 
 const skipQuestion = (questionId) => {
