@@ -33,7 +33,8 @@ const ESQuestion = ({
     propsNext,
     propsPrev,
     labelMonitor,
-    skipSeeAnswer
+    skipSeeAnswer,
+    isBookmarked
 }) => {
     const [striped, setStripe] = useState({})
     const [selected, setSelect] = useState()
@@ -212,7 +213,8 @@ const ESQuestion = ({
                         onlyStep,
                         isHistoric,
                         propsNext,
-                        propsPrev
+                        propsPrev,
+                        isBookmarked
                     }}
                 />
             </ESSpin>
@@ -231,6 +233,7 @@ ESQuestion.propTypes = {
     onlyStep: PropTypes.bool,
     full: PropTypes.bool,
     isHistoric: PropTypes.bool,
+    isBookmarked: PropTypes.bool,
     skipSeeAnswer: PropTypes.bool,
     labelMonitor: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     stats: PropTypes.arrayOf(

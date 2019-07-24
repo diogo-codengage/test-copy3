@@ -33,7 +33,7 @@ const reducer = (state, { payload, type }) => {
     }
 }
 
-const LayoutProvider = ({ children }) => {
+const LayoutProvider = ({ children, history }) => {
     const { t } = useTranslation('esanar')
     const [darkMode, setDarkMode] = useState(false)
     const [menuIsOpen, setMenuIsOpen] = useState(false)

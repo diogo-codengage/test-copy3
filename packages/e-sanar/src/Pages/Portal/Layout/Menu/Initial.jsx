@@ -10,7 +10,7 @@ import {
 } from 'sanar-ui/dist/Components/Organisms/MainMenu'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 
-import { useAuthContext } from 'assets/Hooks/auth'
+import { useAuthContext } from 'Hooks/auth'
 import { usePortalContext } from 'Pages/Portal/Context'
 import { getClassRoute } from 'Utils/getClassRoute'
 import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
