@@ -240,6 +240,7 @@ const SANCommentList = ({ resourceId }) => {
                 data: { repliesComment }
             } = await client.query({
                 query: GET_REPLIES_COMMENTS,
+                fetchPolicy: 'network-only',
                 variables: {
                     resourceId,
                     parentId,
