@@ -16,8 +16,61 @@ div.ant-typography,
 }
 
 .es-typography {
+    &--ellipsis-action {
+        font-weight: 600;
+        cursor: pointer;
+    }
+
     &--regular {
         font-weight: 400 !important;
+    }
+
+    &--disabled {
+        cursor: not-allowed;
+        color: @grey-6;
+    }
+
+    &--delete {
+        text-decoration: line-through;
+    }
+
+    &--ellipsis {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    &__heading {
+        font-weight: 600;
+        color: @grey-solid-10;
+
+        &--h1 {
+            font-size: 60px;
+        }
+
+        &--h2 {
+            font-size: 42px;
+        }
+
+        &--h3 {
+            font-size: 34px;
+        }
+
+        &--h4 {
+            font-size: 24px;
+        }
+
+        &--h5 {
+            font-size: 20px;
+        }
+
+        &--h6 {
+            font-size: 16px;
+        }
+    }
+
+    &--strong {
+        font-weight: 600;
     }
 
     &--transform {

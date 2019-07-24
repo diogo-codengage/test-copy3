@@ -15,8 +15,10 @@ export const Question = () => {
             questionsCtx.loadMoreQuestions(false);
         }
     }
+
     useEffect(() => {
         initialLoad();
+        // eslint-disable-next-line
     },[])
 
     const loadNextQuestion = () => {

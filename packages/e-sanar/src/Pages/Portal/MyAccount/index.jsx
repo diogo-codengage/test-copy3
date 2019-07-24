@@ -9,6 +9,7 @@ const SANMyAccountPage = ({ match: { url } }) => {
     const { setMenuTab } = useLayoutContext()
     useEffect(() => {
         setMenuTab(7)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

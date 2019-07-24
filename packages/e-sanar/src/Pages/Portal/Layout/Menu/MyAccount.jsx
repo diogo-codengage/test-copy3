@@ -119,6 +119,7 @@ const SANMyAccount = ({ handleBack, history }) => {
                     icon={<ESEvaIcon name='folder-outline' color='default' />}
                 /> */}
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__my-account__change-password'
                     key='1'
                     title={t(`${intlPath}changePassword`)}
                     to='/aluno/minha-conta/alterar-senha'
@@ -133,6 +134,7 @@ const SANMyAccount = ({ handleBack, history }) => {
             </ESTypography>
             <ESNavigationList onClick={navIntoMyAccount}>
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__my-account__help-center'
                     key='2'
                     title={t(`${intlPath}helpCenter`)}
                     icon={<ESEvaIcon name='lock-outline' color='default' />}
@@ -176,18 +178,21 @@ const SANMyAccount = ({ handleBack, history }) => {
             </ESTypography>
             <ESNavigationList onClick={handleOtherLinks}>
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__my-account__use-terms'
                     key={0}
                     title={t(`${intlPath}termsOfUse`)}
                     arrow={false}
                     onClick={() => setOpenModalTerms(true)}
                 />
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__my-account__privacy-and-policy'
                     key={1}
                     title={t(`${intlPath}privacyPolicy`)}
                     arrow={false}
                     onClick={() => setOpenModalTerms(true)}
                 />
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__my-account__leave-account'
                     key={2}
                     title={t(`${intlPath}leaveAccount`)}
                     arrow={false}

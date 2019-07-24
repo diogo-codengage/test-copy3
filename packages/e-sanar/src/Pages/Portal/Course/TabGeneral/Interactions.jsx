@@ -50,7 +50,10 @@ const SANInteractions = () => {
             title={item.resource_title}
             description={
                 item.resource_index && item.level_index
-                    ? `Módulo ${item.level_index}, aula ${item.resource_index}`
+                    ? t('courseDetails.recentlySavedContentIndexes', {
+                          module: item.level_index,
+                          class: item.resource_index
+                      })
                     : ''
             }
         />

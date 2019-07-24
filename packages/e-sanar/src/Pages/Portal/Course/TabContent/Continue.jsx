@@ -73,6 +73,7 @@ const SANCourseContinue = ({ history }) => {
                                 )}
                             />
                             <ESCardCourseModule
+                                data-testid='san-portal__tab-content__continue'
                                 className='san-tab-course-content__continue--card'
                                 {...leftProps}
                                 actionName={t(
@@ -87,6 +88,7 @@ const SANCourseContinue = ({ history }) => {
                                 )}
                             />
                             <ESCardCourseModule
+                                data-testid='san-portal__tab-content__next-discipline'
                                 className='san-tab-course-content__continue--card'
                                 moduleName={`${t(
                                     'courseDetails.tabContent.discipline.discipline.key'

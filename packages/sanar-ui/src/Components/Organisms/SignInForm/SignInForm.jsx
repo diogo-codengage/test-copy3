@@ -39,18 +39,20 @@ const ESSignInForm = ({
     const signIn = e => {
         e.preventDefault()
         setLoading(true)
-        form.validateFields().then(() => {
-            const { email, password } = form.getFieldsValue()
-            signInByEmail(email, password)
-                .then(response => {
-                    setLoading(false)
-                    actProp()
-                })
-                .catch(error => {
-                    setLoading(false)
-                    message.error(error.message)
-                })
-        })
+        form.validateFields()
+            .then(() => {
+                const { email, password } = form.getFieldsValue()
+                signInByEmail(email, password)
+                    .then(response => {
+                        setLoading(false)
+                        actProp(response)
+                    })
+                    .catch(error => {
+                        setLoading(false)
+                        message.error(error.message)
+                    })
+            })
+            .catch(() => setLoading(false))
     }
 
     const signInFacebook = () => {
@@ -83,17 +85,10 @@ const ESSignInForm = ({
             })
     }
 
-    const validator = () =>
-        !!(!form.isFieldTouched('email') || !form.isFieldTouched('password'))
-
     return (
         <div className={classes}>
             <Spin indicator={antIcon} spinning={loading}>
-                <ESForm
-                    form={form}
-                    onSubmit={signIn}
-                    customValidator={!!validator()}
-                >
+                <ESForm form={form} onSubmit={signIn}>
                     {/* <ESRow className='es-sign-in-form--social' gutter={16}>
                         <ESCol xs={24} sm={12}>
                             <ESFacebookSignIn
@@ -126,7 +121,11 @@ const ESSignInForm = ({
                         ]}
                         name='email'
                     >
-                        <ESInput size='large' placeholder={t('global.user')} />
+                        <ESInput
+                            data-testid='es-signin-form__form__email'
+                            size='large'
+                            placeholder={t('global.user')}
+                        />
                     </ESFormItem>
                     <ESFormItem
                         name='password'
@@ -142,6 +141,7 @@ const ESSignInForm = ({
                             size='large'
                             placeholder={t('global.password')}
                             component={ESInput.Password}
+                            data-testid='es-signin-form__form__password'
                         />
                     </ESFormItem>
                     <ESRow
@@ -154,6 +154,7 @@ const ESSignInForm = ({
                             <ESCheckbox
                                 checked={isKeepMeLoggedChecked}
                                 onClick={() => keepMeLogged()}
+                                data-testid='es-signin-form__form__keep-me-logged-in'
                             >
                                 {keepMeLoggedIn}
                             </ESCheckbox>
@@ -164,6 +165,7 @@ const ESSignInForm = ({
                                 variant='text'
                                 bold
                                 color='primary'
+                                data-testid='es-signin-form__form__forgot-password'
                             >
                                 {forgotPassword}
                             </ESButton>
@@ -176,6 +178,7 @@ const ESSignInForm = ({
                         variant='solid'
                         block
                         bold
+                        data-testid='es-signin-form__form__do-login'
                     >
                         {login}
                     </ESButton>
