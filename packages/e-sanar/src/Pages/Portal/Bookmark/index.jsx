@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { withRouter } from 'react-router-dom'
 import SANBookmarksHeader from './Header'
 import { useApolloContext } from 'Hooks/apollo'
 import { GET_BOOKMARKS } from 'Apollo/Bookmark/queries/bookmarks'

@@ -55,11 +55,11 @@ const ESQuestionFooter = ({
                 <ESButton
                     size='small'
                     color='primary'
-                    variant={onlyStep || answer ? 'solid' : 'outlined'}
+                    variant='outlined'
                     uppercase
                     bold
                     disabled={!selected || !question}
-                    onClick={answer ? handleNext : handleConfirm}
+                    onClick={handleConfirm}
                 >
                     {t('question.confirm')}
                 </ESButton>

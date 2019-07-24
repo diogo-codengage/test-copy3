@@ -5,7 +5,7 @@ import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import { useTranslation } from 'react-i18next'
 
-const SANBookmarkedQuestionHeader = () => {
+const SANBookmarkedQuestionHeader = ({ bookmarked, goBack, onRemove }) => {
     const { t } = useTranslation('esanar')
 
     return (
@@ -18,20 +18,31 @@ const SANBookmarkedQuestionHeader = () => {
                         size='small'
                         bold
                         uppercase
+                        onClick={goBack}
                     >
                         <ESEvaIcon name='arrow-back-outline' />
                         {t('questionBase.question.backBookmark')}
                     </ESButton>
                 }
                 extra={
-                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}
+                    >
                         <ESButton
                             variant='text'
                             color='primary'
                             size='small'
                             bold
+                            onClick={() => onRemove()}
                         >
-                            <ESEvaIcon name='heart-outline' />
+                            <ESEvaIcon
+                                name={bookmarked ? 'heart' : 'heart-outline'}
+                                key={bookmarked ? 'bookmarked' : 'unbookmarked'}
+                            />
                             {t('questionBase.question.bookmark')}
                         </ESButton>
                         <ESEvaIcon name='more-vertical-outline' />

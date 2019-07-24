@@ -1,8 +1,5 @@
 import React from 'react'
-
-import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-
 import ESInput from 'sanar-ui/dist/Components/Atoms/Input'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
