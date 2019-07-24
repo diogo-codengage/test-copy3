@@ -25,7 +25,8 @@ const ESCommentList = ({
     loadMoreProps,
     hasMore,
     className,
-    loading
+    loading,
+    avatar
 }) => {
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-comment-list', className)
@@ -56,6 +57,7 @@ const ESCommentList = ({
                     onLike={onLike}
                     onDislike={onDislike}
                     comment={comment}
+                    avatar={avatar}
                 />
                 {(comment.replies_count &&
                     (!comment.answers || !comment.answers.length)) ||
@@ -186,7 +188,8 @@ ESCommentList.propTypes = {
     hideRepliesProps: PropTypes.object,
     loadRepliesProps: PropTypes.object,
     hasMore: PropTypes.bool,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    avatar: PropTypes.string
 }
 ESCommentList.defaultProps = {}
 

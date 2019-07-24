@@ -10,6 +10,7 @@ import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 import ESSpin from 'sanar-ui/dist/Components/Atoms/Spin'
 
 import { useApolloContext } from 'Hooks/apollo'
+import { useAuthContext } from 'Hooks/auth'
 
 import { GET_COMMENTS } from 'Apollo/Classroom/queries/comments'
 import { CREATE_COMMENT } from 'Apollo/Classroom/mutations/comment'
@@ -20,6 +21,7 @@ import { GET_REPLIES_COMMENTS } from 'Apollo/Classroom/queries/replies-comments'
 const SANCommentList = ({ resourceId }) => {
     const client = useApolloContext()
     const { t } = useTranslation('esanar')
+    const { me } = useAuthContext()
     const [comments, setComments] = useState({ data: [], count: 0 })
 
     const handleRemoveComment = async commentId => {
@@ -299,6 +301,7 @@ const SANCommentList = ({ resourceId }) => {
 
                 return (
                     <ESCommentList
+                        avatar={me.profile_picture}
                         loading={loading}
                         comments={comments}
                         onExclude={handleRemoveComment}

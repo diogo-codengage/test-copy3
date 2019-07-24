@@ -19,7 +19,8 @@ const Comment = ({
     onReport,
     onComment,
     comment,
-    className
+    className,
+    avatar
 }) => {
     const { t } = useTranslation('sanarui')
     const textEditorRef = useRef()
@@ -121,11 +122,11 @@ const Comment = ({
             />
             {reply && (
                 <ESTextEditor
+                    avatar={avatar}
                     onSubmit={handleComment}
                     ref={textEditorRef}
                     dark
                     comment
-                    reply
                 />
             )}
         </>
