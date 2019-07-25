@@ -7,7 +7,13 @@ import ESTabs, { ESTabPane } from '../../Atoms/Tabs'
 import ESBrandHeader from '../../Atoms/BrandHeader'
 import useWindowSize from '../../../Hooks/useWindowSize'
 
-const ESModalTabs = ({ className, visible, onCancel, content }) => {
+const ESModalTabs = ({
+    className,
+    visible,
+    onCancel,
+    content,
+    defaultActiveKey
+}) => {
     const classes = classNames('es-modal-tabs', className)
     const [tabPosition, setTabPosition] = useState('top')
     const { width } = useWindowSize()
@@ -17,11 +23,13 @@ const ESModalTabs = ({ className, visible, onCancel, content }) => {
     }, [width])
 
     const renderItem = useCallback(
-        (item, index) => (
-            <ESTabPane tab={item.title} key={index}>
-                {item.content}
-            </ESTabPane>
-        ),
+        (item, index) => {
+            return (
+                <ESTabPane tab={item.title} key={index}>
+                    {item.content}
+                </ESTabPane>
+            )
+        },
         [content]
     )
 
@@ -36,7 +44,10 @@ const ESModalTabs = ({ className, visible, onCancel, content }) => {
         >
             <div className='es-modal-tabs__content'>
                 <ESBrandHeader size={width > 1023 ? 'large' : 'small'} />
-                <ESTabs tabPosition={tabPosition}>
+                <ESTabs
+                    tabPosition={tabPosition}
+                    defaultActiveKey={defaultActiveKey.toString()}
+                >
                     {content.map(renderItem)}
                 </ESTabs>
             </div>
@@ -49,6 +60,8 @@ ESModalTabs.propTypes = {
     visible: PropTypes.bool,
     content: PropTypes.any
 }
-ESModalTabs.defaultProps = {}
+ESModalTabs.defaultProps = {
+    defaultActiveKey: '0'
+}
 
 export default ESModalTabs
