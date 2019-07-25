@@ -85,15 +85,19 @@ const SANQuiz = ({
         }
     }
 
-    const handleConfirm = mutation => alternative => {
-        setSelect(alternative)
-        mutation({
-            variables: {
-                userId: me.id,
-                alternativeIds: [alternative],
-                questionId: questions[index].id
-            }
-        })
+    const handleConfirm = mutation => async alternative => {
+        try {
+            setSelect(alternative)
+            mutation({
+                variables: {
+                    userId: me.id,
+                    alternativeIds: [alternative],
+                    questionId: questions[index].id
+                }
+            })
+        } catch {
+            t('classroom.failReplyQuestion')
+        }
     }
 
     const jump = () => {
@@ -124,9 +128,6 @@ const SANQuiz = ({
             window.scrollTo(0, 0)
         }
 
-        if (index === questions.length - 1) return
-        setIndex(oldIndex => ++oldIndex)
-
         if (isCorrect) {
             setStats(oldStats => ({
                 ...oldStats,
@@ -138,6 +139,9 @@ const SANQuiz = ({
                 wrong: oldStats.wrong + 1
             }))
         }
+
+        if (index === questions.length - 1 && mock) return
+        setIndex(oldIndex => ++oldIndex)
     }
 
     const handlePrevious = () =>
