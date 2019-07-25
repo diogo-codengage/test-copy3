@@ -4,26 +4,24 @@ import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { LocaleProvider as ANTLocaleProvider } from 'antd'
 import pt_FR from 'antd/lib/locale-provider/pt_BR'
 
-import ESSplashLoader from 'sanar-ui/dist/Components/Atoms/SplashLoader'
-
-import image from 'assets/images/logo.svg'
-
 import './App.less'
-import SANAuth from 'Pages/Auth'
-import SANPortalRoutes from 'Pages/Portal'
-import PrivateRoute from 'Pages/Portal/Private/Private'
 
 import { esConfigureAuthStorage } from 'sanar-ui/dist/Util/Auth'
 import ESNotFoundError from 'Pages/Portal/Errors/NotFound'
 
-//TODO Start use lazy loading
+import SANSplashLoader from 'Components/SplashLoader'
+
+const SANAuth = React.lazy(() => import('Pages/Auth'))
+const SANPortalRoutes = React.lazy(() => import('Pages/Portal'))
+const PrivateRoute = React.lazy(() => import('Pages/Portal/Private/Private'))
+
 const SANApp = () => {
     useEffect(() => {
         esConfigureAuthStorage()
     })
 
     return (
-        <Suspense fallback={<ESSplashLoader image={image} />}>
+        <Suspense fallback={<SANSplashLoader />}>
             <ANTLocaleProvider locale={pt_FR}>
                 <Router>
                     <Switch>

@@ -1,8 +1,13 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import SANSendPasswordRecovery from './SendPasswordRecovery'
-import SANPasswordRecoverySent from './PasswordRecoverySent'
-import SANResetPassword from './ResetPassword'
+
+const SANSendPasswordRecovery = React.lazy(() =>
+    import('./SendPasswordRecovery')
+)
+const SANPasswordRecoverySent = React.lazy(() =>
+    import('./PasswordRecoverySent')
+)
+const SANResetPassword = React.lazy(() => import('./ResetPassword'))
 
 const SANPasswordRecovery = ({ match: { url } }) => {
     return (

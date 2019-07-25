@@ -158,6 +158,7 @@ export default {
             'Continue salvando mais itens para a sua coleção de conteúdos!',
         recentlySavedNoItems: 'Comece a salvar seus conteúdos favoritos!',
         recentlySavedNoItemsAction: 'ADICIONAR EXEMPLO',
+        recentlySavedContentIndexes: 'Módulo {{module}}, aula {{class}}',
 
         seePreviousLives: 'Ver lives anteriores',
         livesTitle: 'Lives',
@@ -363,6 +364,7 @@ export default {
         viewDiscussions: 'Ver discussões',
         failHandleBookmark: 'Ocorreu um erro ao favoritar conteúdo.',
         failLoadClassroom: 'Ocorreu um erro ao carregar sala de aula.',
+        failRateClass: 'Ocorreu um erro ao avaliar a aula.',
         error: 'Ocorreu um erro ao carregar este vídeo.',
         document: {
             error: 'Ocorreu um erro ao carregar este documento.'
@@ -376,7 +378,12 @@ export default {
             modulesError:
                 'Ocorreu um erro ao carregar as disciplinas deste curso.',
             goToBegin: 'Voltar para o início'
-        }
+        },
+        failRemoveComment: 'Ocorreu um erro ao excluir seu comentário.',
+        failCreateComment: 'Ocorreu um erro ao criar seu comentário.',
+        failLoadRepliesComment: 'Ocorreu um erro ao carregar sub comentários.',
+        failInteractionComment:
+            'Ocorreu um erro ao dar like/dislike no comentário.'
     },
     footer: {
         helpButton: 'Precisa de ajuda?',

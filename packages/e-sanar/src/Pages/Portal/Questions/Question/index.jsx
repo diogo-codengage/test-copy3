@@ -5,10 +5,11 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import { Modal } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-import SANQuestionsFilter from './Filter'
-import SANQuestionPage from './Question'
 import SANQuestionHeader from './Header'
 import { useQuestionsContext } from '../Context'
+
+const SANQuestionsFilter = React.lazy(() => import('./Filter'))
+const SANQuestionPage = React.lazy(() => import('./Question'))
 
 const SANQuestionDetailsPage = ({ match: { url }, history }) => {
     const { t } = useTranslation('esanar')

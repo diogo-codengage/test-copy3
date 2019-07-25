@@ -73,7 +73,7 @@ export const GET_ME = gql`
                         status
                         online
                         scheduled
-                        release_date
+                        start_at
                         professors {
                             id
                             name

@@ -35,20 +35,32 @@ const Comment = ({
 
     const handleComment = text => {
         onComment &&
-            onComment({ text, parentId: comment.parent_id || comment.id })
+            onComment({
+                text,
+                parentId: comment.parent_id || comment.id,
+                user: comment.user.name
+            })
         setReplay(false)
     }
 
+    const handleLike = () =>
+        onLike({ commentId: comment.id, parentId: comment.parent_id })
+
+    const handleDislike = () =>
+        onDislike({ commentId: comment.id, parentId: comment.parent_id })
+
     const actions = [
         <InteractionButton
-            onClick={onLike}
+            onClick={handleLike}
             type='like'
             count={comment.likes_count}
+            byUser={comment.liked_by_user}
         />,
         <InteractionButton
-            onClick={onDislike}
+            onClick={handleDislike}
             type='dislike'
             count={comment.dislikes_count}
+            byUser={comment.disliked_by_user}
         />,
         <ESButton
             size='xsmall'
@@ -60,27 +72,42 @@ const Comment = ({
         >
             {t('commentList.reply')}
         </ESButton>,
-        <ESDropdown
-            overlay={
-                <ESMenu onClick={handleMenuClick}>
-                    <ESItem key='exclude'>
-                        <ESTypography strong>
-                            {t('commentList.exclude')}
-                        </ESTypography>
-                    </ESItem>
-                    <ESItem key='report'>
-                        <ESTypography strong>
-                            {t('commentList.report')}
-                        </ESTypography>
-                    </ESItem>
-                </ESMenu>
-            }
-            trigger={['click']}
-        >
-            <ESButton circle size='xsmall' variant='text' color='white' bold>
-                <ESEvaIcon name='more-vertical-outline' />
-            </ESButton>
-        </ESDropdown>
+        <>
+            {onReport ||
+                (comment.commented_by_user && (
+                    <ESDropdown
+                        overlay={
+                            <ESMenu onClick={handleMenuClick}>
+                                {comment.commented_by_user && (
+                                    <ESItem key='exclude'>
+                                        <ESTypography strong>
+                                            {t('commentList.exclude')}
+                                        </ESTypography>
+                                    </ESItem>
+                                )}
+                                {onReport && (
+                                    <ESItem key='report'>
+                                        <ESTypography strong>
+                                            {t('commentList.report')}
+                                        </ESTypography>
+                                    </ESItem>
+                                )}
+                            </ESMenu>
+                        }
+                        trigger={['click']}
+                    >
+                        <ESButton
+                            circle
+                            size='xsmall'
+                            variant='text'
+                            color='white'
+                            bold
+                        >
+                            <ESEvaIcon name='more-vertical-outline' />
+                        </ESButton>
+                    </ESDropdown>
+                ))}
+        </>
     ]
 
     return (
@@ -89,6 +116,7 @@ const Comment = ({
                 dark
                 actions={actions}
                 {...comment}
+                monitor={comment.labels === 'expert'}
                 className={className}
             />
             {reply && (

@@ -41,6 +41,9 @@ const SANCourseModules = ({ history }) => {
     const renderDiscipline = item => (
         <ESListViewItem>
             <ESCardCourseModule
+                data-testid={`san-portal__tab-content__modules__module--${
+                    item.index
+                }`}
                 className='san-tab-course-content__continue--card'
                 moduleName={`${t(
                     'courseDetails.tabContent.discipline.discipline.key'

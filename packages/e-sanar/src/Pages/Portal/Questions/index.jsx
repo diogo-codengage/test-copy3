@@ -4,11 +4,11 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 
 import { SANQuestionsProvider } from './Context'
 
-import SANQuestionsFilter from './Filter'
-import SANQuestionsHistoric from './Historic'
-import SANQuestionPage from './Question'
-import SANPracticeCompletedPage from './PracticeCompleted'
-import SANBookmarkedQuestion from './Bookmarked'
+const SANQuestionsFilter = React.lazy(() => import('./Filter'))
+const SANQuestionsHistoric = React.lazy(() => import('./Historic'))
+const SANQuestionPage = React.lazy(() => import('./Question'))
+const SANPracticeCompletedPage = React.lazy(() => import('./PracticeCompleted'))
+const SANBookmarkedQuestion = React.lazy(() => import('./Bookmarked'))
 
 const SANQuestions = ({ match: { url } }) => {
     return (

@@ -1,12 +1,13 @@
 import React from 'react'
 
-import { withRouter, NavLink } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import {
     ESNavigationList,
     ESNavigationListItem,
-    ESLeftOff
+    ESLeftOff,
+    ESRanking
 } from 'sanar-ui/dist/Components/Organisms/MainMenu'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 
@@ -24,7 +25,7 @@ const SANInitial = ({ setTab, history, match }) => {
     const { menuOpenOrClose } = useLayoutContext()
     const { t } = useTranslation('esanar')
 
-    const { course } = getEnrollment()
+    const { course, ranking } = getEnrollment()
 
     const moduleReference = last =>
         `${t('global.subject')} ${last.module_order}, ${t('global.activity')} ${
@@ -48,10 +49,10 @@ const SANInitial = ({ setTab, history, match }) => {
         })
     }
 
-    // const rankingProps = {
-    //     ranking: ranking.position,
-    //     score: ranking.points
-    // }
+    const rankingProps = {
+        ranking: ranking.position,
+        score: ranking.points
+    }
 
     const renderNextContent = e => {
         setTab(Number(e.key))
@@ -59,9 +60,9 @@ const SANInitial = ({ setTab, history, match }) => {
 
     return (
         <>
-            {/* <div className='pl-md pr-md mb-md'>
+            <div className='pl-md pr-md mb-md'>
                 <ESRanking {...rankingProps} />
-            </div> */}
+            </div>
             <div className='pl-md pr-md'>
                 {!error ? (
                     <ESLeftOff {...leftProps} />
@@ -77,6 +78,7 @@ const SANInitial = ({ setTab, history, match }) => {
             </div>
             <ESNavigationList onClick={renderNextContent}>
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__home'
                     key={0}
                     title={t(`${intlPath}init`)}
                     icon={<ESEvaIcon name='home-outline' color='default' />}
@@ -111,6 +113,14 @@ const SANInitial = ({ setTab, history, match }) => {
                     onClick={() => menuOpenOrClose()}
                 />
                 <ESNavigationListItem
+                    key={4}
+                    title={t(`${intlPath}performace`)}
+                    icon={
+                        <ESEvaIcon name='pie-chart-outline' color='default' />
+                    }
+                />
+                <ESNavigationListItem
+                    data-testid='san-menu-navigation__questions'
                     key={5}
                     title={t(`${intlPath}questions`)}
                     icon={<ESEvaIcon name='edit-outline' color='default' />}
@@ -123,6 +133,7 @@ const SANInitial = ({ setTab, history, match }) => {
                     icon={<ESEvaIcon name='swap-outline' color='default' />}
                 /> */}
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__my-account'
                     key={7}
                     title={t(`${intlPath}myAccount`)}
                     icon={<ESEvaIcon name='person-outline' color='default' />}
