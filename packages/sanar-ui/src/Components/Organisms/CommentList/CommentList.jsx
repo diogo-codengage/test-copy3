@@ -9,6 +9,7 @@ import ESButton from '../../Atoms/Button'
 import ESDropdown from '../../Atoms/Dropdown'
 import ESMenu, { ESItem } from '../../Atoms/Menu'
 import ESTypography from '../../Atoms/Typography'
+import ESEmpty from '../../Atoms/Empty'
 
 import Comment from './Comment'
 
@@ -159,18 +160,17 @@ const ESCommentList = ({
                 </>
             ) : (
                 <div className='es-comment-list__empty'>
-                    <ESTypography varinat='subtitle2'>
-                        {t('commentList.empty')}
-                    </ESTypography>
-                    <ESButton
-                        uppercase
-                        bold
-                        variant='text'
-                        size='xsmall'
-                        color='white'
-                    >
-                        {t('commentList.reply')}
-                    </ESButton>
+                    <ESEmpty
+                        description={
+                            <ESTypography
+                                varinat='subtitle2'
+                                className='text-white-7'
+                            >
+                                {t('commentList.empty')}
+                            </ESTypography>
+                        }
+                        dark
+                    />
                 </div>
             )}
         </div>

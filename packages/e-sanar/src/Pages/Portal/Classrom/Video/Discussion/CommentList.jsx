@@ -77,8 +77,9 @@ const SANCommentList = ({ resourceId }) => {
             } = await client.mutate({
                 mutation: CREATE_COMMENT,
                 variables: {
-                    text: `${user &&
-                        `<span style="float: left; color: #ffebc2">@${user}&nbsp;</span>`} ${text}`,
+                    text: user
+                        ? `<span style="float: left; color: #ffebc2">@${user}&nbsp;</span> ${text}`
+                        : text,
                     parentId,
                     resourceId,
                     resourceType: 'Video'
@@ -96,7 +97,6 @@ const SANCommentList = ({ resourceId }) => {
                 }),
                 comments.data
             )
-            console.log(data)
             setComments(oldComments => ({
                 ...oldComments,
                 data
