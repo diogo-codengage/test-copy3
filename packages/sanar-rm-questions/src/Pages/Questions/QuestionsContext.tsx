@@ -40,6 +40,9 @@ export interface IQuestionsContext {
     questionsRequests: number,
     setQuestionsRequests: (value: number) => void,
 
+    noMoreQuestions: boolean
+    setNoMoreQuestion: (value: boolean) => void
+
     totalCorrect: number
     totalWrong: number
     totalSkipped: number

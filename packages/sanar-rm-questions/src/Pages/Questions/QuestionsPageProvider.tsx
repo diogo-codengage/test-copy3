@@ -21,6 +21,7 @@ interface IProps {
 export const QuestionsPageProvider = (props: IProps) => {
 
     const course = props.course
+    const [noMoreQuestions, setNoMoreQuestion] = useState(false) 
 
     const [loading, setLoading] = useState(false)
 
@@ -67,11 +68,12 @@ export const QuestionsPageProvider = (props: IProps) => {
     }
 
     const loadMoreQuestions = async (clearOld: boolean) => {
+        console.log({clearOld})
         const filters = await getParamsFromFilters()
         return  BFFService.loadMoreQuestions(filters)
             .then(function({ data }) {
-                if(data.questions.data.length === 0 && course){
-                    setCurrentPage(QuestionPageType.Filter);
+                if(data.questions.data.length === 0 && !clearOld){
+                    setNoMoreQuestion(true)
                     return false;
                 }
                 setQuestionsRequests(questionsRequests + 1)
@@ -113,6 +115,10 @@ export const QuestionsPageProvider = (props: IProps) => {
     }
 
     const value: IQuestionsContext = {
+
+        noMoreQuestions,
+        setNoMoreQuestion,
+
         loading,
         setLoading,
 
