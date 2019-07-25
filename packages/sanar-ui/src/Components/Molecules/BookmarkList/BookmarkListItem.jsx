@@ -24,11 +24,12 @@ const ESBookmarkListItem = ({
     resourceType,
     subtitle,
     title,
+    onPress,
     onRemove
 }) => {
     const classes = classNames('es-favorite-item', className)
     return (
-        <div className={classes}>
+        <div className={classes} onClick={onPress}>
             <div
                 className='es-favorite-item__img'
                 style={{

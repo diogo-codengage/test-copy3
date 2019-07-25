@@ -68,7 +68,9 @@ const SANBookmarkContent = ({
                                             resource_id
                                         )
                                     }
-                                    onRemove={() => onRemove(resource_id, resource_type)}
+                                    onRemove={() =>
+                                        onRemove(resource_id, resource_type)
+                                    }
                                 />
                             ) : (
                                 <ESBookmarkListItem
@@ -77,7 +79,7 @@ const SANBookmarkContent = ({
                                     title={resource_title}
                                     resourceType={resource_type}
                                     onRemove={() =>
-                                        console.log('remove clicked')
+                                        onRemove(resource_id, resource_type)
                                     }
                                 />
                             )}
