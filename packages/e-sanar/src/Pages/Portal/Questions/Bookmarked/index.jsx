@@ -58,10 +58,7 @@ const SANBookmarkedQuestion = ({
             setQuestion(qt)
             setCurrentIdx(idx)
             setQuestions(qts)
-    
-            console.log(qts)
-            console.log(qt)
-    
+                
             setTotal(count)
     
             setLoading(false)
@@ -69,14 +66,6 @@ const SANBookmarkedQuestion = ({
 
         fetchAllQuestions()
     }, [])
-
-    // useEffect(() => {
-    //     setBookmarked(
-    //         questions &&
-    //             questions.length &&
-    //             questions.find(i => i.id === question.id)
-    //     )
-    // }, [questions, question])
 
     useEffect(() => {
         setIsFull(width <= 992)

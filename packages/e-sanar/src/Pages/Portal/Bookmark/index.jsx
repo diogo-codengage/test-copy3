@@ -29,7 +29,9 @@ const SANBookmarkPage = ({ history }) => {
             fetchPolicy: 'network-only',
             variables: {
                 enrollmentId,
-                resourceType: filter
+                resourceType: filter,
+                limit: 9,
+                skip: page
             }
         })
 
