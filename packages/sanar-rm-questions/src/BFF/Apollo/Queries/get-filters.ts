@@ -11,25 +11,6 @@ query {
 }
 `
 
-export const GET_SPECIALTIES = gql`
-    {
-        specialties: specialties (limit: 1000) {
-            data {
-                ...specialtyFragment
-                parent {
-                    ...specialtyFragment
-                }
-            }
-        }
-    }
-
-    fragment specialtyFragment on Specialty {
-        value: id
-        label: name
-    }
-
-`
-
 export const GET_TAGS = gql`
     {
         tags {
