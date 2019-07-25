@@ -59,7 +59,7 @@ const ESBookmarkListItem = ({
                     </ESTypography>
                 </div>
             </div>
-            {/* <div className='es-favorite-item__action'>
+            <div className='es-favorite-item__action'>
                 {onRemove && (
                     <ESEvaIcon
                         key={`${resourceType}_${id}_grid_remove_icon`}
@@ -69,7 +69,7 @@ const ESBookmarkListItem = ({
                         className='es-favorite-item__action--icon'
                     />
                 )}
-            </div> */}
+            </div>
         </div>
     )
 }
