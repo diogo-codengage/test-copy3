@@ -1,46 +1,29 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import SANSigninPage from './Signin'
-import SANPasswordRecovery from './PasswordRecovery'
-import SANCreatePassword from './CreatePassword'
+import SANSplashLoader from 'Components/SplashLoader'
 
-// const SANSigninPage = lazy(() => import('./Signin'))
-// const SANPasswordRecoveryPage = lazy(() => import('./PasswordRecovery'))
+const SANCreatePasswordPage = React.lazy(() => import('./CreatePassword'))
+const SANSigninPage = React.lazy(() => import('./Signin'))
+const SANPasswordRecoveryPage = React.lazy(() => import('./PasswordRecovery'))
 
 const SANAuth = ({ match: { url } }) => (
-    <Route
-        render={({ location }) => {
-            return (
-                <TransitionGroup>
-                    <CSSTransition
-                        key={location.pathname}
-                        classNames='app-routes-transition'
-                        timeout={300}
-                    >
-                        <Switch>
-                            <Route
-                                path={`${url}/signin`}
-                                component={SANSigninPage}
-                            />
-                            <Route
-                                path={`${url}/recuperar-senha`}
-                                component={SANPasswordRecovery}
-                            />
-                            <Route
-                                path={`${url}/criar-senha`}
-                                component={SANCreatePassword}
-                            />
-                            <Route
-                                path={[`${url}/*`, `${url}`]}
-                                render={() => <Redirect to={`${url}/signin`} />}
-                            />
-                        </Switch>
-                    </CSSTransition>
-                </TransitionGroup>
-            )
-        }}
-    />
+    <Suspense fallback={<SANSplashLoader />}>
+        <Switch>
+            <Route path={`${url}/signin`} component={SANSigninPage} />
+            <Route
+                path={`${url}/recuperar-senha`}
+                component={SANPasswordRecoveryPage}
+            />
+            <Route
+                path={`${url}/criar-senha`}
+                component={SANCreatePasswordPage}
+            />
+            <Route
+                path={[`${url}/*`, `${url}`]}
+                render={() => <Redirect to={`${url}/signin`} />}
+            />
+        </Switch>
+    </Suspense>
 )
 
 export default SANAuth
