@@ -28,9 +28,14 @@ const Comment = ({
 
     const handleMenuClick = ({ key }) => {
         if (key === 'exclude') {
-            onExclude && onExclude(comment.id)
+            onExclude &&
+                onExclude({
+                    commentId: comment.id,
+                    parentId: comment.parent_id
+                })
         } else {
-            onReport && onReport(comment.id)
+            onReport &&
+                onReport({ commentId: comment.id, parentId: comment.parent_id })
         }
     }
 

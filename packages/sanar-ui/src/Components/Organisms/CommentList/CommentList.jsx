@@ -73,7 +73,9 @@ const ESCommentList = ({
                         className='secondary'
                     >
                         {t('commentList.viewReply', {
-                            count: comment.replies_count
+                            count:
+                                comment.replies_count -
+                                (comment.answers || []).length
                         })}
                         <ESEvaIcon name='chevron-down-outline' key='down' />
                     </ESButton>
