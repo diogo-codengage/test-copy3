@@ -4,6 +4,7 @@ import { RMContainer } from '../../../Components/RMContainer'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import { QuestionPageType, useQuestionsContext } from '../QuestionsContext'
 import { SessionStatusDashboard } from './SessionStatusDashboard'
+import ESModal from 'sanar-ui/dist/Components/Atoms/Modal'
 
 interface IProps {
     onConfirm?: (alternativeId) => void
@@ -20,6 +21,8 @@ export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: 
         currentAnswerId,
         setCurrentPage,
         course,
+        noMoreQuestions,
+        setNoMoreQuestion
     } = useQuestionsContext()
 
     const isFromCourse = () => {
@@ -67,6 +70,30 @@ export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: 
             labelMonitor={'Ninja Sanar'}
         />
 
+        <ESModal
+            title={'Opps'}
+            visible={noMoreQuestions}
+            centered={'Centered'}
+            onCancel={() => {
+                setCurrentPage(QuestionPageType.Filter)
+                setNoMoreQuestion(true)
+            }}
+        >
+            <p> Não encontramos questões para você praticar, tente outras opções </p>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <ESButton
+                    color='outlined'
+                    variant='text'
+                    uppercase
+                    blockOnlyMobile
+                    onClick={() => {
+                       setCurrentPage(QuestionPageType.Filter)
+                       setNoMoreQuestion(true)
+                    }}
+                >VOLTAR PARA FILTRO</ESButton>
+            </div>
+        </ESModal>
     </RMContainer>
 
 

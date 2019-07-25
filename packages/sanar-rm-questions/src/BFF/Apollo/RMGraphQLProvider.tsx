@@ -5,11 +5,12 @@ import { isDevEnvironment, isLocalhost, isProdEnvironment } from '../../Util/env
 import { getUserToken } from '../../Util/getUserToken'
 
 const getGraphqlUri = () => {
+    const local = 'http://nlb-residencia-qa-aa2d4c0241e3f160.elb.us-east-1.amazonaws.com/graphql';
     const prod = 'https://bff.sanarresidenciamedica.com.br/graphql'
 
     switch(true) {
         case isLocalhost():
-            return prod // TODO: fix this, change to local
+            return local // TODO: fix this, change to local
         case isDevEnvironment():
             return prod // TODO: fix this, change to dev
         case isProdEnvironment():
