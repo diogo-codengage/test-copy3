@@ -351,6 +351,7 @@ export default {
         failLoadClassroom: 'Ocorreu um erro ao carregar sala de aula.',
         failLoadComments:
             'Ocorreu um erro ao carregar comentários. Tente novamente mais tarde.',
+        failRateClass: 'Ocorreu um erro ao avaliar a aula.',
         error: 'Ocorreu um erro ao carregar este vídeo.',
         document: {
             error: 'Ocorreu um erro ao carregar este documento.'
