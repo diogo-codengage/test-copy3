@@ -13,8 +13,11 @@ export const mapCommentInteraction = ({
         likes_count,
         dislikes_count,
         disliked_by_user:
-            interaction === 'dislike' && !comment.disliked_by_user,
-        liked_by_user: interaction === 'like' && !comment.liked_by_user
+            interaction === 'dislike' &&
+            !comment.disliked_by_user &&
+            !!dislikes_count,
+        liked_by_user:
+            interaction === 'like' && !comment.liked_by_user && !!likes_count
     })
 })
 
