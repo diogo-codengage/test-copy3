@@ -171,7 +171,8 @@ export default {
         reply: 'Responder',
         exclude: 'Excluir',
         report: 'Reportar',
-        viewReply: 'Ver {{count}} respostas',
+        viewReply: 'Ver {{count}} resposta',
+        viewReply_plural: 'Ver {{count}} respostas',
         loadMore: 'Carregar mais',
         hideReplies: 'Ocultar respostas',
         answers: {
