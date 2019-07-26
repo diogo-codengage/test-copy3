@@ -179,17 +179,25 @@ const SANCommentList = ({ resourceId }) => {
                     skip: 0
                 }
             })
-            hasAdd && addSubComments({ answers: repliesComment.data, parentId })
+            hasAdd &&
+                addSubComments({
+                    answers: repliesComment.data,
+                    parentId,
+                    count: repliesComment.count
+                })
         } catch {
             message.error(t('classroom.failLoadRepliesComment'))
         }
     }
 
-    const addSubComments = ({ parentId, answers = [] }) => {
+    const addSubComments = ({ parentId, answers = [], count }) => {
         const data = map(
             comment => ({
                 ...comment,
-                ...(comment.id === parentId && { answers })
+                ...(comment.id === parentId && {
+                    answers,
+                    replies_count: count
+                })
             }),
             comments.data
         )
