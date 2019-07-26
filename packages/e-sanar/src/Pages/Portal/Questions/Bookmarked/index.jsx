@@ -66,7 +66,7 @@ const SANBookmarkedQuestion = ({
         }
 
         fetchAllQuestions()
-    }, [])
+    }, [client, idx])
 
     useEffect(() => {
         setIsFull(width <= 992)

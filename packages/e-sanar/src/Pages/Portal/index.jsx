@@ -10,7 +10,6 @@ import { useApolloContext } from 'Hooks/apollo'
 import SANPortalLayout from './Layout'
 import { SANPortalProvider } from './Context'
 import ESDefaultError from '../Portal/Errors/Default'
-import SANBookmarkPage from './Bookmark'
 import SANBookmarkRouter from './Bookmark'
 
 const SANCoursePage = React.lazy(() => import('./Course'))

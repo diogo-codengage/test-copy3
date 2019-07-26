@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import SANBookmarksHeader from './Header'
 import { useApolloContext } from 'Hooks/apollo'
 import { GET_BOOKMARKS } from 'Apollo/Bookmark/queries/bookmarks'
 import { useAuthContext } from 'Hooks/auth'
 import SANBookmarkContent from './Content'
 import { CHANGE_BOOKMARK } from 'Apollo/Bookmark/mutations/bookmark'
+import ESDefaultError from 'Pages/Portal/Errors/Default'
 
 const SANBookmarkListPage = ({ history }) => {
-    
     const client = useApolloContext()
     const { me, getEnrollment } = useAuthContext()
     const { id: enrollmentId } = getEnrollment()
-    
+
     const [filter, setFilter] = useState(null)
     const [visualization, setVisualization] = useState('grid')
     const [loading, setLoading] = useState(false)
     const [total, setTotal] = useState(0)
     const [page, setPage] = useState(1)
     const [bookmarks, setBookmarks] = useState([])
+    const [error, setError] = useState(false)
 
-    const fetchBookmarks = async () => {
+    const fetchBookmarks = useCallback(async () => {
         setLoading(true)
         const {
             data: {
@@ -42,11 +43,11 @@ const SANBookmarkListPage = ({ history }) => {
         }
 
         setLoading(false)
-    }
+    }, [filter, page, client, enrollmentId])
 
     useEffect(() => {
         fetchBookmarks()
-    }, [filter, page])
+    }, [fetchBookmarks])
 
     const getColumnAmount = () => {
         if (visualization && visualization === 'list') {
@@ -100,27 +101,31 @@ const SANBookmarkListPage = ({ history }) => {
 
             await fetchBookmarks()
         } catch (err) {
-            console.error(err)
+            setError(err)
         }
     }
 
     return (
         <>
             <SANBookmarksHeader />
-            <SANBookmarkContent
-                bookmarks={bookmarks}
-                total={total}
-                filter={filter}
-                loading={loading}
-                page={page}
-                visualization={visualization}
-                getColumnAmount={getColumnAmount}
-                navigateToResource={navigateToResource}
-                onRemove={onRemove}
-                setFilter={setFilter}
-                setPage={setPage}
-                setVisualization={setVisualization}
-            />
+            {!error ? (
+                <SANBookmarkContent
+                    bookmarks={bookmarks}
+                    total={total}
+                    filter={filter}
+                    loading={loading}
+                    page={page}
+                    visualization={visualization}
+                    getColumnAmount={getColumnAmount}
+                    navigateToResource={navigateToResource}
+                    onRemove={onRemove}
+                    setFilter={setFilter}
+                    setPage={setPage}
+                    setVisualization={setVisualization}
+                />
+            ) : (
+                <ESDefaultError />
+            )}
         </>
     )
 }

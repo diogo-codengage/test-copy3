@@ -1,10 +1,10 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import ESInput from 'sanar-ui/dist/Components/Atoms/Input'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
-import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
+// import ESInput from 'sanar-ui/dist/Components/Atoms/Input'
+// import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 
 const intlPath = 'bookmark.'
 

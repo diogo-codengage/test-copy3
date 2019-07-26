@@ -8,7 +8,6 @@ const SANQuestionsFilter = React.lazy(() => import('./Filter'))
 const SANQuestionsHistoric = React.lazy(() => import('./Historic'))
 const SANQuestionPage = React.lazy(() => import('./Question'))
 const SANPracticeCompletedPage = React.lazy(() => import('./PracticeCompleted'))
-const SANBookmarkedQuestion = React.lazy(() => import('./Bookmarked'))
 
 const SANQuestions = ({ match: { url } }) => {
     return (
@@ -32,10 +31,6 @@ const SANQuestions = ({ match: { url } }) => {
                         exact={true}
                         component={SANQuestionPage}
                     />
-                    {/* <Route
-                        path={`${url}/perguntas/:id?`}
-                        component={SANBookmarkedQuestion}
-                    /> */}
                     <Route
                         path={[`${url}/`, `${url}`]}
                         render={() => <Redirect to={`${url}/filtro`} />}

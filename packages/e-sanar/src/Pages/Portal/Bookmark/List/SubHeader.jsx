@@ -20,13 +20,13 @@ const SANBookmarkSubHeader = ({
 
     const selectedClasses = idx =>
         classNames('san-bookmark-page__subheader--filter-area_item', {
-            ['selected-filter']: idx === filter,
-            ['disabled']: loading
+            'selected-filter': idx === filter,
+            'disabled': loading
         })
 
     const selectedVisualizationClasses = idx =>
         classNames('san-bookmark-page__subheader--visualization_item', {
-            ['selected-visualization']: idx === visualization
+            'selected-visualization': idx === visualization
         })
 
     const pathToMessage = name => (name ? name.toLowerCase() + 's' : 'all')
