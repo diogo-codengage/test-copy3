@@ -3,6 +3,12 @@
     border-radius: @border-radius-base;
     background-color: @grey-1;
 
+    &.comment .cke_source {
+        padding: @padding-xs @padding-xs @padding-xs 57px;
+        height: ~'calc(100% - 16px)' !important;
+        width: ~'calc(100% - 65px)' !important;
+    }
+
     & .ant-spin-nested-loading {
         height: 100%;
         & .ant-spin-container {

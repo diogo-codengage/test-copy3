@@ -13,13 +13,12 @@
     &-container {
         position: relative;
 
+        &--button,
         &--buttons {
             display: flex;
             align-items: center;
             position: absolute;
             bottom: 8px;
-            left: ~'calc(100% / 2 - 155px)';
-
             & .active {
                 margin: 0 @margin-md;
                 background-color: @secondary-color;
@@ -40,6 +39,15 @@
                 }
             }
         }
+
+        &--button {
+            left: ~'calc(100% / 2 - 88px)';
+        }
+
+        &--buttons {
+            left: ~'calc(100% / 2 - 155px)';
+        }
+
         @media (max-width: @screen-xl) {
             &--buttons {
                 display: none;

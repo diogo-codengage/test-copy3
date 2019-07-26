@@ -19,7 +19,8 @@ const Comment = ({
     onReport,
     onComment,
     comment,
-    className
+    className,
+    avatar
 }) => {
     const { t } = useTranslation('sanarui')
     const textEditorRef = useRef()
@@ -27,9 +28,14 @@ const Comment = ({
 
     const handleMenuClick = ({ key }) => {
         if (key === 'exclude') {
-            onExclude && onExclude(comment.id)
+            onExclude &&
+                onExclude({
+                    commentId: comment.id,
+                    parentId: comment.parent_id
+                })
         } else {
-            onReport && onReport(comment.id)
+            onReport &&
+                onReport({ commentId: comment.id, parentId: comment.parent_id })
         }
     }
 
@@ -38,7 +44,8 @@ const Comment = ({
             onComment({
                 text,
                 parentId: comment.parent_id || comment.id,
-                user: comment.user.name
+                ...(((comment.answers && comment.answers.length) ||
+                    comment.parent_id) && { user: comment.user.name })
             })
         setReplay(false)
     }
@@ -121,11 +128,11 @@ const Comment = ({
             />
             {reply && (
                 <ESTextEditor
+                    avatar={avatar}
                     onSubmit={handleComment}
                     ref={textEditorRef}
                     dark
                     comment
-                    reply
                 />
             )}
         </>

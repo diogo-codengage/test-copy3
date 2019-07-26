@@ -7,10 +7,6 @@ import { useTranslation } from 'react-i18next'
 import ESJwPlayer from 'sanar-ui/dist/Components/Molecules/JwPlayer'
 import ESTabs, { ESTabPane } from 'sanar-ui/dist/Components/Atoms/Tabs'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
-import ESLessonHeader, {
-    ESLessonHeaderExtra,
-    ESLessonHeaderLeft
-} from 'sanar-ui/dist/Components/Molecules/LessonHeader'
 import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 import { createDebounce } from 'sanar-ui/dist/Util/Debounce'
 
@@ -27,14 +23,14 @@ import renderTabBar from './renderTabBar'
 import { useClassroomContext } from '../Context'
 import SANDiscussion from './Discussion'
 
-const ButtonTab = ({ active, ...props }) => (
+const ButtonTab = ({ active, className, ...props }) => (
     <ESButton
         size='small'
         uppercase
         bold
         color={!active ? 'white' : undefined}
         variant={active ? 'solid' : 'outlined'}
-        className={classNames({ active: active })}
+        className={classNames(className, { active: active })}
         {...props}
     />
 )
@@ -66,7 +62,7 @@ const SANClassroomVideo = () => {
     const [playlistVideo, setPlaylistVideo] = useState()
     const [videoError, seVideoError] = useState()
     const [videoReady, seVideoReady] = useState()
-    const [activeKey, setActiveKey] = useState('1')
+    const [activeKey, setActiveKey] = useState(currentResource.quiz ? '1' : '2')
 
     const handleVideoError = () => seVideoError(true)
 
@@ -209,7 +205,7 @@ const SANClassroomVideo = () => {
                     onOneHundredPercent={() => debounceProgress(100)}
                     onFirstFrame={() => debounceProgress(1)}
                 />
-                {currentResource.quiz && (
+                {currentResource.quiz ? (
                     <div className='classroom__video-container--buttons'>
                         <ButtonTab
                             onClick={goTab('1')}
@@ -224,36 +220,44 @@ const SANClassroomVideo = () => {
                             {t('classroom.viewDiscussions')}
                         </ButtonTab>
                     </div>
+                ) : (
+                    <div className='classroom__video-container--button'>
+                        <ButtonTab
+                            onClick={goTab('2')}
+                            active={activeKey === '2'}
+                        >
+                            {t('classroom.viewDiscussions')}
+                        </ButtonTab>
+                    </div>
                 )}
             </div>
-            {currentResource.quiz ? (
-                <ESTabs
-                    dark
-                    center
-                    tabBarGutter={0}
-                    onChange={setActiveKey}
-                    activeKey={activeKey}
-                    renderTabBar={renderTabBar({
-                        bookmarked,
-                        handleBookmark,
-                        onClick: openMenu,
-                        nextResource: nextResource && nextResource.title,
-                        prevResource: prevResource && prevResource.title,
-                        onPrev: onNavigation('prev'),
-                        onNext: onNavigation('next'),
-                        title: currentResource.video.title,
-                        subtitle: `${t(
-                            'global.subject'
-                        )} ${currentModule.index + 1}, ${t(
-                            'global.activity'
-                        )} ${currentResource.index + 1}`,
-                        label: t('classroom.rateClass'),
-                        rate: {
-                            value: rate,
-                            onChange: handleRate
-                        }
-                    })}
-                >
+
+            <ESTabs
+                dark
+                center
+                tabBarGutter={0}
+                onChange={setActiveKey}
+                activeKey={activeKey}
+                renderTabBar={renderTabBar({
+                    bookmarked,
+                    handleBookmark,
+                    onClick: openMenu,
+                    nextResource: nextResource && nextResource.title,
+                    prevResource: prevResource && prevResource.title,
+                    onPrev: onNavigation('prev'),
+                    onNext: onNavigation('next'),
+                    title: currentResource.video.title,
+                    subtitle: `${t('global.subject')} ${currentModule.index +
+                        1}, ${t('global.activity')} ${currentResource.index +
+                        1}`,
+                    label: t('classroom.rateClass'),
+                    rate: {
+                        value: rate,
+                        onChange: handleRate
+                    }
+                })}
+            >
+                {currentResource.quiz && (
                     <ESTabPane tab={t('classroom.questions')} key='1'>
                         <SANQuiz
                             quiz={currentResource.quiz}
@@ -261,41 +265,11 @@ const SANClassroomVideo = () => {
                             scrollToOffsetElementPosition
                         />
                     </ESTabPane>
-                    <ESTabPane tab={t('classroom.discussions')} key='2'>
-                        <SANDiscussion resourceId={currentResource.video.id} />
-                    </ESTabPane>
-                </ESTabs>
-            ) : (
-                <ESLessonHeader
-                    rate={rate}
-                    bookmarked={bookmarked}
-                    onBookmarked={handleBookmark}
-                    leftChildren={
-                        <ESLessonHeaderLeft
-                            title={currentResource.video.title}
-                            subtitle={`${t('global.subject')} ${
-                                currentModule.index
-                            }, ${t('global.activity')} ${currentResource.index +
-                                1}`}
-                            onClick={openMenu}
-                            rate={{
-                                value: rate,
-                                onChange: handleRate
-                            }}
-                        />
-                    }
-                    rightChildren={
-                        <ESLessonHeaderExtra
-                            previousLesson={prevResource && prevResource.title}
-                            nextLesson={nextResource && nextResource.title}
-                            onPrev={onNavigation('prev')}
-                            onNext={onNavigation('next')}
-                            bookmarked={bookmarked}
-                            onBookmarked={handleBookmark}
-                        />
-                    }
-                />
-            )}
+                )}
+                <ESTabPane tab={t('classroom.discussions')} key='2'>
+                    <SANDiscussion resourceId={currentResource.video.id} />
+                </ESTabPane>
+            </ESTabs>
         </div>
     )
 }
