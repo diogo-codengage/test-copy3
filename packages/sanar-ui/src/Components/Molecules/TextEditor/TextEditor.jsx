@@ -110,8 +110,13 @@ const ESTextEditor = forwardRef(
             onCancel && onCancel()
         }
 
-        const handleSubmit = e => {
+        const handleSubmit = () => {
             onSubmit && onSubmit(data)
+            setData()
+        }
+
+        const handleEnter = text => {
+            onSubmit && onSubmit(text)
             setData()
         }
 
@@ -135,6 +140,11 @@ const ESTextEditor = forwardRef(
                             on: {
                                 instanceReady: function() {
                                     setReady(true)
+                                },
+                                key: function(e) {
+                                    if (e.data.keyCode === 13) {
+                                        handleEnter(e.editor.getData())
+                                    }
                                 }
                             },
                             height: heightIframe,
