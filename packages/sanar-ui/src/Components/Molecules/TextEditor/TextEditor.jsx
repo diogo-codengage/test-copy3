@@ -161,7 +161,10 @@ const ESTextEditor = forwardRef(
                                 />
                             )}
                             <div className='es-text-editor__buttons'>
-                                <ESTypography variant='caption'>
+                                <ESTypography
+                                    variant='caption'
+                                    className='es-text-editor__buttons--count'
+                                >
                                     {`${t('textEditor.count')}: ${letter}`}
                                 </ESTypography>
                                 <div className='d-flex align-items-center'>
