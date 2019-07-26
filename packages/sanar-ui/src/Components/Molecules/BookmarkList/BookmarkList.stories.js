@@ -21,6 +21,7 @@ storiesOf('Molecules.Favorites', module)
                     image={videoImage}
                     icon='play-circle-outline'
                     onRemove={() => console.log('remove clicked')}
+                    onPress={() => console.log('HUHEUEHUEHUEH')}
                 />
             ))}
         </ESBookmarkList>

@@ -81,6 +81,13 @@ const SANBookmarkContent = ({
                                     onRemove={() =>
                                         onRemove(resource_id, resource_type)
                                     }
+                                    onPress={() =>
+                                        navigateToResource(
+                                            resource_type,
+                                            level_id,
+                                            resource_id
+                                        )
+                                    }
                                 />
                             )}
                         </List.Item>

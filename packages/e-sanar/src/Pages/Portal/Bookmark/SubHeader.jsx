@@ -47,23 +47,28 @@ const SANBookmarkSubHeader = ({
             type='flex'
             align='middle'
             style={{ marginBottom: 40, height: 40 }}
+            justify='center'
         >
             <ESCol sm={24} md={6}>
                 {amount > 0 && (
-                    <div
-                        style={{
-                            height: 40,
-                            display: 'flex',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <ESTypography variant='body2'>
-                            {amount}
-                            {t(
-                                `${intlPath}${amount > 1 ? 'plural' : 'single'}`
-                            )}
-                        </ESTypography>
-                    </div>
+                    <ESRow justify='start'>
+                        <div
+                            style={{
+                                height: 40,
+                                display: 'flex',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <ESTypography variant='body2'>
+                                {amount}
+                                {t(
+                                    `${intlPath}${
+                                        amount > 1 ? 'plural' : 'single'
+                                    }`
+                                )}
+                            </ESTypography>
+                        </div>
+                    </ESRow>
                 )}
             </ESCol>
             <ESCol sm={24} md={12}>

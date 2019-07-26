@@ -29,14 +29,14 @@ const ESBookmarkListItem = ({
 }) => {
     const classes = classNames('es-favorite-item', className)
     return (
-        <div className={classes} onClick={onPress}>
+        <div className={classes}>
             <div
                 className='es-favorite-item__img'
                 style={{
                     backgroundImage: `url(${image})`
                 }}
             />
-            <div className='es-favorite-item__content'>
+            <div className='es-favorite-item__content' onClick={onPress}>
                 <ESTypography
                     variant='subtitle2'
                     ellipsis
