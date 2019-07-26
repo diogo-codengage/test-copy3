@@ -16,19 +16,27 @@ const locale =
         ? require('date-fns/locale/en')
         : require('date-fns/locale/pt')
 
-const Title = ({ name, monitor, labelMonitor }) => {
+const Title = ({ name, monitor, labelMonitor, commentedByUser }) => {
     const { t } = useTranslation('sanarui')
+
+    const badge = commentedByUser ? (
+        <div className='es-comment__badge es-comment__badge'>
+            {t('global.you')}
+        </div>
+    ) : monitor ? (
+        <div className='es-comment__badge es-comment__badge'>
+            {labelMonitor || t('global.monitor')}
+        </div>
+    ) : (
+        undefined
+    )
 
     return (
         <div className='es-comment__title'>
             <ESTypography variant='caption' strong className='text-grey-7'>
                 {name}
             </ESTypography>
-            {monitor && (
-                <div className='es-comment__badge'>
-                    {labelMonitor || t('global.monitor')}
-                </div>
-            )}
+            {badge}
         </div>
     )
 }
@@ -42,6 +50,7 @@ const ESComment = ({
     labelMonitor,
     dark,
     owner,
+    commented_by_user,
     className
 }) => {
     const classes = classNames(
@@ -57,6 +66,7 @@ const ESComment = ({
         distanceInWords(new Date(), new Date(time && time), {
             locale
         })
+
     return (
         <Comment
             className={classes}
@@ -66,6 +76,7 @@ const ESComment = ({
                     name={user && user.name}
                     monitor={monitor}
                     labelMonitor={labelMonitor}
+                    commentedByUser={commented_by_user}
                 />
             }
             avatar={
@@ -97,6 +108,7 @@ ESComment.propTypes = {
     }),
     text: PropTypes.string,
     time: PropTypes.string,
+    commented_by_user: PropTypes.bool,
     monitor: PropTypes.bool,
     actions: PropTypes.arrayOf(PropTypes.node),
     labelMonitor: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),

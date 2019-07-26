@@ -4,7 +4,7 @@ import ESIcon from '../../Atoms/Icon'
 import ESButton from '../../Atoms/Button'
 import ESTypography from '../../Atoms/Typography'
 
-const InteractionButton = ({ type, count, ...props }) => (
+const InteractionButton = ({ type, count, byUser, ...props }) => (
     <div className='es-comment-list--interaction'>
         <ESButton
             {...props}
@@ -13,6 +13,7 @@ const InteractionButton = ({ type, count, ...props }) => (
             variant='text'
             color='white'
             bold
+            className={byUser ? 'active' : undefined}
         >
             <ESIcon type={type} theme='filled' />
         </ESButton>

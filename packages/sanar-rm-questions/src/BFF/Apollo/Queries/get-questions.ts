@@ -1,11 +1,7 @@
 import { gql } from 'apollo-boost'
 import { QuestionsInputFilter } from '../../QuestionsInputFilter'
-
 export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
-
     const where:any = {};
-
-    //institution_id: { inq: [] as string[] },
 
     if(filter.specialtiesIds.length > 0) {
         where.specialty_ids = {
@@ -46,7 +42,7 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
 
     const queryWithParams = `
         {
-            questions(limit: 10, random:false ${whereFilter}){
+            questions(limit: 10, random:true ${whereFilter}){
                 data {
                     id,
                     statement,
@@ -85,6 +81,6 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
             }
         }
 `
-    // console.log({queryWithParams})
     return gql`${queryWithParams}`
 }
+

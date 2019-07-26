@@ -26,7 +26,7 @@ const SANLives = () => {
         live && `https://www.youtube.com/embed/${live.link.split('=')[1]}`
 
     return (
-        <SANPortalPagesContainer className='lives mt-lg'>
+        <SANPortalPagesContainer className='lives'>
             <ESSessionTitle
                 title={t('courseDetails.livesTitle')}
                 subtitle={t('courseDetails.livesSubtitle')}

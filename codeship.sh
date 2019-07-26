@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 if [ "$CI_BRANCH" = "master" ];
 then
