@@ -110,6 +110,7 @@ const SANQuiz = ({
     }
 
     const handleJump = () => {
+        handleProgress(((index + 1) * 100) / questions.length)
         if (index === questions.length - 1) {
             jump()
             return
