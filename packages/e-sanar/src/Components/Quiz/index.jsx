@@ -109,8 +109,21 @@ const SANQuiz = ({
         setResponses(oldResponses => append(null, oldResponses))
     }
 
+    const scrollBehavior = () => {
+        if (scrollToOffsetElementPosition) {
+            window.scrollTo(
+                0,
+                ref.current.offsetTop + ref.current.offsetParent.offsetTop
+            )
+        } else {
+            window.scrollTo(0, 0)
+        }
+    }
+
     const handleJump = () => {
         handleProgress(((index + 1) * 100) / questions.length)
+        scrollBehavior()
+
         if (index === questions.length - 1) {
             jump()
             return
@@ -121,14 +134,7 @@ const SANQuiz = ({
     }
 
     const handleNext = () => {
-        if (scrollToOffsetElementPosition) {
-            window.scrollTo(
-                0,
-                ref.current.offsetTop + ref.current.offsetParent.offsetTop
-            )
-        } else {
-            window.scrollTo(0, 0)
-        }
+        scrollBehavior()
 
         if (index === questions.length - 1 && mock) return
         setIndex(oldIndex => ++oldIndex)
