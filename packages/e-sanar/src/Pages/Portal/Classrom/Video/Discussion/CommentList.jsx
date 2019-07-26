@@ -223,6 +223,7 @@ const SANCommentList = ({ resourceId }) => {
             query={GET_COMMENTS}
             onCompleted={handleCompleted}
             fetchPolicy='cache-and-network'
+            pollInterval={120000}
             variables={{
                 resourceId,
                 limit: 5,
