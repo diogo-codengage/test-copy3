@@ -38,6 +38,20 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        @media (max-width: @screen-xs) {
+            & .d-flex {
+                flex: 1;
+                justify-content: space-between;
+            }
+            &--count {
+                display: none;
+            }
+        }
+    }
+
+    & .cke_browser_ios .cke_contents {
+        overflow-y: hidden;
     }
 
     & .cke_button_icon.cke_button__bold_icon,

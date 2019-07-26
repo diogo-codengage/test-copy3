@@ -44,8 +44,7 @@ const Comment = ({
             onComment({
                 text,
                 parentId: comment.parent_id || comment.id,
-                ...(((comment.answers && comment.answers.length) ||
-                    comment.parent_id) && { user: comment.user.name })
+                ...(comment.parent_id && { user: comment.user.name })
             })
         setReplay(false)
     }
