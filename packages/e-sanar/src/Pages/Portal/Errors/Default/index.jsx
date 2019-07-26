@@ -10,17 +10,16 @@ const ESDefaultError = () => {
     return (
         <div className='default-error'>
             <div className='default-error__container'>
-                <img src={image} alt='' className='default__image' />
+                <img src={image} alt='' className='default-error__image' />
                 <ESTypography
-                    variant='body1'
-                    strong
+                    level={4}
                     className='default-error__title'
                     ellipsis={{ rows: 2, expandable: false }}
                 >
                     {t('errors.default.title')}
                 </ESTypography>
                 <ESTypography
-                    variant='body2'
+                    variant='subtitle1'
                     ellipsis={{ rows: 4, expandable: false }}
                     className='default-error__subtitle'
                 >
@@ -34,6 +33,7 @@ const ESDefaultError = () => {
                 variant='solid'
                 size='small'
                 bold
+                blockOnlyMobile
                 className='default-error__button'
             >
                 {t('errors.tryAgain')}

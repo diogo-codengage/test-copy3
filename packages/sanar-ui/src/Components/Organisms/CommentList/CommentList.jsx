@@ -9,6 +9,7 @@ import ESButton from '../../Atoms/Button'
 import ESDropdown from '../../Atoms/Dropdown'
 import ESMenu, { ESItem } from '../../Atoms/Menu'
 import ESTypography from '../../Atoms/Typography'
+import ESEmpty from '../../Atoms/Empty'
 
 import Comment from './Comment'
 
@@ -25,7 +26,8 @@ const ESCommentList = ({
     loadMoreProps,
     hasMore,
     className,
-    loading
+    loading,
+    avatar
 }) => {
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-comment-list', className)
@@ -56,6 +58,7 @@ const ESCommentList = ({
                     onLike={onLike}
                     onDislike={onDislike}
                     comment={comment}
+                    avatar={avatar}
                 />
                 {(comment.replies_count &&
                     (!comment.answers || !comment.answers.length)) ||
@@ -71,7 +74,9 @@ const ESCommentList = ({
                         className='secondary'
                     >
                         {t('commentList.viewReply', {
-                            count: comment.replies_count
+                            count:
+                                comment.replies_count -
+                                (comment.answers || []).length
                         })}
                         <ESEvaIcon name='chevron-down-outline' key='down' />
                     </ESButton>
@@ -133,22 +138,40 @@ const ESCommentList = ({
                     </ESDropdown>
                 )}
             </div>
-            <div style={{ width: '100%' }}>
-                {comments.data.map(renderComment)}
-            </div>
-            {hasMore && (
-                <ESButton
-                    size='xsmall'
-                    variant='outlined'
-                    color='primary'
-                    uppercase
-                    bold
-                    className='mt-md secondary'
-                    loading={loading}
-                    {...loadMoreProps}
-                >
-                    {t('commentList.loadMore')}
-                </ESButton>
+            {comments.count > 0 ? (
+                <>
+                    <div style={{ width: '100%' }}>
+                        {comments.data.map(renderComment)}
+                    </div>
+                    {hasMore && (
+                        <ESButton
+                            size='xsmall'
+                            variant='outlined'
+                            color='primary'
+                            uppercase
+                            bold
+                            className='mt-md secondary'
+                            loading={loading}
+                            {...loadMoreProps}
+                        >
+                            {t('commentList.loadMore')}
+                        </ESButton>
+                    )}
+                </>
+            ) : (
+                <div className='es-comment-list__empty'>
+                    <ESEmpty
+                        description={
+                            <ESTypography
+                                varinat='subtitle2'
+                                className='text-white-7'
+                            >
+                                {t('commentList.empty')}
+                            </ESTypography>
+                        }
+                        dark
+                    />
+                </div>
             )}
         </div>
     )
@@ -167,7 +190,8 @@ ESCommentList.propTypes = {
     hideRepliesProps: PropTypes.object,
     loadRepliesProps: PropTypes.object,
     hasMore: PropTypes.bool,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    avatar: PropTypes.string
 }
 ESCommentList.defaultProps = {}
 

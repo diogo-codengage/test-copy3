@@ -12,7 +12,9 @@ export default {
         confirm: 'Confirmar',
         yes: 'Sim',
         no: 'Não',
-        failLoadLastAccessed: 'Erro ao carregar "Continuar onde parei".'
+        failLoadLastAccessed: 'Erro ao carregar "Continuar onde parei".',
+        termsOfUse: 'Termos de Uso',
+        privacyPolicy: 'Política de Privacidade'
     },
     auth: {
         accessAccount: 'Acessar conta',
@@ -56,6 +58,10 @@ export default {
         validations: {
             passwordsMismatch: 'As senhas não conferem.',
             minPassword: 'Senha deve ter no mínimo {{min}} caracteres.'
+        },
+        footer: {
+            onEnter: 'Ao entrar na plataforma, você concorda com nossos',
+            us: 'e nossa'
         }
     },
     logout: {
@@ -89,8 +95,6 @@ export default {
             sendFeedback: 'Enviar feedback',
             helpCenter: 'Central de ajuda',
             otherLinks: 'Outros links',
-            termsOfUse: 'Termos de Uso',
-            privacyPolicy: 'Política de Privacidade',
             leaveAccount: 'Sair da conta'
         },
         changeCourse: {
@@ -364,7 +368,10 @@ export default {
         viewDiscussions: 'Ver discussões',
         failHandleBookmark: 'Ocorreu um erro ao favoritar conteúdo.',
         failLoadClassroom: 'Ocorreu um erro ao carregar sala de aula.',
+        failLoadComments:
+            'Ocorreu um erro ao carregar comentários. Tente novamente mais tarde.',
         failRateClass: 'Ocorreu um erro ao avaliar a aula.',
+        failReplyQuestion: 'Ocorreu um erro ao responder a questão.',
         error: 'Ocorreu um erro ao carregar este vídeo.',
         document: {
             error: 'Ocorreu um erro ao carregar este documento.'
@@ -390,9 +397,7 @@ export default {
         phone: '0 800 327 0035',
         email: 'atendimento@editorasanar.com.br',
         attendance: 'Atendimento de Seg. a Sex. das 09h às 18h',
-        copyright: 'Copyright © Sanar. Todos os direitos reservados.',
-        termsOfUse: 'Termos de Uso',
-        privacyPolicy: 'Política de Privacidade'
+        copyright: 'Copyright © Sanar. Todos os direitos reservados.'
     },
     errors: {
         tryAgain: 'Tentar novamente',

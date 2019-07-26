@@ -50,8 +50,8 @@ const SANInitial = ({ setTab, history, match }) => {
     }
 
     const rankingProps = {
-        ranking: ranking.position,
-        score: ranking.points
+        ranking: ranking ? ranking.position : 0,
+        score: ranking ? ranking.points : 0
     }
 
     const renderNextContent = e => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { QuestionTemplate } from './QuestionTemplate'
 import { useQuestionsContext } from '../QuestionsContext'
 import { BFFService } from '../../../BFF/BFFService'
@@ -9,6 +9,17 @@ export const Question = () => {
 
     const [stats, setStats] = useState()
     const [loading, setLoading] = useState(false)
+
+    const initialLoad = () => {
+        if(!questionsCtx.currentQuestion) {
+            questionsCtx.loadMoreQuestions(false);
+        }
+    }
+
+    useEffect(() => {
+        initialLoad();
+        // eslint-disable-next-line
+    },[])
 
     const loadNextQuestion = () => {
         let questions = questionsCtx.questions
@@ -28,10 +39,6 @@ export const Question = () => {
 
     const onNextQuestion = (correct) => {
         loadNextQuestion()
-    }
-
-    if(!questionsCtx.currentQuestion) {
-        questionsCtx.loadMoreQuestions(false);
     }
 
     const onConfirmResponse = (alternativeId) => {

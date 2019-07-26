@@ -77,7 +77,8 @@ const ESTextEditor = forwardRef(
             'es-text-editor',
             {
                 'es-text-editor__comment': comment && !focus,
-                'es-text-editor__dark': dark
+                'es-text-editor__dark': dark,
+                comment: comment
             },
             className
         )
