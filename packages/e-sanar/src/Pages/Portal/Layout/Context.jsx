@@ -76,7 +76,6 @@ const LayoutProvider = ({ children, history }) => {
                 })
                 break
             case 3:
-                history.push('/aluno/favoritos')
                 break
             case 5:
                 break

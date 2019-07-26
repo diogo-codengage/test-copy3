@@ -9,6 +9,7 @@ import { BOOKMARKED_QUESTIONS } from 'Apollo/Bookmark/queries/bookmarkQuestion'
 import { Mutation } from 'react-apollo'
 import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
 import { CHANGE_BOOKMARK } from 'Apollo/Bookmark/mutations/bookmark'
+import ESDefaultError from 'Pages/Portal/Errors/Default'
 
 const initialResponse = {
     answer: null,
@@ -18,7 +19,7 @@ const initialResponse = {
 
 const SANBookmarkedQuestion = ({
     match: {
-        params: { id }
+        params: { idx }
     },
     history
 }) => {
@@ -31,6 +32,7 @@ const SANBookmarkedQuestion = ({
     const [currentIdx, setCurrentIdx] = useState(0)
     const [isFull, setIsFull] = useState(width <= 992)
     const [response, setResponse] = useState(initialResponse)
+    const [error, setError] = useState(null)
 
     const { me } = useAuthContext()
 
@@ -45,22 +47,21 @@ const SANBookmarkedQuestion = ({
                 query: BOOKMARKED_QUESTIONS,
                 fetchPolicy: 'network-only'
             })
-    
+
             const qts = data.map(({ question }) => {
                 question.bookmarked = true
-    
+
                 return question
             })
 
-            const qt = qts.find(i => i.id === id)
-            const idx = qts.findIndex(i => i.id === id)
-    
+            const qt = qts[parseInt(idx)]
+
             setQuestion(qt)
-            setCurrentIdx(idx)
+            setCurrentIdx(parseInt(idx))
             setQuestions(qts)
-                
+
             setTotal(count)
-    
+
             setLoading(false)
         }
 
@@ -139,7 +140,7 @@ const SANBookmarkedQuestion = ({
                 }
             })
         } catch (err) {
-            console.error(err)
+            setError(true)
         }
     }
 
@@ -149,7 +150,7 @@ const SANBookmarkedQuestion = ({
                 answerQuestion,
                 { loading: loadingMutation, error: errorMutation }
             ) => {
-                if (errorMutation) return `Error! ${errorMutation}`
+                if (errorMutation || error) return <ESDefaultError />
                 return (
                     <>
                         <SANPortalPagesContainer>

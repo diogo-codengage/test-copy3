@@ -32,10 +32,10 @@ const SANQuestions = ({ match: { url } }) => {
                         exact={true}
                         component={SANQuestionPage}
                     />
-                    <Route
+                    {/* <Route
                         path={`${url}/perguntas/:id?`}
                         component={SANBookmarkedQuestion}
-                    />
+                    /> */}
                     <Route
                         path={[`${url}/`, `${url}`]}
                         render={() => <Redirect to={`${url}/filtro`} />}

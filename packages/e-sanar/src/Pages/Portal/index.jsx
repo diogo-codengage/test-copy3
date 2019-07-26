@@ -11,6 +11,7 @@ import SANPortalLayout from './Layout'
 import { SANPortalProvider } from './Context'
 import ESDefaultError from '../Portal/Errors/Default'
 import SANBookmarkPage from './Bookmark'
+import SANBookmarkRouter from './Bookmark'
 
 const SANCoursePage = React.lazy(() => import('./Course'))
 const SANQuestionsPage = React.lazy(() => import('./Questions'))
@@ -57,7 +58,7 @@ const SANPortalRoutes = ({ match: { url } }) => {
                                         />
                                         <Route
                                             path={`${url}/favoritos`}
-                                            component={SANBookmarkPage}
+                                            component={SANBookmarkRouter}
                                         />
                                         <Route
                                             path={`${url}/minha-conta`}
