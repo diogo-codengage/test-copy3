@@ -198,8 +198,6 @@ const SANQuiz = ({
                 defaultSelected: selected
             }
         ])
-
-        // handleProgress(((anchor + 1) * 100) / questions.length)
     }
 
     useEffect(() => {
