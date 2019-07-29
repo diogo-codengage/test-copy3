@@ -10,6 +10,7 @@ import ESDropdown from '../../Atoms/Dropdown'
 import ESMenu, { ESItem } from '../../Atoms/Menu'
 import ESTypography from '../../Atoms/Typography'
 import ESEmpty from '../../Atoms/Empty'
+import ESDivider from '../../Atoms/Divider'
 
 import Comment from './Comment'
 
@@ -102,7 +103,8 @@ const ESCommentList = ({
                     undefined
                 )}
             </div>,
-            ...acc
+            ...acc,
+            !comment.parent_id && <ESDivider color='grey' />
         ]
     }
 
