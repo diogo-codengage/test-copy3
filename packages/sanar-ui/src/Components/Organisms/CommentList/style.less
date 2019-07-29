@@ -38,6 +38,11 @@
         }
     }
 
+    & .es-text-editor {
+        margin-bottom: @margin-sm;
+        margin-left: 56px;
+    }
+
     &-comment {
         &__child {
             margin-left: 56px;
@@ -63,14 +68,6 @@
         }
     }
 
-    & .es-text-editor {
-        margin-bottom: @margin-sm;
-    }
-
-    & .es-text-editor {
-        margin-left: 56px;
-    }
-
     & .ant-comment-inner {
         padding-bottom: 0;
     }
@@ -90,6 +87,15 @@
 
         & .es-typography {
             color: @white-6;
+        }
+    }
+
+    @media (max-width: @screen-xs) {
+        &-comment__child,
+        & .es-text-editor + .es-button,
+        & .es-comment + .es-button,
+        & .es-text-editor {
+            margin-left: 0;
         }
     }
 }

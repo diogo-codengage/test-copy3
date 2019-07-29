@@ -31,6 +31,8 @@
             }
 
             &-time {
+                text-overflow: ellipsis;
+                overflow: hidden;
                 &:before {
                     content: '•';
                     margin-right: @margin-xs;
@@ -55,6 +57,16 @@
                     color: @white-5 !important;
                 }
             }
+        }
+    }
+
+    @media (max-width: @screen-xs) {
+        & .ant-comment-content-detail {
+            margin-top: @margin-lg;
+        }
+        & .ant-comment-actions,
+        & .ant-comment-content-detail {
+            margin-left: -56px;
         }
     }
 }
