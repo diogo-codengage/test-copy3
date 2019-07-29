@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import { useTranslation } from 'react-i18next'
-import { distanceInWords } from 'date-fns'
+import { distanceInWordsToNow } from 'date-fns'
 
 import Avatar from 'antd/lib/avatar'
 import Comment from 'antd/lib/comment'
@@ -63,7 +63,7 @@ const ESComment = ({
 
     const diff =
         time &&
-        distanceInWords(new Date(), new Date(time && time), {
+        distanceInWordsToNow(new Date(time), {
             locale
         })
 
@@ -96,7 +96,11 @@ const ESComment = ({
                     <span dangerouslySetInnerHTML={{ __html: text }} />
                 </ESTypography>
             }
-            datetime={diff && diff}
+            datetime={
+                i18n.language == 'pt'
+                    ? diff.replace('aproximadamente', 'Há')
+                    : diff
+            }
         />
     )
 }

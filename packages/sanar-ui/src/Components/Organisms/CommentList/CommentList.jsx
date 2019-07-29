@@ -43,7 +43,7 @@ const ESCommentList = ({
     const handleHideReplies = id => () =>
         hideRepliesProps.onClick && hideRepliesProps.onClick(id)
 
-    const renderComment = (comment, index) => {
+    const renderComment = comment => {
         let acc = []
         if (comment && comment.answers && comment.answers.length) {
             acc = comment.answers.map(renderComment)
@@ -51,7 +51,7 @@ const ESCommentList = ({
 
         return [
             <div
-                key={index}
+                key={comment.id}
                 className={classNames('es-comment-list-comment', {
                     'es-comment-list-comment__child': comment.parent_id
                 })}
@@ -108,9 +108,7 @@ const ESCommentList = ({
         ]
     }
 
-    const handleOrderBy = ({ key }) => {
-        onOrderBy && onOrderBy(key)
-    }
+    const handleOrderBy = ({ key }) => onOrderBy && onOrderBy(key)
 
     return (
         <div className={classes}>
