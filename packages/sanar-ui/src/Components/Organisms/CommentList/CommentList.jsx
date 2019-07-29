@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -30,10 +30,14 @@ const ESCommentList = ({
     avatar
 }) => {
     const { t } = useTranslation('sanarui')
+    const [loadingReplies, setLoadingReplies] = useState({})
     const classes = classNames('es-comment-list', className)
 
-    const handleLoadReplies = id => () =>
-        loadRepliesProps.onClick && loadRepliesProps.onClick(id)
+    const handleLoadReplies = id => async () => {
+        setLoadingReplies({ [id]: true })
+        loadRepliesProps.onClick && (await loadRepliesProps.onClick(id))
+        setLoadingReplies(false)
+    }
 
     const handleHideReplies = id => () =>
         hideRepliesProps.onClick && hideRepliesProps.onClick(id)
@@ -72,6 +76,7 @@ const ESCommentList = ({
                         color='primary'
                         bold
                         className='secondary'
+                        loading={loadingReplies[comment.id]}
                     >
                         {t('commentList.viewReply', {
                             count:
