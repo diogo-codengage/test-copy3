@@ -40,6 +40,9 @@ export interface IQuestionsContext {
     questionsRequests: number,
     setQuestionsRequests: (value: number) => void,
 
+    noMoreQuestions: boolean
+    setNoMoreQuestion: (value: boolean) => void
+
     totalCorrect: number
     totalWrong: number
     totalSkipped: number
@@ -60,8 +63,6 @@ export interface IQuestionsContext {
     isCommentedByExpert: boolean
     setCommentedByExpert: (value: boolean) => void
 
-    allInstitutions: ISelectOption[]
-    setAllInstitutions:  (values: ISelectOption[]) => void
     selectedInstitutions: ISelectOption[]
     setSelectedInstitutions: (values: ISelectOption[]) => void
 
@@ -73,17 +74,15 @@ export interface IQuestionsContext {
     setSelectedTags: (selectedTags: Tag[]) => void
 
     allSpecialties: Speciality[]
-    setAllSpecialties: (selectedSpecialties: Speciality[]) => void
-    allSubSpecialties: Speciality[]
-    setAllSubSpecialties: (selectedSubSpecialties: Speciality[]) => void
     allTags: Tag[]
-    setAllTags: (selectedTags: Tag[]) => void
+    allInstitutions: ISelectOption[]
 
     showAdvancedFilters: boolean
     setShowAdvancedFilters: (showAdvancedFilters: boolean) => void
 
-    loadMoreQuestions: (clearOlds: boolean) => Promise<Boolean>
+    loadMoreQuestions: (clearOld: boolean) => Promise<Boolean>
 }
 
 export const QuestionsContext = createContext<IQuestionsContext>(null)
 export const useQuestionsContext = () => useContext(QuestionsContext)
+

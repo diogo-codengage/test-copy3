@@ -1,4 +1,4 @@
-import React  from 'react'
+import React, { useState } from 'react'
 import { FilterTemplate, IFilterTemplateProps } from './FilterTemplate'
 import { useQuestionsContext } from '../QuestionsContext'
 import { Speciality } from '../../../BFF/speciality'
@@ -6,6 +6,7 @@ import { Speciality } from '../../../BFF/speciality'
 export const Filter: React.FC = () => {
 
     const ctx = useQuestionsContext()
+    const [allSubSpecialties, setAllSubSpecialties ] = useState(ctx.allSpecialties.flatMap(s => s.children))
 
     const clearQuestions = () => {
         ctx.setQuestions([])
@@ -16,12 +17,12 @@ export const Filter: React.FC = () => {
     const params: IFilterTemplateProps = {
 
         allSpecialties: ctx.allSpecialties,
-        allSubSpecialties: ctx.allSubSpecialties,
+        allSubSpecialties,
         allTags: ctx.allTags,
 
         setSelectedSpecialties: (specialities: Speciality[]) => {
             ctx.setSelectedSpecialties(specialities)
-            ctx.setAllSubSpecialties( specialities.flatMap(s => s.children) )
+            setAllSubSpecialties( specialities.flatMap(s => s.children) )
             if(ctx.selectedSubSpecialties.length > 0 && specialities.length > 0){
                 ctx.setSelectedSubSpecialties( ctx.selectedSubSpecialties.filter( ss => {
                     return specialities.flatMap(s => s.children).map(s => s.value).includes(ss.value);
