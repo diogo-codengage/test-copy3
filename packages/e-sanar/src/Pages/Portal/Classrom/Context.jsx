@@ -93,7 +93,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         return () => {
             setMenuTab(0)
             setDarkMode(false)
-            setPageContext(false)
+            setPageContext('general')
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
