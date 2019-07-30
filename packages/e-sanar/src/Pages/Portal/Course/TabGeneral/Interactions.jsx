@@ -42,11 +42,7 @@ const SANInteractions = () => {
     const renderListBookmarks = (item, index) => (
         <ESRecentSavedListItem
             key={index}
-            avatar={
-                item.resource_thumbnail
-                    ? item.resource_thumbnail
-                    : bookmarkAvatar(item.resource_type)
-            }
+            avatar={bookmarkAvatar(item.resource_type)}
             title={item.resource_title}
             description={
                 item.resource_index && item.level_index
