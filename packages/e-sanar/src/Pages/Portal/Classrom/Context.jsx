@@ -91,6 +91,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
     useEffect(() => {
         setDarkMode(true)
         return () => {
+            setMenuTab(0)
             setDarkMode(false)
             setPageContext(false)
         }
