@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -10,6 +10,7 @@ import ESDropdown from '../../Atoms/Dropdown'
 import ESMenu, { ESItem } from '../../Atoms/Menu'
 import ESTypography from '../../Atoms/Typography'
 import ESEmpty from '../../Atoms/Empty'
+import ESDivider from '../../Atoms/Divider'
 
 import Comment from './Comment'
 
@@ -30,15 +31,19 @@ const ESCommentList = ({
     avatar
 }) => {
     const { t } = useTranslation('sanarui')
+    const [loadingReplies, setLoadingReplies] = useState({})
     const classes = classNames('es-comment-list', className)
 
-    const handleLoadReplies = id => () =>
-        loadRepliesProps.onClick && loadRepliesProps.onClick(id)
+    const handleLoadReplies = id => async () => {
+        setLoadingReplies({ [id]: true })
+        loadRepliesProps.onClick && (await loadRepliesProps.onClick(id))
+        setLoadingReplies(false)
+    }
 
     const handleHideReplies = id => () =>
         hideRepliesProps.onClick && hideRepliesProps.onClick(id)
 
-    const renderComment = (comment, index) => {
+    const renderComment = comment => {
         let acc = []
         if (comment && comment.answers && comment.answers.length) {
             acc = comment.answers.map(renderComment)
@@ -46,7 +51,7 @@ const ESCommentList = ({
 
         return [
             <div
-                key={index}
+                key={comment.id}
                 className={classNames('es-comment-list-comment', {
                     'es-comment-list-comment__child': comment.parent_id
                 })}
@@ -72,6 +77,7 @@ const ESCommentList = ({
                         color='primary'
                         bold
                         className='secondary'
+                        loading={loadingReplies[comment.id]}
                     >
                         {t('commentList.viewReply', {
                             count:
@@ -97,13 +103,12 @@ const ESCommentList = ({
                     undefined
                 )}
             </div>,
-            ...acc
+            ...acc,
+            !comment.parent_id && <ESDivider color='grey' />
         ]
     }
 
-    const handleOrderBy = ({ key }) => {
-        onOrderBy && onOrderBy(key)
-    }
+    const handleOrderBy = ({ key }) => onOrderBy && onOrderBy(key)
 
     return (
         <div className={classes}>
