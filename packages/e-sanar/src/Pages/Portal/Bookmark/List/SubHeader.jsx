@@ -3,124 +3,74 @@ import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
-import classNames from 'classnames'
 import { ESCol, ESRow } from 'sanar-ui/dist/Components/Atoms/Grid'
+import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
+import {
+    ESRadioGroup,
+    ESRadioButton
+} from 'sanar-ui/dist/Components/Atoms/Radio'
 
 const intlPath = 'bookmark.subHeader.'
 
 const SANBookmarkSubHeader = ({
     amount,
-    filter,
-    loading,
-    visualization,
     onSelectFilter,
     onSelectVisualization
 }) => {
     const { t } = useTranslation('esanar')
 
-    const selectedClasses = idx =>
-        classNames('san-bookmark-page__subheader--filter-area_item', {
-            'selected-filter': idx === filter,
-            disabled: loading
-        })
-
-    const selectedVisualizationClasses = idx =>
-        classNames('san-bookmark-page__subheader--visualization_item', {
-            'selected-visualization': idx === visualization
-        })
-
-    const pathToMessage = name => (name ? name.toLowerCase() + 's' : 'all')
-
-    const FilterItem = ({ name }) => (
-        <div
-            className={selectedClasses(name)}
-            onClick={() => !loading && onSelectFilter(name)}
-        >
-            <ESTypography variant='body2' strong>
-                {t(`${intlPath}${pathToMessage(name)}`)}
-            </ESTypography>
-        </div>
-    )
-
     return (
-        <ESRow
-            type='flex'
-            align='middle'
-            style={{ marginBottom: 40, height: 40 }}
-            justify='center'
-        >
-            <ESCol sm={24} md={6}>
-                {amount > 0 && (
-                    <ESRow justify='start'>
-                        <div
-                            style={{
-                                height: 40,
-                                display: 'flex',
-                                alignItems: 'center'
-                            }}
-                        >
-                            <ESTypography variant='body2'>
-                                {t(`${intlPath}counter.keyWithCount`, {
-                                    count: amount
-                                })}
-                            </ESTypography>
-                        </div>
-                    </ESRow>
-                )}
+        <ESRow type='flex' justify='space-between'>
+            <ESCol xs={24} sm={12} md={8} className='mb-md'>
+                <ESTypography variant='body2'>
+                    {t(`${intlPath}counter.keyWithCount`, {
+                        count: amount
+                    })}
+                </ESTypography>
             </ESCol>
-            <ESCol sm={24} md={12}>
-                <ESRow type='flex' align='middle' justify='space-between'>
-                    <ESCol span={6}>
-                        <FilterItem
-                            name={null}
-                            onSelect={onSelectFilter}
-                            classes={selectedClasses}
-                        />
-                    </ESCol>
-                    <ESCol span={6}>
-                        <FilterItem
-                            name='Video'
-                            onSelect={onSelectFilter}
-                            classes={selectedClasses}
-                        />
-                    </ESCol>
-                    <ESCol span={6}>
-                        <FilterItem
-                            name='Document'
-                            onSelect={onSelectFilter}
-                            classes={selectedClasses}
-                        />
-                    </ESCol>
-                    <ESCol span={6}>
-                        <FilterItem
-                            name='Question'
-                            onSelect={onSelectFilter}
-                            classes={selectedClasses}
-                        />
-                    </ESCol>
-                </ESRow>
+            <ESCol xs={24} sm={12} md={8}>
+                <ESRadioGroup
+                    defaultValue={null}
+                    onChange={e => onSelectFilter(e.target.value)}
+                    className='d-flex justify-content-between'
+                    blocks
+                >
+                    <ESRadioButton value={null}>
+                        {t(`${intlPath}all`)}
+                    </ESRadioButton>
+                    <ESRadioButton value='Video'>
+                        {t(`${intlPath}videos`)}
+                    </ESRadioButton>
+                    <ESRadioButton value='Document'>
+                        {t(`${intlPath}documents`)}
+                    </ESRadioButton>
+                    <ESRadioButton value='Question'>
+                        {t(`${intlPath}questions`)}
+                    </ESRadioButton>
+                </ESRadioGroup>
             </ESCol>
-            <ESCol xs={0} sm={0} md={6}>
-                <div className='san-bookmark-page__subheader--visualization'>
-                    <div
-                        className={`${selectedVisualizationClasses(
-                            'grid'
-                        )} mr-sm`}
-                        onClick={() =>
-                            !loading && onSelectVisualization('grid')
-                        }
-                    >
-                        <ESEvaIcon name='grid-outline' />
-                    </div>
-                    <div
-                        className={selectedVisualizationClasses('list')}
-                        onClick={() =>
-                            !loading && onSelectVisualization('list')
-                        }
-                    >
-                        <ESEvaIcon name='list-outline' />
-                    </div>
-                </div>
+            <ESCol
+                xs={0}
+                sm={0}
+                md={8}
+                className='d-flex justify-content-flex-end'
+            >
+                <ESButton
+                    onClick={() => onSelectVisualization('grid')}
+                    size='small'
+                    variant='text'
+                    circle
+                >
+                    <ESEvaIcon name='grid-outline' />
+                </ESButton>
+                <ESButton
+                    onClick={() => onSelectVisualization('list')}
+                    size='small'
+                    variant='text'
+                    circle
+                >
+                    <ESEvaIcon name='list-outline' />
+                </ESButton>
             </ESCol>
         </ESRow>
     )
