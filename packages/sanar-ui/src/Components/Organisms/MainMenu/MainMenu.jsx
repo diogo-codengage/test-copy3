@@ -12,8 +12,6 @@ import ESButton from '../../Atoms/Button'
 import MainMenuContentHeader from './MainMenuContentHeader'
 import ESCardContinueCourse from '../../Atoms/CardContinueCourse/CardContinueCourse'
 
-import { Scrollbars } from 'react-custom-scrollbars'
-
 const SideButton = ({ name, ...props }) => {
     const { theme } = useMainMenuContext()
     return (
@@ -180,16 +178,15 @@ const ESMainMenu = forwardRef(
                         <img className='logo' src={logo} />
                     </div>
                 ) : (
-                    context !== 'classroom' && (
-                        <>
-                            {showContinueBar &&
-                                context !== 'questionPractice' && (
-                                    <ESCardContinueCourse
-                                        className='es-main-menu__continue'
-                                        {...continueCourseProps}
-                                        borderRadius={false}
-                                    />
-                                )}
+                    <>
+                        {showContinueBar && (
+                            <ESCardContinueCourse
+                                className='es-main-menu__continue'
+                                {...continueCourseProps}
+                                borderRadius={false}
+                            />
+                        )}
+                        {context !== 'classroom' && (
                             <div className='es-main-menu__sidebar-bottom'>
                                 <HomeButton onClick={onHome} />
                                 {onSearchClick && (
@@ -197,8 +194,8 @@ const ESMainMenu = forwardRef(
                                 )}
                                 <InitalButton onClick={initialBottomClick} />
                             </div>
-                        </>
-                    )
+                        )}
+                    </>
                 )}
                 {(staticToolbar || context === 'classroom') && (
                     <div

@@ -17,6 +17,7 @@ import { usePortalContext } from 'Pages/Portal/Context'
 import { getClassRoute } from 'Utils/getClassRoute'
 
 const toDarkMode = [6, 9]
+const hideContinueBarContext = ['questionPractice', 'classroom']
 
 //TODO: Improve setTab
 const MenuContent = ({ indexMenu, setMenuTab: setTab, handleBack }) => {
@@ -113,7 +114,7 @@ const SANMenu = ({ history }) => {
             onHome={handleHome}
             title={menuTitle}
             theme={theme}
-            showContinueBar
+            showContinueBar={!hideContinueBarContext.includes(pageContext)}
             context={pageContext}
             className='san-main-menu'
             continueCourseProps={continueCourseProps}
