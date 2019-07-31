@@ -7,16 +7,30 @@ export const mapCommentInteraction = ({
     dislikes_count,
     likes_count,
     interaction
-}) => comment => ({
-    ...comment,
-    ...(comment.id === id && {
-        likes_count,
-        dislikes_count,
-        disliked_by_user:
-            interaction === 'dislike' && !comment.disliked_by_user,
-        liked_by_user: interaction === 'like' && !comment.liked_by_user
-    })
-})
+}) => comment => {
+    if (comment.id === id) {
+        let flag
+        if (interaction === 'dislike') {
+            flag = {
+                disliked_by_user: !comment.disliked_by_user,
+                liked_by_user: false
+            }
+        } else {
+            flag = {
+                disliked_by_user: false,
+                liked_by_user: !comment.liked_by_user
+            }
+        }
+        return {
+            ...comment,
+            ...flag,
+            likes_count,
+            dislikes_count
+        }
+    }
+
+    return comment
+}
 
 export const interactionCache = ({ parentId, interaction }) => (
     store,

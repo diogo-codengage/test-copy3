@@ -1,5 +1,7 @@
 import gql from 'graphql-tag'
 
+const isRandom = (/true/i).test(process.env.REACT_APP_RANDOM_QUESTIONS)
+
 export const GET_QUESTIONS = gql`
     query Questions(
         $courseIds: [ID]
@@ -24,6 +26,7 @@ export const GET_QUESTIONS = gql`
             answeredByUser: $answeredByUser
             notAnsweredByUser: $notAnsweredByUser
             isCommentedByExpert: $isCommentedByExpert
+            random: ${isRandom}
         ) {
             count
             data {

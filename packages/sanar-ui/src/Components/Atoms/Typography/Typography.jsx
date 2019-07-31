@@ -35,6 +35,7 @@ const ESTypography = ({
     strong,
     ellipsis,
     children,
+    component,
     delete: deleteProp,
     ...props
 }) => {
@@ -59,6 +60,7 @@ const ESTypography = ({
         setEllipsed(old => !old)
     }
 
+    // It'll render a paragraph with ellipsis
     if (typeof ellipsis === 'object' && ellipsed) {
         return (
             <ResponsiveLinesEllipsis
@@ -79,8 +81,10 @@ const ESTypography = ({
             />
         )
     }
+
+    const Component = component ? component : 'div'
     return (
-        <div className={classes} {...props}>
+        <Component className={classes} {...props}>
             {children}
             {typeof ellipsis === 'object' && ellipsis.showAction && (
                 <div>
@@ -91,12 +95,13 @@ const ESTypography = ({
                     />
                 </div>
             )}
-        </div>
+        </Component>
     )
 }
 
 ESTypography.propTypes = {
     className: PropTypes.string,
+    component: PropTypes.string,
     level: PropTypes.oneOf([1, 2, 3, 4, 5, 6]),
     variant: PropTypes.oneOf([
         'subtitle1',

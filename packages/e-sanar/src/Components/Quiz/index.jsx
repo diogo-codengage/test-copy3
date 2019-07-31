@@ -88,6 +88,7 @@ const SANQuiz = ({
     const handleConfirm = mutation => async alternative => {
         try {
             setSelect(alternative)
+            handleProgress(((index + 1) * 100) / questions.length)
             mutation({
                 variables: {
                     userId: me.id,
@@ -120,6 +121,7 @@ const SANQuiz = ({
     }
 
     const handleJump = () => {
+        handleProgress(((index + 1) * 100) / questions.length)
         scrollBehavior()
 
         if (index === questions.length - 1) {
@@ -131,20 +133,8 @@ const SANQuiz = ({
         }
     }
 
-    const handleNext = isCorrect => {
+    const handleNext = () => {
         scrollBehavior()
-
-        if (isCorrect) {
-            setStats(oldStats => ({
-                ...oldStats,
-                correct: oldStats.correct + 1
-            }))
-        } else {
-            setStats(oldStats => ({
-                ...oldStats,
-                wrong: oldStats.wrong + 1
-            }))
-        }
 
         if (index === questions.length - 1 && mock) return
         setIndex(oldIndex => ++oldIndex)
@@ -182,6 +172,18 @@ const SANQuiz = ({
             return question
         })
 
+        if (correct.id === selected) {
+            setStats(oldStats => ({
+                ...oldStats,
+                correct: oldStats.correct + 1
+            }))
+        } else {
+            setStats(oldStats => ({
+                ...oldStats,
+                wrong: oldStats.wrong + 1
+            }))
+        }
+
         setQuestions(questionsMap)
 
         setResponses(oldResponses => [
@@ -196,8 +198,6 @@ const SANQuiz = ({
                 defaultSelected: selected
             }
         ])
-
-        handleProgress((1 * 100) / questions.length)
     }
 
     useEffect(() => {
@@ -272,7 +272,7 @@ const SANQuiz = ({
                     return (
                         <SANErrorPiece
                             message={t('classroom.mock.errorAnswering')}
-                            dark={true}
+                            dark
                         />
                     )
                 return (
@@ -302,11 +302,13 @@ const SANQuiz = ({
                                     onNext={handleNext}
                                     onPrevious={handlePrevious}
                                     loading={loadingMutation}
-                                    isHistoric={isFinish}
+                                    isHistoric={isFinish && mock}
                                     skipSeeAnswer={mock && !isFinish}
                                     {...responses[index]}
                                     propsNext={{
-                                        disabled: index === questions.length - 1
+                                        disabled:
+                                            index === questions.length - 1 &&
+                                            mock
                                     }}
                                     propsPrev={{
                                         disabled: index === 0
