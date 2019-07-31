@@ -81,7 +81,7 @@ export default {
             init: 'Início',
             notifications: 'Notificações',
             schedule: 'Cronograma',
-            saved: 'Salvos',
+            saved: 'Favoritos',
             performace: 'Desempenho',
             questions: 'Banco de questões',
             changeCourse: 'Trocar de curso',
@@ -248,6 +248,23 @@ export default {
             }
         }
     },
+    bookmark: {
+        title: 'Favoritos',
+        subtitle: 'Encontre aqui todos seus conteúdos favoritos',
+        search: 'Pesquisar favoritos',
+        subHeader: {
+            counter: {
+                key: 'item favorito',
+                key_plural: 'itens favoritos',
+                keyWithCount: '{{count}} item favorito',
+                keyWithCount_plural: '{{count}} itens favoritos',
+            },
+            all: 'Todos',
+            videos: 'Vídeos',
+            documents: 'Materiais',
+            questions: 'Questões'
+        }
+    },
     questionBase: {
         hitoricButton: 'Histórico',
         questionsButton: 'BANCO DE QUESTÕES',
@@ -269,7 +286,9 @@ export default {
                 title: 'Ops! Você está saindo da prática.',
                 subtitle: 'Deseja realmente encerrar a prática?'
             },
-            failHandleBookmark: 'Ocorreu um erro ao favoritar questão.'
+            failHandleBookmark: 'Ocorreu um erro ao favoritar questão.',
+            backBookmark: 'Voltar para favoritos',
+            bookmark: 'Favorito'
         },
         historic: {
             title: 'Histórico de questões',

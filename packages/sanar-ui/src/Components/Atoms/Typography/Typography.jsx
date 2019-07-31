@@ -77,6 +77,7 @@ const ESTypography = ({
                     )
                 }
                 className={classes}
+                {...props}
             />
         )
     }

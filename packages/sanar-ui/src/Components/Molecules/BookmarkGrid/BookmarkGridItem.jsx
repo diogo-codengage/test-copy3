@@ -3,19 +3,32 @@ import PropTypes from 'prop-types'
 import ESTypography from '../../Atoms/Typography'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 
-const ESFavoriteGridItem = ({
-    resourceType,
-    title,
-    subtitle,
-    preview,
+const getIconName = type => {
+    switch (type) {
+        case 'Document':
+            return 'book-open-outline'
+        case 'Question':
+            return 'edit-outline'
+        case 'Video':
+            return 'play-circle-outline'
+        default:
+            return 'alert-circle-outline'
+    }
+}
+
+const ESBookmarkGridItem = ({
+    id,
     image,
-    icon,
-    action
+    resourceType,
+    subtitle,
+    title,
+    onRemove,
+    onPress
 }) => {
     return (
         <div className='es-favorite-grid__item'>
             {resourceType && resourceType !== 'Question' && (
-                <ESTypography variant='body1' strong>
+                <ESTypography variant='body1' strong onClick={onPress}>
                     {title}
                 </ESTypography>
             )}
@@ -27,13 +40,15 @@ const ESFavoriteGridItem = ({
                     ellipsis={{ rows: 10, expandable: false }}
                     variant='subtitle2'
                     className='es-favorite-grid__item--preview'
+                    onClick={onPress}
                 >
-                    {preview}
+                    {title}
                 </ESTypography>
             )}
             <div className='es-favorite-grid__item--actions'>
                 <ESEvaIcon
-                    name={icon}
+                    key={`${resourceType}_${id}_grid_icon`}
+                    name={getIconName(resourceType)}
                     className='es-favorite-grid__item--actions-icon'
                     size='large'
                 />
@@ -44,9 +59,10 @@ const ESFavoriteGridItem = ({
                     {subtitle}
                 </ESTypography>
                 <ESEvaIcon
+                    key={`${resourceType}_${id}_grid_remove_icon`}
                     name='trash-outline'
                     className='es-favorite-grid__item--actions-remove'
-                    onClick={action}
+                    onClick={onRemove}
                     size='large'
                 />
             </div>
@@ -54,14 +70,12 @@ const ESFavoriteGridItem = ({
     )
 }
 
-ESFavoriteGridItem.propTypes = {
-    resourceType: PropTypes.string,
-    preview: PropTypes.string,
-    title: PropTypes.string,
-    subtitle: PropTypes.string,
+ESBookmarkGridItem.propTypes = {
     image: PropTypes.string,
-    icon: PropTypes.string,
-    action: PropTypes.func
+    resourceType: PropTypes.string,
+    subtitle: PropTypes.string,
+    title: PropTypes.string,
+    onRemove: PropTypes.func
 }
 
-export default ESFavoriteGridItem
+export default ESBookmarkGridItem

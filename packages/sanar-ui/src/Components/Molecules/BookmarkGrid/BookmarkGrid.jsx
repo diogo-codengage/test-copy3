@@ -1,8 +1,8 @@
 import React from 'react'
 import { List } from 'antd'
-import ESFavoriteGridItem from './FavoriteGridItem'
+import ESBookmarkGridItem from './BookmarkGridItem'
 
-const ESFavoriteGrid = ({ data }) => {
+const ESBookmarkGrid = ({ data }) => {
     return (
         <List
             grid={{ gutter: 48, xs: 1, sm: 2, md: 2, lg: 3 }}
@@ -14,7 +14,7 @@ const ESFavoriteGrid = ({ data }) => {
                         justifyContent: 'center'
                     }}
                 >
-                    <ESFavoriteGridItem {...item} />
+                    <ESBookmarkGridItem {...item} />
                 </List.Item>
             )}
             dataSource={data}
@@ -22,4 +22,4 @@ const ESFavoriteGrid = ({ data }) => {
     )
 }
 
-export default ESFavoriteGrid
+export default ESBookmarkGrid

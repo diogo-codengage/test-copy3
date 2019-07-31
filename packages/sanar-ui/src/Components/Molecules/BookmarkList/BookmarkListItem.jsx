@@ -4,26 +4,39 @@ import PropTypes from 'prop-types'
 import ESTypography from '../../Atoms/Typography'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 
-const ESFavoriteListItem = ({
+const getIconName = type => {
+    switch (type) {
+        case 'Document':
+            return 'book-open-outline'
+        case 'Question':
+            return 'edit-outline'
+        case 'Video':
+            return 'play-circle-outline'
+        default:
+            return 'alert-circle-outline'
+    }
+}
+
+const ESBookmarkListItem = ({
+    id,
     className,
-    extra,
-    extraIcon,
-    icon,
     image,
-    title,
+    resourceType,
     subtitle,
-    ...props
+    title,
+    onPress,
+    onRemove
 }) => {
     const classes = classNames('es-favorite-item', className)
     return (
-        <div className={classes} {...props}>
+        <div className={classes}>
             <div
                 className='es-favorite-item__img'
                 style={{
                     backgroundImage: `url(${image})`
                 }}
             />
-            <div className='es-favorite-item__content'>
+            <div className='es-favorite-item__content' onClick={onPress}>
                 <ESTypography
                     variant='subtitle2'
                     ellipsis
@@ -34,8 +47,9 @@ const ESFavoriteListItem = ({
                 </ESTypography>
                 <div className='d-flex align-items-center'>
                     <ESEvaIcon
+                        key={`${resourceType}_${id}_icon`}
                         size='medium'
-                        name={icon}
+                        name={getIconName(resourceType)}
                         className='es-favorite-item__content--icon'
                     />
                     <ESTypography
@@ -47,11 +61,12 @@ const ESFavoriteListItem = ({
                 </div>
             </div>
             <div className='es-favorite-item__action'>
-                {extra && (
+                {onRemove && (
                     <ESEvaIcon
+                        key={`${resourceType}_${id}_grid_remove_icon`}
                         size='small'
-                        name={extraIcon}
-                        onClick={extra}
+                        name='trash-outline'
+                        onClick={onRemove}
                         className='es-favorite-item__action--icon'
                     />
                 )}
@@ -60,14 +75,16 @@ const ESFavoriteListItem = ({
     )
 }
 
-ESFavoriteListItem.propTypes = {
+ESBookmarkListItem.propTypes = {
+    id: PropTypes.string,
     className: PropTypes.string,
-    extra: PropTypes.func,
-    extraIcon: PropTypes.string,
+    remove: PropTypes.func,
     image: PropTypes.string,
+    resourceType: PropTypes.string,
     subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    title: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
+    title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    onRemove: PropTypes.func
 }
-ESFavoriteListItem.defaultProps = {}
+ESBookmarkListItem.defaultProps = {}
 
-export default ESFavoriteListItem
+export default ESBookmarkListItem

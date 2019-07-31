@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import ESFavoriteGrid from './FavoriteGrid'
+import ESBookmarkGrid from './BookmarkGrid'
 import videoImage from '../../../assets/images/favorite-grid/grid-video.png'
 import documentImage from '../../../assets/images/favorite-grid/grid-document.png'
 
@@ -50,5 +50,5 @@ const items = [
 ]
 
 storiesOf('Molecules.FavoriteGrid', module).add('Video', () => (
-    <ESFavoriteGrid data={items} />
+    <ESBookmarkGrid data={items} />
 ))
