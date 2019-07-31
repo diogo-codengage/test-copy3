@@ -100,9 +100,19 @@ const SANInitial = ({ setTab, history, match }) => {
                     icon={<ESEvaIcon name='calendar-outline' color='default' />}
                 />
                 <ESNavigationListItem
+                key={4}
+                title={t(`${intlPath}performace`)}
+                icon={
+                    <ESEvaIcon name='pie-chart-outline' color='default' />
+                }
+            /> */}
+                <ESNavigationListItem
+                    data-testid='san-menu-navigation__bookmarks'
                     key={3}
                     title={t(`${intlPath}saved`)}
                     icon={<ESEvaIcon name='heart-outline' color='default' />}
+                    onClick={() => menuOpenOrClose()}
+                    to='/aluno/favoritos'
                 />
                 <ESNavigationListItem
                     key={4}
@@ -110,7 +120,7 @@ const SANInitial = ({ setTab, history, match }) => {
                     icon={
                         <ESEvaIcon name='pie-chart-outline' color='default' />
                     }
-                /> */}
+                />
                 <ESNavigationListItem
                     data-testid='san-menu-navigation__questions'
                     key={5}
