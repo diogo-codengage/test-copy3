@@ -117,7 +117,7 @@ const ESJwPlayer = forwardRef(
             if (player.getWidth() > 1024) {
                 player.resize('100%', '100vh')
             } else {
-                player.resize('100vw', 'calc(100vh - 100px)')
+                player.resize('100%', 'calc(100vh - 100px)')
             }
 
             setIsReady(true)
@@ -141,10 +141,10 @@ const ESJwPlayer = forwardRef(
         useEffect(() => {
             if (width < 1024) {
                 const player = getPlayer(playerId)
-                player && player.resize('100vw', 'calc(100vh - 100px)')
+                player && player.resize('100%', 'calc(100vh - 100px)')
             } else {
                 const player = getPlayer(playerId)
-                player && player.resize('100vw', '100vh')
+                player && player.resize('100%', '100vh')
             }
         }, [width])
 

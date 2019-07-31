@@ -53,6 +53,7 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
 
     const handleBookmark = async ({ resourceId, resourceType }) => {
         try {
+            !resourceId && setBookmark(oldBookmarked => !oldBookmarked)
             await client.mutate({
                 mutation: CREATE_BOOKMARK,
                 variables: {
@@ -65,7 +66,6 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
                     userId: me.id
                 }
             })
-            !resourceId && setBookmark(oldBookmarked => !oldBookmarked)
         } catch {
             message.error(t('classroom.failHandleBookmark'))
         }
