@@ -72,7 +72,10 @@ const SANQuestionsFilterSelects = ({ defaultOpen }) => {
                         </Query>
                     </ESCol>
                     <ESCol sm={24} md={12}>
-                        <Query query={GET_TAGS} variables={{ order: 'name' }}>
+                        <Query
+                            query={GET_TAGS}
+                            variables={{ order: 'name', limit: 9999999 }}
+                        >
                             {props => (
                                 <ESFormItem
                                     name='tags'
@@ -96,7 +99,10 @@ const SANQuestionsFilterSelects = ({ defaultOpen }) => {
                         </Query>
                     </ESCol>
                     <ESCol sm={24} md={12}>
-                        <Query query={GET_BOARDS} variables={{ order: 'name' }}>
+                        <Query
+                            query={GET_BOARDS}
+                            variables={{ order: 'name', limit: 9999999 }}
+                        >
                             {props => (
                                 <ESFormItem
                                     name='boards'
@@ -119,7 +125,10 @@ const SANQuestionsFilterSelects = ({ defaultOpen }) => {
                         </Query>
                     </ESCol>
                     <ESCol sm={24} md={12}>
-                        <Query query={GET_EXAMS} variables={{ order: 'name' }}>
+                        <Query
+                            query={GET_EXAMS}
+                            variables={{ order: 'name', limit: 9999999 }}
+                        >
                             {props => (
                                 <ESFormItem
                                     name='exams'
