@@ -21,7 +21,7 @@ const SANBookmarkSubHeader = ({
     const selectedClasses = idx =>
         classNames('san-bookmark-page__subheader--filter-area_item', {
             'selected-filter': idx === filter,
-            'disabled': loading
+            disabled: loading
         })
 
     const selectedVisualizationClasses = idx =>
@@ -60,12 +60,9 @@ const SANBookmarkSubHeader = ({
                             }}
                         >
                             <ESTypography variant='body2'>
-                                {amount}
-                                {t(
-                                    `${intlPath}${
-                                        amount > 1 ? 'plural' : 'single'
-                                    }`
-                                )}
+                                {t(`${intlPath}counter.keyWithCount`, {
+                                    count: amount
+                                })}
                             </ESTypography>
                         </div>
                     </ESRow>
@@ -106,8 +103,9 @@ const SANBookmarkSubHeader = ({
             <ESCol xs={0} sm={0} md={6}>
                 <div className='san-bookmark-page__subheader--visualization'>
                     <div
-                        className={selectedVisualizationClasses('grid')}
-                        style={{ marginRight: 12 }}
+                        className={`${selectedVisualizationClasses(
+                            'grid'
+                        )} mr-sm`}
                         onClick={() =>
                             !loading && onSelectVisualization('grid')
                         }

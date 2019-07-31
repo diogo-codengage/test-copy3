@@ -253,8 +253,12 @@ export default {
         subtitle: 'Encontre aqui todos seus conteúdos favoritos',
         search: 'Pesquisar favoritos',
         subHeader: {
-            single: ' item favorito',
-            plural: ' itens favoritos',
+            counter: {
+                key: 'item favorito',
+                key_plural: 'itens favoritos',
+                keyWithCount: '{{count}} item favorito',
+                keyWithCount_plural: '{{count}} itens favoritos',
+            },
             all: 'Todos',
             videos: 'Vídeos',
             documents: 'Materiais',

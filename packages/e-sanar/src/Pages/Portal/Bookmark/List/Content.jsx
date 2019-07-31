@@ -8,6 +8,44 @@ import { ESBookmarkListItem } from 'sanar-ui/dist/Components/Molecules/BookmarkL
 import ESPagination from 'sanar-ui/dist/Components/Atoms/Pagination'
 import { List } from 'antd'
 
+const Item = ({
+    visualization,
+    id,
+    resource_title,
+    resource_id,
+    level_id,
+    resource_thumbnail,
+    resource_type,
+    navigateToResource,
+    onRemove
+}) => (
+    <List.Item className='d-flex justify-content-center align-items-center'>
+        {visualization && visualization === 'grid' ? (
+            <ESBookmarkGridItem
+                id={id}
+                image={resource_thumbnail}
+                title={resource_title}
+                resourceType={resource_type}
+                onPress={() =>
+                    navigateToResource(resource_type, level_id, resource_id)
+                }
+                onRemove={() => onRemove(resource_id, resource_type)}
+            />
+        ) : (
+            <ESBookmarkListItem
+                id={id}
+                image={resource_thumbnail}
+                title={resource_title}
+                resourceType={resource_type}
+                onRemove={() => onRemove(resource_id, resource_type)}
+                onPress={() =>
+                    navigateToResource(resource_type, level_id, resource_id)
+                }
+            />
+        )}
+    </List.Item>
+)
+
 const SANBookmarkContent = ({
     bookmarks,
     total,
@@ -37,62 +75,14 @@ const SANBookmarkContent = ({
                 grid={getColumnAmount()}
                 loading={loading}
                 dataSource={bookmarks}
-                renderItem={item => {
-                    const {
-                        id,
-                        resource_title,
-                        resource_id,
-                        level_id,
-                        resource_thumbnail,
-                        resource_type
-                    } = item
-
-                    return (
-                        <List.Item
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }}
-                        >
-                            {visualization && visualization === 'grid' ? (
-                                <ESBookmarkGridItem
-                                    id={id}
-                                    image={resource_thumbnail}
-                                    title={resource_title}
-                                    resourceType={resource_type}
-                                    onPress={() =>
-                                        navigateToResource(
-                                            resource_type,
-                                            level_id,
-                                            resource_id
-                                        )
-                                    }
-                                    onRemove={() =>
-                                        onRemove(resource_id, resource_type)
-                                    }
-                                />
-                            ) : (
-                                <ESBookmarkListItem
-                                    id={id}
-                                    image={resource_thumbnail}
-                                    title={resource_title}
-                                    resourceType={resource_type}
-                                    onRemove={() =>
-                                        onRemove(resource_id, resource_type)
-                                    }
-                                    onPress={() =>
-                                        navigateToResource(
-                                            resource_type,
-                                            level_id,
-                                            resource_id
-                                        )
-                                    }
-                                />
-                            )}
-                        </List.Item>
-                    )
-                }}
+                renderItem={item => (
+                    <Item
+                        {...item}
+                        visualization={visualization}
+                        navigateToResource={navigateToResource}
+                        onRemove={onRemove}
+                    />
+                )}
                 footer={
                     <div
                         style={{
