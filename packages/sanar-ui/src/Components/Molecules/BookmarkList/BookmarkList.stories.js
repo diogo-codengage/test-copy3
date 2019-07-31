@@ -8,7 +8,7 @@ import documentImage from '../../../assets/images/favorite-items/document.png'
 import questionImage from '../../../assets/images/favorite-items/question.svg'
 import videoImage from '../../../assets/images/favorite-items/video.png'
 
-storiesOf('Molecules.Favorites', module)
+storiesOf('Molecules.BookmarkList', module)
     .add('Video', () => (
         <ESBookmarkList>
             {[0, 1, 2, 3, 4, 5].map(e => (

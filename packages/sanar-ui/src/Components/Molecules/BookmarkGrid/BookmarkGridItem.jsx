@@ -1,20 +1,44 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import ESTypography from '../../Atoms/Typography'
 import ESEvaIcon from '../../Atoms/EvaIcon'
+import ESButton from '../../Atoms/Button'
 
-const getIconName = type => {
-    switch (type) {
-        case 'Document':
-            return 'book-open-outline'
-        case 'Question':
-            return 'edit-outline'
-        case 'Video':
-            return 'play-circle-outline'
-        default:
-            return 'alert-circle-outline'
-    }
+import videoSvg from '../../../assets/images/bookmark/video.svg'
+import questionSvg from '../../../assets/images/bookmark/question.svg'
+import documentSvg from '../../../assets/images/bookmark/document.svg'
+
+const icon = {
+    Document: documentSvg,
+    Question: questionSvg,
+    Video: videoSvg
 }
+
+const VideoDocument = ({ title, image }) => (
+    <>
+        <ESTypography variant='body2' strong>
+            {title}
+        </ESTypography>
+        <div className='es-favorite-grid__item-container'>
+            <div
+                className='es-favorite-grid__item-container--image'
+                style={{
+                    backgroundImage: `url(${image})`
+                }}
+            />
+        </div>
+    </>
+)
+
+const Question = ({ title }) => (
+    <ESTypography
+        variant='subtitle2'
+        className='es-favorite-grid__item--preview'
+    >
+        {title}
+    </ESTypography>
+)
 
 const ESBookmarkGridItem = ({
     id,
@@ -25,46 +49,37 @@ const ESBookmarkGridItem = ({
     onRemove,
     onPress
 }) => {
+    const handleRemove = e => {
+        e.stopPropagation()
+        onRemove && onRemove(e)
+    }
+
     return (
-        <div className='es-favorite-grid__item'>
-            {resourceType && resourceType !== 'Question' && (
-                <ESTypography variant='body1' strong onClick={onPress}>
-                    {title}
-                </ESTypography>
-            )}
-            {resourceType &&
-            (resourceType === 'Video' || resourceType === 'Document') ? (
-                <img src={image} />
-            ) : (
-                <ESTypography
-                    ellipsis={{ rows: 10, expandable: false }}
-                    variant='subtitle2'
-                    className='es-favorite-grid__item--preview'
-                    onClick={onPress}
-                >
-                    {title}
-                </ESTypography>
-            )}
+        <div className='es-favorite-grid__item' onClick={onPress}>
+            <div className='es-favorite-grid__item-content'>
+                {resourceType === 'Video' || resourceType === 'Document' ? (
+                    <VideoDocument {...{ title, image }} />
+                ) : (
+                    <Question {...{ title }} />
+                )}
+            </div>
             <div className='es-favorite-grid__item--actions'>
-                <ESEvaIcon
-                    key={`${resourceType}_${id}_grid_icon`}
-                    name={getIconName(resourceType)}
-                    className='es-favorite-grid__item--actions-icon'
-                    size='large'
-                />
+                <img src={icon[resourceType]} alt='' width={21} />
                 <ESTypography
-                    variant='body2'
+                    variant='caption'
                     className='es-favorite-grid__item--actions-description'
                 >
                     {subtitle}
                 </ESTypography>
-                <ESEvaIcon
-                    key={`${resourceType}_${id}_grid_remove_icon`}
-                    name='trash-outline'
+                <ESButton
+                    circle
+                    onClick={handleRemove}
+                    variant='text'
+                    size='xsmall'
                     className='es-favorite-grid__item--actions-remove'
-                    onClick={onRemove}
-                    size='large'
-                />
+                >
+                    <ESEvaIcon name='trash-outline' />
+                </ESButton>
             </div>
         </div>
     )
@@ -72,7 +87,7 @@ const ESBookmarkGridItem = ({
 
 ESBookmarkGridItem.propTypes = {
     image: PropTypes.string,
-    resourceType: PropTypes.string,
+    resourceType: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     title: PropTypes.string,
     onRemove: PropTypes.func
