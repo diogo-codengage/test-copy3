@@ -8,6 +8,7 @@ import ESRecentSavedListItem from 'sanar-ui/dist/Components/Molecules/RecentSave
 import ESMissContent from 'sanar-ui/dist/Components/Molecules/MissContent'
 import ESCard from 'sanar-ui/dist/Components/Molecules/Card'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
+import ESBadge from 'sanar-ui/dist/Components/Atoms/Badge'
 import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 
 import { Query } from 'react-apollo'
@@ -42,11 +43,7 @@ const SANInteractions = () => {
     const renderListBookmarks = (item, index) => (
         <ESRecentSavedListItem
             key={index}
-            avatar={
-                item.resource_thumbnail
-                    ? item.resource_thumbnail
-                    : bookmarkAvatar(item.resource_type)
-            }
+            avatar={bookmarkAvatar(item.resource_type)}
             title={item.resource_title}
             description={
                 item.resource_index && item.level_index
@@ -67,6 +64,7 @@ const SANInteractions = () => {
             />
             <Query
                 query={GET_BOOKMARKS}
+                fetchPolicy='cache-and-network'
                 variables={{
                     enrollmentId: getEnrollment().id,
                     limit: 2,
@@ -95,17 +93,23 @@ const SANInteractions = () => {
                             className='mb-md'
                             actions={
                                 data.bookmarks &&
-                                data.bookmarks.count > 0 && [
-                                    <ESButton
-                                        variant='text'
-                                        color='primary'
-                                        size='xsmall'
-                                        bold
-                                        uppercase
-                                        style={{ margin: '0 auto' }}
-                                    >
-                                        {t('courseDetails.recentlySavedButton')}
-                                    </ESButton>
+                                data.bookmarks.count && [
+                                    <div className='d-flex align-items-center justify-content-center'>
+                                        <ESButton
+                                            variant='text'
+                                            color='primary'
+                                            size='xsmall'
+                                            bold
+                                            uppercase
+                                            href='#/aluno/favoritos'
+                                            style={{ width: 'auto' }}
+                                        >
+                                            {t(
+                                                'courseDetails.recentlySavedButton'
+                                            )}
+                                        </ESButton>
+                                        <ESBadge count={data.bookmarks.count} />
+                                    </div>
                                 ]
                             }
                         >
