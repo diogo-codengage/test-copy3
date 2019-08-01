@@ -5,10 +5,11 @@
     "main": "dist/bundle.js",
     "style": "dist/bundle.less",
     "scripts": {
-        "build": "cross-env BABEL_ENV=build babel src -d dist --source-maps --delete-dir-on-start --config-file ./babel.config.js --no-comments --copy-files",
+        "copyAssets": "copyfiles -u 1 -V ./src/*.less ./src/**/*.less  ./src/**/**/*.less ./src/**/**/**/*.less ./src/**/**/**/**/*.less ./src/**/*.svg ./src/**/*.jpg ./src/**/*.png ./dist",
+        "dev": "tsc-watch --onSuccess \"yarn copyAssets\"",
+        "build": "tsc && yarn copyAssets",
         "build:storybook": "build-storybook",
         "cli": "hygen sanar-ui",
-        "dev": "yarn build -w",
         "storybook": "start-storybook -p 62238",
         "storybook:build": "build-storybook -c .storybook -o dist-storybook",
         "test": "jest --config ./jest.config.js --env=jsdom"
