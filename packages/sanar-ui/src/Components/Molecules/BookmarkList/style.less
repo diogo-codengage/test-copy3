@@ -158,6 +158,16 @@
                     }
                 }
             }
+
+            @media (max-width: @screen-xs) {
+                &--image {
+                    width: 80px;
+                    min-width: 80px;
+                }
+                &--content {
+                    width: ~'calc(100% - 80px)';
+                }
+            }
         }
     }
 }

@@ -80,6 +80,7 @@ const ESBookmarkGridItem = ({
                 <img src={icon[resourceType]} alt='' width={21} />
                 {!!subtitle && (
                     <ESTypography
+                        ellipsis
                         variant='caption'
                         className='es-favorite-grid__item--actions-description'
                     >

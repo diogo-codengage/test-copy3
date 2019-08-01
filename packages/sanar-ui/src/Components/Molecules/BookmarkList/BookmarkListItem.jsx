@@ -59,6 +59,7 @@ const ESBookmarkListItem = ({
                         <img src={icon[resourceType]} alt='' width={21} />
                         {!!subtitle && (
                             <ESTypography
+                                ellipsis
                                 variant='caption'
                                 className='text-grey-6 ml-sm'
                             >
