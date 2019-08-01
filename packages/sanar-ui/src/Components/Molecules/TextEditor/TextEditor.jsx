@@ -3,7 +3,8 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
-import CKEditor from 'ckeditor4-react'
+// import CKEditor from 'ckeditor4-react'
+import CKEditor from './ckeditor'
 import { Avatar } from 'antd'
 
 import ESButton from '../../Atoms/Button'
