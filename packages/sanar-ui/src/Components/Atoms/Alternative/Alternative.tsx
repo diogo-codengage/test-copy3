@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import { ESCol, ESRow } from '../Grid'
 import ESTypography from '../Typography'
 
 import disabledStrike from '../../../assets/images/questions/strike-disabled.svg'
