@@ -36,6 +36,6 @@ const ESIcon: React.FC<IPros> = ({
 }
 
 ESIcon.propTypes = propTypes
-// ESIcon.defaultProps = Icon['defaultProps']
+ESIcon.defaultProps = Icon['defaultProps'] as IPros
 
 export default ESIcon
