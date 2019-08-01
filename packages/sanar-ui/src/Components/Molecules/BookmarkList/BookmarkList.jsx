@@ -65,14 +65,16 @@ ESBookmarkList.propTypes = {
     orientation: PropTypes.oneOf(['grid', 'list']),
     onRemove: PropTypes.func,
     onClick: PropTypes.func,
-    data: PropTypes.shape({
-        id: PropTypes.string,
-        image: PropTypes.string,
-        resourceType: PropTypes.oneOf(['Video', 'Document', 'Question'])
-            .isRequired,
-        subtitle: PropTypes.string,
-        title: PropTypes.string
-    })
+    data: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string,
+            image: PropTypes.string,
+            resourceType: PropTypes.oneOf(['Video', 'Document', 'Question'])
+                .isRequired,
+            subtitle: PropTypes.string,
+            title: PropTypes.string
+        })
+    )
 }
 
 ESBookmarkList.defaultProps = {
