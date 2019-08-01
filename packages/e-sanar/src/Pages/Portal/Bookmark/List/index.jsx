@@ -1,51 +1,95 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import SANBookmarksHeader from './Header'
-import { useApolloContext } from 'Hooks/apollo'
-import { GET_BOOKMARKS } from 'Apollo/Bookmark/queries/bookmarks'
-import { useAuthContext } from 'Hooks/auth'
-import SANBookmarkContent from './Content'
-import { CHANGE_BOOKMARK } from 'Apollo/Bookmark/mutations/bookmark'
-import { Modal } from 'antd'
+import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
+import SANBookmarkSubHeader from './SubHeader'
+import { ESBookmarkList } from 'sanar-ui/dist/Components/Molecules/BookmarkList'
+import ESPagination from 'sanar-ui/dist/Components/Atoms/Pagination'
+import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 import { useBookmarksContext } from '../Context'
+import { Modal } from 'antd'
 const { confirm } = Modal
 
-const SANBookmarkListPage = ({ history }) => {
-    const client = useApolloContext()
+const SANBookmarkListPage = () => {
+    const { t } = useTranslation('esanar')
+    const { width } = useWindowSize()
+    const {
+        filter,
+        orientation,
+        bookmarks,
+        loading,
+        page,
+        setPage,
+        total,
+        removeBookmark
+    } = useBookmarksContext()
 
-    // Bookmarks context
-    const { filter } = useBookmarksContext()
+    const configureOrientation = useMemo(
+        () => (width > 767 && orientation === 'grid' ? 'grid' : 'list'),
+        [orientation, width]
+    )
 
-    const navigateToResource = (resourceType, moduleId, resourceId) => {
-        console.log('nav to...')
-    }
-
-    const onRemoveConfirm = async (resourceId, resourceType) => {
+    const onRemove = async ({ id, resourceType }) => {
         confirm({
-            title: 'Você quer mesmo remover?',
-            content: 'Esta alteração não terá volta.',
+            title: t('bookmark.confirmDelete.title'),
             centered: true,
-            onOk: () => onRemove(resourceId, resourceType)
+            okText: t('global.remove'),
+            okButtonProps: {
+                type: 'danger'
+            },
+            onOk: () => removeBookmark(id, resourceType)
         })
     }
 
-    const onRemove = async (resourceId, resourceType) => {
-        console.log('remove')
+    const listData = bookmarks
+        ? bookmarks.map(item => {
+              return {
+                  id: item.resource_id,
+                  image: item.resource_thumbnail,
+                  title: item.resource_title,
+                  resourceType: item.resource_type,
+                  subtitle: 'Módulo 1, aula 2'
+              }
+          })
+        : []
+
+    const onPagination = page => {
+        setPage(page - 1)
     }
 
     return (
-        <>
+        <div className='san-bookmark-page'>
             <SANBookmarksHeader />
-            <SANBookmarkContent
-                navigateToResource={navigateToResource}
-                onRemove={onRemoveConfirm}
-            />
-            {/* {!error ? (
+            <SANPortalPagesContainer className='d-flex flex-column flex-fill'>
+                <SANBookmarkSubHeader
+                    amount={total}
+                    filter={filter}
+                    loading={loading}
+                />
 
-            ) : (
-                <ESDefaultError />
-            )} */}
-        </>
+                <div className='flex-fill'>
+                    <ESBookmarkList
+                        orientation={configureOrientation}
+                        data={listData}
+                        loading={loading}
+                        onRemove={onRemove}
+                    />
+                </div>
+
+                {total > 0 && (
+                    <ESPagination
+                        className='text-align-center'
+                        current={page + 1}
+                        total={total}
+                        pageSize={9999}
+                        onChange={onPagination}
+                    />
+                )}
+            </SANPortalPagesContainer>
+        </div>
     )
 }
+
+SANBookmarkListPage.propTypes = {}
 
 export default SANBookmarkListPage
