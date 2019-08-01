@@ -1,60 +1,49 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
+import { select } from '@storybook/addon-knobs'
 
 import ESBookmarkList from './BookmarkList'
-import ESBookmarkListItem from './BookmarkListItem'
 
-import documentImage from '../../../assets/images/favorite-items/document.png'
-import questionImage from '../../../assets/images/favorite-items/question.svg'
-import videoImage from '../../../assets/images/favorite-items/video.png'
+const orientationOptions = {
+    grid: 'grid',
+    list: 'list'
+}
 
-storiesOf('Molecules.Favorites', module)
-    .add('Video', () => (
-        <ESBookmarkList>
-            {[0, 1, 2, 3, 4, 5].map(e => (
-                <ESBookmarkListItem
-                    key={e}
-                    title='Duis mauris augue, efficitur eu arcu sit amet, posuere dignissim neque. Aenean enim sem, pharetra et magna sit amet, luctus aliquet nibh. Curabitur auctor leo et libero consectetur gravida. Morbi gravida et sem dictum varius. Proin eget viverra sem, non euismod est. Maecenas facilisis urna in lectus aliquet venenatis. Etiam et metus nec mauris condimentum vulputate. Aenean volutpat odio quis egestas tempus. Fusce tempor vulputate luctus. Pellentesque vulputate viverra ex eget elementum. Aliquam ut feugiat felis.'
-                    subtitle='Instituição porem ipsum, 2014'
-                    extra={() => console.log('action clicked')}
-                    extraIcon='trash-outline'
-                    image={videoImage}
-                    icon='play-circle-outline'
-                    onRemove={() => console.log('remove clicked')}
-                    onPress={() => console.log('HUHEUEHUEHUEH')}
-                />
-            ))}
-        </ESBookmarkList>
-    ))
-    .add('Document', () => (
-        <ESBookmarkList>
-            {[0, 1, 2, 3, 4, 5].map(e => (
-                <ESBookmarkListItem
-                    key={e}
-                    title='Duis mauris augue, efficitur eu arcu sit amet, posuere dignissim neque. Aenean enim sem, pharetra et magna sit amet, luctus aliquet nibh. Curabitur auctor leo et libero consectetur gravida. Morbi gravida et sem dictum varius. Proin eget viverra sem, non euismod est. Maecenas facilisis urna in lectus aliquet venenatis. Etiam et metus nec mauris condimentum vulputate. Aenean volutpat odio quis egestas tempus. Fusce tempor vulputate luctus. Pellentesque vulputate viverra ex eget elementum. Aliquam ut feugiat felis.'
-                    subtitle='Instituição porem ipsum, 2014'
-                    extra={() => console.log('action clicked')}
-                    extraIcon='trash-outline'
-                    image={documentImage}
-                    icon='book-open-outline'
-                    onRemove={() => console.log('remove clicked')}
-                />
-            ))}
-        </ESBookmarkList>
-    ))
-    .add('Question', () => (
-        <ESBookmarkList>
-            {[0, 1, 2, 3, 4, 5].map(e => (
-                <ESBookmarkListItem
-                    key={e}
-                    title='Duis mauris augue, efficitur eu arcu sit amet'
-                    subtitle='Instituição porem ipsum, 2014'
-                    extra={() => console.log('action clicked')}
-                    extraIcon='trash-outline'
-                    image={questionImage}
-                    icon='edit-outline'
-                    onRemove={() => console.log('remove clicked')}
-                />
-            ))}
-        </ESBookmarkList>
-    ))
+const items = [
+    {
+        resourceType: 'Video',
+        title: 'Legislação do Sistema Único de Saúde e Saúde Coletiva',
+        subtitle: 'Módulo 2, aula 5'
+    },
+    {
+        resourceType: 'Document',
+        title: 'Legislação do Sistema Único de Saúde e Saúde Coletiva',
+        subtitle: 'Módulo 2, aula 5'
+    },
+    {
+        resourceType: 'Question',
+        subtitle: 'Módulo 2, aula 5',
+        title:
+            'The Inmates Are Running the Asylum, published in 1998, introduced the use of personas as a practical interaction design tool. Based on the single-chapter discussion in that book, personas rapidly gained popularity in the software industry due to their unusual power and effectiveness. Had personas been developed in the laboratory, the full story of how they came to be would have been published long ago, but since.'
+    },
+    {
+        resourceType: 'Document',
+        title: 'Legislação do Sistema Único de Saúde e Saúde Coletiva',
+        subtitle: 'Módulo 2, aula 5'
+    },
+    {
+        resourceType: 'Video',
+        title: 'Video sample 2',
+        subtitle: 'Módulo 2, aula 5'
+    }
+]
+
+storiesOf('Molecules.BookmarkList', module).add('Simple', () => (
+    <ESBookmarkList
+        data={items}
+        onRemove={action('onRemove')}
+        onClick={action('onClick')}
+        orientation={select('Orientation', orientationOptions, 'list')}
+    />
+))
