@@ -97,9 +97,11 @@ const ESComment = ({
                 </ESTypography>
             }
             datetime={
-                i18n.language == 'pt'
-                    ? diff.replace('aproximadamente', 'Há')
-                    : diff
+                diff && (
+                    i18n.language == 'pt'
+                        ? diff.replace('aproximadamente', 'Há')
+                        : diff
+                )
             }
         />
     )
