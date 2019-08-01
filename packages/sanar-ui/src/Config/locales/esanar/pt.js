@@ -14,7 +14,8 @@ export default {
         no: 'Não',
         failLoadLastAccessed: 'Erro ao carregar "Continuar onde parei".',
         termsOfUse: 'Termos de Uso',
-        privacyPolicy: 'Política de Privacidade'
+        privacyPolicy: 'Política de Privacidade',
+        remove: 'Remover'
     },
     auth: {
         accessAccount: 'Acessar conta',
@@ -264,6 +265,9 @@ export default {
             videos: 'Vídeos',
             documents: 'Materiais',
             questions: 'Questões'
+        },
+        confirmDelete: {
+            title: 'Deseja remover este conteúdo dos seus favoritos?'
         }
     },
     questionBase: {
