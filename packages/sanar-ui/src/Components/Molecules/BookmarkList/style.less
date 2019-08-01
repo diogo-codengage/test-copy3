@@ -1,70 +1,163 @@
 .es-favorite {
+    &-grid {
+        &__item {
+            background: @grey-solid-1;
+            border: 1px solid @grey-3;
+            border-radius: @border-radius-base;
+            box-shadow: 0 1px 2px @grey-3;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: @padding-md;
+            cursor: pointer;
+            margin-bottom: @margin-lg;
+
+            &-content {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                min-height: 200px;
+                max-height: 200px;
+                margin-bottom: @margin-md;
+            }
+
+            &:hover {
+                & .es-favorite-grid__item--preview {
+                    text-shadow: none;
+                    color: inherit;
+                }
+                & .es-favorite-grid__item-container--image {
+                    transform: scale(1.075);
+                }
+            }
+
+            &-container {
+                overflow: hidden;
+                height: 142px;
+                margin-top: @margin-md;
+                border-radius: @border-radius-base;
+
+                &--image {
+                    transition: transform 0.4s ease-in;
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    height: 100%;
+                }
+            }
+
+            &--preview {
+                position: relative;
+                user-select: none;
+                transition: all 0.4s ease-in;
+                color: transparent;
+                text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+                overflow: hidden;
+
+                &:after {
+                    position: absolute;
+                    content: '';
+                    bottom: 0;
+                    right: 0;
+                    height: 150px;
+                    width: 100%;
+                    background-image: linear-gradient(
+                        360deg,
+                        @white,
+                        @white-2,
+                        @white-2
+                    );
+                }
+            }
+
+            &--actions {
+                display: flex;
+                align-items: center;
+                &-description {
+                    color: @grey-6;
+                    flex: 1;
+                    padding-left: @padding-xs;
+                }
+                &-remove {
+                    color: @grey-5;
+                    &:hover {
+                        background-color: @grey-2;
+                    }
+                }
+            }
+        }
+    }
+
     &-list {
         border: 1px solid @grey-3;
         border-radius: @border-radius-base;
         overflow: hidden;
         box-shadow: 0 1px 2px @grey-3;
-    }
 
-    &-item {
-        display: flex;
-        align-content: center;
-        border-bottom: 1px solid @grey-3;
-        background-color: @white;
-        height: 80px;
-        width: 100%;
-
-        &:hover {
-            background-color: @white-1;
+        & .es-list-view-item {
+            margin: 0;
+            min-height: auto;
         }
 
-        &__content {
-            padding: @padding-md;
-            width: ~'calc(100% - 125px)';
-            position: relative;
-
-            &:after {
-                position: absolute;
-                content: '';
-                right: 0;
-                top: 0;
-                height: 100%;
-                width: 270px;
-                background-image: linear-gradient(
-                    -90deg,
-                    @white,
-                    @white-2,
-                    @white-2
-                );
-            }
-
-            &--icon {
-                color: @grey-8;
-            }
-        }
-
-        &__img {
-            border-right: 1px solid @grey-3;
-            width: 104px;
-            min-width: 104px;
-            background-position: center;
-            background-size: contain;
-            background-repeat: no-repeat;
-        }
-
-        &__action {
-            height: 100%;
+        &__item {
+            border-bottom: 1px solid @grey-3;
             display: flex;
             align-items: center;
-            background-color: @white;
+            height: 80px;
             cursor: pointer;
-            &--icon {
-                color: @grey-5;
-            }
-        }
 
-        &:last-child {
-            border-bottom: none;
+            &:hover {
+                & .es-favorite-list__item--content {
+                    background-color: @grey-1;
+                    &-title:after {
+                        background: transparent;
+                    }
+                }
+            }
+
+            &--image {
+                border-right: 1px solid @grey-3;
+                height: 100%;
+                width: 104px;
+                min-width: 104px;
+                background-position: center;
+                background-repeat: no-repeat;
+                overflow: hidden;
+            }
+
+            &--content {
+                width: ~'calc(100% - 104px)';
+                background-color: @white;
+                padding: @padding-md;
+
+                &-title {
+                    position: relative;
+                    margin-bottom: @margin-xs / 2;
+
+                    &:after {
+                        position: absolute;
+                        content: '';
+                        right: 0;
+                        top: 0;
+                        height: 100%;
+                        width: 270px;
+                        background-image: linear-gradient(
+                            -90deg,
+                            @white,
+                            @white-2,
+                            @white-2
+                        );
+                    }
+                }
+
+                &-remove {
+                    color: @grey-5;
+                    &:hover {
+                        background-color: @grey-2;
+                    }
+                }
+            }
         }
     }
 }
