@@ -44,6 +44,7 @@ const propTypes = Object.assign(
                 onExpand: PropTypes.func
             })
         ]),
+        strong: PropTypes.bool,
         mark: PropTypes.bool,
         underline: PropTypes.bool,
         onChange: PropTypes.func,
