@@ -114,13 +114,13 @@ const SANInitial = ({ setTab, history, match }) => {
                     onClick={() => menuOpenOrClose()}
                     to='/aluno/favoritos'
                 />
-                <ESNavigationListItem
+                {/*FIXME: <ESNavigationListItem
                     key={4}
                     title={t(`${intlPath}performace`)}
                     icon={
                         <ESEvaIcon name='pie-chart-outline' color='default' />
                     }
-                />
+                /> */}
                 <ESNavigationListItem
                     data-testid='san-menu-navigation__questions'
                     key={5}
