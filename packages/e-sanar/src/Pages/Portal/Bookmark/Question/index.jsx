@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import { useApolloContext } from 'Hooks/apollo'
-import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
-import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
-import ESQuestion from 'sanar-ui/dist/Components/Molecules/Question'
-import SANBookmarkedQuestionHeader from './Header'
-import { useAuthContext } from 'Hooks/auth'
-import { BOOKMARKED_QUESTIONS } from 'Apollo/Bookmark/queries/bookmarkQuestion'
+
 import { Mutation } from 'react-apollo'
+import { message } from 'antd'
+import { useTranslation } from 'react-i18next'
+
+import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
+import ESQuestion from 'sanar-ui/dist/Components/Molecules/Question'
+import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
+
+import { useAuthContext } from 'Hooks/auth'
+import { useApolloContext } from 'Hooks/apollo'
+import { BOOKMARKED_QUESTIONS } from 'Apollo/Bookmark/queries/bookmarkQuestion'
 import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
 import { CHANGE_BOOKMARK } from 'Apollo/Bookmark/mutations/bookmark'
+
 import ESDefaultError from 'Pages/Portal/Errors/Default'
+import SANBookmarkedQuestionHeader from './Header'
 
 const initialResponse = {
     answer: null,
@@ -19,17 +25,18 @@ const initialResponse = {
 
 const SANBookmarkedQuestion = ({
     match: {
-        params: { idx }
+        params: { index }
     },
-    history
+    history,
+    onRemove
 }) => {
+    const { t } = useTranslation('esanar')
     const { width } = useWindowSize()
     const client = useApolloContext()
     const [loading, setLoading] = useState(true)
     const [question, setQuestion] = useState(null)
     const [questions, setQuestions] = useState([])
     const [total, setTotal] = useState(0)
-    const [currentIdx, setCurrentIdx] = useState(0)
     const [isFull, setIsFull] = useState(width <= 992)
     const [response, setResponse] = useState(initialResponse)
     const [error, setError] = useState(null)
@@ -38,59 +45,47 @@ const SANBookmarkedQuestion = ({
 
     useEffect(() => {
         const fetchAllQuestions = async () => {
-            const {
-                data: {
-                    bookmarksQuestions: { data }
-                },
-                count
-            } = await client.query({
-                query: BOOKMARKED_QUESTIONS,
-                fetchPolicy: 'network-only'
-            })
+            setLoading(true)
+            try {
+                const {
+                    data: {
+                        bookmarksQuestions: { data, count }
+                    }
+                } = await client.query({
+                    query: BOOKMARKED_QUESTIONS,
+                    fetchPolicy: 'network-only'
+                })
 
-            const qts = data.map(({ question }) => {
-                question.bookmarked = true
+                const questions = data.map(({ question }) => ({
+                    ...question,
+                    bookmarked: true
+                }))
 
-                return question
-            })
-
-            const qt = qts[parseInt(idx)]
-
-            setQuestion(qt)
-            setCurrentIdx(parseInt(idx))
-            setQuestions(qts)
-
-            setTotal(count)
-
+                setQuestions(questions)
+                setTotal(count)
+            } catch {
+                setError(true)
+            }
             setLoading(false)
         }
 
         fetchAllQuestions()
-    }, [client, idx])
-
-    useEffect(() => {
-        setIsFull(width <= 992)
-    }, [width])
+    }, [])
 
     const handleNext = () => {
-        if (currentIdx + 1 === total) return
-
-        const current = questions[currentIdx + 1]
-
-        setQuestion(current)
-        setCurrentIdx(currentIdx + 1)
         setResponse(initialResponse)
+        const idx =
+            parseInt(index) >= total ? parseInt(index) : parseInt(index) + 1
+        history.push(`/aluno/favoritos/questoes/${idx}`)
     }
 
     const handlePrevious = () => {
-        if (!currentIdx) return
-
-        const current = questions[currentIdx - 1]
-
-        setQuestion(current)
-        setCurrentIdx(currentIdx - 1)
         setResponse(initialResponse)
+        const idx = parseInt(index) <= 1 ? parseInt(index) : parseInt(index) - 1
+        history.push(`/aluno/favoritos/questoes/${idx}`)
     }
+
+    const handleBack = () => history.push('/aluno/favoritos')
 
     const handleConfirm = mutation => alternative => {
         mutation({
@@ -122,27 +117,13 @@ const SANBookmarkedQuestion = ({
         })
     }
 
-    const handleBack = () => history && history.goBack()
+    useEffect(() => {
+        setQuestion(questions[parseInt(index - 1)])
+    }, [index, questions])
 
-    const handleRemove = async () => {
-        try {
-            const q = Object.assign({}, question)
-            q.bookmarked = false
-
-            setQuestion(q)
-
-            await client.mutate({
-                mutation: CHANGE_BOOKMARK,
-                variables: {
-                    resourceId: question.id,
-                    resourceType: 'Question',
-                    userId: me.id
-                }
-            })
-        } catch (err) {
-            setError(true)
-        }
-    }
+    useEffect(() => {
+        setIsFull(width <= 992)
+    }, [width])
 
     return (
         <Mutation mutation={ANSWER_MUTATION} onCompleted={callbackAnswer}>
@@ -153,13 +134,11 @@ const SANBookmarkedQuestion = ({
                 if (errorMutation || error) return <ESDefaultError />
                 return (
                     <>
-                        <SANPortalPagesContainer>
-                            <SANBookmarkedQuestionHeader
-                                goBack={handleBack}
-                                bookmarked={question && question.bookmarked}
-                                onRemove={handleRemove}
-                            />
-                        </SANPortalPagesContainer>
+                        <SANBookmarkedQuestionHeader
+                            goBack={handleBack}
+                            bookmarked={question && question.bookmarked}
+                            onRemove={onRemove}
+                        />
                         <SANPortalPagesContainer>
                             <ESQuestion
                                 full={isFull}
@@ -168,7 +147,13 @@ const SANBookmarkedQuestion = ({
                                 onNext={handleNext}
                                 onPrevious={handlePrevious}
                                 loading={loading || loadingMutation}
-                                isBookmarked={true}
+                                isBookmarked
+                                propsPrev={{
+                                    disabled: parseInt(index) <= 1
+                                }}
+                                propsNext={{
+                                    disabled: parseInt(index) >= total
+                                }}
                                 {...response}
                             />
                         </SANPortalPagesContainer>

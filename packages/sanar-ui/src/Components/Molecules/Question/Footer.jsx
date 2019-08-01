@@ -19,14 +19,15 @@ const ESQuestionFooter = ({
     isHistoric,
     propsNext,
     propsPrev,
+    propsConfirm,
     isBookmarked
 }) => {
     const { t } = useTranslation('sanarui')
 
     const BookmarkedFooter = () => (
         <>
-            <div className='es-question__footer'>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <div className='es-question__footer es-question__footer-bookmarked'>
+                <div className='es-question__footer-bookmarked--actions'>
                     <ESButton
                         size='small'
                         variant='text'
@@ -58,8 +59,9 @@ const ESQuestionFooter = ({
                     variant='outlined'
                     uppercase
                     bold
-                    disabled={!selected || !question}
+                    disabled={!!selected && !!answer}
                     onClick={handleConfirm}
+                    {...propsConfirm}
                 >
                     {t('question.confirm')}
                 </ESButton>

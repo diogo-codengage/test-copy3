@@ -1,5 +1,8 @@
 import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
+
+import { withRouter } from 'react-router-dom'
+
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 import SANBookmarkSubHeader from './SubHeader'
 import { ESBookmarkList } from 'sanar-ui/dist/Components/Molecules/BookmarkList'
@@ -8,7 +11,7 @@ import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 import { useBookmarksContext } from '../Context'
 import { useAuthContext } from 'Hooks/auth'
 
-const SANBookmarkContent = ({ onRemove }) => {
+const SANBookmarkContent = ({ onRemove, history }) => {
     const {
         me: { userId }
     } = useAuthContext()
@@ -31,7 +34,7 @@ const SANBookmarkContent = ({ onRemove }) => {
     const listData = bookmarks
         ? bookmarks.map(item => {
               return {
-                  id: item.id,
+                  ...item,
                   image: item.resource_thumbnail,
                   title: item.resource_title,
                   resourceType: item.resource_type,
@@ -44,6 +47,13 @@ const SANBookmarkContent = ({ onRemove }) => {
 
     const onPagination = page => {
         setPage(page - 1)
+    }
+
+    const goToBookmark = item => {
+        const index = bookmarks
+            .filter(bookmark => bookmark.resource_type === 'Question')
+            .findIndex(bookmark => bookmark.resource_id === item.resource_id)
+        history.push(`/aluno/favoritos/questoes/${index + 1}`)
     }
 
     return (
@@ -61,6 +71,7 @@ const SANBookmarkContent = ({ onRemove }) => {
                         data={listData}
                         loading={loading}
                         onRemove={onRemove}
+                        onClick={goToBookmark}
                     />
                 </div>
 
@@ -90,4 +101,4 @@ SANBookmarkContent.propTypes = {
     getColumnAmount: PropTypes.func
 }
 
-export default SANBookmarkContent
+export default withRouter(SANBookmarkContent)

@@ -252,12 +252,13 @@ export default {
         title: 'Favoritos',
         subtitle: 'Encontre aqui todos seus conteúdos favoritos',
         search: 'Pesquisar favoritos',
+        failRemoveBookmark: 'Ocorreu um erro ao remover favorito.',
         subHeader: {
             counter: {
                 key: 'item favorito',
                 key_plural: 'itens favoritos',
                 keyWithCount: '{{count}} item favorito',
-                keyWithCount_plural: '{{count}} itens favoritos',
+                keyWithCount_plural: '{{count}} itens favoritos'
             },
             all: 'Todos',
             videos: 'Vídeos',
