@@ -12,7 +12,7 @@ export const GET_BOOKMARKS = gql`
             resourceType: $resourceType
             limit: $limit
             skip: $skip
-        ) {
+        ) @connection(key: "bookmarks") {
             count
             data {
                 id
