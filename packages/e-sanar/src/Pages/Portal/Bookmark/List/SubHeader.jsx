@@ -2,7 +2,6 @@ import React from 'react'
 import classNames from 'classnames'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import { useTranslation } from 'react-i18next'
-import PropTypes from 'prop-types'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import { ESCol, ESRow } from 'sanar-ui/dist/Components/Atoms/Grid'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
@@ -14,9 +13,14 @@ import { useBookmarksContext } from '../Context'
 
 const intlPath = 'bookmark.subHeader.'
 
-const SANBookmarkSubHeader = ({ amount }) => {
+const SANBookmarkSubHeader = () => {
     const { t } = useTranslation('esanar')
-    const { orientation, setOrientation, setFilter } = useBookmarksContext()
+    const {
+        orientation,
+        setOrientation,
+        setFilter,
+        total
+    } = useBookmarksContext()
 
     const gridButtonClasses = classNames({
         'san-bookmark-page__subheader--active-orientation-button':
@@ -35,20 +39,21 @@ const SANBookmarkSubHeader = ({ amount }) => {
             justify='space-between'
             align='middle'
         >
-            {amount && (
-                <ESCol
-                    xs={24}
-                    sm={12}
-                    md={8}
-                    className='san-bookmark-page__subheader--amount'
-                >
+            <ESCol
+                xs={24}
+                sm={12}
+                md={8}
+                className='san-bookmark-page__subheader--amount'
+            >
+                {total > 0 && (
                     <ESTypography variant='body2'>
                         {t(`${intlPath}counter.keyWithCount`, {
-                            count: amount
+                            count: total
                         })}
                     </ESTypography>
-                </ESCol>
-            )}
+                )}
+            </ESCol>
+
             <ESCol xs={24} sm={12} md={8}>
                 <ESRadioGroup
                     defaultValue={0}
@@ -99,11 +104,6 @@ const SANBookmarkSubHeader = ({ amount }) => {
     )
 }
 
-SANBookmarkSubHeader.propTypes = {
-    amount: PropTypes.number,
-    filter: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    loading: PropTypes.bool,
-    visualization: PropTypes.string
-}
+SANBookmarkSubHeader.propTypes = {}
 
 export default SANBookmarkSubHeader
