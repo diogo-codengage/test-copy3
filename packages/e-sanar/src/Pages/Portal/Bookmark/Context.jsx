@@ -1,9 +1,15 @@
 import React, { createContext, useState, useContext, useEffect } from 'react'
+
+import { useTranslation } from 'react-i18next'
+import { Modal } from 'antd'
+
 import { Query } from 'react-apollo'
 import { GET_BOOKMARKS } from 'Apollo/Bookmark/queries/bookmarks'
 import { CHANGE_BOOKMARK } from 'Apollo/Bookmark/mutations/bookmark'
 import { useAuthContext } from 'Hooks/auth'
 import { useApolloContext } from 'Hooks/apollo'
+
+const { confirm } = Modal
 
 export const SANBookmarksContext = createContext()
 
@@ -11,6 +17,7 @@ export const useBookmarksContext = () => useContext(SANBookmarksContext)
 
 export const SANBookmarksProvider = ({ children }) => {
     const client = useApolloContext()
+    const { t } = useTranslation('esanar')
     const {
         me: { userId }
     } = useAuthContext()
@@ -50,6 +57,18 @@ export const SANBookmarksProvider = ({ children }) => {
         })
     }
 
+    const onRemove = async ({ id, resourceType }) => {
+        confirm({
+            title: t('bookmark.confirmDelete.title'),
+            centered: true,
+            okText: t('global.remove'),
+            okButtonProps: {
+                type: 'danger'
+            },
+            onOk: () => removeBookmark(id, resourceType)
+        })
+    }
+
     const value = {
         orientation,
         setOrientation,
@@ -57,7 +76,8 @@ export const SANBookmarksProvider = ({ children }) => {
         setFilter,
         page,
         setPage,
-        removeBookmark
+        removeBookmark,
+        onRemove
     }
 
     return (

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
+
 import { withRouter } from 'react-router-dom'
 
 import SANBookmarksHeader from './Header'
@@ -9,11 +9,8 @@ import { ESBookmarkList } from 'sanar-ui/dist/Components/Molecules/BookmarkList'
 import ESPagination from 'sanar-ui/dist/Components/Atoms/Pagination'
 import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 import { useBookmarksContext } from '../Context'
-import { Modal } from 'antd'
-const { confirm } = Modal
 
 const SANBookmarkListPage = ({ history }) => {
-    const { t } = useTranslation('esanar')
     const { width } = useWindowSize()
     const {
         filter,
@@ -23,25 +20,13 @@ const SANBookmarkListPage = ({ history }) => {
         page,
         setPage,
         total,
-        removeBookmark
+        onRemove
     } = useBookmarksContext()
 
     const configureOrientation = useMemo(
         () => (width > 767 && orientation === 'grid' ? 'grid' : 'list'),
         [orientation, width]
     )
-
-    const onRemove = async ({ id, resourceType }) => {
-        confirm({
-            title: t('bookmark.confirmDelete.title'),
-            centered: true,
-            okText: t('global.remove'),
-            okButtonProps: {
-                type: 'danger'
-            },
-            onOk: () => removeBookmark(id, resourceType)
-        })
-    }
 
     const listData = bookmarks
         ? bookmarks.map(item => {
@@ -60,9 +45,10 @@ const SANBookmarkListPage = ({ history }) => {
     }
 
     const goToBookmark = item => {
+        if (item.resourceType !== 'Question') return
         const index = bookmarks
             .filter(bookmark => bookmark.resource_type === 'Question')
-            .findIndex(bookmark => bookmark.resource_id === item.resource_id)
+            .findIndex(bookmark => bookmark.resource_id === item.id)
         history.push(`/aluno/favoritos/questoes/${index + 1}`)
     }
 
@@ -82,6 +68,7 @@ const SANBookmarkListPage = ({ history }) => {
                         data={listData}
                         loading={loading}
                         onRemove={onRemove}
+                        onClick={goToBookmark}
                     />
                 </div>
 
