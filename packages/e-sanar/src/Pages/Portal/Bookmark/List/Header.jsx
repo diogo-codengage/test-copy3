@@ -29,12 +29,6 @@ const SANBookmarksHeader = () => {
                             {t(`${intlPath}subtitle`)}
                         </ESTypography>
                     }
-                    extra={
-                        <ESInput
-                            prefix={<ESEvaIcon name='search-outline' />}
-                            placeholder={t(`${intlPath}search`)}
-                        />
-                    }
                 />
             </SANPortalPagesContainer>
         </div>
