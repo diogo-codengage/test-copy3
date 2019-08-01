@@ -35,14 +35,18 @@ const ESBookmarkListItem = ({
             : iconQuestion
         : image
 
+    let backgroundSize = 'cover'
+    if (resourceType === 'Question' && !image) {
+        backgroundSize = 'auto'
+    }
+
     return (
         <div className={classes} onClick={onClick}>
             <div
                 className='es-favorite-list__item--image'
                 style={{
                     backgroundImage: `url(${img})`,
-                    ...(resourceType === 'Video' &&
-                        !image && { backgroundSize: 'cover' })
+                    backgroundSize
                 }}
             />
             <div className='es-favorite-list__item--content'>
