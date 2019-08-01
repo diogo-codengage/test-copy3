@@ -1,118 +1,92 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 import SANBookmarkSubHeader from './SubHeader'
-import ESListView from 'sanar-ui/dist/Components/Atoms/ListView'
-import { ESBookmarkGridItem } from 'sanar-ui/dist/Components/Molecules/BookmarkGrid'
-import { ESBookmarkListItem } from 'sanar-ui/dist/Components/Molecules/BookmarkList'
+import { ESBookmarkList } from 'sanar-ui/dist/Components/Molecules/BookmarkList'
 import ESPagination from 'sanar-ui/dist/Components/Atoms/Pagination'
-import { List } from 'antd'
+import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
+import { useBookmarksContext } from '../Context'
+import { useAuthContext } from 'Hooks/auth'
 
-const Item = ({
-    visualization,
-    id,
-    resource_title,
-    resource_id,
-    level_id,
-    resource_thumbnail,
-    resource_type,
-    navigateToResource,
-    onRemove
-}) => (
-    <List.Item className='d-flex justify-content-center align-items-center'>
-        {visualization && visualization === 'grid' ? (
-            <ESBookmarkGridItem
-                id={id}
-                image={resource_thumbnail}
-                title={resource_title}
-                resourceType={resource_type}
-                onPress={() =>
-                    navigateToResource(resource_type, level_id, resource_id)
-                }
-                onRemove={() => onRemove(resource_id, resource_type)}
-            />
-        ) : (
-            <ESBookmarkListItem
-                id={id}
-                image={resource_thumbnail}
-                title={resource_title}
-                resourceType={resource_type}
-                onRemove={() => onRemove(resource_id, resource_type)}
-                onPress={() =>
-                    navigateToResource(resource_type, level_id, resource_id)
-                }
-            />
-        )}
-    </List.Item>
-)
+const SANBookmarkContent = ({ onRemove }) => {
+    const {
+        me: { userId }
+    } = useAuthContext()
+    const { width } = useWindowSize()
+    const {
+        filter,
+        orientation,
+        bookmarks,
+        loading,
+        page,
+        setPage,
+        total
+    } = useBookmarksContext()
 
-const SANBookmarkContent = ({
-    bookmarks,
-    total,
-    filter,
-    loading,
-    page,
-    visualization,
-    getColumnAmount,
-    navigateToResource,
-    onRemove,
-    setFilter,
-    setPage,
-    setVisualization
-}) => (
-    <div className='san-bookmark-page'>
-        <SANPortalPagesContainer>
-            <SANBookmarkSubHeader
-                amount={total}
-                filter={filter}
-                loading={loading}
-                visualization={visualization}
-                onSelectFilter={setFilter}
-                onSelectVisualization={setVisualization}
-            />
+    const configureOrientation = useMemo(
+        () => (width > 767 && orientation === 'grid' ? 'grid' : 'list'),
+        [orientation, width]
+    )
 
-            <ESListView
-                grid={getColumnAmount()}
-                loading={loading}
-                dataSource={bookmarks}
-                renderItem={item => (
-                    <Item
-                        {...item}
-                        visualization={visualization}
-                        navigateToResource={navigateToResource}
+    const listData = bookmarks
+        ? bookmarks.map(item => {
+              return {
+                  id: item.id,
+                  image: item.resource_thumbnail,
+                  title: item.resource_title,
+                  resourceType: item.resource_type,
+                  subtitle: 'Módulo 1, aula 2'
+              }
+          })
+        : []
+
+    const removeBookmark = (resourceId, resourceType) => {}
+
+    const onPagination = page => {
+        setPage(page - 1)
+    }
+
+    return (
+        <div className='san-bookmark-page'>
+            <SANPortalPagesContainer className='d-flex flex-column flex-fill'>
+                <SANBookmarkSubHeader
+                    amount={total}
+                    filter={filter}
+                    loading={loading}
+                />
+
+                <div className='flex-fill'>
+                    <ESBookmarkList
+                        orientation={configureOrientation}
+                        data={listData}
+                        loading={loading}
                         onRemove={onRemove}
                     />
-                )}
-                footer={
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'center'
-                        }}
-                    >
-                        <ESPagination
-                            total={total}
-                            current={page}
-                            onChange={setPage}
-                        />
-                    </div>
-                }
-            />
-        </SANPortalPagesContainer>
-    </div>
-)
+                </div>
+
+                <ESPagination
+                    className='text-align-center'
+                    current={page + 1}
+                    total={total}
+                    pageSize={9999}
+                    onChange={onPagination}
+                />
+            </SANPortalPagesContainer>
+        </div>
+    )
+}
 
 SANBookmarkContent.propTypes = {
     bookmarks: PropTypes.array,
     total: PropTypes.number,
-    filter: PropTypes.string,
+    filter: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     history: PropTypes.any,
     loading: PropTypes.bool,
     page: PropTypes.number,
-    visualization: PropTypes.string,
+    orientation: PropTypes.string,
     setFilter: PropTypes.func,
     setPage: PropTypes.func,
-    setVisualization: PropTypes.func,
+    setorientation: PropTypes.func,
     getColumnAmount: PropTypes.func
 }
 

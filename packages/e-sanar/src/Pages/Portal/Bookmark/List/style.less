@@ -5,37 +5,22 @@
     flex-direction: column;
 
     &__subheader {
-        &--row {
-            display: flex;
-            align-items: center;
-        }
+        &--active-orientation-button {
+            background: fade(@primary-color, 10%) !important;
+            color: @primary-color !important;
 
-        &--filter-area {
-            display: flex;
-            flex-direction: row;
-            justify-content: center !important;
+            &.btn-active {
+                background: fade(@primary-color, 10%) !important;
+            }
 
-            &_item {
-                padding: 12px;
-                height: 32px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
+            &:hover {
+                background: fade(@primary-color, 15%) !important;
             }
         }
 
-        &--visualization {
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end !important;
-            &_item {
-                width: 24px;
-                height: 24px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
+        @media (max-width: @screen-sm) {
+            &--amount {
+                margin-bottom: @margin-md;
             }
         }
     }
@@ -49,14 +34,14 @@
 .header {
     border-bottom: 1px solid @grey-3;
     box-shadow: 0 1px 2px @grey-3;
+    padding: @margin-xs 0;
+
+    &__subtitle {
+        color: @grey-6;
+    }
 
     & .es-session-title {
-        margin-top: 22px;
-        margin-bottom: 21px;
-
-        & .es-form-item {
-            margin: 0;
-        }
+        margin: 0;
     }
 }
 

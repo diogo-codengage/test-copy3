@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
@@ -9,33 +10,53 @@ import {
     ESRadioGroup,
     ESRadioButton
 } from 'sanar-ui/dist/Components/Atoms/Radio'
+import { useBookmarksContext } from '../Context'
 
 const intlPath = 'bookmark.subHeader.'
 
-const SANBookmarkSubHeader = ({
-    amount,
-    onSelectFilter,
-    onSelectVisualization
-}) => {
+const SANBookmarkSubHeader = ({ amount }) => {
     const { t } = useTranslation('esanar')
+    const { orientation, setOrientation, setFilter } = useBookmarksContext()
+
+    const gridButtonClasses = classNames({
+        'san-bookmark-page__subheader--active-orientation-button':
+            orientation === 'grid'
+    })
+
+    const listButtonClasses = classNames({
+        'san-bookmark-page__subheader--active-orientation-button':
+            orientation === 'list'
+    })
 
     return (
-        <ESRow type='flex' justify='space-between'>
-            <ESCol xs={24} sm={12} md={8} className='mb-md'>
-                <ESTypography variant='body2'>
-                    {t(`${intlPath}counter.keyWithCount`, {
-                        count: amount
-                    })}
-                </ESTypography>
-            </ESCol>
+        <ESRow
+            className='san-bookmark-page__subheader mb-lg'
+            type='flex'
+            justify='space-between'
+            align='middle'
+        >
+            {amount && (
+                <ESCol
+                    xs={24}
+                    sm={12}
+                    md={8}
+                    className='san-bookmark-page__subheader--amount'
+                >
+                    <ESTypography variant='body2'>
+                        {t(`${intlPath}counter.keyWithCount`, {
+                            count: amount
+                        })}
+                    </ESTypography>
+                </ESCol>
+            )}
             <ESCol xs={24} sm={12} md={8}>
                 <ESRadioGroup
-                    defaultValue={null}
-                    onChange={e => onSelectFilter(e.target.value)}
+                    defaultValue={0}
+                    onChange={e => setFilter(e.target.value)}
                     className='d-flex justify-content-between'
                     blocks
                 >
-                    <ESRadioButton value={null}>
+                    <ESRadioButton value={0}>
                         {t(`${intlPath}all`)}
                     </ESRadioButton>
                     <ESRadioButton value='Video'>
@@ -56,18 +77,20 @@ const SANBookmarkSubHeader = ({
                 className='d-flex justify-content-flex-end'
             >
                 <ESButton
-                    onClick={() => onSelectVisualization('grid')}
+                    onClick={() => setOrientation('grid')}
                     size='small'
                     variant='text'
                     circle
+                    className={gridButtonClasses}
                 >
                     <ESEvaIcon name='grid-outline' />
                 </ESButton>
                 <ESButton
-                    onClick={() => onSelectVisualization('list')}
+                    onClick={() => setOrientation('list')}
                     size='small'
                     variant='text'
                     circle
+                    className={listButtonClasses}
                 >
                     <ESEvaIcon name='list-outline' />
                 </ESButton>
@@ -78,7 +101,7 @@ const SANBookmarkSubHeader = ({
 
 SANBookmarkSubHeader.propTypes = {
     amount: PropTypes.number,
-    filter: PropTypes.string,
+    filter: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     loading: PropTypes.bool,
     visualization: PropTypes.string
 }
