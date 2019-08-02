@@ -1,136 +1,109 @@
 import React from 'react'
+import classNames from 'classnames'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import { useTranslation } from 'react-i18next'
-import PropTypes from 'prop-types'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
-import classNames from 'classnames'
 import { ESCol, ESRow } from 'sanar-ui/dist/Components/Atoms/Grid'
+import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
+import {
+    ESRadioGroup,
+    ESRadioButton
+} from 'sanar-ui/dist/Components/Atoms/Radio'
+import { useBookmarksContext } from '../Context'
 
 const intlPath = 'bookmark.subHeader.'
 
-const SANBookmarkSubHeader = ({
-    amount,
-    filter,
-    loading,
-    visualization,
-    onSelectFilter,
-    onSelectVisualization
-}) => {
+const SANBookmarkSubHeader = () => {
     const { t } = useTranslation('esanar')
+    const {
+        orientation,
+        setOrientation,
+        setFilter,
+        total
+    } = useBookmarksContext()
 
-    const selectedClasses = idx =>
-        classNames('san-bookmark-page__subheader--filter-area_item', {
-            'selected-filter': idx === filter,
-            disabled: loading
-        })
+    const gridButtonClasses = classNames({
+        'san-bookmark-page__subheader--active-orientation-button':
+            orientation === 'grid'
+    })
 
-    const selectedVisualizationClasses = idx =>
-        classNames('san-bookmark-page__subheader--visualization_item', {
-            'selected-visualization': idx === visualization
-        })
-
-    const pathToMessage = name => (name ? name.toLowerCase() + 's' : 'all')
-
-    const FilterItem = ({ name }) => (
-        <div
-            className={selectedClasses(name)}
-            onClick={() => !loading && onSelectFilter(name)}
-        >
-            <ESTypography variant='body2' strong>
-                {t(`${intlPath}${pathToMessage(name)}`)}
-            </ESTypography>
-        </div>
-    )
+    const listButtonClasses = classNames({
+        'san-bookmark-page__subheader--active-orientation-button':
+            orientation === 'list'
+    })
 
     return (
         <ESRow
+            className='san-bookmark-page__subheader mb-lg'
             type='flex'
+            justify='space-between'
             align='middle'
-            style={{ marginBottom: 40, height: 40 }}
-            justify='center'
         >
-            <ESCol sm={24} md={6}>
-                {amount > 0 && (
-                    <ESRow justify='start'>
-                        <div
-                            style={{
-                                height: 40,
-                                display: 'flex',
-                                alignItems: 'center'
-                            }}
-                        >
-                            <ESTypography variant='body2'>
-                                {t(`${intlPath}counter.keyWithCount`, {
-                                    count: amount
-                                })}
-                            </ESTypography>
-                        </div>
-                    </ESRow>
+            <ESCol
+                xs={24}
+                sm={12}
+                md={8}
+                className='san-bookmark-page__subheader--amount'
+            >
+                {total > 0 && (
+                    <ESTypography variant='body2'>
+                        {t(`${intlPath}counter.keyWithCount`, {
+                            count: total
+                        })}
+                    </ESTypography>
                 )}
             </ESCol>
-            <ESCol sm={24} md={12}>
-                <ESRow type='flex' align='middle' justify='space-between'>
-                    <ESCol span={6}>
-                        <FilterItem
-                            name={null}
-                            onSelect={onSelectFilter}
-                            classes={selectedClasses}
-                        />
-                    </ESCol>
-                    <ESCol span={6}>
-                        <FilterItem
-                            name='Video'
-                            onSelect={onSelectFilter}
-                            classes={selectedClasses}
-                        />
-                    </ESCol>
-                    <ESCol span={6}>
-                        <FilterItem
-                            name='Document'
-                            onSelect={onSelectFilter}
-                            classes={selectedClasses}
-                        />
-                    </ESCol>
-                    <ESCol span={6}>
-                        <FilterItem
-                            name='Question'
-                            onSelect={onSelectFilter}
-                            classes={selectedClasses}
-                        />
-                    </ESCol>
-                </ESRow>
+
+            <ESCol xs={24} sm={12} md={8}>
+                <ESRadioGroup
+                    defaultValue={0}
+                    onChange={e => setFilter(e.target.value)}
+                    className='d-flex justify-content-between'
+                    blocks
+                >
+                    <ESRadioButton value={0}>
+                        {t(`${intlPath}all`)}
+                    </ESRadioButton>
+                    <ESRadioButton value='Video'>
+                        {t(`${intlPath}videos`)}
+                    </ESRadioButton>
+                    <ESRadioButton value='Document'>
+                        {t(`${intlPath}documents`)}
+                    </ESRadioButton>
+                    <ESRadioButton value='Question'>
+                        {t(`${intlPath}questions`)}
+                    </ESRadioButton>
+                </ESRadioGroup>
             </ESCol>
-            <ESCol xs={0} sm={0} md={6}>
-                <div className='san-bookmark-page__subheader--visualization'>
-                    <div
-                        className={`${selectedVisualizationClasses(
-                            'grid'
-                        )} mr-sm`}
-                        onClick={() =>
-                            !loading && onSelectVisualization('grid')
-                        }
-                    >
-                        <ESEvaIcon name='grid-outline' />
-                    </div>
-                    <div
-                        className={selectedVisualizationClasses('list')}
-                        onClick={() =>
-                            !loading && onSelectVisualization('list')
-                        }
-                    >
-                        <ESEvaIcon name='list-outline' />
-                    </div>
-                </div>
+            <ESCol
+                xs={0}
+                sm={0}
+                md={8}
+                className='d-flex justify-content-flex-end'
+            >
+                <ESButton
+                    onClick={() => setOrientation('grid')}
+                    size='small'
+                    variant='text'
+                    circle
+                    className={gridButtonClasses}
+                >
+                    <ESEvaIcon name='grid-outline' />
+                </ESButton>
+                <ESButton
+                    onClick={() => setOrientation('list')}
+                    size='small'
+                    variant='text'
+                    circle
+                    className={listButtonClasses}
+                >
+                    <ESEvaIcon name='list-outline' />
+                </ESButton>
             </ESCol>
         </ESRow>
     )
 }
 
-SANBookmarkSubHeader.propTypes = {
-    amount: PropTypes.number,
-    filter: PropTypes.string,
-    loading: PropTypes.bool,
-    visualization: PropTypes.string
-}
+SANBookmarkSubHeader.propTypes = {}
 
 export default SANBookmarkSubHeader

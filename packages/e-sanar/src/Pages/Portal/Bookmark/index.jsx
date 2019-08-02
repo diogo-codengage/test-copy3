@@ -1,21 +1,25 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import SANBookmarkListPage from './List'
-import SANBookmarkedQuestion from '../Questions/Bookmarked'
+import { SANBookmarksProvider } from './Context'
 
-const SANBookmarkRouter = () => {
+const SANBookmarkListPage = React.lazy(() => import('./List'))
+const SANBookmarkedQuestion = React.lazy(() => import('./Question'))
+
+const SANBookmarkRouter = ({ match: { url } }) => {
     return (
-        <Switch>
-            <Route
-                path='/aluno/favoritos'
-                component={SANBookmarkListPage}
-                exact={true}
-            />
-            <Route
-                path='/aluno/favoritos/questoes/:idx?'
-                component={SANBookmarkedQuestion}
-            />
-        </Switch>
+        <SANBookmarksProvider>
+            <Switch>
+                <Route
+                    path={`${url}/questoes/:index`}
+                    component={SANBookmarkedQuestion}
+                />
+                <Route
+                    path={[`${url}`, `${url}/`]}
+                    component={SANBookmarkListPage}
+                    exact={true}
+                />
+            </Switch>
+        </SANBookmarksProvider>
     )
 }
 

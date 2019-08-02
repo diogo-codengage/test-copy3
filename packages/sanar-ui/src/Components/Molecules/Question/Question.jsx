@@ -32,6 +32,7 @@ const ESQuestion = ({
     isHistoric,
     propsNext,
     propsPrev,
+    propsConfirm,
     labelMonitor,
     skipSeeAnswer,
     isBookmarked
@@ -215,6 +216,7 @@ const ESQuestion = ({
                         isHistoric,
                         propsNext,
                         propsPrev,
+                        propsConfirm,
                         isBookmarked
                     }}
                 />

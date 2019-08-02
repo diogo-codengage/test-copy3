@@ -1,133 +1,91 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useMemo } from 'react'
+
+import { withRouter } from 'react-router-dom'
+
 import SANBookmarksHeader from './Header'
-import { useApolloContext } from 'Hooks/apollo'
-import { GET_BOOKMARKS } from 'Apollo/Bookmark/queries/bookmarks'
-import { useAuthContext } from 'Hooks/auth'
-import SANBookmarkContent from './Content'
-import { CHANGE_BOOKMARK } from 'Apollo/Bookmark/mutations/bookmark'
-import ESDefaultError from 'Pages/Portal/Errors/Default'
+import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
+import SANBookmarkSubHeader from './SubHeader'
+import { ESBookmarkList } from 'sanar-ui/dist/Components/Molecules/BookmarkList'
+import ESPagination from 'sanar-ui/dist/Components/Atoms/Pagination'
+import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
+import { useBookmarksContext } from '../Context'
 
 const SANBookmarkListPage = ({ history }) => {
-    const client = useApolloContext()
-    const { me, getEnrollment } = useAuthContext()
-    const { id: enrollmentId } = getEnrollment()
+    const { width } = useWindowSize()
+    const {
+        filter,
+        orientation,
+        bookmarks,
+        loading,
+        page,
+        setPage,
+        total,
+        onRemove
+    } = useBookmarksContext()
 
-    const [filter, setFilter] = useState(null)
-    const [visualization, setVisualization] = useState('grid')
-    const [loading, setLoading] = useState(false)
-    const [total, setTotal] = useState(0)
-    const [page, setPage] = useState(1)
-    const [bookmarks, setBookmarks] = useState([])
-    const [error, setError] = useState(false)
+    const configureOrientation = useMemo(
+        () => (width > 767 && orientation === 'grid' ? 'grid' : 'list'),
+        [orientation, width]
+    )
 
-    const fetchBookmarks = useCallback(async () => {
-        setLoading(true)
-        const {
-            data: {
-                bookmarks: { data, count }
-            }
-        } = await client.query({
-            query: GET_BOOKMARKS,
-            fetchPolicy: 'network-only',
-            variables: {
-                enrollmentId,
-                resourceType: filter,
-                limit: 9,
-                skip: page
-            }
-        })
+    const listData = bookmarks
+        ? bookmarks.map(item => {
+              return {
+                  id: item.resource_id,
+                  image: item.resource_thumbnail,
+                  title: item.resource_title,
+                  resourceType: item.resource_type,
+                  subtitle: 'Módulo 1, aula 2'
+              }
+          })
+        : []
 
-        if (data && data.length) {
-            setBookmarks(data)
-            setTotal(count)
-        }
-
-        setLoading(false)
-    }, [filter, page, client, enrollmentId])
-
-    useEffect(() => {
-        fetchBookmarks()
-    }, [fetchBookmarks])
-
-    const getColumnAmount = () => {
-        if (visualization && visualization === 'list') {
-            return { column: 1 }
-        } else {
-            return {
-                gutter: 48,
-                sm: 1,
-                md: 2,
-                lg: 3
-            }
-        }
+    const onPagination = page => {
+        setPage(page - 1)
     }
 
-    const getClassRoute = resourceType => {
-        if (resourceType === 'Video') {
-            return 'video'
-        } else if (resourceType === 'Document') {
-            return 'documento'
-        }
-        return ''
-    }
-
-    const navigateToResource = (resourceType, moduleId, resourceId) => {
-        if (resourceType && resourceType !== 'Question') {
-            history.push(
-                `/aluno/sala-aula/${moduleId}/${getClassRoute(
-                    resourceType
-                )}/${resourceId}`
-            )
-        } else {
-            const idx = bookmarks
-                .filter(i => i.resource_type === resourceType)
-                .findIndex(i => i.resource_id === resourceId)
-
-            history.push(`/aluno/favoritos/questoes/${idx}`)
-        }
-    }
-
-    const onRemove = async (resourceId, resourceType) => {
-        try {
-            setLoading(true)
-            await client.mutate({
-                mutation: CHANGE_BOOKMARK,
-                variables: {
-                    resourceId: resourceId,
-                    resourceType: resourceType,
-                    userId: me.id
-                }
-            })
-
-            await fetchBookmarks()
-        } catch (err) {
-            setError(err)
-        }
+    const goToBookmark = item => {
+        if (item.resourceType !== 'Question') return
+        const index = bookmarks
+            .filter(bookmark => bookmark.resource_type === 'Question')
+            .findIndex(bookmark => bookmark.resource_id === item.id)
+        history.push(`/aluno/favoritos/questoes/${index + 1}`)
     }
 
     return (
-        <>
+        <div className='san-bookmark-page'>
             <SANBookmarksHeader />
-            {!error ? (
-                <SANBookmarkContent
-                    bookmarks={bookmarks}
-                    total={total}
+            <SANPortalPagesContainer className='d-flex flex-column flex-fill'>
+                <SANBookmarkSubHeader
+                    amount={total}
                     filter={filter}
                     loading={loading}
-                    page={page}
-                    visualization={visualization}
-                    getColumnAmount={getColumnAmount}
-                    navigateToResource={navigateToResource}
-                    onRemove={onRemove}
-                    setFilter={setFilter}
-                    setPage={setPage}
-                    setVisualization={setVisualization}
                 />
-            ) : (
-                <ESDefaultError />
-            )}
-        </>
+
+                <div className='flex-fill'>
+                    <ESBookmarkList
+                        orientation={configureOrientation}
+                        data={listData}
+                        loading={loading}
+                        onRemove={onRemove}
+                        onClick={goToBookmark}
+                    />
+                </div>
+
+                {total > 0 && (
+                    <ESPagination
+                        className='text-align-center'
+                        current={page + 1}
+                        total={total}
+                        pageSize={9999}
+                        onChange={onPagination}
+                    />
+                )}
+            </SANPortalPagesContainer>
+        </div>
     )
 }
 
-export default SANBookmarkListPage
+SANBookmarkListPage.propTypes = {}
+
+export default withRouter(SANBookmarkListPage)
