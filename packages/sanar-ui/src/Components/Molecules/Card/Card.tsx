@@ -6,7 +6,7 @@ import { Card } from 'antd'
 import ESEvaIcon from '../../Atoms/EvaIcon/EvaIcon'
 import ESTooltip from '../../Atoms/Tooltip/Tooltip'
 
-const ESCard = forwardRef(({ className, children, doubt, ...props }, ref) => {
+const ESCard: React.FC<IProps>=(({ className, children, doubt, ...props }, ref) => {
     const classes = classNames('es-card', className)
 
     return (
@@ -30,8 +30,10 @@ const ESCard = forwardRef(({ className, children, doubt, ...props }, ref) => {
     )
 })
 
-ESCard.propTypes = Object.assign(
-    { ...Card['propTypes'] },
+type IProps = PropTypes.InferProps<typeof propTypes>
+
+const propTypes = Object.assign(
+    { ...Card.prototype['propTypes'] },
     {
         title: PropTypes.string,
         extra: PropTypes.element,
@@ -53,5 +55,5 @@ ESCard.defaultProps = Object.assign(
         size: 'small'
     }
 )
-
+ESCard.propTypes = propTypes
 export default ESCard
