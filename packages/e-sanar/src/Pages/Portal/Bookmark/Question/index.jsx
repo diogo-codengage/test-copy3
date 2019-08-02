@@ -21,6 +21,8 @@ const initialResponse = {
     comment: null
 }
 
+const scrollTop = () => window.scrollTo(0, 0)
+
 const SANBookmarkedQuestion = ({
     match: {
         params: { index }
@@ -75,17 +77,20 @@ const SANBookmarkedQuestion = ({
         const idx =
             parseInt(index) >= total ? parseInt(index) : parseInt(index) + 1
         history.push(`/aluno/favoritos/questoes/${idx}`)
+        scrollTop()
     }
 
     const handlePrevious = () => {
         setResponse(initialResponse)
         const idx = parseInt(index) <= 1 ? parseInt(index) : parseInt(index) - 1
         history.push(`/aluno/favoritos/questoes/${idx}`)
+        scrollTop()
     }
 
     const handleBack = () => history.push('/aluno/favoritos')
 
     const handleConfirm = mutation => alternative => {
+        scrollTop()
         mutation({
             variables: {
                 userId: me.id,
