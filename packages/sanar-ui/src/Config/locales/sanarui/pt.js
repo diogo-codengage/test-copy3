@@ -5,7 +5,8 @@ export default {
         user: 'Usuário',
         empty: 'Não há dados',
         monitor: 'Monitor',
-        sendFeedback: 'Enviar feedback'
+        sendFeedback: 'Enviar feedback',
+        you: 'Você'
     },
     mainMenu: {
         leftOff: 'Continuar onde parei',
@@ -170,18 +171,21 @@ export default {
         reply: 'Responder',
         exclude: 'Excluir',
         report: 'Reportar',
-        viewReply: 'Ver {{count}} respostas',
+        viewReply: 'Ver {{count}} resposta',
+        viewReply_plural: 'Ver {{count}} respostas',
         loadMore: 'Carregar mais',
         hideReplies: 'Ocultar respostas',
         answers: {
-            key: 'Resposta',
-            key_plural: 'Respostas',
-            keyWithCount: '{{count}} Resposta',
-            keyWithCount_plural: '{{count}} Respostas'
+            key: 'Comentário',
+            key_plural: 'Comentários',
+            keyWithCount: '{{count}} Comentário',
+            keyWithCount_plural: '{{count}} Comentários'
         },
         orderBy: 'Ordenar por',
         orderByRecents: 'Mais recentes',
-        orderByRelevance: 'Relevância'
+        orderByRelevance: 'Relevância',
+        empty:
+            'Ainda não foi iniciada uma discussão nessa aula. Seja o primeiro a comentar.'
     },
     feedbackSimple: {
         giveFeedback: 'Dar feedback',
@@ -190,5 +194,9 @@ export default {
         checkbox:
             'Permitir o contato da Sanar para tirar dúvidas sobre  o feedback.',
         send: 'Enviar'
+    },
+    typography: {
+        seeMore: 'Ver mais',
+        seeLess: 'Ver menos'
     }
 }

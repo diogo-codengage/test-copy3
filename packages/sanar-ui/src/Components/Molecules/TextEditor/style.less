@@ -3,6 +3,20 @@
     border-radius: @border-radius-base;
     background-color: @grey-1;
 
+    &.comment .cke_source {
+        padding: @padding-xs @padding-xs @padding-xs 57px;
+        height: ~'calc(100% - 16px)' !important;
+        width: ~'calc(100% - 65px)' !important;
+    }
+
+    & .ant-spin-nested-loading {
+        height: 100%;
+        & .ant-spin-container {
+            height: 100%;
+            border-radius: @border-radius-base;
+        }
+    }
+
     &__comment--avatar {
         position: absolute;
         left: 16px;
@@ -24,6 +38,20 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        @media (max-width: @screen-xs) {
+            & .d-flex {
+                flex: 1;
+                justify-content: space-between;
+            }
+            &--count {
+                display: none;
+            }
+        }
+    }
+
+    & .cke_browser_ios .cke_contents {
+        overflow-y: hidden;
     }
 
     & .cke_button_icon.cke_button__bold_icon,

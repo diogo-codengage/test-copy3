@@ -13,15 +13,16 @@ const ESDisciplineList = ({ className, items, activeId, onSelect, width }) => {
 
     useEffect(() => {
         let element = document.getElementById(activeId)
-
         let parentElement = document.getElementById(
             'es-discipline-dropdown__scrollable'
         ).childNodes[0]
 
-        parentElement.scrollTo({
-            top: element.offsetTop,
-            left: 0
-        })
+        if (element && parentElement) {
+            parentElement.scrollTo({
+                top: element.offsetTop,
+                left: 0
+            })
+        }
     })
 
     const renderItems = useCallback(

@@ -121,7 +121,11 @@ const ESSignInForm = ({
                         ]}
                         name='email'
                     >
-                        <ESInput size='large' placeholder={t('global.user')} />
+                        <ESInput
+                            data-testid='es-signin-form__form__email'
+                            size='large'
+                            placeholder={t('global.user')}
+                        />
                     </ESFormItem>
                     <ESFormItem
                         name='password'
@@ -137,6 +141,7 @@ const ESSignInForm = ({
                             size='large'
                             placeholder={t('global.password')}
                             component={ESInput.Password}
+                            data-testid='es-signin-form__form__password'
                         />
                     </ESFormItem>
                     <ESRow
@@ -149,6 +154,7 @@ const ESSignInForm = ({
                             <ESCheckbox
                                 checked={isKeepMeLoggedChecked}
                                 onClick={() => keepMeLogged()}
+                                data-testid='es-signin-form__form__keep-me-logged-in'
                             >
                                 {keepMeLoggedIn}
                             </ESCheckbox>
@@ -159,6 +165,7 @@ const ESSignInForm = ({
                                 variant='text'
                                 bold
                                 color='primary'
+                                data-testid='es-signin-form__form__forgot-password'
                             >
                                 {forgotPassword}
                             </ESButton>
@@ -171,6 +178,7 @@ const ESSignInForm = ({
                         variant='solid'
                         block
                         bold
+                        data-testid='es-signin-form__form__do-login'
                     >
                         {login}
                     </ESButton>

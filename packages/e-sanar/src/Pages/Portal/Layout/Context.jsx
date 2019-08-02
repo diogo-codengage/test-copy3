@@ -33,7 +33,7 @@ const reducer = (state, { payload, type }) => {
     }
 }
 
-const LayoutProvider = ({ children, history }) => {
+const LayoutProvider = ({ children }) => {
     const { t } = useTranslation('esanar')
     const [darkMode, setDarkMode] = useState(false)
     const [menuIsOpen, setMenuIsOpen] = useState(false)
@@ -65,7 +65,6 @@ const LayoutProvider = ({ children, history }) => {
                         menuTitle: t(`${intlPath}menu`)
                     }
                 })
-                history.push('/aluno/curso')
                 break
             case 1:
                 dispatch({
@@ -77,7 +76,6 @@ const LayoutProvider = ({ children, history }) => {
                 })
                 break
             case 5:
-                history.push('/aluno/banco-questoes')
                 break
             case 6:
                 dispatch({

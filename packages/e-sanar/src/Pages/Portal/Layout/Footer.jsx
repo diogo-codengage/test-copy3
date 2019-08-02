@@ -9,7 +9,6 @@ import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESDivider from 'sanar-ui/dist/Components/Atoms/Divider'
-import ESModalTabs from 'sanar-ui/dist/Components/Organisms/ModalTabs'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 
 import { SANPortalPagesContainer } from '../Layout'
@@ -17,48 +16,34 @@ import { SANPortalPagesContainer } from '../Layout'
 import logoSvg from 'assets/images/logo.svg'
 import whiteLogo from 'assets/images/white-logo.svg'
 
-import ESTermsAndPrivacy from 'assets/TermsAndPrivacy'
-
-const modalTermsContent = [
-    {
-        title: 'Termos de uso',
-        content: <ESTermsAndPrivacy />
-    }
-]
+import SANModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 
 const SANFooter = ({ darkMode, history }) => {
     const { t } = useTranslation('esanar')
-    const [openTerms, setOpenTerms] = useState(false)
-    const [openPrivacy, setOpenPrivacy] = useState(false)
+    const [showModalTermsAndPrivacy, setShowModalTermsAndPrivacy] = useState(
+        false
+    )
+    const [activeKey, setActiveKey] = useState('0')
 
-    const handleCloseTerms = () => setOpenTerms(false)
+    const handleCloseModalTermsAndPrivacy = () =>
+        setShowModalTermsAndPrivacy(false)
 
-    const handleOpenTerms = e => {
+    const handleModalTermsAndPrivacy = (e, key) => {
         e.preventDefault()
-        setOpenTerms(true)
-    }
-
-    const handleClosePrivacy = () => setOpenPrivacy(false)
-
-    const handleOpenPrivacy = e => {
-        e.preventDefault()
-        setOpenPrivacy(true)
+        setActiveKey(key)
+        setShowModalTermsAndPrivacy(true)
     }
 
     const goHelpCenter = () => history.push('/aluno/central-ajuda')
 
     return (
         <>
-            <ESModalTabs
-                visible={openTerms}
-                onCancel={handleCloseTerms}
-                content={modalTermsContent}
+            <SANModalTermsAndPrivacy
+                visible={showModalTermsAndPrivacy}
+                onCancel={handleCloseModalTermsAndPrivacy}
+                defaultActiveKey={activeKey}
             />
-            <ESModalTabs
-                visible={openPrivacy}
-                onCancel={handleClosePrivacy}
-                content={modalTermsContent}
-            />
+
             <ANTDLayout.Footer
                 className={classNames(
                     'san-portal-layout__footer',
@@ -180,12 +165,22 @@ const SANFooter = ({ darkMode, history }) => {
                             type={darkMode ? 'light' : 'default'}
                             strong
                         >
-                            <a onClick={handleOpenTerms} href='foo'>
-                                {t('footer.termsOfUse')}
+                            <a
+                                onClick={e =>
+                                    handleModalTermsAndPrivacy(e, '0')
+                                }
+                                href='foo'
+                            >
+                                {t('global.termsOfUse')}
                             </a>
                             {' | '}
-                            <a onClick={handleOpenPrivacy} href='foo'>
-                                {t('footer.privacyPolicy')}
+                            <a
+                                onClick={e =>
+                                    handleModalTermsAndPrivacy(e, '1')
+                                }
+                                href='foo'
+                            >
+                                {t('global.privacyPolicy')}
                             </a>
                         </ESTypography>
                     </ESCol>
