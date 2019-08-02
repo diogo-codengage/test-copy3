@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { Progress } from 'antd'
 
-const ESCircleProgress = ({
+const ESCircleProgress: React.FC<IProps>=({
     className,
     status,
     format,
@@ -32,7 +32,9 @@ const ESCircleProgress = ({
     )
 }
 
-ESCircleProgress.propTypes = {
+type IProps = PropTypes.InferProps<typeof propTypes>
+
+const propTypes = Object.assign({
     className: PropTypes.string,
     strokeWidth: PropTypes.number,
     width: PropTypes.number,
@@ -44,11 +46,12 @@ ESCircleProgress.propTypes = {
     color: PropTypes.oneOf(['white']),
     status: PropTypes.oneOf(['normal', 'error', 'success', 'warning']),
     trailColor: PropTypes.oneOf(['grey'])
-}
+})
 ESCircleProgress.defaultProps = {
     strokeWidth: 6,
     strokeLinecap: 'square',
     status: 'normal'
 }
 
+ESCircleProgress.propTypes = propTypes
 export default ESCircleProgress
