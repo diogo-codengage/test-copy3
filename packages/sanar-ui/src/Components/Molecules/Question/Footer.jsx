@@ -59,9 +59,8 @@ const ESQuestionFooter = ({
                     variant='outlined'
                     uppercase
                     bold
-                    disabled={!!selected && !!answer}
+                    disabled={!selected || (!!answer && !!selected)}
                     onClick={handleConfirm}
-                    {...propsConfirm}
                 >
                     {t('question.confirm')}
                 </ESButton>
