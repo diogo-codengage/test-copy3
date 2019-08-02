@@ -195,7 +195,7 @@ const SANQuestionPage = ({ history }) => {
                                         {bookmarked ? (
                                             <ESEvaIcon
                                                 name='heart'
-                                                color='error'
+                                                color='primary'
                                                 key='quiz-bookmarked'
                                             />
                                         ) : (
