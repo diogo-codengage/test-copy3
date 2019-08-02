@@ -28,7 +28,6 @@ const SANQuestions = ({ match: { url } }) => {
                     />
                     <Route
                         path={`${url}/perguntas`}
-                        exact={true}
                         component={SANQuestionPage}
                     />
                     <Route
