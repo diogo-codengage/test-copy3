@@ -66,6 +66,11 @@ const ESQuestion = ({
         onNext && onNext(answer && answer === selected)
     }
 
+    const handlePrevious = () => {
+        reset()
+        onPrevious && onPrevious()
+    }
+
     const handleJump = () => {
         reset()
         onJump && onJump(question)
@@ -208,7 +213,7 @@ const ESQuestion = ({
                         handleJump,
                         handleNext,
                         handleConfirm,
-                        handlePrevious: onPrevious,
+                        handlePrevious,
                         selected,
                         answer,
                         question,
