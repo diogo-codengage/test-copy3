@@ -6,7 +6,9 @@ import { useTranslation } from 'react-i18next'
 
 import { Empty } from 'antd'
 
-const ESEmpty = ({ className, description, ...props }) => {
+type IProps = PropTypes.InferProps<typeof propTypes>
+
+const ESEmpty: React.FC<IProps>=({ className, description, ...props }) => {
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-empty', className)
     return (
@@ -18,7 +20,7 @@ const ESEmpty = ({ className, description, ...props }) => {
     )
 }
 
-ESEmpty.propTypes = {
+const propTypes = Object.assign({
     className: PropTypes.string,
     description: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     imageStyle: PropTypes.object,
@@ -30,7 +32,10 @@ ESEmpty.propTypes = {
             'Empty.PRESENTED_IMAGE_DEFAULT'
         ])
     ])
-}
+})
+ESEmpty.propTypes = propTypes
+
+
 ESEmpty.defaultProps = {}
 
 export default ESEmpty
