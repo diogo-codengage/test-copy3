@@ -4,21 +4,27 @@ import PropTypes from 'prop-types'
 
 import { Divider } from 'antd'
 
-const ESDivider = ({ className, color, ...props }) => {
+type IProps = PropTypes.InferProps<typeof propTypes>
+
+const ESDivider: React.FC<IProps>=({ className, color, ...props }) => {
     const classes = classNames('es-divider', className, {
         'es-divider__grey': color === 'grey'
     })
     return <Divider className={classes} {...props} />
 }
 
-ESDivider.propTypes = Object.assign(
+const propTypes = Object.assign(
     {
         ...Divider['propTypes']
     },
     {
-        className: PropTypes.string
+        className: PropTypes.string,
+        color: PropTypes.string
     }
 )
+
+ESDivider.propTypes = propTypes
+
 ESDivider.defaultProps = Divider['defaultProps']
 
 export default ESDivider
