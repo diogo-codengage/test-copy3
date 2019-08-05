@@ -6,18 +6,18 @@ import { Carousel } from 'antd'
 import ESButton from '../Button'
 import ESEvaIcon from '../EvaIcon'
 
-const NextArrow = ({ onClick, className }) => (
-    <ESButton onClick={onClick} circle size='xsmall' className={className}>
+const NextArrow: React.FC<IProps> = ({ onClick, className }) => (
+    <ESButton onClick={onClick} circle size='small' className={className}>
         <ESEvaIcon name='arrow-ios-forward-outline' />
     </ESButton>
 )
-const PrevArrow = ({ onClick, className }) => (
-    <ESButton onClick={onClick} circle size='xsmall' className={className}>
+const PrevArrow: React.FC<IProps> = ({ onClick, className }) => (
+    <ESButton onClick={onClick} circle size='small' className={className}>
         <ESEvaIcon name='arrow-ios-back-outline' />
     </ESButton>
 )
 
-const ESCarousel = forwardRef(({ className, style, ...props }, ref) => {
+const ESCarousel: React.FC<IProps>=(({ className, style, ...props }, ref) => {
     const classes = classNames('es-carousel', className)
 
     const next = () => ref.current.next()
@@ -36,11 +36,14 @@ const ESCarousel = forwardRef(({ className, style, ...props }, ref) => {
     )
 })
 
-ESCarousel.propTypes = Object.assign(
+type IProps = PropTypes.InferProps<typeof propTypes>
+
+const propTypes = Object.assign(
     { ...Carousel['propTypes'] },
     {
         className: PropTypes.string,
         autoplay: PropTypes.bool,
+        size: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large', 'default']),
         afterChange: PropTypes.func,
         beforeChange: PropTypes.func,
         dots: PropTypes.bool,
@@ -55,7 +58,6 @@ ESCarousel.propTypes = Object.assign(
         centerMode: PropTypes.bool,
         centerPadding: PropTypes.bool,
         customPaging: PropTypes.func,
-        dots: PropTypes.bool,
         draggable: PropTypes.bool,
         focusOnSelect: PropTypes.bool,
         infinite: PropTypes.bool,
@@ -76,6 +78,8 @@ ESCarousel.propTypes = Object.assign(
         variableWidth: PropTypes.bool
     }
 )
+
+ESCarousel.prototype = propTypes
 
 ESCarousel.defaultProps = Carousel['defaultProps']
 

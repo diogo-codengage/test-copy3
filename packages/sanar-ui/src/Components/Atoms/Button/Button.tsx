@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 import ESIcon from '../Icon'
 
-const ESButton = ({
+const ESButton: React.FC<IProps>=({
     className,
     clear,
     size,
@@ -21,6 +21,7 @@ const ESButton = ({
     circle,
     loading,
     htmlType,
+    type,
     ...props
 }) => {
     const classes = classNames(
@@ -48,7 +49,7 @@ const ESButton = ({
     }
 
     const kids =
-        children && children.length > 1
+        children && children.valueOf() > 1
             ? React.Children.map(children, mapChildren)
             : children
 
@@ -77,10 +78,26 @@ const ESButton = ({
     )
 }
 
-ESButton.propTypes = Object.assign(
-    { ...Button['propTypes'] },
+type IProps = PropTypes.InferProps<typeof propTypes>
+
+const propTypes = Object.assign(
+    { ...Button.propTypes },
     {
         className: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+        loading: PropTypes.bool,
+        htmlType: PropTypes.oneOf([
+            'info',
+            'warning',
+            'danger',
+            'success',
+            'muted',
+            'default',
+            'light',
+            'secondary'
+        ]),
+        type: PropTypes.oneOf([
+            'loading'
+        ]),
         clear: PropTypes.bool,
         href: PropTypes.string,
         fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -95,11 +112,15 @@ ESButton.propTypes = Object.assign(
             'default',
             'light'
         ]),
+        uppercase: PropTypes.any,
+        circle: PropTypes.any,
         bold: PropTypes.bool,
         blockOnlyMobile: PropTypes.bool
     }
 )
 
-ESButton.defaultProps = { size: 'medium', htmlType: 'button' }
+ESButton.propTypes = propTypes
+
+ESButton.defaultProps = Button['defaultProps'] as ESButton
 
 export default ESButton
