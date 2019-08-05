@@ -25,8 +25,8 @@ const createAcronym = (index, percent) => {
         }
     }
 }
-
-const ESAlternative = ({
+type IProps = PropTypes.InferProps<typeof propTypes>
+const ESAlternative:React.FC<IProps> = ({
     id,
     index,
     percent,
@@ -78,13 +78,14 @@ const ESAlternative = ({
     )
 }
 
-ESAlternative.propTypes = {
+const propTypes = {
+    id: PropTypes.string,
     index: PropTypes.number.isRequired,
     percent: PropTypes.string,
     text: PropTypes.string.isRequired,
     onSelect: PropTypes.func,
     handleStripe: PropTypes.func,
-    stripe: PropTypes.bool,
+    striped: PropTypes.bool,
     status: PropTypes.oneOf([
         'normal',
         'selected',
@@ -94,5 +95,7 @@ ESAlternative.propTypes = {
         'incorrect-when-miss'
     ])
 }
+
+ESAlternative.propTypes = propTypes
 
 export default ESAlternative

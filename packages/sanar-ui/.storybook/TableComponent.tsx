@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 const Th = props => <th style={{ fontWeight: 400, padding: 20 }} {...props} />
 
@@ -67,7 +67,7 @@ const formatPropTypeShape = propType => (
         Object.keys(propType.value).reduce(
             (prev, current) => ({
                 ...prev,
-                [current]: formatPropType(propType.value[current])
+                [current]: formatPropType(propType.value[current],null)
             }),
             {}
         ),
@@ -86,7 +86,7 @@ const PropComponent = ({
     <Tr key={property} title={description}>
         <Td>{property}</Td>
         <Td>
-            {propType && propType.name ? <pre>{formatPropType(propType)}</pre> : propType}
+            {propType && propType.name ? <pre>{formatPropType(propType, null)}</pre> : propType}
         </Td>
         <Td>{typeof required !== 'undefined' && required.toString()}</Td>
         <Td>
