@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import { Col } from 'antd'
 import classNames from 'classnames'
 
-const ESCol = forwardRef(
+type IProps = PropTypes.InferProps<typeof propTypes>
+
+const ESCol: React.FC<IProps>=(
     ({ className, flex, style, type, alignSelf, ...props }, ref) => {
         const classes = classNames('es-col', className, {
             [`es-col__${type}`]: type
@@ -19,9 +21,10 @@ const ESCol = forwardRef(
     }
 )
 
-ESCol.propTypes = Object.assign(
-    { ...Col['propTypes'] },
+const propTypes = Object.assign(
     {
+        className: PropTypes.string,
+        style: PropTypes.string,
         flex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         alignSelf: PropTypes.oneOf([
             'auto',
@@ -44,8 +47,9 @@ ESCol.propTypes = Object.assign(
             'unset'
         ]),
         type: PropTypes.string
-    }
+    },
 )
+ESCol.propTypes = propTypes
 
 ESCol.defaultProps = Col['defaultProps']
 
