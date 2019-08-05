@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { Interface } from 'readline';
 
-const ESCommonBadge = ({
+const ESCommonBadge: React.FC<IProps> = ({
     count,
     suffix,
     status,
@@ -22,8 +23,11 @@ const ESCommonBadge = ({
     return <div style={styles} className={classes}>{`${count}${suffix}`}</div>
 }
 
-ESCommonBadge.propTypes = {
+type IProps = PropTypes.InferProps<typeof propTypes>
+
+const propTypes = Object.assign({
     className: PropTypes.string,
+    style: PropTypes.string,
     count: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     suffix: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
@@ -36,7 +40,9 @@ ESCommonBadge.propTypes = {
         'info',
         'default'
     ])
-}
+})
+
+ESCommonBadge.propTypes = propTypes
 
 ESCommonBadge.defaultProps = {
     suffix: ''
