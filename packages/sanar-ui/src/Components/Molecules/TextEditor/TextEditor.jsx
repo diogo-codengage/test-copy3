@@ -3,11 +3,13 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
-import CKEditor from 'ckeditor4-react'
+// import CKEditor from 'ckeditor4-react'
+import CKEditor from './ckeditor'
 import { Avatar } from 'antd'
 
 import ESButton from '../../Atoms/Button'
 import ESTypography from '../../Atoms/Typography'
+import ESSpin from '../../Atoms/Spin'
 
 const height = 356
 
@@ -62,6 +64,7 @@ const ESTextEditor = forwardRef(
             dark,
             avatar,
             reply,
+            loading,
             ...props
         },
         ref
@@ -75,7 +78,8 @@ const ESTextEditor = forwardRef(
             'es-text-editor',
             {
                 'es-text-editor__comment': comment && !focus,
-                'es-text-editor__dark': dark
+                'es-text-editor__dark': dark,
+                comment: comment
             },
             className
         )
@@ -107,8 +111,14 @@ const ESTextEditor = forwardRef(
             onCancel && onCancel()
         }
 
-        const handleSubmit = e => {
+        const handleSubmit = () => {
             onSubmit && onSubmit(data)
+            setData()
+        }
+
+        const handleEnter = text => {
+            onSubmit && onSubmit(text)
+            setData()
         }
 
         const heightCalculated =
@@ -122,71 +132,81 @@ const ESTextEditor = forwardRef(
 
         return (
             <div className={classes} style={{ height: heightCalculated }}>
-                <CKEditor
-                    {...props}
-                    ref={ref}
-                    config={{
-                        ...config,
-                        on: {
-                            instanceReady: function() {
-                                setReady(true)
-                            }
-                        },
-                        height: heightIframe,
-                        contentsCss: comment
-                            ? contentsCss(
-                                  conditionalStyle,
-                                  !reply && `p { margin-left: 40px; }`
-                              )
-                            : contentsCss(conditionalStyle)
-                    }}
-                    data={data}
-                    onChange={onChange}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                />
-                {isReady && (
-                    <>
-                        {comment && !reply && (
-                            <Avatar
-                                className='es-text-editor__comment--avatar'
-                                size={28}
-                                icon='user'
-                                src={avatar}
-                            />
-                        )}
-                        <div className='es-text-editor__buttons'>
-                            <ESTypography variant='caption'>
-                                {`${t('textEditor.count')}: ${letter}`}
-                            </ESTypography>
-                            <div className='d-flex align-items-center'>
-                                <ESButton
-                                    className='mr-md'
-                                    variant='text'
-                                    bold
-                                    uppercase
-                                    color={dark ? 'white' : 'default'}
-                                    size='xsmall'
-                                    disabled={!data}
-                                    onClick={handleCancel}
+                <ESSpin dark spinning={loading || !isReady}>
+                    <CKEditor
+                        {...props}
+                        ref={ref}
+                        config={{
+                            ...config,
+                            on: {
+                                instanceReady: function() {
+                                    setReady(true)
+                                },
+                                key: function(e) {
+                                    if (e.data.keyCode === 13) {
+                                        handleEnter(e.editor.getData())
+                                    }
+                                }
+                            },
+                            height: heightIframe,
+                            contentsCss: comment
+                                ? contentsCss(
+                                      conditionalStyle,
+                                      !reply && `p { margin-left: 40px; }`
+                                  )
+                                : contentsCss(conditionalStyle)
+                        }}
+                        data={data}
+                        onChange={onChange}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                    />
+                    {isReady && (
+                        <>
+                            {comment && !reply && (
+                                <Avatar
+                                    className='es-text-editor__comment--avatar'
+                                    size={28}
+                                    icon='user'
+                                    src={avatar}
+                                />
+                            )}
+                            <div className='es-text-editor__buttons'>
+                                <ESTypography
+                                    variant='caption'
+                                    className='es-text-editor__buttons--count'
                                 >
-                                    {t('textEditor.cancel')}
-                                </ESButton>
-                                <ESButton
-                                    variant='solid'
-                                    bold
-                                    uppercase
-                                    color={dark ? 'white' : 'primary'}
-                                    size='xsmall'
-                                    disabled={!data}
-                                    onClick={handleSubmit}
-                                >
-                                    {t('textEditor.publish')}
-                                </ESButton>
+                                    {`${t('textEditor.count')}: ${letter}`}
+                                </ESTypography>
+                                <div className='d-flex align-items-center'>
+                                    <ESButton
+                                        className='mr-md'
+                                        variant='text'
+                                        bold
+                                        uppercase
+                                        color={dark ? 'white' : 'default'}
+                                        size='xsmall'
+                                        disabled={!data}
+                                        onClick={handleCancel}
+                                    >
+                                        {t('textEditor.cancel')}
+                                    </ESButton>
+                                    <ESButton
+                                        variant='solid'
+                                        bold
+                                        uppercase
+                                        color={dark ? 'white' : 'primary'}
+                                        size='xsmall'
+                                        disabled={!data}
+                                        onClick={handleSubmit}
+                                    >
+                                        {t('textEditor.publish')}
+                                    </ESButton>
+                                </div>
                             </div>
-                        </div>
-                    </>
-                )}
+                        </>
+                    )}
+                </ESSpin>
             </div>
         )
     }
@@ -211,6 +231,7 @@ ESTextEditor.propTypes = {
 
 ESTextEditor.defaultProps = {
     type: 'classic',
+    loading: false,
     config,
     height
 }

@@ -14,32 +14,35 @@ import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESDivider from 'sanar-ui/dist/Components/Atoms/Divider'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
-import ESModalTabs from 'sanar-ui/dist/Components/Organisms/ModalTabs'
+import SANModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 
 import { useAuthContext } from 'Hooks/auth'
 import SANLogout from 'Components/ModalLogout'
 import SANFeedback from 'Components/ModalFeedback'
-import ESTermsAndPrivacy from 'assets/TermsAndPrivacy'
 import { useLayoutContext } from '../Context'
 
 const intlPath = 'mainMenu.myAccount.'
 
-const modalTermsContent = [
-    {
-        title: 'Termos de uso',
-        content: <ESTermsAndPrivacy />
-    }
-]
-
 const SANMyAccount = ({ handleBack, history }) => {
     const { me, getEnrollment } = useAuthContext()
+    const { course } = getEnrollment()
     const { t } = useTranslation('esanar')
     const [open, setOpen] = useState(false)
     const [openFeedback, setOpenFeedback] = useState(false)
-    const [openModalTerms, setOpenModalTerms] = useState(false)
     const { menuOpenOrClose } = useLayoutContext()
 
-    const { course } = getEnrollment()
+    const [showModalTermsAndPrivacy, setShowModalTermsAndPrivacy] = useState(
+        false
+    )
+    const [activeKey, setActiveKey] = useState('0')
+
+    const handleCloseModalTermsAndPrivacy = () =>
+        setShowModalTermsAndPrivacy(false)
+
+    const handleModalTermsAndPrivacy = key => {
+        setActiveKey(key)
+        setShowModalTermsAndPrivacy(true)
+    }
 
     const handleOtherLinks = ({ key }) => {
         setOpen(Number(key) === 2)
@@ -58,11 +61,9 @@ const SANMyAccount = ({ handleBack, history }) => {
     const navIntoMyAccount = ({ key }) => {
         switch (Number(key)) {
             case 1:
-                history.push('/aluno/minha-conta/')
                 menuOpenOrClose()
                 break
             case 2:
-                history.push('/aluno/central-ajuda/')
                 menuOpenOrClose()
                 break
             default:
@@ -83,10 +84,10 @@ const SANMyAccount = ({ handleBack, history }) => {
                 onCancel={() => setOpenFeedback(false)}
                 onSendEnd={() => setOpenFeedback(false)}
             />
-            <ESModalTabs
-                visible={openModalTerms}
-                onCancel={() => setOpenModalTerms(false)}
-                content={modalTermsContent}
+            <SANModalTermsAndPrivacy
+                visible={showModalTermsAndPrivacy}
+                defaultActiveKey={activeKey}
+                onCancel={handleCloseModalTermsAndPrivacy}
             />
 
             <div className='pl-md pr-md mb-md'>
@@ -114,15 +115,17 @@ const SANMyAccount = ({ handleBack, history }) => {
             >
                 {t(`${intlPath}management`)}
             </ESTypography>
-            <ESNavigationList onClick={navIntoMyAccount}>
+            <ESNavigationList className='mb-md' onClick={navIntoMyAccount}>
                 {/*FIXME: <ESNavigationListItem
                     key='0'
                     title={t(`${intlPath}myData`)}
                     icon={<ESEvaIcon name='folder-outline' color='default' />}
                 /> */}
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__my-account__change-password'
                     key='1'
                     title={t(`${intlPath}changePassword`)}
+                    to='/aluno/minha-conta/alterar-senha'
                     icon={<ESEvaIcon name='lock-outline' color='default' />}
                 />
             </ESNavigationList>
@@ -134,9 +137,11 @@ const SANMyAccount = ({ handleBack, history }) => {
             </ESTypography>
             <ESNavigationList onClick={navIntoMyAccount}>
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__my-account__help-center'
                     key='2'
                     title={t(`${intlPath}helpCenter`)}
                     icon={<ESEvaIcon name='lock-outline' color='default' />}
+                    to='/aluno/central-ajuda'
                 />
             </ESNavigationList>
             {/*FIXME: <div className='pl-md pr-md'>
@@ -176,18 +181,21 @@ const SANMyAccount = ({ handleBack, history }) => {
             </ESTypography>
             <ESNavigationList onClick={handleOtherLinks}>
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__my-account__use-terms'
                     key={0}
-                    title={t(`${intlPath}termsOfUse`)}
+                    title={t(`global.termsOfUse`)}
                     arrow={false}
-                    onClick={() => setOpenModalTerms(true)}
+                    onClick={() => handleModalTermsAndPrivacy('0')}
                 />
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__my-account__privacy-and-policy'
                     key={1}
-                    title={t(`${intlPath}privacyPolicy`)}
+                    title={t(`global.privacyPolicy`)}
                     arrow={false}
-                    onClick={() => setOpenModalTerms(true)}
+                    onClick={() => handleModalTermsAndPrivacy('1')}
                 />
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__my-account__leave-account'
                     key={2}
                     title={t(`${intlPath}leaveAccount`)}
                     arrow={false}

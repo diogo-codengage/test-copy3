@@ -19,7 +19,7 @@ import { useLayoutContext } from '../../Layout/Context'
 
 const intlPath = 'mainMenu.initial.'
 
-const SANInitial = ({ setTab, history }) => {
+const SANInitial = ({ setTab, history, match }) => {
     const { lastAccessed, error } = usePortalContext()
     const { getEnrollment } = useAuthContext()
     const { menuOpenOrClose } = useLayoutContext()
@@ -50,8 +50,8 @@ const SANInitial = ({ setTab, history }) => {
     }
 
     const rankingProps = {
-        ranking: ranking.position,
-        score: ranking.points
+        ranking: ranking ? ranking.position : 0,
+        score: ranking ? ranking.points : 0
     }
 
     const renderNextContent = e => {
@@ -78,10 +78,12 @@ const SANInitial = ({ setTab, history }) => {
             </div>
             <ESNavigationList onClick={renderNextContent}>
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__home'
                     key={0}
                     title={t(`${intlPath}init`)}
                     icon={<ESEvaIcon name='home-outline' color='default' />}
                     onClick={() => menuOpenOrClose()}
+                    to='/aluno/curso'
                 />
                 {/*FIXME: <ESNavigationListItem
                     key={1}
@@ -110,10 +112,12 @@ const SANInitial = ({ setTab, history }) => {
                     }
                 /> */}
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__questions'
                     key={5}
                     title={t(`${intlPath}questions`)}
                     icon={<ESEvaIcon name='edit-outline' color='default' />}
                     onClick={() => menuOpenOrClose()}
+                    to='/aluno/banco-questoes'
                 />
                 {/*FIXME: <ESNavigationListItem
                     key={6}
@@ -121,6 +125,7 @@ const SANInitial = ({ setTab, history }) => {
                     icon={<ESEvaIcon name='swap-outline' color='default' />}
                 /> */}
                 <ESNavigationListItem
+                    data-testid='san-menu-navigation__my-account'
                     key={7}
                     title={t(`${intlPath}myAccount`)}
                     icon={<ESEvaIcon name='person-outline' color='default' />}

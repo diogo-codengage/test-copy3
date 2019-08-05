@@ -5,11 +5,23 @@ import PropTypes from 'prop-types'
 import { ESItem } from '../../../Atoms/Menu'
 import ESEvaIcon from '../../../Atoms/EvaIcon'
 
-const ESNavigationListItem = ({ className, title, icon, arrow, ...props }) => {
+const ESNavigationListItem = ({
+    className,
+    title,
+    icon,
+    to,
+    arrow,
+    ...props
+}) => {
     const classes = classNames('es-navigation-list-item', className)
 
     return (
-        <ESItem className={classes} {...props}>
+        <ESItem
+            activeClassName='es-navigation-list-item--active'
+            className={classes}
+            to={to ? to : null}
+            {...props}
+        >
             <span>
                 {icon && icon}
                 {title}

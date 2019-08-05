@@ -12,21 +12,14 @@ import image from 'assets/images/auth/login.png'
 
 import useLocalStorage from 'sanar-ui/dist/Hooks/useLocalStorage'
 
-import ESModalTabs from 'sanar-ui/dist/Components/Organisms/ModalTabs'
+import SANModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
-import ESTermsAndPrivacy from 'assets/TermsAndPrivacy'
-
-const content = [
-    {
-        title: 'Termos de Uso',
-        content: <ESTermsAndPrivacy />
-    }
-]
 
 const SANSigninPage = ({ history }) => {
     const { t } = useTranslation('esanar')
 
     const [showModalTerms, setShowModalTerms] = useState(false)
+    const [activeKey, setActiveKey] = useState('0')
     const [storedValue, setValue] = useLocalStorage('es-keep-me-logged-in')
     const [isKeepMeLoggedChecked, setIsKeepMeLoggedChecked] = useState(
         storedValue
@@ -39,6 +32,11 @@ const SANSigninPage = ({ history }) => {
                 email: response.attributes.email
             })
         }
+    }
+
+    const modalTermsOpen = defaultKey => {
+        setActiveKey(defaultKey)
+        setShowModalTerms(true)
     }
 
     const storeKeepMeLoggedIn = () => {
@@ -61,17 +59,16 @@ const SANSigninPage = ({ history }) => {
     }
 
     const Terms = () => (
-        <>
-            <ESTypography>
-                Ao entrar na plataforma, você concorda com nossos
-            </ESTypography>
-            <span onClick={() => setShowModalTerms(true)}> Termos de Uso </span>
-            <ESTypography>e nossa</ESTypography>
-            <span href='#' onClick={() => setShowModalTerms(true)}>
-                {' '}
-                Política de Privacidade
+        <ESTypography className='text-align-center'>
+            {t('auth.footer.onEnter')}
+            <span onClick={() => modalTermsOpen('0')}>
+                {t('global.termsOfUse')}
             </span>
-        </>
+            {t('auth.footer.us')}
+            <span href='#' onClick={() => modalTermsOpen('1')}>
+                {t('global.privacyPolicy')}
+            </span>
+        </ESTypography>
     )
 
     return (
@@ -99,10 +96,10 @@ const SANSigninPage = ({ history }) => {
                 }
             />
 
-            <ESModalTabs
+            <SANModalTermsAndPrivacy
                 onCancel={() => setShowModalTerms(false)}
                 visible={showModalTerms}
-                content={content}
+                defaultActiveKey={activeKey}
                 scrolling
             />
         </div>

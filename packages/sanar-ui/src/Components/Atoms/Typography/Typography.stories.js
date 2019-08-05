@@ -29,7 +29,7 @@ const transformOptions = {
 }
 
 const levelOptions = {
-    '': '',
+    '': null,
     1: 1,
     2: 2,
     3: 3,
@@ -40,37 +40,34 @@ const levelOptions = {
 
 const ellipsisObject = {
     rows: 1,
-    expandable: false
+    showAction: true,
+    basedOn: 'letters'
 }
 
-storiesOf('Atoms.Typography', module).add('Simple', () => (
-    <ESTypography
-        copyable={boolean('Copyable', false)}
-        delete={boolean('Delete', false)}
-        disabled={boolean('Disabled', false)}
-        editable={boolean('Editable', false)}
-        ellipsis={object('Ellipsis', ellipsisObject)}
-        mark={boolean('Mark', false)}
-        underline={boolean('Underline', false)}
-        strong={boolean('Strong', false)}
-        regular={boolean('Regular', false)}
-        level={select('Level', levelOptions, '')}
-        type={select('Type', typeOptions, 'default')}
-        variant={select('Variant', variantOptions, undefined)}
-        variant={select('Transform', transformOptions, undefined)}
-    >
-        Every year, I took a holiday. I went to Florence, this cafe on the banks
-        of the Arno. Every fine evening, I would sit there and order a Fernet
-        Branca. I had this fantasy, that I would look across the tables and I
-        would see you there with a wife maybe a couple of kids. You wouldn't say
-        anything to me, nor me to you. But we would both know that you've made
-        it, that you were happy. I never wanted you to come back to Gotham. I
-        always knew there was nothing here for you except pain and tragedy and I
-        wanted something more for you than that. I still do.
-    </ESTypography>
-))
-.add('Dark', () => (
-    <ESTypography type='light'>
-        Another text in dark mode
-    </ESTypography>
-))
+storiesOf('Atoms.Typography', module)
+    .add('Simple', () => (
+        <ESTypography
+            delete={boolean('Delete', false)}
+            disabled={boolean('Disabled', false)}
+            ellipsis={object('Ellipsis', ellipsisObject)}
+            strong={boolean('Strong', false)}
+            regular={boolean('Regular', false)}
+            level={select('Level', levelOptions, '')}
+            type={select('Type', typeOptions, 'default')}
+            variant={select('Variant', variantOptions, undefined)}
+            transform={select('Transform', transformOptions, undefined)}
+        >
+            Every year, I took a holiday. I went to Florence, this cafe on the
+            banks of the Arno. Every fine evening, I would sit there and order a
+            Fernet Branca. I had this fantasy, that I would look across the
+            tables and I would see you there with a wife maybe a couple of kids.
+            You wouldn't say anything to me, nor me to you. But we would both
+            know that you've made it, that you were happy. I never wanted you to
+            come back to Gotham. I always knew there was nothing here for you
+            except pain and tragedy and I wanted something more for you than
+            that. I still do.
+        </ESTypography>
+    ))
+    .add('Dark', () => (
+        <ESTypography type='light'>Another text in dark mode</ESTypography>
+    ))

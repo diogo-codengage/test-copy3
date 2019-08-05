@@ -56,6 +56,7 @@ const ESQuestion = ({
         setConfirm(true)
         setStripe({})
         onConfirm && onConfirm(id || selected)
+        skipSeeAnswer && handleNext()
     }
 
     const handleNext = () => {
