@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Icon from 'react-eva-icons'
+import { esConvertFormattedTimeToSeconds } from '../../../Util/Date';
 
-const ESEvaIcon = ({ className, onClick, style, size, color, ...props }) => {
+const ESEvaIcon: React.FC<Iprops> = ({ className, onClick, style, size, color, ...props }) => {
     const classes = classNames('anticon', 'es-eva-icon', className, {
         [`es-eva-icon--${size}`]: size,
         [`es-eva-icon--${color}`]: color
@@ -16,7 +17,9 @@ const ESEvaIcon = ({ className, onClick, style, size, color, ...props }) => {
     )
 }
 
-ESEvaIcon.propTypes = Object.assign(
+type Iprops  = PropTypes.InferProps<typeof propTypes>
+
+const propTypes = Object.assign(
     { ...Icon['propTypes'] },
     {
         className: PropTypes.any,
@@ -35,6 +38,7 @@ ESEvaIcon.propTypes = Object.assign(
     }
 )
 
+ESEvaIcon.propTypes = propTypes
 ESEvaIcon.defaultProps = Icon['defaultProps']
 
 export default ESEvaIcon

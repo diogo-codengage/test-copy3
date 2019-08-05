@@ -67,9 +67,9 @@ const propTypes = {
         'light',
         'secondary'
     ]),
-    strong: PropTypes.bool,
+    strong: PropTypes.bool
 }
-
+    
 type IPros = PropTypes.InferProps<typeof propTypes>
 
 const ESTypography:React.FC<IPros> = ({
@@ -90,8 +90,7 @@ const ESTypography:React.FC<IPros> = ({
     const [ellipsed, setEllipsed] = useState(
         ellipsis && typeof ellipsis === 'object'
     )
-
-    const classes = classNames('es-typography', className, {
+    const classes = classNames('estypography', className, {
         [`es-typography--${type}`]: type,
         [`es-typography--${variant}`]: variant,
         'es-typography--strong': strong,
