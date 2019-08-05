@@ -4,23 +4,29 @@ import PropTypes from 'prop-types'
 
 import { Collapse } from 'antd'
 
-const ESCollapse = ({ className, ...props }) => {
+const ESCollapse: React.FC<IProps> = ({ className, ...props }) => {
     const classes = classNames('es-collapse', className)
     return <Collapse className={classes} {...props} />
 }
 
-ESCollapse.propTypes = {
+type IProps = PropTypes.InferProps<typeof propTypes>
+
+const propTypes = Object.assign(
+    {...Collapse['prototype']},
+    {
     className: PropTypes.string,
     activeKey: PropTypes.any,
-    defaultActiveKey: PropTypes.string,
+    defaultActiveKey: PropTypes.array,
     bordered: PropTypes.bool,
     accordion: PropTypes.bool,
     onChange: PropTypes.func,
-    expandIcon: PropTypes.node,
-    expandIconPosition: PropTypes.oneOf(['left', 'right']),
+    expandIcon: PropTypes.func,
+    expandIconPosition: PropTypes.any,
     destroyInactivePanel: PropTypes.bool
-}
+})
 
-ESCollapse.defaultProps = {}
+ESCollapse.propTypes = propTypes
+
+ESCollapse.defaultProps = Collapse['defaultProps']
 
 export default ESCollapse

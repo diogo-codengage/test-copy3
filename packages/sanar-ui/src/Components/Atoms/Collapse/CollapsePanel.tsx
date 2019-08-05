@@ -4,14 +4,20 @@ import PropTypes from 'prop-types'
 
 import { Collapse } from 'antd'
 
-const Panel = Collapse.Panel
-
-const ESCollapsePanel = ({ className, customKey, ...props }) => {
+const ESCollapsePanel: React.FC<IProps> = ({
+    className,
+    customKey,
+    ...props
+}) => {
     const classes = classNames('es-collapse-panel', className)
-    return <Panel key={customKey} className={classes} {...props} />
+    return < Collapse.Panel key={customKey} className={classes} {...props} header={props.header} />
 }
 
-ESCollapsePanel.propTypes = {
+type IProps = PropTypes.InferProps<typeof propTypes>
+
+const propTypes = Object.assign(
+    {...Collapse['prototype']},
+    {
     className: PropTypes.string,
     disabled: PropTypes.bool,
     forceRender: PropTypes.bool,
@@ -19,8 +25,10 @@ ESCollapsePanel.propTypes = {
     customKey: PropTypes.string,
     showArrow: PropTypes.bool,
     extra: PropTypes.node
-}
+})
 
-ESCollapsePanel.defaultProps = {}
+ESCollapsePanel.propTypes = propTypes
+
+ESCollapsePanel.defaultProps = Collapse['defaultProps'] as ESCollapsePanel
 
 export default ESCollapsePanel
