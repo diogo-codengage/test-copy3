@@ -3,13 +3,15 @@ import PropTypes from 'prop-types'
 import Dropdown from 'antd/lib/dropdown'
 import classNames from 'classnames'
 
-const ESDropdown = ({ className, component, ...props }) => {
+const ESDropdown: React.FC<IProps> = ({ className, component, ...props }) => {
     const classes = classNames('es-dropdown', className)
 
-    return <Dropdown className={classes} {...props} />
+    return <Dropdown className={classes} {...props} overlay={propTypes.any}/>
 }
 
-ESDropdown.propTypes = Object.assign(
+type IProps = PropTypes.InferProps<typeof propTypes>
+
+const propTypes = Object.assign(
     { ...Dropdown['propTypes'] },
     {
         className: PropTypes.string,
@@ -33,6 +35,7 @@ ESDropdown.propTypes = Object.assign(
         ])
     }
 )
+ESDropdown.propTypes = propTypes
 
 ESDropdown.defaultProps = Dropdown['defaultProps']
 
