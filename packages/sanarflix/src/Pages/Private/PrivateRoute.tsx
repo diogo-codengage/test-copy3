@@ -14,7 +14,7 @@ const FLXPrivateRoute: React.FC<FLXPrivateRouteProps> = ({
 
     useEffect(() => {
         setLogged(true)
-    }, [setLogged])
+    }, [])
 
     return (
         <Route
