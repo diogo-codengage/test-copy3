@@ -5,19 +5,18 @@ import * as serviceWorker from './serviceWorker'
 
 import FLXGraphQLProvider from './Apollo/GraphQLService'
 import { FLXAuthProvider } from './Hooks/auth'
-import { ThemeProvider } from 'styled-components'
-import FLXTheme from './Styles/Theme'
 import { FLXGlobalStyle } from './Styles'
+import { FLXThemeProvider } from 'Hooks/theme'
 
 const FLXApp: React.FC = () => (
     <FLXGraphQLProvider>
         <FLXAuthProvider>
-            <ThemeProvider theme={FLXTheme}>
+            <FLXThemeProvider>
                 <>
                     <FLXGlobalStyle />
                     <App />
                 </>
-            </ThemeProvider>
+            </FLXThemeProvider>
         </FLXAuthProvider>
     </FLXGraphQLProvider>
 )
