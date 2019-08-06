@@ -26,7 +26,15 @@
         "react-i18next": "^10.10.0",
         "react-router-dom": "^5.0.0",
         "react-scripts": "3.0.0",
-        "react-transition-group": "^4.0.1"
+        "react-transition-group": "^4.0.1",
+        "@apollo/react-hooks": "^0.1.0-beta.11",
+        "@types/jest": "24.0.16",
+        "@types/node": "^12.6.9",
+        "@types/react": "^16.8.24",
+        "@types/react-dom": "^16.8.5",
+        "@types/styled-components": "^4.1.18",
+        "styled-components": "^4.3.2",
+        "typescript": "^3.5.3"
     },
     "devDependencies": {
         "@babel/plugin-proposal-export-default-from": "^7.2.0",
@@ -65,7 +73,12 @@
         "sanarrm:build": "yarn workspace sanar-rm-questions build",
         "sanarrm:start": "yarn workspace sanar-rm-questions start",
         "sanarrm:lint": "yarn workspace sanar-rm-questions lint",
-        "sanarrm:start:dev": "npm-run-all --parallel sanarui:dev sanarui:storybook sanarrm:start"
+        "sanarrm:start:dev": "npm-run-all --parallel sanarui:dev sanarui:storybook sanarrm:start",
+        "sanarflix:start": "yarn workspace sanarflix start",
+        "sanarflix:build:development": "yarn workspace sanarflix build:development",
+        "sanarflix:build:staging": "yarn workspace sanarflix build:staging",
+        "sanarflix:build:production": "yarn workspace sanarflix build:production",
+        "sanarflix:start:dev": "npm-run-all --parallel sanarui:dev sanarflix:start"
     },
     "husky": {
         "hooks": {
