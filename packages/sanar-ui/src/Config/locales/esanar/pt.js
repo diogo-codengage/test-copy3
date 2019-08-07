@@ -100,8 +100,9 @@ export default {
         },
         changeCourse: {
             changeCourse: 'Trocar de curso',
-            message:
-                'Você tem <strong>{{courses}}</strong> cursos em “{{filter}}”'
+            failChange: 'Ocorreu um erro ao trocar de curso.',
+            message: 'Você tem <strong>{{courses}}</strong> outros cursos',
+            placeholder: 'Outros cursos'
         },
         notifications: {
             notRead: 'Não lidas',

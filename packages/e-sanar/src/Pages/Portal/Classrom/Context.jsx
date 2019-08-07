@@ -40,9 +40,10 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         menuOpenOrClose,
         setPageContext
     } = useLayoutContext()
-    const { getEnrollment, me } = useAuthContext()
-
-    const { id: enrollmentId } = getEnrollment()
+    const {
+        me,
+        enrollment: { id: enrollmentId }
+    } = useAuthContext()
 
     const [bookmarked, setBookmark] = useState()
 

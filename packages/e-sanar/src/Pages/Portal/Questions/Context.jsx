@@ -23,8 +23,9 @@ const QuestionsProvider = ({ children, location: { pathname }, history }) => {
     const [limit] = useState(20)
     const [firstLoad, setFirstLoad] = useState(false)
     const [questions, setQuestions] = useState([])
-    const { getEnrollment } = useAuthContext()
-    const { course } = getEnrollment()
+    const {
+        enrollment: { course }
+    } = useAuthContext()
 
     const stopwatchRef = useRef()
     const [filter, setFilter] = useState({})

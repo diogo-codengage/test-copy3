@@ -113,7 +113,6 @@ const ESMainMenu = forwardRef(
             }
 
             onInitialClick && onInitialClick(e)
-            // setTheme('primary')
         }
 
         const searchClick = e => {
@@ -145,6 +144,7 @@ const ESMainMenu = forwardRef(
 
         useEffect(() => {
             onOpenOrClose(toggle)
+            !toggle && setTheme('primary')
         }, [toggle])
 
         useImperativeHandle(ref, () => ({

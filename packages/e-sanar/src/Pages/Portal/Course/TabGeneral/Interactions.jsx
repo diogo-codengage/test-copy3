@@ -25,7 +25,9 @@ import noBookmark from 'assets/images/empty-bookmark.svg'
 const SANInteractions = () => {
     const { t } = useTranslation('esanar')
 
-    const { getEnrollment } = useAuthContext()
+    const {
+        enrollment: { id: enrollmentId }
+    } = useAuthContext()
 
     const bookmarkAvatar = status => {
         switch (status) {
@@ -66,7 +68,7 @@ const SANInteractions = () => {
                 query={GET_BOOKMARKS}
                 fetchPolicy='cache-and-network'
                 variables={{
-                    enrollmentId: getEnrollment().id,
+                    enrollmentId,
                     limit: 2,
                     skip: 0
                 }}

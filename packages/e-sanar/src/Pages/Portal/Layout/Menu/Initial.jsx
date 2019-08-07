@@ -19,13 +19,13 @@ import { useLayoutContext } from '../../Layout/Context'
 
 const intlPath = 'mainMenu.initial.'
 
-const SANInitial = ({ setTab, history, match }) => {
+const SANInitial = ({ setTab, history }) => {
     const { lastAccessed, error } = usePortalContext()
-    const { getEnrollment } = useAuthContext()
+    const {
+        enrollment: { course, ranking }
+    } = useAuthContext()
     const { menuOpenOrClose } = useLayoutContext()
     const { t } = useTranslation('esanar')
-
-    const { course, ranking } = getEnrollment()
 
     const moduleReference = last =>
         `${t('global.subject')} ${last.module_order}, ${t('global.activity')} ${
@@ -129,11 +129,12 @@ const SANInitial = ({ setTab, history, match }) => {
                     onClick={() => menuOpenOrClose()}
                     to='/aluno/banco-questoes'
                 />
-                {/*FIXME: <ESNavigationListItem
+                <ESNavigationListItem
+                    data-testid='san-menu-navigation_change-course'
                     key={6}
                     title={t(`${intlPath}changeCourse`)}
                     icon={<ESEvaIcon name='swap-outline' color='default' />}
-                /> */}
+                />
                 <ESNavigationListItem
                     data-testid='san-menu-navigation__my-account'
                     key={7}

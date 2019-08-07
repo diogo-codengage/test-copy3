@@ -22,14 +22,14 @@ import ESDivider from 'sanar-ui/dist/Components/Atoms/Divider'
 
 const SANCourseModules = ({ history }) => {
     const { t } = useTranslation('esanar')
-    const { getEnrollment } = useAuthContext()
+    const {
+        enrollment: {
+            course: { id: courseId },
+            id: enrollmentId
+        }
+    } = useAuthContext()
     const [current, setCurrent] = useState(1)
     const [pageSize] = useState(12)
-
-    const {
-        course: { id: courseId },
-        id: enrollmentId
-    } = getEnrollment()
 
     const goClassrom = module => () => {
         const type = getClassRoute(module.last_resource_type)

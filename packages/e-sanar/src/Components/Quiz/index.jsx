@@ -36,7 +36,10 @@ const SANQuiz = ({
     const ref = useRef()
     const { t } = useTranslation('esanar')
     const client = useApolloContext()
-    const { me, getEnrollment } = useAuthContext()
+    const {
+        me,
+        enrollment: { id: enrollmentId }
+    } = useAuthContext()
     const { width } = useWindowSize()
     const [isFull, setIsFull] = useState(width <= 992)
     const [responses, setResponses] = useState([])
@@ -50,8 +53,6 @@ const SANQuiz = ({
         skipped: 0,
         total: 0
     })
-
-    const { id: enrollmentId } = getEnrollment()
 
     const handleProgress = async percentage => {
         try {

@@ -18,9 +18,29 @@
         );
     }
 
+    &:hover {
+        background-color: fade(@primary-1, 20);
+    }
+
     &__content {
         padding: @padding-md;
         position: inherit;
+
+        &--image {
+            filter: saturate(0);
+            margin-right: @margin-xs;
+        }
+
+        &--skeleton {
+            width: auto;
+            & .ant-skeleton-header {
+                padding-right: @padding-xs;
+            }
+        }
+
+        &--title {
+            width: ~'calc(100% - 45px)';
+        }
     }
 
     &__continue {
@@ -44,7 +64,7 @@
     }
 
     &__progress {
-        padding: 6px @padding-md;
+        padding: 5px @padding-md;
         background-color: @grey-6;
         display: flex;
         align-items: center;

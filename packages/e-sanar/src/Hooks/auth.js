@@ -6,13 +6,13 @@ export const useAuthContext = () => useContext(SANAuthContext)
 
 export const SANAuthProvider = ({ children }) => {
     const [me, setMe] = useState()
-
-    const getEnrollment = (pos = 0) => me.enrollments[pos]
+    const [enrollment, setEnrollment] = useState()
 
     const value = {
         me,
         setMe,
-        getEnrollment
+        enrollment,
+        setEnrollment
     }
 
     return (
