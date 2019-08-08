@@ -20,11 +20,11 @@ const Title = ({ name, monitor, labelMonitor, commentedByUser }) => {
     const { t } = useTranslation('sanarui')
 
     const badge = commentedByUser ? (
-        <div className='es-comment__badge es-comment__badge'>
+        <div className='es-comment__badge'>
             {t('global.you')}
         </div>
     ) : monitor ? (
-        <div className='es-comment__badge es-comment__badge'>
+        <div className='es-comment__badge'>
             {labelMonitor || t('global.monitor')}
         </div>
     ) : (
@@ -97,9 +97,11 @@ const ESComment = ({
                 </ESTypography>
             }
             datetime={
-                i18n.language == 'pt'
-                    ? diff.replace('aproximadamente', 'Há')
-                    : diff
+                diff && (
+                    i18n.language == 'pt'
+                        ? diff.replace('aproximadamente', 'Há')
+                        : diff
+                )
             }
         />
     )
