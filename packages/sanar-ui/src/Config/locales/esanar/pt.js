@@ -294,7 +294,8 @@ export default {
             },
             failHandleBookmark: 'Ocorreu um erro ao favoritar questão.',
             backBookmark: 'Voltar para favoritos',
-            bookmark: 'Favorito'
+            bookmark: 'Favorito',
+            error: 'Ocorreu um erro ao tentar carregar questões.'
         },
         historic: {
             title: 'Histórico de questões',

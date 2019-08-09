@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import ESQuestion from 'sanar-ui/dist/Components/Molecules/Question'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
 import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
@@ -39,7 +40,8 @@ const SANQuestionPage = ({ history }) => {
         firstLoad,
         setQuestions,
         questions,
-        currentIndex
+        currentIndex,
+        error
     } = useQuestionsContext()
 
     const { setPageContext } = useLayoutContext()
@@ -170,8 +172,12 @@ const SANQuestionPage = ({ history }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentIndex, questions])
 
-    if (!firstLoad && (!questions || !questions.length)) {
+    if (!error && !firstLoad && (!questions || !questions.length)) {
         return <SANEmptyQuestions />
+    }
+
+    if (error) {
+        return <SANErrorPiece message={t('questionBase.question.error')} />
     }
 
     return (
