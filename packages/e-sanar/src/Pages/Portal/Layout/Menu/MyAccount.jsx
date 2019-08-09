@@ -24,8 +24,10 @@ import { useLayoutContext } from '../Context'
 const intlPath = 'mainMenu.myAccount.'
 
 const SANMyAccount = ({ handleBack, history }) => {
-    const { me, getEnrollment } = useAuthContext()
-    const { course } = getEnrollment()
+    const {
+        me,
+        enrollment: { course }
+    } = useAuthContext()
     const { t } = useTranslation('esanar')
     const [open, setOpen] = useState(false)
     const [openFeedback, setOpenFeedback] = useState(false)

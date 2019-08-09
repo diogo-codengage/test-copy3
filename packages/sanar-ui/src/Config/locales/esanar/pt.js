@@ -14,7 +14,8 @@ export default {
         no: 'Não',
         failLoadLastAccessed: 'Erro ao carregar "Continuar onde parei".',
         termsOfUse: 'Termos de Uso',
-        privacyPolicy: 'Política de Privacidade'
+        privacyPolicy: 'Política de Privacidade',
+        remove: 'Remover'
     },
     auth: {
         accessAccount: 'Acessar conta',
@@ -81,7 +82,7 @@ export default {
             init: 'Início',
             notifications: 'Notificações',
             schedule: 'Cronograma',
-            saved: 'Salvos',
+            saved: 'Favoritos',
             performace: 'Desempenho',
             questions: 'Banco de questões',
             changeCourse: 'Trocar de curso',
@@ -99,8 +100,9 @@ export default {
         },
         changeCourse: {
             changeCourse: 'Trocar de curso',
-            message:
-                'Você tem <strong>{{courses}}</strong> cursos em “{{filter}}”'
+            failChange: 'Ocorreu um erro ao trocar de curso.',
+            message: 'Você tem <strong>{{courses}}</strong> outros cursos',
+            placeholder: 'Outros cursos'
         },
         notifications: {
             notRead: 'Não lidas',
@@ -248,6 +250,27 @@ export default {
             }
         }
     },
+    bookmark: {
+        title: 'Favoritos',
+        subtitle: 'Encontre aqui todos seus conteúdos favoritos',
+        search: 'Pesquisar favoritos',
+        failRemoveBookmark: 'Ocorreu um erro ao remover favorito.',
+        subHeader: {
+            counter: {
+                key: 'item favorito',
+                key_plural: 'itens favoritos',
+                keyWithCount: '{{count}} item favorito',
+                keyWithCount_plural: '{{count}} itens favoritos'
+            },
+            all: 'Todos',
+            videos: 'Vídeos',
+            documents: 'Materiais',
+            questions: 'Questões'
+        },
+        confirmDelete: {
+            title: 'Deseja remover este conteúdo dos seus favoritos?'
+        }
+    },
     questionBase: {
         hitoricButton: 'Histórico',
         questionsButton: 'BANCO DE QUESTÕES',
@@ -269,7 +292,10 @@ export default {
                 title: 'Ops! Você está saindo da prática.',
                 subtitle: 'Deseja realmente encerrar a prática?'
             },
-            failHandleBookmark: 'Ocorreu um erro ao favoritar questão.'
+            failHandleBookmark: 'Ocorreu um erro ao favoritar questão.',
+            backBookmark: 'Voltar para favoritos',
+            bookmark: 'Favorito',
+            error: 'Ocorreu um erro ao tentar carregar questões.'
         },
         historic: {
             title: 'Histórico de questões',

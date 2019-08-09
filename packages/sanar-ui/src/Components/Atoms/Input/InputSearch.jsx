@@ -5,8 +5,12 @@ import classNames from 'classnames'
 
 const Search = Input.Search
 
-const ESInputSearch = ({ className, ...props }) => {
-    const classes = classNames('es-input-search', className)
+const ESInputSearch = ({ className, dark, ...props }) => {
+    const classes = classNames(
+        'es-input-search',
+        { 'es-input-search__dark': dark },
+        className
+    )
 
     return <Search className={classes} {...props} />
 }
@@ -15,7 +19,8 @@ ESInputSearch.propTypes = Object.assign(
     { ...Search['propTypes'] },
     {
         className: PropTypes.string,
-        onSearch: PropTypes.func
+        onSearch: PropTypes.func,
+        dark: PropTypes.bool
     }
 )
 

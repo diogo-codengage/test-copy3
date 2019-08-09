@@ -23,9 +23,9 @@ const Linkedin = ({ link }) => (
 const SANCourseProfessors = () => {
     const { t } = useTranslation('esanar')
 
-    const { getEnrollment } = useAuthContext()
-
-    const { course } = getEnrollment()
+    const {
+        enrollment: { course }
+    } = useAuthContext()
 
     const renderProfessor = (professor, index) => (
         <ESCol className='mb-md' xs={24} sm={12} lg={6} key={index}>

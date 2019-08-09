@@ -23,8 +23,9 @@ const QuestionsProvider = ({ children, location: { pathname }, history }) => {
     const [limit] = useState(20)
     const [firstLoad, setFirstLoad] = useState(false)
     const [questions, setQuestions] = useState([])
-    const { getEnrollment } = useAuthContext()
-    const { course } = getEnrollment()
+    const {
+        enrollment: { course }
+    } = useAuthContext()
 
     const stopwatchRef = useRef()
     const [filter, setFilter] = useState({})
@@ -35,6 +36,7 @@ const QuestionsProvider = ({ children, location: { pathname }, history }) => {
     const [totalQuestions, setTotalQuestions] = useState(0)
     const [currentIndex, setCurrentIndex] = useState(0)
     const [loadedItems, setLoadedItems] = useState(0)
+    const [error, setError] = useState(false)
 
     const totalAnsweredQuestions = useMemo(
         () => skippedQuestions + wrongQuestions + correctQuestions,
@@ -79,32 +81,36 @@ const QuestionsProvider = ({ children, location: { pathname }, history }) => {
         }
     }
 
-    const fetchQuestions = async (load, reset, skip = 0) => {
+    const fetchQuestions = async (load, reset) => {
         load && setFirstLoad(true)
-        const {
-            data: {
-                questions: { data, count = 0 }
-            }
-        } = await client.query({
-            query: GET_QUESTIONS,
-            fetchPolicy: 'network-only',
-            variables: {
-                ...filter,
-                courseIds: [course.id],
-                limit,
-                skip: loadedItems
-            }
-        })
+        try {
+            const {
+                data: {
+                    questions: { data, count = 0 }
+                }
+            } = await client.query({
+                query: GET_QUESTIONS,
+                fetchPolicy: 'network-only',
+                variables: {
+                    ...filter,
+                    courseIds: [course.id],
+                    limit,
+                    skip: loadedItems
+                }
+            })
 
-        if (reset) {
-            setTotalQuestions(count)
-            setQuestions(data)
-            setLoadedItems(data.length)
-            setCurrentIndex(data.length ? 1 : 0)
-        } else {
-            const aggregate = [...questions, ...data]
-            setLoadedItems(old => old + data.length)
-            setQuestions(aggregate)
+            if (reset) {
+                setTotalQuestions(count)
+                setQuestions(data)
+                setLoadedItems(data.length)
+                setCurrentIndex(data.length ? 1 : 0)
+            } else {
+                const aggregate = [...questions, ...data]
+                setLoadedItems(old => old + data.length)
+                setQuestions(aggregate)
+            }
+        } catch {
+            setError(true)
         }
 
         setFirstLoad(false)
@@ -150,7 +156,8 @@ const QuestionsProvider = ({ children, location: { pathname }, history }) => {
         questions,
         setQuestions,
         firstLoad,
-        fetchQuestions
+        fetchQuestions,
+        error
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

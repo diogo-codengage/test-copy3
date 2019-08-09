@@ -32,8 +32,10 @@ const ESQuestion = ({
     isHistoric,
     propsNext,
     propsPrev,
+    propsConfirm,
     labelMonitor,
-    skipSeeAnswer
+    skipSeeAnswer,
+    isBookmarked
 }) => {
     const [striped, setStripe] = useState({})
     const [selected, setSelect] = useState()
@@ -62,6 +64,11 @@ const ESQuestion = ({
     const handleNext = () => {
         reset()
         onNext && onNext(answer && answer === selected)
+    }
+
+    const handlePrevious = () => {
+        reset()
+        onPrevious && onPrevious()
     }
 
     const handleJump = () => {
@@ -206,14 +213,16 @@ const ESQuestion = ({
                         handleJump,
                         handleNext,
                         handleConfirm,
-                        handlePrevious: onPrevious,
+                        handlePrevious,
                         selected,
                         answer,
                         question,
                         onlyStep,
                         isHistoric,
                         propsNext,
-                        propsPrev
+                        propsPrev,
+                        propsConfirm,
+                        isBookmarked
                     }}
                 />
             </ESSpin>
@@ -232,6 +241,7 @@ ESQuestion.propTypes = {
     onlyStep: PropTypes.bool,
     full: PropTypes.bool,
     isHistoric: PropTypes.bool,
+    isBookmarked: PropTypes.bool,
     skipSeeAnswer: PropTypes.bool,
     labelMonitor: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     stats: PropTypes.arrayOf(
