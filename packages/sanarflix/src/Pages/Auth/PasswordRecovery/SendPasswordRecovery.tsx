@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import ESPasswordRecoveryTemplate from 'sanar-ui/dist/Components/Templates/PasswordRecovery'
@@ -11,10 +11,35 @@ import ESInput from 'sanar-ui/dist/Components/Atoms/Input'
 import ESBrandHeader from 'sanar-ui/dist/Components/Atoms/BrandHeader'
 
 import logo from 'Assets/images/brand/logo.svg'
+import { withRouter } from 'react-router'
+import { message } from 'antd'
+
+import forgotPassword from './utils/forgotPassword'
+
 import searching from 'Assets/images/searching.png'
 
-const FLXSendPasswordRecoveryPage: React.FC<any> = ({ form }) => {
+const FLXSendPasswordRecoveryPage: React.FC<any> = ({ form, history }) => {
     const { t } = useTranslation('sanarflix')
+    const [loading, setLoading] = useState(false)
+
+    const onSubmit = e => {
+        e.preventDefault()
+        setLoading(true)
+        const { email } = form.getFieldsValue()
+
+        forgotPassword(email)
+            .then(() => {
+                history.push({
+                    pathname: 'recuperar-senha/sucesso',
+                    search: `?email=${email}`
+                })
+                setLoading(false)
+            })
+            .catch(error => {
+                message.error(error.message)
+                setLoading(false)
+            })
+    }
 
     return (
         <ESPasswordRecoveryTemplate
@@ -24,7 +49,7 @@ const FLXSendPasswordRecoveryPage: React.FC<any> = ({ form }) => {
             image={searching}
             actionsMargin='large'
             actions={
-                <ESForm form={form} onSubmit={console.log}>
+                <ESForm form={form} onSubmit={onSubmit}>
                     <ESFormItem
                         rules={[
                             {
@@ -48,7 +73,7 @@ const FLXSendPasswordRecoveryPage: React.FC<any> = ({ form }) => {
                         />
                     </ESFormItem>
                     <ESButton
-                        loading={false}
+                        loading={loading}
                         htmlType='submit'
                         uppercase
                         block
@@ -73,4 +98,4 @@ const FLXSendPasswordRecoveryPage: React.FC<any> = ({ form }) => {
     )
 }
 
-export default withESForm(FLXSendPasswordRecoveryPage)
+export default withESForm(withRouter(FLXSendPasswordRecoveryPage))
