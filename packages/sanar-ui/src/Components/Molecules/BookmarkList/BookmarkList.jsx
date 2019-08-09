@@ -29,7 +29,7 @@ const ESBookmarkList = ({
         'es-favorite',
         {
             'es-favorite-grid': orientation === 'grid',
-            'es-favorite-list': orientation === 'list'
+            'es-favorite-list': orientation === 'list' && !!data.length
         },
         className
     )

@@ -156,49 +156,53 @@ const SANQuiz = ({
             stats
         }
     }) => {
-        const correct = alternatives.data.find(
-            alternative => alternative.correct
-        )
+        try {
+            const correct = alternatives.data.find(
+                alternative => alternative.correct
+            )
 
-        const anchor = mock ? index - 1 : index
+            const anchor = mock ? index - 1 : index
 
-        const questionsMap = questions.map(question => {
-            if (question.id === questions[anchor].id) {
-                return {
-                    ...question,
-                    status: correct.id === selected ? 'correct' : 'wrong'
+            const questionsMap = questions.map(question => {
+                if (question.id === questions[anchor].id) {
+                    return {
+                        ...question,
+                        status: correct.id === selected ? 'correct' : 'wrong'
+                    }
                 }
+
+                return question
+            })
+
+            if (correct.id === selected) {
+                setStats(oldStats => ({
+                    ...oldStats,
+                    correct: oldStats.correct + 1
+                }))
+            } else {
+                setStats(oldStats => ({
+                    ...oldStats,
+                    wrong: oldStats.wrong + 1
+                }))
             }
 
-            return question
-        })
+            setQuestions(questionsMap)
 
-        if (correct.id === selected) {
-            setStats(oldStats => ({
-                ...oldStats,
-                correct: oldStats.correct + 1
-            }))
-        } else {
-            setStats(oldStats => ({
-                ...oldStats,
-                wrong: oldStats.wrong + 1
-            }))
+            setResponses(oldResponses => [
+                ...oldResponses,
+                {
+                    stats: stats.alternatives,
+                    comment:
+                        comments.data && comments.data.length
+                            ? comments.data[0]
+                            : null,
+                    answer: correct.id,
+                    defaultSelected: selected
+                }
+            ])
+        } catch {
+            message.error(t('classroom.failReplyQuestion'))
         }
-
-        setQuestions(questionsMap)
-
-        setResponses(oldResponses => [
-            ...oldResponses,
-            {
-                stats: stats.alternatives,
-                comment:
-                    comments.data && comments.data.length
-                        ? comments.data[0]
-                        : null,
-                answer: correct.id,
-                defaultSelected: selected
-            }
-        ])
     }
 
     useEffect(() => {
