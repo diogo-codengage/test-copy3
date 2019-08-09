@@ -9,7 +9,6 @@ export const CHANGE_COURSE = gql`
                 position
                 points
             }
-            thumbnail
             progress_percentage
             expires_at
             next_module {
@@ -50,6 +49,7 @@ export const CHANGE_COURSE = gql`
                 icon
                 status
                 knowledge_area
+                cover_picture_url
                 professors {
                     id
                     name

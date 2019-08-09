@@ -75,7 +75,7 @@ const SANCourseChange = ({ handleBack, history }) => {
                 format(enrollment.expires_at, 'DD/MM/YYYY')
             }
             percent={parseInt(enrollment.progress_percentage)}
-            coverPicture={enrollment.thumbnail}
+            coverPicture={enrollment.course.cover_picture_url}
             icon={enrollment.course.icon}
             module={moduleReference(lastAccessed)}
             description={lastAccessed.module_title}
@@ -117,7 +117,7 @@ const SANCourseChange = ({ handleBack, history }) => {
                         format(enrollment.expires_at, 'DD/MM/YYYY')
                     }
                     percent={parseInt(enrollment.progress_percentage)}
-                    coverPicture={enrollment.thumbnail}
+                    coverPicture={enrollment.course.cover_picture_url}
                     icon={enrollment.course.icon}
                     onContinue={goClassroom}
                     module={moduleReference(lastAccessed)}

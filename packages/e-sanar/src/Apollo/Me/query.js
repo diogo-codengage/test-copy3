@@ -10,12 +10,12 @@ export const GET_ME = gql`
             enrollments {
                 id
                 expires_at
-                thumbnail
                 progress_percentage
                 course {
                     id
                     icon
                     name
+                    cover_picture_url
                 }
             }
         }

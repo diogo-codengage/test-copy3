@@ -9,7 +9,6 @@ export const GET_LAST_ENROLLMENT_ACCESSED = gql`
                 position
                 points
             }
-            thumbnail
             progress_percentage
             expires_at
             next_module {
@@ -50,6 +49,7 @@ export const GET_LAST_ENROLLMENT_ACCESSED = gql`
                 icon
                 status
                 knowledge_area
+                cover_picture_url
                 professors {
                     id
                     name
