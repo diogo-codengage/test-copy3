@@ -100,8 +100,9 @@ export default {
         },
         changeCourse: {
             changeCourse: 'Trocar de curso',
-            message:
-                'Você tem <strong>{{courses}}</strong> cursos em “{{filter}}”'
+            failChange: 'Ocorreu um erro ao trocar de curso.',
+            message: 'Você tem <strong>{{courses}}</strong> outros cursos',
+            placeholder: 'Outros cursos'
         },
         notifications: {
             notRead: 'Não lidas',
@@ -293,7 +294,8 @@ export default {
             },
             failHandleBookmark: 'Ocorreu um erro ao favoritar questão.',
             backBookmark: 'Voltar para favoritos',
-            bookmark: 'Favorito'
+            bookmark: 'Favorito',
+            error: 'Ocorreu um erro ao tentar carregar questões.'
         },
         historic: {
             title: 'Histórico de questões',

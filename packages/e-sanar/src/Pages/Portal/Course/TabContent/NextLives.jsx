@@ -59,10 +59,11 @@ const SANLives = ({ title, start_at, link }) => {
 }
 
 const SANNextLives = () => {
-    const { getEnrollment } = useAuthContext()
     const {
-        course: { lives: livesProp }
-    } = getEnrollment()
+        enrollment: {
+            course: { lives: livesProp }
+        }
+    } = useAuthContext()
 
     const { t } = useTranslation('esanar')
 

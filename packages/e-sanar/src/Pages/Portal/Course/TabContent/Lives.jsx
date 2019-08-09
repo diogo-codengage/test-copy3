@@ -11,10 +11,11 @@ import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 import { useAuthContext } from 'Hooks/auth'
 
 const SANLives = () => {
-    const { getEnrollment } = useAuthContext()
     const {
-        course: { lives }
-    } = getEnrollment()
+        enrollment: {
+            course: { lives }
+        }
+    } = useAuthContext()
 
     const { t } = useTranslation('esanar')
 

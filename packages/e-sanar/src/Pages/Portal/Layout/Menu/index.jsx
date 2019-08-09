@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter } from 'react-router'
@@ -106,6 +106,14 @@ const SANMenu = ({ history }) => {
             onContinue: goClassroom
         })
     }
+
+    // Whenever close menu the set initial tab
+    useEffect(() => {
+        if (menuRef && menuRef.current) {
+            !menuRef.current.toggle && indexMenu && setMenuTab(0)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [menuRef.current])
 
     return (
         <ESMainMenu

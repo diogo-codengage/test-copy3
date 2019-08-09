@@ -21,8 +21,9 @@ export const SANBookmarksProvider = ({ children }) => {
     const {
         me: { userId }
     } = useAuthContext()
-    const { getEnrollment } = useAuthContext()
-    const { id: enrollmentId } = getEnrollment()
+    const {
+        enrollment: { id: enrollmentId }
+    } = useAuthContext()
     const [orientation, setOrientation] = useState('grid')
     const [filter, setFilter] = useState(null)
     const [page, setPage] = useState(0)

@@ -1,28 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import ESTypography from '../../Atoms/Typography'
 import ESProgress from '../../Atoms/Progress'
 import ESEvaIcon from '../../Atoms/EvaIcon'
+import ESSkeleton from '../../Atoms/Skeleton'
 import ESCardContinueCourse from '../../Atoms/CardContinueCourse/CardContinueCourse'
-
-const Continue = ({ onContinue, module, description }) => (
-    <div onClick={onContinue} className='es-change-course__continue'>
-        <ESTypography variant='caption' className='text-grey-6'>
-            {module}
-        </ESTypography>
-        <ESTypography strong variant='caption' className='text-grey-8' ellipsis>
-            {description}
-        </ESTypography>
-        <ESEvaIcon name='play-circle' size='large' />
-    </div>
-)
 
 const ESChangeCourse = ({
     className,
     icon,
     title,
+    id,
     date,
     expireLabel,
     round,
@@ -32,8 +22,10 @@ const ESChangeCourse = ({
     onContinue,
     onChange,
     module,
+    loading,
     description
 }) => {
+    const [loadingIcon, setOnLoadIcon] = useState(true)
     const classes = classNames(
         'es-change-course',
         {
@@ -44,7 +36,7 @@ const ESChangeCourse = ({
 
     const onClick = e => {
         e.stopPropagation()
-        onChange && !onContinue && onChange(e)
+        onChange && !onContinue && onChange(id)
     }
 
     if (onContinue && (!module || !description)) {
@@ -62,22 +54,50 @@ const ESChangeCourse = ({
         >
             <div className='es-change-course__content'>
                 <div className='d-flex align-items-center'>
-                    {icon && <img src={icon} className='mr-xs' />}
-                    <div>
-                        <ESTypography
-                            className='text-white'
-                            variant='subtitle1'
-                        >
-                            {title}
-                        </ESTypography>
-                        <ESTypography
-                            className='text-white-7'
-                            variant='caption'
-                        >{`${expireLabel} ${date}`}</ESTypography>
-                    </div>
+                    <ESSkeleton
+                        paragraph={false}
+                        title={false}
+                        avatar={{ size: 40 }}
+                        active
+                        dark
+                        loading={loadingIcon || (!loadingIcon && loading)}
+                        className='es-change-course__content--skeleton'
+                    />
+                    <img
+                        src={icon}
+                        className='es-change-course__content--image'
+                        width={40}
+                        onLoad={() => setOnLoadIcon(false)}
+                        style={{
+                            display:
+                                loadingIcon || (!loadingIcon && loading)
+                                    ? 'none'
+                                    : 'block'
+                        }}
+                    />
+                    <ESSkeleton
+                        paragraph={{ rows: 1, width: '80%' }}
+                        title={{ width: '90%' }}
+                        active
+                        dark
+                        loading={loading}
+                    >
+                        <div className='es-change-course__content--title'>
+                            <ESTypography variant='subtitle1' ellipsis strong>
+                                {title}
+                            </ESTypography>
+                            {date && (
+                                <ESTypography
+                                    className='text-white-7'
+                                    variant='caption'
+                                >{`${expireLabel} ${date}`}</ESTypography>
+                            )}
+                        </div>
+                    </ESSkeleton>
                 </div>
                 {onContinue && (
                     <ESCardContinueCourse
+                        loading={loading}
                         className='mt-md mb-md'
                         borderRadius
                         {...{ onContinue, module, description }}
@@ -105,11 +125,13 @@ const ESChangeCourse = ({
 
 ESChangeCourse.propTypes = {
     className: PropTypes.string,
+    id: PropTypes.string,
     title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     module: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     description: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     date: PropTypes.string,
     round: PropTypes.bool,
+    loading: PropTypes.bool,
     icon: PropTypes.string,
     percent: PropTypes.number,
     coverPicture: PropTypes.string,

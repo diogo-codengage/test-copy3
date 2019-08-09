@@ -25,14 +25,14 @@ import SANQuestionsFilterAdvanced from './Advanced'
 const intlPath = 'questionBase.filter.'
 
 const SANQuestionsFilterSelects = ({ defaultOpen }) => {
-    const { getEnrollment } = useAuthContext()
+    const {
+        enrollment: {
+            course: { id: courseId },
+            id: enrollmentId
+        }
+    } = useAuthContext()
     const { formState } = useQuestionsContext()
     const { t } = useTranslation('esanar')
-
-    const {
-        course: { id: courseId },
-        id: enrollmentId
-    } = getEnrollment()
 
     const makeItems = ({ loading, data }, entity) =>
         !loading && data ? data[entity].data : []
