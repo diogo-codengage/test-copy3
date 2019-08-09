@@ -101,7 +101,11 @@ export default {
         changeCourse: {
             changeCourse: 'Trocar de curso',
             failChange: 'Ocorreu um erro ao trocar de curso.',
-            message: 'Você tem <strong>{{courses}}</strong> outros cursos',
+            message: {
+                keyWithCount: 'Você tem <strong>{{count}}</strong> outro curso',
+                keyWithCount_plural:
+                    'Você tem <strong>{{count}}</strong> outros cursos'
+            },
             placeholder: 'Outros cursos'
         },
         notifications: {

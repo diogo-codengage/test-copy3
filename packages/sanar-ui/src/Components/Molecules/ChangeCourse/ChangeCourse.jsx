@@ -57,7 +57,7 @@ const ESChangeCourse = ({
                     <ESSkeleton
                         paragraph={false}
                         title={false}
-                        avatar={{ size: 40 }}
+                        avatar={{ size: 30 }}
                         active
                         dark
                         loading={loadingIcon || (!loadingIcon && loading)}
@@ -66,7 +66,7 @@ const ESChangeCourse = ({
                     <img
                         src={icon}
                         className='es-change-course__content--image'
-                        width={40}
+                        width={30}
                         onLoad={() => setOnLoadIcon(false)}
                         style={{
                             display:

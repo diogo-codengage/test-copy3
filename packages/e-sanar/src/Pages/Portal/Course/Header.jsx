@@ -36,10 +36,9 @@ const SANEnrollmentProgress = () => {
                         title={t('courseDetails.progressbarTitle')}
                         percent={
                             !loading
-                                ? Number(
-                                      data.enrollmentProgress.progress_percentage.toFixed(
-                                          0
-                                      )
+                                ? parseInt(
+                                      data.enrollmentProgress
+                                          .progress_percentage
                                   )
                                 : 0
                         }

@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 import { format } from 'date-fns'
-import { filter } from 'ramda'
+import { filter, sortBy, path } from 'ramda'
 import { message } from 'antd'
 
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
@@ -86,10 +86,10 @@ const SANCourseChange = ({ handleBack, history }) => {
         />
     )
 
-    const allEnrollments = useMemo(
-        () => filter(e => e.id !== enrollment.id, me.enrollments),
-        [me.enrollments, enrollment]
-    )
+    const allEnrollments = useMemo(() => {
+        const filtered = filter(e => e.id !== enrollment.id, me.enrollments)
+        return sortBy(path(['course', 'name']))(filtered)
+    }, [me.enrollments, enrollment])
 
     const expr = new RegExp(search, 'i')
 
@@ -147,8 +147,8 @@ const SANCourseChange = ({ handleBack, history }) => {
                 >
                     <span
                         dangerouslySetInnerHTML={{
-                            __html: t(`${intlPath}message`, {
-                                courses: allEnrollments.length
+                            __html: t(`${intlPath}message.keyWithCount`, {
+                                count: allEnrollments.length
                             })
                         }}
                     />
