@@ -42,32 +42,3 @@ const forgotPassword = email => {
 }
 
 export default forgotPassword
-
-// switch (error.code) {
-//   case 'LimitExceededException':
-//     return Promise.reject({
-//         code: error.code,
-//         message: i18n.t(
-//             'sanarui:authMessages.limitExceededException'
-//         )
-//     })
-// case 'UserNotFoundException':
-//     return Promise.reject({
-//         code: error.code,
-//         message: i18n.t(
-//             'sanarui:authMessages.userNotFoundException'
-//         )
-//     })
-// case 'InvalidParameterException':
-//     return Promise.reject({
-//         code: error.code,
-//         message: i18n.t(
-//             'sanarui:authMessages.invalidParameterException'
-//         )
-//     })
-// default:
-//     return Promise.reject({
-//         code: error.code,
-//         message: i18n.t('sanarui:authMessages.generic')
-//     })
-// }
