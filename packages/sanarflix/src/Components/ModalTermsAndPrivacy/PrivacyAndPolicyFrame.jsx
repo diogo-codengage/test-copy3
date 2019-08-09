@@ -9,7 +9,7 @@ const FLXPrivacyAndPolicyFrame = () => {
     }
     return (
         <>
-            <ESSpin flex loading={loading} minHeight='100%' />
+            {loading && <ESSpin flex loading={loading} minHeight='100%' />}
             <iframe
                 title='privacy-and-policy-frame'
                 onLoad={manipuleLoading}
