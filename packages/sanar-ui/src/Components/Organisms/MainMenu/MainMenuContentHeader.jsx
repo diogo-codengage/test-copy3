@@ -14,7 +14,7 @@ const ESMainMenuContentHeader = ({ className, title, onClose }) => {
 
     return (
         <div className={classes}>
-            <ESTypography level={5}>{title}</ESTypography>
+            <ESTypography level={5} regular>{title}</ESTypography>
             {showClose && (
                 <ESButton
                     onClick={() => onClose(false)}

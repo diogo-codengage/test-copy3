@@ -17,9 +17,9 @@ import { GET_ENROLLMENT_PROGRESS } from 'Apollo/Me/enrollment-progress'
 
 const SANEnrollmentProgress = () => {
     const { t } = useTranslation('esanar')
-    const { getEnrollment } = useAuthContext()
-
-    const { id: enrollmentId } = getEnrollment()
+    const {
+        enrollment: { id: enrollmentId }
+    } = useAuthContext()
 
     return (
         <Query
@@ -53,9 +53,9 @@ const SANEnrollmentProgress = () => {
 const SANCourseHeader = () => {
     const { t } = useTranslation('esanar')
 
-    const { getEnrollment } = useAuthContext()
-
-    const { course, certificate } = getEnrollment()
+    const {
+        enrollment: { course, certificate }
+    } = useAuthContext()
 
     return (
         <ANTPageHeader className='header'>

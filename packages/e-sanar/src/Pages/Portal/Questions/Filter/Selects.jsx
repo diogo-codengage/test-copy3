@@ -25,14 +25,14 @@ import SANQuestionsFilterAdvanced from './Advanced'
 const intlPath = 'questionBase.filter.'
 
 const SANQuestionsFilterSelects = ({ defaultOpen }) => {
-    const { getEnrollment } = useAuthContext()
+    const {
+        enrollment: {
+            course: { id: courseId },
+            id: enrollmentId
+        }
+    } = useAuthContext()
     const { formState } = useQuestionsContext()
     const { t } = useTranslation('esanar')
-
-    const {
-        course: { id: courseId },
-        id: enrollmentId
-    } = getEnrollment()
 
     const makeItems = ({ loading, data }, entity) =>
         !loading && data ? data[entity].data : []
@@ -72,7 +72,10 @@ const SANQuestionsFilterSelects = ({ defaultOpen }) => {
                         </Query>
                     </ESCol>
                     <ESCol sm={24} md={12}>
-                        <Query query={GET_TAGS}>
+                        <Query
+                            query={GET_TAGS}
+                            variables={{ order: 'name', limit: 9999999 }}
+                        >
                             {props => (
                                 <ESFormItem
                                     name='tags'
@@ -96,7 +99,10 @@ const SANQuestionsFilterSelects = ({ defaultOpen }) => {
                         </Query>
                     </ESCol>
                     <ESCol sm={24} md={12}>
-                        <Query query={GET_BOARDS}>
+                        <Query
+                            query={GET_BOARDS}
+                            variables={{ order: 'name', limit: 9999999 }}
+                        >
                             {props => (
                                 <ESFormItem
                                     name='boards'
@@ -119,7 +125,10 @@ const SANQuestionsFilterSelects = ({ defaultOpen }) => {
                         </Query>
                     </ESCol>
                     <ESCol sm={24} md={12}>
-                        <Query query={GET_EXAMS}>
+                        <Query
+                            query={GET_EXAMS}
+                            variables={{ order: 'name', limit: 9999999 }}
+                        >
                             {props => (
                                 <ESFormItem
                                     name='exams'

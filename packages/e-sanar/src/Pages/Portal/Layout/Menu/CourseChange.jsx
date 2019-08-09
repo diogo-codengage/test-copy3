@@ -1,17 +1,97 @@
-import React from 'react'
+import React, { useMemo, useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
+import { withRouter } from 'react-router-dom'
+import { format } from 'date-fns'
+import { filter } from 'ramda'
+import { message } from 'antd'
 
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import { ESInputSearch } from 'sanar-ui/dist/Components/Atoms/Input'
 import ESChangeCourse from 'sanar-ui/dist/Components/Molecules/ChangeCourse'
+import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
+import { normalize } from 'sanar-ui/dist/Util/Normalize'
+
+import { getClassRoute } from 'Utils/getClassRoute'
+import { useApolloContext } from 'Hooks/apollo'
+import { CHANGE_COURSE } from 'Apollo/Me/change-course'
+
+import { useAuthContext } from 'Hooks/auth'
+import { usePortalContext } from 'Pages/Portal/Context'
 
 const intlPath = 'mainMenu.changeCourse.'
 
-const SANCourseChange = ({ handleBack }) => {
+const SANCourseChange = ({ handleBack, history }) => {
+    const client = useApolloContext()
     const { t } = useTranslation('esanar')
+    const { lastAccessed, error } = usePortalContext()
+    const { enrollment, me, setEnrollment } = useAuthContext()
+    const [search, setSearch] = useState()
+    const [loading, setLoading] = useState(false)
+
+    const moduleReference = last =>
+        `${t('global.subject')} ${last.module_order}, ${t('global.activity')} ${
+            last.resource_order
+        }`
+
+    const goClassroom = () =>
+        history.push(
+            `/aluno/sala-aula/${lastAccessed.module_id}/${getClassRoute(
+                lastAccessed.resource_type
+            )}/${lastAccessed.resource_id}`
+        )
+
+    const onSearch = e => setSearch(e.target.value)
+
+    const onChangeCourse = async enrollmentId => {
+        setLoading(true)
+        try {
+            history.push('/aluno/curso')
+            const {
+                data: { setLastEnrollmentAccessed }
+            } = await client.mutate({
+                mutation: CHANGE_COURSE,
+                variables: {
+                    enrollmentId
+                }
+            })
+            setEnrollment(setLastEnrollmentAccessed)
+        } catch {
+            message.error(t('mainMenu.changeCourse.failChange'))
+        }
+        setLoading(false)
+    }
+
+    const renderEnrollment = enrollment => (
+        <ESChangeCourse
+            loading={loading}
+            key={enrollment.id}
+            id={enrollment.id}
+            title={enrollment.course.name}
+            date={
+                enrollment.expires_at &&
+                format(enrollment.expires_at, 'DD/MM/YYYY')
+            }
+            percent={parseInt(enrollment.progress_percentage)}
+            coverPicture={enrollment.course.cover_picture_url}
+            icon={enrollment.course.icon}
+            module={moduleReference(lastAccessed)}
+            description={lastAccessed.module_title}
+            onChange={onChangeCourse}
+            className='mb-md'
+            arrow
+            round
+        />
+    )
+
+    const allEnrollments = useMemo(
+        () => filter(e => e.id !== enrollment.id, me.enrollments),
+        [me.enrollments, enrollment]
+    )
+
+    const expr = new RegExp(search, 'i')
 
     return (
         <>
@@ -28,22 +108,39 @@ const SANCourseChange = ({ handleBack }) => {
                     {t('mainMenu.back')}
                 </ESButton>
             </div>
-            <ESChangeCourse
-                title='Trilha Sanar Enfermagem'
-                date='23/05/2020'
-                percent={45}
-                coverPicture='https://public-v2links.adobecc.com/708e2f04-215d-454f-6692-c1d3b53d580f/component?params=component_id:899c6240-1561-47a3-b425-036d434af138&params=version:0&token=1558439368_da39a3ee_68fc0088bfa72e77be9860d55ddd139582a2974a&api_key=CometServer1'
-                icon='https://public-v2links.adobecc.com/708e2f04-215d-454f-6692-c1d3b53d580f/component?params=component_id:4bebafd6-cbae-4b0f-a8b3-9dcc45696d90&params=version:0&token=1558439368_da39a3ee_68fc0088bfa72e77be9860d55ddd139582a2974a&api_key=CometServer1'
-                onContinue={console.log}
-                module='Continuar no Módulo 2, aula 5'
-                description='Per aumento de cachacis, eu reclamis.'
-            />
+            {!error ? (
+                <ESChangeCourse
+                    loading={loading}
+                    title={enrollment.course.name}
+                    date={
+                        enrollment.expires_at &&
+                        format(enrollment.expires_at, 'DD/MM/YYYY')
+                    }
+                    percent={parseInt(enrollment.progress_percentage)}
+                    coverPicture={enrollment.course.cover_picture_url}
+                    icon={enrollment.course.icon}
+                    onContinue={goClassroom}
+                    module={moduleReference(lastAccessed)}
+                    description={lastAccessed.module_title}
+                />
+            ) : (
+                <SANErrorPiece
+                    message={t(
+                        'courseDetails.tabContent.continue.error.defaultMessage'
+                    )}
+                />
+            )}
             <div className='pl-md pr-md pt-md pb-md'>
-                <ESTypography className='mb-md text-white-9' level={5}>
+                <ESTypography className='mb-md text-white-9' level={5} regular>
                     {t(`${intlPath}changeCourse`)}
                 </ESTypography>
 
-                <ESInputSearch placeholder='Todas as áreas' />
+                <ESInputSearch
+                    placeholder={t(`${intlPath}placeholder`)}
+                    dark
+                    value={search}
+                    onChange={onSearch}
+                />
                 <ESTypography
                     className='mb-md mt-md text-white-8'
                     variant='caption'
@@ -51,29 +148,17 @@ const SANCourseChange = ({ handleBack }) => {
                     <span
                         dangerouslySetInnerHTML={{
                             __html: t(`${intlPath}message`, {
-                                courses: 2,
-                                filter: 'Todas as áreas'
+                                courses: allEnrollments.length
                             })
                         }}
                     />
                 </ESTypography>
-                {[0, 1].map(i => (
-                    <ESChangeCourse
-                        key={i}
-                        className='mb-md'
-                        title='Trilha Sanar Enfermagem'
-                        date='23/05/2020'
-                        percent={45}
-                        arrow
-                        round
-                        coverPicture='https://public-v2links.adobecc.com/708e2f04-215d-454f-6692-c1d3b53d580f/component?params=component_id:0350b44a-5d5b-4fc8-a46e-e69fbe91c118&params=version:0&token=1558439368_da39a3ee_68fc0088bfa72e77be9860d55ddd139582a2974a&api_key=CometServer1'
-                        icon='https://public-v2links.adobecc.com/708e2f04-215d-454f-6692-c1d3b53d580f/component?params=component_id:4bebafd6-cbae-4b0f-a8b3-9dcc45696d90&params=version:0&token=1558439368_da39a3ee_68fc0088bfa72e77be9860d55ddd139582a2974a&api_key=CometServer1'
-                        onChange={console.log}
-                    />
-                ))}
+                {allEnrollments
+                    .filter(e => expr.test(normalize(e.course.name)))
+                    .map(renderEnrollment)}
             </div>
         </>
     )
 }
 
-export default SANCourseChange
+export default withRouter(SANCourseChange)

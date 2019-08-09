@@ -16,16 +16,17 @@ import { getClassRoute } from 'Utils/getClassRoute'
 import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 
 const SANCourseContinue = ({ history }) => {
-    const { getEnrollment } = useAuthContext()
+    const {
+        enrollment: { next_module }
+    } = useAuthContext()
     const { t } = useTranslation('esanar')
     const { lastAccessed, error } = usePortalContext()
 
-    const { next_module } = getEnrollment()
-
-    const percentProgressLast = lastAccessed
-        ? (lastAccessed.module_progress.done * 100) /
-          lastAccessed.module_progress.total
-        : 0
+    const percentProgressLast =
+        lastAccessed && lastAccessed.module_progress
+            ? (lastAccessed.module_progress.done * 100) /
+              lastAccessed.module_progress.total
+            : 0
 
     const percentProgressNext =
         next_module && next_module.progress

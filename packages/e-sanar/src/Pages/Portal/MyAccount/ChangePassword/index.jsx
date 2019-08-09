@@ -75,6 +75,7 @@ const SANMyAccountChangePassword = ({ history, form }) => {
             subtitle={t('esanar:auth.sendResetPassword.subtitle')}
             image={image}
             actionsMargin='large'
+            fullHeight={false}
             actions={
                 <ESForm form={form} onSubmit={changePassword}>
                     <ESFormItem
