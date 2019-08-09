@@ -2,7 +2,9 @@
     "name": "sanarflix",
     "version": "0.1.0",
     "private": true,
-    "dependencies": {},
+    "dependencies": {
+        "amazon-cognito-identity-js": "^3.0.15"
+    },
     "scripts": {
         "start": "env-cmd -f ./environments/.env react-app-rewired start",
         "build:development": "env-cmd -f ./environments/.env.development react-app-rewired build",
