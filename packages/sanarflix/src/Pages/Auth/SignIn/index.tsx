@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 
@@ -12,6 +12,7 @@ import signInByEmail from './signIn'
 
 const FLXSignIn: React.FC<any> = ({ history }) => {
     const { t } = useTranslation('sanarflix')
+    const [keepMeLoggedIn, setKeepMeLoggedIn] = useState(false)
 
     const marketing = {
         title: t('auth.marketing.title'),
@@ -35,8 +36,8 @@ const FLXSignIn: React.FC<any> = ({ history }) => {
                     forgotPassword={t('auth.forgotPassword')}
                     login={t('auth.login')}
                     action={action}
-                    isKeepMeLoggedChecked={true}
-                    keepMeLogged={console.log}
+                    isKeepMeLoggedChecked={keepMeLoggedIn}
+                    keepMeLogged={() => setKeepMeLoggedIn(old => !old)}
                     signInByEmail={signInByEmail}
                 />
             }
