@@ -28,7 +28,7 @@ const FLXPasswordRecoverySent: React.FC<any> = ({ location, history }) => {
                         {t('auth.passwordResetSent.advice')}
                     </ESTypography>
                     <ESButton
-                        onClick={() => history.push('/')}
+                        onClick={() => history.push('/auth')}
                         uppercase
                         block
                         variant='solid'
