@@ -9,7 +9,7 @@ const FLXTermsFrame = () => {
     }
     return (
         <>
-            {loading && <ESSpin flex minHeight='100%' />}
+            <ESSpin flex loading={loading} minHeight='100%' />
             <iframe
                 title='terms-frame'
                 onLoad={manipuleLoading}
