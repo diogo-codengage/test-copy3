@@ -3,10 +3,10 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { Radio } from 'antd'
 
-const ESRadio = forwardRef(({ className, ...props }, ref) => {
+const ESRadio = ({ className, ...props }, ref) => {
     const classes = classNames('es-radio', className)
     return <Radio className={classes} {...props} />
-})
+}
 
 ESRadio.propTypes = Object.assign(
     { ...Radio['propTypes'] },
@@ -17,4 +17,4 @@ ESRadio.propTypes = Object.assign(
 
 ESRadio.defaultProps = {}
 
-export default ESRadio
+export default forwardRef(ESRadio)
