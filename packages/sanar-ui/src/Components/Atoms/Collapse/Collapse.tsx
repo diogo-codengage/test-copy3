@@ -4,15 +4,15 @@ import PropTypes from 'prop-types'
 
 import { Collapse } from 'antd'
 
+type IProps = PropTypes.InferProps<typeof propTypes>
+
 const ESCollapse: React.FC<IProps> = ({ className, ...props }) => {
     const classes = classNames('es-collapse', className)
     return <Collapse className={classes} {...props} />
 }
 
-type IProps = PropTypes.InferProps<typeof propTypes>
-
 const propTypes = Object.assign(
-    {...Collapse['prototype']},
+//    {...Collapse['prototype']},
     {
     className: PropTypes.string,
     activeKey: PropTypes.any,
