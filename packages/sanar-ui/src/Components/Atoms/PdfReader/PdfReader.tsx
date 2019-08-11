@@ -26,7 +26,7 @@ const ESPdfReader = ({ url, className }) => {
                 <ESButton
                     variant='text'
                     color='secondary'
-                    size='xsmall'
+                    size='small'
                     onClick={openPdf}
                     bold
                 >
