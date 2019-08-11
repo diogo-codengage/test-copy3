@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 import ESIcon from '../Icon'
 
-const ESSwitch = forwardRef(({ className, checkedChildren, ...props }, ref) => {
+const ESSwitch = ({ className, checkedChildren, ...props }, ref) => {
     const classes = classNames('es-switch', className)
 
     const icon = checkedChildren ? checkedChildren : <ESIcon type='check' />
@@ -18,7 +18,7 @@ const ESSwitch = forwardRef(({ className, checkedChildren, ...props }, ref) => {
             {...props}
         />
     )
-})
+}
 
 ESSwitch.propTypes = Object.assign(
     { ...Switch['propTypes'] },
@@ -45,4 +45,4 @@ ESSwitch.propTypes = Object.assign(
 
 ESSwitch.defaultProps = Switch['defaultProps']
 
-export default ESSwitch
+export default forwardRef(ESSwitch)
