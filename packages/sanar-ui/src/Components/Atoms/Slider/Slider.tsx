@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 import Slider from 'antd/lib/slider'
 import classNames from 'classnames'
 
-const ESSlider = ({ className, ...props }) => {
+type IProps = PropTypes.InferProps<typeof propTypes>
+const ESSlider = ({ className, ...props }: IProps) => {
     const classes = classNames('es-slider', className)
 
     return <Slider className={classes} {...props} />
 }
 
-ESSlider.propTypes = Object.assign(
+const propTypes =Object.assign(
     { ...Slider['propTypes'] },
     {
         range: PropTypes.bool,
@@ -30,6 +31,8 @@ ESSlider.propTypes = Object.assign(
         tooltipVisible: PropTypes.bool
     }
 )
+
+ESSlider.propTypes = propTypes
 
 ESSlider.defaultProps = Slider['defaultProps']
 

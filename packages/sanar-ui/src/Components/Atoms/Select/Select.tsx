@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { Select } from 'antd'
 import ESEvaIcon from '../EvaIcon'
 
-const ESSelect = forwardRef(({ className, suffixIcon, ...props }, ref) => {
+const ESSelect = ({ className, suffixIcon, ...props }, ref) => {
     const classes = classNames('es-select', className)
     const icon = suffixIcon ? (
         suffixIcon
@@ -14,7 +14,7 @@ const ESSelect = forwardRef(({ className, suffixIcon, ...props }, ref) => {
     )
 
     return <Select ref={ref} suffixIcon={icon} className={classes} {...props} />
-})
+}
 
 ESSelect.propTypes = Object.assign(
     {
@@ -26,4 +26,4 @@ ESSelect.propTypes = Object.assign(
 )
 ESSelect.defaultProps = {}
 
-export default ESSelect
+export default forwardRef(ESSelect)
