@@ -1,25 +1,15 @@
-import React, {
-    useState,
-    useRef,
-    forwardRef,
-    useMemo,
-    useCallback
-} from 'react'
+import React, { useState, useRef, useMemo } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
-import { Scrollbars } from 'react-custom-scrollbars'
-import { Empty, Skeleton } from 'antd'
 
 import useOnClickOutside from '../../../Hooks/useOnClickOutside'
 
 import ESInput from '../../Atoms/Input'
-import ESCheckbox from '../../Atoms/Checkbox'
 import ESEvaIcon from '../../Atoms/EvaIcon'
+import ESSkeleton from '../../Atoms/Skeleton'
 import ESDropdown from '../../Atoms/Dropdown'
-import ESButton from '../../Atoms/Button'
-import ESDivider from '../../Atoms/Divider'
 import ESTypography from '../../Atoms/Typography'
 import ESCard from '../Card'
 
@@ -178,7 +168,7 @@ const ESCardSelectFilter = ({
                     onLoad={() => setLoadImage(false)}
                     style={{ display: loadImage ? 'none' : 'block' }}
                 />
-                <Skeleton
+                <ESSkeleton
                     className='mt-md mb-xs'
                     loading={loadImage}
                     avatar={{ size: 168 }}

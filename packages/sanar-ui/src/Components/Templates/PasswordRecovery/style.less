@@ -1,18 +1,20 @@
 .es-password-recovery-template {
     display: flex;
     justify-content: center;
-    padding: @padding-xl * 2.25 @padding-md 0 @padding-md;
+    padding: @padding-md;
     overflow-y: auto;
     background: @white;
 
-    &--without-brand-header {
-        &,
-        .es-password-recovery-template__content {
-            padding-top: @padding-sm;
-        }
+    &--full-height {
+        height: 100vh;
+        align-items: center;
     }
 
-    &__header {
+    &--with-brand-header {
+        padding-top: 78px !important;
+    }
+
+    .es-brand-header {
         position: fixed;
         top: 0;
         left: 0;
@@ -45,6 +47,7 @@
 
             img {
                 max-width: 75%;
+                max-height: 20%;
                 margin-bottom: @margin-lg;
             }
         }
@@ -56,8 +59,6 @@
         }
 
         @media (min-width: @screen-md) {
-            padding-top: 78px;
-
             &__infos {
                 &--large-margin {
                     margin-bottom: @margin-xxl;
@@ -66,6 +67,14 @@
                 img {
                     max-width: 100%;
                     margin-bottom: @margin-xxl;
+                }
+            }
+        }
+
+        @media (max-height: @screen-xs-max) {
+            &__infos {
+                img {
+                    display: none;
                 }
             }
         }

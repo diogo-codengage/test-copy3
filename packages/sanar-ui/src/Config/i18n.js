@@ -5,6 +5,8 @@ import sanaruiPt from './locales/sanarui/pt'
 import sanaruiEn from './locales/sanarui/en'
 import esanarPt from './locales/esanar/pt'
 import esanarEn from './locales/esanar/en'
+import sanarflixPt from './locales/sanarflix/pt'
+import sanarflixEn from './locales/sanarflix/en'
 
 const sanaruiI18n = i18n.createInstance()
 
@@ -18,11 +20,13 @@ sanaruiI18n
         resources: {
             pt: {
                 sanarui: sanaruiPt,
-                esanar: esanarPt
+                esanar: esanarPt,
+                sanarflix: sanarflixPt
             },
             en: {
                 sanarui: sanaruiEn,
-                esanar: esanarEn
+                esanar: esanarEn,
+                sanarflix: sanarflixEn
             }
         },
         interpolation: {

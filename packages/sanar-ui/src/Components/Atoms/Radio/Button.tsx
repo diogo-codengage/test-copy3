@@ -16,7 +16,8 @@ const ESRadioButton = ({ className, children, ...props }, ref) => {
 ESRadioButton.propTypes = Object.assign(
     { ...Radio.Button['propTypes'] },
     {
-        className: PropTypes.string
+        className: PropTypes.string,
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
     }
 )
 

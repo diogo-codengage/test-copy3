@@ -7,12 +7,15 @@ import ESTabs, { ESTabPane } from '../../Atoms/Tabs'
 import ESBrandHeader from '../../Atoms/BrandHeader'
 import useWindowSize from '../../../Hooks/useWindowSize'
 
+import defaultLogo from '../../../assets/images/logo/full-logo.svg'
+
 const ESModalTabs = ({
     className,
     visible,
     onCancel,
     content,
-    defaultActiveKey
+    defaultActiveKey,
+    imageHeader
 }) => {
     const classes = classNames('es-modal-tabs', className)
     const [tabPosition, setTabPosition] = useState('top')
@@ -43,7 +46,10 @@ const ESModalTabs = ({
             width={width > 1023 ? '75vw' : 'auto'}
         >
             <div className='es-modal-tabs__content'>
-                <ESBrandHeader size={width > 1023 ? 'large' : 'small'} />
+                <ESBrandHeader
+                    logo={imageHeader}
+                    size={width > 1023 ? 'large' : 'small'}
+                />
                 <ESTabs
                     tabPosition={tabPosition}
                     defaultActiveKey={defaultActiveKey.toString()}
@@ -58,10 +64,12 @@ const ESModalTabs = ({
 ESModalTabs.propTypes = {
     className: PropTypes.string,
     visible: PropTypes.bool,
-    content: PropTypes.any
+    content: PropTypes.any,
+    imageHeader: PropTypes.string
 }
 ESModalTabs.defaultProps = {
-    defaultActiveKey: '0'
+    defaultActiveKey: '0',
+    imageHeader: defaultLogo
 }
 
 export default ESModalTabs

@@ -123,6 +123,7 @@ const ESTypography:React.FC<IPros> = ({
                     )
                 }
                 className={classes}
+                {...props}
             />
         )
     }

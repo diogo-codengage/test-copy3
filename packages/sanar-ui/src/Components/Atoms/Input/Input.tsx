@@ -1,12 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Input from 'antd/lib/input'
 import classNames from 'classnames'
 
-const ESInput = ({ className, component, ...props }) => {
-    const classes = classNames('es-input', className)
+import warning from '../../../Util/Warning'
+
+const ESInput = ({ className, dark, component, ...props }) => {
+    const classes = classNames(
+        'es-input',
+        { 'es-input__dark': dark },
+        className
+    )
 
     const Comp = component ? component : Input
+
+    useEffect(() => {
+        warning(
+            false,
+            'ESInput',
+            'ESInput component is deprecated. Please use SInput component.'
+        )
+    }, [])
 
     return <Comp className={classes} {...props} />
 }
@@ -14,7 +28,8 @@ const ESInput = ({ className, component, ...props }) => {
 ESInput.propTypes = Object.assign(
     { ...Input['propTypes'] },
     {
-        className: PropTypes.string
+        className: PropTypes.string,
+        dark: PropTypes.bool
     }
 )
 

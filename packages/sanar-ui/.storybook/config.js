@@ -2,10 +2,12 @@ import React from 'react'
 import { configure, addDecorator, addParameters } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
 import { withInfo } from '@storybook/addon-info'
-import { create } from '@storybook/theming'
 
 import './styles.less'
 import TableComponent from './TableComponent'
+
+import ESThemeProvider from '../src/Components/Atoms/ThemeProvider'
+import { createTheme } from '../src/Theme/createTheme'
 
 import '../src/Config/i18n'
 
@@ -21,7 +23,7 @@ const DefaultDecotator = (story, { parameters }) => (
                   }
         }
     >
-        {story()}
+        <ESThemeProvider theme={createTheme({})}>{story()}</ESThemeProvider>
     </div>
 )
 

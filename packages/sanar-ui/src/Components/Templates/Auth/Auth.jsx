@@ -12,7 +12,8 @@ const ESAuthTemplate = ({
     form,
     image,
     marketing = {},
-    terms
+    terms,
+    header
 }) => {
     const classes = classNames('es-auth-template', className)
     return (
@@ -20,7 +21,9 @@ const ESAuthTemplate = ({
             <ESRow>
                 <ESCol xs={24} md={12}>
                     <div className='es-auth-template__input-data'>
-                        <ESBrandHeader className='es-auth-template__input-data__header' />
+                        {header || (
+                            <ESBrandHeader className='es-auth-template__input-data__header' />
+                        )}
 
                         <div className='es-auth-template__input-data__content'>
                             {description && (
@@ -45,20 +48,27 @@ const ESAuthTemplate = ({
                     style={{ backgroundImage: `url(${image})` }}
                 >
                     <div className='es-auth-template__marketing__content mb-xl'>
-                        <ESTypography level={3}>{marketing.title}</ESTypography>
+                        <ESTypography
+                            className='es-auth-template__marketing__content--title'
+                            level={3}
+                        >
+                            {marketing.title}
+                        </ESTypography>
                         <ESTypography level={6} regular>
                             {marketing.description}
                         </ESTypography>
                     </div>
-                    <ESButton
-                        href={marketing.link}
-                        color='white'
-                        bold
-                        variant='outlined'
-                        target='_blank'
-                    >
-                        {marketing.linkDescription}
-                    </ESButton>
+                    {marketing.linkDescription && marketing.link && (
+                        <ESButton
+                            href={marketing.link}
+                            color='white'
+                            bold
+                            variant='outlined'
+                            target='_blank'
+                        >
+                            {marketing.linkDescription}
+                        </ESButton>
+                    )}
                 </ESCol>
             </ESRow>
         </div>
@@ -68,9 +78,10 @@ const ESAuthTemplate = ({
 ESAuthTemplate.propTypes = {
     className: PropTypes.string,
     description: PropTypes.string,
-    form: PropTypes.element.isRequired,
+    form: PropTypes.node.isRequired,
     image: PropTypes.string,
-    terms: PropTypes.element,
+    terms: PropTypes.node,
+    header: PropTypes.node,
     marketing: PropTypes.shape({
         title: PropTypes.string,
         description: PropTypes.string,
