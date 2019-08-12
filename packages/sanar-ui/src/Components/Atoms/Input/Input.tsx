@@ -5,7 +5,9 @@ import classNames from 'classnames'
 
 import warning from '../../../Util/Warning'
 
-const ESInput = ({ className, dark, component, ...props }) => {
+type IProps = PropTypes.InferProps<typeof propTypes>
+
+const ESInput = ({ className, dark, component, ...props }:IProps) => {
     const classes = classNames(
         'es-input',
         { 'es-input__dark': dark },
@@ -25,13 +27,16 @@ const ESInput = ({ className, dark, component, ...props }) => {
     return <Comp className={classes} {...props} />
 }
 
-ESInput.propTypes = Object.assign(
+const propTypes = Object.assign(
     { ...Input['propTypes'] },
     {
         className: PropTypes.string,
-        dark: PropTypes.bool
+        dark: PropTypes.bool,
+        component: PropTypes.any
     }
 )
+
+ESInput.propTypes = propTypes
 
 ESInput.defaultProps = Input['defaultProps']
 
