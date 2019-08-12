@@ -68,5 +68,20 @@
         justify-content: space-between;
         border-top: 1px solid @grey-3;
         padding: @padding-lg @padding-xl;
+
+        &-bookmarked {
+            &--actions {
+                display: flex;
+            }
+
+            @media (max-width: @screen-xs) {
+                flex-direction: column;
+                &--actions {
+                    justify-content: space-between;
+                    order: 2;
+                    margin-top: @margin-sm;
+                }
+            }
+        }
     }
 }

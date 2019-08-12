@@ -40,8 +40,13 @@
                 align-items: center;
                 justify-content: center;
                 font-size: 12px;
-                max-width: 320px;
+                max-width: 425px;
                 margin: 0 auto;
+                text-align: center;
+
+                img {
+                    margin-bottom: @margin-md;
+                }
 
                 span {
                     font-weight: bold;
@@ -51,6 +56,19 @@
 
                     &:hover {
                         opacity: 0.8;
+                    }
+                }
+
+                @media (min-width: @screen-md) {
+                    img {
+                        margin: 0;
+                    }
+
+                    .es-col > .es-typography {
+                        border-left: 1px solid @grey-2;
+                        margin-left: 16px;
+                        text-align: left;
+                        padding-left: 16px;
                     }
                 }
             }
@@ -81,8 +99,14 @@
 
     &__marketing {
         &__content {
-            max-width: 490px;
+            max-width: 550px;
+            padding: @padding-sm;
             text-align: center;
+
+            &--title {
+                line-height: 42.5px;
+                margin-bottom: @margin-md;
+            }
 
             .es-typography {
                 color: @white;

@@ -11,10 +11,13 @@ const ESPasswordRecoveryTemplate = ({
     subtitle,
     actionsMargin,
     actions,
-    brandHeader
+    brandHeader,
+    header,
+    fullHeight
 }) => {
     const classes = classNames('es-password-recovery-template', className, {
-        'es-password-recovery-template--without-brand-header': !brandHeader
+        'es-password-recovery-template--with-brand-header': brandHeader,
+        'es-password-recovery-template--full-height': fullHeight
     })
 
     const classesInfo = classNames(
@@ -28,9 +31,7 @@ const ESPasswordRecoveryTemplate = ({
 
     return (
         <div className={classes}>
-            {brandHeader && (
-                <ESBrandHeader className='es-password-recovery-template__header' />
-            )}
+            {brandHeader && (header || <ESBrandHeader />)}
             <div className='es-password-recovery-template__content'>
                 <div className={classesInfo}>
                     <img src={image} />
@@ -61,13 +62,16 @@ ESPasswordRecoveryTemplate.propTypes = {
     title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     image: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    actions: PropTypes.element,
+    actions: PropTypes.node,
     actionsMargin: PropTypes.oneOf(['default', 'large']),
-    brandHeader: PropTypes.bool
+    brandHeader: PropTypes.bool,
+    header: PropTypes.node,
+    fullHeight: PropTypes.bool
 }
 ESPasswordRecoveryTemplate.defaultProps = {
     actionsMargin: 'default',
-    brandHeader: true
+    brandHeader: true,
+    fullHeight: true
 }
 
 export default ESPasswordRecoveryTemplate
