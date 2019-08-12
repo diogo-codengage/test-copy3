@@ -49,9 +49,6 @@
         "react-eva-icons": "^0.0.7",
         "react-jw-player": "^1.19.0",
         "react-lines-ellipsis": "^0.14.1",
-        "styled-components": "^4.3.2",
-        "styled-system": "^5.0.20",
-        "styled-tools": "^1.7.1",
         "warning": "^4.0.3"
     }
 }
