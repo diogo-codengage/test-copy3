@@ -45,8 +45,10 @@
     "dependencies": {
         "ckeditor4-react": "^0.1.1",
         "pdfobject": "^2.1.1",
+        "polished": "^3.4.1",
         "react-eva-icons": "^0.0.7",
         "react-jw-player": "^1.19.0",
-        "react-lines-ellipsis": "^0.14.1"
+        "react-lines-ellipsis": "^0.14.1",
+        "warning": "^4.0.3"
     }
 }
