@@ -1,6 +1,7 @@
 import { FLXThemeInterface } from 'styled-components'
 
 const FLXTheme: FLXThemeInterface = {
+
     colors: {
         primary: '#600F30',
         secondary: '#A52C41'
