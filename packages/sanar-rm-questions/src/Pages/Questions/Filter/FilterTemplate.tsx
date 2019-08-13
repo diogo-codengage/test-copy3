@@ -66,7 +66,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
     }
 
     let allTags = props.allTags.filter(createDistinctFilter<Tag>(t => t.value)).sort(sortByLabel);
-    let allSpecialties = props.allSpecialties;
+    let allSpecialties = props.allSpecialties.filter((value) => value.children.length > 0);
     let allSubSpecialties = props.allSpecialties.flatMap(s => s.children).sort(sortByLabel);
 
     if(props.selectedTags.length > 0) {
@@ -77,7 +77,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
     }
 
     if(props.selectedSpecialties.length > 0) {
-        allTags = props.selectedSpecialties.flatMap(s => s.tags).concat( props.selectedSpecialties.flatMap(s => s.children).flatMap(s => s.tags)).sort(sortByLabel)
+        allTags = props.selectedSpecialties.flatMap(s => s.tags).sort(sortByLabel)
         allSubSpecialties = props.selectedSpecialties.flatMap( s => s.children);
     }
 

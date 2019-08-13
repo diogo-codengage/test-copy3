@@ -1,5 +1,6 @@
 import { gql } from 'apollo-boost'
 import { QuestionsInputFilter } from '../../QuestionsInputFilter'
+
 export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
     const where:any = {};
 
@@ -10,16 +11,7 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
     }
 
     if(filter.tagsIds.length > 0) {
-        where.tag_id = {
-            inq : filter.tagsIds
-        }
-    }
-
-    if(filter.states.length > 0){
-        // where['state'] = null //filter.states[0].toLowerCase();
-        // where['state'] = {
-        //     inq : filter.states
-        // }
+        where.tag_ids = filter.tagsIds
     }
 
     if(filter.institutionsIds.length > 0){
@@ -37,7 +29,6 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
         where.isCommentedByExpert = true;
     }
 
-    console.log( JSON.stringify({where}, null, 4) )
     const whereFilter = ` ,where: "${JSON.stringify(where).replace(/"/g, '\\"') }" `
 
     const queryWithParams = `

@@ -73,7 +73,7 @@ export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: 
         <ESModal
             title={'Opps'}
             visible={noMoreQuestions}
-            centered={'Centered'}
+            centered
             onCancel={() => {
                 setCurrentPage(QuestionPageType.Filter)
                 setNoMoreQuestion(true)
@@ -83,7 +83,7 @@ export const QuestionTemplate = ({ onConfirm, onNext, onJump, stats, loading }: 
 
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <ESButton
-                    color='outlined'
+                    color='black'
                     variant='text'
                     uppercase
                     blockOnlyMobile
