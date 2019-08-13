@@ -85,7 +85,7 @@ defaultBreakpoints.lg = defaultBreakpoints[3]
 defaultBreakpoints.xl = defaultBreakpoints[4]
 defaultBreakpoints.xxl = defaultBreakpoints[5]
 
-const defaultBorderRadius: any = [2, 4]
+const defaultBorderRadius: any = ['2px', '4px']
 defaultBorderRadius.sm = defaultBorderRadius[0]
 defaultBorderRadius.base = defaultBorderRadius[1]
 
@@ -93,7 +93,17 @@ const defaultFonts = {
     default: "'Nunito Sans', sans-serif"
 }
 
-const defaultFontSizes: any = [10, 12, 14, 16, 20, 24, 34, 48, 60]
+const defaultFontSizes: any = [
+    '10px',
+    '12px',
+    '14px',
+    '16px',
+    '20px',
+    '24px',
+    '34px',
+    '48px',
+    '60px'
+]
 defaultFontSizes.xs = defaultFontSizes[0]
 defaultFontSizes.sm = defaultFontSizes[1]
 defaultFontSizes.md = defaultFontSizes[2]
@@ -106,7 +116,17 @@ defaultFontWeights.regular = defaultFontWeights[0]
 defaultFontWeights.medium = defaultFontWeights[1]
 defaultFontWeights.bold = defaultFontWeights[2]
 
-const defaultSpace: any = [0, 4, 8, 12, 16, 20, 24, 32, 48]
+const defaultSpace: any = [
+    '0px',
+    '4px',
+    '8px',
+    '12px',
+    '16px',
+    '20px',
+    '24px',
+    '32px',
+    '48px'
+]
 defaultSpace.xs = defaultSpace[2]
 defaultSpace.sm = defaultSpace[3]
 defaultSpace.md = defaultSpace[4]
