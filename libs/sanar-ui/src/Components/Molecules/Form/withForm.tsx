@@ -17,7 +17,7 @@ const withESForm = (component, options = {}) => {
     return Form.create({
         ...defaultOptions,
         ...options
-    })(component)
+    } as any )(component)
 }
 
 export default withESForm

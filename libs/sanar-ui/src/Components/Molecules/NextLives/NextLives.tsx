@@ -74,7 +74,7 @@ ESNextLives.propTypes = Object.assign(
     {
         children: PropTypes.node,
         responsive: PropTypes.array,
-        test: PropTypes.instanceOf(ESCarousel)
+        test: PropTypes.any
     }
 )
 ESNextLives.defaultProps = {

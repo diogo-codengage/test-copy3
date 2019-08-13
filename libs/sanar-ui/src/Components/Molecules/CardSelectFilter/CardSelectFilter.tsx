@@ -93,7 +93,7 @@ const ESCardSelectFilter = ({
     const onFocus = () => handleOpen(true)
 
     const clickOutside = () => {
-        setSearch()
+        setSearch(null)
         handleOpen(false)
     }
 
@@ -146,6 +146,7 @@ const ESCardSelectFilter = ({
                                 search,
                                 width:
                                     dropdownRef.current &&
+                                    //@ts-ignore
                                     dropdownRef.current.offsetWidth
                             }}
                         />

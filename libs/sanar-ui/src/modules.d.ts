@@ -3,6 +3,7 @@ interface Window {
     fbAsyncInit: any,
     gapi: any,
     jwplayer: any,
+    CKEDITOR: any,
 }
 
 declare module "*.svg" {

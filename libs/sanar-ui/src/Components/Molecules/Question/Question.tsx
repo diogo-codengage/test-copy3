@@ -116,7 +116,7 @@ const ESQuestion = ({
 
     const handleStripe = (index, alternativeId) => () => {
         if (selected === alternativeId) {
-            setSelect()
+            setSelect(null)
         }
         setStripe({
             ...striped,

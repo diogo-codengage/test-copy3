@@ -12,13 +12,13 @@ const ESFeedbackRateItem = ({ value, img, label, dirty, selected, onClick }) => 
 
     const [hover, setHover] = useState(false);
 
-    let opacity = '1'
+    let opacity: number = 1
     if(dirty)
-        opacity = '0.3'
+        opacity = 0.3
     if(hover)
-        opacity = '0.7'
+        opacity = 0.7
     if(selected)
-        opacity = '1'
+        opacity = 1
 
     return (
         <div onMouseEnter={() => setHover(true)} onMouseLeave={ () => setHover(false)}

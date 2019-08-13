@@ -6,11 +6,11 @@ import { Form } from 'antd'
 
 import { useFormContext } from './context'
 
-const ESFormItem = forwardRef(
+const ESFormItem =
     ({ className, children, name, ...props }, ref) => {
         const {
             form: { getFieldDecorator }
-        } = useFormContext()
+        } = useFormContext() as any
         const classes = classNames('es-form-item', className)
 
         return (
@@ -21,7 +21,7 @@ const ESFormItem = forwardRef(
             </Form.Item>
         )
     }
-)
+
 
 ESFormItem.propTypes = Object.assign(
     {
@@ -34,4 +34,4 @@ ESFormItem.propTypes = Object.assign(
 
 ESFormItem.defaultProps = {}
 
-export default ESFormItem
+export default forwardRef(ESFormItem)

@@ -46,6 +46,7 @@ const ESDisciplineDropdown = ({
                     items={items}
                     width={
                         disciplineDropdownRef.current &&
+                        // @ts-ignore
                         disciplineDropdownRef.current.offsetWidth
                     }
                 />

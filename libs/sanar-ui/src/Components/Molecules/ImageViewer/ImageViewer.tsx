@@ -8,7 +8,7 @@ import ESModal from '../../Atoms/Modal'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESButton from '../../Atoms/Button'
 
-const ESImageViewer = ({ className, images, alt }) => {
+const ESImageViewer: React.FC<any> = ({ className, images, alt }) => {
     if (!images.small.url.match(/\.(jpeg|jpg|png)$/)) {
         console.error(`ESImageViewer - it's not an image: ${images.small.url}`)
         return null
