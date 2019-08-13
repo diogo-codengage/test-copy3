@@ -37,7 +37,7 @@ const InitalButton = ({ name = 'keypad-outline', ...props }) => (
     <SideButton name={name} {...props} />
 )
 
-const ESMainMenu = forwardRef(
+const ESMainMenu: React.FC<any> =
     (
         {
             className,
@@ -208,7 +208,7 @@ const ESMainMenu = forwardRef(
             </div>
         )
     }
-)
+
 
 ESMainMenu.propTypes = {
     className: PropTypes.string,
@@ -229,4 +229,4 @@ ESMainMenu.defaultProps = {
     logo: logoSvg
 }
 
-export default withMainMenuProvider(ESMainMenu)
+export default withMainMenuProvider(forwardRef(ESMainMenu))

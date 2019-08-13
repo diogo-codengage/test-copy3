@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { boolean, color, number, select } from '@storybook/addon-knobs'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 
-const ESFeedbackUpload = ({ className }) => {
+const ESFeedbackUpload: React.FC<any> = ({ className }) => {
     const classes = classNames('es-feedback-upload', className)
     return (
         <div className={classes}>

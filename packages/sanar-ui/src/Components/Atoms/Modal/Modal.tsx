@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 import ESModalFooter from './ModalFooter'
 
-const ESModal = ({ className, footer, children, ...props }) => {
+const ESModal:React.FC<any> = ({ className, footer, children, ...props }) => {
     const classes = classNames('es-modal', className)
 
     const mapChildren = child => child.type === ESModalFooter && child

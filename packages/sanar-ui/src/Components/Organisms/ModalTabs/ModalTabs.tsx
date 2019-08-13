@@ -9,7 +9,7 @@ import useWindowSize from '../../../Hooks/useWindowSize'
 
 import defaultLogo from '../../../assets/images/logo/full-logo.svg'
 
-const ESModalTabs = ({
+const ESModalTabs: React.FC<any> = ({
     className,
     visible,
     onCancel,

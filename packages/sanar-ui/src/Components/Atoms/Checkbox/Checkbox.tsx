@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Checkbox from 'antd/lib/checkbox'
 import classNames from 'classnames'
 
-const ESCheckbox: React.FC<IProps>=({ className, ...props }) => {
+const ESCheckbox: React.FC<IProps & any>=({ className, ...props }) => {
     const classes = classNames('es-checkbox', className)
 
     return <Checkbox className={classes} {...props} />

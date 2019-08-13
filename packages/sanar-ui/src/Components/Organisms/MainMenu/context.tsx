@@ -9,7 +9,7 @@ import React, {
 
 import useWindowSize from '../../../Hooks/useWindowSize'
 
-const Context = createContext()
+const Context = createContext(null)
 
 export const useMainMenuContext = () => useContext(Context)
 

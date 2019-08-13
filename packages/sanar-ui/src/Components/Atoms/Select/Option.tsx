@@ -6,7 +6,7 @@ import { Select } from 'antd'
 
 const Option = Select.Option
 
-const ESOption = ({ className }) => {
+const ESOption: React.FC<any> = ({ className }) => {
     const classes = classNames('es-select-option', className)
     return <Option className={classes} />
 }

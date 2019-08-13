@@ -21,7 +21,8 @@
     "noFallthroughCasesInSwitch": true,
     "allowJs": true,
     "isolatedModules": false,
-    "noEmit": false
+    "noEmit": false,
+    "noImplicitAny": false
   },
   "include": [
     "src"
