@@ -97,8 +97,6 @@ export default {
         generic: 'Ocorreu um erro. Tente novamente mais tarde.',
         notAuthorizedException:
             'Desculpe, essa combinação inserida de e-mail e senha está incorreta. Verifique seus dados e tente novamente!',
-        limitExceededException:
-            'Você excedeu o limite de tentativas. Tente novamente mais tarde.',
         userNotFoundException:
             'Desculpe, não encontramos nenhuma conta associada ao e-mail inserido. Por favor tente novamente.',
         invalidParameterException:

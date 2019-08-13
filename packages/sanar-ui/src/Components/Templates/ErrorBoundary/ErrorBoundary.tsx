@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import ESTypography from '../../Atoms/Typography'
 
-class ESErrorBoundary extends Component {
+class ESErrorBoundary extends Component<any,any> {
     constructor(props) {
         super(props)
         this.state = { hasError: false }
@@ -33,9 +33,11 @@ class ESErrorBoundary extends Component {
     }
 }
 
+// @ts-ignore
 ESErrorBoundary.propTypes = {
     className: PropTypes.string
 }
+// @ts-ignore
 ESErrorBoundary.defaultProps = {}
 
 export default ESErrorBoundary

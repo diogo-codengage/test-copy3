@@ -2,7 +2,6 @@ import { createColorVariants } from './colors'
 
 const defaultColors = {
     // default
-    white: '#ffffff',
     black: '#000000',
 
     // brand
@@ -71,7 +70,7 @@ const defaultColors = {
     ]
 }
 
-const defaultBreakpoints = [
+const defaultBreakpoints: any = [
     '480px',
     '576px',
     '768px',
@@ -86,7 +85,7 @@ defaultBreakpoints.lg = defaultBreakpoints[3]
 defaultBreakpoints.xl = defaultBreakpoints[4]
 defaultBreakpoints.xxl = defaultBreakpoints[5]
 
-const defaultBorderRadius = [2, 4]
+const defaultBorderRadius: any = [2, 4]
 defaultBorderRadius.sm = defaultBorderRadius[0]
 defaultBorderRadius.base = defaultBorderRadius[1]
 
@@ -94,7 +93,7 @@ const defaultFonts = {
     default: "'Nunito Sans', sans-serif"
 }
 
-const defaultFontSizes = [10, 12, 14, 16, 20, 24, 34, 48, 60]
+const defaultFontSizes: any = [10, 12, 14, 16, 20, 24, 34, 48, 60]
 defaultFontSizes.xs = defaultFontSizes[0]
 defaultFontSizes.sm = defaultFontSizes[1]
 defaultFontSizes.md = defaultFontSizes[2]
@@ -102,12 +101,12 @@ defaultFontSizes.lg = defaultFontSizes[3]
 defaultFontSizes.xl = defaultFontSizes[4]
 defaultFontSizes.xxl = defaultFontSizes[5]
 
-const defaultFontWeights = [400, 500, 700]
+const defaultFontWeights: any = [400, 500, 700]
 defaultFontWeights.regular = defaultFontWeights[0]
 defaultFontWeights.medium = defaultFontWeights[1]
 defaultFontWeights.bold = defaultFontWeights[2]
 
-const defaultSpace = [0, 4, 8, 12, 16, 20, 24, 32, 48]
+const defaultSpace: any = [0, 4, 8, 12, 16, 20, 24, 32, 48]
 defaultSpace.xs = defaultSpace[2]
 defaultSpace.sm = defaultSpace[3]
 defaultSpace.md = defaultSpace[4]
@@ -143,7 +142,7 @@ const defaultShadows = [
     '0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)'
 ]
 
-const defaultZIndices = []
+const defaultZIndices: any = []
 defaultZIndices.sidebar = 1200
 defaultZIndices.modal = 1300
 
@@ -161,7 +160,7 @@ export const createTheme = ({
     shadows = defaultShadows,
     zIndices = defaultZIndices,
     ...rest
-}) => {
+}: any) => {
     // merge colors with base colors
     colors = {
         ...defaultColors,
@@ -198,13 +197,14 @@ export const createTheme = ({
     colors.errorDark = palette.error.dark
 
     const mediaQueries = Object.entries(breakpoints).reduce(
-        (prev, [key, val]) => ({
+        (prev, [key, val]): any => ({
             up: {
                 ...prev.up,
                 [key]: `@media screen and (min-width: ${val})`
             },
             down: {
                 ...prev.down,
+                // @ts-ignore
                 [key]: `@media screen and (max-width: ${val - 1})`
             }
         }),

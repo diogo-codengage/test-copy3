@@ -11,19 +11,19 @@ import ESCollapsePanel from '../../Atoms/Collapse/CollapsePanel'
 import HelpHeader from './Header'
 import questionsData from './questionsData.json'
 
-const ESHelpCenter = ({ className }) => {
+const ESHelpCenter: React.FC<any> = ({ className }) => {
     const { t } = useTranslation('sanarui')
     const [helpCenterData, sethelpCenterData] = useState(questionsData)
     const classes = classNames(className, 'es-help-center-template')
 
-    const scroll = document.getElementById('san-scroll')
+    const scroll: any = document.getElementById('san-scroll')
     if(scroll) {scroll.firstChild.scrollTo(0, 0)}
 
     const getSearchData = data => {
         if (data === '') {
             sethelpCenterData(questionsData)
         } else {
-            let dataFiltered = {}
+            let dataFiltered: any = {}
             dataFiltered.plataforma = questionFilter(
                 questionsData.plataforma,
                 data

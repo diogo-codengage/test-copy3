@@ -6,7 +6,7 @@ import { Collapse } from 'antd'
 
 type IProps = PropTypes.InferProps<typeof propTypesCp>
 
-const ESCollapsePanel: React.FC<IProps> = ({
+const ESCollapsePanel: React.FC<IProps & any> = ({
     className,
     customKey,
     ...props

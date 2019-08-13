@@ -6,7 +6,7 @@ import ESBrandHeader from '../../Atoms/BrandHeader'
 import ESTypography from '../../Atoms/Typography'
 import ESButton from '../../Atoms/Button'
 
-const ESAuthTemplate = ({
+const ESAuthTemplate: React.FC<any> = ({
     className,
     description,
     form,

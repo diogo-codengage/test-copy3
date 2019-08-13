@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 
 function useStopwatch(settings) {
-    const { autoStart } = settings || {}
+    const { autoStart } = settings || { autoStart: undefined}
 
     // Seconds
     const [seconds, setSeconds] = useState(0)
@@ -52,6 +52,7 @@ function useStopwatch(settings) {
 
     function start() {
         if (!intervalRef.current) {
+            // @ts-ignore
             intervalRef.current = setInterval(() => addSecond(), 1000)
         }
     }
@@ -85,4 +86,4 @@ function useStopwatch(settings) {
     return { seconds, minutes, hours, days, start, pause, reset }
 }
 
-export default useStopwatch
+export default (useStopwatch as (a?:any)=> any)
