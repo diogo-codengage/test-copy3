@@ -1,7 +1,8 @@
 import { Auth } from 'aws-amplify'
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types'
 
 const esGoogleSignIn = () => {
-    return Auth.federatedSignIn({ provider: 'Google' }).then(
+    return Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google }).then(
         googleUser => {
             console.log(googleUser)
             return getAWSCredentials(googleUser)
@@ -35,7 +36,7 @@ const initGapi = key => {
 const getAWSCredentials = async googleUser => {
     console.log('Starting signIn with Google Button...')
 
-    await Auth.federatedSignIn({ provider: 'Google' })
+    await Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google })
 }
 
 export default esGoogleSignIn

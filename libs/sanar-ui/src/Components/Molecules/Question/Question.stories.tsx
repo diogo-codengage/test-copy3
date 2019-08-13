@@ -115,8 +115,8 @@ const Example = () => {
     const fetch = () => {
         setLoading(true)
         setTimeout(() => {
-            setAnswer()
-            setEspecialist()
+            setAnswer(null)
+            setEspecialist(null)
             setCurrentQuestion({
                 ...question,
                 id: Math.floor(Math.random() * 100).toString()

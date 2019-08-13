@@ -19,7 +19,7 @@ const Badge = ({ count }) => (
     <div className='badge'>{count > 99 ? '99+' : count}</div>
 )
 
-const ESCardSelectFilter = ({
+const ESCardSelectFilter: React.FC<any> = ({
     className,
     placeholder,
     image,

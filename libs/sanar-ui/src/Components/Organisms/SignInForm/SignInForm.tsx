@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 
 const antIcon = <ESIcon type='loading' style={{ fontSize: 24 }} spin />
 
-const ESSignInForm = ({
+const ESSignInForm: React.FC<any> = ({
     className,
     keepMeLoggedIn,
     forgotPassword,

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import { Row } from 'antd'
 import classNames from 'classnames'
 
-type Iprops = PropTypes.InferProps<typeof propTypes>
+type IProps = PropTypes.InferProps<typeof propTypes>
 
-const ESRow: React.FC<Iprops>=(
+const ESRow: React.FC<IProps> =(
     ({ className, direction, flex, style, height, ...props }, ref) => {
         const classes = classNames('es-row', className, {
             [`es-row__direction--${direction}`]: direction
@@ -21,8 +21,6 @@ const ESRow: React.FC<Iprops>=(
     }
 )
 
-
-
 const propTypes = Object.assign(
     {
         className: PropTypes.string,
@@ -37,4 +35,4 @@ ESRow.propTypes = propTypes
 
 ESRow.defaultProps = Row['defaultProps']
 
-export default ESRow
+export default forwardRef(ESRow)

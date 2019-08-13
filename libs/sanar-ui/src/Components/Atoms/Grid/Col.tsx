@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 type IProps = PropTypes.InferProps<typeof propTypes>
 
-const ESCol: React.FC<IProps>=(
+const ESCol: React.FC<IProps> =(
     ({ className, flex, style, type, alignSelf, ...props }, ref) => {
         const classes = classNames('es-col', className, {
             [`es-col__${type}`]: type
@@ -53,4 +53,4 @@ ESCol.propTypes = propTypes
 
 ESCol.defaultProps = Col['defaultProps']
 
-export default ESCol
+export default forwardRef(ESCol)

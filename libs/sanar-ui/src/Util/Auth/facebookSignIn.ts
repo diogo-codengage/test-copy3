@@ -1,4 +1,5 @@
 import { Auth } from 'aws-amplify'
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types'
 
 const esFacebookSignIn = () => doLoginIntoCognito()
 
@@ -54,7 +55,7 @@ const requestFacebookLogin = () => {
 }
 
 const doLoginIntoCognito = () =>
-    Auth.federatedSignIn({ provider: 'Facebook' }).catch(err =>
+    Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Facebook }).catch(err =>
         console.log(err)
     )
 

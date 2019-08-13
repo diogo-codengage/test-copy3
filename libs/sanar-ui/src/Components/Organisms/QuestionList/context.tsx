@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react'
 
-const Context = createContext()
+const Context = createContext(null)
 
 export const useQuestionContext = () => useContext(Context)
 

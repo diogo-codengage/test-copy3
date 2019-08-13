@@ -15,7 +15,7 @@ import ESQuestionComment from './Comment'
 
 const arrSkeleton = [0, 1, 2, 3, 4]
 
-const ESQuestion = ({
+const ESQuestion: React.FC<any> = ({
     answer,
     defaultSelected,
     question,
