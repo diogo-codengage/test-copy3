@@ -54,4 +54,4 @@ ESDatePicker.propTypes = propTypes
 
 ESDatePicker.defaultProps = DatePicker['defaultProps'] as any
 
-export default ESDatePicker
+export default forwardRef(ESDatePicker)

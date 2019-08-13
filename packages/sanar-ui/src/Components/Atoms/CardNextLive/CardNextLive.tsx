@@ -43,4 +43,4 @@ ESCardNextLive.propTypes = propTypes
 
 ESCardNextLive.defaultProps = {}
 
-export default ESCardNextLive
+export default  ESCardNextLive

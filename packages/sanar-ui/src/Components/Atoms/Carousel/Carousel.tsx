@@ -83,4 +83,4 @@ ESCarousel.prototype = propTypes
 
 ESCarousel.defaultProps = Carousel['defaultProps']
 
-export default ESCarousel
+export default forwardRef(ESCarousel)
