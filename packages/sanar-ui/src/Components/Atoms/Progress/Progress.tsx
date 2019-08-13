@@ -3,9 +3,12 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { Progress } from 'antd'
 
-const ESProgress = ({ className, square, status, goal, size, ...props }) => {
+type IProps = PropTypes.InferProps<typeof propTypes>
+
+const ESProgress:React.FC<IProps> = ({ className, square, status, goal, size, ...props }) => {
     const classes = classNames('es-progress', className, {
         'es-progress--square': square,
+        // @ts-ignore
         'es-progress--warning': status === 'warning',
         'es-progress__goal': goal
     })
@@ -18,6 +21,7 @@ const ESProgress = ({ className, square, status, goal, size, ...props }) => {
 
     return (
         <div className={classes}>
+            // @ts-ignore
             <Progress size={size} {...props} />
             {goal && (
                 <div
@@ -29,12 +33,13 @@ const ESProgress = ({ className, square, status, goal, size, ...props }) => {
     )
 }
 
-ESProgress.propTypes = Object.assign(
+const propTypes = Object.assign(
     { ...Progress['propTypes'] },
     {
         className: PropTypes.string,
         square: PropTypes.bool,
         goal: PropTypes.number,
+        size: PropTypes.any,
         status: PropTypes.oneOf([
             'normal',
             'exception',
@@ -44,6 +49,7 @@ ESProgress.propTypes = Object.assign(
         ])
     }
 )
+ESProgress.propTypes = propTypes
 ESProgress.defaultProps = {
     square: false,
     percent: 0,

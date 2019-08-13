@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 const SubMenu = Menu.SubMenu
 
-const ESSubMenu = ({ className, ...props }) => {
+const ESSubMenu: React.FC<any> = ({ className, ...props }) => {
   const classes = classNames(
     'es-sub-menu',
     className

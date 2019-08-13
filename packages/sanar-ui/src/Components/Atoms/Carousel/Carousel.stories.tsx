@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { storiesOf } from '@storybook/react'
 import { select, text, boolean } from '@storybook/addon-knobs'
 
 import ESCarousel from './Carousel'
 
-const style = {
+const style: CSSProperties = {
     textAlign: 'center',
     background: '#364d79',
     height: '100px',

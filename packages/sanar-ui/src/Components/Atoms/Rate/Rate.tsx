@@ -3,13 +3,14 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 import { Rate } from 'antd'
+type IProps = PropTypes.InferProps<typeof propTypes>
 
-const ESRate = ({ className, ...props }) => {
+const ESRate:React.FC<IProps> = ({ className, ...props }) => {
     const classes = classNames('es-rate', className)
     return <Rate className={classes} {...props} />
 }
 
-ESRate.propTypes = {
+const propTypes = {
     className: PropTypes.string,
     allowClear: PropTypes.bool,
     allowHalf: PropTypes.bool,
@@ -26,6 +27,7 @@ ESRate.propTypes = {
     onHoverChange: PropTypes.func,
     onKeyDown: PropTypes.func
 }
+ESRate.propTypes = propTypes
 ESRate.defaultProps = {}
 
 export default ESRate

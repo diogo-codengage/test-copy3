@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 const Divider = Menu.Divider
 
-const ESDivider = ({ className, ...props }) => {
+const ESDivider: React.FC<any> = ({ className, ...props }) => {
   const classes = classNames(
     'es-divider',
     className

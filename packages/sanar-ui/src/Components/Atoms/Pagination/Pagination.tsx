@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import ESButton from '../Button'
 import ESEvaIcon from '../EvaIcon'
 
+type IProps = PropTypes.InferProps<typeof propTypes>
 const customRenderElements = (current, type, originalElement) => {
     switch (type) {
         case 'prev':
@@ -36,7 +37,7 @@ const customRenderElements = (current, type, originalElement) => {
     }
 }
 
-const ESPagination = ({ className, ...props }) => {
+const ESPagination: React.FC<IProps> = ({ className, ...props }) => {
     const classes = classNames('es-pagination', className)
 
     return (
@@ -48,7 +49,7 @@ const ESPagination = ({ className, ...props }) => {
     )
 }
 
-ESPagination.propTypes = Object.assign(
+const propTypes = Object.assign(
     { ...Pagination['propTypes'] },
     {
         className: PropTypes.string,
@@ -70,6 +71,7 @@ ESPagination.propTypes = Object.assign(
         onShowSizeChange: PropTypes.func
     }
 )
+ESPagination.propTypes = propTypes
 
 ESPagination.defaultProps = Pagination['defaultProps']
 

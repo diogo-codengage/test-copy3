@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 const ItemGroup = Menu.ItemGroup
 
-const ESItemGroup = ({ className, ...props }) => {
+const ESItemGroup: React.FC<any> = ({ className, ...props }) => {
   const classes = classNames(
     'es-item-group',
     className

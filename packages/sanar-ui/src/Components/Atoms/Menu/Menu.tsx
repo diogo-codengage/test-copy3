@@ -2,7 +2,7 @@ import React from 'react'
 import { Menu } from 'antd'
 import classNames from 'classnames'
 
-const ESDropdown = ({ className, component, ...props }) => {
+const ESDropdown: React.FC<any> = ({ className, component, ...props }) => {
   const classes = classNames(
     'es-menu',
     className

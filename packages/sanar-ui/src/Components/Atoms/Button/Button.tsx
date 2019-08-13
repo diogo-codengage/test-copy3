@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 import ESIcon from '../Icon'
 
-const ESButton: React.FC<IProps>=({
+const ESButton: React.FC<IProps & any> =({
     className,
     clear,
     size,

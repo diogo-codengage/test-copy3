@@ -5,18 +5,21 @@ import classNames from 'classnames'
 
 const TabPane = Tabs.TabPane
 
-const ESTabPane = ({ className, ...props }) => {
+type IProps = PropTypes.InferProps<typeof propTypes>
+const ESTabPane: React.FC<IProps> = ({ className, ...props }) => {
     const classes = classNames('es-tab-pane', className)
 
     return <TabPane className={classes} {...props} />
 }
 
-ESTabPane.propTypes = Object.assign(
+
+const propTypes = Object.assign(
     { ...TabPane['propTypes'] },
     {
         className: PropTypes.string
     }
 )
+ESTabPane.propTypes = propTypes
 
 ESTabPane.defaultProps = TabPane['defaultProps']
 

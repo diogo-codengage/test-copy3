@@ -5,7 +5,8 @@ import classNames from 'classnames'
 import ESCard from '../../Molecules/Card'
 import ESTypography from '../Typography'
 
-const ESCardNextLive = ({ className, title, date, actions, ...props }) => {
+type IProps = PropTypes.InferProps<typeof propTypes>
+const ESCardNextLive: React.FC<IProps & any> = ({ className, title, date, actions, ...props }) => {
     const classes = classNames('es-card-next-live', className)
 
     return (
@@ -29,7 +30,7 @@ const ESCardNextLive = ({ className, title, date, actions, ...props }) => {
     )
 }
 
-ESCardNextLive.propTypes = Object.assign(
+const propTypes = Object.assign(
     { ...ESCard['propTypes'] },
     {
         className: PropTypes.string,
@@ -38,6 +39,7 @@ ESCardNextLive.propTypes = Object.assign(
         actions: PropTypes.arrayOf(PropTypes.node)
     }
 )
+ESCardNextLive.propTypes = propTypes
 
 ESCardNextLive.defaultProps = {}
 

@@ -117,6 +117,7 @@ const Wrapper = styled.div`
 
 export const SInput = memo(
     forwardRef(
+// @ts-ignore
         ({ placeholder, iconRight, iconLeft, disabled, ...props }, ref) => {
             const customPlaceholder = props.required
                 ? `${placeholder} *`
@@ -135,7 +136,7 @@ export const SInput = memo(
             )
         }
     )
-)
+) as React.FC<any>
 
 SInput.propTypes = {
     disabled: PropTypes.bool,

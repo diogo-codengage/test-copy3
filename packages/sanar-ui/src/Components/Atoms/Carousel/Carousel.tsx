@@ -6,18 +6,18 @@ import { Carousel } from 'antd'
 import ESButton from '../Button'
 import ESEvaIcon from '../EvaIcon'
 
-const NextArrow: React.FC<IProps> = ({ onClick, className }) => (
+const NextArrow: React.FC<any> = ({ onClick, className }) => (
     <ESButton onClick={onClick} circle size='small' className={className}>
         <ESEvaIcon name='arrow-ios-forward-outline' />
     </ESButton>
 )
-const PrevArrow: React.FC<IProps> = ({ onClick, className }) => (
+const PrevArrow: React.FC<any> = ({ onClick, className }) => (
     <ESButton onClick={onClick} circle size='small' className={className}>
         <ESEvaIcon name='arrow-ios-back-outline' />
     </ESButton>
 )
 
-const ESCarousel: React.FC<IProps>=(({ className, style, ...props }, ref) => {
+const ESCarousel: React.FC<IProps & any> = (({ className, style, ...props }, ref) => {
     const classes = classNames('es-carousel', className)
 
     const next = () => ref.current.next()

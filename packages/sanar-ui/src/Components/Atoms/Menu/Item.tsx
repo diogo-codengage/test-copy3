@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 const Item = Menu.Item
 
-const ESItem = ({ className, to, activeClassName, children, ...props }) => {
+const ESItem: React.FC<any> = ({ className, to, activeClassName, children, ...props }) => {
     const classes = classNames('es-item', className)
 
     if (to && activeClassName) {

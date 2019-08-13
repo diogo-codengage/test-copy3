@@ -7,7 +7,7 @@ import warning from '../../../Util/Warning'
 
 type IProps = PropTypes.InferProps<typeof propTypes>
 
-const ESInput: React.FC<IProps> = ({ className, dark, component, ...props }:) => {
+const ESInput: React.FC<IProps & any> = ({ className, dark, component, ...props }) => {
     const classes = classNames(
         'es-input',
         { 'es-input__dark': dark },
@@ -41,6 +41,7 @@ ESInput.propTypes = propTypes
 
 ESInput.defaultProps = Input['defaultProps']
 
+// @ts-ignore
 ESInput.Password = Input.Password
 
-export default ESInput
+export default ESInput as (React.FC<any> & {Password: any})

@@ -5,13 +5,14 @@ import classNames from 'classnames'
 
 const TextArea = Input.TextArea
 
-const ESTextArea = ({ className, ...props }) => {
+type IProps = PropTypes.InferProps<typeof propTypes>
+const ESTextArea: React.FC<IProps> = ({ className, ...props }) => {
     const classes = classNames('es-text-area', className)
 
     return <TextArea className={classes} {...props} />
 }
 
-ESTextArea.propTypes = Object.assign(
+const propTypes = Object.assign(
     { ...TextArea['propTypes'] },
     {
         className: PropTypes.string,
@@ -21,6 +22,7 @@ ESTextArea.propTypes = Object.assign(
         onPressEnter: PropTypes.func
     }
 )
+ESTextArea.propTypes = propTypes
 
 ESTextArea.defaultProps = TextArea['defaultProps']
 
