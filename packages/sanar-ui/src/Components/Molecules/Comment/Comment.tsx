@@ -16,7 +16,7 @@ const locale =
         ? require('date-fns/locale/en')
         : require('date-fns/locale/pt')
 
-const Title = ({ name, monitor, labelMonitor, commentedByUser }) => {
+const Title:React.FC<any> = ({ name, monitor, labelMonitor, commentedByUser }) => {
     const { t } = useTranslation('sanarui')
 
     const badge = commentedByUser ? (
@@ -41,7 +41,7 @@ const Title = ({ name, monitor, labelMonitor, commentedByUser }) => {
     )
 }
 
-const ESComment = ({
+const ESComment: React.FC<any> = ({
     user,
     text,
     time,

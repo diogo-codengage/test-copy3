@@ -14,7 +14,7 @@ import ESDivider from '../../Atoms/Divider'
 
 import Comment from './Comment'
 
-const ESCommentList = ({
+const ESCommentList: React.FC<any> = ({
     comments,
     onExclude,
     onReport,

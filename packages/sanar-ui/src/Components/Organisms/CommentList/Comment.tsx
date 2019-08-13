@@ -12,7 +12,7 @@ import ESTextEditor from '../../Molecules/TextEditor'
 
 import InteractionButton from './InteractionButton'
 
-const Comment = ({
+const Comment: React.FC<any> = ({
     onLike,
     onDislike,
     onExclude,

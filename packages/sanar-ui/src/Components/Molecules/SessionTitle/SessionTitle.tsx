@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import { ESRow, ESCol } from '../../Atoms/Grid'
 import ESTypography from '../../Atoms/Typography'
 
-const ESSessionTitle = ({
+const ESSessionTitle:React.FC<any> = ({
     className,
     title,
     subtitle,

@@ -72,7 +72,7 @@ const propTypes = {
     
 type IPros = PropTypes.InferProps<typeof propTypes>
 
-const ESTypography:React.FC<IPros> = ({
+const ESTypography:React.FC<IPros & any> = ({
     className,
     type,
     level,

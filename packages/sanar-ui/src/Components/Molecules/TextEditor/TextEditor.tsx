@@ -49,7 +49,7 @@ export const createConfig = conf => ({
     ...conf
 })
 
-const ESTextEditor = forwardRef(
+const ESTextEditor =
     (
         {
             className,
@@ -113,12 +113,12 @@ const ESTextEditor = forwardRef(
 
         const handleSubmit = () => {
             onSubmit && onSubmit(data)
-            setData()
+            setData(null)
         }
 
         const handleEnter = text => {
             onSubmit && onSubmit(text)
-            setData()
+            setData(null)
         }
 
         const heightCalculated =
@@ -210,7 +210,7 @@ const ESTextEditor = forwardRef(
             </div>
         )
     }
-)
+
 
 ESTextEditor.propTypes = {
     className: PropTypes.string,
@@ -236,4 +236,4 @@ ESTextEditor.defaultProps = {
     height
 }
 
-export default ESTextEditor
+export default forwardRef(ESTextEditor)
