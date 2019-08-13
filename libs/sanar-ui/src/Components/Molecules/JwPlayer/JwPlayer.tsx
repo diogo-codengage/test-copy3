@@ -34,7 +34,7 @@ const captions = {
 
 const getPlayer = id => window.jwplayer && window.jwplayer(id)
 
-const ESJwPlayer = forwardRef(
+const ESJwPlayer:React.FC<any> =
     (
         {
             className,
@@ -134,7 +134,8 @@ const ESJwPlayer = forwardRef(
         const height = useMemo(
             () =>
                 wrapperRef.current &&
-                parseInt(wrapperRef.current.clientWidth * 0.56),
+                // @ts-ignore
+                parseInt(wrapperRef.current.clientWidth * 0.56, 10),
             [wrapperRef.current]
         )
 
@@ -224,7 +225,7 @@ const ESJwPlayer = forwardRef(
             </div>
         )
     }
-)
+
 
 ESJwPlayer.propTypes = Object.assign(
     {
@@ -236,4 +237,4 @@ ESJwPlayer.propTypes = Object.assign(
 )
 ESJwPlayer.defaultProps = {}
 
-export default ESJwPlayer
+export default forwardRef(ESJwPlayer)

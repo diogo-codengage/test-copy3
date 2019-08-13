@@ -23,7 +23,7 @@ import ESDivider from '../../Atoms/Divider'
 import ESTypography from '../../Atoms/Typography'
 import ESCard from '../Card'
 
-const ESCardSelectFilterMenu = forwardRef(
+const ESCardSelectFilterMenu =
     (
         {
             items,
@@ -107,7 +107,7 @@ const ESCardSelectFilterMenu = forwardRef(
             </div>
         )
     }
-)
+
 
 ESCardSelectFilterMenu.propTypes = {
     className: PropTypes.string,
@@ -136,4 +136,4 @@ ESCardSelectFilterMenu.propTypes = {
 }
 ESCardSelectFilterMenu.defaultProps = {}
 
-export default ESCardSelectFilterMenu
+export default forwardRef(ESCardSelectFilterMenu)

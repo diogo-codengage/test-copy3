@@ -9,7 +9,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getEditorNamespace from './getEditorNamespace.js'
 
-class CKEditor extends React.Component {
+class CKEditor extends React.Component<any,any> {
+    private element: any;
+    private editor: any;
+    private static editorUrl: any
+
     constructor(props) {
         super(props)
 
@@ -51,7 +55,7 @@ class CKEditor extends React.Component {
     render() {
         return (
             <div
-                contentEditable='true'
+                contentEditable={true}
                 style={this.props.style}
                 ref={ref => (this.element = ref)}
             />
@@ -124,6 +128,7 @@ class CKEditor extends React.Component {
     }
 }
 
+// @ts-ignore
 CKEditor.propTypes = {
     type: PropTypes.oneOf(['classic', 'inline']),
     data: PropTypes.string,
@@ -133,6 +138,7 @@ CKEditor.propTypes = {
     onBeforeLoad: PropTypes.func
 }
 
+// @ts-ignore
 CKEditor.defaultProps = {
     type: 'classic',
     data: '',
@@ -140,7 +146,9 @@ CKEditor.defaultProps = {
     readOnly: false
 }
 
+// @ts-ignore
 CKEditor.editorUrl = 'https://cdn.ckeditor.com/4.12.1/standard-all/ckeditor.js'
+// @ts-ignore
 CKEditor.displayName = 'CKEditor'
 
 export default CKEditor

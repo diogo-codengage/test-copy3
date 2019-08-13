@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react'
 
-const Context = createContext()
+const Context = createContext(null)
 
 export const useFormContext = () => useContext(Context)
 

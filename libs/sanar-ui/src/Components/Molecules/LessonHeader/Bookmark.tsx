@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESButton from '../../Atoms/Button'
 
-const ESBookmark = ({ bookmarked, bookmarkLabel, onBookmarked, hideLabel }) => {
+const ESBookmark: React.FC<any> = ({ bookmarked, bookmarkLabel, onBookmarked, hideLabel }) => {
     const { t } = useTranslation('sanarui')
 
     return (

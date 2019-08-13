@@ -85,7 +85,8 @@
         "sanarflix:build:development": "yarn workspace sanarflix build:development",
         "sanarflix:build:staging": "yarn workspace sanarflix build:staging",
         "sanarflix:build:production": "yarn workspace sanarflix build:production",
-        "sanarflix:start:dev": "npm-run-all --parallel sanarui:dev sanarflix:start"
+        "sanarflix:start:dev": "npm-run-all --parallel sanarui:dev sanarflix:start",
+        "test": "yarn && yarn sanarui:build && yarn esanar:build:development && yarn sanarflix:build:development && yarn sanarrm:build"
     },
     "husky": {
         "hooks": {

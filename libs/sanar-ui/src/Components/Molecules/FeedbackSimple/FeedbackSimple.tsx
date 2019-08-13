@@ -11,7 +11,7 @@ import ESButton from '../../Atoms/Button'
 import ESTypography from '../../Atoms/Typography'
 import ESForm, { withESForm, ESFormItem } from '../Form'
 
-const ESFeedbackSimple = withESForm(
+const ESFeedbackSimple =
     ({ visible, onOk, onCancel, form, onSubmit, className }) => {
         const { t } = useTranslation('sanarui')
         const classes = classNames('es-feedback-simple', className)
@@ -76,11 +76,11 @@ const ESFeedbackSimple = withESForm(
             </ESModal>
         )
     }
-)
+
 
 ESFeedbackSimple.propTypes = {
     className: PropTypes.string
 }
 ESFeedbackSimple.defaultProps = {}
 
-export default ESFeedbackSimple
+export default withESForm(ESFeedbackSimple)

@@ -5,7 +5,7 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESTypography from '../../Atoms/Typography'
 
-const ESDisciplineList = ({ className, items, activeId, onSelect, width }) => {
+const ESDisciplineList: React.FC<any> = ({ className, items, activeId, onSelect, width }) => {
     const classes = classNames(
         'es-discipline-dropdown__menu__content',
         className
@@ -15,7 +15,7 @@ const ESDisciplineList = ({ className, items, activeId, onSelect, width }) => {
         let element = document.getElementById(activeId)
         let parentElement = document.getElementById(
             'es-discipline-dropdown__scrollable'
-        ).childNodes[0]
+        ).childNodes[0] as any
 
         if (element && parentElement) {
             parentElement.scrollTo({
@@ -80,7 +80,5 @@ const ESDisciplineList = ({ className, items, activeId, onSelect, width }) => {
         </div>
     )
 }
-
-ESDisciplineList.proptypes = {}
 
 export default ESDisciplineList
