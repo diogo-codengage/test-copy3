@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import Tabs from 'antd/lib/tabs'
 import classNames from 'classnames'
 
-const ESTabs = ({ className, center, dark, ...props }) => {
+type IProps = PropTypes.InferProps<typeof propTypes>
+const ESTabs:React.FC<IProps> = ({ className, center, dark, ...props }) => {
     const classes = classNames(
         'es-tabs',
         {
@@ -15,31 +16,32 @@ const ESTabs = ({ className, center, dark, ...props }) => {
 
     return <Tabs className={classes} {...props} />
 }
+const propTypes = Object.assign(
+        { ...Tabs['propTypes'] },
+        {
+            className: PropTypes.string,
+            activeKey: PropTypes.string,
+            animated: PropTypes.bool,
+            renderTabBar: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+            defaultActiveKey: PropTypes.string,
+            hideAdd: PropTypes.bool,
+            size: PropTypes.oneOf(['default', 'large', 'small']),
+            tabBarExtraContent: PropTypes.node,
+            tabBarGutter: PropTypes.number,
+            tabBarStyle: PropTypes.object,
+            tabPosition: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
+            type: PropTypes.oneOf(['line', 'card', 'editable-card']),
+            onChange: PropTypes.func,
+            onEdit: PropTypes.func,
+            onNextClick: PropTypes.func,
+            onPrevClick: PropTypes.func,
+            onTabClick: PropTypes.func,
+            center: PropTypes.bool,
+            dark: PropTypes.bool
+        }
+    )
 
-ESTabs.propTypes = Object.assign(
-    { ...Tabs['propTypes'] },
-    {
-        className: PropTypes.string,
-        activeKey: PropTypes.string,
-        animated: PropTypes.bool,
-        renderTabBar: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-        defaultActiveKey: PropTypes.string,
-        hideAdd: PropTypes.bool,
-        size: PropTypes.oneOf(['default', 'large', 'small']),
-        tabBarExtraContent: PropTypes.node,
-        tabBarGutter: PropTypes.number,
-        tabBarStyle: PropTypes.object,
-        tabPosition: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
-        type: PropTypes.oneOf(['line', 'card', 'editable-card']),
-        onChange: PropTypes.func,
-        onEdit: PropTypes.func,
-        onNextClick: PropTypes.func,
-        onPrevClick: PropTypes.func,
-        onTabClick: PropTypes.func,
-        center: PropTypes.bool,
-        dark: PropTypes.bool
-    }
-)
+ESTabs.propTypes = propTypes
 
 ESTabs.defaultProps = Tabs['defaultProps']
 

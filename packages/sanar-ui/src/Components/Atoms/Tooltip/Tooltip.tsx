@@ -3,7 +3,8 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { Tooltip } from 'antd'
 
-const ESTooltip = ({ className, children, ...props }) => {
+type IProps = PropTypes.InferProps<typeof proptypes>
+const ESTooltip:React.FC<IProps> = ({ className, children, ...props }) => {
     const classes = classNames('es-tooltip', className)
     return (
         <Tooltip
@@ -16,7 +17,7 @@ const ESTooltip = ({ className, children, ...props }) => {
     )
 }
 
-ESTooltip.propTypes = Object.assign(
+const proptypes = Object.assign(
     { ...Tooltip['propTypes'] },
     {
         className: PropTypes.string,
@@ -40,6 +41,7 @@ ESTooltip.propTypes = Object.assign(
         ])
     }
 )
+ESTooltip.propTypes = proptypes
 
 ESTooltip.defaultProps = Tooltip['defaultProps']
 

@@ -16,10 +16,10 @@
     "resolveJsonModule": true,
     "jsx": "react",
     "outDir": "dist",
-//    "declaration": true,
+    "declaration": true,
 //    "declarationMap": true,
     "noFallthroughCasesInSwitch": true,
-    "allowJs": true,
+//    "allowJs": true,
     "isolatedModules": false,
     "noEmit": false
   },

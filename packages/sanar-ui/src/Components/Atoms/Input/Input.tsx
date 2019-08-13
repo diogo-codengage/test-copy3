@@ -7,7 +7,7 @@ import warning from '../../../Util/Warning'
 
 type IProps = PropTypes.InferProps<typeof propTypes>
 
-const ESInput = ({ className, dark, component, ...props }:IProps) => {
+const ESInput: React.FC<IProps> = ({ className, dark, component, ...props }:) => {
     const classes = classNames(
         'es-input',
         { 'es-input__dark': dark },
@@ -32,7 +32,8 @@ const propTypes = Object.assign(
     {
         className: PropTypes.string,
         dark: PropTypes.bool,
-        component: PropTypes.any
+        component: PropTypes.any,
+        placeholder: PropTypes.any,
     }
 )
 
