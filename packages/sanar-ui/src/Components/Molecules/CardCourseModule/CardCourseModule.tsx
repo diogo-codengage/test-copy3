@@ -11,7 +11,7 @@ import ESEvaIcon from '../../Atoms/EvaIcon/EvaIcon'
 import ESCommonBadge from '../../Atoms/CommonBadge'
 import ESSkeleton from '../../Atoms/Skeleton'
 
-const ESCardCourseModule = ({
+const ESCardCourseModule: React.FC<any> = ({
     className,
     image,
     moduleName,

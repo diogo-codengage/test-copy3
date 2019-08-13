@@ -5,7 +5,7 @@ import { Progress } from 'antd'
 
 type IProps = PropTypes.InferProps<typeof propTypes>
 
-const ESProgress:React.FC<IProps> = ({ className, square, status, goal, size, ...props }) => {
+const ESProgress:React.FC<IProps & any> = ({ className, square, status, goal, size, ...props }) => {
     const classes = classNames('es-progress', className, {
         'es-progress--square': square,
         // @ts-ignore
