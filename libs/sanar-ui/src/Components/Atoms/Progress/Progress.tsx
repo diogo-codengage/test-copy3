@@ -21,7 +21,6 @@ const ESProgress:React.FC<IProps & any> = ({ className, square, status, goal, si
 
     return (
         <div className={classes}>
-            // @ts-ignore
             <Progress size={size} {...props} />
             {goal && (
                 <div
