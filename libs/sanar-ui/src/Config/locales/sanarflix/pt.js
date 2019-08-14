@@ -51,6 +51,17 @@ export default {
             us: 'e nossa'
         }
     },
+    home: {
+        viewedCourses: {
+            title: 'Cursos Visualizados',
+            subtitle: 'Continue assistindo de onde você parou'
+        },
+        addedCourses: {
+            title: 'Adicionados',
+            subtitle:
+                'Conteúdos adicionados toda semana! Aulas, resumos e outros materiaos que acabaram de chegar'
+        }
+    },
     mainMenu: {
         initial: {
             begin: 'Início',
