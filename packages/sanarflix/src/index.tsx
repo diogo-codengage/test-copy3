@@ -8,6 +8,8 @@ import { FLXAuthProvider } from './Hooks/auth'
 import { FLXGlobalStyle } from './Styles'
 import { FLXThemeProvider } from 'Hooks/theme'
 
+import 'sanar-ui/dist/Config/i18n'
+
 const FLXApp: React.FC = () => (
     <FLXGraphQLProvider>
         <FLXAuthProvider>
