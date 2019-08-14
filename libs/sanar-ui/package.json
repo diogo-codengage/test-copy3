@@ -7,7 +7,7 @@
     "scripts": {
         "copyAssets": "copyfiles -u 1 -V ./src/*.less ./src/**/*.less  ./src/**/**/*.less ./src/**/**/**/*.less ./src/**/**/**/**/*.less ./src/**/*.svg ./src/**/*.jpg ./src/**/*.png ./dist",
         "dev": "tsc-watch --onSuccess \"yarn copyAssets\"",
-        "build": "rm -r ./dist; tsc && yarn copyAssets",
+        "build": "rm -rf ./dist && tsc && yarn copyAssets",
         "build:storybook": "build-storybook",
         "cli": "hygen sanar-ui",
         "storybook": "start-storybook -p 62238",

@@ -2,8 +2,9 @@
 to: src/Components/<%=h.inflection.pluralize(category)%>/<%=h.inflection.camelize(name)%>/<%=h.inflection.camelize(name)%>.tsx
 ---
 import React from 'react'
-import styled from 'styled-components';
 import PropTypes from 'prop-types'
+
+import styled from 'styled-components'
 
 const SAN<%=h.inflection.camelize(name)%>Styled = styled.div``
 
@@ -19,6 +20,7 @@ const SAN<%=h.inflection.camelize(name)%>: React.FC<IProps> = () => {
 
 const propTypes = {}
 
+SAN<%=h.inflection.camelize(name)%>.propTypes = propTypes
 SAN<%=h.inflection.camelize(name)%>.defaultProps = {}
 
 export default SAN<%=h.inflection.camelize(name)%>

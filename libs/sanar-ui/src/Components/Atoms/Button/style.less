@@ -107,8 +107,19 @@
             }
             &.light {
                 background-color: transparent !important;
-                border-color: @white-7 !important;
-                color: @white-7 !important;
+                border-color: @white !important;
+                color: @white !important;
+
+                &:focus:not(disabled),
+                &:hover:not(disabled) {
+                    background-color: @white-2 !important;
+                }
+                &:active {
+                    background-color: @white-4 !important;
+                }
+                &[disabled] {
+                    opacity: 0.3;
+                }
             }
         }
 
