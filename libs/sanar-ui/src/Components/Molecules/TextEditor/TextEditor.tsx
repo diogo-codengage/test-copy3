@@ -49,7 +49,7 @@ export const createConfig = conf => ({
     ...conf
 })
 
-const ESTextEditor =
+const ESTextEditor: React.FC<any>  =
     (
         {
             className,

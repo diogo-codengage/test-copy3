@@ -8,7 +8,7 @@ import { Form } from 'antd'
 
 import { withFormProvider, useFormContext } from './context'
 
-const ESForm = ({
+const ESForm: React.FC<any>  = ({
     className,
     form,
     customValidator,

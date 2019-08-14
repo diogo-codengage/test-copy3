@@ -6,7 +6,7 @@ import { Form } from 'antd'
 
 import { useFormContext } from './context'
 
-const ESFormItem =
+const ESFormItem: React.FC<any>  =
     ({ className, children, name, ...props }, ref) => {
         const {
             form: { getFieldDecorator }
@@ -34,4 +34,4 @@ ESFormItem.propTypes = Object.assign(
 
 ESFormItem.defaultProps = {}
 
-export default forwardRef(ESFormItem)
+export default forwardRef(ESFormItem) as any

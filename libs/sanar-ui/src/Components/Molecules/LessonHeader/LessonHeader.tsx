@@ -10,7 +10,7 @@ import ESRate from '../../Atoms/Rate'
 
 import ESBookmark from './Bookmark'
 
-const ESLessonHeader = ({
+const ESLessonHeader: React.FC<any> = ({
     className,
     children,
     leftChildren,

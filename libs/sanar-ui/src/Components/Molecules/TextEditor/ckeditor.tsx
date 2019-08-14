@@ -7,7 +7,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import getEditorNamespace from './getEditorNamespace.js'
+import getEditorNamespace from './getEditorNamespace'
 
 class CKEditor extends React.Component<any,any> {
     private element: any;

@@ -9,7 +9,7 @@ import ESDisciplineList from './DisciplineList'
 import ESTypography from '../../Atoms/Typography'
 import ESSkeleton from '../../Atoms/Skeleton'
 
-const ESDisciplineDropdown = ({
+const ESDisciplineDropdown: React.FC<any> = ({
     className,
     items,
     activeItem,

@@ -85,7 +85,6 @@ const Example = withESForm(({ form }) => {
             </ESFormItem>
             <ESFormItem>
                 <ESButton
-                    type='submit'
                     type='primary'
                     uppercase
                     bold

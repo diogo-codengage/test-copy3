@@ -5,7 +5,7 @@ import ESTypography from '../../Atoms/Typography'
 import { useTranslation } from 'react-i18next'
 import errorImg from '../../../assets/images/errors/grey-error.svg'
 
-const SANErrorPiece = ({ message, action, dark, ...props }) => {
+const SANErrorPiece: React.FC<any>  = ({ message, action, dark, ...props }) => {
     const { t } = useTranslation('sanarui')
 
     return (

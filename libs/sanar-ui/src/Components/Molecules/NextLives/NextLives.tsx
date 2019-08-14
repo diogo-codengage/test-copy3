@@ -39,7 +39,7 @@ const responsive = [
     }
 ]
 
-const ESNextLives = ({ className, children, responsive, ...props }) => {
+const ESNextLives: React.FC<any> = ({ className, children, responsive, ...props }) => {
     const ref = useRef(null)
     const [arrows, setArrows] = useState(true)
 

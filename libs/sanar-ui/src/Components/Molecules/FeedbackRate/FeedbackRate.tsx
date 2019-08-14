@@ -8,7 +8,7 @@ import confused from '../../../assets/images/feedback-rate/confused.svg'
 import smile from '../../../assets/images/feedback-rate/smile.svg'
 import inLove from '../../../assets/images/feedback-rate/in-love.svg'
 
-const ESFeedbackRateItem = ({ value, img, label, dirty, selected, onClick }) => {
+const ESFeedbackRateItem: React.FC<any>  = ({ value, img, label, dirty, selected, onClick }) => {
 
     const [hover, setHover] = useState(false);
 

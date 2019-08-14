@@ -3,7 +3,7 @@ import classNames from 'classnames'
 
 import QuestionListItem from '../../Molecules/QuestionListItem'
 
-const ESQuestionListItem = ({ className, ...props }) => {
+const ESQuestionListItem: React.FC<any> = ({ className, ...props }) => {
     const classes = classNames('es-question-list__content--item', className)
 
     return <QuestionListItem className={classes} {...props} />

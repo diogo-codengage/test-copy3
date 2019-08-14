@@ -13,7 +13,7 @@ const icons = {
     Quiz: 'edit-outline'
 }
 
-const ESPlaylist = ({ className, index, item, current, onClick }) => {
+const ESPlaylist: React.FC<any> = ({ className, index, item, current, onClick }) => {
     const { title, progress, durationInSeconds } = item[
         item.resource_type.toLowerCase()
     ]

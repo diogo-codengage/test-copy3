@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import ESDivider from '../../../Atoms/Divider'
 
-const ESListSearch = ({ className, children, ...props }) => {
+const ESListSearch: React.FC<any> = ({ className, children, ...props }) => {
     const classes = classNames('es-list-search', className)
 
     return (

@@ -7,7 +7,7 @@ import ESTypography from '../../Atoms/Typography'
 import ESButton from '../../Atoms/Button'
 import ESComment from '../Comment'
 
-const ESQuestionComment = ({
+const ESQuestionComment: React.FC<any>  = ({
     user,
     text,
     time,

@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import ESTypography from '../../Atoms/Typography'
 
-const ESQuestionListHeader = ({ className, title, children, ...props }) => {
+const ESQuestionListHeader: React.FC<any> = ({ className, title, children, ...props }) => {
     const classes = classNames('es-question-list__header', className)
 
     return (

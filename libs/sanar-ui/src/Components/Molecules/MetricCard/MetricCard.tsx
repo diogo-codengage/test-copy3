@@ -4,7 +4,7 @@ import ESCard from '../Card'
 import MetricCardBadge from './MetricCardBadge'
 import ESTypography from '../../Atoms/Typography'
 
-const ESMetricCard = ({
+const ESMetricCard: React.FC<any>  = ({
     img,
     badge,
     description,

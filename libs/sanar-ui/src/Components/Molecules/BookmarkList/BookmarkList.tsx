@@ -17,7 +17,7 @@ const Item = ({ orientation, ...props }) => (
     </ESListViewItem>
 )
 
-const ESBookmarkList = ({
+const ESBookmarkList: React.FC<any> = ({
     className,
     onClick,
     onRemove,

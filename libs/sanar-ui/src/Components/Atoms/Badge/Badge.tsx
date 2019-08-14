@@ -4,7 +4,7 @@ import  PropTypes from 'prop-types'
 import { Badge } from 'antd'
 
 type IProps = PropTypes.InferProps<typeof propTypes>
-const ESBadge:React.FC<IProps> = ({ className, status, border, solid, ...props }) => {
+const ESBadge:React.FC<IProps & any> = ({ className, status, border, solid, ...props }) => {
     const classes = classNames('es-badge', className, {
         [`es-badge__${status}`]: status,
         [`es-badge__border`]: border,

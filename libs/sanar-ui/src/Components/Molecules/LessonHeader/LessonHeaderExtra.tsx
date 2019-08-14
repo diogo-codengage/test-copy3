@@ -7,7 +7,7 @@ import { ESRow, ESCol } from '../../Atoms/Grid'
 
 import ESBookmark from './Bookmark'
 
-const ESLessonHeaderExtra = ({
+const ESLessonHeaderExtra: React.FC<any> = ({
     bookmarked,
     bookmarkLabel,
     onBookmarked,

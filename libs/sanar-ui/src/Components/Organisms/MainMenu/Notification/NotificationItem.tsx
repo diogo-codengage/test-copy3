@@ -18,7 +18,7 @@ const icons = {
     general: 'globe-2-outline'
 }
 
-const ESNotificationItem = ({
+const ESNotificationItem: React.FC<any> = ({
     className,
     read,
     type,

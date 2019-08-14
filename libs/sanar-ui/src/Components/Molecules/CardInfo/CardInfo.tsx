@@ -10,7 +10,7 @@ import { Avatar } from 'antd'
 const manipuleLimit = (count, limit, suffix) =>
     limit && count > limit ? `${limit}${suffix}+` : `${count}${suffix}`
 
-const ESCardInfo = ({ className, count, limit, suffix, image, text }) => {
+const ESCardInfo: React.FC<any>  = ({ className, count, limit, suffix, image, text }) => {
     const classes = classNames('es-card-info', className)
     return (
         <div className={classes}>

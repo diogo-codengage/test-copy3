@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 const ButtonGroup = Button.Group
 
-const ESButtonGroup = ({ className, ...props }) => {
+const ESButtonGroup: React.FC<any> = ({ className, ...props }) => {
     const classes = classNames('es-button-group', className)
 
     return <ButtonGroup className={classes} {...props} />

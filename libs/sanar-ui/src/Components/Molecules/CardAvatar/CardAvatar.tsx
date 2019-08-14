@@ -7,7 +7,7 @@ import { Avatar } from 'antd'
 import ESCard from '../Card'
 import ESTypography from '../../Atoms/Typography'
 
-const ESCardAvatar = ({
+const ESCardAvatar: React.FC<any> =  ({
     className,
     image,
     name,

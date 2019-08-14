@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import ESModal from '../../Atoms/Modal'
 import ESTypography from '../../Atoms/Typography'
 
-const Circle = ({ index, status, current, mock }) => {
+const Circle: React.FC<any>  = ({ index, status, current, mock }) => {
     const classes = classNames('es-question-map__circle', {
         [`es-question-map__circle--${status}`]: !mock,
         'es-question-map__circle--current': current,

@@ -8,7 +8,7 @@ import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESSkeleton from '../../Atoms/Skeleton'
 import ESCardContinueCourse from '../../Atoms/CardContinueCourse/CardContinueCourse'
 
-const ESChangeCourse = ({
+const ESChangeCourse: React.FC<any>  = ({
     className,
     icon,
     title,

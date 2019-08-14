@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import ESAvatarListItem from '../AvatarListItem'
 import ESTypography from '../../Atoms/Typography'
 
-const ESRecentSavedListItem = ({ className, title, description, avatar }) => {
+const ESRecentSavedListItem: React.FC<any>  = ({ className, title, description, avatar }) => {
     const classes = classNames('es-recent-saved-list-item', className)
     return (
         <ESAvatarListItem avatar={avatar} className={classes}>

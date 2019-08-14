@@ -8,7 +8,7 @@ import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESSkeleton from '../../Atoms/Skeleton'
 import ESTypography from '../../Atoms/Typography'
 
-const ESInstructor = ({ avatar, labelLive, linkedin, formation, name }) => (
+const ESInstructor: React.FC<any>  = ({ avatar, labelLive, linkedin, formation, name }) => (
     <div className='es-live-section__instructor'>
         <Avatar
             size='large'
@@ -44,7 +44,7 @@ const ESInstructor = ({ avatar, labelLive, linkedin, formation, name }) => (
     </div>
 )
 
-const ESLiveSection = ({
+const ESLiveSection: React.FC<any> = ({
     className,
     videoSrc,
     height,

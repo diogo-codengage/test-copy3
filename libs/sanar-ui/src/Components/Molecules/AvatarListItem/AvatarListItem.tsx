@@ -6,7 +6,7 @@ import { Avatar } from 'antd'
 import { ESListViewItem } from '../../Atoms/ListView'
 import { ESRow, ESCol } from '../../Atoms/Grid'
 
-const ESAvatarListItem = ({
+const ESAvatarListItem: React.FC<any>  = ({
     avatar,
     avatarSize,
     children,

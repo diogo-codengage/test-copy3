@@ -8,7 +8,7 @@ import ESTypography from '../../../Atoms/Typography'
 import ESEvaIcon from '../../../Atoms/EvaIcon'
 import ESSkeleton from '../../../Atoms/Skeleton'
 
-const ESLeftOff = ({
+const ESLeftOff: React.FC<any> = ({
     className,
     title,
     thumbnail,

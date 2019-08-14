@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { ESItem } from '../../../Atoms/Menu'
 import ESEvaIcon from '../../../Atoms/EvaIcon'
 
-const ESNavigationListItem = ({
+const ESNavigationListItem: React.FC<any> = ({
     className,
     title,
     icon,

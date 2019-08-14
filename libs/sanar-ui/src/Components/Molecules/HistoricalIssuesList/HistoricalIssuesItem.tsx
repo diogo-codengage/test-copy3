@@ -7,7 +7,7 @@ import editSvg from '../../../assets/images/historical-issues/edit.svg'
 
 import ESTypography from '../../Atoms/Typography'
 
-const ESHistoricalIssuesItem = ({
+const ESHistoricalIssuesItem: React.FC<any>  = ({
     className,
     title,
     subtitle,

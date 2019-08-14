@@ -229,4 +229,4 @@ ESMainMenu.defaultProps = {
     logo: logoSvg
 }
 
-export default withMainMenuProvider(forwardRef(ESMainMenu))
+export default withMainMenuProvider(forwardRef(ESMainMenu)) as any

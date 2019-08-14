@@ -9,7 +9,7 @@ import ESProgress from '../../Atoms/Progress/Progress'
 import { ESRow, ESCol } from '../../Atoms/Grid'
 import ESSkeleton from '../../Atoms/Skeleton'
 
-const ESProgressBar = ({ className, percent, title, limit, loading }) => {
+const ESProgressBar: React.FC<any>  = ({ className, percent, title, limit, loading }) => {
     const classes = classNames('es-progress-bar', className)
 
     return (

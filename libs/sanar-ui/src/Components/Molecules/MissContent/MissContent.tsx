@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import ESTypography from '../../Atoms/Typography'
 import ESButton from '../../Atoms/Button'
 
-const ESMissContent = ({
+const ESMissContent: React.FC<any>  = ({
     className,
     direction,
     fullSpace,

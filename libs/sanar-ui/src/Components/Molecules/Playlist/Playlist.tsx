@@ -9,7 +9,7 @@ import ESPlaylistItem from './PlaylistItem'
 import ESTypography from '../../Atoms/Typography'
 import ESSkeleton from '../../Atoms/Skeleton/Skeleton'
 
-const ESPlaylist = ({
+const ESPlaylist: React.FC<any>  = ({
     className,
     items,
     loading,

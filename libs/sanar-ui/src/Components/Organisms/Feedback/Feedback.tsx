@@ -15,7 +15,7 @@ const Required = () => <span style={{ color: 'red' }}>*</span>
 
 const ESFeedbackRow = (props) => <div style={{ marginTop: '1em' }}>{props.children}</div>
 
-const ESFeedback = ({ onSend, className, ...props }) => {
+const ESFeedback: React.FC<any> = ({ onSend, className, ...props }) => {
     const subjects = ['Aparência', 'Mal funcionamento', 'Desempenho', 'Conteúdo', 'Outro']
     const classes = classNames('es-feedback', className)
 

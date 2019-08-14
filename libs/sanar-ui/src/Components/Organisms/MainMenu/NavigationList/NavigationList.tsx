@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import ESMenu from '../../../Atoms/Menu'
 
-const ESNavigationList = ({ className, ...props }) => {
+const ESNavigationList: React.FC<any> = ({ className, ...props }) => {
     const classes = classNames('es-navigation-list', className)
 
     return <ESMenu className={classes} {...props} />

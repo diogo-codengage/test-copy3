@@ -6,7 +6,7 @@ import ESTypography from '../../Atoms/Typography'
 import ESCounterLabel from '../../Atoms/CounterLabel'
 import AvatarListItem from '../AvatarListItem'
 
-const ESQuestionListItem = ({
+const ESQuestionListItem: React.FC<any>  = ({
     className,
     loading,
     avatar,

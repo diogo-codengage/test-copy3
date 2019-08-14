@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
-const ESQuestionListContent = ({ className, ...props }) => {
+const ESQuestionListContent: React.FC<any> = ({ className, ...props }) => {
     const classes = classNames('es-question-list__content', className)
 
     return <ul className={classes} {...props} />

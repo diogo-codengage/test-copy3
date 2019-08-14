@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import ESButton from '../../Atoms/Button'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 
-const ESQuestionFooter = ({
+const ESQuestionFooter: React.FC<any>  = ({
     handleJump,
     handleNext,
     handleConfirm,

@@ -23,7 +23,7 @@ import ESDivider from '../../Atoms/Divider'
 import ESTypography from '../../Atoms/Typography'
 import ESCard from '../Card'
 
-const ESCardSelectFilterMenu =
+const ESCardSelectFilterMenu: React.FC<any> =
     (
         {
             items,
