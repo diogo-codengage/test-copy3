@@ -69,10 +69,10 @@ const propTypes = {
     ]),
     strong: PropTypes.bool
 }
-    
+
 type IPros = PropTypes.InferProps<typeof propTypes>
 
-const ESTypography:React.FC<IPros & any> = ({
+const ESTypography: React.FC<IPros & any> = ({
     className,
     type,
     level,
@@ -90,7 +90,7 @@ const ESTypography:React.FC<IPros & any> = ({
     const [ellipsed, setEllipsed] = useState(
         ellipsis && typeof ellipsis === 'object'
     )
-    const classes = classNames('estypography', className, {
+    const classes = classNames('es-typography', className, {
         [`es-typography--${type}`]: type,
         [`es-typography--${variant}`]: variant,
         'es-typography--strong': strong,
@@ -99,7 +99,7 @@ const ESTypography:React.FC<IPros & any> = ({
         'es-typography--delete': deleteProp,
         'es-typography--ellipsis': ellipsis && typeof ellipsis !== 'object',
         [`es-typography--transform-${transform}`]: transform,
-        [`es-typography__heading es-typography__heading--h${level}`]: level, 
+        [`es-typography__heading es-typography__heading--h${level}`]: level
     })
 
     const configureEllipsed = () => {
@@ -128,7 +128,7 @@ const ESTypography:React.FC<IPros & any> = ({
         )
     }
 
-    const Component = (component ? component : 'div') as any;
+    const Component = (component ? component : 'div') as any
     return (
         <Component className={classes} {...props}>
             {children}
@@ -145,7 +145,7 @@ const ESTypography:React.FC<IPros & any> = ({
     )
 }
 
-ESTypography.propTypes = propTypes 
+ESTypography.propTypes = propTypes
 ESTypography.defaultProps = {}
 
 export default ESTypography

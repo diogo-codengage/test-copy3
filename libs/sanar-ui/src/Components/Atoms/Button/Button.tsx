@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 import ESIcon from '../Icon'
 
-const ESButton: React.FC<IProps & any> =({
+const ESButton: React.FC<IProps & any> = ({
     className,
     clear,
     size,
@@ -21,7 +21,6 @@ const ESButton: React.FC<IProps & any> =({
     circle,
     loading,
     htmlType,
-    type,
     ...props
 }) => {
     const classes = classNames(
@@ -85,19 +84,8 @@ const propTypes = Object.assign(
     {
         className: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
         loading: PropTypes.bool,
-        htmlType: PropTypes.oneOf([
-            'info',
-            'warning',
-            'danger',
-            'success',
-            'muted',
-            'default',
-            'light',
-            'secondary'
-        ]),
-        type: PropTypes.oneOf([
-            'loading'
-        ]),
+
+        htmlType: PropTypes.string,
         clear: PropTypes.bool,
         href: PropTypes.string,
         fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -121,6 +109,6 @@ const propTypes = Object.assign(
 
 ESButton.propTypes = propTypes
 
-ESButton.defaultProps = Button['defaultProps'] as ESButton
+ESButton.defaultProps = { size: 'medium', htmlType: 'button' }
 
 export default ESButton

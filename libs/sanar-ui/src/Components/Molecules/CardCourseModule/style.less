@@ -50,7 +50,7 @@
 
         &__badge {
             position: absolute;
-            bottom: 22px;
+            bottom: 26px;
             right: 16px;
         }
 
@@ -70,7 +70,7 @@
 
             &::after {
                 content: '';
-                background: rgba(0, 0, 0, 0.35);
+                background: linear-gradient(0deg, @grey-8, @grey-5);
                 position: absolute;
                 right: 0;
                 bottom: 0;
@@ -78,6 +78,17 @@
                 left: 0;
                 border-radius: @card-radius @card-radius 0 0;
             }
+        }
+
+        & .badge-new {
+            padding: 3px @padding-xs;
+            color: @white;
+            border-radius: @border-radius-base;
+            background-color: @warning-color;
+            width: min-content;
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
         }
     }
 

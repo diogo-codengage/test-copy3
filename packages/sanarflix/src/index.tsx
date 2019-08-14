@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 
+import 'sanar-ui/dist/Config/i18n'
+
 import FLXGraphQLProvider from './Apollo/GraphQLService'
 import { FLXAuthProvider } from './Hooks/auth'
 import { FLXGlobalStyle } from './Styles'

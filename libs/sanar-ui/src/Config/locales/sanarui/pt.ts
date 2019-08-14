@@ -196,5 +196,8 @@ export default {
     typography: {
         seeMore: 'Ver mais',
         seeLess: 'Ver menos'
+    },
+    cardCourseModule: {
+        new: 'Novo'
     }
 }

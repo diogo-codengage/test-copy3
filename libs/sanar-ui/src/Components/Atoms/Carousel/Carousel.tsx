@@ -7,22 +7,21 @@ import ESButton from '../Button'
 import ESEvaIcon from '../EvaIcon'
 
 const NextArrow: React.FC<any> = ({ onClick, className }) => (
-    <ESButton onClick={onClick} circle size='small' className={className}>
+    <ESButton onClick={onClick} circle size='xsmall' className={className}>
         <ESEvaIcon name='arrow-ios-forward-outline' />
     </ESButton>
 )
 const PrevArrow: React.FC<any> = ({ onClick, className }) => (
-    <ESButton onClick={onClick} circle size='small' className={className}>
+    <ESButton onClick={onClick} circle size='xsmall' className={className}>
         <ESEvaIcon name='arrow-ios-back-outline' />
     </ESButton>
 )
 
-const ESCarousel: React.FC<IProps & any> = (({ className, style, ...props }, ref) => {
+const ESCarousel: React.FC<IProps & any> = (
+    { className, style, ...props },
+    ref
+) => {
     const classes = classNames('es-carousel', className)
-
-    const next = () => ref.current.next()
-
-    const prev = () => ref.current.prev()
 
     return (
         <div style={style} className={classes}>
@@ -34,7 +33,7 @@ const ESCarousel: React.FC<IProps & any> = (({ className, style, ...props }, ref
             />
         </div>
     )
-})
+}
 
 type IProps = PropTypes.InferProps<typeof propTypes>
 
@@ -43,7 +42,13 @@ const propTypes = Object.assign(
     {
         className: PropTypes.string,
         autoplay: PropTypes.bool,
-        size: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large', 'default']),
+        size: PropTypes.oneOf([
+            'xsmall',
+            'small',
+            'medium',
+            'large',
+            'default'
+        ]),
         afterChange: PropTypes.func,
         beforeChange: PropTypes.func,
         dots: PropTypes.bool,

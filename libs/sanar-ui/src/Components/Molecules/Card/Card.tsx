@@ -7,7 +7,10 @@ import ESEvaIcon from '../../Atoms/EvaIcon/EvaIcon'
 import ESTooltip from '../../Atoms/Tooltip/Tooltip'
 
 type IProps = PropTypes.InferProps<typeof propTypes>
-const ESCard: React.FC<IProps & any> =(({ className, children, doubt, ...props }, ref) => {
+const ESCard: React.FC<IProps & any> = (
+    { className, children, doubt, ...props },
+    ref
+) => {
     const classes = classNames('es-card', className)
 
     return (
@@ -29,7 +32,7 @@ const ESCard: React.FC<IProps & any> =(({ className, children, doubt, ...props }
             {children}
         </Card>
     )
-})
+}
 
 const propTypes = Object.assign(
     { ...Card.prototype['propTypes'] },
@@ -55,4 +58,5 @@ ESCard.defaultProps = Object.assign(
     }
 )
 ESCard.propTypes = propTypes
-export default ESCard
+
+export default forwardRef(ESCard)
