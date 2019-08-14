@@ -22,10 +22,10 @@
     "declarationMap": true,
     "noFallthroughCasesInSwitch": true,
     "isolatedModules": false,
-    "noEmit": true
+    "noEmit": false
   },
   "include": [
-    "."
+    "src"
   ],
   "exclude": []
 }
