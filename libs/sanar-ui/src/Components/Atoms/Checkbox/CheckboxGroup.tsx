@@ -28,4 +28,4 @@ ESCheckboxGroup.propTypes = propTypes
 
 ESCheckboxGroup.defaultProps = Checkbox['defaultProps'] as ESCheckboxGroup
 
-export default forwardRef(ESCheckboxGroup)
+export default ESCheckboxGroup

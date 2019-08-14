@@ -38,7 +38,7 @@ const formatTime = (hours, minutes, seconds, days) => {
 }
 
 type IProps = PropTypes.InferProps<typeof propTypes>
-const ESStopwatch: React.FC<IProps> = ({ className, autoStart, dark }, ref) => {
+const ESStopwatch = forwardRef (({ className, autoStart, dark }: any, ref: any) => {
     const [paused, setPaused] = useState(!autoStart)
     const {
         hours,
@@ -89,14 +89,14 @@ const ESStopwatch: React.FC<IProps> = ({ className, autoStart, dark }, ref) => {
             <span>{formatTime(hours, minutes, seconds, days)}</span>
         </div>
     )
-}
+})
 
 const propTypes = {
     className: PropTypes.string,
     autoStart: PropTypes.bool,
     dark: PropTypes.bool
 }
-ESStopwatch.propTypes = propTypes
+// ESStopwatch.propTypes = propTypes
 ESStopwatch.defaultProps = {}
 
-export default forwardRef(ESStopwatch)
+export default ESStopwatch

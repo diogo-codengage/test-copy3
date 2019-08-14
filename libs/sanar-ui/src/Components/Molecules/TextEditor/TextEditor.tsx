@@ -49,7 +49,7 @@ export const createConfig = conf => ({
     ...conf
 })
 
-const ESTextEditor: React.FC<any>  =
+const ESTextEditor = forwardRef(
     (
         {
             className,
@@ -66,7 +66,7 @@ const ESTextEditor: React.FC<any>  =
             reply,
             loading,
             ...props
-        },
+        }: any,
         ref
     ) => {
         const { t } = useTranslation('sanarui')
@@ -210,24 +210,24 @@ const ESTextEditor: React.FC<any>  =
             </div>
         )
     }
+)
 
-
-ESTextEditor.propTypes = {
-    className: PropTypes.string,
-    config: PropTypes.object,
-    data: PropTypes.string,
-    onChange: PropTypes.func,
-    onInit: PropTypes.func,
-    onBlur: PropTypes.func,
-    onFocus: PropTypes.func,
-    readOnly: PropTypes.bool,
-    type: PropTypes.oneOf(['classic', 'inline']),
-    onCancel: PropTypes.func,
-    onSubmit: PropTypes.func,
-    comment: PropTypes.bool,
-    reply: PropTypes.bool,
-    avatar: PropTypes.string
-}
+// ESTextEditor.propTypes = {
+//     className: PropTypes.string,
+//     config: PropTypes.object,
+//     data: PropTypes.string,
+//     onChange: PropTypes.func,
+//     onInit: PropTypes.func,
+//     onBlur: PropTypes.func,
+//     onFocus: PropTypes.func,
+//     readOnly: PropTypes.bool,
+//     type: PropTypes.oneOf(['classic', 'inline']),
+//     onCancel: PropTypes.func,
+//     onSubmit: PropTypes.func,
+//     comment: PropTypes.bool,
+//     reply: PropTypes.bool,
+//     avatar: PropTypes.string
+// }
 
 ESTextEditor.defaultProps = {
     type: 'classic',
@@ -236,4 +236,4 @@ ESTextEditor.defaultProps = {
     height
 }
 
-export default forwardRef(ESTextEditor)
+export default ESTextEditor

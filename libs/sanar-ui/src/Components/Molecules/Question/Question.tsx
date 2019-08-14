@@ -129,7 +129,7 @@ const ESQuestion: React.FC<any> = ({
             key={i}
             active
             loading={!question}
-            avatar={{ size: 32, shape: 'circle' }}
+            avatar={{ size: 'large', shape: 'circle' }}
             paragraph={false}
             className='mt-lg'
         />

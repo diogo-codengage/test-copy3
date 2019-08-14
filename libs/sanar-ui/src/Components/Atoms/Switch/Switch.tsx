@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 import ESIcon from '../Icon'
 
-const ESSwitch = ({ className, checkedChildren, ...props }, ref) => {
+const ESSwitch = forwardRef(({ className, checkedChildren, ...props }: any, ref) => {
     const classes = classNames('es-switch', className)
 
     const icon = checkedChildren ? checkedChildren : <ESIcon type='check' />
@@ -18,31 +18,31 @@ const ESSwitch = ({ className, checkedChildren, ...props }, ref) => {
             {...props}
         />
     )
-}
+})
 
-ESSwitch.propTypes = Object.assign(
-    { ...Switch['propTypes'] },
-    {
-        className: PropTypes.string,
-        autoFocus: PropTypes.bool,
-        checked: PropTypes.bool,
-        checkedChildren: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.node
-        ]),
-        unCheckedChildren: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.node
-        ]),
-        defaultChecked: PropTypes.bool,
-        disabled: PropTypes.bool,
-        loading: PropTypes.bool,
-        size: PropTypes.oneOf(['default', 'small']),
-        onChange: PropTypes.func,
-        onClick: PropTypes.func
-    }
-)
+// ESSwitch.propTypes = Object.assign(
+//     { ...Switch['propTypes'] },
+//     {
+//         className: PropTypes.string,
+//         autoFocus: PropTypes.bool,
+//         checked: PropTypes.bool,
+//         checkedChildren: PropTypes.oneOfType([
+//             PropTypes.string,
+//             PropTypes.node
+//         ]),
+//         unCheckedChildren: PropTypes.oneOfType([
+//             PropTypes.string,
+//             PropTypes.node
+//         ]),
+//         defaultChecked: PropTypes.bool,
+//         disabled: PropTypes.bool,
+//         loading: PropTypes.bool,
+//         size: PropTypes.oneOf(['default', 'small']),
+//         onChange: PropTypes.func,
+//         onClick: PropTypes.func
+//     }
+// )
 
 ESSwitch.defaultProps = Switch['defaultProps']
 
-export default forwardRef(ESSwitch)
+export default ESSwitch

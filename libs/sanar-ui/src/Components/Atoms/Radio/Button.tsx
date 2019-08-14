@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import { Radio } from 'antd'
 
-const ESRadioButton = ({ className, children, ...props }, ref) => {
+const ESRadioButton = forwardRef (({ className, children, ...props }: any, ref: any) => {
     const classes = classNames('es-radio-button', className)
 
     return (
@@ -11,16 +11,16 @@ const ESRadioButton = ({ className, children, ...props }, ref) => {
             {children}
         </Radio.Button>
     )
-}
+})
 
-ESRadioButton.propTypes = Object.assign(
-    { ...Radio.Button['propTypes'] },
-    {
-        className: PropTypes.string,
-        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-    }
-)
+// ESRadioButton.propTypes = Object.assign(
+//     { ...Radio.Button['propTypes'] },
+//     {
+//         className: PropTypes.string,
+//         value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+//     }
+// )
 
 ESRadioButton.defaultProps = {}
 
-export default forwardRef(ESRadioButton)
+export default ESRadioButton

@@ -17,7 +17,7 @@ const PrevArrow: React.FC<any> = ({ onClick, className }) => (
     </ESButton>
 )
 
-const ESCarousel: React.FC<IProps & any> = (({ className, style, ...props }, ref) => {
+const ESCarousel = forwardRef (({ className, style, ...props }: any, ref:any) => {
     const classes = classNames('es-carousel', className)
 
     const next = () => ref.current.next()
@@ -83,4 +83,4 @@ ESCarousel.prototype = propTypes
 
 ESCarousel.defaultProps = Carousel['defaultProps']
 
-export default forwardRef(ESCarousel)
+export default ESCarousel

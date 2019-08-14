@@ -23,7 +23,7 @@ import ESDivider from '../../Atoms/Divider'
 import ESTypography from '../../Atoms/Typography'
 import ESCard from '../Card'
 
-const ESCardSelectFilterMenu: React.FC<any> =
+const ESCardSelectFilterMenu = forwardRef(
     (
         {
             items,
@@ -33,8 +33,8 @@ const ESCardSelectFilterMenu: React.FC<any> =
             handleChange,
             search,
             width = 426
-        },
-        ref
+        }: any,
+        ref: any
     ) => {
         const { t } = useTranslation('sanarui')
 
@@ -107,33 +107,33 @@ const ESCardSelectFilterMenu: React.FC<any> =
             </div>
         )
     }
+)
 
-
-ESCardSelectFilterMenu.propTypes = {
-    className: PropTypes.string,
-    placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    image: PropTypes.string,
-    filterName: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    onSelectItem: PropTypes.func,
-    onDeselectItem: PropTypes.func,
-    onSelectAll: PropTypes.func,
-    onClear: PropTypes.func,
-    onClose: PropTypes.func,
-    onOpen: PropTypes.func,
-    items: PropTypes.arrayOf(
-        PropTypes.shape({
-            label: PropTypes.string,
-            value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-        })
-    ),
-    defaultSelectedItems: PropTypes.arrayOf(
-        PropTypes.shape({
-            label: PropTypes.string,
-            value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-        })
-    ),
-    labelSelecteds: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
-}
+// ESCardSelectFilterMenu.propTypes = {
+//     className: PropTypes.string,
+//     placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+//     image: PropTypes.string,
+//     filterName: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+//     onSelectItem: PropTypes.func,
+//     onDeselectItem: PropTypes.func,
+//     onSelectAll: PropTypes.func,
+//     onClear: PropTypes.func,
+//     onClose: PropTypes.func,
+//     onOpen: PropTypes.func,
+//     items: PropTypes.arrayOf(
+//         PropTypes.shape({
+//             label: PropTypes.string,
+//             value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+//         })
+//     ),
+//     defaultSelectedItems: PropTypes.arrayOf(
+//         PropTypes.shape({
+//             label: PropTypes.string,
+//             value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+//         })
+//     ),
+//     labelSelecteds: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
+// }
 ESCardSelectFilterMenu.defaultProps = {}
 
-export default forwardRef(ESCardSelectFilterMenu)
+export default ESCardSelectFilterMenu

@@ -5,8 +5,8 @@ import classNames from 'classnames'
 
 type IProps = PropTypes.InferProps<typeof propTypes>
 
-const ESCol: React.FC<IProps> =(
-    ({ className, flex, style, type, alignSelf, ...props }, ref) => {
+const ESCol: React.FC<IProps> = forwardRef(
+    ({ className, flex, style, type, alignSelf, ...props }, ref:any) => {
         const classes = classNames('es-col', className, {
             [`es-col__${type}`]: type
         })
@@ -24,7 +24,7 @@ const ESCol: React.FC<IProps> =(
 const propTypes = Object.assign(
     {
         className: PropTypes.string,
-        style: PropTypes.string,
+        style: PropTypes.object,
         flex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         alignSelf: PropTypes.oneOf([
             'auto',
@@ -53,4 +53,4 @@ ESCol.propTypes = propTypes
 
 ESCol.defaultProps = Col['defaultProps']
 
-export default forwardRef(ESCol)
+export default ESCol

@@ -37,7 +37,7 @@ const InitalButton = ({ name = 'keypad-outline', ...props }) => (
     <SideButton name={name} {...props} />
 )
 
-const ESMainMenu: React.FC<any> =
+const ESMainMenu = forwardRef(
     (
         {
             className,
@@ -52,7 +52,7 @@ const ESMainMenu: React.FC<any> =
             context: contextProp,
             onOpenOrClose,
             continueCourseProps
-        },
+        }: any,
         ref
     ) => {
         const {
@@ -208,25 +208,25 @@ const ESMainMenu: React.FC<any> =
             </div>
         )
     }
+)
 
-
-ESMainMenu.propTypes = {
-    className: PropTypes.string,
-    theme: PropTypes.oneOf(['primary', 'dark', 'light']),
-    onInitialClick: PropTypes.func,
-    onSearchClick: PropTypes.func,
-    onHome: PropTypes.func,
-    showContinueBar: PropTypes.bool,
-    logo: PropTypes.string,
-    continueCourseProps: PropTypes.shape({
-        onContinue: PropTypes.func,
-        module: PropTypes.string,
-        description: PropTypes.string
-    })
-}
+// ESMainMenu.propTypes = {
+//     className: PropTypes.string,
+//     theme: PropTypes.oneOf(['primary', 'dark', 'light']),
+//     onInitialClick: PropTypes.func,
+//     onSearchClick: PropTypes.func,
+//     onHome: PropTypes.func,
+//     showContinueBar: PropTypes.bool,
+//     logo: PropTypes.string,
+//     continueCourseProps: PropTypes.shape({
+//         onContinue: PropTypes.func,
+//         module: PropTypes.string,
+//         description: PropTypes.string
+//     })
+// }
 ESMainMenu.defaultProps = {
     theme: 'primary',
     logo: logoSvg
 }
 
-export default withMainMenuProvider(forwardRef(ESMainMenu)) as any
+export default withMainMenuProvider(ESMainMenu) as any

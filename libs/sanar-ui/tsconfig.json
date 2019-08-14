@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-//    "target": "esnext",
+    "target": "esnext",
     "lib": [
       "dom",
       "dom.iterable",
@@ -11,13 +11,13 @@
     "allowSyntheticDefaultImports": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
-//    "module": "esnext",
+    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "react",
     "outDir": "dist",
     "declaration": true,
-//    "declarationMap": true,
+    "declarationMap": true,
     "noFallthroughCasesInSwitch": true,
 //    "allowJs": true,
     "isolatedModules": false,

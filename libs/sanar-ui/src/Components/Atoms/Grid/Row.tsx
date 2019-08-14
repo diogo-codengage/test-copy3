@@ -5,8 +5,8 @@ import classNames from 'classnames'
 
 type IProps = PropTypes.InferProps<typeof propTypes>
 
-const ESRow: React.FC<IProps> =(
-    ({ className, direction, flex, style, height, ...props }, ref) => {
+const ESRow: React.FC<IProps> = forwardRef(
+    ({ className, direction, flex, style, height, ...props }, ref: any) => {
         const classes = classNames('es-row', className, {
             [`es-row__direction--${direction}`]: direction
         })
@@ -35,4 +35,4 @@ ESRow.propTypes = propTypes
 
 ESRow.defaultProps = Row['defaultProps']
 
-export default forwardRef(ESRow)
+export default ESRow

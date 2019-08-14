@@ -7,7 +7,7 @@ import ESEvaIcon from '../EvaIcon'
 
 type IProps = PropTypes.InferProps<typeof propTypes>
 
-const ESDatePicker: React.FC<IProps>=({ className, suffixIcon, ...props }, ref) => {
+const ESDatePicker = forwardRef (({ className, suffixIcon, ...props }: any, ref:any) => {
     const classes = classNames('es-date-picker', className)
     const icon = suffixIcon ? suffixIcon : <ESEvaIcon name='calendar-outline' />
 
@@ -19,7 +19,7 @@ const ESDatePicker: React.FC<IProps>=({ className, suffixIcon, ...props }, ref) 
             {...props}
         />
     )
-}
+})
 
 const propTypes = Object.assign(
     {...DatePicker.propTypes},
@@ -50,8 +50,6 @@ const propTypes = Object.assign(
     onOk: PropTypes.func
 })
 
-ESDatePicker.propTypes = propTypes
-
 ESDatePicker.defaultProps = DatePicker['defaultProps'] as any
 
-export default forwardRef(ESDatePicker)
+export default ESDatePicker

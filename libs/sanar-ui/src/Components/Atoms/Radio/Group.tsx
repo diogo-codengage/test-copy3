@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Radio } from 'antd'
 
-const ESRadioGroup =
-    ({ className, children, blocks, ...props }, ref) => {
+const ESRadioGroup = forwardRef(
+    ({ className, children, blocks, ...props }: any, ref: any) => {
         const classes = classNames('es-radio-group', className, {
             'es-radio-group--blocks': blocks
         })
@@ -15,14 +15,14 @@ const ESRadioGroup =
             </Radio.Group>
         )
     }
-
-
-ESRadioGroup.propTypes = Object.assign(
-    { ...Radio.Group['propTypes'] },
-    {
-        className: PropTypes.string
-    }
 )
+
+// ESRadioGroup.propTypes = Object.assign(
+//     { ...Radio.Group['propTypes'] },
+//     {
+//         className: PropTypes.string
+//     }
+// )
 ESRadioGroup.defaultProps = {}
 
-export default forwardRef(ESRadioGroup)
+export default ESRadioGroup

@@ -90,7 +90,7 @@ const ESTypography:React.FC<IPros & any> = ({
     const [ellipsed, setEllipsed] = useState(
         ellipsis && typeof ellipsis === 'object'
     )
-    const classes = classNames('estypography', className, {
+    const classes = classNames('es-typography', className, {
         [`es-typography--${type}`]: type,
         [`es-typography--${variant}`]: variant,
         'es-typography--strong': strong,
