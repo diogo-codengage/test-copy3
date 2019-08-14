@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 
 import { theme, ifProp, prop } from 'styled-tools'
 
-import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
-import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
+import { SANButton } from '../../Atoms/Button'
+import { SANTypography } from '../../Atoms/Typography'
 
 const SANBannerStyled = styled.div`
     display: flex;
@@ -66,8 +66,8 @@ const SANBanner: React.FC<IProps> = ({ title, image, ButtonProps }) => {
     }
     return (
         <SANBannerStyled {...{ image }}>
-            <ESTypography level={4}>{title}</ESTypography>
-            <ESButton {...mergeButtonProps} />
+            <SANTypography {...{ level: 4 }}>{title}</SANTypography>
+            <SANButton {...mergeButtonProps} />
         </SANBannerStyled>
     )
 }
