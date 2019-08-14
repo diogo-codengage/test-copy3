@@ -61,5 +61,16 @@ export default {
             subtitle:
                 'Conteúdos adicionados toda semana! Aulas, resumos e outros materiaos que acabaram de chegar'
         }
+    },
+    mainMenu: {
+        initial: {
+            begin: 'Início',
+            allCourses: 'Todos os cursos',
+            added: 'Adicionados',
+            questionBase: 'Banco de questões',
+            bookmarks: 'Favoritos',
+            invites: 'Indique e ganhe',
+            account: 'Minha conta'
+        }
     }
 }

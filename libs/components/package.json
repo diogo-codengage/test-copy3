@@ -1,34 +1,35 @@
 {
-    "name": "@sanar/components",
-    "author": "Vinicius Lohmann Kieling",
-    "license": "ISC",
-    "version": "0.0.1",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "build": "rm -rf dist && tsc",
-        "start": "tsc -w",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "storybook": "start-storybook -p 9001 -c .storybook",
-        "cli": "hygen sanar-components"
-    },
-    "devDependencies": {
-        "@storybook/addon-info": "^5.1.11",
-        "@storybook/addon-knobs": "^5.1.11",
-        "@storybook/react": "^5.1.11",
-        "@types/node": "^12.6.9",
-        "@types/react": "^16.8.24",
-        "@types/react-dom": "^16.8.5",
-        "@types/styled-components": "^4.1.18",
-        "awesome-typescript-loader": "^5.2.1",
-        "hygen": "^4.0.2",
-        "react": "^16.8.6",
-        "react-docgen-typescript-loader": "^3.1.1",
-        "react-docgen-typescript-webpack-plugin": "^1.1.0",
-        "react-dom": "^16.8.6",
-        "styled-components": "^4.3.2",
-        "styled-system": "^5.0.20",
-        "styled-tools": "^1.7.1",
-        "typescript": "^3.5.3"
-    }
+  "name": "@sanar/components",
+  "author": "Vinicius Lohmann Kieling",
+  "license": "ISC",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "start": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "cli": "hygen sanar-components"
+  },
+  "devDependencies": {
+    "@storybook/addon-info": "^5.1.11",
+    "@storybook/addon-knobs": "^5.1.11",
+    "@storybook/react": "^5.1.11",
+    "@types/node": "^12.6.9",
+    "@types/react": "^16.8.24",
+    "@types/react-dom": "^16.8.5",
+    "@types/styled-components": "^4.1.18",
+    "awesome-typescript-loader": "^5.2.1",
+    "hygen": "^4.0.2",
+    "react": "^16.8.6",
+    "react-docgen-typescript-loader": "^3.1.1",
+    "react-docgen-typescript-webpack-plugin": "^1.1.0",
+    "react-dom": "^16.8.6",
+    "react-eva-icons": "^0.0.8",
+    "styled-components": "^4.3.2",
+    "styled-system": "^5.0.20",
+    "styled-tools": "^1.7.1",
+    "typescript": "^3.5.3"
+  }
 }

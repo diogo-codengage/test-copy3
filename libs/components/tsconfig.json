@@ -20,6 +20,6 @@
         "isolatedModules": false,
         "noEmit": false
     },
-    "include": ["."],
+    "include": ["src"],
     "exclude": ["dist"]
 }
