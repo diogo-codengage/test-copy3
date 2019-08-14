@@ -210,20 +210,6 @@ const ESMainMenu = forwardRef(
     }
 )
 
-// ESMainMenu.propTypes = {
-//     className: PropTypes.string,
-//     theme: PropTypes.oneOf(['primary', 'dark', 'light']),
-//     onInitialClick: PropTypes.func,
-//     onSearchClick: PropTypes.func,
-//     onHome: PropTypes.func,
-//     showContinueBar: PropTypes.bool,
-//     logo: PropTypes.string,
-//     continueCourseProps: PropTypes.shape({
-//         onContinue: PropTypes.func,
-//         module: PropTypes.string,
-//         description: PropTypes.string
-//     })
-// }
 ESMainMenu.defaultProps = {
     theme: 'primary',
     logo: logoSvg
