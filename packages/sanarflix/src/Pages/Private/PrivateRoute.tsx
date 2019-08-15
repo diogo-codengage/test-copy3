@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Route, Redirect } from 'react-router-dom'
+import { getInstance } from 'Config/AWSCognito'
 
 type FLXPrivateRouteProps = {
     component: React.ElementType
@@ -13,7 +14,11 @@ const FLXPrivateRoute: React.FC<FLXPrivateRouteProps> = ({
     const [logged, setLogged] = useState(true)
 
     useEffect(() => {
-        setLogged(true)
+        getInstance().user.getSession((err, result) => {
+            if (!result) {
+                setLogged(false)
+            }
+        })
     }, [])
 
     return (
