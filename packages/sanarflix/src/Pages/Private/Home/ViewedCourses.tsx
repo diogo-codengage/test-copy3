@@ -1,46 +1,56 @@
 import React from 'react'
 
 import { useTranslation } from 'react-i18next'
-import styled from 'styled-components'
 
 import { SANSessionTitle } from '@sanar/components/dist/Components/Atoms/SessionTitle'
+import { SANContainer } from '@sanar/components/dist/Components/Atoms/Container'
 import { SANCarousel } from '@sanar/components/dist/Components/Molecules/Carousel'
 import { SANCardCourseModule } from '@sanar/components/dist/Components/Molecules/CardCourseModule'
 
-const responsive = [
+export const responsive = [
     {
-        breakpoint: 1560,
-        settings: {
-            slidesToShow: 4,
-            arrows: true
-        }
-    },
-    {
-        breakpoint: 1280,
+        breakpoint: 1200,
         settings: {
             slidesToShow: 3,
             arrows: false,
-            variableWidth: true
+            centerMode: true,
+            infinite: true
+        }
+    },
+    {
+        breakpoint: 576,
+        settings: {
+            slidesToShow: 2,
+            arrows: false,
+            centerMode: true,
+            infinite: true
+        }
+    },
+    {
+        breakpoint: 480,
+        settings: {
+            slidesToShow: 1,
+            arrows: false,
+            centerMode: true,
+            infinite: true
         }
     }
 ]
-
-const Wrapper = styled.div`
-    max-width: 1000px;
-    margin: 0 auto;
-`
 
 const FLXViewedCourses: React.FC = () => {
     const { t } = useTranslation('sanarflix')
 
     return (
-        <Wrapper>
+        <SANContainer mb={8}>
             <SANSessionTitle
                 title={t('home.viewedCourses.title')}
                 subtitle={t('home.viewedCourses.subtitle')}
             />
             <SANCarousel
+                slidesToShow={4}
                 slidesToScroll={1}
+                initialSlide={0}
+                arrows
                 infinite={false}
                 dots={false}
                 draggable
@@ -60,7 +70,7 @@ const FLXViewedCourses: React.FC = () => {
                     </div>
                 ))}
             </SANCarousel>
-        </Wrapper>
+        </SANContainer>
     )
 }
 

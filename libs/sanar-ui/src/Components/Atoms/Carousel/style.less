@@ -1,7 +1,8 @@
 @spacing-button: -48px;
 
 .es-carousel {
-    margin: 0 auto;
+    margin-left: -8px;
+    margin-right: -8px;
 
     & .slick-prev {
         left: @spacing-button;
@@ -29,15 +30,7 @@
     & .slick-list {
         & .slick-track {
             & .slick-slide .es-card {
-                margin: 0 16px;
-            }
-
-            & .slick-slide.slick-active :last-of-type .es-card {
-                margin-right: 2px;
-            }
-
-            & .slick-current .es-card {
-                margin-left: 0;
+                margin: 0 @margin-xs;
             }
         }
     }

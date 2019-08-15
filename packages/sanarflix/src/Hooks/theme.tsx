@@ -8,11 +8,11 @@ type FLXThemeContextProviderProps = {}
 
 export const useThemeContext = () => useContext(ThemeContext)
 
+const theme = createTheme(FLXTheme)
+
 export const FLXThemeProvider: React.FC<FLXThemeContextProviderProps> = ({
     children
 }) => {
-    const theme = createTheme(FLXTheme)
-
     return (
         <ThemeProvider theme={theme}>
             <>{children}</>

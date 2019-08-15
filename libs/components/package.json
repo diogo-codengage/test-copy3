@@ -31,5 +31,6 @@
     "styled-system": "^5.0.20",
     "styled-tools": "^1.7.1",
     "typescript": "^3.5.3"
-  }
+  },
+  "dependencies": {}
 }
