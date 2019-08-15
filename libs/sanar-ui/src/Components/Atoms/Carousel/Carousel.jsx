@@ -20,10 +20,6 @@ const PrevArrow = ({ onClick, className }) => (
 const ESCarousel = forwardRef(({ className, style, ...props }, ref) => {
     const classes = classNames('es-carousel', className)
 
-    const next = () => ref.current.next()
-
-    const prev = () => ref.current.prev()
-
     return (
         <div style={style} className={classes}>
             <Carousel

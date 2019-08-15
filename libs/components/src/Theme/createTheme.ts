@@ -224,8 +224,7 @@ export const createTheme = ({
             },
             down: {
                 ...prev.down,
-                // @ts-ignore
-                [key]: `@media screen and (max-width: ${val - 1})`
+                [key]: `@media screen and (max-width: ${val})`
             }
         }),
         {

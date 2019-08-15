@@ -42,7 +42,6 @@ const ESTypography = ({
     const [ellipsed, setEllipsed] = useState(
         ellipsis && typeof ellipsis === 'object'
     )
-
     const classes = classNames('es-typography', className, {
         [`es-typography--${type}`]: type,
         [`es-typography--${variant}`]: variant,
