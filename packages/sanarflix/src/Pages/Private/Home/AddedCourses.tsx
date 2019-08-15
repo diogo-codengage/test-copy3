@@ -13,7 +13,7 @@ const FLXAddedCourses: React.FC = () => {
     const { t } = useTranslation('sanarflix')
 
     return (
-        <SANLayoutContainer>
+        <SANLayoutContainer mb={8}>
             <SANSessionTitle
                 title={t('home.addedCourses.title')}
                 subtitle={t('home.addedCourses.subtitle')}

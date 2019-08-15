@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
 
-type IProps = PropTypes.InferProps<typeof propTypes>
+export type ISANSessionTitleProps = PropTypes.InferProps<typeof propTypes>
 
-const SANSessionTitle: React.FC<IProps> = props => {
+const SANSessionTitle: React.FC<ISANSessionTitleProps> = props => {
     return <ESSessionTitle {...props} />
 }
 
