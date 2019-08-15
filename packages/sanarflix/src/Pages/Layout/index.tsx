@@ -1,6 +1,6 @@
 import React from 'react'
 
-import SANLayout from '@sanar/components/dist/Components/Organisms/Layout'
+import { SANLayout } from '@sanar/components/dist/Components/Organisms/Layout'
 import FLXMenuContent from './Menu'
 
 import logo from 'Assets/images/brand/logo-menu.svg'
