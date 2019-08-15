@@ -1,1 +1,1 @@
-export { default as SANBanner } from './Banner'
+export { default as SANBanner, ISANBannerProps } from './Banner'

@@ -60,6 +60,24 @@ export default {
             title: 'Adicionados',
             subtitle:
                 'Conteúdos adicionados toda semana! Aulas, resumos e outros materiaos que acabaram de chegar'
+        },
+        banners: {
+            allCourses: {
+                title: 'Todos os Cursos',
+                subtitle: 'Conteúdo completo com diversos recursos',
+                action: 'Acessar'
+            },
+            questionsBase: {
+                title: 'Banco de Questões',
+                subtitle: 'Aprimore seus conhecimentos',
+                action: 'Acessar'
+            },
+            indicate: {
+                title: 'Indique e Ganhe',
+                subtitle:
+                    'Indique o SanarFlix para os seus amigos. A cada indicação válida você ganha R$20!',
+                action: 'Saiba mais'
+            }
         }
     },
     mainMenu: {

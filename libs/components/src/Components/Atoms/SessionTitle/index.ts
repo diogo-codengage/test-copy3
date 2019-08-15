@@ -1,1 +1,4 @@
-export { default as SANSessionTitle } from './SessionTitle'
+export {
+    default as SANSessionTitle,
+    ISANSessionTitleProps
+} from './SessionTitle'

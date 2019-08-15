@@ -3,9 +3,9 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { SANSessionTitle } from '@sanar/components/dist/Components/Atoms/SessionTitle'
-import { SANContainer } from '@sanar/components/dist/Components/Atoms/Container'
 import { SANCarousel } from '@sanar/components/dist/Components/Molecules/Carousel'
 import { SANCardCourseModule } from '@sanar/components/dist/Components/Molecules/CardCourseModule'
+import { SANLayoutContainer } from '@sanar/components/dist/Components/Organisms/Layout'
 
 import { responsive } from './ViewedCourses'
 
@@ -13,7 +13,7 @@ const FLXAddedCourses: React.FC = () => {
     const { t } = useTranslation('sanarflix')
 
     return (
-        <SANContainer>
+        <SANLayoutContainer mb={8}>
             <SANSessionTitle
                 title={t('home.addedCourses.title')}
                 subtitle={t('home.addedCourses.subtitle')}
@@ -42,7 +42,7 @@ const FLXAddedCourses: React.FC = () => {
                     </div>
                 ))}
             </SANCarousel>
-        </SANContainer>
+        </SANLayoutContainer>
     )
 }
 
