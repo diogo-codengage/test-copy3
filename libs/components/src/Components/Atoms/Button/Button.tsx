@@ -1,17 +1,13 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 
-type IProps = PropTypes.InferProps<typeof propTypes>
+import { SANStyled } from '../../../Theme/createTheme'
 
-const SANButton: React.FC<IProps> = props => {
-    return <ESButton {...props} />
-}
+export type ISANButtonProps = PropTypes.InferProps<typeof propTypes>
 
-const propTypes = {}
+const SANButton = SANStyled(ESButton)``
 
-SANButton.propTypes = propTypes
-SANButton.defaultProps = {}
+const propTypes = ESButton['propTypes']
 
 export default SANButton

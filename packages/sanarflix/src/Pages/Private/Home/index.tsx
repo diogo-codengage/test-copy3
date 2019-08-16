@@ -15,6 +15,7 @@ import FLXBanner from 'Components/Banner'
 
 import allCourses from 'Assets/images/banners/all-courses.png'
 import baseQuestions from 'Assets/images/banners/base-questions.png'
+import indicate from 'Assets/images/banners/indicate.png'
 
 const intl = 'home.banners'
 
@@ -69,7 +70,7 @@ const FLXHome: React.FC = () => {
                     }}
                     BannerProps={{
                         title: t(`${intl}.indicate.title`),
-                        image: allCourses,
+                        image: indicate,
                         ButtonProps: {
                             children: t(`${intl}.indicate.action`)
                         }

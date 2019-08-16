@@ -1,3 +1,8 @@
+import styled, {
+    ThemedStyledInterface,
+    StyledComponent
+} from 'styled-components'
+
 import { createColorVariants } from './colors'
 
 const defaultColors = {
@@ -280,3 +285,20 @@ export const createTheme = ({
         ...rest
     }
 }
+
+type Theme = {
+    name: string
+    colors: (typeof defaultColors) | any
+    breakpoints: typeof defaultBreakpoints
+    borderRadius: typeof defaultBorderRadius
+    fonts: typeof defaultFonts
+    fontSizes: typeof defaultFontSizes
+    fontWeights: typeof defaultFontWeights
+    space: typeof defaultSpace
+    shadows: typeof defaultShadows
+    zIndices: typeof defaultZIndices
+} & { [key: string]: any }
+
+export type SANElement<T> = StyledComponent<React.FC<T>, Theme>
+
+export const SANStyled = styled as ThemedStyledInterface<Theme>
