@@ -1,2 +1,2 @@
 export { default as SANThemeColors } from './colors'
-export { default as SANThemeCreateTheme } from './createTheme'
+export { createTheme } from './createTheme'
