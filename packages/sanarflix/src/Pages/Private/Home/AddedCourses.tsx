@@ -2,11 +2,12 @@ import React from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import { SANSessionTitle } from '@sanar/components/dist/Components/Atoms/SessionTitle'
-import { SANCarousel } from '@sanar/components/dist/Components/Molecules/Carousel'
-import { SANCardCourseModule } from '@sanar/components/dist/Components/Molecules/CardCourseModule'
-import { SANLayoutContainer } from '@sanar/components/dist/Components/Organisms/Layout'
-
+import {
+    SANSessionTitle,
+    SANCarousel,
+    SANCardCourseModule,
+    SANLayoutContainer
+} from '@sanar/components'
 import { responsive } from './ViewedCourses'
 
 const FLXAddedCourses: React.FC = () => {

@@ -2,11 +2,7 @@ import React from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import {
-    SANRow,
-    SANCol
-} from '@sanar/components/dist/Components/Molecules/Grid'
-import { SANLayoutContainer } from '@sanar/components/dist/Components/Organisms/Layout'
+import { SANRow, SANCol, SANLayoutContainer } from '@sanar/components'
 
 import FLXViewedCourses from './ViewedCourses'
 import FLXAddedCourses from './AddedCourses'
