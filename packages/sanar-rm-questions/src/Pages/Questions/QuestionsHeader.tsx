@@ -102,7 +102,7 @@ export const QuestionsHeader = () => {
         <ESModal
             title={'Encerrar aula'}
             visible={showModalFinish}
-            centered={'Centered'}
+            centered
             onCancel={() => {
                 setShowModalFinish(false)
             }}
@@ -111,7 +111,7 @@ export const QuestionsHeader = () => {
 
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <ESButton
-                    color='outlined'
+                    color='black'
                     variant='text'
                     uppercase
                     blockOnlyMobile
@@ -136,7 +136,7 @@ export const QuestionsHeader = () => {
         <ESModal
             title={'Parece que algo deu errado'}
             visible={showModalNoQuestionsForFilter}
-            centered={'Centered'}
+            centered
             onCancel={() => () => setShowModalNoQuestionsForFilter(false) }
         >
             <p>Opa, não existem questões para o filtro atual.</p>

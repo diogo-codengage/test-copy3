@@ -23,6 +23,9 @@ export const Question = () => {
 
     const loadNextQuestion = () => {
         let questions = questionsCtx.questions
+        if (questions.length === 0) {
+            questionsCtx.loadMoreQuestions(false);
+        }
         questionsCtx.setCurrentQuestion(questions.shift())
         questionsCtx.setQuestions(questions)
         if (questions.length === 1) {
@@ -51,9 +54,9 @@ export const Question = () => {
         .then(({data}) => {
             setStats(data.questionAnswer.stats.alternatives)
             setLoading(false)
-            if(correct) {
+            if (correct) {
                 questionsCtx.increaseTotalCorrect()
-            }else {
+            } else {
                 questionsCtx.increaseTotalWrong()
             }
             questionsCtx.setCurrentAnswerId(answerId)
