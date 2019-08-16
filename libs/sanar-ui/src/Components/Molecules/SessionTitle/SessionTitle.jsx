@@ -11,6 +11,7 @@ const ESSessionTitle = ({
     subtitle,
     extra,
     extraOnLeft,
+    levelTitle,
     children
 }) => {
     const classes = classNames('es-session-title', className)
@@ -33,7 +34,7 @@ const ESSessionTitle = ({
         >
             <ESCol className='es-session-title__texts'>
                 {typeof title === 'string' ? (
-                    <ESTypography className={titleClasses} level={5}>
+                    <ESTypography className={titleClasses} level={levelTitle}>
                         {title}
                     </ESTypography>
                 ) : (
@@ -62,11 +63,13 @@ ESSessionTitle.propTypes = {
     subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     extra: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     align: PropTypes.oneOf(['top', 'middle', 'bottom']),
-    extraOnLeft: PropTypes.bool
+    extraOnLeft: PropTypes.bool,
+    levelTitle: PropTypes.number
 }
 
 ESSessionTitle.defaultProps = {
-    align: 'bottom'
+    align: 'bottom',
+    levelTitle: 5
 }
 
 export default ESSessionTitle
