@@ -12,6 +12,7 @@ then
 else
   NODE_ENV='development'
   yarn esanar:build:development
+  yarn sanarflix:build:development
 fi
 
 export NODE_ENV

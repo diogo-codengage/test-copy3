@@ -247,9 +247,9 @@ const SANClassroomVideo = () => {
                     onPrev: onNavigation('prev'),
                     onNext: onNavigation('next'),
                     title: currentResource.video.title,
-                    subtitle: `${t('global.subject')} ${currentModule.index +
-                        1}, ${t('global.activity')} ${currentResource.index +
-                        1}`,
+                    subtitle: `${t('global.subject')} ${
+                        currentModule.index
+                    }, ${t('global.activity')} ${currentResource.index + 1}`,
                     label: t('classroom.rateClass'),
                     rate: {
                         value: rate,

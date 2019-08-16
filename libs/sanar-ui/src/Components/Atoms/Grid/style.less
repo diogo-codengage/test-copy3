@@ -1,0 +1,25 @@
+.es-row {
+    &__direction--row {
+        flex-direction: row;
+    }
+    &__direction--column {
+        flex-direction: column;
+    }
+}
+.es-col {
+    &__flex {
+        display: flex;
+    }
+}
+
+@media (max-width: @screen-xs-max) {
+    .ant-col-xs-0 {
+        display: none !important;
+    }
+}
+
+@media (max-width: @screen-sm-max) {
+    .ant-col-sm-0 {
+        display: none !important;
+    }
+}

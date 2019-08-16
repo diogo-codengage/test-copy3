@@ -1,0 +1,131 @@
+.es-auth-template {
+    min-width: 100vw;
+    min-height: 100vh;
+
+    &__input-data {
+        &__header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+        &__content {
+            padding: 72px @padding-md @padding-md @padding-md;
+            max-width: 490px;
+            margin: 0 auto;
+            min-height: ~'calc(100vh - 48px)';
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            &--description {
+                text-align: center;
+                margin-bottom: @margin-xl + @margin-md !important;
+            }
+
+            &__sign-in {
+                &__social {
+                    &--button {
+                        box-shadow: @es-shadow;
+                    }
+                }
+            }
+
+            &__terms {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+                max-width: 425px;
+                margin: 0 auto;
+                text-align: center;
+
+                img {
+                    margin-bottom: @margin-md;
+                }
+
+                span {
+                    font-weight: bold;
+                    margin: 0 4px;
+                    color: @primary-color;
+                    cursor: pointer;
+
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+
+                @media (min-width: @screen-md) {
+                    img {
+                        margin: 0;
+                    }
+
+                    .es-col > .es-typography {
+                        border-left: 1px solid @grey-2;
+                        margin-left: 16px;
+                        text-align: left;
+                        padding-left: 16px;
+                    }
+                }
+            }
+        }
+
+        @media (max-width: @screen-sm) {
+            &__content {
+                &__sign-in {
+                    &__form {
+                        &--extra {
+                            justify-content: space-around;
+                        }
+                    }
+                }
+            }
+        }
+
+        @media (min-width: @screen-md) {
+            &__header {
+                right: 50%;
+            }
+
+            &__content {
+                justify-content: space-around;
+            }
+        }
+    }
+
+    &__marketing {
+        &__content {
+            max-width: 550px;
+            padding: @padding-sm;
+            text-align: center;
+
+            &--title {
+                line-height: 42.5px;
+                margin-bottom: @margin-md;
+            }
+
+            .es-typography {
+                color: @white;
+            }
+        }
+
+        .es-button {
+            border-color: @white;
+            color: @white;
+        }
+
+        @media (min-width: @screen-md) {
+            height: 100vh;
+            background: no-repeat center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

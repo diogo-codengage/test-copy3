@@ -79,8 +79,9 @@ const CommitmentCard = ({ value, status }) => {
 
 const SANPerformance = () => {
     const { t } = useTranslation('esanar')
-    const { getEnrollment } = useAuthContext()
-    const { performance } = getEnrollment()
+    const {
+        enrollment: { performance }
+    } = useAuthContext()
 
     return (
         <div className='performance'>

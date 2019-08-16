@@ -1,0 +1,37 @@
+@spacing-button: -48px;
+
+.es-carousel {
+    margin-left: -8px;
+    margin-right: -8px;
+
+    & .slick-prev {
+        left: @spacing-button;
+    }
+    & .slick-next {
+        right: @spacing-button;
+    }
+
+    & .es-button.slick-arrow {
+        background-color: @normal-color;
+
+        &.slick-disabled {
+            opacity: 0.2;
+        }
+
+        &.slick-arrow:hover {
+            background-color: lighten(@normal-color, 5);
+        }
+
+        &.slick-arrow svg {
+            fill: darken(@normal-color, 65) !important;
+        }
+    }
+
+    & .slick-list {
+        & .slick-track {
+            & .slick-slide .es-card {
+                margin: 0 @margin-xs;
+            }
+        }
+    }
+}
