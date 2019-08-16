@@ -23,6 +23,9 @@ export const Question = () => {
 
     const loadNextQuestion = () => {
         let questions = questionsCtx.questions
+        if (questions.length === 0) {
+            questionsCtx.loadMoreQuestions(false);
+        }
         questionsCtx.setCurrentQuestion(questions.shift())
         questionsCtx.setQuestions(questions)
         if (questions.length === 1) {
