@@ -6,7 +6,7 @@ import SANLayoutContent from './Content'
 
 const SANLayoutStyled = styled.div`
     height: 100vh;
-    overflow: hidden;
+    overflow-x: hidden;
 `
 
 type IProps = PropTypes.InferProps<typeof propTypes>

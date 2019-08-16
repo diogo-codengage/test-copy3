@@ -14,6 +14,7 @@ const SANBannerStyled = styled.div`
     border-radius: ${theme('radii.base')};
     position: relative;
     padding: ${theme('space.8')} 0;
+
     ${ifProp(
         'image',
         css`
@@ -30,6 +31,7 @@ const SANBannerStyled = styled.div`
 
     &:before {
         content: '';
+        opacity: 0.65;
         border-radius: ${theme('radii.base')};
         position: absolute;
         left: 0;
@@ -54,9 +56,13 @@ const SANBannerStyled = styled.div`
     }
 `
 
-type IProps = PropTypes.InferProps<typeof propTypes>
+export type ISANBannerProps = PropTypes.InferProps<typeof propTypes>
 
-const SANBanner: React.FC<IProps> = ({ title, image, ButtonProps }) => {
+const SANBanner: React.FC<ISANBannerProps> = ({
+    title,
+    image,
+    ButtonProps
+}) => {
     const mergeButtonProps = {
         uppercase: true,
         variant: 'outlined',
