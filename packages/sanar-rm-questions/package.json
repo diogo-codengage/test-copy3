@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@types/react-dom": "^16.8.4",
+    "lodash": "^4.17.15",
     "styled-components": "^4.3.2",
     "tslint": "^5.18.0",
     "typescript": "^3.5.1"
