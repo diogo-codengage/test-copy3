@@ -1,8 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-
-import styled from 'styled-components'
-import { theme } from 'styled-tools'
+import { SANStyled, SANElement } from '../../../Theme/createTheme'
+import { css } from 'styled-components'
+import { theme, ifProp } from 'styled-tools'
 import {
     color,
     space,
@@ -17,7 +15,7 @@ import {
     BorderProps
 } from 'styled-system'
 
-const SANContainerStyled = styled.div`
+const SANContainer = SANStyled.div`
     width: 100%;
     max-width: 1008px;
     padding-right: ${theme('space.md')};
@@ -25,28 +23,27 @@ const SANContainerStyled = styled.div`
     margin-right: auto;
     margin-left: auto;
 
+    ${ifProp(
+        'fullMobile',
+        css`
+            ${theme('mediaQueries.down.md')} {
+                padding: 0;
+            }
+        `
+    )}
+
     ${color}
     ${space}
     ${layout}
     ${flexbox}
     ${border}
-`
+` as SANElement<IProps>
 
-type IProps = PropTypes.InferProps<typeof propTypes> &
-    SpaceProps &
+type IProps = SpaceProps &
     LayoutProps &
     FlexboxProps &
     BorderProps &
     BackgroundColorProps &
-    OpacityProps
-
-const SANContainer: React.FC<IProps> = props => {
-    return <SANContainerStyled {...props} />
-}
-
-const propTypes = {}
-
-SANContainer.propTypes = propTypes
-SANContainer.defaultProps = {}
+    OpacityProps & { fullMobile?: boolean }
 
 export default SANContainer

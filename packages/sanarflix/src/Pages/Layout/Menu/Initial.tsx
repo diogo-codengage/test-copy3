@@ -6,7 +6,7 @@ import {
     SANNavigationList,
     SANNavigationListItem
 } from '@sanar/components/dist/Components/Organisms/MainMenu'
-import SANEvaIcon from '@sanar/components/dist/Components/Atoms/EvaIcon'
+import { SANEvaIcon } from '@sanar/components/dist/Components/Atoms/EvaIcon'
 
 import { useLayoutContext } from '../Context'
 
