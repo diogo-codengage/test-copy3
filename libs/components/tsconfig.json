@@ -23,10 +23,10 @@
         "noFallthroughCasesInSwitch": true,
         "isolatedModules": false,
         "noEmit": false,
-        "baseUrl": "src"
+        "baseUrl": "src",
     },
     "include": [
-        "src"
+        "."
     ],
     "exclude": [
         "dist"
