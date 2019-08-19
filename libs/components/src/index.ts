@@ -10,11 +10,7 @@ import { SANCardCourseModule } from 'Components/Molecules/CardCourseModule'
 import { SANCarousel } from 'Components/Molecules/Carousel'
 import { SANRow, SANCol } from 'Components/Molecules/Grid'
 import { SANHeader } from 'Components/Molecules/Header'
-import {
-    SANLayoutContainer,
-    SANLayoutFooter,
-    SANLayout
-} from 'Components/Organisms/Layout'
+import { SANLayoutContainer, SANLayout } from 'Components/Organisms/Layout'
 import {
     SANMainMenu,
     SANLeftOff,
@@ -37,7 +33,6 @@ export {
     SANCol,
     SANHeader,
     SANLayoutContainer,
-    SANLayoutFooter,
     SANLayout,
     SANMainMenu,
     SANLeftOff,
