@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { storiesOf } from '@storybook/react'
 
 import styled from 'styled-components'
@@ -20,32 +20,27 @@ const Item = styled.div`
     color: white;
 `
 
+const renderItem = item => (
+    <Item key={item.id}>{`${item.title} - ${item.id}`}</Item>
+)
+
 const Example = () => {
-    const parentRef = useRef()
     const [list, setList] = useState([])
 
-    const loadMore = page => {
-        const res = getMock({ offset: list.length })
-        console.log({ res })
-        setList([...list, ...res])
-    }
+    const loadMore = page =>
+        setTimeout(() => {
+            const res = getMock({ offset: list.length })
+            setList([...list, ...res])
+        }, 2000)
 
     return (
-        // <div style={{ height: 500, overflow: 'auto' }} ref={parentRef}>
         <SANInfiniteScroll
-            // useWindow={false}
-            // getScrollParent={() => parentRef}
             pageStart={0}
             loadMore={loadMore}
-            hasMore={list.length < 30}
+            hasMore={list.length < 289}
         >
-            <List>
-                {list.map(item => (
-                    <Item key={item.id}>{`${item.title} - ${item.id}`}</Item>
-                ))}
-            </List>
+            <List>{list.map(renderItem)}</List>
         </SANInfiniteScroll>
-        // </div>
     )
 }
 
