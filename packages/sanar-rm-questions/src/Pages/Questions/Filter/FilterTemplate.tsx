@@ -1,4 +1,5 @@
 import React  from 'react'
+import { uniqBy } from 'lodash'
 
 import ESCardSelectFilter from 'sanar-ui/dist/Components/Molecules/CardSelectFilter'
 import { ESCol, ESRow } from 'sanar-ui/dist/Components/Atoms/Grid'
@@ -77,7 +78,9 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
     }
 
     if(props.selectedSpecialties.length > 0) {
-        allTags = props.selectedSpecialties.flatMap(s => s.tags).concat( props.selectedSpecialties.flatMap(s => s.children).flatMap(s => s.tags)).sort(sortByLabel)
+        const specialtiesTags = props.selectedSpecialties.flatMap(s => s.tags)
+        const childrenTags = (props.selectedSpecialties.flatMap(s => s.children)).flatMap(c => c.tags)
+        allTags = uniqBy((specialtiesTags.concat(childrenTags)).sort(sortByLabel), 'value')
         allSubSpecialties = props.selectedSpecialties.flatMap( s => s.children);
     }
 

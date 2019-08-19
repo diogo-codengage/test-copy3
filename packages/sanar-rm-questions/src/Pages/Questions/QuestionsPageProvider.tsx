@@ -68,7 +68,6 @@ export const QuestionsPageProvider = (props: IProps) => {
     }
 
     const loadMoreQuestions = async (clearOld: boolean) => {
-        console.log({clearOld})
         const filters = await getParamsFromFilters()
         return  BFFService.loadMoreQuestions(filters)
             .then(function({ data }) {
