@@ -1,1 +1,1 @@
-export { default } from './EvaIcon'
+export { default as SANEvaIcon } from './EvaIcon'

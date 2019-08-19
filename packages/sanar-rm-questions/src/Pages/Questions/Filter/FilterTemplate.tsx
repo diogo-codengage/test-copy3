@@ -67,7 +67,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
     }
 
     let allTags = props.allTags.filter(createDistinctFilter<Tag>(t => t.value)).sort(sortByLabel);
-    let allSpecialties = props.allSpecialties;
+    let allSpecialties = props.allSpecialties.filter((value) => value.children.length > 0);
     let allSubSpecialties = props.allSpecialties.flatMap(s => s.children).sort(sortByLabel);
 
     if(props.selectedTags.length > 0) {

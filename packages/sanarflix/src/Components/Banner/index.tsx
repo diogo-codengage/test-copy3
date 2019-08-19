@@ -2,15 +2,12 @@ import React from 'react'
 
 import styled from 'styled-components'
 import { space, SpaceProps } from 'styled-system'
-
 import {
     SANSessionTitle,
-    ISANSessionTitleProps
-} from '@sanar/components/dist/Components/Atoms/SessionTitle'
-import {
     SANBanner,
+    ISANSessionTitleProps,
     ISANBannerProps
-} from '@sanar/components/dist/Components/Molecules/Banner'
+} from '@sanar/components'
 
 type IProps = {
     BannerProps?: ISANBannerProps

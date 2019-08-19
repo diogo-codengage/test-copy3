@@ -1,4 +1,4 @@
-export { default } from './MainMenu'
+export { default as SANMainMenu } from './MainMenu'
 
 // Left off
 export { default as SANLeftOff } from './LeftOff'

@@ -2,11 +2,7 @@ import React from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import {
-    SANRow,
-    SANCol
-} from '@sanar/components/dist/Components/Molecules/Grid'
-import { SANLayoutContainer } from '@sanar/components/dist/Components/Organisms/Layout'
+import { SANRow, SANCol, SANLayoutContainer } from '@sanar/components'
 
 import FLXViewedCourses from './ViewedCourses'
 import FLXAddedCourses from './AddedCourses'
@@ -15,6 +11,7 @@ import FLXBanner from 'Components/Banner'
 
 import allCourses from 'Assets/images/banners/all-courses.png'
 import baseQuestions from 'Assets/images/banners/base-questions.png'
+import indicate from 'Assets/images/banners/indicate.png'
 
 const intl = 'home.banners'
 
@@ -69,7 +66,7 @@ const FLXHome: React.FC = () => {
                     }}
                     BannerProps={{
                         title: t(`${intl}.indicate.title`),
-                        image: allCourses,
+                        image: indicate,
                         ButtonProps: {
                             children: t(`${intl}.indicate.action`)
                         }

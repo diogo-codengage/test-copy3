@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next'
 
 import {
     SANNavigationList,
-    SANNavigationListItem
-} from '@sanar/components/dist/Components/Organisms/MainMenu'
-import SANEvaIcon from '@sanar/components/dist/Components/Atoms/EvaIcon'
+    SANNavigationListItem,
+    SANEvaIcon
+} from '@sanar/components'
 
 import { useLayoutContext } from '../Context'
 
