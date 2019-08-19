@@ -2,7 +2,7 @@ export default {
     global: {
         filter: 'Filtrar',
         password: 'Senha',
-        user: 'Usuário',
+        user: 'E-mail',
         empty: 'Não há dados',
         monitor: 'Monitor',
         sendFeedback: 'Enviar feedback',

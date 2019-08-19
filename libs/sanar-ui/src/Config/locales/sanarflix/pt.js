@@ -8,7 +8,7 @@ export default {
         accessAccount: 'Acessar conta',
         signInDescription:
             'Sua conta SANAR é a chave para você acessar todos os cursos e ferramentas para otimizar e impulsionar sua carreira médica.',
-        keepMeLoggedIn: 'Manter-me logado',
+        keepMeLoggedIn: 'Manter logado',
         forgotPassword: 'Esqueci minha senha',
         login: 'Entrar',
         title: 'Ou entre com os dados abaixo',
