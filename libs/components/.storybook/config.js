@@ -9,16 +9,21 @@ import { withKnobs } from '@storybook/addon-knobs'
 
 import './styles.less'
 
+const defaultStyle = {
+    padding: 20,
+    minHeight: '200px',
+    backgroundColor: '#f7f8f9'
+}
+
 const DefaultDecotator = (story, { parameters }) => (
     <div
         style={
             parameters.style
-                ? parameters.style
-                : {
-                      padding: 20,
-                      minHeight: '200px',
-                      backgroundColor: '#f7f8f9'
+                ? {
+                      ...defaultStyle,
+                      ...parameters.style
                   }
+                : defaultStyle
         }
     >
         <SANThemeProvider theme={createTheme({})}>{story()}</SANThemeProvider>
