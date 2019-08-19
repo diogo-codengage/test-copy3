@@ -6,7 +6,7 @@ import FLXMenuContent from './Menu'
 import { useLayoutContext } from './Context'
 
 import logo from 'Assets/images/brand/logo-menu.svg'
-import logoFooter from 'Assets/images/brand/logo-grey.svg'
+// import logoFooter from 'Assets/images/brand/logo-grey.svg'
 
 const FLXLayout: React.FC = ({ children }) => {
     const { menuRef, currentMenuTitle } = useLayoutContext()
@@ -17,14 +17,14 @@ const FLXLayout: React.FC = ({ children }) => {
         title: currentMenuTitle
     }
 
-    const FooterProps = {
-        logo: logoFooter
-    }
+    // const FooterProps = {
+    //     logo: logoFooter
+    // }
 
     return (
         <SANLayout
             showContinueBar={true}
-            FooterProps={FooterProps}
+            // FooterProps={FooterProps}
             MenuProps={MenuProps}
         >
             {children}
