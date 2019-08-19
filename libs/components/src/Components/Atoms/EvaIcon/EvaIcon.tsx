@@ -13,6 +13,10 @@ const SANEvaIconStyled = styled.i`
         height: 1em;
     }
 
+    & > div {
+        display: flex;
+    }
+
     ${switchProp('size', {
         xsmall: css`
             svg {

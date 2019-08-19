@@ -1,17 +1,28 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 
+import {
+    space,
+    flexbox,
+    border,
+    SpaceProps,
+    LayoutProps,
+    FlexboxProps
+} from 'styled-system'
+
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
+import { SANStyled, SANElement } from '../../../Theme/createTheme'
 
-type IProps = PropTypes.InferProps<typeof propTypes>
+type ISANTypographyProps = PropTypes.InferProps<
+    typeof ESTypography['propTypes']
+> &
+    SpaceProps &
+    LayoutProps &
+    FlexboxProps
 
-const SANTypography: React.FC<IProps> = props => {
-    return <ESTypography {...props} />
-}
-
-const propTypes = ESTypography['propTypes']
-
-SANTypography.propTypes = propTypes
-SANTypography.defaultProps = {}
+const SANTypography: SANElement<ISANTypographyProps> = SANStyled(ESTypography)`
+    ${space}
+    ${flexbox}
+    ${border}
+`
 
 export default SANTypography
