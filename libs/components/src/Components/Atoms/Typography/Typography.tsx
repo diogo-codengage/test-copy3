@@ -9,7 +9,7 @@ const SANTypography: React.FC<IProps> = props => {
     return <ESTypography {...props} />
 }
 
-const propTypes = {}
+const propTypes = ESTypography['propTypes']
 
 SANTypography.propTypes = propTypes
 SANTypography.defaultProps = {}

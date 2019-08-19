@@ -10,7 +10,6 @@ const SANCarousel: React.FC<IProps> = props => {
 }
 
 const propTypes = ESCarousel['propTypes']
-
 SANCarousel.defaultProps = {}
 
 export default SANCarousel
