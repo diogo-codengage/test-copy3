@@ -16,6 +16,7 @@ export interface VideoParams {
     moduleName: string;
     subSpecialtyName: string;
     specialtyName: string;
+    courseId: string;
 }
 
 export interface IQuestionsContext {
