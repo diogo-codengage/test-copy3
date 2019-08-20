@@ -1,4 +1,8 @@
 export {
-    default as SANCollapseTheme,
-    ICollapseThemeProps
+    SANCollapseTheme,
+    SANCollapseThemePanel,
+    SANCollapseThemeControlled,
+    ISANCollapseThemeProps,
+    ISANCollapseThemeDataProps,
+    ISANCollapseThemeLessonProps
 } from './CollapseTheme'

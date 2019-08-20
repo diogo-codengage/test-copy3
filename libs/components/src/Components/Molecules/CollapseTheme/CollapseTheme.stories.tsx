@@ -1,6 +1,12 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import SANCollapseTheme from './CollapseTheme'
+
+import {
+    SANCollapseThemeControlled,
+    SANCollapseTheme,
+    SANCollapseThemePanel,
+    ISANCollapseThemeDataProps
+} from './CollapseTheme'
 
 const Icon = () => (
     <img src='https://lh6.googleusercontent.com/proxy/RvgTRICCMRQatVtmAql3Ekbq-hygP6Jl2-1326m1osHhT8shndAeJ72pePJkGFrEX7YUke7q221d3x6MVVa4rU0rECXXsvV8N66yClXWsqfVUNFI2eY5drQlCxzlFzdDdg7c6U06INMIJVqlnjNg8O7rdxZP1dx-4JRaRq4olw=w1200-h630-p-k-no-nu' />
@@ -51,40 +57,59 @@ const themes = [
         lessons
     },
     {
-        title: 'Anatomia dos Órgãos e Sistemas'
+        title: 'Anatomia dos Órgãos e Sistemas',
+        lessons
     },
     {
-        title: 'Anatomia dos Órgãos e Sistemas'
+        title: 'Anatomia dos Órgãos e Sistemas',
+        lessons
     },
     {
-        title: 'Anatomia dos Órgãos e Sistemas'
+        title: 'Anatomia dos Órgãos e Sistemas',
+        lessons
     },
     {
-        title: 'Anatomia dos Órgãos e Sistemas'
+        title: 'Anatomia dos Órgãos e Sistemas',
+        lessons
     },
     {
-        title: 'Anatomia dos Órgãos e Sistemas'
+        title: 'Anatomia dos Órgãos e Sistemas',
+        lessons
     },
     {
-        title: 'Anatomia dos Órgãos e Sistemas'
+        title: 'Anatomia dos Órgãos e Sistemas',
+        lessons
     },
     {
-        title: 'Anatomia dos Órgãos e Sistemas'
+        title: 'Anatomia dos Órgãos e Sistemas',
+        lessons
     },
     {
-        title: 'Anatomia dos Órgãos e Sistemas'
+        title: 'Anatomia dos Órgãos e Sistemas',
+        lessons
     },
     {
-        title: 'Anatomia dos Órgãos e Sistemas'
+        title: 'Anatomia dos Órgãos e Sistemas',
+        lessons
     }
 ]
 
-storiesOf('Molecules.CollapseTheme', module).add(
-    'Simple',
-    () => <SANCollapseTheme data={themes} />,
-    {
+const renderItem = (theme: ISANCollapseThemeDataProps, index: number) => (
+    <SANCollapseThemePanel key={index} {...{ ...theme, index }} />
+)
+
+storiesOf('Molecules.CollapseTheme', module)
+    .add('Controlled', () => <SANCollapseThemeControlled data={themes} />, {
         style: {
             backgroundColor: '#ffff'
         }
-    }
-)
+    })
+    .add(
+        'Uncontrolled',
+        () => <SANCollapseTheme>{themes.map(renderItem)}</SANCollapseTheme>,
+        {
+            style: {
+                backgroundColor: '#ffff'
+            }
+        }
+    )

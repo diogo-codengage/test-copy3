@@ -4,9 +4,13 @@ import {
     space,
     flexbox,
     border,
+    color,
+    typography,
     SpaceProps,
+    ColorProps,
     LayoutProps,
-    FlexboxProps
+    FlexboxProps,
+    TypographyProps
 } from 'styled-system'
 
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
@@ -17,12 +21,16 @@ type ISANTypographyProps = PropTypes.InferProps<
 > &
     SpaceProps &
     LayoutProps &
-    FlexboxProps
+    FlexboxProps &
+    ColorProps &
+    TypographyProps
 
 const SANTypography: SANElement<ISANTypographyProps> = SANStyled(ESTypography)`
     ${space}
     ${flexbox}
     ${border}
+    ${color}
+    ${typography}
 `
 
 export default SANTypography
