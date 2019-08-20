@@ -1,1 +1,1 @@
-export { default as SANEvaIcon } from './EvaIcon'
+export { default as SANEvaIcon, ISANEvaIconProps } from './EvaIcon'
