@@ -5,7 +5,7 @@ import { isDevEnvironment, isLocalhost, isProdEnvironment } from '../../Util/env
 import { getUserToken } from '../../Util/getUserToken'
 
 const getGraphqlUri = () => {
-    const dev = 'http://nlb-residencia-qa-aa2d4c0241e3f160.elb.us-east-1.amazonaws.com/graphql';
+    const dev = 'http://res-app-bff-sanar-staging.editorasanar.com.br/graphql';
     const prod = 'https://bff.sanarresidenciamedica.com.br/graphql'
 
     switch(true) {
