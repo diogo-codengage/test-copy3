@@ -22,36 +22,41 @@ const FLXResetPasswordPage: React.FC<any> = ({ history, location, form }) => {
     const [loading, setLoading] = useState(false)
     const params = new URLSearchParams(location.search)
 
-    const onSubmit = event => {
+    const onSubmit = async event => {
         event.preventDefault()
         setLoading(true)
 
-        form.validateFields()
-            .then(() => {
-                const { password } = form.getFieldsValue()
-                const email = params.get('email')
-                const code = params.get('codigo') || ''
+        try {
+            await form.validateFields()
 
-                resetPassword(email, code, password)
-                    .then(() => {
-                        setLoading(false)
-                        history.push('/auth/signin')
-                    })
-                    .catch(error => {
-                        setLoading(false)
-                        history.push('/auth/recuperar-senha')
-                        message.error(error.message)
-                    })
-            })
-            .catch(() => setLoading(false))
+            const { password } = form.getFieldsValue()
+            const email = params.get('email')
+            const code = params.get('codigo') || ''
+
+            await resetPassword(email, code, password)
+            history.push('/auth/signin')
+        } catch (error) {
+            if (error.message) {
+                history.push('/auth/recuperar-senha')
+                message.error(error.message)
+            }
+        }
     }
 
     const compareToFirstPassword = (rule, value, callback) => {
         if (value && value !== form.getFieldValue('password')) {
-            callback('Two passwords that you enter is inconsistent!')
+            callback('')
         } else {
             callback()
         }
+    }
+
+    const validateToNextPassword = (rule, value, callback) => {
+        const { passwordConfirm } = form.getFieldsValue()
+        if (value && passwordConfirm) {
+            form.validateFields(['passwordConfirm'], { force: true })
+        }
+        callback()
     }
 
     return (
@@ -77,6 +82,9 @@ const FLXResetPasswordPage: React.FC<any> = ({ history, location, form }) => {
                                 message: t('auth.validations.minPassword', {
                                     min: 6
                                 })
+                            },
+                            {
+                                validator: validateToNextPassword
                             }
                         ]}
                     >

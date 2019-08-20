@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
 import signInByEmail from './signIn'
@@ -34,24 +34,32 @@ const FLXSignIn: React.FC<any> = ({ history }) => {
         setShowModalTerms(true)
     }
 
-    const Terms = () => (
-        <ESRow type='flex' align='middle' justify='center'>
-            <ESCol>
-                <img src={sanar} alt='sanar' />
-            </ESCol>
-            <ESCol md={18}>
-                <ESTypography>
-                    {t('auth.footer.onEnter')}
-                    <span onClick={() => modalTermsOpen('0')}>
-                        {t('global.termsOfUse')}
-                    </span>
-                    {t('auth.footer.us')}
-                    <span onClick={() => modalTermsOpen('1')}>
-                        {t('global.privacyPolicy')}
-                    </span>
-                </ESTypography>
-            </ESCol>
-        </ESRow>
+    const onKeepMeLoggedIn = () => {
+        setKeepMeLoggedIn(old => !old)
+    }
+
+    const Terms = useMemo(
+        () => (
+            <ESRow type='flex' align='middle' justify='center'>
+                <ESCol>
+                    <img src={sanar} alt='sanar' />
+                </ESCol>
+                <ESCol md={18}>
+                    <ESTypography>
+                        {t('auth.footer.onEnter')}
+                        <span onClick={() => modalTermsOpen('0')}>
+                            {t('global.termsOfUse')}
+                        </span>
+                        {t('auth.footer.us')}
+                        <span onClick={() => modalTermsOpen('1')}>
+                            {t('global.privacyPolicy')}
+                        </span>
+                    </ESTypography>
+                </ESCol>
+            </ESRow>
+        ),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        []
     )
 
     return (
@@ -59,7 +67,7 @@ const FLXSignIn: React.FC<any> = ({ history }) => {
             <ESAuthTemplate
                 image={imageMarketing}
                 marketing={marketing}
-                terms={<Terms />}
+                terms={Terms}
                 description={t('auth.signInDescription')}
                 header={<ESBrandHeader logo={logo} />}
                 form={
@@ -69,7 +77,7 @@ const FLXSignIn: React.FC<any> = ({ history }) => {
                         login={t('auth.login')}
                         action={action}
                         isKeepMeLoggedChecked={keepMeLoggedIn}
-                        keepMeLogged={() => setKeepMeLoggedIn(old => !old)}
+                        keepMeLogged={onKeepMeLoggedIn}
                         signInByEmail={signInByEmail}
                     />
                 }
@@ -81,7 +89,6 @@ const FLXSignIn: React.FC<any> = ({ history }) => {
                 defaultActiveKey={activeKey}
                 scrolling
             />
-
         </>
     )
 }
