@@ -74,7 +74,7 @@ export const QuestionsHeader = () => {
                 onClick={
                     () => {
                         const uri = `${isLocalhost() ? 'http://localhost:8080' : ''}`
-                            + `/#/meus-cursos/${course.enrollmentId}/modulos/${course.moduleId}/${course.contentId}?back`
+                            + `/#/meus-cursos/${course.courseId}/${course.enrollmentId}/modulos/${course.moduleId}/${course.contentId}?back`
                         window.open(uri, '_self')
                     }
                 }
