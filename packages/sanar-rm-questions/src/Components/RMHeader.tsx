@@ -62,7 +62,7 @@ const RMHeaderTemplate = ({ title, rightElement, className }: IProp) => {
                         }}
                     >VOLTAR</ESButton>
                     <ESButton
-                        color='primary'
+                        color='black'
                         variant='solid'
                         uppercase
                         blockOnlyMobile

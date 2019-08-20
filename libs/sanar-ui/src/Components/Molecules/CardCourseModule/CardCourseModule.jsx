@@ -63,7 +63,7 @@ const ESCardCourseModule = ({
                             title={false}
                             dark
                         >
-                            {moduleName && (
+                            {!!moduleName && (
                                 <ESTypography
                                     variant='overline'
                                     className='mb-xs'
@@ -88,14 +88,14 @@ const ESCardCourseModule = ({
                             }}
                         />
                     </div>
-                    {!disabled && badge && (
+                    {!disabled && !!badge && (
                         <ESCommonBadge
                             className='es-car-course-module__content__badge'
                             status='warning'
                             count={badge}
                         />
                     )}
-                    {newBadge && (
+                    {!!newBadge && (
                         <div className='badge-new'>
                             <ESTypography variant='overline' strong>
                                 {t('cardCourseModule.new')}
@@ -103,7 +103,7 @@ const ESCardCourseModule = ({
                         </div>
                     )}
 
-                    {progress && (
+                    {!!progress && (
                         <ESProgress
                             status='warning'
                             percent={progress}
