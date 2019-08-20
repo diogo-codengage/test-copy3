@@ -10,7 +10,7 @@ export const isDevEnvironment = () => {
 }
 
 export const isProdEnvironment = () => {
-    return NODE_ENV === 'production'
+    return window.location.href.indexOf('aluno.sanarresidenciamedica.com.br') > -1;
 }
 
 

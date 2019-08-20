@@ -5,13 +5,11 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
     const where:any = {};
 
     if(filter.specialtiesIds.length > 0) {
-        where.specialty_ids = {
-            inq : filter.specialtiesIds
-        }
+        where.specialties = filter.specialtiesIds
     }
 
     if(filter.tagsIds.length > 0) {
-        where.tag_ids = filter.tagsIds
+        where.tags = filter.tagsIds
     }
 
     if(filter.institutionsIds.length > 0){
