@@ -20,7 +20,7 @@ import {
 } from '@sanar/components'
 
 import i18n from 'sanar-ui/dist/Config/i18n'
-import { SANStyled } from '@sanar/components/dist/Theme/createTheme'
+import { SANStyled } from '@sanar/components/dist/Theme'
 
 import { FLXCompletenessFilters } from 'Components/CompletenessFilters'
 

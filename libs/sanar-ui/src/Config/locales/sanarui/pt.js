@@ -200,6 +200,6 @@ export default {
         seeLess: 'Ver menos'
     },
     cardCourseModule: {
-        new: 'Novo'
+        new: 'Novo!'
     }
 }

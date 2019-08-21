@@ -1,2 +1,1 @@
-export { default as SANThemeColors } from './colors'
-export { createTheme } from './createTheme'
+export { createTheme, SANStyled, SANElement } from './createTheme'
