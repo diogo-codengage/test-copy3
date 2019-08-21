@@ -44,7 +44,7 @@ const FLXLayout: React.FC = ({ children }) => {
                     justifyContent='center'
                 >
                     <SANTypography color='grey.5' textAlign='center'>
-                        Copyright © Sanarflix. Todos os direitos reservados.
+                        Copyright © Sanarflix. {t('global.copyright')}.
                     </SANTypography>
                     <SANButton
                         bold
@@ -52,7 +52,7 @@ const FLXLayout: React.FC = ({ children }) => {
                         color='primary'
                         variant='text'
                     >
-                        Sobre SanarFlix
+                        {t('global.about')}
                     </SANButton>{' '}
                     |{' '}
                     <SANButton
@@ -62,7 +62,7 @@ const FLXLayout: React.FC = ({ children }) => {
                         variant='text'
                         onClick={() => modalTermsOpen('0')}
                     >
-                        {t('global.useTerms')}
+                        {t('global.termsOfUse')}
                     </SANButton>{' '}
                     |{' '}
                     <SANButton
@@ -72,7 +72,7 @@ const FLXLayout: React.FC = ({ children }) => {
                         variant='text'
                         onClick={() => modalTermsOpen('1')}
                     >
-                        Termos de Privacidade
+                        {t('global.privacyPolicy')}
                     </SANButton>
                 </SANFlexbox>
             </SANSpace>
