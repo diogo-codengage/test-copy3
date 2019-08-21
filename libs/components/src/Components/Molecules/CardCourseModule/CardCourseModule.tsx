@@ -1,16 +1,14 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import { space, SpaceProps } from 'styled-system'
 
+import { SANStyled, SANElement } from '../../../Theme/createTheme'
 import ESCardCourseModule from 'sanar-ui/dist/Components/Molecules/CardCourseModule'
 
-type IProps = PropTypes.InferProps<typeof propTypes>
+type IProps = PropTypes.InferProps<typeof ESCardCourseModule['propTypes']> &
+    SpaceProps
 
-const SANCardCourseModule: React.FC<IProps> = props => {
-    return <ESCardCourseModule {...props} />
-}
-
-const propTypes = ESCardCourseModule['propTypes']
-
-SANCardCourseModule.defaultProps = {}
+const SANCardCourseModule: SANElement<IProps> = SANStyled(ESCardCourseModule)`
+    ${space}
+`
 
 export default SANCardCourseModule

@@ -2,7 +2,12 @@ export default {
     global: {
         termsOfUse: 'Termos de Uso',
         privacyPolicy: 'Política de Privacidade',
-        send: 'Enviar'
+        send: 'Enviar',
+        completenessFilters: {
+            all: 'Todos',
+            completed: 'Concluídos',
+            incomplete: 'Incompletos'
+        }
     },
     auth: {
         accessAccount: 'Acessar conta',
@@ -50,6 +55,17 @@ export default {
             onEnter: 'Ao entrar na plataforma, você concorda com nossos',
             us: 'e nossa'
         }
+    },
+    courses: {
+        title: 'Cursos',
+        subtitle: 'Encontre aqui todos os cursos',
+        subheader: {
+            key: 'curso',
+            key_plural: 'disciplinas',
+            keyWithCount: '{{count}} cursos',
+            keyWithCount_plural: '{{count}} cursos'
+        },
+        viewCourse: 'Ver curso'
     },
     home: {
         viewedCourses: {

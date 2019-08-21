@@ -6,6 +6,7 @@ import FLXSplashLoader from 'Components/SplashLoader'
 import FLXLayoutProvider from 'Pages/Layout/Context'
 
 const FLXHome = React.lazy(() => import('./Home'))
+const FLXCourses = React.lazy(() => import('./Courses'))
 
 type FLXPrivatePages = {}
 
@@ -18,6 +19,7 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
                 <Suspense fallback={<FLXSplashLoader />}>
                     <Switch>
                         <Route path={`${url}/inicio`} component={FLXHome} />
+                        <Route path={`${url}/cursos`} component={FLXCourses} />
                         <Route
                             path={[`${url}`, `${url}/`]}
                             render={() => <Redirect to={`${url}/inicio`} />}

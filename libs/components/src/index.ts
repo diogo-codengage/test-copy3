@@ -20,6 +20,8 @@ import {
 import { SANThemeColors, createTheme as SANThemeCreateTheme } from 'Theme'
 import { SANSpin } from 'Components/Atoms/Spin'
 import { SANInfiniteScroll } from 'Components/Atoms/InfiniteScroll'
+import { SANRadio, SANRadioButton, SANRadioGroup } from 'Components/Atoms/Radio'
+import { SANTabs, SANTabPane } from 'Components/Molecules/Tabs'
 
 export {
     SANButton,
@@ -43,5 +45,10 @@ export {
     SANThemeColors,
     SANThemeCreateTheme,
     SANSpin,
-    SANInfiniteScroll
+    SANInfiniteScroll,
+    SANRadio,
+    SANRadioButton,
+    SANRadioGroup,
+    SANTabs,
+    SANTabPane
 }

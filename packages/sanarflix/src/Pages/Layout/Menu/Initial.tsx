@@ -25,7 +25,7 @@ const FLXMenuInitial: React.FC = () => {
                     title={t('mainMenu.initial.begin')}
                 />
                 <SANNavigationListItem
-                    to='#'
+                    to='/portal/cursos'
                     icon={<SANEvaIcon name='book-outline' color='default' />}
                     onClick={onCloseMenu}
                     dataTestid='flx-menu__go-to--allCourses'
