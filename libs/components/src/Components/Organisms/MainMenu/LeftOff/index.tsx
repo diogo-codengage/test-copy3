@@ -1,11 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { ESLeftOff } from 'sanar-ui/dist/Components/Organisms/MainMenu'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 
-type IProps = PropTypes.InferProps<typeof ESLeftOff.propTypes>
+import { ESLeftOff } from 'sanar-ui/dist/Components/Organisms/MainMenu'
+
+type IProps = {
+    title?: string
+    thumbnail?: string
+    classReference?: number | string
+    moduleReference?: number | string
+    label?: string
+    onClick?: () => void
+}
 
 const SANLeftOffStyled = styled.div`
     margin: ${theme('space.md')};

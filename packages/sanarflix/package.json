@@ -6,7 +6,7 @@
         "amazon-cognito-identity-js": "^3.0.15"
     },
     "scripts": {
-        "start": "env-cmd -f ./environments/.env.staging react-app-rewired start",
+        "start": "PORT=3001 env-cmd -f ./environments/.env.staging react-app-rewired start",
         "build:development": "env-cmd -f ./environments/.env.staging react-app-rewired build",
         "build:staging": "env-cmd -f ./environments/.env.staging react-app-rewired build",
         "build:production": "env-cmd -f ./environments/.env.production react-app-rewired build",

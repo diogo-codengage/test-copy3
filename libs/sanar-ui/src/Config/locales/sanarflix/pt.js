@@ -5,6 +5,8 @@ export default {
         send: 'Enviar',
         access: 'Acessar',
         viewCourse: 'Ver curso',
+        about: 'Sobre o SanarFlix',
+        copyright: 'Todos os direitos reservados',
         completenessFilters: {
             all: 'Todos',
             completed: 'Concluídos',

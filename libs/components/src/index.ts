@@ -10,7 +10,11 @@ import { SANCardCourseModule } from 'Components/Molecules/CardCourseModule'
 import { SANCarousel } from 'Components/Molecules/Carousel'
 import { SANRow, SANCol } from 'Components/Molecules/Grid'
 import { SANHeader } from 'Components/Molecules/Header'
-import { SANLayoutContainer, SANLayout } from 'Components/Organisms/Layout'
+import {
+    SANLayoutContainer,
+    SANLayout,
+    ISANLayoutFooterProps
+} from 'Components/Organisms/Layout'
 import {
     SANMainMenu,
     SANLeftOff,
@@ -23,6 +27,9 @@ import { SANInfiniteScroll } from 'Components/Atoms/InfiniteScroll'
 import { SANRadio, SANRadioButton, SANRadioGroup } from 'Components/Atoms/Radio'
 import { SANTabs, SANTabPane } from 'Components/Molecules/Tabs'
 import { SANQuery } from 'Components/Molecules/Query'
+import { SANFlexbox } from 'Components/Atoms/Flexbox'
+import { SANSpace } from 'Components/Atoms/Space'
+import { SANBox } from 'Components/Atoms/Box'
 
 export {
     SANButton,
@@ -39,6 +46,7 @@ export {
     SANHeader,
     SANLayoutContainer,
     SANLayout,
+    ISANLayoutFooterProps,
     SANMainMenu,
     SANLeftOff,
     SANNavigationList,
@@ -51,5 +59,8 @@ export {
     SANRadioGroup,
     SANTabs,
     SANTabPane,
-    SANQuery
+    SANQuery,
+    SANFlexbox,
+    SANSpace,
+    SANBox
 }
