@@ -1,14 +1,6 @@
 import React, { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
-import {
-    color,
-    flex,
-    layout,
-    ColorProps,
-    FlexProps,
-    LayoutProps
-} from 'styled-system'
 
 import {
     SANLayoutContainer,
@@ -16,11 +8,11 @@ import {
     SANInfiniteScroll,
     SANSessionTitle,
     SANRow,
-    SANCol
+    SANCol,
+    SANBox
 } from '@sanar/components'
 
 import i18n from 'sanar-ui/dist/Config/i18n'
-import { SANStyled } from '@sanar/components/dist/Theme'
 
 import { FLXCompletenessFilters } from 'Components/CompletenessFilters'
 
@@ -62,12 +54,6 @@ const mock = [
 const getMock = ({ limit = 12, offset = 0 }) =>
     mock.slice(offset, offset + limit)
 
-const Box: React.FC<ColorProps & FlexProps & LayoutProps> = SANStyled.div`
-    ${color}
-    ${flex}
-    ${layout}
-`
-
 const renderCourse = (course: any) => (
     <SANCol key={course.id} xs={12} lg={8} xl={6}>
         <SANCardCourseModule
@@ -93,7 +79,7 @@ const FLXCoursesList: React.FC<{ id?: string }> = () => {
     }
 
     return (
-        <Box bg='grey-solid.1' flex='1' height='100%'>
+        <SANBox bg='grey-solid.1' flex='1' height='100%'>
             <SANLayoutContainer pt={8} pb={7}>
                 <SANSessionTitle
                     title={t('courses.subheader.keyWithCount', {
@@ -115,7 +101,7 @@ const FLXCoursesList: React.FC<{ id?: string }> = () => {
                     <SANRow gutter={24}>{courses.map(renderCourse)}</SANRow>
                 </SANInfiniteScroll>
             </SANLayoutContainer>
-        </Box>
+        </SANBox>
     )
 }
 

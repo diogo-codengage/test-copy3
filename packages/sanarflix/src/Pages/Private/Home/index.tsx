@@ -3,7 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
-import { SANRow, SANCol, SANLayoutContainer } from '@sanar/components'
+import { SANRow, SANCol, SANLayoutContainer, SANBox } from '@sanar/components'
 
 import FLXViewedCourses from './ViewedCourses'
 import FLXAddedCourses from './AddedCourses'
@@ -20,8 +20,8 @@ const FLXHome: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('sanarflix')
 
     return (
-        <>
-            <SANLayoutContainer mt={8}>
+        <SANBox bg='grey-solid.1'>
+            <SANLayoutContainer pt={8}>
                 <SANRow gutter={16}>
                     <SANCol xs={24} md={12}>
                         <FLXBanner
@@ -61,7 +61,7 @@ const FLXHome: React.FC<RouteComponentProps> = ({ history }) => {
             </SANLayoutContainer>
             <FLXViewedCourses />
             <FLXAddedCourses />
-            <SANLayoutContainer mb={8}>
+            <SANLayoutContainer pb={8}>
                 <FLXBanner
                     SessionTitleProps={{
                         title: t(`${intl}.indicate.title`),
@@ -76,7 +76,7 @@ const FLXHome: React.FC<RouteComponentProps> = ({ history }) => {
                     }}
                 />
             </SANLayoutContainer>
-        </>
+        </SANBox>
     )
 }
 
