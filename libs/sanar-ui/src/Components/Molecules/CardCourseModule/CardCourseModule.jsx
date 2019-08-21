@@ -112,7 +112,12 @@ const ESCardCourseModule = ({
                         />
                     )}
                 </div>
-                <ESRow type='flex' align='middle' justify='end'>
+                <ESRow
+                    type='flex'
+                    align='middle'
+                    justify='end'
+                    className='es-car-course-module__footer'
+                >
                     <ESCol>{renderBasedOnDisabled(disabled)}</ESCol>
                 </ESRow>
             </>

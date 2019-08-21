@@ -21,6 +21,7 @@
     }
 
     & .backdrop {
+        z-index: 2;
         transition: transform 0.3s ease-in-out;
         bottom: 0;
         background-color: rgba(0, 0, 0, 0.75);
@@ -69,7 +70,7 @@
     }
 
     &__content {
-        z-index: 1;
+        z-index: 1000;
         background-color: inherit;
         width: 304px;
         height: ~'calc(100% + 8px)';
@@ -141,6 +142,7 @@
         }
 
         &-left {
+            z-index: 1000;
             flex-direction: column;
             box-shadow: 1px 0px 1px @grey-4;
             width: 56px;

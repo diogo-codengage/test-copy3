@@ -2,13 +2,18 @@ export default {
     global: {
         termsOfUse: 'Termos de Uso',
         privacyPolicy: 'Política de Privacidade',
-        send: 'Enviar'
+        send: 'Enviar',
+        completenessFilters: {
+            all: 'Todos',
+            completed: 'Concluídos',
+            incomplete: 'Incompletos'
+        }
     },
     auth: {
         accessAccount: 'Acessar conta',
         signInDescription:
             'Sua conta SANAR é a chave para você acessar todos os cursos e ferramentas para otimizar e impulsionar sua carreira médica.',
-        keepMeLoggedIn: 'Manter-me logado',
+        keepMeLoggedIn: 'Manter logado',
         forgotPassword: 'Esqueci minha senha',
         login: 'Entrar',
         title: 'Ou entre com os dados abaixo',
@@ -50,6 +55,17 @@ export default {
             onEnter: 'Ao entrar na plataforma, você concorda com nossos',
             us: 'e nossa'
         }
+    },
+    courses: {
+        title: 'Cursos',
+        subtitle: 'Encontre aqui todos os cursos',
+        subheader: {
+            key: 'curso',
+            key_plural: 'disciplinas',
+            keyWithCount: '{{count}} cursos',
+            keyWithCount_plural: '{{count}} cursos'
+        },
+        viewCourse: 'Ver curso'
     },
     home: {
         viewedCourses: {

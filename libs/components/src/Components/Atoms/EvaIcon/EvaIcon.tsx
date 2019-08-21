@@ -1,16 +1,26 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import styled, { css } from 'styled-components'
 import Icon from 'react-eva-icons'
+import {
+    color,
+    BackgroundColorProps,
+    OpacityProps,
+    ResponsiveValue
+} from 'styled-system'
 
 import { switchProp, theme } from 'styled-tools'
 
 const SANEvaIconStyled = styled.i`
+    ${color}
     & svg {
         fill: currentColor !important;
         width: 1em;
         height: 1em;
+    }
+
+    & > i {
+        display: flex;
     }
 
     ${switchProp('size', {
@@ -90,34 +100,18 @@ const SANEvaIconStyled = styled.i`
     })}
 `
 
-type IProps = PropTypes.InferProps<typeof propTypes>
+export interface ISANEvaIconProps extends BackgroundColorProps, OpacityProps {
+    color?: ResponsiveValue<any>
+    size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
+    name?: string
+}
 
-const SANEvaIcon: React.FC<IProps> = ({ color, size, ...props }) => {
+const SANEvaIcon: React.FC<ISANEvaIconProps> = ({ color, size, ...props }) => {
     return (
         <SANEvaIconStyled {...{ color, size }}>
             <Icon {...props} />
         </SANEvaIconStyled>
     )
 }
-
-const propTypes = Object.assign(
-    { ...Icon['propTypes'] },
-    {
-        color: PropTypes.oneOf([
-            'primary',
-            'secondary',
-            'success',
-            'warning',
-            'error',
-            'info',
-            'default',
-            'light',
-            'grey'
-        ]),
-        size: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large', 'xlarge'])
-    }
-)
-
-SANEvaIcon.defaultProps = Icon['defaultProps']
 
 export default SANEvaIcon

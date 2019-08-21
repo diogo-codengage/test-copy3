@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { useTranslation } from 'react-i18next'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import { SANRow, SANCol, SANLayoutContainer } from '@sanar/components'
 
@@ -15,7 +16,7 @@ import indicate from 'Assets/images/banners/indicate.png'
 
 const intl = 'home.banners'
 
-const FLXHome: React.FC = () => {
+const FLXHome: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('sanarflix')
 
     return (
@@ -33,7 +34,9 @@ const FLXHome: React.FC = () => {
                                 title: t(`${intl}.allCourses.title`),
                                 image: allCourses,
                                 ButtonProps: {
-                                    children: t(`${intl}.allCourses.action`)
+                                    children: t(`${intl}.allCourses.action`),
+                                    onClick: () =>
+                                        history.push('/portal/cursos')
                                 }
                             }}
                         />
@@ -77,4 +80,4 @@ const FLXHome: React.FC = () => {
     )
 }
 
-export default FLXHome
+export default withRouter(FLXHome)

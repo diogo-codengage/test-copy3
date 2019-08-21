@@ -22,23 +22,24 @@ const FLXSendPasswordRecoveryPage: React.FC<any> = ({ form, history }) => {
     const { t } = useTranslation('sanarflix')
     const [loading, setLoading] = useState(false)
 
-    const onSubmit = e => {
+    const onSubmit = async e => {
         e.preventDefault()
         setLoading(true)
         const { email } = form.getFieldsValue()
 
-        forgotPassword(email)
-            .then(() => {
-                history.push({
-                    pathname: 'recuperar-senha/sucesso',
-                    search: `?email=${email}`
-                })
-                setLoading(false)
+        try {
+            await form.validateFields()
+            await forgotPassword(email)
+
+            history.push({
+                pathname: 'recuperar-senha/sucesso',
+                search: `?email=${email}`
             })
-            .catch(error => {
-                message.error(error.message)
-                setLoading(false)
-            })
+        } catch (error) {
+            if (error.message) message.error(error.message)
+        }
+
+        setLoading(false)
     }
 
     return (
