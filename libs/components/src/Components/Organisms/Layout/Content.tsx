@@ -5,6 +5,8 @@ import { ifProp, theme } from 'styled-tools'
 const SANLayoutContentStyled = styled.div`
     height: 100%;
     padding-bottom: 56px;
+    display: flex;
+    flex-direction: column;
 
     ${ifProp(
         'showContinueBar',

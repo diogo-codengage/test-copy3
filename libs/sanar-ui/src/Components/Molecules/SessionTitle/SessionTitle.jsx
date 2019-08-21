@@ -31,10 +31,15 @@ const ESSessionTitle = ({
             align={subtitle ? 'bottom' : extra ? 'middle' : 'top'}
             className={classes}
             gutter={24}
+            data-testid='es-session-title'
         >
             <ESCol className='es-session-title__texts'>
                 {typeof title === 'string' ? (
-                    <ESTypography className={titleClasses} level={levelTitle}>
+                    <ESTypography
+                        className={titleClasses}
+                        level={levelTitle}
+                        data-testid='es-session-title__title'
+                    >
                         {title}
                     </ESTypography>
                 ) : (
@@ -45,6 +50,7 @@ const ESSessionTitle = ({
                         <ESTypography
                             className='es-session-title__texts--subtitle'
                             ellipsis
+                            data-testid='es-session-title__subtitle'
                         >
                             {subtitle}
                         </ESTypography>

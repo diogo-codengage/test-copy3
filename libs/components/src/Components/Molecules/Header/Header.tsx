@@ -12,7 +12,7 @@ import {
 import { SANLayoutContainer } from '../../Organisms/Layout'
 
 const SANHeaderStyled = styled.div`
-    height: 124px;
+    min-height: 124px;
     border-bottom: 1px solid ${theme('colors.grey.2')};
     display: flex;
     align-items: center;
@@ -54,9 +54,15 @@ const SANHeader: React.FC<ISANHeaderProps> = ({
     onBack
 }) => {
     return (
-        <SANHeaderStyled>
+        <SANHeaderStyled data-testid='san-header'>
             <SANLayoutContainer>
-                <SANButton circle size='xsmall' variant='text' onClick={onBack}>
+                <SANButton
+                    circle
+                    size='xsmall'
+                    variant='text'
+                    onClick={onBack}
+                    data-testid='san-header__back'
+                >
                     <SANEvaIcon name='arrow-ios-back-outline' />
                 </SANButton>
                 <SANSessionTitle {...{ ...SessionTitleProps, levelTitle: 4 }} />
