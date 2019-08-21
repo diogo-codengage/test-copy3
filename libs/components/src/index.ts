@@ -21,11 +21,12 @@ import {
     SANNavigationList,
     SANNavigationListItem
 } from 'Components/Organisms/MainMenu'
-import { SANThemeColors, createTheme as SANThemeCreateTheme } from 'Theme'
+import { createTheme as SANThemeCreateTheme } from 'Theme'
 import { SANSpin } from 'Components/Atoms/Spin'
 import { SANInfiniteScroll } from 'Components/Atoms/InfiniteScroll'
 import { SANRadio, SANRadioButton, SANRadioGroup } from 'Components/Atoms/Radio'
 import { SANTabs, SANTabPane } from 'Components/Molecules/Tabs'
+import { SANQuery } from 'Components/Molecules/Query'
 import { SANFlexbox } from 'Components/Atoms/Flexbox'
 import { SANSpace } from 'Components/Atoms/Space'
 import { SANBox } from 'Components/Atoms/Box'
@@ -50,7 +51,6 @@ export {
     SANLeftOff,
     SANNavigationList,
     SANNavigationListItem,
-    SANThemeColors,
     SANThemeCreateTheme,
     SANSpin,
     SANInfiniteScroll,
@@ -59,6 +59,7 @@ export {
     SANRadioGroup,
     SANTabs,
     SANTabPane,
+    SANQuery,
     SANFlexbox,
     SANSpace,
     SANBox

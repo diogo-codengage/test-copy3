@@ -3,6 +3,8 @@ export default {
         termsOfUse: 'Termos de Uso',
         privacyPolicy: 'Política de Privacidade',
         send: 'Enviar',
+        access: 'Acessar',
+        viewCourse: 'Ver curso',
         about: 'Sobre o SanarFlix',
         copyright: 'Todos os direitos reservados',
         completenessFilters: {

@@ -49,7 +49,6 @@ const ESSessionTitle = ({
                     (typeof subtitle === 'string' ? (
                         <ESTypography
                             className='es-session-title__texts--subtitle'
-                            ellipsis
                             data-testid='es-session-title__subtitle'
                         >
                             {subtitle}

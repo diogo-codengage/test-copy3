@@ -6,8 +6,16 @@ import {
     SANSessionTitle,
     SANCarousel,
     SANCardCourseModule,
-    SANLayoutContainer
+    SANLayoutContainer,
+    SANQuery
 } from '@sanar/components'
+import i18n from 'sanar-ui/dist/Config/i18n'
+
+import {
+    GET_COURSES_LAST_VIEWED,
+    ICourses,
+    ICourse
+} from 'Apollo/Home/Queries/courses-last-viewed'
 
 export const responsive = [
     {
@@ -25,7 +33,8 @@ export const responsive = [
             slidesToShow: 2,
             arrows: false,
             centerMode: true,
-            infinite: true
+            infinite: true,
+            swipeToSlide: true
         }
     },
     {
@@ -34,23 +43,32 @@ export const responsive = [
             slidesToShow: 1,
             arrows: false,
             centerMode: true,
-            infinite: true
+            infinite: true,
+            swipeToSlide: true
         }
     }
 ]
 
-const FLXViewedCourses: React.FC = () => {
-    const { t } = useTranslation('sanarflix')
+const renderCourse = (course: ICourse) => (
+    <div key={course.id}>
+        <SANCardCourseModule
+            title={course.name}
+            badge='70%'
+            progress={70}
+            actionName={i18n.t('sanarflix:global.viewCourse')}
+            image={course.cover_picture_url}
+            size='small'
+        />
+    </div>
+)
 
+const Courses = () => {
     return (
-        <>
-            <SANLayoutContainer>
-                <SANSessionTitle
-                    title={t('home.viewedCourses.title')}
-                    subtitle={t('home.viewedCourses.subtitle')}
-                />
-            </SANLayoutContainer>
-            <SANLayoutContainer mb={8} fullMobile>
+        <SANQuery
+            query={GET_COURSES_LAST_VIEWED}
+            loaderProps={{ minHeight: 186, flex: true }}
+        >
+            {(data: ICourses) => (
                 <SANCarousel
                     slidesToShow={4}
                     slidesToScroll={1}
@@ -62,19 +80,26 @@ const FLXViewedCourses: React.FC = () => {
                     lazyLoad
                     responsive={responsive}
                 >
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((_, index) => (
-                        <div key={index} style={{ width: 232 }}>
-                            <SANCardCourseModule
-                                title={`Exames Laboratoriais - ${index}`}
-                                badge='70%'
-                                progress={70}
-                                actionName='Ver curso'
-                                image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzM7PUwo278lb88GzaJE6KUEt4bOh01hK8NU29IqEhmq0wuUGv'
-                                size='small'
-                            />
-                        </div>
-                    ))}
+                    {data.courses.data.map(renderCourse)}
                 </SANCarousel>
+            )}
+        </SANQuery>
+    )
+}
+
+const FLXViewedCourses = () => {
+    const { t } = useTranslation('sanarflix')
+
+    return (
+        <>
+            <SANLayoutContainer>
+                <SANSessionTitle
+                    title={t('home.viewedCourses.title')}
+                    subtitle={t('home.viewedCourses.subtitle')}
+                />
+            </SANLayoutContainer>
+            <SANLayoutContainer mb={8} fullMobile>
+                <Courses />
             </SANLayoutContainer>
         </>
     )
