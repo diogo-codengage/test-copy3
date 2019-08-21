@@ -1,6 +1,8 @@
 .es-password-recovery-template {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding: @padding-md;
     background: @white;
 
@@ -10,7 +12,7 @@
     }
 
     &--with-brand-header {
-        padding-top: 78px !important;
+        padding-top: 60px !important;
     }
 
     .es-brand-header {
@@ -20,62 +22,86 @@
         right: 0;
     }
 
-    &__content {
+    &__container-content {
+        display: flex;
+
+        flex: auto;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         max-width: 360px;
 
-        &__infos {
-            margin-bottom: @margin-md;
-
-            &--large-margin {
-                margin-bottom: @margin-lg;
-            }
-
-            text-align: center;
-
-            &--title {
-                color: @grey-solid-9;
-            }
-
-            &--subtitle {
-                color: @grey-solid-7;
-            }
-
-            .es-typography {
-                text-align: center;
-            }
-
-            img {
-                max-width: 75%;
-                max-height: 20%;
-                margin-bottom: @margin-lg;
-            }
-        }
-
-        &__actions {
-            .es-typography {
-                text-align: center;
-            }
-        }
-
-        @media (min-width: @screen-md) {
+        &__content {    
             &__infos {
+                margin-bottom: @margin-md;
+    
                 &--large-margin {
-                    margin-bottom: @margin-xxl;
+                    margin-bottom: @margin-lg;
                 }
-
+    
+                text-align: center;
+    
+                &--title {
+                    color: @grey-solid-9;
+                }
+    
+                &--subtitle {
+                    color: @grey-solid-7;
+                }
+    
+                .es-typography {
+                    text-align: center;
+                }
+    
                 img {
-                    max-width: 100%;
-                    margin-bottom: @margin-xxl;
+                    max-width: 75%;
+                    max-height: 20%;
+                    margin-bottom: @margin-lg;
+                }
+            }
+    
+            &__actions {
+                .es-typography {
+                    text-align: center;
+                }
+            }
+    
+            @media (min-width: @screen-md) {
+                &__infos {
+                    &--large-margin {
+                        margin-bottom: @margin-xxl;
+                    }
+    
+                    img {
+                        max-width: 100%;
+                        margin-bottom: @margin-xxl;
+                    }
+                }
+            }
+    
+            @media (max-height: @screen-xs-max) {
+                &__infos {
+                    img {
+                        display: none;
+                    }
                 }
             }
         }
+    }
 
-        @media (max-height: @screen-xs-max) {
-            &__infos {
-                img {
-                    display: none;
-                }
-            }
+
+    &__footer {
+        width: 100vw;
+        border-top: 1px solid @grey-2;
+        margin: -@margin-md;
+        padding: @padding-md;
+        text-align: center;
+        background: rgba(250, 250, 250, 1)
+    }
+
+    @media(min-width: @screen-lg) {
+        &--with-brand-header {
+            padding-top: 78px !important;
         }
     }
 }
