@@ -8,7 +8,6 @@ export type ISANTabPaneProps = PropTypes.InferProps<
     typeof ESTabPane['propTypes']
 >
 
-const SANTabPane = SANStyled(ESTabPane)`
-`
+const SANTabPane = SANStyled(ESTabPane)``
 
 export default SANTabPane

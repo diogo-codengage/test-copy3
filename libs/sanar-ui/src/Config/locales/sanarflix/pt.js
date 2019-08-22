@@ -62,7 +62,7 @@ export default {
         }
     },
     courses: {
-        title: 'Cursos',
+        title: 'Todos os Cursos',
         subtitle: 'Encontre aqui todos os cursos',
         subheader: {
             key: 'curso',

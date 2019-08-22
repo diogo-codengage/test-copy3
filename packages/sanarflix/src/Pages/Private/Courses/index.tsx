@@ -35,7 +35,7 @@ const Topics = () => {
     return (
         <SANQuery query={GET_TOPICS} loaderProps={{ flex: true, minHeight: 0 }}>
             {({ data }: { data: ITopics }) => (
-                <SANTabs defaultActiveKey='all' center flex='1'>
+                <SANTabs defaultActiveKey='all' flex='1' container>
                     <SANTabPane
                         tab={
                             <SANTypography variant='subtitle2' strong>
