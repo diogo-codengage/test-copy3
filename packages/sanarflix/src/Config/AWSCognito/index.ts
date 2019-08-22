@@ -24,7 +24,7 @@ const constructor = email => {
     }
 
     user = new CognitoUser(userData)
-    return { user }
+    return { user, userPool }
 }
 
 const getStorageEmail = (): string => {
@@ -41,7 +41,7 @@ const getInstance = (email?: string | null) => {
         return constructor(newEmail)
     }
 
-    return { user }
+    return { user, userPool }
 }
 
 export { getInstance }

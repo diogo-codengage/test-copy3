@@ -5,11 +5,11 @@ import { getInstance } from 'Config/AWSCognito'
 
 const config = getInstance()
 
-const getAccessToken = () =>
-    config.user.getSession((err, session) => {
-        // if (err) window.location = '#/auth'
+const getAccessToken = () => {
+    return config.userPool.getCurrentUser().getSession((_, session) => {
         return session.getIdToken().getJwtToken()
     })
+}
 
 const client = new ApolloClient({
     uri: process.env.REACT_APP_URL_API,
