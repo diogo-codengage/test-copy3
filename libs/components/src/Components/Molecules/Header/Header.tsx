@@ -29,7 +29,7 @@ const SANHeaderStyled = styled.div`
         ${SANButton} {
             position: absolute;
             left: -24px;
-            top: calc(100% - 30px);
+            top: calc(100% - 58px);
             background-color: ${theme('colors.grey.0')};
             color: ${theme('colors.grey.6')};
 
@@ -63,7 +63,7 @@ const SANHeader: React.FC<ISANHeaderProps> = ({
                     onClick={onBack}
                     data-testid='san-header__back'
                 >
-                    <SANEvaIcon name='arrow-ios-back-outline' />
+                    <SANEvaIcon name='arrow-ios-back-outline' size='medium' />
                 </SANButton>
                 <SANSessionTitle {...{ ...SessionTitleProps, levelTitle: 4 }} />
             </SANLayoutContainer>
