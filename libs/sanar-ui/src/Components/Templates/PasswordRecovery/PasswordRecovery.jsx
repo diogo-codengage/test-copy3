@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import ESBrandHeader from '../../Atoms/BrandHeader'
 import ESTypography from '../../Atoms/Typography'
 
+import logo from '../../../assets/images/logo/logo-grey.svg'
+
 const ESPasswordRecoveryTemplate = ({
     className,
     image,
@@ -21,10 +23,10 @@ const ESPasswordRecoveryTemplate = ({
     })
 
     const classesInfo = classNames(
-        'es-password-recovery-template__content__infos',
+        'es-password-recovery-template__container-content__content__infos',
         className,
         {
-            'es-password-recovery-template__content__infos--large-margin':
+            'es-password-recovery-template__container-content__content__infos--large-margin':
                 actionsMargin === 'large'
         }
     )
@@ -32,27 +34,35 @@ const ESPasswordRecoveryTemplate = ({
     return (
         <div className={classes}>
             {brandHeader && (header || <ESBrandHeader />)}
-            <div className='es-password-recovery-template__content'>
-                <div className={classesInfo}>
-                    <img src={image} />
-                    <ESTypography
-                        className='es-password-recovery-template__content__infos--title mb-md'
-                        level={4}
-                    >
-                        {title}
-                    </ESTypography>
-                    <ESTypography
-                        className='es-password-recovery-template__content__infos--subtitle'
-                        variant='subtitle2'
-                    >
-                        {subtitle}
-                    </ESTypography>
-                </div>
+            <div className='es-password-recovery-template__container-content'>
+                <div className='es-password-recovery-template__container-content__content'>
+                    <div className={classesInfo}>
+                        <img src={image} />
+                        <ESTypography
+                            className='es-password-recovery-template__container-content__content__infos--title mb-md'
+                            level={4}
+                        >
+                            {title}
+                        </ESTypography>
+                        <ESTypography
+                            className='es-password-recovery-template__container-content__content__infos--subtitle'
+                            variant='subtitle2'
+                        >
+                            {subtitle}
+                        </ESTypography>
+                    </div>
 
-                <div className='es-password-recovery-template__content__actions'>
-                    {actions}
+                    <div className='es-password-recovery-template__container-content__content__actions'>
+                        {actions}
+                    </div>
                 </div>
             </div>
+
+            {fullHeight && (
+                <div className='es-password-recovery-template__footer'>
+                    <img src={logo} alt='sanar-logo' />
+                </div>
+            )}
         </div>
     )
 }
