@@ -9,20 +9,21 @@ import SANLayoutFooter from './Footer'
 import sanarLogo from 'Assets/images/brand/sanar.svg'
 import { ISANLayoutFooterProps } from 'index'
 
-const SANLayoutStyled = styled.div`
-    height: 100vh;
-    overflow: hidden;
+const SANLayoutStyled = styled.section`
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 `
 
-const SANLayoutContentStyled = styled.div`
+const SANLayoutContentStyled = styled.main`
     flex: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 `
 
-const SANContentContainer = styled.div`
-    height: 100%;
-    overflow: auto;
+const SANContentContainer = styled.section`
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 

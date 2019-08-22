@@ -5,6 +5,10 @@ const FLXGlobalStyle = createGlobalStyle`
     font-family: 'Nunito Sans', sans-serif !important;
     src: url('https://fonts.googleapis.com/css?family=Nunito+Sans:700,400');
   }
+
+  body {
+    overflow-x: hidden;
+  }
 `
 
 export default FLXGlobalStyle

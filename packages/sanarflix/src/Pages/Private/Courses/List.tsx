@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { useTranslation } from 'react-i18next'
+import { theme } from 'styled-tools'
 
 import {
     SANLayoutContainer,
@@ -9,98 +10,131 @@ import {
     SANSessionTitle,
     SANRow,
     SANCol,
-    SANBox
+    SANBox,
+    SANTypography,
+    SANStyled,
+    SANQuery
 } from '@sanar/components'
 
 import i18n from 'sanar-ui/dist/Config/i18n'
 
+import { GET_COURSES, ICourses, ICourse } from 'Apollo/Courses/Queries/courses'
+
 import { FLXCompletenessFilters } from 'Components/CompletenessFilters'
+import { useCoursesContext } from './Context'
 
-const mock = [
-    {
-        id: 1,
-        name: 'Anatomia do Sistema Locomotor',
-        progress: 60
-    },
-    {
-        id: 2,
-        name: 'Anatomia dos Órgãos e Sistemas',
-        progress: 100
-    },
-    { id: 3, name: 'Antibioticoterapia', progress: 100 },
-    { id: 4, name: 'Biofísica', progress: 60 },
-    { id: 5, name: 'Biologia Molecular e Celular', progress: 60 },
-    { id: 6, name: 'Bioquímica', progress: 0 },
-    { id: 7, name: 'Eletrocardiograma (ECG)', progress: 60 },
-    { id: 8, name: 'Embriologia', progress: 50 },
-    { id: 9, name: 'Exames Laboratoriais', progress: 25 },
-    { id: 10, name: 'Farmacologia', progress: 37 },
-    { id: 11, name: 'Medicina Preventiva', progress: 8 },
-    { id: 12, name: 'Microbiologia', progress: 20 },
-    { id: 13, name: 'Exames Laboratoriais', progress: 96 },
-    { id: 14, name: 'Farmacologia', progress: 44 },
-    { id: 15, name: 'Medicina Preventiva', progress: 29 },
-    { id: 16, name: 'Microbiologia', progress: 2 },
-    { id: 17, name: 'Exames Laboratoriais', progress: 1 },
-    { id: 18, name: 'Farmacologia', progress: 8 },
-    { id: 19, name: 'Medicina Preventiva', progress: 17 },
-    { id: 20, name: 'Microbiologia - 1', progress: 15 },
-    { id: 21, name: 'Microbiologia - 2', progress: 15 },
-    { id: 22, name: 'Microbiologia - 3', progress: 15 },
-    { id: 23, name: 'Microbiologia - 4', progress: 15 },
-    { id: 24, name: 'Microbiologia - 5', progress: 15 }
-]
+const SANSessionTitleStyled = SANStyled(SANSessionTitle)`
+    & > div:nth-child(2) {
+        display: block;
+        flex: inherit;
+        margin: 0;
 
-const getMock = ({ limit = 12, offset = 0 }) =>
-    mock.slice(offset, offset + limit)
+        ${theme('mediaQueries.down.xs')} {
+            margin-top: ${theme('space.md')};
+        }
+    }
+`
 
-const renderCourse = (course: any) => (
+const renderCourse = (course: ICourse) => (
     <SANCol key={course.id} xs={12} lg={8} xl={6}>
         <SANCardCourseModule
             mb='xl'
-            image='https://www.tmlawyers.com/wp-content/uploads/2018/11/data-breach-min-2-232x128.jpg'
-            title={`${course.name} - ${course.id}`}
-            progress={course.progress}
-            badge={`${course.progress}%`}
+            image={course.cover_picture_url}
+            title={course.name}
+            progress={70}
+            badge={'70%'}
             actionName={i18n.t('sanarflix:courses.viewCourse')}
         />
     </SANCol>
 )
 
-const FLXCoursesList: React.FC<{ id?: string }> = () => {
-    const { t } = useTranslation('sanarflix')
-    const [courses, setCourses] = useState<Object[]>([])
+const updateCacheCourses = (prev, { fetchMoreResult }) => {
+    if (!fetchMoreResult) return prev
+    return Object.assign({}, prev, {
+        courses: {
+            ...prev.courses,
+            data: [...prev.courses.data, ...fetchMoreResult.courses.data]
+        }
+    })
+}
 
-    const loadMore = (page: number) => {
-        setTimeout(() => {
-            const res = getMock({ offset: courses.length })
-            setCourses(old => [...old, ...res])
-        }, 500)
-    }
+const FLXCoursesList: React.FC<{ id?: string }> = ({ id }) => {
+    const { t } = useTranslation('sanarflix')
+    const {
+        completenessFilter,
+        onChangeCompletenessFilters
+    } = useCoursesContext()
 
     return (
         <SANBox bg='grey-solid.1' flex='1' height='100%'>
-            <SANLayoutContainer pt={8} pb={7}>
-                <SANSessionTitle
-                    title={t('courses.subheader.keyWithCount', {
-                        count: 60
-                    })}
-                    extra={<FLXCompletenessFilters defaultValue={1} />}
-                    extraOnLeft
-                    m='0'
-                />
-            </SANLayoutContainer>
-            <SANLayoutContainer pb={7}>
-                <SANInfiniteScroll
-                    useWindow={false}
-                    threshold={204}
-                    pageStart={0}
-                    loadMore={loadMore}
-                    hasMore={courses.length < 36}
-                >
-                    <SANRow gutter={24}>{courses.map(renderCourse)}</SANRow>
-                </SANInfiniteScroll>
-            </SANLayoutContainer>
+            <SANQuery
+                query={GET_COURSES}
+                options={{
+                    variables: {
+                        tagId: id,
+                        ...(completenessFilter !== 'all' && {
+                            completeness: completenessFilter
+                        })
+                    }
+                }}
+                loaderProps={{ flex: true, minHeight: 200 }}
+            >
+                {({
+                    data: { courses },
+                    fetchMore
+                }: {
+                    data: ICourses
+                    fetchMore: (data: any) => Object
+                }) => (
+                    <>
+                        <SANLayoutContainer pt={8} pb={7}>
+                            <SANSessionTitleStyled
+                                title={t('courses.subheader.keyWithCount', {
+                                    count: courses.count
+                                })}
+                                extra={
+                                    <FLXCompletenessFilters
+                                        defaultValue='all'
+                                        value={completenessFilter}
+                                        onChange={onChangeCompletenessFilters}
+                                    />
+                                }
+                                extraOnLeft
+                                m='0'
+                            />
+                        </SANLayoutContainer>
+                        <SANLayoutContainer pb={7}>
+                            {!!courses.data.length ? (
+                                <SANInfiniteScroll
+                                    threshold={204}
+                                    loadMore={() =>
+                                        fetchMore({
+                                            variables: {
+                                                offset: courses.data.length
+                                            },
+                                            updateQuery: updateCacheCourses
+                                        })
+                                    }
+                                    hasMore={
+                                        courses.data.length < courses.count
+                                    }
+                                >
+                                    <SANRow gutter={24}>
+                                        {courses.data.map(renderCourse)}
+                                    </SANRow>
+                                </SANInfiniteScroll>
+                            ) : (
+                                <SANTypography
+                                    textAlign='center'
+                                    variant='subtitle1'
+                                >
+                                    Nada por aqui
+                                </SANTypography>
+                            )}
+                        </SANLayoutContainer>
+                    </>
+                )}
+            </SANQuery>
         </SANBox>
     )
 }
