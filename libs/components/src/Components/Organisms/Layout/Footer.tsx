@@ -1,21 +1,19 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
-import { flexbox, grid, space } from 'styled-system'
 
 import { SANLayoutContainer } from '.'
-import { SANFlexbox } from 'Components/Atoms/Flexbox'
-import { SANTypography } from 'Components/Atoms/Typography'
-import { SANSpace } from 'Components/Atoms/Space'
+import { SANFlexbox } from '../../Atoms/Flexbox'
+import { SANTypography } from '../../Atoms/Typography'
+import { SANSpace } from '../../Atoms/Space'
 
-import facebook from 'Assets/images/social/facebook.svg'
-import instagram from 'Assets/images/social/instagram.svg'
-import youtube from 'Assets/images/social/youtube.svg'
-import phone from 'Assets/images/social/phone.svg'
-import email from 'Assets/images/social/email.svg'
-import { SANButton } from 'Components/Atoms/Button'
-import { SANBox } from 'Components/Atoms/Box'
+import facebook from '../../../Assets/images/social/facebook.svg'
+import instagram from '../../../Assets/images/social/instagram.svg'
+import youtube from '../../../Assets/images/social/youtube.svg'
+import phone from '../../../Assets/images/social/phone.svg'
+import email from '../../../Assets/images/social/email.svg'
+import { SANButton } from '../../Atoms/Button'
+import { SANBox } from '../../Atoms/Box'
 
 const SANLayoutFooterStyled = styled.footer`
     background: ${theme('pureWhite')};

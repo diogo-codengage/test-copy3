@@ -25,7 +25,7 @@ import {
 
 import { ifProp } from 'styled-tools'
 
-import { SANStyled } from 'Theme/createTheme'
+import { SANStyled } from '../../../Theme/createTheme'
 
 interface IProps
     extends SpaceProps,
