@@ -9,6 +9,8 @@ import { withKnobs } from '@storybook/addon-knobs'
 
 import './styles.less'
 
+import 'sanar-ui/dist/Config/i18n'
+
 const defaultStyle = {
     padding: 20,
     minHeight: '200px',
