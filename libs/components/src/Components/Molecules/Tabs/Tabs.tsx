@@ -12,6 +12,9 @@ export type ISANTabsProps = PropTypes.InferProps<typeof ESTabs['propTypes']> &
     FlexProps & { overflow?: boolean }
 
 const SANTabs = SANStyled(ESTabs)`
+    display: flex;
+    flex-direction: column;
+
     & > div:first-child {
         margin: 0;
     }
@@ -24,7 +27,7 @@ const SANTabs = SANStyled(ESTabs)`
     )}
 
     & .ant-tabs-content {
-        height: 100%;
+        flex: 1;
     }
 
     ${space}

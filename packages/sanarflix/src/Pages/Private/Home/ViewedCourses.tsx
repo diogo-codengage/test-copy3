@@ -68,7 +68,7 @@ const Courses = () => {
             query={GET_COURSES_LAST_VIEWED}
             loaderProps={{ minHeight: 186, flex: true }}
         >
-            {(data: ICourses) => (
+            {({ data }: { data: ICourses }) => (
                 <SANCarousel
                     slidesToShow={4}
                     slidesToScroll={1}

@@ -6,66 +6,68 @@ import {
     SANHeader,
     SANTabs,
     SANTabPane,
-    SANTypography
+    SANTypography,
+    SANBox,
+    SANQuery
 } from '@sanar/components'
 
+import { GET_TOPICS, ITopics, ITopic } from 'Apollo/Courses/Queries/topics'
+
 import FLXCoursesList from './List'
+import FLXCoursesProvider from './Context'
 
-const tags = [
-    {
-        id: 1,
-        name: 'Todos os Cursos'
-    },
-    {
-        id: 2,
-        name: 'Ciclo Básico'
-    },
-    {
-        id: 3,
-        name: 'Clínica Cirúrgica'
-    },
-    {
-        id: 4,
-        name: 'Clínica Médica'
-    },
-    {
-        id: 5,
-        name: 'Ginecologia e Obstetrícia'
-    },
-    {
-        id: 6,
-        name: 'Pediatria'
-    }
-]
-
-const renderTab = (tag, index) => (
+const renderTab = (topic: ITopic) => (
     <SANTabPane
         tab={
             <SANTypography variant='subtitle2' strong>
-                {tag.name}
+                {topic.name}
             </SANTypography>
         }
-        key={index}
+        key={topic.id}
     >
-        <FLXCoursesList id={tag.id} />
+        <FLXCoursesList id={topic.id} />
     </SANTabPane>
 )
+
+const Topics = () => {
+    const { t } = useTranslation('sanarflix')
+
+    return (
+        <SANQuery query={GET_TOPICS} loaderProps={{ flex: true, minHeight: 0 }}>
+            {({ data }: { data: ITopics }) => (
+                <SANTabs defaultActiveKey='all' center flex='1'>
+                    <SANTabPane
+                        tab={
+                            <SANTypography variant='subtitle2' strong>
+                                {t('global.allCourses')}
+                            </SANTypography>
+                        }
+                        key='all'
+                    >
+                        <FLXCoursesList />
+                    </SANTabPane>
+                    {data.topics.data.map(renderTab)}
+                </SANTabs>
+            )}
+        </SANQuery>
+    )
+}
 
 const FLXCourses: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('sanarflix')
     return (
-        <>
-            <SANHeader
-                onBack={() => history.goBack()}
-                SessionTitleProps={{
-                    title: t('courses.title'),
-                    subtitle: t('courses.subtitle')
-                }}
-            />
-            <SANTabs defaultActiveKey='0' center flex='1' overflow={false}>
-                {tags.map(renderTab)}
-            </SANTabs>
-        </>
+        <FLXCoursesProvider>
+            <SANBox displayFlex flexDirection='column' flex='1'>
+                <SANHeader
+                    onBack={() => history.goBack()}
+                    SessionTitleProps={{
+                        title: t('courses.title'),
+                        subtitle: t('courses.subtitle')
+                    }}
+                />
+                <Topics />
+            </SANBox>
+        </FLXCoursesProvider>
     )
 }
 

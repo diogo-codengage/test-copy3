@@ -31,6 +31,8 @@ import { SANFlexbox } from 'Components/Atoms/Flexbox'
 import { SANSpace } from 'Components/Atoms/Space'
 import { SANBox } from 'Components/Atoms/Box'
 
+import { SANStyled, SANElement } from 'Theme/'
+
 export {
     SANButton,
     SANEvaIcon,
@@ -62,5 +64,7 @@ export {
     SANQuery,
     SANFlexbox,
     SANSpace,
-    SANBox
+    SANBox,
+    SANStyled,
+    SANElement
 }

@@ -17,8 +17,9 @@ import email from 'Assets/images/social/email.svg'
 import { SANButton } from 'Components/Atoms/Button'
 import { SANBox } from 'Components/Atoms/Box'
 
-const SANLayoutFooterStyled = styled.div`
+const SANLayoutFooterStyled = styled.footer`
     background: ${theme('pureWhite')};
+    flex: 0 0 auto;
 `
 
 const Infos = styled.div`
