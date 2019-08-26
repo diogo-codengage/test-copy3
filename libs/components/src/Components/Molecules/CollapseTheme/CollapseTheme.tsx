@@ -6,7 +6,7 @@ import { theme, ifProp } from 'styled-tools'
 import { SANCollapse, SANCollapsePanel } from '../../Atoms/Collapse'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
-import { SANStyled, SANElement } from '../../../Theme/createTheme'
+import { SANStyled } from '../../../Theme/createTheme'
 
 const IconWrapperStyled = SANStyled.div`
     position: absolute;
@@ -81,7 +81,7 @@ export interface ISANCollapseThemeProps {
     data: ISANCollapseThemeDataProps[]
 }
 
-const renderClass = (
+export const renderClass = (
     { id, icon, title, subtitle, checked }: ISANCollapseThemeLessonProps,
     index: number
 ) => (

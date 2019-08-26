@@ -49,12 +49,14 @@ export const responsive = [
     }
 ]
 
+const round = n => Math.round(n)
+
 const renderCourse = (course: ICourse) => (
     <div key={course.id}>
         <SANCardCourseModule
             title={course.name}
-            badge='70%'
-            progress={70}
+            badge={`${round(course.progress_percentage)}%`}
+            progress={round(course.progress_percentage)}
             actionName={i18n.t('sanarflix:global.viewCourse')}
             image={course.cover_picture_url}
             size='small'

@@ -4,6 +4,7 @@ export interface ICourse {
     id: string
     name: string
     cover_picture_url: string
+    progress_percentage: number
 }
 
 export interface ICourses {
@@ -19,6 +20,7 @@ export const GET_COURSES_LAST_VIEWED = gql`
                 id
                 name
                 cover_picture_url
+                progress_percentage
             }
         }
     }

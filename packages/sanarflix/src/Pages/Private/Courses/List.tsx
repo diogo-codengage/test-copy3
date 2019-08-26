@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { theme } from 'styled-tools'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
     SANLayoutContainer,
@@ -35,7 +36,7 @@ const SANSessionTitleStyled = SANStyled(SANSessionTitle)`
     }
 `
 
-const renderCourse = (course: ICourse) => (
+const renderCourse = history => (course: ICourse) => (
     <SANCol key={course.id} xs={12} lg={8} xl={6}>
         <SANCardCourseModule
             mb='xl'
@@ -44,6 +45,7 @@ const renderCourse = (course: ICourse) => (
             progress={70}
             badge={'70%'}
             actionName={i18n.t('sanarflix:courses.viewCourse')}
+            onClick={() => history.push(`/portal/curso/${course.id}`)}
         />
     </SANCol>
 )
@@ -58,7 +60,10 @@ const updateCacheCourses = (prev, { fetchMoreResult }) => {
     })
 }
 
-const FLXCoursesList: React.FC<{ id?: string }> = ({ id }) => {
+const FLXCoursesList: React.FC<RouteComponentProps & { id?: string }> = ({
+    id,
+    history
+}) => {
     const { t } = useTranslation('sanarflix')
     const {
         completenessFilter,
@@ -120,7 +125,9 @@ const FLXCoursesList: React.FC<{ id?: string }> = ({ id }) => {
                                     }
                                 >
                                     <SANRow gutter={24}>
-                                        {courses.data.map(renderCourse)}
+                                        {courses.data.map(
+                                            renderCourse(history)
+                                        )}
                                     </SANRow>
                                 </SANInfiniteScroll>
                             ) : (
@@ -139,4 +146,4 @@ const FLXCoursesList: React.FC<{ id?: string }> = ({ id }) => {
     )
 }
 
-export default FLXCoursesList
+export default withRouter(FLXCoursesList)

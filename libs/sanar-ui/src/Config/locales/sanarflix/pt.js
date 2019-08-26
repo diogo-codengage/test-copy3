@@ -61,6 +61,15 @@ export default {
             us: 'e nossa'
         }
     },
+    course: {
+        subheader: {
+            key: 'tema',
+            key_plural: 'temas',
+            keyWithCount: '{{count}} Tema',
+            keyWithCount_plural: '{{count}} Temas'
+        },
+        viewCourse: 'Ver curso'
+    },
     courses: {
         title: 'Todos os Cursos',
         subtitle: 'Encontre aqui todos os cursos',

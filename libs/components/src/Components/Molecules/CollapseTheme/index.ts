@@ -4,5 +4,6 @@ export {
     SANCollapseThemeControlled,
     ISANCollapseThemeProps,
     ISANCollapseThemeDataProps,
-    ISANCollapseThemeLessonProps
+    ISANCollapseThemeLessonProps,
+    renderClass
 } from './CollapseTheme'
