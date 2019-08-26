@@ -36,6 +36,7 @@ import {
     SANCollapseThemePanel,
     SANCollapseThemeControlled
 } from 'Components/Molecules/CollapseTheme'
+import { SANEmpty } from 'Components/Atoms/Empty'
 
 import { SANStyled, SANElement } from 'Theme/'
 
@@ -72,6 +73,7 @@ export {
     SANSpace,
     SANBox,
     SANCardInfo,
+    SANEmpty,
     SANStyled,
     SANElement,
     SANCollapseTheme,

@@ -1,14 +1,8 @@
 import React from 'react'
 
-import {
-    flexbox,
-    FlexboxProps,
-    SpaceProps,
-    ColorProps,
-    compose
-} from 'styled-system'
+import { flexbox, FlexboxProps, ColorProps, compose } from 'styled-system'
 
-import { SANStyled } from 'Theme/createTheme'
+import { SANStyled } from '../../../Theme/createTheme'
 
 interface IProps extends FlexboxProps, ColorProps {}
 

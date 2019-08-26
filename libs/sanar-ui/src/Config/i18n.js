@@ -7,6 +7,8 @@ import esanarPt from './locales/esanar/pt'
 import esanarEn from './locales/esanar/en'
 import sanarflixPt from './locales/sanarflix/pt'
 import sanarflixEn from './locales/sanarflix/en'
+import componentsPt from './locales/components/pt'
+import componentsEn from './locales/components/en'
 
 const sanaruiI18n = i18n.createInstance()
 
@@ -21,12 +23,14 @@ sanaruiI18n
             pt: {
                 sanarui: sanaruiPt,
                 esanar: esanarPt,
-                sanarflix: sanarflixPt
+                sanarflix: sanarflixPt,
+                components: componentsPt
             },
             en: {
                 sanarui: sanaruiEn,
                 esanar: esanarEn,
-                sanarflix: sanarflixEn
+                sanarflix: sanarflixEn,
+                components: componentsEn
             }
         },
         interpolation: {

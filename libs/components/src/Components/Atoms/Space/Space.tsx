@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { space, SpaceProps, ColorProps, compose } from 'styled-system'
-import { SANStyled } from 'Theme/createTheme'
+import { SANStyled } from '../../../Theme/createTheme'
 
 interface IProps extends SpaceProps, ColorProps {}
 
