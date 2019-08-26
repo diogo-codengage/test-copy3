@@ -11,7 +11,7 @@ import {
     SANRow,
     SANCol,
     SANBox,
-    SANTypography,
+    SANEmpty,
     SANStyled,
     SANQuery
 } from '@sanar/components'
@@ -124,12 +124,7 @@ const FLXCoursesList: React.FC<{ id?: string }> = ({ id }) => {
                                     </SANRow>
                                 </SANInfiniteScroll>
                             ) : (
-                                <SANTypography
-                                    textAlign='center'
-                                    variant='subtitle1'
-                                >
-                                    Nada por aqui
-                                </SANTypography>
+                                <SANEmpty />
                             )}
                         </SANLayoutContainer>
                     </>

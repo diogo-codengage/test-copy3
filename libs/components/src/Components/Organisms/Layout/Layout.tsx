@@ -6,7 +6,7 @@ import { ifProp, theme } from 'styled-tools'
 import { SANMainMenu } from '../MainMenu'
 import SANLayoutFooter from './Footer'
 
-import sanarLogo from 'Assets/images/brand/sanar.svg'
+import sanarLogo from '../../../Assets/images/brand/sanar.svg'
 import { ISANLayoutFooterProps } from 'index'
 
 const SANLayoutStyled = styled.section`

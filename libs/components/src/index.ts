@@ -30,6 +30,7 @@ import { SANQuery } from 'Components/Molecules/Query'
 import { SANFlexbox } from 'Components/Atoms/Flexbox'
 import { SANSpace } from 'Components/Atoms/Space'
 import { SANBox } from 'Components/Atoms/Box'
+import { SANEmpty } from 'Components/Atoms/Empty'
 
 import { SANStyled, SANElement } from 'Theme/'
 
@@ -65,6 +66,8 @@ export {
     SANFlexbox,
     SANSpace,
     SANBox,
+    SANEmpty,
+
     SANStyled,
     SANElement
 }
