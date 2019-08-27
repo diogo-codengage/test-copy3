@@ -1,9 +1,6 @@
 @spacing-button: -40px;
 
 .es-carousel {
-    margin-left: -8px;
-    margin-right: -8px;
-
     & .slick-prev {
         left: @spacing-button;
     }
@@ -31,5 +28,10 @@
                 margin: 0 @margin-xs;
             }
         }
+    }
+
+    @media(min-width: @screen-lg) {
+        margin-left: -8px;
+        margin-right: -8px;
     }
 }
