@@ -25,6 +25,9 @@ import { FLXCompletenessFilters } from 'Components/CompletenessFilters'
 import { useCoursesContext } from './Context'
 
 const SANSessionTitleStyled = SANStyled(SANSessionTitle)`
+    & > div:nth-child(1) {
+        margin-right: 90px;
+    }
     & > div:nth-child(2) {
         display: block;
         flex: inherit;

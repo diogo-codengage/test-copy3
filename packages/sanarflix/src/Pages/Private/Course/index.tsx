@@ -1,61 +1,155 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
-import { theme } from 'styled-tools'
+
 import { withRouter, RouteComponentProps } from 'react-router-dom'
+import LinesEllipsis from 'react-lines-ellipsis'
+import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC'
 
 import {
     SANHeader,
     SANBox,
     SANLayoutContainer,
     SANTypography,
-    SANSessionTitle,
     SANCardInfo,
     SANCarousel,
+    SANRow,
+    SANCol,
+    SANDivider,
     SANStyled,
     SANQuery
 } from '@sanar/components'
 
-import { GET_COURSE, ICourses } from 'Apollo/Course/Queries/course'
+import i18n from 'sanar-ui/dist/Config/i18n'
+
+import articleSvg from 'Assets/images/course-items/article.svg'
+import certifiedSvg from 'Assets/images/course-items/certified.svg'
+import classSvg from 'Assets/images/course-items/class.svg'
+import flowSvg from 'Assets/images/course-items/flow.svg'
+import mentalMap from 'Assets/images/course-items/mental-map.svg'
+import questionSvg from 'Assets/images/course-items/question.svg'
+import resumeSvg from 'Assets/images/course-items/resume.svg'
+
+import {
+    GET_COURSE,
+    ICourses,
+    ICourseCounters
+} from 'Apollo/Course/Queries/course'
 
 import Themes from './Themes'
 
-const Extra = () => (
-    <SANCarousel
-        slidesToShow={4}
-        slidesToScroll={1}
-        initialSlide={0}
-        arrows
-        infinite
-        dots={false}
-        draggable
-        lazyLoad
-    >
-        {[0, 1, 2, 3, 4, 5].map(() => (
-            <SANCardInfo
-                count={9}
-                limit={100}
-                suffix={'+'}
-                image={
-                    'http://icons.iconarchive.com/icons/designbolts/free-multimedia/1024/Play-icon.png'
-                }
-                text={'Vídeos'}
-            />
-        ))}
-    </SANCarousel>
-)
+const ResponsiveLinesEllipsis = responsiveHOC(0)(LinesEllipsis)
 
-const SANSessionTitleStyled = SANStyled(SANSessionTitle)`
-    & > div:nth-child(2) {
-        display: block;
-        flex: inherit;
-        margin: 0;
-
-        ${theme('mediaQueries.down.xs')} {
-            margin-top: ${theme('space.md')};
+const responsive = [
+    {
+        breakpoint: 1500,
+        settings: {
+            arrows: false,
+            swipeToSlide: true
+        }
+    },
+    {
+        breakpoint: 480,
+        settings: {
+            slidesToShow: 2,
+            arrows: false,
+            swipeToSlide: true
         }
     }
+]
+
+const makeCardProps = ({ counters, image, item, ...props }) => ({
+    text: i18n.t(`sanarflix:course.counters.${item}.key`, {
+        count: counters[item]
+    }),
+    count: counters[item],
+    image,
+    ...props
+})
+
+const getCardProps = (counters: ICourseCounters) => {
+    const items = Object.keys(counters).filter(key => !!counters[key])
+    let cardsProps: any[] = []
+    items.forEach(item => {
+        switch (item) {
+            case 'articles':
+                cardsProps.push(
+                    makeCardProps({ counters, image: articleSvg, item })
+                )
+                break
+            case 'certificates':
+                cardsProps.push(
+                    makeCardProps({ counters, image: certifiedSvg, item })
+                )
+                break
+            case 'flowcharts':
+                cardsProps.push(
+                    makeCardProps({ counters, image: flowSvg, item })
+                )
+                break
+            case 'lessons':
+                cardsProps.push(
+                    makeCardProps({
+                        counters,
+                        image: classSvg,
+                        item,
+                        suffix: 'h'
+                    })
+                )
+                break
+            case 'mentalmaps':
+                cardsProps.push(
+                    makeCardProps({ counters, image: mentalMap, item })
+                )
+                break
+            case 'questions':
+                cardsProps.push(
+                    makeCardProps({ counters, image: questionSvg, item })
+                )
+                break
+            case 'resumes':
+                cardsProps.push(
+                    makeCardProps({ counters, image: resumeSvg, item })
+                )
+                break
+            default: {
+            }
+        }
+    })
+    return cardsProps
+}
+
+const SANBoxStyled = SANStyled(SANBox)`
+    @media screen and (min-width: 1500px) {
+        width: calc(100% - 47px);
+    }
 `
+
+const Cards = ({ counters }: { counters: ICourseCounters }) => {
+    const items = getCardProps(counters)
+
+    const renderItem = (item, index) => (
+        <SANCardInfo key={index} {...item} limit={100} />
+    )
+
+    return (
+        <SANBoxStyled mb={{ xs: 'xxl', sm: 0 }}>
+            <SANCarousel
+                slidesToShow={4}
+                slidesToScroll={1}
+                initialSlide={0}
+                arrows
+                infinite
+                dots={false}
+                draggable
+                lazyLoad
+                responsive={responsive}
+            >
+                {items.map(renderItem)}
+            </SANCarousel>
+        </SANBoxStyled>
+    )
+}
 
 const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
     history,
@@ -64,9 +158,14 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
     }
 }) => {
     const { t } = useTranslation('sanarflix')
+    const [showDescription, setShowDescription] = useState(false)
 
     return (
-        <SANQuery query={GET_COURSE} options={{ variables: { id } }}>
+        <SANQuery
+            query={GET_COURSE}
+            options={{ variables: { id } }}
+            loaderProps={{ minHeight: '100%', flex: true }}
+        >
             {({ data }: { data: ICourses }) => {
                 const course = data.courses.data[0]
                 return (
@@ -74,33 +173,58 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
                         <SANHeader
                             onBack={() => history.goBack()}
                             SessionTitleProps={{
-                                title: t('courses.title'),
-                                subtitle: t('courses.subtitle')
+                                title: course.name
                             }}
                         />
-                        <SANLayoutContainer my={8}>
-                            <SANSessionTitle
-                                title='O que esse curso possui'
-                                subtitle={
-                                    <SANTypography
-                                        ellipsis={{
-                                            rows: 2,
-                                            showAction: true,
-                                            basedOn: 'letters'
-                                        }}
+                        <SANLayoutContainer mt={8}>
+                            <SANRow type='flex' align='middle' gutter={64}>
+                                <SANCol xs={{ span: 24, order: 1 }} lg={7}>
+                                    <SANBox mb='md'>
+                                        <SANTypography level={5} mb='xs'>
+                                            {t('course.whatCurseHave')}
+                                        </SANTypography>
+                                        <ResponsiveLinesEllipsis
+                                            text={course.description}
+                                            maxLine={2}
+                                            ellipsis={
+                                                <SANTypography
+                                                    variant='subtitle2'
+                                                    strong
+                                                    color='primary'
+                                                    component='span'
+                                                    ml='xs'
+                                                    onClick={() =>
+                                                        setShowDescription(
+                                                            old => !old
+                                                        )
+                                                    }
+                                                >
+                                                    {showDescription
+                                                        ? t('course.seeLess')
+                                                        : t('course.viewMore')}
+                                                </SANTypography>
+                                            }
+                                        />
+                                    </SANBox>
+                                </SANCol>
+                                <SANCol xs={{ span: 24, order: 3 }} lg={17}>
+                                    <Cards counters={course.counters} />
+                                </SANCol>
+                                {showDescription && (
+                                    <SANCol
+                                        xs={{ span: 24, order: 2 }}
+                                        sm={{ span: 24, order: 3 }}
                                     >
-                                        Mussum Ipsum, cacilds vidis litro
-                                        abertis. Aenean aliquam molestie leo,
-                                        vitae iaculis nisl. Interessantiss
-                                        quisso pudia ce receita de bolis, mais
-                                        bolis eu num gostis. Mé faiz elementum
-                                        girarzis, nisi eros vermeio. Nullam
-                                        volutpat risus nec leo commodo, ut
-                                        interdum diam laoreet. Sed non consequat
-                                        odio.
-                                    </SANTypography>
-                                }
-                            />
+                                        <SANTypography
+                                            variant='subtitle2'
+                                            my='md'
+                                        >
+                                            {course.description}
+                                        </SANTypography>
+                                    </SANCol>
+                                )}
+                            </SANRow>
+                            <SANDivider mt='md' />
                         </SANLayoutContainer>
                         <Themes courseId={course.id} />
                     </SANBox>

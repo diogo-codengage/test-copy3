@@ -1,28 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { theme } from 'styled-tools'
 
 import {
     SANLayoutContainer,
-    SANTypography,
     SANSessionTitle,
     SANInfiniteScroll,
     SANCollapseTheme,
     SANCollapseThemePanel,
     SANStyled,
+    SANEmpty,
     SANQuery
 } from '@sanar/components'
 import { renderClass } from '@sanar/components/dist/Components/Molecules/CollapseTheme'
 
-import { FLXCompletenessFilters } from 'Components/CompletenessFilters'
+import {
+    FLXCompletenessFilters,
+    ICompletenessFiltersValues
+} from 'Components/CompletenessFilters'
 import { GET_THEMES, IThemes } from 'Apollo/Course/Queries/themes'
 import {
     GET_THEME_CONTENTS,
     IThemeContents
 } from 'Apollo/Course/Queries/theme-contents'
 
+import classSvg from 'Assets/images/contents/class.svg'
+import flowSvg from 'Assets/images/contents/flow.svg'
+import mentalMapSvg from 'Assets/images/contents/mental-map.svg'
+import questionSvg from 'Assets/images/contents/question.svg'
+import resumeSvg from 'Assets/images/contents/resume.svg'
+
 const SANSessionTitleStyled = SANStyled(SANSessionTitle)`
+    & > div:nth-child(1) {
+        margin-right: ${theme('space.xl')};
+    }
     & > div:nth-child(2) {
         display: block;
         flex: inherit;
@@ -44,32 +56,54 @@ const updateCacheThemes = (prev, { fetchMoreResult }) => {
     })
 }
 
-const lessons = {
-    // icon: <Icon />,
-    title: 'Nome do Artigo e Diretriz',
-    subtitle: 'Artigos e Diretrizes',
-    checked: false
-}
-
 const renderTheme = (theme, index) => (
-    <SANCollapseThemePanel key={theme.id} index={index} title={theme.name}>
-        <div>dsad</div>
+    <SANCollapseThemePanel
+        customKey={theme.id}
+        index={index}
+        title={theme.name}
+    >
         <SANQuery<IThemeContents>
             query={GET_THEME_CONTENTS}
             options={{ variables: { themeId: theme.id } }}
+            loaderProps={{ minHeight: 70, flex: true }}
         >
-            {({ data: { themeContents } }: { data: IThemeContents }) => (
-                <div>dsad</div>
-            )}
+            {({ data: { themeContents } }: { data: IThemeContents }) =>
+                themeContents.data.map(content =>
+                    renderClass({
+                        id: content.id,
+                        title: content.title,
+                        subtitle: 'subtitle',
+                        checked: content.completed
+                    })
+                )
+            }
         </SANQuery>
     </SANCollapseThemePanel>
 )
 
 const Themes = ({ courseId }: { courseId: string }) => {
     const { t } = useTranslation('sanarflix')
+    const [completenessFilter, setCompletenessFilter] = useState<
+        ICompletenessFiltersValues
+    >('all')
+
+    const onChangeCompletenessFilters = (
+        e: React.ChangeEvent<HTMLSelectElement>
+    ) => setCompletenessFilter(e.target.value as ICompletenessFiltersValues)
 
     return (
-        <SANQuery query={GET_THEMES} options={{ variables: { courseId } }}>
+        <SANQuery
+            query={GET_THEMES}
+            options={{
+                variables: {
+                    courseId,
+                    ...(completenessFilter !== 'all' && {
+                        completeness: completenessFilter
+                    })
+                }
+            }}
+            loaderProps={{ minHeight: 150, flex: true }}
+        >
             {({
                 data: { themes },
                 fetchMore
@@ -78,7 +112,7 @@ const Themes = ({ courseId }: { courseId: string }) => {
                 fetchMore: (data: any) => Object
             }) => (
                 <>
-                    <SANLayoutContainer pt={8} pb={7}>
+                    <SANLayoutContainer pt={7} pb={7}>
                         <SANSessionTitleStyled
                             title={t('course.subheader.keyWithCount', {
                                 count: themes.count
@@ -86,8 +120,8 @@ const Themes = ({ courseId }: { courseId: string }) => {
                             extra={
                                 <FLXCompletenessFilters
                                     defaultValue='all'
-                                    value={'all'}
-                                    onChange={() => {}}
+                                    value={completenessFilter}
+                                    onChange={onChangeCompletenessFilters}
                                 />
                             }
                             extraOnLeft
@@ -95,22 +129,26 @@ const Themes = ({ courseId }: { courseId: string }) => {
                         />
                     </SANLayoutContainer>
                     <SANLayoutContainer pb={8}>
-                        <SANInfiniteScroll
-                            threshold={71}
-                            loadMore={() =>
-                                fetchMore({
-                                    variables: {
-                                        offset: themes.data.length
-                                    },
-                                    updateQuery: updateCacheThemes
-                                })
-                            }
-                            hasMore={themes.data.length < themes.count}
-                        >
-                            <SANCollapseTheme>
-                                {themes.data.map(renderTheme)}
-                            </SANCollapseTheme>
-                        </SANInfiniteScroll>
+                        {!!themes.data.length ? (
+                            <SANInfiniteScroll
+                                threshold={71}
+                                loadMore={() =>
+                                    fetchMore({
+                                        variables: {
+                                            offset: themes.data.length
+                                        },
+                                        updateQuery: updateCacheThemes
+                                    })
+                                }
+                                hasMore={themes.data.length < themes.count}
+                            >
+                                <SANCollapseTheme>
+                                    {themes.data.map(renderTheme)}
+                                </SANCollapseTheme>
+                            </SANInfiniteScroll>
+                        ) : (
+                            <SANEmpty />
+                        )}
                     </SANLayoutContainer>
                 </>
             )}

@@ -1,16 +1,20 @@
 import gql from 'graphql-tag'
 
+export interface ICourseCounters {
+    questions: number | null
+    certificates: number | null
+    lessons: number | null
+    resumes: number | null
+    mentalmaps: number | null
+    flowcharts: number | null
+    articles: number | null
+}
+
 export interface ICourse {
     id: string
     name: string
     description: string
-    certificatesCount: number | null
-    lessionsCount: number | null
-    resoumesCount: number | null
-    questionsCount: number | null
-    mentalMapCount: number | null
-    fluxogramsCount: number | null
-    articlesGuidelinesCount: number | null
+    counters: ICourseCounters
 }
 
 export interface ICourses {
@@ -25,14 +29,16 @@ export const GET_COURSE = gql`
             data {
                 id
                 name
-                certificatesCount
-                lessionsCount
-                resoumesCount
-                questionsCount
-                mentalMapCount
-                fluxogramsCount
-                articlesGuidelinesCount
                 description
+                counters {
+                    questions
+                    certificates
+                    lessons
+                    resumes
+                    mentalmaps
+                    flowcharts
+                    articles
+                }
             }
         }
     }

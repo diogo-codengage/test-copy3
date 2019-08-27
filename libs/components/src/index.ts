@@ -37,6 +37,7 @@ import {
     SANCollapseThemeControlled
 } from 'Components/Molecules/CollapseTheme'
 import { SANEmpty } from 'Components/Atoms/Empty'
+import { SANDivider } from 'Components/Atoms/Divider'
 
 import { SANStyled, SANElement } from 'Theme/'
 
@@ -78,5 +79,6 @@ export {
     SANElement,
     SANCollapseTheme,
     SANCollapseThemePanel,
-    SANCollapseThemeControlled
+    SANCollapseThemeControlled,
+    SANDivider
 }
