@@ -10,6 +10,7 @@ import {
 } from '@sanar/components'
 import FLXMenuContent from './Menu'
 
+import { withRouter, RouterProps } from 'react-router'
 import { useLayoutContext } from './Context'
 
 import logo from 'Assets/images/brand/logo-menu.svg'
@@ -17,7 +18,7 @@ import logoFooter from 'Assets/images/brand/logo-grey.svg'
 import FLXModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 import { useTranslation } from 'react-i18next'
 
-const FLXLayout: React.FC = ({ children }) => {
+const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
     const { t } = useTranslation('sanarflix')
     const { menuRef, currentMenuTitle } = useLayoutContext()
     const [showModalTerms, setShowModalTerms] = useState(false)
@@ -32,7 +33,8 @@ const FLXLayout: React.FC = ({ children }) => {
         children: <FLXMenuContent />,
         logo,
         ref: menuRef,
-        title: currentMenuTitle
+        title: currentMenuTitle,
+        onHome: () => history.push('/portal/inicio')
     }
 
     const Copyright = () => {
@@ -113,4 +115,4 @@ const FLXLayout: React.FC = ({ children }) => {
     )
 }
 
-export default FLXLayout
+export default withRouter(FLXLayout)
