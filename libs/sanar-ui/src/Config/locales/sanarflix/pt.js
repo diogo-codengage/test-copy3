@@ -72,6 +72,16 @@ export default {
         },
         viewCourse: 'Ver curso'
     },
+    course: {
+        continue: 'Continuar de onde parei',
+        itemSuggest: 'Próximo item sugerido',
+        banners: {
+            questionsBase: {
+                title: 'Banco de Questões',
+                action: 'Acessar'
+            }
+        }
+    },
     home: {
         viewedCourses: {
             title: 'Cursos Visualizados',
