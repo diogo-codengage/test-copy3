@@ -1,11 +1,18 @@
 import gql from 'graphql-tag'
 
+export type IType =
+    | 'resume'
+    | 'mentalmap'
+    | 'flowchart'
+    | 'article'
+    | 'lesson'
+    | 'question'
 export interface IThemeContent {
     id: string
     index: string
     resource_type: string
     title: string
-    type: string
+    type: IType
     completed: boolean
 }
 

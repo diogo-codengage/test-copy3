@@ -14,6 +14,7 @@ import {
     SANQuery
 } from '@sanar/components'
 import { renderClass } from '@sanar/components/dist/Components/Molecules/CollapseTheme'
+import i18n from 'sanar-ui/dist/Config/i18n'
 
 import {
     FLXCompletenessFilters,
@@ -22,7 +23,8 @@ import {
 import { GET_THEMES, IThemes } from 'Apollo/Course/Queries/themes'
 import {
     GET_THEME_CONTENTS,
-    IThemeContents
+    IThemeContents,
+    IType
 } from 'Apollo/Course/Queries/theme-contents'
 
 import classSvg from 'Assets/images/contents/class.svg'
@@ -30,6 +32,17 @@ import flowSvg from 'Assets/images/contents/flow.svg'
 import mentalMapSvg from 'Assets/images/contents/mental-map.svg'
 import questionSvg from 'Assets/images/contents/question.svg'
 import resumeSvg from 'Assets/images/contents/resume.svg'
+
+const Img = props => <img {...props} width={26} />
+
+const typesIcon = {
+    resume: <Img src={resumeSvg} />,
+    question: <Img src={questionSvg} />,
+    mentalmap: <Img src={mentalMapSvg} />,
+    flowchart: <Img src={flowSvg} />,
+    article: <Img src={resumeSvg} />,
+    lesson: <Img src={classSvg} />
+}
 
 const SANSessionTitleStyled = SANStyled(SANSessionTitle)`
     & > div:nth-child(1) {
@@ -72,7 +85,10 @@ const renderTheme = (theme, index) => (
                     renderClass({
                         id: content.id,
                         title: content.title,
-                        subtitle: 'subtitle',
+                        subtitle: i18n.t(
+                            `sanarflix:global.types.${content.type}`
+                        ),
+                        icon: typesIcon[content.type],
                         checked: content.completed
                     })
                 )

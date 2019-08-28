@@ -1,10 +1,18 @@
 import gql from 'graphql-tag'
 
+type Type =
+    | 'resume'
+    | 'mentalmap'
+    | 'flowchart'
+    | 'article'
+    | 'lesson'
+    | 'question'
+
 export interface IContent {
     id: string
     title: string
     thumbnail: string
-    type: string
+    type: Type
 }
 
 export interface IContents {

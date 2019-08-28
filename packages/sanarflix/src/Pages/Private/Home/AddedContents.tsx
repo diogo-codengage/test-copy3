@@ -22,7 +22,7 @@ const renderContent = (content: IContent) => (
     <div key={content.id}>
         <SANCardCourseModule
             title={content.title}
-            moduleName='Tipo do item'
+            moduleName={i18n.t(`sanarflix:global.types.${content.type}`)}
             actionName={i18n.t('sanarflix:global.access')}
             image={content.thumbnail}
             size='small'

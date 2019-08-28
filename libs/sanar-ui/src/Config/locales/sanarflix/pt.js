@@ -12,6 +12,14 @@ export default {
             all: 'Todos',
             completed: 'Concluídos',
             incomplete: 'Incompletos'
+        },
+        types: {
+            resume: 'Resumo',
+            mentalmap: 'Mapa mental',
+            flowchart: 'Fluxograma',
+            article: 'Artigos e Diretrizes',
+            lesson: 'Aula',
+            question: 'Questão'
         }
     },
     auth: {
