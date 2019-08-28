@@ -13,7 +13,7 @@ export const getUserToken = async () => {
     if (isLocalhost()) {
         // const user = await Auth.signIn('testesanar@gmail.com', 'sanar123')
         // return user.signInUserSession.idToken.jwtToken
-        return 'BMXtYtzuP4o0bM5P6tXuADDZsP860pyAkjEGcrHmqzPW9vyPm449g8MYm5KO1GoT'
+        return 'tlKsaWrqNKLoZfJBqmrdSX7NbNqrESjBkAaewB9NpRB0wdH53zkVEtA691RsGViX'
     } else {
 
         const goToLogin = () => {
