@@ -39,14 +39,16 @@ const SANSessionTitleStyled = SANStyled(SANSessionTitle)`
     }
 `
 
+const round = n => Math.round(n)
+
 const renderCourse = history => (course: ICourse) => (
     <SANCol key={course.id} xs={12} lg={8} xl={6}>
         <SANCardCourseModule
             mb='xl'
             image={course.cover_picture_url}
             title={course.name}
-            progress={70}
-            badge={'70%'}
+            badge={`${round(course.progress_percentage)}%`}
+            progress={round(course.progress_percentage)}
             actionName={i18n.t('sanarflix:courses.viewCourse')}
             onClick={() => history.push(`/portal/curso/${course.id}`)}
         />
