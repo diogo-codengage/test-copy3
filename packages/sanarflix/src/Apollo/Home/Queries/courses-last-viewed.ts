@@ -15,7 +15,7 @@ export interface ICourses {
 
 export const GET_COURSES_LAST_VIEWED = gql`
     {
-        courses(order: viewed, limit: 20) {
+        courses(order: viewed, limit: 50) {
             data {
                 id
                 name

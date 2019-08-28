@@ -119,7 +119,7 @@ export default {
             title: 'Cursos Visualizados',
             subtitle: 'Continue assistindo de onde você parou'
         },
-        addedCourses: {
+        addedContents: {
             title: 'Adicionados',
             subtitle:
                 'Conteúdos adicionados toda semana! Aulas, resumos e outros materiaos que acabaram de chegar'

@@ -6,7 +6,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { SANRow, SANCol, SANLayoutContainer, SANBox } from '@sanar/components'
 
 import FLXViewedCourses from './ViewedCourses'
-import FLXAddedCourses from './AddedCourses'
+import FLXAddedContents from './AddedContents'
 
 import FLXBanner from 'Components/Banner'
 
@@ -60,7 +60,7 @@ const FLXHome: React.FC<RouteComponentProps> = ({ history }) => {
                 </SANRow>
             </SANLayoutContainer>
             <FLXViewedCourses />
-            <FLXAddedCourses />
+            <FLXAddedContents />
             <SANLayoutContainer pb={8}>
                 <FLXBanner
                     SessionTitleProps={{
