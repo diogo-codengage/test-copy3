@@ -37,6 +37,7 @@ import {
 } from 'Apollo/Course/Queries/course'
 
 import Themes from './Themes'
+import FLXCourseNavigation from './Navigation'
 
 const ResponsiveLinesEllipsis = responsiveHOC(0)(LinesEllipsis)
 
@@ -176,6 +177,7 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
                                 title: course.name
                             }}
                         />
+                        <FLXCourseNavigation LastAccessedProps={{}} />
                         <SANLayoutContainer mt={8}>
                             <SANRow type='flex' align='middle' gutter={64}>
                                 <SANCol xs={{ span: 24, order: 1 }} lg={7}>

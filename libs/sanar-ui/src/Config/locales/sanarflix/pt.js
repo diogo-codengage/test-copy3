@@ -70,6 +70,14 @@ export default {
         }
     },
     course: {
+        continue: 'Continuar de onde parei',
+        itemSuggest: 'Próximo item sugerido',
+        banners: {
+            questionsBase: {
+                title: 'Banco de Questões',
+                action: 'Acessar'
+            }
+        },
         subheader: {
             key: 'tema',
             key_plural: 'temas',
@@ -121,16 +129,6 @@ export default {
             keyWithCount_plural: '{{count}} cursos'
         },
         viewCourse: 'Ver curso'
-    },
-    course: {
-        continue: 'Continuar de onde parei',
-        itemSuggest: 'Próximo item sugerido',
-        banners: {
-            questionsBase: {
-                title: 'Banco de Questões',
-                action: 'Acessar'
-            }
-        }
     },
     home: {
         viewedCourses: {
