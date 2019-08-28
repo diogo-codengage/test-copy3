@@ -45,19 +45,19 @@ const FLXCourseNavigation: React.FC<IProps> = ({
             <SANLayoutContainer>
                 <SANRow gutter={24}>
                     <SANCol sm={12}>
-                        <SANTypography mb={6} color='grey.7' level='5' strong>
+                        <SANTypography mb={6} color='grey.7' level={5} strong>
                             {t('course.continue')}
                         </SANTypography>
                         <SANCardCourseModule
                             image={LastAccessedProps.image}
                             title={LastAccessedProps.title}
                             moduleName={LastAccessedProps.moduleName}
-                            redirectTo={LastAccessedProps.redirectTo}
+                            // redirectTo={LastAccessedProps.redirectTo}
                             mb={{ _: 6, sm: 0 }}
                         />
                     </SANCol>
                     <SANCol sm={12}>
-                        <SANTypography mb={6} color='grey.7' level='5' strong>
+                        <SANTypography mb={6} color='grey.7' level={5} strong>
                             {t('course.itemSuggest')}
                         </SANTypography>
                         {!isLastContent && SuggestedItemProps ? (
@@ -65,7 +65,7 @@ const FLXCourseNavigation: React.FC<IProps> = ({
                                 image={SuggestedItemProps.image}
                                 title={SuggestedItemProps.title}
                                 moduleName={SuggestedItemProps.moduleName}
-                                redirectTo={SuggestedItemProps.redirectTo}
+                                // redirectTo={SuggestedItemProps.redirectTo}
                                 mb={{ _: 6, sm: 0 }}
                             />
                         ) : (
