@@ -23,8 +23,7 @@ import {
 import { GET_THEMES, IThemes } from 'Apollo/Course/Queries/themes'
 import {
     GET_THEME_CONTENTS,
-    IThemeContents,
-    IType
+    IThemeContents
 } from 'Apollo/Course/Queries/theme-contents'
 
 import classSvg from 'Assets/images/contents/class.svg'
@@ -33,7 +32,7 @@ import mentalMapSvg from 'Assets/images/contents/mental-map.svg'
 import questionSvg from 'Assets/images/contents/question.svg'
 import resumeSvg from 'Assets/images/contents/resume.svg'
 
-const Img = props => <img {...props} width={26} />
+const Img = props => <img {...props} width={26} alt='' />
 
 const typesIcon = {
     resume: <Img src={resumeSvg} />,
