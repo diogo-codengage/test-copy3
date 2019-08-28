@@ -1,8 +1,8 @@
 
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import SANBox from './Box'
+import SANDivider from './Divider'
 
-storiesOf('Atoms.Box', module).add('Simple', () => (
-    <SANBox />
+storiesOf('Atoms.Divider', module).add('Simple', () => (
+    <SANDivider />
 ))
