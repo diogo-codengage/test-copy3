@@ -3,7 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "amazon-cognito-identity-js": "^3.0.15"
+        "amazon-cognito-identity-js": "^3.0.15",
+        "react-lines-ellipsis": "^0.14.1"
     },
     "scripts": {
         "start": "set PORT=3001 && env-cmd -f ./environments/.env.staging react-app-rewired start",

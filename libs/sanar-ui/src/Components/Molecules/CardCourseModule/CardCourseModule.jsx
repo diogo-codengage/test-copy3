@@ -72,7 +72,9 @@ const ESCardCourseModule = ({
                                 </ESTypography>
                             )}
 
-                            <ESTypography strong>{title}</ESTypography>
+                            <ESTypography strong ellipsis={{ rows: 2 }}>
+                                {title}
+                            </ESTypography>
                         </ESSkeleton>
                     </div>
                     <div

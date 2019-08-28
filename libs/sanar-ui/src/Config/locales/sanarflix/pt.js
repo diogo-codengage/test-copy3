@@ -12,6 +12,14 @@ export default {
             all: 'Todos',
             completed: 'Concluídos',
             incomplete: 'Incompletos'
+        },
+        types: {
+            resume: 'Resumo',
+            mentalmap: 'Mapa mental',
+            flowchart: 'Fluxograma',
+            article: 'Artigos e Diretrizes',
+            lesson: 'Aula',
+            question: 'Questão'
         }
     },
     auth: {
@@ -61,6 +69,48 @@ export default {
             us: 'e nossa'
         }
     },
+    course: {
+        subheader: {
+            key: 'tema',
+            key_plural: 'temas',
+            keyWithCount: '{{count}} Tema',
+            keyWithCount_plural: '{{count}} Temas'
+        },
+        viewCourse: 'Ver curso',
+        seeLess: 'Ver menos',
+        viewMore: 'Ver mais',
+        whatCurseHave: 'O que esse curso possui',
+        counters: {
+            articles: {
+                key: 'Artigos e Diretrizes',
+                key_plural: 'Artigos e Diretrizes'
+            },
+            certificates: {
+                key: 'Certificado',
+                key_plural: 'Certificados'
+            },
+            flowcharts: {
+                key: 'Fluxograma',
+                key_plural: 'Fluxogramas'
+            },
+            lessons: {
+                key: 'Aula',
+                key_plural: 'Aulas'
+            },
+            mentalmaps: {
+                key: 'Mapa mental',
+                key_plural: 'Mapas mentais'
+            },
+            questions: {
+                key: 'Questão',
+                key_plural: 'Questões'
+            },
+            resumes: {
+                key: 'Resumo',
+                key_plural: 'Resumos'
+            }
+        }
+    },
     courses: {
         title: 'Todos os Cursos',
         subtitle: 'Encontre aqui todos os cursos',
@@ -77,7 +127,7 @@ export default {
             title: 'Cursos Visualizados',
             subtitle: 'Continue assistindo de onde você parou'
         },
-        addedCourses: {
+        addedContents: {
             title: 'Adicionados',
             subtitle:
                 'Conteúdos adicionados toda semana! Aulas, resumos e outros materiaos que acabaram de chegar'

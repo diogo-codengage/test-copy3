@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { theme } from 'styled-tools'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
     SANLayoutContainer,
@@ -24,6 +25,9 @@ import { FLXCompletenessFilters } from 'Components/CompletenessFilters'
 import { useCoursesContext } from './Context'
 
 const SANSessionTitleStyled = SANStyled(SANSessionTitle)`
+    & > div:nth-child(1) {
+        margin-right: 90px;
+    }
     & > div:nth-child(2) {
         display: block;
         flex: inherit;
@@ -35,15 +39,18 @@ const SANSessionTitleStyled = SANStyled(SANSessionTitle)`
     }
 `
 
-const renderCourse = (course: ICourse) => (
+const round = n => Math.round(n)
+
+const renderCourse = history => (course: ICourse) => (
     <SANCol key={course.id} xs={12} lg={8} xl={6}>
         <SANCardCourseModule
             mb='xl'
             image={course.cover_picture_url}
             title={course.name}
-            progress={70}
-            badge={'70%'}
+            badge={`${round(course.progress_percentage)}%`}
+            progress={round(course.progress_percentage)}
             actionName={i18n.t('sanarflix:courses.viewCourse')}
+            onClick={() => history.push(`/portal/curso/${course.id}`)}
         />
     </SANCol>
 )
@@ -58,7 +65,10 @@ const updateCacheCourses = (prev, { fetchMoreResult }) => {
     })
 }
 
-const FLXCoursesList: React.FC<{ id?: string }> = ({ id }) => {
+const FLXCoursesList: React.FC<RouteComponentProps & { id?: string }> = ({
+    id,
+    history
+}) => {
     const { t } = useTranslation('sanarflix')
     const {
         completenessFilter,
@@ -120,7 +130,9 @@ const FLXCoursesList: React.FC<{ id?: string }> = ({ id }) => {
                                     }
                                 >
                                     <SANRow gutter={24}>
-                                        {courses.data.map(renderCourse)}
+                                        {courses.data.map(
+                                            renderCourse(history)
+                                        )}
                                     </SANRow>
                                 </SANInfiniteScroll>
                             ) : (
@@ -134,4 +146,4 @@ const FLXCoursesList: React.FC<{ id?: string }> = ({ id }) => {
     )
 }
 
-export default FLXCoursesList
+export default withRouter(FLXCoursesList)
