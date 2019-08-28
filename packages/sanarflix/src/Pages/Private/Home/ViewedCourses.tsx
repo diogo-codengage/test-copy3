@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { useTranslation } from 'react-i18next'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
     SANSessionTitle,
@@ -49,43 +50,44 @@ export const responsive = [
     }
 ]
 
-const renderCourse = (course: ICourse) => (
+const round = n => Math.round(n)
+
+const renderCourse = history => (course: ICourse) => (
     <div key={course.id}>
         <SANCardCourseModule
             title={course.name}
-            badge='70%'
-            progress={70}
+            badge={`${round(course.progress_percentage)}%`}
+            progress={round(course.progress_percentage)}
             actionName={i18n.t('sanarflix:global.viewCourse')}
             image={course.cover_picture_url}
+            onClick={() => history.push(`/portal/curso/${course.id}`)}
             size='small'
         />
     </div>
 )
 
-const Courses = () => {
-    return (
-        <SANQuery
-            query={GET_COURSES_LAST_VIEWED}
-            loaderProps={{ minHeight: 186, flex: true }}
-        >
-            {({ data }: { data: ICourses }) => (
-                <SANCarousel
-                    slidesToShow={4}
-                    slidesToScroll={1}
-                    initialSlide={0}
-                    arrows
-                    infinite={false}
-                    dots={false}
-                    draggable
-                    lazyLoad
-                    responsive={responsive}
-                >
-                    {data.courses.data.map(renderCourse)}
-                </SANCarousel>
-            )}
-        </SANQuery>
-    )
-}
+const Courses = withRouter(({ history }: RouteComponentProps) => (
+    <SANQuery
+        query={GET_COURSES_LAST_VIEWED}
+        loaderProps={{ minHeight: 186, flex: true }}
+    >
+        {({ data }: { data: ICourses }) => (
+            <SANCarousel
+                slidesToShow={4}
+                slidesToScroll={1}
+                initialSlide={0}
+                arrows
+                infinite={false}
+                dots={false}
+                draggable
+                lazyLoad
+                responsive={responsive}
+            >
+                {data.courses.data.map(renderCourse(history))}
+            </SANCarousel>
+        )}
+    </SANQuery>
+))
 
 const FLXViewedCourses = () => {
     const { t } = useTranslation('sanarflix')

@@ -6,7 +6,7 @@ import { theme, ifProp } from 'styled-tools'
 import { SANCollapse, SANCollapsePanel } from '../../Atoms/Collapse'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
-import { SANStyled, SANElement } from '../../../Theme/createTheme'
+import { SANStyled } from '../../../Theme/createTheme'
 
 const IconWrapperStyled = SANStyled.div`
     position: absolute;
@@ -23,6 +23,10 @@ const RowLessonStyled = SANStyled.div`
 
     &:not(:first-child) {
         border-top: 1px solid ${theme('colors.grey.2')};
+    }
+
+    & i {
+        right: ${theme('space.xl')} !important;
     }
 `
 const WrapperIconStyled = SANStyled.div`
@@ -48,7 +52,7 @@ const SANCollapsePanelStyled = SANStyled(SANCollapsePanel)`
             `
         )}
 
-        & i {
+        & i.ant-collapse-arrow {
             right: ${theme('space.xl')} !important;
         }
 
@@ -66,6 +70,7 @@ export interface ISANCollapseThemeDataProps {
     title: string | React.ReactNode
     index?: number
     id?: string
+    customKey?: string | number
     lessons?: ISANCollapseThemeLessonProps[]
 }
 
@@ -81,11 +86,14 @@ export interface ISANCollapseThemeProps {
     data: ISANCollapseThemeDataProps[]
 }
 
-const renderClass = (
-    { id, icon, title, subtitle, checked }: ISANCollapseThemeLessonProps,
-    index: number
-) => (
-    <RowLessonStyled key={id || index}>
+export const renderClass = ({
+    id,
+    icon,
+    title,
+    subtitle,
+    checked
+}: ISANCollapseThemeLessonProps) => (
+    <RowLessonStyled key={id}>
         {!!icon && <WrapperIconStyled>{icon}</WrapperIconStyled>}
         <TextWrapperStyled>
             <SANTypography
@@ -116,7 +124,7 @@ const renderClass = (
     </RowLessonStyled>
 )
 
-const renderTheme = (
+export const renderTheme = (
     { title, lessons, id }: ISANCollapseThemeDataProps,
     index: number
 ) => {
@@ -124,7 +132,8 @@ const renderTheme = (
 
     return (
         <SANCollapsePanelStyled
-            key={id || index}
+            key={id}
+            customKey={id}
             header={
                 <SANTypography
                     fontSize={['md', 'lg']}
@@ -146,11 +155,14 @@ export const SANCollapseThemePanel: React.FC<ISANCollapseThemeDataProps> = ({
     title,
     index,
     lessons,
-    children
+    children,
+    ...props
 }) => {
     const header = typeof index === 'number' ? `${index + 1}. ${title}` : title
+
     return (
         <SANCollapsePanelStyled
+            {...props}
             header={
                 <SANTypography mr='xl' level={6} ellipsis color='grey.7'>
                     {header}
@@ -164,12 +176,7 @@ export const SANCollapseThemePanel: React.FC<ISANCollapseThemeDataProps> = ({
 }
 
 export const SANCollapseTheme: React.FC = ({ children }) => (
-    <SANCollapseStyled
-        expandIconPosition='right'
-        accordion
-        showArrow
-        bordered={false}
-    >
+    <SANCollapseStyled expandIconPosition='right' accordion bordered={false}>
         {children}
     </SANCollapseStyled>
 )

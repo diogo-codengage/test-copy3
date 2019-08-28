@@ -29,7 +29,7 @@ const SANHeaderStyled = styled.div`
         ${SANButton} {
             position: absolute;
             left: -24px;
-            top: calc(100% - 58px);
+            top: 6px;
             background-color: ${theme('colors.grey.0')};
             color: ${theme('colors.grey.6')};
 

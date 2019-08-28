@@ -58,7 +58,8 @@ const SANLayout: React.FC<IProps> = ({
     children
 }) => {
     const MergeMenuProps = {
-        onOpenOrClose: () => console.log,
+        onOpenOrClose: console.log,
+        onHome: console.log,
         showContinueBar,
         ...MenuProps
     }

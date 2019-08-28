@@ -95,7 +95,7 @@ const themes = [
 ]
 
 const renderItem = (theme: ISANCollapseThemeDataProps, index: number) => (
-    <SANCollapseThemePanel key={index} {...{ ...theme, index }} />
+    <SANCollapseThemePanel customKey={index} {...{ ...theme, index }} />
 )
 
 storiesOf('Molecules.CollapseTheme', module)

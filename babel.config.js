@@ -15,7 +15,14 @@ const presets = [
 
 const plugins = [
     '@babel/plugin-proposal-export-default-from',
-    '@babel/plugin-proposal-object-rest-spread'
+    '@babel/plugin-proposal-object-rest-spread',
+    [
+        'import',
+        {
+            libraryName: 'antd',
+            libraryDirectory: 'es'
+        }
+    ]
 ]
 
 const env = {
