@@ -6,7 +6,7 @@ import { Speciality } from '../../../BFF/speciality'
 export const Filter: React.FC = () => {
 
     const ctx = useQuestionsContext()
-    const [allSubSpecialties, setAllSubSpecialties ] = useState(ctx.allSpecialties.flatMap(s => s.children))
+    const [allSubSpecialties] = useState(ctx.allSpecialties.flatMap(s => s.children))
 
     const clearQuestions = () => {
         ctx.setQuestions([])
@@ -22,12 +22,6 @@ export const Filter: React.FC = () => {
 
         setSelectedSpecialties: (specialities: Speciality[]) => {
             ctx.setSelectedSpecialties(specialities)
-            setAllSubSpecialties( specialities.flatMap(s => s.children) )
-            if(ctx.selectedSubSpecialties.length > 0 && specialities.length > 0){
-                ctx.setSelectedSubSpecialties( ctx.selectedSubSpecialties.filter( ss => {
-                    return specialities.flatMap(s => s.children).map(s => s.value).includes(ss.value);
-                }))
-            }
             clearQuestions()
         },
         setSelectedSubSpecialties: v => {

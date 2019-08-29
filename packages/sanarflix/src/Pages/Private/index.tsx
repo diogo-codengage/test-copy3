@@ -8,6 +8,7 @@ import FLXLayoutProvider from 'Pages/Layout/Context'
 const FLXHome = React.lazy(() => import('./Home'))
 const FLXCourses = React.lazy(() => import('./Courses'))
 const FLXCourse = React.lazy(() => import('./Course'))
+const FLXClassroom = React.lazy(() => import('./Classroom'))
 
 type FLXPrivatePages = {}
 
@@ -24,6 +25,10 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
                         <Route
                             path={`${url}/curso/:id`}
                             component={FLXCourse}
+                        />
+                        <Route
+                            path={`${url}/sala-aula/:themeId/:type?/:contentId?`}
+                            component={FLXClassroom}
                         />
                         <Route
                             path={[`${url}`, `${url}/`]}

@@ -20,7 +20,12 @@ import { useTranslation } from 'react-i18next'
 
 const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
     const { t } = useTranslation('sanarflix')
-    const { menuRef, currentMenuTitle } = useLayoutContext()
+    const {
+        menuRef,
+        currentMenuTitle,
+        darkMode,
+        menuContext
+    } = useLayoutContext()
     const [showModalTerms, setShowModalTerms] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
 
@@ -34,7 +39,8 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
         logo,
         ref: menuRef,
         title: currentMenuTitle,
-        onHome: () => history.push('/portal/inicio')
+        onHome: () => history.push('/portal/inicio'),
+        context: menuContext
     }
 
     const Copyright = () => {
@@ -92,7 +98,8 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
             'https://www.instagram.com/sanarflix.med/?utm_source=instagram&utm_medium=sanarflix&utm_campaign=sanarflix-tf-sanarflix&utm_term=sanarflix-med',
         youtube:
             'youtube.com/sanarmedicina?utm_source=youtube&utm_medium=sanarmed&utm_campaign=sanarflix-tf-youtube&utm_term=sanarflix-med',
-        copyright: <Copyright />
+        copyright: <Copyright />,
+        darkMode
     }
 
     return (

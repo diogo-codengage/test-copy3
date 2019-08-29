@@ -10,10 +10,9 @@ import { SANSpace } from '../../Atoms/Space'
 import facebook from '../../../Assets/images/social/facebook.svg'
 import instagram from '../../../Assets/images/social/instagram.svg'
 import youtube from '../../../Assets/images/social/youtube.svg'
-import phone from '../../../Assets/images/social/phone.svg'
-import email from '../../../Assets/images/social/email.svg'
 import { SANButton } from '../../Atoms/Button'
 import { SANBox } from '../../Atoms/Box'
+import { SANEvaIcon } from '../../Atoms/EvaIcon'
 
 const SANLayoutFooterStyled = styled.footer`
     background: ${theme('pureWhite')};
@@ -30,7 +29,8 @@ const IconAndText: React.FC<any> = styled(SANSpace)`
     color: ${theme('colors.grey.6')};
     padding: ${theme('space.2')};
 
-    & img {
+    & i {
+        color: ${theme('colors.grey.6')};
         margin-right: 4px;
     }
 
@@ -42,19 +42,20 @@ const IconAndText: React.FC<any> = styled(SANSpace)`
 
 const Social: React.FC<any> = styled(SANFlexbox)`
     & img {
-        width: 24;
-        height: 24;
+        width: 24px;
+        height: 24px;
+        filter: saturate(0);
     }
 `
 
-const ContactInfo: React.FC<{ info: string; image: string }> = ({
+const ContactInfo: React.FC<{ info: string; name: string }> = ({
     info,
-    image
+    name
 }) => {
     return (
         <IconAndText>
             <SANFlexbox alignItems='center'>
-                <img src={image} alt='sanarflix-logo-footer' />
+                <SANEvaIcon name={name} />
                 <SANTypography>{info}</SANTypography>
             </SANFlexbox>
         </IconAndText>
@@ -116,19 +117,19 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
                             >
                                 {phoneProp && (
                                     <ContactInfo
-                                        image={phone}
                                         info={phoneProp}
+                                        name='phone-outline'
                                     />
                                 )}
                                 {whatsappProp && (
                                     <ContactInfo
-                                        image={phone}
                                         info={whatsappProp}
+                                        name='phone-outline'
                                     />
                                 )}
                                 {emailProp && (
                                     <ContactInfo
-                                        image={email}
+                                        name='email-outline'
                                         info={emailProp}
                                     />
                                 )}

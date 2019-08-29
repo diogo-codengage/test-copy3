@@ -10,7 +10,7 @@ export type IType =
 export interface IThemeContent {
     id: string
     index: string
-    resource_type: string
+    resource_type: 'Video' | 'Question' | 'Document'
     title: string
     type: IType
     completed: boolean
