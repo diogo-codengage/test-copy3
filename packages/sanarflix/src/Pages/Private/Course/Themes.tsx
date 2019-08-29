@@ -92,9 +92,9 @@ const renderTheme = history => (theme, index) => (
                         ),
                         icon: typesIcon[content.type],
                         checked: content.completed,
-                        onClick: ({ themeId, contentId, resourceType }) =>
+                        onClick: ({ themeId, resourceType }) =>
                             history.push(
-                                `/portal/sala-aula/${themeId}/${resourceType}/${contentId}`
+                                `/portal/sala-aula/${themeId}/${resourceType}/${content.resource_id}`
                             )
                     })
                 )

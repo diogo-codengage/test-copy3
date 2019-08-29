@@ -7,7 +7,7 @@ import { SANJwPlayer, SANQuery } from '@sanar/components'
 import { GET_RESOURCE } from 'Apollo/Classroom/Queries/resource'
 
 interface IParams {
-    contentId: string
+    resourceId: string
     themeId: string
     type: string
 }
@@ -15,7 +15,7 @@ interface IParams {
 const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
     const {
         match: {
-            params: { themeId, contentId }
+            params: { themeId, resourceId }
         }
     } = props
     const playerRef = useRef()
@@ -23,23 +23,30 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
     return (
         <SANQuery
             query={GET_RESOURCE}
-            options={{ variables: { themeId, resourceId: contentId } }}
+            options={{ variables: { themeId, resourceId } }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
         >
-            {({ data }) => (
-                <SANJwPlayer
-                    ref={playerRef}
-                    playerId='playerId'
-                    playerScript='/jwplayer/jwplayer.js'
-                    playlist={{
-                        file: 'https://cdn.jwplayer.com/manifests/eqXRiD4T.m3u8'
-                    }}
-                    licenseKey={process.env.REACT_APP_JWPLAYER}
-                    isMuted={false}
-                    title='Nome da aula exemplo que'
-                    subtitle='Disciplina 3, atividade 5'
-                />
-            )}
+            {({ data: { resource } }) => {
+                const file = resource.video.providers.data.find(
+                    provider => provider.code === 'jwplayer'
+                )
+                const playlist = {
+                    file: file && file.files.smil.url,
+                    image: resource.video.thumbnails.large
+                }
+                return (
+                    <SANJwPlayer
+                        ref={playerRef}
+                        playerId='playerId'
+                        playerScript='/jwplayer/jwplayer.js'
+                        playlist={playlist}
+                        licenseKey={process.env.REACT_APP_JWPLAYER}
+                        isMuted={false}
+                        title={resource.video.title}
+                        subtitle={resource.course.name}
+                    />
+                )
+            }}
         </SANQuery>
     )
 }

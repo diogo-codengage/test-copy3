@@ -164,7 +164,7 @@ export default {
     },
     classroom: {
         document: {
-            bookmark: 'Favoritar material'
+            bookmark: 'Favoritar Material'
         }
     }
 }

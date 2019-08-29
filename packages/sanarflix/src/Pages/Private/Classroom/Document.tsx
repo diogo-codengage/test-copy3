@@ -1,46 +1,69 @@
 import React from 'react'
 
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import ESLessonHeader, {
     ESLessonHeaderExtra,
     ESLessonHeaderLeft
 } from 'sanar-ui/dist/Components/Molecules/LessonHeader'
-import {SANPdfReader} from '@sanar/components'
+import { SANPdfReader, SANQuery } from '@sanar/components'
 
+import { GET_RESOURCE } from 'Apollo/Classroom/Queries/resource'
 
-const FLXClassRoomDocument = () => {
+interface IParams {
+    resourceId: string
+    themeId: string
+    type: string
+}
+
+const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
+    const {
+        match: {
+            params: { themeId, resourceId }
+        }
+    } = props
     const { t } = useTranslation('sanarflix')
 
     return (
-        <>
-            <ESLessonHeader
-                bookmarked
-                onBookmarked={() => {}}
-                leftChildren={
-                    <ESLessonHeaderLeft
-                        title={'Title'}
-                        subtitle={'Subtitle'}
-                        onClick={() => {}}
-                    />
-                }
-                rightChildren={
-                    <ESLessonHeaderExtra
-                        previousLesson={'Anterior'}
-                        nextLesson={'Proxima'}
-                        onPrev={() => {}}
-                        onNext={() => {}}
-                        bookmarkLabel={t('classroom.document.bookmark')}
-                        bookmarked
+        <SANQuery
+            query={GET_RESOURCE}
+            options={{ variables: { themeId, resourceId } }}
+            loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
+        >
+            {({ data: { resource } }) => (
+                <>
+                    <ESLessonHeader
+                        bookmarked={resource.document.bookmarked}
                         onBookmarked={() => {}}
+                        bookmarkLabel={t('classroom.document.bookmark')}
+                        leftChildren={
+                            <ESLessonHeaderLeft
+                                title={resource.document.title}
+                                subtitle={resource.course.name}
+                                onClick={() => {}}
+                            />
+                        }
+                        rightChildren={
+                            <ESLessonHeaderExtra
+                                previousLesson={'Anterior'}
+                                nextLesson={'Proxima'}
+                                onPrev={() => {}}
+                                onNext={() => {}}
+                                bookmarkLabel={t('classroom.document.bookmark')}
+                                bookmarked={resource.document.bookmarked}
+                                onBookmarked={() => {}}
+                            />
+                        }
                     />
-                }
-            />
-            <SANPdfReader
-                url='https://43748h.ha.azioncdn.net/arquivos/esanar_assuntos/59210/ARQUIVO_ASSUNTO.pdf?v=1'
-            />
-        </>
+                    <SANPdfReader
+                        url={resource.document.file.url}
+                        hasDownload={false}
+                    />
+                </>
+            )}
+        </SANQuery>
     )
 }
 
-export default FLXClassRoomDocument
+export default withRouter(FLXClassRoomDocument)

@@ -12,6 +12,10 @@ export const GET_RESOURCE = gql`
             resource_type
             type
             title
+            course {
+                id
+                name
+            }
             video {
                 id
                 title

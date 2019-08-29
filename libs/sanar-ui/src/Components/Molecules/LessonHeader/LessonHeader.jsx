@@ -17,7 +17,8 @@ const ESLessonHeader = ({
     rightChildren,
     rate,
     onBookmarked,
-    bookmarked
+    bookmarked,
+    bookmarkLabel
 }) => {
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-lesson-header', className)
@@ -55,7 +56,12 @@ const ESLessonHeader = ({
                 )}
                 {onBookmarked && (
                     <ESBookmark
-                        {...{ bookmarked, onBookmarked, hideLabel: !!rate }}
+                        {...{
+                            bookmarked,
+                            onBookmarked,
+                            bookmarkLabel,
+                            hideLabel: !!rate
+                        }}
                     />
                 )}
             </ESCol>
