@@ -61,7 +61,7 @@ const SANSessionTitleStyled = SANStyled(SANSessionTitle)`
 const updateCacheThemes = (prev, { fetchMoreResult }) => {
     if (!fetchMoreResult) return prev
     return Object.assign({}, prev, {
-        courses: {
+        themes: {
             ...prev.themes,
             data: [...prev.themes.data, ...fetchMoreResult.themes.data]
         }
@@ -150,7 +150,7 @@ const Themes = ({ courseId }: { courseId: string }) => {
                                 loadMore={() =>
                                     fetchMore({
                                         variables: {
-                                            offset: themes.data.length
+                                            skip: themes.data.length
                                         },
                                         updateQuery: updateCacheThemes
                                     })
