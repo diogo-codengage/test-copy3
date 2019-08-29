@@ -7,7 +7,7 @@ import ESLessonHeader, {
     ESLessonHeaderExtra,
     ESLessonHeaderLeft
 } from 'sanar-ui/dist/Components/Molecules/LessonHeader'
-import { SANPdfReader, SANQuery } from '@sanar/components'
+import { SANPdfReader, SANQuery, SANClassroomHeader } from '@sanar/components'
 
 import { GET_RESOURCE } from 'Apollo/Classroom/Queries/resource'
 
@@ -55,6 +55,19 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
                                 onBookmarked={() => {}}
                             />
                         }
+                    />
+                    <SANClassroomHeader
+                        title={resource.document.title}
+                        subtitle={resource.course.name}
+                        ButtonPreviousProps={{
+                            children: 'Anterior'
+                        }}
+                        ButtonNextProps={{
+                            children: 'Própximo'
+                        }}
+                        ButtonBookmarkProps={{
+                            children: t('classroom.document.bookmark')
+                        }}
                     />
                     <SANPdfReader
                         url={resource.document.file.url}

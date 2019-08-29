@@ -33,6 +33,7 @@ import { SANBox } from 'Components/Atoms/Box'
 import { SANThemeProvider } from 'Components/Atoms/ThemeProvider'
 import { SANCardInfo } from 'Components/Molecules/CardInfo'
 import { SANJwPlayer } from 'Components/Molecules/JwPlayer'
+import { SANClassroomHeader } from 'Components/Molecules/ClassroomHeader'
 import {
     SANCollapseTheme,
     SANCollapseThemePanel,
@@ -89,5 +90,6 @@ export {
     SANClassroomMenu,
     SANThemeProvider,
     SANJwPlayer,
-    SANPdfReader
+    SANPdfReader,
+    SANClassroomHeader
 }
