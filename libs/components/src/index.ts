@@ -44,6 +44,8 @@ import { SANPdfReader } from 'Components/Atoms/PdfReader'
 
 import { SANStyled, SANElement } from 'Theme/'
 
+import { SANClassroomMenu } from 'Components/Organisms/ClassroomMenu'
+
 export {
     SANButton,
     SANEvaIcon,
@@ -84,6 +86,7 @@ export {
     SANCollapseThemePanel,
     SANCollapseThemeControlled,
     SANDivider,
+    SANClassroomMenu,
     SANThemeProvider,
     SANJwPlayer,
     SANPdfReader
