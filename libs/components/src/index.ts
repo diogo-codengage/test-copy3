@@ -86,7 +86,7 @@ export {
     SANCollapseThemePanel,
     SANCollapseThemeControlled,
     SANDivider,
-    SANClassroomMenu
+    SANClassroomMenu,
     SANThemeProvider,
     SANJwPlayer,
     SANPdfReader
