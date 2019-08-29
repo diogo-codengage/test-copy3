@@ -1,6 +1,4 @@
 .es-jw-player {
-    position: relative;
-
     &:hover .es-jw-player__header,
     & .has-header {
         visibility: visible;
@@ -24,10 +22,12 @@
     }
 
     &__loader {
+        height: 100%;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
+        position: absolute;
     }
 
     /* HEADER LAYER */

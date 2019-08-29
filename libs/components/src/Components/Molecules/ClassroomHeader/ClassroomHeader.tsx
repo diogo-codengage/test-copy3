@@ -13,6 +13,7 @@ import { SANRow, SANCol } from '../Grid'
 export interface ISANClassroomHeaderProps {
     title: string
     subtitle: string
+    actions?: boolean
     ButtonPreviousProps?: ISANButtonProps
     ButtonNextProps?: ISANButtonProps
     ButtonBookmarkProps?: ISANButtonProps
@@ -34,6 +35,7 @@ const SANButtonMenu = SANStyled(SANButton)`
 const SANClassroomHeader = ({
     title,
     subtitle,
+    actions = true,
     ButtonPreviousProps,
     ButtonNextProps,
     ButtonBookmarkProps
@@ -45,59 +47,78 @@ const SANClassroomHeader = ({
         block: true
     }
 
-    const mergeButtonPreviousProps = {
-        ...buttonDefaultProps,
-        ...ButtonPreviousProps,
-        children: (
-            <>
-                <SANEvaIcon name='arrow-back-outline' mr='xs' fontSize='lg' />
-                {ButtonPreviousProps.children}
-            </>
-        )
-    }
-    const mergeButtonNextProps = {
-        ...buttonDefaultProps,
-        ...ButtonNextProps,
-        children: (
-            <>
-                {ButtonNextProps.children}
-                <SANEvaIcon
-                    name='arrow-forward-outline'
-                    ml='xs'
-                    fontSize='lg'
-                />
-            </>
-        )
-    }
+    const mergeButtonPreviousProps = ButtonPreviousProps
+        ? {
+              ...buttonDefaultProps,
+              ...ButtonPreviousProps,
+              children: (
+                  <>
+                      <SANEvaIcon
+                          name='arrow-back-outline'
+                          mr='xs'
+                          fontSize='lg'
+                      />
+                      {ButtonPreviousProps.children}
+                  </>
+              )
+          }
+        : {}
 
-    const mergeButtonBookmarkProps = {
-        size: 'small',
-        variant: 'text',
-        color: 'white',
-        block: true,
-        ...ButtonBookmarkProps,
-        children: (
-            <>
-                {ButtonBookmarkProps.bookmarked ? (
-                    <SANEvaIcon
-                        name='heart'
-                        key='bookmarked'
-                        color='secondary'
-                        mr='xs'
-                        fontSize='lg'
-                    />
-                ) : (
-                    <SANEvaIcon
-                        mr='xs'
-                        name='heart-outline'
-                        key='not-bookmarked'
-                        fontSize='lg'
-                    />
-                )}
-                {ButtonBookmarkProps.children}
-            </>
-        )
-    }
+    const mergeButtonNextProps = ButtonNextProps
+        ? {
+              ...buttonDefaultProps,
+              ...ButtonNextProps,
+              children: (
+                  <>
+                      {ButtonNextProps.children}
+                      <SANEvaIcon
+                          name='arrow-forward-outline'
+                          ml='xs'
+                          fontSize='lg'
+                      />
+                  </>
+              )
+          }
+        : {}
+
+    const mergeButtonBookmarkProps = ButtonBookmarkProps
+        ? {
+              size: 'small',
+              variant: 'text',
+              color: 'white',
+              block: true,
+              ...ButtonBookmarkProps,
+              children: (
+                  <>
+                      {ButtonBookmarkProps.bookmarked ? (
+                          <SANEvaIcon
+                              name='heart'
+                              key='bookmarked'
+                              color='secondary'
+                              mr='xs'
+                              fontSize='lg'
+                          />
+                      ) : (
+                          <SANEvaIcon
+                              mr='xs'
+                              name='heart-outline'
+                              key='not-bookmarked'
+                              fontSize='lg'
+                          />
+                      )}
+                      {ButtonBookmarkProps.children}
+                  </>
+              )
+          }
+        : {}
+
+    const grid = actions
+        ? {
+              xs: 24,
+              md: 12,
+              xl: 16
+          }
+        : { xs: 24 }
 
     return (
         <SANRow
@@ -106,7 +127,7 @@ const SANClassroomHeader = ({
             justify='space-between'
             align='middle'
         >
-            <SANCol xs={24} md={12} xl={16}>
+            <SANCol {...grid}>
                 <SANBox
                     displayFlex
                     justifyContent={{ sm: 'flex-start', _: 'space-between' }}
@@ -135,26 +156,35 @@ const SANClassroomHeader = ({
                     </SANBox>
                 </SANBox>
             </SANCol>
-            <SANCol xs={24} md={12} xl={8}>
-                <SANRow
-                    type='flex'
-                    justifyContent={{ xs: 'flex-end', _: 'space-between' }}
-                    gutter={24}
-                >
-                    <SANCol xs={24} sm={24} md={0} order={3} mt='md' mb='xs'>
-                        <SANDivider />
-                    </SANCol>
-                    <SANCol xs={24} sm={24} md={8} order={{ _: 3, md: 1 }}>
-                        <SANButton {...mergeButtonBookmarkProps} />
-                    </SANCol>
-                    <SANCol xs={12} sm={12} md={8} order={{ _: 1, md: 3 }}>
-                        <SANButton {...mergeButtonPreviousProps} />
-                    </SANCol>
-                    <SANCol xs={12} sm={12} md={8} order={{ _: 1, md: 4 }}>
-                        <SANButton {...mergeButtonNextProps} />
-                    </SANCol>
-                </SANRow>
-            </SANCol>
+            {actions && (
+                <SANCol xs={24} md={12} xl={8}>
+                    <SANRow
+                        type='flex'
+                        justifyContent={{ xs: 'flex-end', _: 'space-between' }}
+                        gutter={24}
+                    >
+                        <SANCol
+                            xs={24}
+                            sm={24}
+                            md={0}
+                            order={3}
+                            mt='md'
+                            mb='xs'
+                        >
+                            <SANDivider />
+                        </SANCol>
+                        <SANCol xs={24} sm={24} md={8} order={{ _: 3, md: 1 }}>
+                            <SANButton {...mergeButtonBookmarkProps} />
+                        </SANCol>
+                        <SANCol xs={12} sm={12} md={8} order={{ _: 1, md: 3 }}>
+                            <SANButton {...mergeButtonPreviousProps} />
+                        </SANCol>
+                        <SANCol xs={12} sm={12} md={8} order={{ _: 1, md: 4 }}>
+                            <SANButton {...mergeButtonNextProps} />
+                        </SANCol>
+                    </SANRow>
+                </SANCol>
+            )}
         </SANRow>
     )
 }

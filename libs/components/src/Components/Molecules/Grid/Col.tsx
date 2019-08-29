@@ -21,7 +21,7 @@ export type ISANColProps = PropTypes.InferProps<typeof ESCol.propTypes> &
 
 const SANCol = SANStyled(ESCol)`
     ${layout}
-    ${flexbox}
     ${space}
+    ${flexbox}
 `
 export default SANCol

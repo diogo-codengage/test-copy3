@@ -1,8 +1,15 @@
 import React, { useRef } from 'react'
 
+import styled from 'styled-components'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
-import { SANJwPlayer, SANQuery } from '@sanar/components'
+import {
+    SANJwPlayer,
+    SANQuery,
+    SANClassroomHeader,
+    SANRow,
+    SANCol
+} from '@sanar/components'
 
 import { GET_RESOURCE } from 'Apollo/Classroom/Queries/resource'
 
@@ -11,6 +18,10 @@ interface IParams {
     themeId: string
     type: string
 }
+
+const SANColStyled = styled(SANCol)`
+    flex: 1;
+`
 
 const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
     const {
@@ -35,16 +46,27 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                     image: resource.video.thumbnails.large
                 }
                 return (
-                    <SANJwPlayer
-                        ref={playerRef}
-                        playerId='playerId'
-                        playerScript='/jwplayer/jwplayer.js'
-                        playlist={playlist}
-                        licenseKey={process.env.REACT_APP_JWPLAYER}
-                        isMuted={false}
-                        title={resource.video.title}
-                        subtitle={resource.course.name}
-                    />
+                    <SANRow type='flex' flexDirection='column' flex='1'>
+                        <SANCol xs={24} md={0}>
+                            <SANClassroomHeader
+                                title={resource.video.title}
+                                subtitle={resource.course.name}
+                                actions={false}
+                            />
+                        </SANCol>
+                        <SANColStyled span={24}>
+                            <SANJwPlayer
+                                ref={playerRef}
+                                playerId='playerId'
+                                playerScript='/jwplayer/jwplayer.js'
+                                playlist={playlist}
+                                licenseKey={process.env.REACT_APP_JWPLAYER}
+                                isMuted={false}
+                                title={resource.video.title}
+                                subtitle={resource.course.name}
+                            />
+                        </SANColStyled>
+                    </SANRow>
                 )
             }}
         </SANQuery>
