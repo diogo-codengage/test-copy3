@@ -13,6 +13,7 @@ export interface ISelectOption {
 interface IProps {
   options: Array<ISelectOption>
   defaultValue?: ISelectOption[]
+  selected?: string
   onSelect?: (values: ISelectOption[]) => void,
   onUniqSelect?: (values: string) => void,
   placeholder: string,
@@ -34,10 +35,13 @@ export const ESSelect: React.FC<IProps> = (props) => {
     }
     e.preventDefault()
   }
-  const onUniqChange = (e: any, s: string) => {
-    props.onUniqSelect(s)
+
+  const onUniqChange = (e: CheckboxChangeEvent, s: string) => {
+    e.target.checked ? props.onUniqSelect(s) : props.onUniqSelect('')
+    e.preventDefault()
   }
 
+  const checkStyle = { padding: 5, marginLeft: 8 }
   const items =
     <Card>
       <div style={
@@ -61,17 +65,18 @@ export const ESSelect: React.FC<IProps> = (props) => {
         }).map((s, index) =>
           props.isMultiple ?
             <Checkbox
-              style={{ padding: 5, marginLeft: 8 }}
+              style={checkStyle}
               key={index}
               checked={!!props.defaultValue.find((e: ISelectOption) => e.value === s.value)}
               onChange={e => onMultipleChange(e, s)}
             >{s.label}</Checkbox>
             :
-            <div
-              style={{ padding: 5, marginLeft: 8, cursor: 'pointer' }}
+            <Checkbox
+              style={checkStyle}
               key={index}
-              onClick={e => onUniqChange(e, s.value)}
-            >{s.label}</div>
+              checked={props.selected === s.value}
+              onChange={e => onUniqChange(e, s.value)}
+            >{s.label}</Checkbox>
         )}
       </div>
     </Card>
