@@ -69,7 +69,7 @@ export const QuestionsPageProvider = (props: IProps) => {
 
     const loadMoreQuestions = async (clearOld: boolean) => {
         const filters = await getParamsFromFilters()
-        return  BFFService.loadMoreQuestions(filters)
+        return BFFService.loadMoreQuestions(filters)
             .then(function({ data }) {
                 if(data.questions.data.length === 0 && !clearOld){
                     setNoMoreQuestion(true)
