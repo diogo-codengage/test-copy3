@@ -1,8 +1,55 @@
 import gql from 'graphql-tag'
 
+export type IType =
+    | 'resume'
+    | 'mentalmap'
+    | 'flowchart'
+    | 'article'
+    | 'lesson'
+    | 'question'
 export interface IResource {
-    id: string
-    name: string
+    resource: {
+        id: string
+        resource_type: 'Video' | 'Question' | 'Document'
+        type: IType
+        title: string
+        course: {
+            id: string
+            name: string
+        }
+        video: {
+            id: string
+            title: string
+            durationInSeconds: number
+            bookmarked: boolean
+            progress: {
+                id: string
+                percentage: number
+                timeInSeconds: number
+            }
+            thumbnails: {
+                large: string
+            }
+            providers: {
+                data: Array<{
+                    code: string
+                    files: {
+                        smil: {
+                            url: string
+                        }
+                    }
+                }>
+            }
+        }
+        document: {
+            id: string
+            title: string
+            bookmarked: boolean
+            file: {
+                url: string
+            }
+        }
+    }
 }
 
 export const GET_RESOURCE = gql`

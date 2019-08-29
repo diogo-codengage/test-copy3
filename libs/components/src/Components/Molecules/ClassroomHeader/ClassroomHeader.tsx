@@ -1,14 +1,14 @@
 import React from 'react'
 
-import { theme, ifProp, prop } from 'styled-tools'
+import { theme } from 'styled-tools'
 
 import { SANStyled } from '../../../Theme'
 import { SANButton, ISANButtonProps } from '../../Atoms/Button'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
 import { SANTypography } from '../../Atoms/Typography'
+import { SANBox } from '../../Atoms/Box'
+import { SANDivider } from '../../Atoms/Divider'
 import { SANRow, SANCol } from '../Grid'
-
-const SANClassroomHeaderStyled = SANStyled.div``
 
 export interface ISANClassroomHeaderProps {
     title: string
@@ -17,6 +17,19 @@ export interface ISANClassroomHeaderProps {
     ButtonNextProps?: ISANButtonProps
     ButtonBookmarkProps?: ISANButtonProps
 }
+
+const SANButtonMenu = SANStyled(SANButton)`
+    && {
+        background-color: ${theme('colors.secondary')};
+        &:hover {
+            background-color: ${theme('colors.yellow.1')};
+        }
+        ${theme('mediaQueries.down.sm')} {
+            width: 32px;
+            height: 32px;
+        }
+    }
+`
 
 const SANClassroomHeader = ({
     title,
@@ -33,18 +46,35 @@ const SANClassroomHeader = ({
     }
 
     const mergeButtonPreviousProps = {
+        ...buttonDefaultProps,
         ...ButtonPreviousProps,
-        ...buttonDefaultProps
+        children: (
+            <>
+                <SANEvaIcon name='arrow-back-outline' mr='xs' fontSize='lg' />
+                {ButtonPreviousProps.children}
+            </>
+        )
     }
     const mergeButtonNextProps = {
-        ...ButtonPreviousProps,
-        ...buttonDefaultProps
+        ...buttonDefaultProps,
+        ...ButtonNextProps,
+        children: (
+            <>
+                {ButtonNextProps.children}
+                <SANEvaIcon
+                    name='arrow-forward-outline'
+                    ml='xs'
+                    fontSize='lg'
+                />
+            </>
+        )
     }
 
     const mergeButtonBookmarkProps = {
         size: 'small',
         variant: 'text',
         color: 'white',
+        block: true,
         ...ButtonBookmarkProps,
         children: (
             <>
@@ -53,9 +83,16 @@ const SANClassroomHeader = ({
                         name='heart'
                         key='bookmarked'
                         color='secondary'
+                        mr='xs'
+                        fontSize='lg'
                     />
                 ) : (
-                    <SANEvaIcon name='heart-outline' key='not-bookmarked' />
+                    <SANEvaIcon
+                        mr='xs'
+                        name='heart-outline'
+                        key='not-bookmarked'
+                        fontSize='lg'
+                    />
                 )}
                 {ButtonBookmarkProps.children}
             </>
@@ -63,26 +100,60 @@ const SANClassroomHeader = ({
     }
 
     return (
-        <SANRow type='flex' justify='space-between' align='bottom'>
-            <SANCol>
-                <SANButton circle variant='text'>
-                    <SANEvaIcon name='menu-outline' />
-                </SANButton>
-                <SANTypography
-                    fontSize={['lg', 'xl']}
-                    fontWeight='bold'
-                    color='white.10'
+        <SANRow
+            p={{ sm: 'xl', _: 'md' }}
+            type='flex'
+            justify='space-between'
+            align='middle'
+        >
+            <SANCol xs={24} md={12} xl={16}>
+                <SANBox
+                    displayFlex
+                    justifyContent={{ sm: 'flex-start', _: 'space-between' }}
+                    mb={{ md: '0', _: 'md' }}
                 >
-                    {title}
-                </SANTypography>
-                <SANTypography fontSize='md' color='gold.0'>
-                    {subtitle}
-                </SANTypography>
+                    <SANBox order={{ sm: 1, _: 2 }}>
+                        <SANButtonMenu
+                            circle
+                            variant='text'
+                            mr={{ sm: 'xl', _: '0' }}
+                        >
+                            <SANEvaIcon name='menu-outline' size='large' />
+                        </SANButtonMenu>
+                    </SANBox>
+                    <SANBox order={{ sm: 2, _: 1 }}>
+                        <SANTypography
+                            fontSize={{ xs: 'xl', _: 'lg' }}
+                            fontWeight='bold'
+                            color='white.10'
+                        >
+                            {title}
+                        </SANTypography>
+                        <SANTypography fontSize='md' color='gold.0'>
+                            {subtitle}
+                        </SANTypography>
+                    </SANBox>
+                </SANBox>
             </SANCol>
-            <SANCol>
-                <SANButton {...mergeButtonBookmarkProps} />
-                <SANButton {...mergeButtonPreviousProps} />
-                <SANButton {...mergeButtonNextProps} />
+            <SANCol xs={24} md={12} xl={8}>
+                <SANRow
+                    type='flex'
+                    justifyContent={{ xs: 'flex-end', _: 'space-between' }}
+                    gutter={24}
+                >
+                    <SANCol xs={24} sm={24} md={0} order={3} mt='md' mb='xs'>
+                        <SANDivider />
+                    </SANCol>
+                    <SANCol xs={24} sm={24} md={8} order={{ _: 3, md: 1 }}>
+                        <SANButton {...mergeButtonBookmarkProps} />
+                    </SANCol>
+                    <SANCol xs={12} sm={12} md={8} order={{ _: 1, md: 3 }}>
+                        <SANButton {...mergeButtonPreviousProps} />
+                    </SANCol>
+                    <SANCol xs={12} sm={12} md={8} order={{ _: 1, md: 4 }}>
+                        <SANButton {...mergeButtonNextProps} />
+                    </SANCol>
+                </SANRow>
             </SANCol>
         </SANRow>
     )

@@ -1,18 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import {
+    space,
+    layout,
+    flexbox,
+    SpaceProps,
+    FlexboxProps,
+    LayoutProps
+} from 'styled-system'
+
 import { ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 
-export type ISANColProps = PropTypes.InferProps<typeof propTypes> &
-    PropTypes.InferProps<typeof ESCol.propTypes>
+import { SANStyled } from '../../../Theme/createTheme'
 
-const SANBanner: React.FC<ISANColProps> = props => {
-    return <ESCol {...props} />
-}
+export type ISANColProps = PropTypes.InferProps<typeof ESCol.propTypes> &
+    LayoutProps &
+    FlexboxProps &
+    SpaceProps
 
-const propTypes = {}
-
-SANBanner.propTypes = propTypes
-SANBanner.defaultProps = {}
-
-export default SANBanner
+const SANCol = SANStyled(ESCol)`
+    ${layout}
+    ${flexbox}
+    ${space}
+`
+export default SANCol

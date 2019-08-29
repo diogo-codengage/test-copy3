@@ -3,10 +3,6 @@ import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-import ESLessonHeader, {
-    ESLessonHeaderExtra,
-    ESLessonHeaderLeft
-} from 'sanar-ui/dist/Components/Molecules/LessonHeader'
 import { SANPdfReader, SANQuery, SANClassroomHeader } from '@sanar/components'
 
 import { GET_RESOURCE } from 'Apollo/Classroom/Queries/resource'
@@ -33,29 +29,6 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
         >
             {({ data: { resource } }) => (
                 <>
-                    <ESLessonHeader
-                        bookmarked={resource.document.bookmarked}
-                        onBookmarked={() => {}}
-                        bookmarkLabel={t('classroom.document.bookmark')}
-                        leftChildren={
-                            <ESLessonHeaderLeft
-                                title={resource.document.title}
-                                subtitle={resource.course.name}
-                                onClick={() => {}}
-                            />
-                        }
-                        rightChildren={
-                            <ESLessonHeaderExtra
-                                previousLesson={'Anterior'}
-                                nextLesson={'Proxima'}
-                                onPrev={() => {}}
-                                onNext={() => {}}
-                                bookmarkLabel={t('classroom.document.bookmark')}
-                                bookmarked={resource.document.bookmarked}
-                                onBookmarked={() => {}}
-                            />
-                        }
-                    />
                     <SANClassroomHeader
                         title={resource.document.title}
                         subtitle={resource.course.name}
@@ -63,7 +36,7 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
                             children: 'Anterior'
                         }}
                         ButtonNextProps={{
-                            children: 'Própximo'
+                            children: 'Próximo'
                         }}
                         ButtonBookmarkProps={{
                             children: t('classroom.document.bookmark')
