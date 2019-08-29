@@ -57,8 +57,8 @@ export interface IQuestionsContext {
     specialties: Speciality[]
     setSpecialties: (specialties: Speciality[]) => void
 
-    selectedStates: ISelectOption[]
-    setSelectedStates: (values: ISelectOption[]) => void
+    selectedState: string
+    setSelectedState: (value: string) => void
     selectedYears: ISelectOption[]
     setSelectedYears: (values: ISelectOption[]) => void
     isCommentedByExpert: boolean
