@@ -2,7 +2,7 @@ export interface QuestionsInputFilter {
     specialtiesIds: string[],
     institutionsIds: string[],
     tagsIds: string[],
-    states: string[],
+    state: string,
     years: string[],
     isCommentedByExpert: boolean;
 }

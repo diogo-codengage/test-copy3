@@ -33,12 +33,11 @@ export const Filter: React.FC = () => {
 
             clearQuestions()
         },
-        setSelectedStates: v => {
-            ctx.setSelectedStates(v)
+        setSelectedState: v => {
+            ctx.setSelectedState(v)
             clearQuestions()
         },
         setSelectedYears: v => {
-            console.log( {years: v})
             ctx.setSelectedYears(v)
             clearQuestions()
         },
@@ -50,7 +49,7 @@ export const Filter: React.FC = () => {
         selectedSpecialties: ctx.selectedSpecialties,
         selectedSubSpecialties: ctx.selectedSubSpecialties,
         selectedTags: ctx.selectedTags,
-        selectedStates: ctx.selectedStates,
+        selectedState: ctx.selectedState,
         selectedYears: ctx.selectedYears,
         isCommentedByExpert: ctx.isCommentedByExpert,
 
