@@ -41,6 +41,8 @@ import { SANDivider } from 'Components/Atoms/Divider'
 
 import { SANStyled, SANElement } from 'Theme/'
 
+import { SANClassroomMenu } from 'Components/Organisms/ClassroomMenu'
+
 export {
     SANButton,
     SANEvaIcon,
@@ -80,5 +82,6 @@ export {
     SANCollapseTheme,
     SANCollapseThemePanel,
     SANCollapseThemeControlled,
-    SANDivider
+    SANDivider,
+    SANClassroomMenu
 }
