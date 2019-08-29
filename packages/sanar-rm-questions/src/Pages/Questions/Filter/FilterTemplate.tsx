@@ -56,7 +56,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
 
     const { width } = useWindowSize()
     const isSmall = width < 768
-    const cardSpan = isSmall ? 24 : 8
+    const cardSpan = isSmall ? 24 : 6
 
     let placeholderInstitutions  = '';
     if(props.selectedInstitutions.length === 1){
@@ -87,6 +87,17 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
     return <>
         <RMContainer>
             <ESRow gutter={24} style={{ marginBottom: 12 }}>
+                <ESCol span={cardSpan}>
+                    <ESCardSelectFilter
+                      style={{marginTop: isSmall ?  20 : 0 }}
+                      filterName="Categoria de prova"
+                      image={iconSpecialties}
+                      items={allTags}
+                      onChange={props.setSelectedTags}
+                      value={props.selectedTags}
+                      labelSelecteds={props.selectedTags.map(e => e.label).join(', ') }
+                    />
+                </ESCol>
                 <ESCol span={cardSpan}>
                     <ESCardSelectFilter
                         style={{marginTop: isSmall ?  20 : 0 }}
