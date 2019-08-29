@@ -174,6 +174,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
                     onUniqSelect={props.setSelectedState}
                     options={BRAZIL_STATES}
                     placeholder={props.selectedState}
+                    selected={props.selectedState}
                   >
                   </ESSelect>
                 </FilterInputContainer>
