@@ -161,5 +161,10 @@ export default {
             invites: 'Indique e ganhe',
             account: 'Minha conta'
         }
+    },
+    classroom: {
+        document: {
+            bookmark: 'Favoritar material'
+        }
     }
 }

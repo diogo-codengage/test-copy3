@@ -32,6 +32,7 @@ import { SANSpace } from 'Components/Atoms/Space'
 import { SANBox } from 'Components/Atoms/Box'
 import { SANThemeProvider } from 'Components/Atoms/ThemeProvider'
 import { SANCardInfo } from 'Components/Molecules/CardInfo'
+import { SANJwPlayer } from 'Components/Molecules/JwPlayer'
 import {
     SANCollapseTheme,
     SANCollapseThemePanel,
@@ -39,6 +40,7 @@ import {
 } from 'Components/Molecules/CollapseTheme'
 import { SANEmpty } from 'Components/Atoms/Empty'
 import { SANDivider } from 'Components/Atoms/Divider'
+import { SANPdfReader } from 'Components/Atoms/PdfReader'
 
 import { SANStyled, SANElement } from 'Theme/'
 
@@ -82,5 +84,7 @@ export {
     SANCollapseThemePanel,
     SANCollapseThemeControlled,
     SANDivider,
-    SANThemeProvider
+    SANThemeProvider,
+    SANJwPlayer,
+    SANPdfReader
 }
