@@ -5,7 +5,7 @@ import styled, {
 
 import { createColorVariants } from './colors'
 
-const defaultColors = {
+export const defaultColors = {
     // default
     black: '#000000',
 
@@ -50,6 +50,76 @@ const defaultColors = {
 
     'grey-solid': [
         '#ffffff',
+        '#f7f9fa',
+        '#ebeef2',
+        '#d1d9e8',
+        '#bfc7d9',
+        '#a4adbf',
+        '#5a6275',
+        '#37404f',
+        '#242938',
+        '#0f1117'
+    ],
+
+    white: [
+        'rgba(255, 255, 255, 0.05)',
+        'rgba(255, 255, 255, 0.1)',
+        'rgba(255, 255, 255, 0.15)',
+        'rgba(255, 255, 255, 0.25)',
+        'rgba(255, 255, 255, 0.4)',
+        'rgba(255, 255, 255, 0.5)',
+        'rgba(255, 255, 255, 0.65)',
+        'rgba(255, 255, 255, 0.75)',
+        'rgba(255, 255, 255, 0.85)',
+        'rgba(255, 255, 255, 0.95)'
+    ]
+}
+
+export const defaultDarkColors = {
+    // default
+    black: '#000000',
+
+    // brand
+    primary: 'rgba(255, 255, 255, 0.65)',
+    secondary: '#edc26d',
+
+    // actions
+    info: '#255AD0',
+    success: '#4aa62e',
+    warning: '#edc26d',
+    error: '#d94a4b',
+
+    blue: ['#ADC7FF', '#4277EB', '#255AD0', '#0F44B8', '#002A85'],
+
+    purple: ['#e1ccff', ' #905adb', '#753dc3', ' #45108f'],
+
+    red: ['#ffbdbd', '#ff7d7d', '#d94a4b', '#a61717'],
+
+    burgundy: ['#ffdbe7', '#ba5677', '#882445', '#6e1230'],
+
+    yellow: ['#ffdf78', '#e6b33e', '#cc8b23'],
+
+    gold: ['#ffebc2', '#edc26d', '#a1741a', '#6e4b07'],
+
+    green: ['#c4fcb3', '#82d968', '4aa62e', '#337320'],
+
+    'pool-green': ['#acfae9', '#5cedce', '#0ea181', '#006e56'],
+
+    grey: [
+        'rgba(255, 255, 255, 0.05)',
+        'rgba(255, 255, 255, 0.1)',
+        'rgba(255, 255, 255, 0.15)',
+        'rgba(255, 255, 255, 0.25)',
+        'rgba(255, 255, 255, 0.4)',
+        'rgba(255, 255, 255, 0.5)',
+        'rgba(255, 255, 255, 0.65)',
+        'rgba(255, 255, 255, 0.75)',
+        'rgba(255, 255, 255, 0.85)',
+        'rgba(255, 255, 255, 0.95)'
+    ],
+
+    'grey-solid': [
+        '#242938',
         '#f7f9fa',
         '#ebeef2',
         '#d1d9e8',

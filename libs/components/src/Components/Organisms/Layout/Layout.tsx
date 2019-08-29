@@ -9,12 +9,6 @@ import SANLayoutFooter from './Footer'
 import sanarLogo from '../../../Assets/images/brand/sanar.svg'
 import { ISANLayoutFooterProps } from 'index'
 
-const SANLayoutStyled = styled.section`
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-`
-
 const SANLayoutContentStyled = styled.main`
     flex: auto;
     display: flex;
@@ -46,6 +40,16 @@ const SANContentContainer = styled.section`
 
     @media screen and (min-width: 1365px) {
         padding-left: 360px;
+    }
+`
+
+const SANLayoutStyled = styled.section`
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    & .es-main-menu__classroom + ${SANContentContainer} {
+        padding: 0;
     }
 `
 

@@ -1,4 +1,12 @@
-import React, { useContext, createContext, useReducer, useRef } from 'react'
+import React, {
+    useContext,
+    createContext,
+    useReducer,
+    useRef,
+    useState
+} from 'react'
+
+type IMenuContext = 'general' | 'classroom'
 
 type IInitialState = {
     indexMenu: number
@@ -11,6 +19,10 @@ type IFLXLayoutProviderValue = {
     setMenuTab: (index: number) => void
     onCloseMenu: () => void
     menuRef: any
+    setDarkMode: (isDark: boolean) => void
+    darkMode: boolean
+    setMenuContext: (context: IMenuContext) => void
+    menuContext: IMenuContext
 }
 
 const defaultValue: IFLXLayoutProviderValue = {
@@ -18,7 +30,11 @@ const defaultValue: IFLXLayoutProviderValue = {
     currentMenuTitle: 'Menu',
     setMenuTab: () => {},
     onCloseMenu: () => {},
-    menuRef: null
+    menuRef: null,
+    setDarkMode: () => {},
+    darkMode: false,
+    setMenuContext: () => {},
+    menuContext: 'general'
 }
 
 const Context = createContext(defaultValue)
@@ -43,6 +59,8 @@ const reducer = (state = initialState, { payload, type }) => {
 
 const FLXLayoutProvider: React.FC = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
+    const [darkMode, setDarkMode] = useState(false)
+    const [menuContext, setMenuContext] = useState()
 
     //TODO: type Ref with TS into @sanar/components
     const menuRef: any = useRef()
@@ -78,7 +96,11 @@ const FLXLayoutProvider: React.FC = ({ children }) => {
         currentMenuTitle: state.menuTitle,
         setMenuTab,
         menuRef,
-        onCloseMenu
+        onCloseMenu,
+        setDarkMode,
+        darkMode,
+        setMenuContext,
+        menuContext
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

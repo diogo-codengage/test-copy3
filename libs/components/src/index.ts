@@ -30,6 +30,7 @@ import { SANQuery } from 'Components/Molecules/Query'
 import { SANFlexbox } from 'Components/Atoms/Flexbox'
 import { SANSpace } from 'Components/Atoms/Space'
 import { SANBox } from 'Components/Atoms/Box'
+import { SANThemeProvider } from 'Components/Atoms/ThemeProvider'
 import { SANCardInfo } from 'Components/Molecules/CardInfo'
 import {
     SANCollapseTheme,
@@ -80,5 +81,6 @@ export {
     SANCollapseTheme,
     SANCollapseThemePanel,
     SANCollapseThemeControlled,
-    SANDivider
+    SANDivider,
+    SANThemeProvider
 }
