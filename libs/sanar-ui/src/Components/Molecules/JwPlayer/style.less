@@ -293,10 +293,10 @@
     & .jw-icon-cc {
         order: 10;
     }
-    & .jw-icon-settings {
+    & .jw-icon-fullscreen {
         order: 11;
     }
-    & .jw-icon-fullscreen {
+    & .jw-icon-settings {
         order: 12;
     }
 
@@ -308,6 +308,7 @@
     .jw-svg-icon-volume-50 path,
     .jw-svg-icon-volume-0 path,
     .jw-svg-icon-cc-off path,
+    .jw-svg-icon-settings path,
     .jw-svg-icon-fullscreen-on path,
     .jw-svg-icon-rewind path,
     .jw-state-complete .jw-svg-icon-play path,
@@ -315,6 +316,7 @@
         display: none;
     }
 
+    .jw-svg-icon-settings,
     .jw-svg-icon-rewind,
     .jw-svg-icon-fullscreen-on,
     .jw-svg-icon-cc-off,
@@ -380,6 +382,14 @@
     }
     .jw-icon-fullscreen:hover .jw-svg-icon-fullscreen-on {
         background-image: url('@{assetsPath}/images/video/fullscreen-on-hover.svg');
+    }
+
+    /* SETTINGS */
+    .jw-svg-icon-settings {
+        background-image: url('@{assetsPath}/images/video/more-vertical.svg');
+    }
+    .jw-icon-settings:hover .jw-svg-icon-settings {
+        background-image: url('@{assetsPath}/images/video/more-vertical-hover.svg');
     }
 
     /* REWIND */

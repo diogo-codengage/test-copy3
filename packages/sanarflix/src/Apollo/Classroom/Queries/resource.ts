@@ -68,11 +68,11 @@ export const GET_RESOURCE = gql`
                 title
                 durationInSeconds
                 bookmarked
-                progress {
-                    id
-                    percentage
-                    timeInSeconds
-                }
+                # progress {
+                #     id
+                #     percentage
+                #     timeInSeconds
+                # }
                 thumbnails {
                     small
                     medium
