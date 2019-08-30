@@ -3,6 +3,7 @@ import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { useApolloClient } from '@apollo/react-hooks'
 
 import {
     SANJwPlayer,
@@ -18,6 +19,7 @@ import {
 } from '@sanar/components'
 
 import { GET_RESOURCE } from 'Apollo/Classroom/Queries/resource'
+import { CREATE_RATING } from 'Apollo/Classroom/Mutations/rating'
 import { useClassroomContext } from './Context'
 
 interface IParams {
@@ -37,6 +39,7 @@ const SANColHeader = styled(SANCol)`
 `
 
 const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
+    const client = useApolloClient()
     const { t } = useTranslation('sanarflix')
     const {
         match: {
@@ -45,6 +48,19 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
     } = props
     const playerRef = useRef()
     const { handleBookmark } = useClassroomContext()
+
+    const handleRating = async ({ value, resourceId }) => {
+        try {
+            await client.mutate({
+                mutation: CREATE_RATING,
+                variables: {
+                    resourceId,
+                    resourceType: 'Video',
+                    rating: { value, type: 'numeric' }
+                }
+            })
+        } catch {}
+    }
 
     return (
         <SANQuery
@@ -84,6 +100,16 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                 isMuted={false}
                                 title={resource.video.title}
                                 subtitle={resource.course.name}
+                                rate={{
+                                    value:
+                                        resource.video.rating &&
+                                        resource.video.rating.rating.value,
+                                    onChange: value =>
+                                        handleRating({
+                                            value,
+                                            resourceId: resource.video.id
+                                        })
+                                }}
                                 BookmarkProps={{
                                     value: resource.video.bookmarked,
                                     onClick: () =>

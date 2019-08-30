@@ -78,6 +78,12 @@ export const GET_RESOURCE = gql`
                     medium
                     large
                 }
+                rating {
+                    id
+                    rating {
+                        value
+                    }
+                }
                 providers {
                     data {
                         code
