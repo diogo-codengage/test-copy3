@@ -1,14 +1,17 @@
 import React, { useContext } from 'react'
 import { ThemeContext } from 'styled-components'
-import FLXTheme from 'Styles/Theme'
 
 import { SANThemeCreateTheme, SANThemeProvider } from '@sanar/components'
-import { defaultDarkColors } from '@sanar/components/dist/Theme'
 
 type FLXThemeContextProviderProps = {}
 
-export const lightTheme = SANThemeCreateTheme(FLXTheme)
-export const darkTheme = SANThemeCreateTheme({ colors: defaultDarkColors })
+const theme = {
+    colors: {
+        primary: '#600F30'
+    }
+}
+
+export const lightTheme = SANThemeCreateTheme(theme)
 
 export const useThemeContext = () => useContext(ThemeContext)
 

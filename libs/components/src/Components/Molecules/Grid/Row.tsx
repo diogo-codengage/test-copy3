@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types'
 
 import {
+    color,
     space,
     layout,
     flexbox,
+    ColorProps,
     FlexboxProps,
     LayoutProps,
     SpaceProps
@@ -16,12 +18,14 @@ import { SANStyled } from '../../../Theme/createTheme'
 export type ISANRowProps = PropTypes.InferProps<typeof ESRow.propTypes> &
     SpaceProps &
     LayoutProps &
-    FlexboxProps
+    FlexboxProps &
+    ColorProps
 
 const SANRow = SANStyled(ESRow)`
     ${space}
     ${layout}
     ${flexbox}
+    ${color}
 `
 
 export default SANRow

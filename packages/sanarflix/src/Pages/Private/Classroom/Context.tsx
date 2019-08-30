@@ -4,7 +4,6 @@ import { zipObj } from 'ramda'
 import { useApolloClient } from '@apollo/react-hooks'
 
 import { useLayoutContext } from 'Pages/Layout/Context'
-import { useThemeContext, darkTheme, lightTheme } from 'Hooks/theme'
 
 import { CREATE_BOOKMARK } from 'Apollo/Classroom/Mutations/bookmark'
 
@@ -59,7 +58,6 @@ const makeOptimisticResponse = ({ resourceId, resourceType, bookmark }) => {
 
 const FLXClassroomProvider: React.FC = ({ children }) => {
     const client = useApolloClient()
-    const { setTheme } = useThemeContext()
     const { setDarkMode, setMenuTab, setMenuContext } = useLayoutContext()
 
     const handleBookmark = async ({ resourceId, resourceType, bookmark }) => {
@@ -81,12 +79,10 @@ const FLXClassroomProvider: React.FC = ({ children }) => {
 
     useEffect(() => {
         setDarkMode(true)
-        setTheme(darkTheme)
         setMenuContext('classroom')
         return () => {
             setMenuTab(0)
             setDarkMode(false)
-            setTheme(lightTheme)
             setMenuContext('general')
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

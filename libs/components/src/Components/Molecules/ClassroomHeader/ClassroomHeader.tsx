@@ -126,6 +126,7 @@ const SANClassroomHeader = ({
             type='flex'
             justify='space-between'
             align='middle'
+            bg='grey-solid.7'
         >
             <SANCol {...grid}>
                 <SANBox
