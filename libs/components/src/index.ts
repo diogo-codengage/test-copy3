@@ -42,6 +42,7 @@ import {
 import { SANEmpty } from 'Components/Atoms/Empty'
 import { SANDivider } from 'Components/Atoms/Divider'
 import { SANPdfReader } from 'Components/Atoms/PdfReader'
+import { SANRate } from 'Components/Atoms/Rate'
 
 import { SANStyled, SANElement } from 'Theme/'
 
@@ -91,5 +92,6 @@ export {
     SANThemeProvider,
     SANJwPlayer,
     SANPdfReader,
-    SANClassroomHeader
+    SANClassroomHeader,
+    SANRate
 }

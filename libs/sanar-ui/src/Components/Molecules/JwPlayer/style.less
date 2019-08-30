@@ -66,10 +66,13 @@
 
         &--right {
             z-index: 1;
+            display: flex;
+            align-items: center;
             > div {
                 z-index: 1;
                 display: flex;
                 align-items: flex-end;
+                align-items: center;
                 & .es-typography,
                 & .es-button {
                     color: @white;
@@ -437,7 +440,7 @@
         }
     }
 
-    @media (max-width: @screen-xs) {
+    @media (max-width: 436px) {
         & .jw-svg-icon-next,
         & .jw-svg-icon-previous,
         & .jw-svg-icon-advance {

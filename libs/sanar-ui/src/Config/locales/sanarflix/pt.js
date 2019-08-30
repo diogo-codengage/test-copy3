@@ -165,6 +165,9 @@ export default {
     classroom: {
         document: {
             bookmark: 'Favoritar Material'
+        },
+        video: {
+            rate: 'Avaliar aula:'
         }
     }
 }

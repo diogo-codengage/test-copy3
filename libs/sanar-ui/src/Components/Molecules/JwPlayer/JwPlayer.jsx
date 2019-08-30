@@ -47,6 +47,7 @@ const ESJwPlayer = forwardRef(
             rate,
             title,
             subtitle,
+            BookmarkProps,
             ...props
         },
         ref
@@ -117,7 +118,7 @@ const ESJwPlayer = forwardRef(
             if (player.getWidth() > 1024) {
                 player.resize('100%', '100vh')
             } else {
-                player.resize('100%', 'calc(100vh - 100px)')
+                // player.resize('100%', 'calc(100vh - 100px)')
             }
 
             setIsReady(true)
@@ -158,7 +159,7 @@ const ESJwPlayer = forwardRef(
                         style={{ height: `${height}px` }}
                     />
                 )}
-                {isReady && (
+                {(isReady || (isReady && isPause)) && (
                     <div
                         className={classNames('es-jw-player__header', {
                             ['has-header']: isReady && isPause
@@ -170,7 +171,9 @@ const ESJwPlayer = forwardRef(
                                 circle
                                 size='medium'
                                 variant='text'
-                                className={classNames({ ['visible']: isReady })}
+                                className={classNames({
+                                    ['visible']: isReady
+                                })}
                             >
                                 <ESEvaIcon name='menu-outline' />
                             </ESButton>
@@ -187,6 +190,29 @@ const ESJwPlayer = forwardRef(
                             </div>
                         </div>
                         <div className='es-jw-player__header--right'>
+                            {BookmarkProps && (
+                                <ESButton
+                                    size='small'
+                                    variant='text'
+                                    color='white'
+                                    onClick={BookmarkProps.onClick}
+                                    className='mr-xs'
+                                >
+                                    {BookmarkProps.value ? (
+                                        <ESEvaIcon
+                                            name='heart'
+                                            key='bookmarked'
+                                            color='secondary'
+                                        />
+                                    ) : (
+                                        <ESEvaIcon
+                                            name='heart-outline'
+                                            key='not-bookmarked'
+                                        />
+                                    )}
+                                    {t('jwplayer.bookmark')}
+                                </ESButton>
+                            )}
                             <div>
                                 <ESTypography
                                     variant='subtitle2'

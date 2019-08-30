@@ -1,14 +1,20 @@
 import React, { useRef } from 'react'
 
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
     SANJwPlayer,
     SANQuery,
     SANClassroomHeader,
+    SANTypography,
     SANRow,
-    SANCol
+    SANCol,
+    SANRate,
+    SANBox,
+    SANButton,
+    SANEvaIcon
 } from '@sanar/components'
 
 import { GET_RESOURCE } from 'Apollo/Classroom/Queries/resource'
@@ -23,7 +29,14 @@ const SANColStyled = styled(SANCol)`
     flex: 1;
 `
 
+const SANColHeader = styled(SANCol)`
+    @media screen and (orientation: landscape) {
+        display: none;
+    }
+`
+
 const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
+    const { t } = useTranslation('sanarflix')
     const {
         match: {
             params: { themeId, resourceId }
@@ -46,14 +59,19 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                     image: resource.video.thumbnails.large
                 }
                 return (
-                    <SANRow type='flex' flexDirection='column' flex='1'>
-                        <SANCol xs={24} md={0}>
+                    <SANRow
+                        type='flex'
+                        flexDirection='column'
+                        flex='1'
+                        gutter={16}
+                    >
+                        <SANColHeader xs={24} md={0}>
                             <SANClassroomHeader
                                 title={resource.video.title}
                                 subtitle={resource.course.name}
                                 actions={false}
                             />
-                        </SANCol>
+                        </SANColHeader>
                         <SANColStyled span={24}>
                             <SANJwPlayer
                                 ref={playerRef}
@@ -64,8 +82,87 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                 isMuted={false}
                                 title={resource.video.title}
                                 subtitle={resource.course.name}
+                                BookmarkProps={{
+                                    value: 1,
+                                    onClick: () => {}
+                                }}
                             />
                         </SANColStyled>
+                        <SANCol xs={24} sm={24} md={0}>
+                            <SANBox
+                                displayFlex
+                                justifyContent='space-between'
+                                alignItems='center'
+                                px='md'
+                                py='xs'
+                            >
+                                <SANBox displayFlex alignItems='center'>
+                                    <SANTypography
+                                        variant='subtitle2'
+                                        color='white.7'
+                                        mr='xs'
+                                    >
+                                        {t('classroom.video.rate')}
+                                    </SANTypography>
+                                    <SANRate value={3} />
+                                </SANBox>
+                                <SANButton circle variant='text' color='white'>
+                                    {false ? (
+                                        <SANEvaIcon
+                                            name='heart'
+                                            key='bookmarked'
+                                            color='secondary'
+                                            fontSize='lg'
+                                        />
+                                    ) : (
+                                        <SANEvaIcon
+                                            name='heart-outline'
+                                            key='not-bookmarked'
+                                            fontSize='lg'
+                                        />
+                                    )}
+                                </SANButton>
+                            </SANBox>
+                        </SANCol>
+                        <SANCol xs={24} sm={24} md={0}>
+                            <SANBox
+                                displayFlex
+                                justifyContent='space-between'
+                                alignItems='center'
+                                px='md'
+                                pt='xs'
+                                pb='8'
+                            >
+                                <SANButton
+                                    size='small'
+                                    variant='outlined'
+                                    color='white'
+                                    mr='xs'
+                                    block
+                                >
+                                    <SANEvaIcon
+                                        name='arrow-back-outline'
+                                        mr='xs'
+                                        fontSize='lg'
+                                    />
+                                    Anterior
+                                </SANButton>
+                                <SANButton
+                                    size='small'
+                                    variant='outlined'
+                                    color='white'
+                                    ml='xs'
+                                    block
+                                >
+                                    Próximo
+                                    <SANEvaIcon
+                                        name='arrow-forward-outline'
+                                        ml='xs'
+                                        fontSize='lg'
+                                    />
+                                </SANButton>
+                            </SANBox>
+                        </SANCol>
                     </SANRow>
                 )
             }}
