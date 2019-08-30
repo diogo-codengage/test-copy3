@@ -66,45 +66,46 @@ const renderCourse = history => (course: ICourse) => (
     </div>
 )
 
-const Courses = withRouter(({ history }: RouteComponentProps) => (
-    <SANQuery
-        query={GET_COURSES_LAST_VIEWED}
-        loaderProps={{ minHeight: 186, flex: true }}
-    >
-        {({ data }: { data: ICourses }) => (
-            <SANCarousel
-                slidesToShow={4}
-                slidesToScroll={1}
-                initialSlide={0}
-                arrows
-                infinite={false}
-                dots={false}
-                draggable
-                lazyLoad
-                responsive={responsive}
-            >
-                {data.courses.data.map(renderCourse(history))}
-            </SANCarousel>
-        )}
-    </SANQuery>
-))
-
-const FLXViewedCourses = () => {
+const FLXViewedCourses = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
 
     return (
-        <>
-            <SANLayoutContainer>
-                <SANSessionTitle
-                    title={t('home.viewedCourses.title')}
-                    subtitle={t('home.viewedCourses.subtitle')}
-                />
-            </SANLayoutContainer>
-            <SANLayoutContainer mb={8} fullMobile>
-                <Courses />
-            </SANLayoutContainer>
-        </>
+        <SANQuery
+            query={GET_COURSES_LAST_VIEWED}
+            loaderProps={{ minHeight: 186, flex: true }}
+        >
+            {({ data }: { data: ICourses }) => {
+                if (!data.courses.data.length) {
+                    return null
+                }
+                return (
+                    <>
+                        <SANLayoutContainer>
+                            <SANSessionTitle
+                                title={t('home.viewedCourses.title')}
+                                subtitle={t('home.viewedCourses.subtitle')}
+                            />
+                        </SANLayoutContainer>
+                        <SANLayoutContainer mb={8} fullMobile>
+                            <SANCarousel
+                                slidesToShow={4}
+                                slidesToScroll={1}
+                                initialSlide={0}
+                                arrows
+                                infinite={false}
+                                dots={false}
+                                draggable
+                                lazyLoad
+                                responsive={responsive}
+                            >
+                                {data.courses.data.map(renderCourse(history))}
+                            </SANCarousel>
+                        </SANLayoutContainer>
+                    </>
+                )
+            }}
+        </SANQuery>
     )
 }
 
-export default FLXViewedCourses
+export default withRouter(FLXViewedCourses)

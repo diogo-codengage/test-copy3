@@ -70,6 +70,8 @@ export default {
         }
     },
     course: {
+        description:
+            'O que você irá aprender e os materiais que você tem acesso na plataforma.',
         subheader: {
             key: 'tema',
             key_plural: 'temas',

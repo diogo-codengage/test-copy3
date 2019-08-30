@@ -3,8 +3,6 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import LinesEllipsis from 'react-lines-ellipsis'
-import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC'
 
 import {
     SANHeader,
@@ -38,12 +36,18 @@ import {
 
 import Themes from './Themes'
 
-const ResponsiveLinesEllipsis = responsiveHOC(0)(LinesEllipsis)
-
 const responsive = [
     {
         breakpoint: 1500,
         settings: {
+            arrows: false,
+            swipeToSlide: true
+        }
+    },
+    {
+        breakpoint: 650,
+        settings: {
+            slidesToShow: 3,
             arrows: false,
             swipeToSlide: true
         }
@@ -178,36 +182,29 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
                         />
                         <SANLayoutContainer mt={8}>
                             <SANRow type='flex' align='middle' gutter={64}>
-                                <SANCol xs={{ span: 24, order: 1 }} lg={7}>
+                                <SANCol xs={{ span: 24, order: 1 }} lg={8}>
                                     <SANBox mb='md'>
                                         <SANTypography level={5} mb='xs'>
                                             {t('course.whatCurseHave')}
                                         </SANTypography>
-                                        <ResponsiveLinesEllipsis
-                                            text={course.description}
-                                            maxLine={2}
-                                            ellipsis={
-                                                <SANTypography
-                                                    variant='subtitle2'
-                                                    strong
-                                                    color='primary'
-                                                    component='span'
-                                                    ml='xs'
-                                                    onClick={() =>
-                                                        setShowDescription(
-                                                            old => !old
-                                                        )
-                                                    }
-                                                >
-                                                    {showDescription
-                                                        ? t('course.seeLess')
-                                                        : t('course.viewMore')}
-                                                </SANTypography>
+                                        {t('course.description')}
+                                        <SANTypography
+                                            variant='subtitle2'
+                                            strong
+                                            color='primary'
+                                            component='span'
+                                            ml='xs'
+                                            onClick={() =>
+                                                setShowDescription(old => !old)
                                             }
-                                        />
+                                        >
+                                            {showDescription
+                                                ? t('course.seeLess')
+                                                : t('course.viewMore')}
+                                        </SANTypography>
                                     </SANBox>
                                 </SANCol>
-                                <SANCol xs={{ span: 24, order: 3 }} lg={17}>
+                                <SANCol xs={{ span: 24, order: 3 }} lg={16}>
                                     <Cards counters={course.counters} />
                                 </SANCol>
                                 {showDescription && (
