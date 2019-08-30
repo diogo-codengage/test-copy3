@@ -121,7 +121,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                 }}
                             />
                         </SANColStyled>
-                        <SANCol xs={24} sm={24} md={0}>
+                        <SANCol xs={24} sm={24} md={0} bg='grey-solid.8'>
                             <SANBox
                                 displayFlex
                                 justifyContent='space-between'
@@ -157,7 +157,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                 </SANButton>
                             </SANBox>
                         </SANCol>
-                        <SANCol xs={24} sm={24} md={0}>
+                        <SANCol xs={24} sm={24} md={0} bg='grey-solid.8'>
                             <SANBox
                                 displayFlex
                                 justifyContent='space-between'

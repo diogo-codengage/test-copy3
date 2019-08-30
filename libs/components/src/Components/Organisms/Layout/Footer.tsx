@@ -1,6 +1,6 @@
 import React from 'react'
-import styled from 'styled-components'
-import { theme } from 'styled-tools'
+import styled, { css } from 'styled-components'
+import { theme, ifProp } from 'styled-tools'
 
 import { SANLayoutContainer } from '.'
 import { SANFlexbox } from '../../Atoms/Flexbox'
@@ -15,22 +15,36 @@ import { SANBox } from '../../Atoms/Box'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
 
 const SANLayoutFooterStyled = styled.footer`
-    background: ${theme('pureWhite')};
+    background-color: ${ifProp(
+        'darkMode',
+        theme('colors.grey-solid.8'),
+        theme('pureWhite')
+    )};
     flex: 0 0 auto;
 `
 
 const Infos = styled.div`
     padding: ${theme('space.xxl')} 0;
-    border-top: 1px solid ${theme('colors.grey.2')};
-    border-bottom: 1px solid ${theme('colors.grey.2')};
+    border-top: 1px solid
+        ${ifProp('darkMode', theme('colors.white.2'), theme('colors.grey.2'))};
+    border-bottom: 1px solid
+        ${ifProp('darkMode', theme('colors.white.2'), theme('colors.grey.2'))};
 `
 
 const IconAndText: React.FC<any> = styled(SANSpace)`
-    color: ${theme('colors.grey.6')};
+    color: ${ifProp(
+        'darkMode',
+        theme('colors.white.6'),
+        theme('colors.grey.6')
+    )};
     padding: ${theme('space.2')};
 
     & i {
-        color: ${theme('colors.grey.6')};
+        color: ${ifProp(
+            'darkMode',
+            theme('colors.white.6'),
+            theme('colors.grey.6')
+        )};
         margin-right: 4px;
     }
 
@@ -44,18 +58,25 @@ const Social: React.FC<any> = styled(SANFlexbox)`
     & img {
         width: 24px;
         height: 24px;
-        filter: saturate(0);
+
+        ${ifProp(
+            'darkMode',
+            css`
+                filter: invert(1);
+            `
+        )};
     }
 `
 
-const ContactInfo: React.FC<{ info: string; name: string }> = ({
-    info,
-    name
-}) => {
+const ContactInfo: React.FC<{
+    info: string
+    name: string
+    darkMode: boolean
+}> = ({ info, name, darkMode }) => {
     return (
-        <IconAndText>
+        <IconAndText darkMode={darkMode}>
             <SANFlexbox alignItems='center'>
-                <SANEvaIcon name={name} />
+                <SANEvaIcon name={name} fontSize='lg' />
                 <SANTypography>{info}</SANTypography>
             </SANFlexbox>
         </IconAndText>
@@ -71,6 +92,7 @@ export type ISANLayoutFooterProps = {
     facebook?: string
     instagram?: string
     youtube?: string
+    darkMode?: boolean
 }
 
 const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
@@ -81,11 +103,12 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
     facebook: facebookProp,
     instagram: instagramProp,
     youtube: youtubeProp,
-    copyright
+    copyright,
+    darkMode
 }) => {
     return (
-        <SANLayoutFooterStyled>
-            <Infos>
+        <SANLayoutFooterStyled {...{ darkMode }}>
+            <Infos {...{ darkMode }}>
                 <SANLayoutContainer>
                     <SANFlexbox
                         flexDirection={{ _: 'column', lg: 'row' }}
@@ -119,23 +142,30 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
                                     <ContactInfo
                                         info={phoneProp}
                                         name='phone-outline'
+                                        darkMode={darkMode}
                                     />
                                 )}
                                 {whatsappProp && (
                                     <ContactInfo
                                         info={whatsappProp}
                                         name='phone-outline'
+                                        darkMode={darkMode}
                                     />
                                 )}
                                 {emailProp && (
                                     <ContactInfo
                                         name='email-outline'
                                         info={emailProp}
+                                        darkMode={darkMode}
                                     />
                                 )}
                             </SANBox>
                         </SANBox>
-                        <Social alignItems='center' justifyContent='center'>
+                        <Social
+                            alignItems='center'
+                            justifyContent='center'
+                            darkMode={darkMode}
+                        >
                             {facebookProp && (
                                 <SANButton
                                     href={facebookProp}
