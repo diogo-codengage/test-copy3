@@ -117,8 +117,8 @@ const ESJwPlayer = forwardRef(
 
             if (player.getWidth() > 1024) {
                 player.resize('100%', '100vh')
-            } else {
-                // player.resize('100%', 'calc(100vh - 100px)')
+            } else if (player.getWidth() > 576) {
+                player.resize('100%', 'calc(100vh - 60px)')
             }
 
             setIsReady(true)
@@ -142,7 +142,7 @@ const ESJwPlayer = forwardRef(
         useEffect(() => {
             if (width < 1024) {
                 const player = getPlayer(playerId)
-                player && player.resize('100%', 'calc(100vh - 100px)')
+                player && player.resize('100%', 'calc(100vh - 60px)')
             } else {
                 const player = getPlayer(playerId)
                 player && player.resize('100%', '100vh')
@@ -159,7 +159,7 @@ const ESJwPlayer = forwardRef(
                         style={{ height: `${height}px` }}
                     />
                 )}
-                {(isReady || (isReady && isPause)) && (
+                {isReady && (
                     <div
                         className={classNames('es-jw-player__header', {
                             ['has-header']: isReady && isPause

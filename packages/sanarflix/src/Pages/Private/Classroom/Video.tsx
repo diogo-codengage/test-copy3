@@ -77,12 +77,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                     image: resource.video.thumbnails.large
                 }
                 return (
-                    <SANRow
-                        type='flex'
-                        flexDirection='column'
-                        flex='1'
-                        gutter={16}
-                    >
+                    <SANRow type='flex' flexDirection='column' flex='1'>
                         <SANColHeader xs={24} md={0}>
                             <SANClassroomHeader
                                 title={resource.video.title}
@@ -90,7 +85,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                 actions={false}
                             />
                         </SANColHeader>
-                        <SANColStyled span={24}>
+                        <SANColStyled xs={24}>
                             <SANJwPlayer
                                 ref={playerRef}
                                 playerId='playerId'

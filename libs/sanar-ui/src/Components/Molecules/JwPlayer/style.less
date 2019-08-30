@@ -1,7 +1,16 @@
 .es-jw-player {
-    &:hover .es-jw-player__header,
+    background-color: @grey-solid-9;
+    overflow: hidden;
+    position: relative;
+
     & .has-header {
         visibility: visible;
+    }
+
+    @media (hover: hover) {
+        &:hover .es-jw-player__header {
+            visibility: visible;
+        }
     }
 
     &:before {
@@ -28,6 +37,7 @@
         align-items: center;
         justify-content: center;
         position: absolute;
+        background-color: @grey-solid-9;
     }
 
     /* HEADER LAYER */
