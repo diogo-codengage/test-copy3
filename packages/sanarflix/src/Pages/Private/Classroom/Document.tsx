@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { SANPdfReader, SANQuery, SANClassroomHeader } from '@sanar/components'
 
 import { GET_RESOURCE } from 'Apollo/Classroom/Queries/resource'
+import { useClassroomContext } from './Context'
 
 interface IParams {
     resourceId: string
@@ -20,6 +21,7 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
         }
     } = props
     const { t } = useTranslation('sanarflix')
+    const { handleBookmark } = useClassroomContext()
 
     return (
         <SANQuery
@@ -39,7 +41,14 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
                             children: 'Próximo'
                         }}
                         ButtonBookmarkProps={{
-                            children: t('classroom.document.bookmark')
+                            children: t('classroom.document.bookmark'),
+                            bookmarked: resource.document.bookmarked,
+                            onClick: () =>
+                                handleBookmark({
+                                    resourceId,
+                                    resourceType: 'Document',
+                                    bookmark: resource.document.bookmarked
+                                })
                         }}
                     />
                     <SANPdfReader

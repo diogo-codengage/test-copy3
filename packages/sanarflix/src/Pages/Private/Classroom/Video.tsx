@@ -18,6 +18,7 @@ import {
 } from '@sanar/components'
 
 import { GET_RESOURCE } from 'Apollo/Classroom/Queries/resource'
+import { useClassroomContext } from './Context'
 
 interface IParams {
     resourceId: string
@@ -43,6 +44,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
         }
     } = props
     const playerRef = useRef()
+    const { handleBookmark } = useClassroomContext()
 
     return (
         <SANQuery
@@ -83,8 +85,13 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                 title={resource.video.title}
                                 subtitle={resource.course.name}
                                 BookmarkProps={{
-                                    value: 1,
-                                    onClick: () => {}
+                                    value: resource.video.bookmarked,
+                                    onClick: () =>
+                                        handleBookmark({
+                                            resourceId,
+                                            resourceType: 'Video',
+                                            bookmark: resource.video.bookmarked
+                                        })
                                 }}
                             />
                         </SANColStyled>

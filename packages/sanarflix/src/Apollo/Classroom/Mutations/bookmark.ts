@@ -1,8 +1,16 @@
 import gql from 'graphql-tag'
 
-export interface IResource {
+interface ResponseBookmark {
     id: string
-    name: string
+    bookmarked: boolean
+}
+
+export interface IBookmark {
+    createBookmarks: {
+        document: ResponseBookmark
+        video: ResponseBookmark
+        question: ResponseBookmark
+    }
 }
 
 export const CREATE_BOOKMARK = gql`
@@ -13,11 +21,17 @@ export const CREATE_BOOKMARK = gql`
         createBookmarks(
             input: { resource_id: $resourceId, resource_type: $resourceType }
         ) {
-            bookmark {
+            document {
                 id
-                resource_type
-                resource_id
-                owner_id
+                bookmarked
+            }
+            video {
+                id
+                bookmarked
+            }
+            question {
+                id
+                bookmarked
             }
         }
     }
