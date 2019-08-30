@@ -13,6 +13,7 @@ import FLXBanner from 'Components/Banner'
 import allCourses from 'Assets/images/banners/all-courses.png'
 import baseQuestions from 'Assets/images/banners/base-questions.png'
 import indicate from 'Assets/images/banners/indicate.png'
+import indicateMobile from 'Assets/images/banners/indicate-mobile.png'
 
 const intl = 'home.banners'
 
@@ -70,6 +71,7 @@ const FLXHome: React.FC<RouteComponentProps> = ({ history }) => {
                     BannerProps={{
                         title: t(`${intl}.indicate.title`),
                         image: indicate,
+                        mobile: indicateMobile,
                         ButtonProps: {
                             children: t(`${intl}.indicate.action`)
                         }
