@@ -11,7 +11,9 @@ export type ISANSessionTitleProps = PropTypes.InferProps<
     SpaceProps
 
 const SANSessionTitle = SANStyled(ESSessionTitle)`
-    ${space}
+    && {
+        ${space}
+    }
 `
 
 export default SANSessionTitle

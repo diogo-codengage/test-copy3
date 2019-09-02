@@ -61,7 +61,7 @@ const SANSessionTitleStyled = SANStyled(SANSessionTitle)`
 const updateCacheThemes = (prev, { fetchMoreResult }) => {
     if (!fetchMoreResult) return prev
     return Object.assign({}, prev, {
-        courses: {
+        themes: {
             ...prev.themes,
             data: [...prev.themes.data, ...fetchMoreResult.themes.data]
         }
@@ -98,6 +98,7 @@ const renderTheme = (theme, index) => (
 
 const Themes = ({ courseId }: { courseId: string }) => {
     const { t } = useTranslation('sanarflix')
+    const [count, setCount] = useState(0)
     const [completenessFilter, setCompletenessFilter] = useState<
         ICompletenessFiltersValues
     >('all')
@@ -107,67 +108,70 @@ const Themes = ({ courseId }: { courseId: string }) => {
     ) => setCompletenessFilter(e.target.value as ICompletenessFiltersValues)
 
     return (
-        <SANQuery
-            query={GET_THEMES}
-            options={{
-                variables: {
-                    courseId,
-                    ...(completenessFilter !== 'all' && {
-                        completeness: completenessFilter
-                    })
-                }
-            }}
-            loaderProps={{ minHeight: 150, flex: true }}
-        >
-            {({
-                data: { themes },
-                fetchMore
-            }: {
-                data: IThemes
-                fetchMore: (data: any) => Object
-            }) => (
-                <>
-                    <SANLayoutContainer pt={7} pb={7}>
-                        <SANSessionTitleStyled
-                            title={t('course.subheader.keyWithCount', {
-                                count: themes.count
-                            })}
-                            extra={
-                                <FLXCompletenessFilters
-                                    defaultValue='all'
-                                    value={completenessFilter}
-                                    onChange={onChangeCompletenessFilters}
-                                />
-                            }
-                            extraOnLeft
-                            m='0'
+        <>
+            <SANLayoutContainer pt={7} pb={7}>
+                <SANSessionTitleStyled
+                    title={t('course.subheader.keyWithCount', {
+                        count
+                    })}
+                    extra={
+                        <FLXCompletenessFilters
+                            defaultValue='all'
+                            value={completenessFilter}
+                            onChange={onChangeCompletenessFilters}
                         />
-                    </SANLayoutContainer>
-                    <SANLayoutContainer pb={8}>
-                        {!!themes.data.length ? (
-                            <SANInfiniteScroll
-                                threshold={71}
-                                loadMore={() =>
-                                    fetchMore({
-                                        variables: {
-                                            offset: themes.data.length
-                                        },
-                                        updateQuery: updateCacheThemes
-                                    })
-                                }
-                                hasMore={themes.data.length < themes.count}
-                            >
-                                <SANCollapseTheme>
-                                    {themes.data.map(renderTheme)}
-                                </SANCollapseTheme>
-                            </SANInfiniteScroll>
-                        ) : (
-                            <SANEmpty />
-                        )}
-                    </SANLayoutContainer>
-                </>
-            )}
-        </SANQuery>
+                    }
+                    extraOnLeft
+                    m='0'
+                />
+            </SANLayoutContainer>
+            <SANQuery
+                query={GET_THEMES}
+                options={{
+                    variables: {
+                        courseId,
+                        ...(completenessFilter !== 'all' && {
+                            completeness: completenessFilter
+                        })
+                    }
+                }}
+                loaderProps={{ minHeight: 150, flex: true }}
+            >
+                {({
+                    data: { themes },
+                    fetchMore
+                }: {
+                    data: IThemes
+                    fetchMore: (data: any) => Object
+                }) => {
+                    setCount(themes.count)
+                    return (
+                        <SANLayoutContainer pb={8}>
+                            {!!themes.data.length ? (
+                                <SANInfiniteScroll
+                                    threshold={71}
+                                    loadMore={() =>
+                                        fetchMore({
+                                            variables: {
+                                                skip: themes.data.length
+                                            },
+                                            updateQuery: updateCacheThemes
+                                        })
+                                    }
+                                    hasMore={themes.data.length < themes.count}
+                                >
+                                    <SANCollapseTheme>
+                                        {themes.data.map(renderTheme)}
+                                    </SANCollapseTheme>
+                                </SANInfiniteScroll>
+                            ) : (
+                                <SANEmpty />
+                            )}
+                        </SANLayoutContainer>
+                    )
+                }}
+            </SANQuery>
+        </>
     )
 }
 

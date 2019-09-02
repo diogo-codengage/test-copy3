@@ -16,17 +16,19 @@ const TextWrapperStyled = SANStyled.div`
     width: calc(100% - 67px);
 `
 const RowLessonStyled = SANStyled.div`
-    padding: ${theme('space.md')} ${theme('space.xl')};
-    display: flex;
-    align-items: center;
-    position: relative;
+    && {
+        padding: ${theme('space.md')} ${theme('space.xl')};
+        display: flex;
+        align-items: center;
+        position: relative;
 
-    &:not(:first-child) {
-        border-top: 1px solid ${theme('colors.grey.2')};
-    }
+        &:not(:first-child) {
+            border-top: 1px solid ${theme('colors.grey.2')};
+        }
 
-    & i {
-        right: ${theme('space.xl')} !important;
+        & i {
+            right: ${theme('space.xl')} !important;
+        }
     }
 `
 const WrapperIconStyled = SANStyled.div`
@@ -39,7 +41,7 @@ const SANCollapsePanelStyled = SANStyled(SANCollapsePanel)`
     && {
         margin-bottom: ${theme('space.md')};
         border: 1px solid ${theme('colors.grey.2')};
-        border-radius: ${theme('radii.base')};
+        border-radius: ${theme('radii.base')} !important;
         box-shadow: 0 1px 2px ${theme('colors.grey.2')};
 
         ${ifProp(

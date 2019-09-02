@@ -31,44 +31,46 @@ const renderContent = (content: IContent) => (
     </div>
 )
 
-const Contents = () => (
-    <SANQuery
-        query={GET_CONTENTS_LAST_ADDED}
-        loaderProps={{ minHeight: 186, flex: true }}
-    >
-        {({ data }: { data: IContents }) => (
-            <SANCarousel
-                slidesToShow={4}
-                slidesToScroll={1}
-                initialSlide={0}
-                arrows
-                infinite={false}
-                dots={false}
-                draggable
-                lazyLoad
-                responsive={responsive}
-            >
-                {data.lastAddedContents.map(renderContent)}
-            </SANCarousel>
-        )}
-    </SANQuery>
-)
-
 const FLXAddedContents = () => {
     const { t } = useTranslation('sanarflix')
 
     return (
-        <>
-            <SANLayoutContainer>
-                <SANSessionTitle
-                    title={t('home.addedContents.title')}
-                    subtitle={t('home.addedContents.subtitle')}
-                />
-            </SANLayoutContainer>
-            <SANLayoutContainer mb={8} fullMobile>
-                <Contents />
-            </SANLayoutContainer>
-        </>
+        <SANQuery
+            query={GET_CONTENTS_LAST_ADDED}
+            loaderProps={{ minHeight: 186, flex: true }}
+        >
+            {({ data }: { data: IContents }) => {
+                if (!data.lastAddedContents.length) {
+                    return null
+                }
+                return (
+                    <>
+                        <SANLayoutContainer>
+                            <SANSessionTitle
+                                title={t('home.addedContents.title')}
+                                subtitle={t('home.addedContents.subtitle')}
+                            />
+                        </SANLayoutContainer>
+                        <SANLayoutContainer mb={8} fullMobile>
+                            <SANCarousel
+                                slidesToShow={4}
+                                slidesToScroll={1}
+                                initialSlide={0}
+                                arrows
+                                infinite={false}
+                                dots={false}
+                                draggable
+                                lazyLoad
+                                swipeToSlide
+                                responsive={responsive}
+                            >
+                                {data.lastAddedContents.map(renderContent)}
+                            </SANCarousel>
+                        </SANLayoutContainer>
+                    </>
+                )
+            }}
+        </SANQuery>
     )
 }
 
