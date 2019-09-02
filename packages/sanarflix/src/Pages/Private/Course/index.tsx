@@ -191,20 +191,24 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
                                             {t('course.whatCurseHave')}
                                         </SANTypography>
                                         {t('course.description')}
-                                        <SANTypography
-                                            variant='subtitle2'
-                                            strong
-                                            color='primary'
-                                            component='span'
-                                            ml='xs'
-                                            onClick={() =>
-                                                setShowDescription(old => !old)
-                                            }
-                                        >
-                                            {showDescription
-                                                ? t('course.seeLess')
-                                                : t('course.viewMore')}
-                                        </SANTypography>
+                                        {!!course.description && (
+                                            <SANTypography
+                                                variant='subtitle2'
+                                                strong
+                                                color='primary'
+                                                component='span'
+                                                ml='xs'
+                                                onClick={() =>
+                                                    setShowDescription(
+                                                        old => !old
+                                                    )
+                                                }
+                                            >
+                                                {showDescription
+                                                    ? t('course.seeLess')
+                                                    : t('course.viewMore')}
+                                            </SANTypography>
+                                        )}
                                     </SANBox>
                                 </SANCol>
                                 <SANCol xs={{ span: 24, order: 3 }} lg={16}>
