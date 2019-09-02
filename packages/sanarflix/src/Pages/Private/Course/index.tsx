@@ -180,7 +180,10 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
                                 title: course.name
                             }}
                         />
-                        <SANLayoutContainer mt={8}>
+                        <SANLayoutContainer
+                            mt={8}
+                            style={{ overflow: 'hidden' }}
+                        >
                             <SANRow type='flex' align='middle' gutter={64}>
                                 <SANCol xs={{ span: 24, order: 1 }} lg={8}>
                                     <SANBox mb='md'>
