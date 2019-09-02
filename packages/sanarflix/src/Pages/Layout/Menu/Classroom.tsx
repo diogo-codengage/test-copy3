@@ -15,10 +15,6 @@ const types = {
     Question: 'questao'
 }
 
-const defaultTheme = {
-    id: window.location.hash.split('/')[4]
-}
-
 const defaultCourse = {
     name: null,
     knowledge_area: null,
@@ -34,7 +30,9 @@ const FLXClassroomMenu: React.FC<RouterProps> = ({ history }) => {
     const [loadingContents, setLoadingContents] = useState(false)
     const [loadingThemes, setLoadingThemes] = useState(false)
     const [currentCourse, setCurrentCourse] = useState(defaultCourse)
-    const [theme, setTheme] = useState(defaultTheme)
+    const [theme, setTheme] = useState({
+        id: window.location.hash.split('/')[4]
+    })
 
     const courseId = window.location.hash.split('/')[3]
 
