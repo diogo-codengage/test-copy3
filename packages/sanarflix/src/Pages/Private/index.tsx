@@ -27,7 +27,7 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
                             component={FLXCourse}
                         />
                         <Route
-                            path={`${url}/sala-aula/:themeId/:type?/:resourceId?`}
+                            path={`${url}/sala-aula/:courseId/:themeId/:type/:resourceId`}
                             component={FLXClassroom}
                         />
                         <Route
