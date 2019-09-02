@@ -18,9 +18,24 @@ import logoFooter from 'Assets/images/brand/logo-grey.svg'
 import FLXModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 import { useTranslation } from 'react-i18next'
 
+const ButtonAbout = ({ darkMode, ...props }) => (
+    <SANButton
+        bold
+        size='xsmall'
+        color={darkMode ? 'white' : 'primary'}
+        variant='text'
+        {...props}
+    />
+)
+
 const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
     const { t } = useTranslation('sanarflix')
-    const { menuRef, currentMenuTitle } = useLayoutContext()
+    const {
+        menuRef,
+        currentMenuTitle,
+        darkMode,
+        menuContext
+    } = useLayoutContext()
     const [showModalTerms, setShowModalTerms] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
 
@@ -34,7 +49,9 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
         logo,
         ref: menuRef,
         title: currentMenuTitle,
-        onHome: () => history.push('/portal/inicio')
+        onHome: () => history.push('/portal/inicio'),
+        context: menuContext,
+        theme: darkMode ? 'dark' : 'primary'
     }
 
     const Copyright = () => {
@@ -44,38 +61,32 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
                     flexWrap='wrap'
                     alignItems='center'
                     justifyContent='center'
+                    color={darkMode ? 'white.6' : 'grey.5'}
                 >
-                    <SANTypography color='grey.5' textAlign='center'>
+                    <SANTypography
+                        color={darkMode ? 'white.5' : 'grey.5'}
+                        textAlign='center'
+                        variant='caption'
+                    >
                         Copyright © Sanarflix. {t('global.copyright')}.
                     </SANTypography>
-                    <SANButton
-                        bold
-                        size='xsmall'
-                        color='primary'
-                        variant='text'
-                    >
+                    <ButtonAbout darkMode={darkMode}>
                         {t('global.about')}
-                    </SANButton>{' '}
+                    </ButtonAbout>{' '}
                     |{' '}
-                    <SANButton
-                        bold
-                        size='xsmall'
-                        color='primary'
-                        variant='text'
+                    <ButtonAbout
+                        darkMode={darkMode}
                         onClick={() => modalTermsOpen('0')}
                     >
                         {t('global.termsOfUse')}
-                    </SANButton>{' '}
+                    </ButtonAbout>{' '}
                     |{' '}
-                    <SANButton
-                        bold
-                        size='xsmall'
-                        color='primary'
-                        variant='text'
+                    <ButtonAbout
+                        darkMode={darkMode}
                         onClick={() => modalTermsOpen('1')}
                     >
                         {t('global.privacyPolicy')}
-                    </SANButton>
+                    </ButtonAbout>
                 </SANFlexbox>
             </SANSpace>
         )
@@ -92,7 +103,8 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
             'https://www.instagram.com/sanarflix.med/?utm_source=instagram&utm_medium=sanarflix&utm_campaign=sanarflix-tf-sanarflix&utm_term=sanarflix-med',
         youtube:
             'youtube.com/sanarmedicina?utm_source=youtube&utm_medium=sanarmed&utm_campaign=sanarflix-tf-youtube&utm_term=sanarflix-med',
-        copyright: <Copyright />
+        copyright: <Copyright />,
+        darkMode
     }
 
     return (

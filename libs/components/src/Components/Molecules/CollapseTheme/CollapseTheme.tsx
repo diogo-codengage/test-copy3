@@ -17,6 +17,7 @@ const TextWrapperStyled = SANStyled.div`
 `
 const RowLessonStyled = SANStyled.div`
     && {
+        cursor: pointer;
         padding: ${theme('space.md')} ${theme('space.xl')};
         display: flex;
         align-items: center;
@@ -82,10 +83,23 @@ export interface ISANCollapseThemeLessonProps {
     title: string | React.ReactNode
     subtitle?: string | React.ReactNode
     checked?: boolean
+    onClick?: (e: {
+        themeId: string
+        contentId: string
+        resourceType: string
+    }) => void
+    themeId?: string
+    resourceType?: 'Video' | 'Document' | 'Question'
 }
 
 export interface ISANCollapseThemeProps {
     data: ISANCollapseThemeDataProps[]
+}
+
+const types = {
+    Video: 'video',
+    Question: 'questao',
+    Document: 'documento'
 }
 
 export const renderClass = ({
@@ -93,9 +107,21 @@ export const renderClass = ({
     icon,
     title,
     subtitle,
-    checked
+    checked,
+    themeId,
+    onClick,
+    resourceType
 }: ISANCollapseThemeLessonProps) => (
-    <RowLessonStyled key={id}>
+    <RowLessonStyled
+        key={id}
+        onClick={() =>
+            onClick({
+                contentId: id,
+                themeId,
+                resourceType: types[resourceType]
+            })
+        }
+    >
         {!!icon && <WrapperIconStyled>{icon}</WrapperIconStyled>}
         <TextWrapperStyled>
             <SANTypography

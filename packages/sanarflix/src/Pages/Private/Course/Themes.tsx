@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { theme } from 'styled-tools'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
     SANLayoutContainer,
@@ -68,13 +69,13 @@ const updateCacheThemes = (prev, { fetchMoreResult }) => {
     })
 }
 
-const renderTheme = (theme, index) => (
+const renderTheme = history => (theme, index) => (
     <SANCollapseThemePanel
         customKey={theme.id}
         index={index}
         title={theme.name}
     >
-        <SANQuery<IThemeContents>
+        <SANQuery
             query={GET_THEME_CONTENTS}
             options={{ variables: { themeId: theme.id } }}
             loaderProps={{ minHeight: 70, flex: true }}
@@ -82,13 +83,19 @@ const renderTheme = (theme, index) => (
             {({ data: { themeContents } }: { data: IThemeContents }) =>
                 themeContents.data.map(content =>
                     renderClass({
+                        themeId: theme.id,
+                        resourceType: content.resource_type,
                         id: content.id,
                         title: content.title,
                         subtitle: i18n.t(
                             `sanarflix:global.types.${content.type}`
                         ),
                         icon: typesIcon[content.type],
-                        checked: content.completed
+                        checked: content.completed,
+                        onClick: ({ themeId, resourceType }) =>
+                            history.push(
+                                `/portal/sala-aula/${theme.course.id}/${themeId}/${resourceType}/${content.resource_id}`
+                            )
                     })
                 )
             }
@@ -96,7 +103,10 @@ const renderTheme = (theme, index) => (
     </SANCollapseThemePanel>
 )
 
-const Themes = ({ courseId }: { courseId: string }) => {
+const Themes = ({
+    courseId,
+    history
+}: RouteComponentProps & { courseId: string }) => {
     const { t } = useTranslation('sanarflix')
     const [count, setCount] = useState(0)
     const [completenessFilter, setCompletenessFilter] = useState<
@@ -161,7 +171,7 @@ const Themes = ({ courseId }: { courseId: string }) => {
                                     hasMore={themes.data.length < themes.count}
                                 >
                                     <SANCollapseTheme>
-                                        {themes.data.map(renderTheme)}
+                                        {themes.data.map(renderTheme(history))}
                                     </SANCollapseTheme>
                                 </SANInfiniteScroll>
                             ) : (
@@ -175,4 +185,4 @@ const Themes = ({ courseId }: { courseId: string }) => {
     )
 }
 
-export default Themes
+export default withRouter(Themes)

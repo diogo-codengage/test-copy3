@@ -23,6 +23,9 @@ export const GET_THEMES = gql`
             data {
                 id
                 name
+                course {
+                    id
+                }
             }
             count
         }

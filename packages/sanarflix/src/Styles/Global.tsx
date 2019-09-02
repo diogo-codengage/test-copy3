@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
+import { theme } from 'styled-tools'
 
 const FLXGlobalStyle = createGlobalStyle`
   @font-face {
@@ -8,6 +9,7 @@ const FLXGlobalStyle = createGlobalStyle`
 
   body {
     overflow-x: hidden;
+    background-color: ${theme('colors.grey-solid.0')};
   }
 `
 

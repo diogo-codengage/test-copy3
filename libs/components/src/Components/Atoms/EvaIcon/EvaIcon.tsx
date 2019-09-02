@@ -4,6 +4,10 @@ import styled, { css } from 'styled-components'
 import Icon from 'react-eva-icons'
 import {
     color,
+    space,
+    typography,
+    TypographyProps,
+    SpaceProps,
     BackgroundColorProps,
     OpacityProps,
     ResponsiveValue
@@ -13,10 +17,10 @@ import { switchProp, theme } from 'styled-tools'
 
 const SANEvaIconStyled = styled.i`
     ${color}
+    ${space}
+    ${typography}
     & svg {
         fill: currentColor !important;
-        width: 1em;
-        height: 1em;
     }
 
     & > i {
@@ -41,7 +45,8 @@ const SANEvaIconStyled = styled.i`
         `,
         large: css`
             svg {
-                font-size: 20px;
+                width: 20px;
+                height: 20px;
             }
         `,
         xlarge: css`
@@ -100,16 +105,25 @@ const SANEvaIconStyled = styled.i`
     })}
 `
 
-export interface ISANEvaIconProps extends BackgroundColorProps, OpacityProps {
+export interface ISANEvaIconProps
+    extends BackgroundColorProps,
+        OpacityProps,
+        SpaceProps,
+        TypographyProps {
     color?: ResponsiveValue<any>
     size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
     name?: string
 }
 
-const SANEvaIcon: React.FC<ISANEvaIconProps> = ({ color, size, ...props }) => {
+const SANEvaIcon: React.FC<ISANEvaIconProps> = ({
+    color,
+    size,
+    name,
+    ...props
+}) => {
     return (
-        <SANEvaIconStyled {...{ color, size }}>
-            <Icon {...props} />
+        <SANEvaIconStyled {...{ color, size, ...props }}>
+            <Icon name={name} />
         </SANEvaIconStyled>
     )
 }

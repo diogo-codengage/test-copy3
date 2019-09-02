@@ -150,7 +150,8 @@ export default {
         advance: 'Avançar 10 segundos',
         rateClass: 'Avaliar aula',
         next: 'Próximo',
-        previous: 'Anterior'
+        previous: 'Anterior',
+        bookmark: 'Favoritar Aula'
     },
     lessonHeader: {
         rateClass: 'Avaliar aula'

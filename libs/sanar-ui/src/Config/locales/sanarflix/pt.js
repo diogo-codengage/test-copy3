@@ -163,5 +163,13 @@ export default {
             invites: 'Indique e ganhe',
             account: 'Minha conta'
         }
+    },
+    classroom: {
+        document: {
+            bookmark: 'Favoritar Material'
+        },
+        video: {
+            rate: 'Avaliar aula:'
+        }
     }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -19,6 +19,28 @@ const ESPlaylist = ({
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-playlist', className)
 
+    if (loading || !items) {
+        return (
+            <>
+                <ESSkeleton
+                    title={false}
+                    className='pl-md pr-md'
+                    active
+                    dark
+                    avatar
+                    className='es-playlist__description-skeleton'
+                />
+                <ESSkeleton
+                    title={false}
+                    className='pl-md pr-md'
+                    paragraph={{ rows: 3, width: '100%' }}
+                    active
+                    dark
+                />
+            </>
+        )
+    }
+
     const current = items[currentIndex]
 
     const renderItem = (item, index) => (
@@ -31,24 +53,7 @@ const ESPlaylist = ({
         />
     )
 
-    return loading ? (
-        <>
-            <ESSkeleton
-                title={false}
-                className='pl-md pr-md'
-                active
-                dark
-                avatar
-            />
-            <ESSkeleton
-                title={false}
-                className='pl-md pr-md'
-                paragraph={{ rows: 3, width: '100%' }}
-                active
-                dark
-            />
-        </>
-    ) : (
+    return (
         <div className={classes}>
             {current && (
                 <div className='es-playlist__current-info'>

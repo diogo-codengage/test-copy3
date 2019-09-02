@@ -1,7 +1,7 @@
 import React from 'react'
 import { configure, addParameters, addDecorator } from '@storybook/react'
 
-import SANThemeProvider from '../src/Components/Atoms/ThemeProvider'
+import { SANThemeProvider } from '../src/Components/Atoms/ThemeProvider'
 
 import { createTheme } from '../src/Theme/createTheme'
 import { withInfo } from '@storybook/addon-info'

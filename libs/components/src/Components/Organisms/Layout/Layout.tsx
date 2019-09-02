@@ -9,12 +9,6 @@ import SANLayoutFooter from './Footer'
 import sanarLogo from '../../../Assets/images/brand/sanar.svg'
 import { ISANLayoutFooterProps } from 'index'
 
-const SANLayoutStyled = styled.section`
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-`
-
 const SANLayoutContentStyled = styled.main`
     flex: auto;
     display: flex;
@@ -49,6 +43,16 @@ const SANContentContainer = styled.section`
     }
 `
 
+const SANLayoutStyled = styled.section`
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    & .es-main-menu__classroom + ${SANContentContainer} {
+        padding: 0;
+    }
+`
+
 type IProps = PropTypes.InferProps<typeof propTypes>
 
 const SANLayout: React.FC<IProps> = ({
@@ -58,8 +62,8 @@ const SANLayout: React.FC<IProps> = ({
     children
 }) => {
     const MergeMenuProps = {
-        onOpenOrClose: console.log,
-        onHome: console.log,
+        onOpenOrClose: () => {},
+        onHome: () => {},
         showContinueBar,
         ...MenuProps
     }
