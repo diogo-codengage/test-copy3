@@ -75,7 +75,7 @@ const renderTheme = history => (theme, index) => (
         index={index}
         title={theme.name}
     >
-        <SANQuery<IThemeContents>
+        <SANQuery
             query={GET_THEME_CONTENTS}
             options={{ variables: { themeId: theme.id } }}
             loaderProps={{ minHeight: 70, flex: true }}
@@ -94,11 +94,7 @@ const renderTheme = history => (theme, index) => (
                         checked: content.completed,
                         onClick: ({ themeId, resourceType }) =>
                             history.push(
-                                `/portal/sala-aula/${
-                                    theme.course.id
-                                }/${themeId}/${resourceType}/${
-                                    content.resource_id
-                                }`
+                                `/portal/sala-aula/${theme.course.id}/${themeId}/${resourceType}/${content.resource_id}`
                             )
                     })
                 )
@@ -112,6 +108,7 @@ const Themes = ({
     history
 }: RouteComponentProps & { courseId: string }) => {
     const { t } = useTranslation('sanarflix')
+    const [count, setCount] = useState(0)
     const [completenessFilter, setCompletenessFilter] = useState<
         ICompletenessFiltersValues
     >('all')
@@ -121,67 +118,70 @@ const Themes = ({
     ) => setCompletenessFilter(e.target.value as ICompletenessFiltersValues)
 
     return (
-        <SANQuery
-            query={GET_THEMES}
-            options={{
-                variables: {
-                    courseId,
-                    ...(completenessFilter !== 'all' && {
-                        completeness: completenessFilter
-                    })
-                }
-            }}
-            loaderProps={{ minHeight: 150, flex: true }}
-        >
-            {({
-                data: { themes },
-                fetchMore
-            }: {
-                data: IThemes
-                fetchMore: (data: any) => Object
-            }) => (
-                <>
-                    <SANLayoutContainer pt={7} pb={7}>
-                        <SANSessionTitleStyled
-                            title={t('course.subheader.keyWithCount', {
-                                count: themes.count
-                            })}
-                            extra={
-                                <FLXCompletenessFilters
-                                    defaultValue='all'
-                                    value={completenessFilter}
-                                    onChange={onChangeCompletenessFilters}
-                                />
-                            }
-                            extraOnLeft
-                            m='0'
+        <>
+            <SANLayoutContainer pt={7} pb={7}>
+                <SANSessionTitleStyled
+                    title={t('course.subheader.keyWithCount', {
+                        count
+                    })}
+                    extra={
+                        <FLXCompletenessFilters
+                            defaultValue='all'
+                            value={completenessFilter}
+                            onChange={onChangeCompletenessFilters}
                         />
-                    </SANLayoutContainer>
-                    <SANLayoutContainer pb={8}>
-                        {!!themes.data.length ? (
-                            <SANInfiniteScroll
-                                threshold={71}
-                                loadMore={() =>
-                                    fetchMore({
-                                        variables: {
-                                            skip: themes.data.length
-                                        },
-                                        updateQuery: updateCacheThemes
-                                    })
-                                }
-                                hasMore={themes.data.length < themes.count}
-                            >
-                                <SANCollapseTheme>
-                                    {themes.data.map(renderTheme(history))}
-                                </SANCollapseTheme>
-                            </SANInfiniteScroll>
-                        ) : (
-                            <SANEmpty />
-                        )}
-                    </SANLayoutContainer>
-                </>
-            )}
-        </SANQuery>
+                    }
+                    extraOnLeft
+                    m='0'
+                />
+            </SANLayoutContainer>
+            <SANQuery
+                query={GET_THEMES}
+                options={{
+                    variables: {
+                        courseId,
+                        ...(completenessFilter !== 'all' && {
+                            completeness: completenessFilter
+                        })
+                    }
+                }}
+                loaderProps={{ minHeight: 150, flex: true }}
+            >
+                {({
+                    data: { themes },
+                    fetchMore
+                }: {
+                    data: IThemes
+                    fetchMore: (data: any) => Object
+                }) => {
+                    setCount(themes.count)
+                    return (
+                        <SANLayoutContainer pb={8}>
+                            {!!themes.data.length ? (
+                                <SANInfiniteScroll
+                                    threshold={71}
+                                    loadMore={() =>
+                                        fetchMore({
+                                            variables: {
+                                                skip: themes.data.length
+                                            },
+                                            updateQuery: updateCacheThemes
+                                        })
+                                    }
+                                    hasMore={themes.data.length < themes.count}
+                                >
+                                    <SANCollapseTheme>
+                                        {themes.data.map(renderTheme(history))}
+                                    </SANCollapseTheme>
+                                </SANInfiniteScroll>
+                            ) : (
+                                <SANEmpty />
+                            )}
+                        </SANLayoutContainer>
+                    )
+                }}
+            </SANQuery>
+        </>
     )
 }
 

@@ -27,6 +27,15 @@ const SANBannerStyled = styled.div`
 
     ${theme('mediaQueries.down.xs')} {
         padding: ${theme('space.xxl')} 0;
+        ${ifProp(
+            'mobile',
+            css`
+                background-image: url(${prop('mobile')});
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            `
+        )}
     }
 
     &:before {
@@ -61,6 +70,7 @@ export type ISANBannerProps = PropTypes.InferProps<typeof propTypes>
 const SANBanner: React.FC<ISANBannerProps> = ({
     title,
     image,
+    mobile,
     ButtonProps
 }) => {
     const mergeButtonProps = {
@@ -71,7 +81,7 @@ const SANBanner: React.FC<ISANBannerProps> = ({
         ...ButtonProps
     }
     return (
-        <SANBannerStyled {...{ image }}>
+        <SANBannerStyled {...{ image, mobile }}>
             <SANTypography {...{ level: 4 }}>{title}</SANTypography>
             <SANButton {...mergeButtonProps} />
         </SANBannerStyled>
@@ -81,6 +91,7 @@ const SANBanner: React.FC<ISANBannerProps> = ({
 const propTypes = {
     title: PropTypes.node,
     image: PropTypes.string,
+    mobile: PropTypes.string,
     ButtonProps: PropTypes.object
 }
 
