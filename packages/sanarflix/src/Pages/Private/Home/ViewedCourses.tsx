@@ -25,7 +25,8 @@ export const responsive = [
             slidesToShow: 3,
             arrows: false,
             centerMode: true,
-            infinite: true
+            infinite: true,
+            swipeToSlide: true
         }
     },
     {
@@ -96,6 +97,7 @@ const FLXViewedCourses = ({ history }: RouteComponentProps) => {
                                 dots={false}
                                 draggable
                                 lazyLoad
+                                swipeToSlide
                                 responsive={responsive}
                             >
                                 {data.courses.data.map(renderCourse(history))}

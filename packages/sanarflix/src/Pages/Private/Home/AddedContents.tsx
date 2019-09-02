@@ -61,6 +61,7 @@ const FLXAddedContents = () => {
                                 dots={false}
                                 draggable
                                 lazyLoad
+                                swipeToSlide
                                 responsive={responsive}
                             >
                                 {data.lastAddedContents.map(renderContent)}

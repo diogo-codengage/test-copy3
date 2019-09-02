@@ -147,6 +147,7 @@ const Cards = ({ counters }: { counters: ICourseCounters }) => {
                 dots={false}
                 draggable
                 lazyLoad
+                swipeToSlide
                 responsive={responsive}
             >
                 {items.map(renderItem)}
