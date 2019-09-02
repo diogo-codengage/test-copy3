@@ -14,7 +14,7 @@ export interface ISANClassroomHeaderProps {
     title: string
     subtitle: string
     actions?: boolean
-    openMenu?: () => {}
+    onOpenMenu?: () => {}
     ButtonPreviousProps?: ISANButtonProps
     ButtonNextProps?: ISANButtonProps
     ButtonBookmarkProps?: ISANButtonProps
@@ -37,7 +37,7 @@ const SANClassroomHeader = ({
     title,
     subtitle,
     actions = true,
-    openMenu,
+    onOpenMenu,
     ButtonPreviousProps,
     ButtonNextProps,
     ButtonBookmarkProps
@@ -138,7 +138,7 @@ const SANClassroomHeader = ({
                 >
                     <SANBox order={{ sm: 1, _: 2 }}>
                         <SANButtonMenu
-                            onClick={openMenu}
+                            onClick={onOpenMenu}
                             circle
                             variant='text'
                             mr={{ sm: 'xl', _: '0' }}

@@ -46,7 +46,7 @@ const FLXClassroomMenu: React.FC<RouterProps> = ({ history }) => {
                 }
             } = await client.query({
                 query: GET_THEMES,
-                fetchPolicy: 'cache-first',
+                fetchPolicy: 'network-only',
                 variables: { courseId }
             })
 

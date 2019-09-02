@@ -24,12 +24,6 @@ export interface ITheme {
     question: {
         id: string
     }
-    course: {
-        id: string
-        name: string
-        knowledge_area: string
-        progress_percentage: number
-    }
 }
 
 export interface IThemeContents {
@@ -56,12 +50,6 @@ export const GET_THEME_CONTENTS = gql`
                 }
                 question {
                     id
-                }
-                course {
-                    id
-                    name
-                    knowledge_area
-                    progress_percentage
                 }
             }
         }

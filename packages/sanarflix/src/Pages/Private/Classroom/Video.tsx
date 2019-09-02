@@ -85,6 +85,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                 title={resource.video.title}
                                 subtitle={resource.course.name}
                                 actions={false}
+                                onOpenMenu={onOpenMenu}
                             />
                         </SANColHeader>
                         <SANColStyled xs={24}>
@@ -135,10 +136,32 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                     >
                                         {t('classroom.video.rate')}
                                     </SANTypography>
-                                    <SANRate value={3} />
+                                    <SANRate
+                                        value={
+                                            resource.video.rating &&
+                                            resource.video.rating.rating.value
+                                        }
+                                        onChange={value =>
+                                            handleRating({
+                                                value,
+                                                resourceId: resource.video.id
+                                            })
+                                        }
+                                    />
                                 </SANBox>
-                                <SANButton circle variant='text' color='white'>
-                                    {false ? (
+                                <SANButton
+                                    circle
+                                    variant='text'
+                                    color='white'
+                                    onClick={() =>
+                                        handleBookmark({
+                                            resourceId,
+                                            resourceType: 'Video',
+                                            bookmark: resource.video.bookmarked
+                                        })
+                                    }
+                                >
+                                    {resource.video.bookmarked ? (
                                         <SANEvaIcon
                                             name='heart'
                                             key='bookmarked'
