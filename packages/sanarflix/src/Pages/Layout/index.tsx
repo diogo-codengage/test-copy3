@@ -50,7 +50,8 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
         ref: menuRef,
         title: currentMenuTitle,
         onHome: () => history.push('/portal/inicio'),
-        context: menuContext
+        context: menuContext,
+        theme: darkMode ? 'dark' : 'primary'
     }
 
     const Copyright = () => {
