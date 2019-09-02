@@ -94,7 +94,11 @@ const renderTheme = history => (theme, index) => (
                         checked: content.completed,
                         onClick: ({ themeId, resourceType }) =>
                             history.push(
-                                `/portal/sala-aula/${themeId}/${resourceType}/${content.resource_id}`
+                                `/portal/sala-aula/${
+                                    theme.course.id
+                                }/${themeId}/${resourceType}/${
+                                    content.resource_id
+                                }`
                             )
                     })
                 )

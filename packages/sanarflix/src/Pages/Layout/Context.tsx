@@ -1,7 +1,7 @@
 import React, { useContext, createContext, useReducer, useRef } from 'react'
 
 import { SANClassroomMenuHeader } from '@sanar/components'
-import { withRouter, RouterProps } from 'react-router'
+import { withRouter } from 'react-router'
 
 type IMenuContext = 'general' | 'classroom'
 

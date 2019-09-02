@@ -7,6 +7,7 @@ import { SANPdfReader, SANQuery, SANClassroomHeader } from '@sanar/components'
 
 import { GET_RESOURCE } from 'Apollo/Classroom/Queries/resource'
 import { useClassroomContext } from './Context'
+import { useLayoutContext } from 'Pages/Layout/Context'
 
 interface IParams {
     resourceId: string
@@ -22,6 +23,7 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
     } = props
     const { t } = useTranslation('sanarflix')
     const { handleBookmark } = useClassroomContext()
+    const { onOpenMenu } = useLayoutContext()
 
     return (
         <SANQuery
@@ -34,6 +36,7 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
                     <SANClassroomHeader
                         title={resource.document.title}
                         subtitle={resource.course.name}
+                        openMenu={onOpenMenu}
                         ButtonPreviousProps={{
                             children: 'Anterior'
                         }}

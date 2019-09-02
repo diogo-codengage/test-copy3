@@ -21,6 +21,7 @@ import {
 import { GET_RESOURCE } from 'Apollo/Classroom/Queries/resource'
 import { CREATE_RATING } from 'Apollo/Classroom/Mutations/rating'
 import { useClassroomContext } from './Context'
+import { useLayoutContext } from 'Pages/Layout/Context'
 
 interface IParams {
     resourceId: string
@@ -48,6 +49,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
     } = props
     const playerRef = useRef()
     const { handleBookmark } = useClassroomContext()
+    const { onOpenMenu } = useLayoutContext()
 
     const handleRating = async ({ value, resourceId }) => {
         try {
@@ -88,6 +90,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                         <SANColStyled xs={24}>
                             <SANJwPlayer
                                 ref={playerRef}
+                                onOpenMenu={onOpenMenu}
                                 playerId='playerId'
                                 playerScript='/jwplayer/jwplayer.js'
                                 playlist={playlist}
