@@ -68,7 +68,7 @@ const playlistItems = [
 storiesOf('Organisms.ClassroomMenu', module).add(
     'Default',
     () => (
-        <div style={{ width: 320 }}>
+        <div style={{ width: 320, height: '100vh' }}>
             <SANClassroomMenu
                 course={{
                     knowledgeArea: text('Knowledge area', 'Enfermagem'),

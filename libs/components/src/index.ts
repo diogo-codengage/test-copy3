@@ -46,7 +46,10 @@ import { SANRate } from 'Components/Atoms/Rate'
 
 import { SANStyled, SANElement } from 'Theme/'
 
-import { SANClassroomMenu } from 'Components/Organisms/ClassroomMenu'
+import {
+    SANClassroomMenu,
+    SANClassroomMenuHeader
+} from 'Components/Organisms/ClassroomMenu'
 
 export {
     SANButton,
@@ -89,6 +92,7 @@ export {
     SANCollapseThemeControlled,
     SANDivider,
     SANClassroomMenu,
+    SANClassroomMenuHeader,
     SANThemeProvider,
     SANJwPlayer,
     SANPdfReader,
