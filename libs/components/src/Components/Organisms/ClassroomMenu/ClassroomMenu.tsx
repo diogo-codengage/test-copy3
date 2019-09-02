@@ -30,7 +30,7 @@ const SANClassroomMenu: React.FC<IProps> = ({
 }) => {
     const { t } = useTranslation('components')
     return (
-        <SANBox height='100vh' backgroundColor='grey-solid.8'>
+        <SANBox height='100%' backgroundColor='grey-solid.8'>
             <SANBox px={4} pt={6}>
                 <SANBox>
                     <SANTypography mb={1} color='white.7' variant='overline'>
