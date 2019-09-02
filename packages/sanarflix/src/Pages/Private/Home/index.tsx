@@ -21,7 +21,7 @@ const FLXHome: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('sanarflix')
 
     return (
-        <SANBox bg='grey-solid.1'>
+        <SANBox bg='grey-solid.1' flex='1'>
             <SANLayoutContainer pt={8}>
                 <SANRow gutter={16}>
                     <SANCol xs={24} md={12}>
