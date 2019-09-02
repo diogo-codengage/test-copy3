@@ -21,8 +21,6 @@ const SANEvaIconStyled = styled.i`
     ${typography}
     & svg {
         fill: currentColor !important;
-        width: 1em;
-        height: 1em;
     }
 
     & > i {
@@ -47,7 +45,8 @@ const SANEvaIconStyled = styled.i`
         `,
         large: css`
             svg {
-                font-size: 20px;
+                width: 20px;
+                height: 20px;
             }
         `,
         xlarge: css`
