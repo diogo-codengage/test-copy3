@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import ESRate from 'sanar-ui/dist/Components/Atoms/Rate'
 import { SANStyled } from '../../../Theme'
 
-type IProps = PropTypes.InferProps<typeof ESRate['propTypes']>
+export type ISANRateProps = PropTypes.InferProps<typeof ESRate['propTypes']>
 
-const SANRate: React.FC<IProps> = SANStyled(ESRate)``
+const SANRate: React.FC<ISANRateProps> = SANStyled(ESRate)``
 
 export default SANRate
