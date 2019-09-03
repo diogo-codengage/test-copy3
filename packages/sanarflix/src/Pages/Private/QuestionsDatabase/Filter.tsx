@@ -26,6 +26,9 @@ import {
     ITheme
 } from 'Apollo/QuestionsDatabase/Queries/themes'
 
+import courseSvg from 'Assets/images/filters/course.svg'
+import themeSvg from 'Assets/images/filters/theme.svg'
+
 const FLXFilter = ({ history }) => {
     const { t } = useTranslation('sanarflix')
     const client = useApolloClient()
@@ -126,7 +129,7 @@ const FLXFilter = ({ history }) => {
                                 filterName={t(
                                     'questionsDatabase.filter.course.filterName'
                                 )}
-                                image='http://www.unirio.br/arquivocentral/imagens/localizacao.png/image_preview'
+                                image={courseSvg}
                                 items={courses}
                                 value={selectedCourses}
                                 onChange={setSelectedCourses}
@@ -143,7 +146,7 @@ const FLXFilter = ({ history }) => {
                                 filterName={t(
                                     'questionsDatabase.filter.theme.filterName'
                                 )}
-                                image='http://www.unirio.br/arquivocentral/imagens/localizacao.png/image_preview'
+                                image={themeSvg}
                                 items={themes}
                                 value={selectedThemes}
                                 onChange={setSelectedThemes}
