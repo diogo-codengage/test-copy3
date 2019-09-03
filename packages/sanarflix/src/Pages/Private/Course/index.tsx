@@ -35,6 +35,7 @@ import {
 } from 'Apollo/Course/Queries/course'
 
 import Themes from './Themes'
+import FLXCourseNavigation from './Navigation'
 
 const responsive = [
     {
@@ -61,6 +62,12 @@ const responsive = [
         }
     }
 ]
+
+const resourceType = {
+    Document: 'documento',
+    Video: 'video',
+    Question: 'questao'
+}
 
 const makeCardProps = ({ counters, image, item, ...props }) => ({
     text: i18n.t(`sanarflix:course.counters.${item}.key`, {
@@ -173,12 +180,50 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
         >
             {({ data }: { data: ICourses }) => {
                 const course = data.courses.data[0]
+
+                const redirectTo = current =>
+                    history.push(
+                        `/sala-aula/${course.id}/${
+                            course[`${current}`].theme_id
+                        }/${resourceType[course[`${current}`].resource_type]}/${
+                            course[`${current}`].resource_id
+                        }`
+                    )
+
                 return (
                     <SANBox displayFlex flexDirection='column' flex='1'>
                         <SANHeader
                             onBack={() => history.goBack()}
                             SessionTitleProps={{
                                 title: course.name
+                            }}
+                        />
+                        <FLXCourseNavigation
+                            isLastContent={course.nextContent.last_content}
+                            hasLastAccessed={!!course.lastAccessed}
+                            LastAccessedProps={{
+                                ...(course &&
+                                    course.lastAccessed && {
+                                        title: course.lastAccessed.theme_title,
+                                        image: course.lastAccessed.thumbnail,
+                                        type: course.lastAccessed.type,
+                                        resource_type:
+                                            course.lastAccessed.resource_type,
+                                        redirectTo: () =>
+                                            redirectTo('lastAccessed')
+                                    })
+                            }}
+                            SuggestedItemProps={{
+                                ...(course &&
+                                    course.nextContent && {
+                                        title: course.nextContent.theme_title,
+                                        image: course.nextContent.thumbnail,
+                                        type: course.nextContent.type,
+                                        resource_type:
+                                            course.nextContent.resource_type,
+                                        redirectTo: () =>
+                                            redirectTo('lastAccessed')
+                                    })
                             }}
                         />
                         <SANLayoutContainer

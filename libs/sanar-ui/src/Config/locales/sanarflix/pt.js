@@ -13,6 +13,11 @@ export default {
             completed: 'Concluídos',
             incomplete: 'Incompletos'
         },
+        resourceTypes: {
+            document: 'Document',
+            video: 'Video',
+            question: 'Questão'
+        },
         types: {
             resume: 'Resumo',
             mentalmap: 'Mapa mental',
@@ -70,6 +75,14 @@ export default {
         }
     },
     course: {
+        continue: 'Continuar de onde parei',
+        itemSuggest: 'Próximo item sugerido',
+        banners: {
+            questionsBase: {
+                title: 'Banco de Questões',
+                action: 'Acessar'
+            }
+        },
         description:
             'O que você irá aprender e os materiais que você tem acesso na plataforma.',
         subheader: {
