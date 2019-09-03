@@ -46,6 +46,9 @@ export interface IFilterTemplateProps {
   allInstitutions: ISelectOption[]
   selectedInstitutions: ISelectOption[]
   setSelectedInstitutions: (values: ISelectOption[]) => void
+  allCategories: ISelectOption[]
+  selectedCategories: ISelectOption[]
+  setSelectedCategories: (values: ISelectOption[]) => void
 
   showAdvancedFilters: boolean,
   setShowAdvancedFilters: (value: boolean) => {},
@@ -57,7 +60,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
 
   const { width } = useWindowSize()
   const isSmall = width < 768
-  const cardSpan = isSmall ? 24 : 8
+  const cardSpan = isSmall ? 24 : 6
   const filterSpan = isSmall ? 24 : 12
 
   let placeholderInstitutions = ''
@@ -94,10 +97,10 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
                       style={{marginTop: isSmall ?  20 : 0 }}
                       filterName="Categoria de prova"
                       image={iconSpecialties}
-                      items={allTags}
-                      onChange={props.setSelectedTags}
-                      value={props.selectedTags}
-                      labelSelecteds={props.selectedTags.map(e => e.label).join(', ') }
+                      items={props.allCategories}
+                      onChange={props.setSelectedCategories}
+                      value={props.selectedCategories}
+                      labelSelecteds={props.selectedCategories.map(e => e.label).join(', ') }
                     />
                 </ESCol>
                 <ESCol span={cardSpan}>

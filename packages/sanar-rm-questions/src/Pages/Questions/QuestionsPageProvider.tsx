@@ -13,9 +13,11 @@ interface IProps {
     selectedSpecialties?: Speciality[]
     selectedSubSpecialties?: Speciality[]
     selectedTags?: Speciality[]
+    selectedCategories?: Speciality[]
     allSpecialties: Speciality[]
     allTags: Tag[]
     allInstitutions: ISelectOption[]
+    allCategories: ISelectOption[]
 }
 
 export const QuestionsPageProvider = (props: IProps) => {
@@ -42,6 +44,7 @@ export const QuestionsPageProvider = (props: IProps) => {
     const [selectedSpecialties, setSelectedSpecialties] = useState(props.selectedSpecialties ? props.selectedSpecialties: [])
     const [selectedSubSpecialties, setSelectedSubSpecialties] = useState(props.selectedSubSpecialties ? props.selectedSubSpecialties: [])
     const [selectedTags, setSelectedTags] = useState(props.selectedTags ? props.selectedTags: [])
+    const [selectedCategories, setSelectedCategories] = useState(props.selectedCategories ? props.selectedCategories: [])
 
     const [selectedState, setSelectedState] = useState('')
     const [selectedYears, setSelectedYears] = useState([])
@@ -50,6 +53,7 @@ export const QuestionsPageProvider = (props: IProps) => {
     const allSpecialties = props.allSpecialties
     const allTags = props.allTags
     const allInstitutions = props.allInstitutions
+    const allCategories = props.allCategories
 
     const[ selectedInstitutions, setSelectedInstitutions ] = useState([])
 
@@ -154,10 +158,11 @@ export const QuestionsPageProvider = (props: IProps) => {
         selectedSubSpecialties,
         setSelectedSubSpecialties,
         selectedTags,
+        selectedCategories,
         setSelectedTags,
         allSpecialties,
         allTags,
-
+        allCategories,
         allInstitutions,
         selectedInstitutions,
         setSelectedInstitutions,
@@ -166,6 +171,7 @@ export const QuestionsPageProvider = (props: IProps) => {
         setSelectedState,
         selectedYears,
         setSelectedYears,
+        setSelectedCategories,
         isCommentedByExpert,
         setCommentedByExpert,
 

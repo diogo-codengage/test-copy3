@@ -1,6 +1,6 @@
 import { Speciality } from './speciality'
 import { apolloClient } from './Apollo/RMGraphQLProvider'
-import { GET_INSTITUTIONS, GET_SPECIALTIES_WITH_TAGS } from './Apollo/Queries/get-filters'
+import { GET_INSTITUTIONS, GET_SPECIALTIES_WITH_TAGS, GET_CATEGORIES } from './Apollo/Queries/get-filters'
 import { questionSkip } from './Apollo/Mutations/questionSkip'
 import { QuestionsInputFilter } from './QuestionsInputFilter'
 import { getQuestionsQuery } from './Apollo/Queries/get-questions'
@@ -58,10 +58,24 @@ const getInstitutions = () => {
         })
 }
 
+
+const getCategories = () => {
+    return apolloClient.query({ query: GET_CATEGORIES})
+        .then(({ data }) => data.categories.data)
+        .then((items: ISelectOption[]) => {
+            return items.sort((o1, o2) => (o1.label.localeCompare(o2.label)))
+        })
+        .then( (items: ISelectOption[]) => {
+            items.forEach(i => i.label = i.label.toLocaleUpperCase());
+            return items;
+        })
+}
+
 export const BFFService = {
     getSpecialties,
     getInstitutions,
     skipQuestion,
     loadMoreQuestions,
-    confirmResponse
+    confirmResponse,
+    getCategories
 }
