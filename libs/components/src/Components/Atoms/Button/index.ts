@@ -1,1 +1,1 @@
-export { default as SANButton } from './Button'
+export { default as SANButton, ISANButtonProps } from './Button'

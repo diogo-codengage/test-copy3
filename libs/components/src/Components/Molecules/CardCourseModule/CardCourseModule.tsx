@@ -8,7 +8,9 @@ type IProps = PropTypes.InferProps<typeof ESCardCourseModule['propTypes']> &
     SpaceProps
 
 const SANCardCourseModule: SANElement<IProps> = SANStyled(ESCardCourseModule)`
-    ${space}
+    && {
+        ${space}
+    }
 `
 
 export default SANCardCourseModule

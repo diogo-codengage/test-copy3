@@ -144,9 +144,6 @@ const ESMainMenu = forwardRef(
 
         useEffect(() => {
             onOpenOrClose(toggle)
-            if (!toggle && context !== 'classroom') {
-                setTheme('primary')
-            }
         }, [toggle])
 
         useImperativeHandle(ref, () => ({

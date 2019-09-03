@@ -46,7 +46,6 @@ const ESButton = ({
         }
         return child
     }
-
     const kids =
         children && children.length > 1
             ? React.Children.map(children, mapChildren)

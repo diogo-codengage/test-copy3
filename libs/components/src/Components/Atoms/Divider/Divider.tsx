@@ -1,14 +1,27 @@
-import { SpaceProps, space } from 'styled-system'
+import {
+    SpaceProps,
+    space,
+    flexbox,
+    FlexboxProps,
+    color,
+    ColorProps
+} from 'styled-system'
 import { theme } from 'styled-tools'
 
 import { SANStyled } from '../../../Theme/createTheme'
 
-export interface ISANDividerProps extends SpaceProps {}
+export interface ISANDividerProps
+    extends SpaceProps,
+        ColorProps,
+        FlexboxProps {}
 
 const SANDivider = SANStyled.div<ISANDividerProps>`
     ${space}
+    ${color}
+    ${flexbox}
     
-    background: ${theme('colors.grey.2')};
+    background-color: ${props =>
+        props.backgroundColor || props.bg || theme('colors.grey.2')};
 
     display: block;
     clear: both;

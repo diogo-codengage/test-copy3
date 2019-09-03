@@ -70,6 +70,8 @@ export default {
         }
     },
     course: {
+        description:
+            'O que você irá aprender e os materiais que você tem acesso na plataforma.',
         subheader: {
             key: 'tema',
             key_plural: 'temas',
@@ -160,6 +162,14 @@ export default {
             bookmarks: 'Favoritos',
             invites: 'Indique e ganhe',
             account: 'Minha conta'
+        }
+    },
+    classroom: {
+        document: {
+            bookmark: 'Favoritar Material'
+        },
+        video: {
+            rate: 'Avaliar aula:'
         }
     }
 }

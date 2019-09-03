@@ -10,7 +10,8 @@ export type IType =
 export interface IThemeContent {
     id: string
     index: string
-    resource_type: string
+    resource_type: 'Video' | 'Question' | 'Document'
+    resource_id: string
     title: string
     type: IType
     completed: boolean
@@ -29,6 +30,7 @@ export const GET_THEME_CONTENTS = gql`
                 id
                 index
                 resource_type
+                resource_id
                 title
                 type
                 completed

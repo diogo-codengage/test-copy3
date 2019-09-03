@@ -30,7 +30,11 @@ import { SANQuery } from 'Components/Molecules/Query'
 import { SANFlexbox } from 'Components/Atoms/Flexbox'
 import { SANSpace } from 'Components/Atoms/Space'
 import { SANBox } from 'Components/Atoms/Box'
+import { SANThemeProvider } from 'Components/Atoms/ThemeProvider'
+import { SANScrollTop } from 'Components/Atoms/ScrollTop'
 import { SANCardInfo } from 'Components/Molecules/CardInfo'
+import { SANJwPlayer } from 'Components/Molecules/JwPlayer'
+import { SANClassroomHeader } from 'Components/Molecules/ClassroomHeader'
 import {
     SANCollapseTheme,
     SANCollapseThemePanel,
@@ -38,8 +42,15 @@ import {
 } from 'Components/Molecules/CollapseTheme'
 import { SANEmpty } from 'Components/Atoms/Empty'
 import { SANDivider } from 'Components/Atoms/Divider'
+import { SANPdfReader } from 'Components/Atoms/PdfReader'
+import { SANRate } from 'Components/Atoms/Rate'
 
 import { SANStyled, SANElement } from 'Theme/'
+
+import {
+    SANClassroomMenu,
+    SANClassroomMenuHeader
+} from 'Components/Organisms/ClassroomMenu'
 
 export {
     SANButton,
@@ -80,5 +91,13 @@ export {
     SANCollapseTheme,
     SANCollapseThemePanel,
     SANCollapseThemeControlled,
-    SANDivider
+    SANDivider,
+    SANClassroomMenu,
+    SANClassroomMenuHeader,
+    SANThemeProvider,
+    SANJwPlayer,
+    SANPdfReader,
+    SANClassroomHeader,
+    SANRate,
+    SANScrollTop
 }

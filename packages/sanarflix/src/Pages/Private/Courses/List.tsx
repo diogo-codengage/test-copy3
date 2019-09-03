@@ -120,7 +120,7 @@ const FLXCoursesList: React.FC<RouteComponentProps & { id?: string }> = ({
                                     loadMore={() =>
                                         fetchMore({
                                             variables: {
-                                                offset: courses.data.length
+                                                skip: courses.data.length
                                             },
                                             updateQuery: updateCacheCourses
                                         })

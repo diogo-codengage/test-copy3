@@ -6,9 +6,13 @@ import { getInstance } from 'Config/AWSCognito'
 const config = getInstance()
 
 const getAccessToken = () => {
-    return config.userPool.getCurrentUser().getSession((_, session) => {
-        return session.getIdToken().getJwtToken()
-    })
+    const cognitoUser = config.userPool.getCurrentUser()
+    console.log({ cognitoUser })
+    if (!!cognitoUser) {
+        return cognitoUser.getSession((_, session) => {
+            return session.getIdToken().getJwtToken()
+        })
+    }
 }
 
 const client = new ApolloClient({

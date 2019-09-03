@@ -21,7 +21,7 @@ const ESPlaylist = ({ className, index, item, current, onClick }) => {
         'es-playlist-list__item',
         {
             'es-playlist-list__item--finish':
-                progress && progress.percentage === 100,
+                (progress && progress.percentage === 100) || item.completed,
             'es-playlist-list__item--current': current
         },
         className
