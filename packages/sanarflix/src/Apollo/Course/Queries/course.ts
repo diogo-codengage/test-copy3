@@ -1,5 +1,25 @@
 import gql from 'graphql-tag'
 
+export type IType =
+    | 'resume'
+    | 'mentalmap'
+    | 'flowchart'
+    | 'article'
+    | 'slide'
+    | 'lesson'
+    | 'question'
+
+export interface ILastAccessed {
+    theme_title: string
+    theme_id: string
+    resource_id: string
+    thumbnail: string
+    resource_type: 'Document' | 'Video' | 'Question'
+    type: IType
+}
+
+export interface INextContent extends ILastAccessed {}
+
 export interface ICourseCounters {
     questions: number | null
     certificates: number | null
@@ -14,6 +34,8 @@ export interface ICourse {
     id: string
     name: string
     description: string
+    lastAccessed: ILastAccessed
+    nextContent: INextContent
     counters: ICourseCounters
 }
 
@@ -30,6 +52,22 @@ export const GET_COURSE = gql`
                 id
                 name
                 description
+                lastAccessed {
+                    theme_title
+                    thumbnail
+                    resource_type
+                    resource_id
+                    type
+                    theme_id
+                }
+                nextContent {
+                    theme_title
+                    thumbnail
+                    resource_type
+                    resource_id
+                    type
+                    theme_id
+                }
                 counters {
                     questions
                     certificates
