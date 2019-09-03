@@ -13,12 +13,25 @@ import { useTranslation } from 'react-i18next'
 import FLXBanner from 'Components/Banner'
 
 import baseQuestions from 'Assets/images/banners/base-questions.png'
+// import { ILastAccessed } from 'Apollo/Course/Queries/course'
+import { IType } from 'Apollo/Course/Queries/course'
+
+// Images
+import document from 'Assets/images/resources/document.png'
+import question from 'Assets/images/resources/question.png'
+import flowchart from 'Assets/images/resources/flowchart.png'
+import mentalmap from 'Assets/images/resources/mentalmap.png'
+import article from 'Assets/images/resources/article.png'
+
+type IResourceType = 'Document' | 'Video' | 'Question'
 
 interface ICardProps {
     title?: string
-    image?: string
+    image: string
+    resource_type: IResourceType
+    type?: IType
     moduleName?: string
-    redirectTo?: string
+    redirectTo?: () => any
 }
 
 interface IProps {
@@ -33,6 +46,32 @@ const FLXCourseNavigation: React.FC<IProps> = ({
     isLastContent
 }) => {
     const { t } = useTranslation('sanarflix')
+
+    const configureImage = (
+        image: string,
+        type?: IType,
+        resourceType?: IResourceType
+    ): string => {
+        switch (resourceType) {
+            case 'Video':
+                return image || ''
+            case 'Document':
+                switch (type) {
+                    case 'flowchart':
+                        return flowchart
+                    case 'mentalmap':
+                        return mentalmap
+                    case 'article':
+                        return article
+                    default:
+                        return document
+                }
+            case 'Question':
+                return question
+            default:
+                return image
+        }
+    }
 
     return (
         <SANBox
@@ -49,10 +88,16 @@ const FLXCourseNavigation: React.FC<IProps> = ({
                             {t('course.continue')}
                         </SANTypography>
                         <SANCardCourseModule
-                            image={LastAccessedProps.image}
+                            image={configureImage(
+                                LastAccessedProps.image,
+                                LastAccessedProps.type,
+                                LastAccessedProps.resource_type
+                            )}
                             title={LastAccessedProps.title}
-                            moduleName={LastAccessedProps.moduleName}
-                            // redirectTo={LastAccessedProps.redirectTo}
+                            moduleName={t(
+                                `global.resourceTypes.${LastAccessedProps.resource_type.toLocaleLowerCase()}`
+                            )}
+                            onClick={LastAccessedProps.redirectTo}
                             mb={{ _: 6, sm: 0 }}
                         />
                     </SANCol>
@@ -65,7 +110,7 @@ const FLXCourseNavigation: React.FC<IProps> = ({
                                 image={SuggestedItemProps.image}
                                 title={SuggestedItemProps.title}
                                 moduleName={SuggestedItemProps.moduleName}
-                                // redirectTo={SuggestedItemProps.redirectTo}
+                                onClick={SuggestedItemProps.redirectTo}
                                 mb={{ _: 6, sm: 0 }}
                             />
                         ) : (

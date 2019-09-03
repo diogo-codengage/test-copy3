@@ -13,6 +13,11 @@ export default {
             completed: 'Concluídos',
             incomplete: 'Incompletos'
         },
+        resourceTypes: {
+            document: 'Document',
+            video: 'Video',
+            question: 'Questão'
+        },
         types: {
             resume: 'Resumo',
             mentalmap: 'Mapa mental',
