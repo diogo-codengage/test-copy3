@@ -43,7 +43,7 @@ export const QuestionsPageProvider = (props: IProps) => {
     const [selectedSubSpecialties, setSelectedSubSpecialties] = useState(props.selectedSubSpecialties ? props.selectedSubSpecialties: [])
     const [selectedTags, setSelectedTags] = useState(props.selectedTags ? props.selectedTags: [])
 
-    const [selectedStates, setSelectedStates] = useState([])
+    const [selectedState, setSelectedState] = useState('')
     const [selectedYears, setSelectedYears] = useState([])
     const [isCommentedByExpert, setCommentedByExpert] = useState(false)
 
@@ -69,7 +69,7 @@ export const QuestionsPageProvider = (props: IProps) => {
 
     const loadMoreQuestions = async (clearOld: boolean) => {
         const filters = await getParamsFromFilters()
-        return  BFFService.loadMoreQuestions(filters)
+        return BFFService.loadMoreQuestions(filters)
             .then(function({ data }) {
                 if(data.questions.data.length === 0 && !clearOld){
                     setNoMoreQuestion(true)
@@ -94,7 +94,7 @@ export const QuestionsPageProvider = (props: IProps) => {
                     .map(s => s.value)),
             institutionsIds: selectedInstitutions.map( i => i.value ),
             tagsIds: selectedTags.map( t => t.value),
-            states: selectedStates.map(s => s.value),
+            state: selectedState,
             years: selectedYears.map(v => v.value),
             isCommentedByExpert: isCommentedByExpert,
         }
@@ -162,8 +162,8 @@ export const QuestionsPageProvider = (props: IProps) => {
         selectedInstitutions,
         setSelectedInstitutions,
 
-        selectedStates,
-        setSelectedStates,
+        selectedState,
+        setSelectedState,
         selectedYears,
         setSelectedYears,
         isCommentedByExpert,

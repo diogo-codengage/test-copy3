@@ -5,14 +5,14 @@ import { isDevEnvironment, isLocalhost, isProdEnvironment } from '../../Util/env
 import { getUserToken } from '../../Util/getUserToken'
 
 const getGraphqlUri = () => {
-    const dev = 'http://res-app-bff-sanar-staging.editorasanar.com.br/graphql';
+    const local = 'http://res-app-bff-sanar-staging.editorasanar.com.br/graphql';
     const prod = 'https://bff.sanarresidenciamedica.com.br/graphql'
 
     switch(true) {
         case isLocalhost():
-            return dev // TODO: fix this, change to local
+            return local // TODO: fix this, change to local
         case isDevEnvironment():
-            return dev // TODO: fix this, change to dev
+            return local // TODO: fix this, change to dev
         case isProdEnvironment():
             return prod
         default:

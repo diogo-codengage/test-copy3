@@ -3,6 +3,7 @@ import { QuestionsInputFilter } from '../../QuestionsInputFilter'
 
 export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
     const where:any = {};
+    let state:string = '';
 
     if(filter.specialtiesIds.length > 0) {
         where.specialties = filter.specialtiesIds
@@ -23,6 +24,11 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
             inq: filter.years.map(parseInt)
         }
     }
+
+    if (filter.state) {
+        state = filter.state
+    }
+
     if(filter.isCommentedByExpert) {
         where.isCommentedByExpert = true;
     }
@@ -31,7 +37,7 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
 
     const queryWithParams = `
         {
-            questions(limit: 10, random:true ${whereFilter}){
+            questions(limit: 10, random:true ${whereFilter}, state: "${state}"){
                 data {
                     id,
                     statement,
