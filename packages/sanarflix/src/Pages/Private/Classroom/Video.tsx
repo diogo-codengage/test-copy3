@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 
+import { theme } from 'styled-tools'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -31,6 +32,7 @@ interface IParams {
 
 const SANColStyled = styled(SANCol)`
     flex: 1;
+    background-color: ${theme('colors.grey-solid.8')};
 `
 
 const SANColHeader = styled(SANCol)`
@@ -49,7 +51,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
     } = props
     const playerRef = useRef()
     const { handleBookmark } = useClassroomContext()
-    const { onOpenMenu } = useLayoutContext()
+    const { onOpenMenu, navigations } = useLayoutContext()
 
     const handleRating = async ({ value, resourceId }) => {
         try {
@@ -79,7 +81,12 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                     image: resource.video.thumbnails.large
                 }
                 return (
-                    <SANRow type='flex' flexDirection='column' flex='1'>
+                    <SANRow
+                        type='flex'
+                        flexDirection='column'
+                        flex='1'
+                        bg='grey-solid.8'
+                    >
                         <SANColHeader xs={24} md={0}>
                             <SANClassroomHeader
                                 title={resource.video.title}
@@ -99,6 +106,8 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                 isMuted={false}
                                 title={resource.video.title}
                                 subtitle={resource.course.name}
+                                onNext={navigations.next.onClick}
+                                onPrevious={navigations.previous.onClick}
                                 rate={{
                                     value:
                                         resource.video.rating &&
@@ -193,13 +202,15 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                     color='white'
                                     mr='xs'
                                     block
+                                    onClick={navigations.previous.onClick}
+                                    disabled={navigations.previous.disabled}
                                 >
                                     <SANEvaIcon
                                         name='arrow-back-outline'
                                         mr='xs'
                                         fontSize='lg'
                                     />
-                                    Anterior
+                                    {navigations.previous.children}
                                 </SANButton>
                                 <SANButton
                                     size='small'
@@ -207,8 +218,10 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                     color='white'
                                     ml='xs'
                                     block
+                                    onClick={navigations.next.onClick}
+                                    disabled={navigations.next.disabled}
                                 >
-                                    Próximo
+                                    {navigations.next.children}
                                     <SANEvaIcon
                                         name='arrow-forward-outline'
                                         ml='xs'

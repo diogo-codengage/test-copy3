@@ -23,6 +23,8 @@ export interface ISANClassroomHeaderProps {
 const SANButtonMenu = SANStyled(SANButton)`
     && {
         background-color: ${theme('colors.secondary')};
+        &:focus,
+        &:active,
         &:hover {
             background-color: ${theme('colors.yellow.1')};
         }
@@ -60,7 +62,7 @@ const SANClassroomHeader = ({
                           mr='xs'
                           fontSize='lg'
                       />
-                      {ButtonPreviousProps.children}
+                      <span>{ButtonPreviousProps.children}</span>
                   </>
               )
           }
@@ -72,7 +74,7 @@ const SANClassroomHeader = ({
               ...ButtonNextProps,
               children: (
                   <>
-                      {ButtonNextProps.children}
+                      <span>{ButtonNextProps.children}</span>
                       <SANEvaIcon
                           name='arrow-forward-outline'
                           ml='xs'
@@ -108,7 +110,7 @@ const SANClassroomHeader = ({
                               fontSize='lg'
                           />
                       )}
-                      {ButtonBookmarkProps.children}
+                      <span>{ButtonBookmarkProps.children}</span>
                   </>
               )
           }

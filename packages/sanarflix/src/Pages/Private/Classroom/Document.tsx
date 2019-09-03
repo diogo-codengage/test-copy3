@@ -23,7 +23,7 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
     } = props
     const { t } = useTranslation('sanarflix')
     const { handleBookmark } = useClassroomContext()
-    const { onOpenMenu } = useLayoutContext()
+    const { onOpenMenu, navigations } = useLayoutContext()
 
     return (
         <SANQuery
@@ -36,13 +36,9 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
                     <SANClassroomHeader
                         title={resource.document.title}
                         subtitle={resource.course.name}
-                        openMenu={onOpenMenu}
-                        ButtonPreviousProps={{
-                            children: 'Anterior'
-                        }}
-                        ButtonNextProps={{
-                            children: 'Próximo'
-                        }}
+                        onOpenMenu={onOpenMenu}
+                        ButtonPreviousProps={navigations.previous}
+                        ButtonNextProps={navigations.next}
                         ButtonBookmarkProps={{
                             children: t('classroom.document.bookmark'),
                             bookmarked: resource.document.bookmarked,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { SANClassroomMenu } from '@sanar/components'
 import { GET_THEMES } from 'Apollo/Classroom/Queries/themes'
 import { useApolloClient } from '@apollo/react-hooks'
@@ -6,7 +6,7 @@ import {
     GET_THEME_CONTENTS,
     ITheme
 } from 'Apollo/Classroom/Queries/themeContents'
-import { withRouter, RouterProps } from 'react-router'
+import { withRouter, RouteComponentProps } from 'react-router'
 import { useLayoutContext } from '../Context'
 
 const types = {
@@ -21,12 +21,12 @@ const defaultCourse = {
     progress_percentage: 0
 }
 
-const FLXClassroomMenu: React.FC<RouterProps> = ({ history }) => {
+const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     const client = useApolloClient()
-    const { onCloseMenu } = useLayoutContext()
+    const { onCloseMenu, setNavigations } = useLayoutContext()
 
-    const [themeContents, setThemeContents] = useState()
-    const [themes, setThemes] = useState()
+    const [themeContents, setThemeContents] = useState<ITheme[]>([])
+    const [themes, setThemes] = useState<any[]>([])
     const [loadingContents, setLoadingContents] = useState(false)
     const [loadingThemes, setLoadingThemes] = useState(false)
     const [currentCourse, setCurrentCourse] = useState(defaultCourse)
@@ -35,8 +35,9 @@ const FLXClassroomMenu: React.FC<RouterProps> = ({ history }) => {
     })
 
     const courseId = window.location.hash.split('/')[3]
+    const resourceId = window.location.hash.split('/')[6]
 
-    const loadThemes = async () => {
+    const loadThemes = async courseId => {
         setLoadingThemes(true)
 
         try {
@@ -46,7 +47,6 @@ const FLXClassroomMenu: React.FC<RouterProps> = ({ history }) => {
                 }
             } = await client.query({
                 query: GET_THEMES,
-                fetchPolicy: 'network-only',
                 variables: { courseId }
             })
 
@@ -71,6 +71,10 @@ const FLXClassroomMenu: React.FC<RouterProps> = ({ history }) => {
             })
 
             setThemeContents(data.themeContents.data)
+            const incomplete = data.themeContents.data.find(
+                item => !item.completed
+            )
+            !!incomplete && goToResource(incomplete, theme.id, false)
         } catch (e) {
             throw e
         }
@@ -82,20 +86,58 @@ const FLXClassroomMenu: React.FC<RouterProps> = ({ history }) => {
         getThemeContents(item)
     }
 
+    const currentResource = useMemo(() => {
+        if (!!themeContents.length) {
+            const index = themeContents.findIndex(
+                item => item.resource_id === resourceId
+            )
+            return index >= 0 ? index : 0
+        } else {
+            return 0
+        }
+    }, [themeContents, resourceId])
+
     useEffect(() => {
-        loadThemes()
+        loadThemes(courseId)
         getThemeContents(theme)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const goToResource = (item: ITheme) => {
+    useEffect(() => {
+        if (themeContents.length) {
+            const previous = makeAction(themeContents[currentResource - 1])
+            const next = makeAction(themeContents[currentResource + 1])
+            setNavigations({
+                previous,
+                next
+            })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [themeContents, currentResource])
+
+    const makeAction = resource =>
+        !!resource
+            ? {
+                  children: resource.title,
+                  onClick: () => goToResource(resource),
+                  disabled: false
+              }
+            : {
+                  disabled: true
+              }
+
+    const goToResource = (
+        item: ITheme,
+        themeId = theme.id,
+        hasClose = true
+    ) => {
         history.push(
-            `/portal/sala-aula/${courseId}/${theme.id}/${
+            `/portal/sala-aula/${courseId}/${themeId}/${
                 types[item.resource_type]
             }/${item.resource_id}`
         )
 
-        onCloseMenu()
+        hasClose && onCloseMenu()
     }
 
     return (
@@ -117,10 +159,7 @@ const FLXClassroomMenu: React.FC<RouterProps> = ({ history }) => {
             PlaylistProps={{
                 items: themeContents,
                 loading: loadingContents,
-                currentIndex:
-                    (themeContents &&
-                        themeContents.findIndex(item => !item.completed)[0]) ||
-                    0,
+                currentIndex: currentResource,
                 goToResource
             }}
         />

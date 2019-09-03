@@ -1,4 +1,10 @@
-import React, { useContext, createContext, useReducer, useRef } from 'react'
+import React, {
+    useContext,
+    useState,
+    createContext,
+    useReducer,
+    useRef
+} from 'react'
 
 import { SANClassroomMenuHeader } from '@sanar/components'
 import { withRouter } from 'react-router'
@@ -21,6 +27,13 @@ type IFLXLayoutProviderValue = {
     menuRef: any
     darkMode?: boolean
     menuContext?: IMenuContext
+    navigations: INagivations
+    setNavigations: (nav: INagivations) => void
+}
+
+const defaultNavigations = {
+    next: {},
+    previous: {}
 }
 
 const defaultValue: IFLXLayoutProviderValue = {
@@ -29,7 +42,9 @@ const defaultValue: IFLXLayoutProviderValue = {
     setMenuTab: () => {},
     onCloseMenu: () => {},
     onOpenMenu: () => {},
-    menuRef: null
+    menuRef: null,
+    setNavigations: () => {},
+    navigations: defaultNavigations
 }
 
 const Context = createContext(defaultValue)
@@ -54,8 +69,22 @@ const reducer = (state = initialState, { payload, type }) => {
     }
 }
 
+interface IAction {
+    children?: string
+    onClick?: () => void
+    disabled?: boolean
+}
+
+interface INagivations {
+    next: IAction
+    previous: IAction
+}
+
 const FLXLayoutProvider: any = withRouter(({ history, children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
+    const [navigations, setNavigations] = useState<INagivations>(
+        defaultNavigations
+    )
 
     //TODO: type Ref with TS into @sanar/components
     const menuRef: any = useRef()
@@ -108,7 +137,9 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
         onCloseMenu,
         onOpenMenu,
         darkMode: state.darkMode,
-        menuContext: state.menuContext
+        menuContext: state.menuContext,
+        navigations,
+        setNavigations
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>
