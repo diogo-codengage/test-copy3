@@ -21,7 +21,7 @@ export interface ISANClassroomHeaderProps {
 }
 
 const SANButtonMenu = SANStyled(SANButton)`
-    && {
+    &&& {
         background-color: ${theme('colors.secondary')};
         &:focus,
         &:active,
@@ -127,10 +127,11 @@ const SANClassroomHeader = ({
     return (
         <SANRow
             p={{ sm: 'xl', _: 'md' }}
+            pb={{ sm: 'xl', _: 'xs' }}
             type='flex'
             justify='space-between'
             align='middle'
-            bg='grey-solid.7'
+            bg='grey-solid.8'
         >
             <SANCol {...grid}>
                 <SANBox

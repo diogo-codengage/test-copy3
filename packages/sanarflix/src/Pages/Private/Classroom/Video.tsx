@@ -30,13 +30,12 @@ interface IParams {
     type: string
 }
 
-const SANColStyled = styled(SANCol)`
-    flex: 1;
-    background-color: ${theme('colors.grey-solid.8')};
-`
-
-const SANColHeader = styled(SANCol)`
+const Header = styled.div`
     @media screen and (orientation: landscape) {
+        display: none;
+    }
+
+    ${theme('mediaQueries.up.md')} {
         display: none;
     }
 `
@@ -81,21 +80,21 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                     image: resource.video.thumbnails.large
                 }
                 return (
-                    <SANRow
-                        type='flex'
-                        flexDirection='column'
-                        flex='1'
-                        bg='grey-solid.8'
-                    >
-                        <SANColHeader xs={24} md={0}>
-                            <SANClassroomHeader
-                                title={resource.video.title}
-                                subtitle={resource.course.name}
-                                actions={false}
-                                onOpenMenu={onOpenMenu}
-                            />
-                        </SANColHeader>
-                        <SANColStyled xs={24}>
+                    <>
+                        <SANBox
+                            displayFlex
+                            flexDirection='column'
+                            flex='1'
+                            bg='grey-solid.8'
+                        >
+                            <Header>
+                                <SANClassroomHeader
+                                    title={resource.video.title}
+                                    subtitle={resource.course.name}
+                                    actions={false}
+                                    onOpenMenu={onOpenMenu}
+                                />
+                            </Header>
                             <SANJwPlayer
                                 ref={playerRef}
                                 onOpenMenu={onOpenMenu}
@@ -128,14 +127,13 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                         })
                                 }}
                             />
-                        </SANColStyled>
-                        <SANCol xs={24} sm={24} md={0} bg='grey-solid.8'>
                             <SANBox
-                                displayFlex
+                                display={{ md: 'none', _: 'flex' }}
                                 justifyContent='space-between'
                                 alignItems='center'
+                                bg='grey-solid.8'
                                 px='md'
-                                py='xs'
+                                pt='xs'
                             >
                                 <SANBox displayFlex alignItems='center'>
                                     <SANTypography
@@ -186,21 +184,18 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                     )}
                                 </SANButton>
                             </SANBox>
-                        </SANCol>
-                        <SANCol xs={24} sm={24} md={0} bg='grey-solid.8'>
-                            <SANBox
-                                displayFlex
-                                justifyContent='space-between'
-                                alignItems='center'
-                                px='md'
-                                pt='xs'
-                                pb='8'
-                            >
+                        </SANBox>
+                        <SANRow
+                            gutter={16}
+                            p='md'
+                            mb='8'
+                            display={{ md: 'none', _: 'flex' }}
+                        >
+                            <SANCol xs={12} md={0} bg='grey-solid.8'>
                                 <SANButton
                                     size='small'
                                     variant='outlined'
                                     color='white'
-                                    mr='xs'
                                     block
                                     onClick={navigations.previous.onClick}
                                     disabled={navigations.previous.disabled}
@@ -210,27 +205,29 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                         mr='xs'
                                         fontSize='lg'
                                     />
-                                    {navigations.previous.children}
+                                    <span>{navigations.previous.children}</span>
                                 </SANButton>
+                            </SANCol>
+
+                            <SANCol xs={12} md={0} bg='grey-solid.8'>
                                 <SANButton
                                     size='small'
                                     variant='outlined'
                                     color='white'
-                                    ml='xs'
                                     block
                                     onClick={navigations.next.onClick}
                                     disabled={navigations.next.disabled}
                                 >
-                                    {navigations.next.children}
+                                    <span>{navigations.next.children}</span>
                                     <SANEvaIcon
                                         name='arrow-forward-outline'
                                         ml='xs'
                                         fontSize='lg'
                                     />
                                 </SANButton>
-                            </SANBox>
-                        </SANCol>
-                    </SANRow>
+                            </SANCol>
+                        </SANRow>
+                    </>
                 )
             }}
         </SANQuery>
