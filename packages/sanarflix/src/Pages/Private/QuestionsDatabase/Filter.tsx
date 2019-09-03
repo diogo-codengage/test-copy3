@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useApolloClient } from '@apollo/react-hooks'
 
 import {
     SANLayoutContainer,
@@ -14,8 +15,61 @@ import {
     SANBox
 } from '@sanar/components'
 
+import {
+    GET_COURSES,
+    ICourses,
+    ICourse
+} from 'Apollo/QuestionsDatabase/Queries/courses'
+import {
+    GET_THEMES,
+    IThemes,
+    ITheme
+} from 'Apollo/QuestionsDatabase/Queries/themes'
+
 const FLXFilter = ({ history }) => {
     const { t } = useTranslation('sanarflix')
+    const client = useApolloClient()
+    const [courses, setCouses] = useState<ICourse[]>([])
+    const [selectedCourses, setSelectedCourses] = useState<ICourse[]>([])
+    const [themes, setThemes] = useState<ITheme[]>([])
+    const [selectedThemes, setSelectedThemes] = useState<ITheme[]>([])
+
+    useEffect(() => {
+        const fetchCourses = async () => {
+            try {
+                const { data }: { data: ICourses } = await client.query({
+                    query: GET_COURSES
+                })
+                setCouses(data.courses.data)
+            } catch {}
+        }
+        fetchCourses()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        if (!!selectedCourses.length) {
+            const fetchThemes = async () => {
+                try {
+                    const { data }: { data: IThemes } = await client.query({
+                        query: GET_THEMES,
+                        variables: {
+                            courseId:
+                                selectedCourses[selectedCourses.length - 1]
+                                    .value
+                        }
+                    })
+                    setThemes(old => [...old, ...data.themes.data])
+                } catch {}
+            }
+            fetchThemes()
+        } else {
+            setThemes([])
+            setSelectedThemes([])
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedCourses])
+
     return (
         <>
             <SANHeader
@@ -73,7 +127,9 @@ const FLXFilter = ({ history }) => {
                                     'questionsDatabase.filter.course.filterName'
                                 )}
                                 image='http://www.unirio.br/arquivocentral/imagens/localizacao.png/image_preview'
-                                items={[]}
+                                items={courses}
+                                value={selectedCourses}
+                                onChange={setSelectedCourses}
                             />
                         </SANCol>
                         <SANCol sm={24} md={12} mb='xl'>
@@ -88,7 +144,9 @@ const FLXFilter = ({ history }) => {
                                     'questionsDatabase.filter.theme.filterName'
                                 )}
                                 image='http://www.unirio.br/arquivocentral/imagens/localizacao.png/image_preview'
-                                items={[]}
+                                items={themes}
+                                value={selectedThemes}
+                                onChange={setSelectedThemes}
                             />
                         </SANCol>
                     </SANRow>
