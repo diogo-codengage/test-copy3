@@ -199,6 +199,8 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
                             }}
                         />
                         <FLXCourseNavigation
+                            isLastContent={course.nextContent.last_content}
+                            hasLastAccessed={!!course.lastAccessed}
                             LastAccessedProps={{
                                 ...(course &&
                                     course.lastAccessed && {
@@ -213,12 +215,12 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
                             }}
                             SuggestedItemProps={{
                                 ...(course &&
-                                    course.lastAccessed && {
-                                        title: course.lastAccessed.theme_title,
-                                        image: course.lastAccessed.thumbnail,
-                                        type: course.lastAccessed.type,
+                                    course.nextContent && {
+                                        title: course.nextContent.theme_title,
+                                        image: course.nextContent.thumbnail,
+                                        type: course.nextContent.type,
                                         resource_type:
-                                            course.lastAccessed.resource_type,
+                                            course.nextContent.resource_type,
                                         redirectTo: () =>
                                             redirectTo('lastAccessed')
                                     })

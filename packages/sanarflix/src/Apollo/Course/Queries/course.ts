@@ -18,7 +18,9 @@ export interface ILastAccessed {
     type: IType
 }
 
-export interface INextContent extends ILastAccessed {}
+export interface INextContent extends ILastAccessed {
+    last_content: boolean
+}
 
 export interface ICourseCounters {
     questions: number | null

@@ -36,14 +36,16 @@ interface ICardProps {
 
 interface IProps {
     LastAccessedProps: ICardProps
-    SuggestedItemProps?: ICardProps
+    SuggestedItemProps: ICardProps
     isLastContent?: boolean
+    hasLastAccessed?: boolean
 }
 
 const FLXCourseNavigation: React.FC<IProps> = ({
     LastAccessedProps,
     SuggestedItemProps,
-    isLastContent
+    isLastContent,
+    hasLastAccessed
 }) => {
     const { t } = useTranslation('sanarflix')
 
@@ -83,24 +85,31 @@ const FLXCourseNavigation: React.FC<IProps> = ({
         >
             <SANLayoutContainer>
                 <SANRow gutter={24}>
-                    <SANCol sm={12}>
-                        <SANTypography mb={6} color='grey.7' level={5} strong>
-                            {t('course.continue')}
-                        </SANTypography>
-                        <SANCardCourseModule
-                            image={configureImage(
-                                LastAccessedProps.image,
-                                LastAccessedProps.type,
-                                LastAccessedProps.resource_type
-                            )}
-                            title={LastAccessedProps.title}
-                            moduleName={t(
-                                `global.resourceTypes.${LastAccessedProps.resource_type.toLocaleLowerCase()}`
-                            )}
-                            onClick={LastAccessedProps.redirectTo}
-                            mb={{ _: 6, sm: 0 }}
-                        />
-                    </SANCol>
+                    {hasLastAccessed && (
+                        <SANCol sm={12}>
+                            <SANTypography
+                                mb={6}
+                                color='grey.7'
+                                level={5}
+                                strong
+                            >
+                                {t('course.continue')}
+                            </SANTypography>
+                            <SANCardCourseModule
+                                image={configureImage(
+                                    LastAccessedProps.image,
+                                    LastAccessedProps.type,
+                                    LastAccessedProps.resource_type
+                                )}
+                                title={LastAccessedProps.title}
+                                moduleName={t(
+                                    `global.resourceTypes.${LastAccessedProps.resource_type.toLocaleLowerCase()}`
+                                )}
+                                onClick={LastAccessedProps.redirectTo}
+                                mb={{ _: 6, sm: 0 }}
+                            />
+                        </SANCol>
+                    )}
                     <SANCol sm={12}>
                         <SANTypography mb={6} color='grey.7' level={5} strong>
                             {t('course.itemSuggest')}
