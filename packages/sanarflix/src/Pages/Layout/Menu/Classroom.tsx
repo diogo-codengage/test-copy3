@@ -89,7 +89,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     }
 
     const configureNewTheme = theme => {
-        if (!!themes.length) {
+        if (!!themes.length && theme.id) {
             const newTheme = themes.find(item => item.id === theme.id)
             getThemeContents(newTheme)
         }
@@ -150,7 +150,9 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     }, [themeContents, currentResource])
 
     useEffect(() => {
-        configureNewTheme({ id: window.location.hash.split('/')[4] })
+        return () => {
+            configureNewTheme({ id: window.location.hash.split('/')[4] })
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [window.location.hash.split('/')[4]])
 
