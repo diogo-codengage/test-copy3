@@ -112,7 +112,13 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
                         indexMenu: index,
                         menuTitle: (
                             <SANClassroomMenuHeader
-                                onBack={() => history.push('/')}
+                                onBack={() =>
+                                    history.push(
+                                        `/portal/curso/${
+                                            window.location.hash.split('/')[3]
+                                        }`
+                                    )
+                                }
                                 onClose={onCloseMenu}
                             />
                         ),
