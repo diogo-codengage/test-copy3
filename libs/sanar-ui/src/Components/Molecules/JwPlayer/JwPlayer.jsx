@@ -58,7 +58,7 @@ const ESJwPlayer = forwardRef(
         const { width } = useWindowSize()
         const [isReady, setIsReady] = useState(false)
         const [error, setError] = useState(false)
-        const [isPause, setIsPause] = useState(false)
+        const [isPause, setIsPause] = useState(!props.autostart)
         const classes = classNames('es-jw-player', className)
 
         const handleSetupError = () => setError(true)
@@ -149,12 +149,15 @@ const ESJwPlayer = forwardRef(
             }
         }, [width])
 
+        const player = getPlayer(playerId)
+
+        const isIdle = !!player && player.getState() === 'idle'
+
         return (
             <div className={classes} ref={wrapperRef}>
-                {!error && (
+                {!error && !isReady && (
                     <ESSpin
                         dark
-                        spinning={!isReady}
                         className='es-jw-player__loader'
                         style={{ height: `${height}px` }}
                     />
@@ -162,7 +165,7 @@ const ESJwPlayer = forwardRef(
                 {isReady && (
                     <div
                         className={classNames('es-jw-player__header', {
-                            ['has-header']: isReady && isPause
+                            ['has-header']: isPause
                         })}
                     >
                         <div className='es-jw-player__header--left'>
@@ -226,16 +229,20 @@ const ESJwPlayer = forwardRef(
                     </div>
                 )}
 
-                {isReady && isPause && (
+                {isReady && (
                     <>
                         <ESEvaIcon
                             name='skip-back'
-                            className='previous-center'
+                            className={classNames('previous-center', {
+                                idle: isIdle
+                            })}
                             onClick={onPrevious}
                         />
                         <ESEvaIcon
                             name='skip-forward'
-                            className='next-center'
+                            className={classNames('next-center', {
+                                idle: isIdle
+                            })}
                             onClick={onNext}
                         />
                     </>

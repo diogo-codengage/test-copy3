@@ -216,7 +216,11 @@ const SANClassPlaylist = ({ history }) => {
             ) : (
                 <>
                     <div className='d-flex justify-content-between mb-xs pl-md pr-md'>
-                        <ESTypography transform='uppercase' variant='caption'>
+                        <ESTypography
+                            className='text-white'
+                            transform='uppercase'
+                            variant='caption'
+                        >
                             {t('global.subject')}
                         </ESTypography>
                         <ESTypography

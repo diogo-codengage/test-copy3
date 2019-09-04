@@ -53,7 +53,12 @@ const ESButton = ({
 
     if (!!href) {
         return (
-            <a href={href} {...props} className={classes}>
+            <a
+                href={href}
+                data-testid='es-button'
+                className={classes}
+                {...props}
+            >
                 {icon && <ESIcon type={icon} />}
                 {kids}
             </a>
@@ -67,6 +72,7 @@ const ESButton = ({
             disabled={loading}
             type={htmlType}
             className={classes}
+            data-testid='es-button'
             {...props}
         >
             {icon && <ESIcon type={icon} />}

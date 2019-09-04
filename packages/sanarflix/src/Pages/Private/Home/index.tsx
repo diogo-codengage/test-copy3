@@ -36,6 +36,7 @@ const FLXHome: React.FC<RouteComponentProps> = ({ history }) => {
                                 image: allCourses,
                                 ButtonProps: {
                                     children: t(`${intl}.allCourses.action`),
+                                    'data-testid': 'banner-all-courses',
                                     onClick: () =>
                                         history.push('/portal/cursos')
                                 }
@@ -53,7 +54,8 @@ const FLXHome: React.FC<RouteComponentProps> = ({ history }) => {
                                 title: t(`${intl}.questionsBase.title`),
                                 image: baseQuestions,
                                 ButtonProps: {
-                                    children: t(`${intl}.questionsBase.action`)
+                                    children: t(`${intl}.questionsBase.action`),
+                                    'data-testid': 'banner-questions-database'
                                 }
                             }}
                         />
@@ -73,7 +75,8 @@ const FLXHome: React.FC<RouteComponentProps> = ({ history }) => {
                         image: indicate,
                         mobile: indicateMobile,
                         ButtonProps: {
-                            children: t(`${intl}.indicate.action`)
+                            children: t(`${intl}.indicate.action`),
+                            'data-testid': 'banner-questions-indicate'
                         }
                     }}
                 />

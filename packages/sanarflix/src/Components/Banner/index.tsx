@@ -21,7 +21,7 @@ const FLXBannerStyled = styled.div`
 const FLXBanner = ({ BannerProps, SessionTitleProps, ...props }: IProps) => {
     return (
         <FLXBannerStyled {...props}>
-            <SANSessionTitle {...SessionTitleProps} />
+            {SessionTitleProps && <SANSessionTitle {...SessionTitleProps} />}
             <SANBanner {...BannerProps} />
         </FLXBannerStyled>
     )

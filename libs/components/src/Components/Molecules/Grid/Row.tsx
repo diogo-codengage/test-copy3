@@ -22,10 +22,12 @@ export type ISANRowProps = PropTypes.InferProps<typeof ESRow.propTypes> &
     ColorProps
 
 const SANRow = SANStyled(ESRow)`
-    ${space}
-    ${layout}
-    ${flexbox}
-    ${color}
+    && {
+        ${space}
+        ${layout}
+        ${flexbox}
+        ${color}
+    }
 `
 
 export default SANRow

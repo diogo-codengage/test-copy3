@@ -28,13 +28,13 @@ const SideButton = ({ name, ...props }) => {
 }
 
 const SearchButton = ({ name = 'search-outline', ...props }) => (
-    <SideButton name={name} {...props} />
+    <SideButton name={name} {...props} data-testid='menu-search-button' />
 )
 const HomeButton = ({ name = 'home-outline', ...props }) => (
-    <SideButton name={name} {...props} />
+    <SideButton name={name} {...props} data-testid='menu-home-button' />
 )
 const InitalButton = ({ name = 'keypad-outline', ...props }) => (
-    <SideButton name={name} {...props} />
+    <SideButton name={name} {...props} data-testid='menu-initial-button' />
 )
 
 const ESMainMenu = forwardRef(

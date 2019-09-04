@@ -76,6 +76,7 @@ const ESTypography = ({
                     )
                 }
                 className={classes}
+                data-testid='es-typography'
                 {...props}
             />
         )
@@ -83,7 +84,7 @@ const ESTypography = ({
 
     const Component = component ? component : 'div'
     return (
-        <Component className={classes} {...props}>
+        <Component className={classes} data-testid='es-typography' {...props}>
             {children}
             {typeof ellipsis === 'object' && ellipsis.showAction && (
                 <div>

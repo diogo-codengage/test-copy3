@@ -1,9 +1,16 @@
 import React from 'react'
 
+import { theme } from 'styled-tools'
+import styled from 'styled-components'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-import { SANPdfReader, SANQuery, SANClassroomHeader } from '@sanar/components'
+import {
+    SANPdfReader,
+    SANQuery,
+    SANClassroomHeader,
+    SANBox
+} from '@sanar/components'
 
 import { GET_RESOURCE } from 'Apollo/Classroom/Queries/resource'
 import { useClassroomContext } from './Context'
@@ -14,6 +21,14 @@ interface IParams {
     themeId: string
     type: string
 }
+
+const PdfReader = styled(SANPdfReader)`
+    && {
+        ${theme('mediaQueries.down.xs')} {
+            min-height: calc(100vh - 174px);
+        }
+    }
+`
 
 const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
     const {
@@ -32,7 +47,7 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
         >
             {({ data: { resource } }) => (
-                <>
+                <SANBox minHeight='100vh'>
                     <SANClassroomHeader
                         title={resource.document.title}
                         subtitle={resource.course.name}
@@ -50,11 +65,11 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
                                 })
                         }}
                     />
-                    <SANPdfReader
+                    <PdfReader
                         url={resource.document.file.url}
                         hasDownload={false}
                     />
-                </>
+                </SANBox>
             )}
         </SANQuery>
     )

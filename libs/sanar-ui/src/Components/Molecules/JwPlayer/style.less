@@ -12,6 +12,10 @@
         }
     }
 
+    & .jwplayer {
+        z-index: 2;
+    }
+
     &:before {
         content: '';
         z-index: 1;
@@ -30,7 +34,8 @@
     }
 
     &__loader {
-        height: 100%;
+        z-index: 1;
+        min-height: 100vh;
         width: 100%;
         display: flex;
         align-items: center;
@@ -43,7 +48,7 @@
     &__header {
         position: absolute;
         padding: @padding-md;
-        z-index: 1;
+        z-index: 3;
         left: 0;
         right: 0;
         justify-content: space-between;
@@ -113,13 +118,18 @@
         }
     }
 
+    & .previous-center.idle,
+    & .next-center.idle {
+        visibility: visible;
+    }
+
     /* CUSTOM BUTTONS CENTER WHEN PAUSED */
     & .previous-center,
     & .next-center {
-        z-index: 1;
+        z-index: 3;
         color: @white;
         position: absolute;
-        top: ~'calc(100% / 2 - 29px)';
+        top: ~'calc(100% / 2 - 19px)';
         color: @white-7;
         visibility: hidden;
         cursor: pointer;
@@ -133,10 +143,10 @@
         }
     }
     & .previous-center {
-        left: ~'calc(100% / 2 - 65px)';
+        left: ~'calc(100% / 2 - 75px)';
     }
     & .next-center {
-        right: ~'calc(100% / 2 - 65px)';
+        right: ~'calc(100% / 2 - 75px)';
     }
 
     & .jw-wrapper {
@@ -197,14 +207,6 @@
     & .jw-display-icon-container.jw-display-icon-rewind.jw-reset {
         display: none;
     }
-
-    /* RESIZE CUSTOM BUTTONS CONTROLS WHEN SCREEN > 1580 */
-    // & .jw-breakpoint-7 .jw-icon-inline.jw-svg-icon-next .jw-button-image,
-    // & .jw-breakpoint-7 .jw-icon-inline.jw-svg-icon-previous .jw-button-image,
-    // & .jw-breakpoint-7 .jw-icon-inline.jw-svg-icon-advance .jw-button-image {
-    //     width: 30px;
-    //     height: 30px;
-    // }
 
     & .jw-reset-text,
     & .jw-reset {
@@ -469,8 +471,9 @@
             order: 4;
         }
 
-        & .previous-center,
-        & .next-center {
+        & .previous-center:not(.idle),
+        & .next-center:not(.idle) {
+            top: ~'calc(100% / 2 - 29px)';
             visibility: visible;
         }
     }

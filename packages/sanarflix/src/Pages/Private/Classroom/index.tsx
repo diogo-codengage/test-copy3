@@ -30,6 +30,9 @@ interface IParams {
 
 const Wrapper = styled.div`
     background-color: ${theme('colors.grey-solid.8')};
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 `
 
 const FLXCourses: React.FC<RouteComponentProps<IParams>> = ({

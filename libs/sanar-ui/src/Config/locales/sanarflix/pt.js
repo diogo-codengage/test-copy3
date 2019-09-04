@@ -8,10 +8,16 @@ export default {
         allCourses: 'Todos os cursos',
         about: 'Sobre o SanarFlix',
         copyright: 'Todos os direitos reservados',
+        course: 'Curso',
         completenessFilters: {
             all: 'Todos',
             completed: 'Concluídos',
             incomplete: 'Incompletos'
+        },
+        resourceTypes: {
+            document: 'Document',
+            video: 'Video',
+            question: 'Questão'
         },
         types: {
             resume: 'Resumo',
@@ -70,6 +76,14 @@ export default {
         }
     },
     course: {
+        continue: 'Continuar de onde parei',
+        itemSuggest: 'Próximo item sugerido',
+        banners: {
+            questionsBase: {
+                title: 'Banco de Questões',
+                action: 'Acessar'
+            }
+        },
         description:
             'O que você irá aprender e os materiais que você tem acesso na plataforma.',
         subheader: {

@@ -45,6 +45,7 @@ const renderCourse = history => (course: ICourse) => (
     <SANCol key={course.id} xs={12} lg={8} xl={6}>
         <SANCardCourseModule
             mb='xl'
+            data-testid={`card-courses-${course.name}`}
             image={course.cover_picture_url}
             title={course.name}
             badge={`${round(course.progress_percentage)}%`}
