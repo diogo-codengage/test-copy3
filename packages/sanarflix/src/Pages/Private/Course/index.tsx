@@ -183,7 +183,7 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
 
                 const redirectTo = current =>
                     history.push(
-                        `/sala-aula/${course.id}/${
+                        `/portal/sala-aula/${course.id}/${
                             course[`${current}`].theme_id
                         }/${resourceType[course[`${current}`].resource_type]}/${
                             course[`${current}`].resource_id

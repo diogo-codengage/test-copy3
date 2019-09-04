@@ -96,6 +96,7 @@ const FLXCourseNavigation: React.FC<IProps> = ({
                                 {t('course.continue')}
                             </SANTypography>
                             <SANCardCourseModule
+                                data-testid='last-accessed-content'
                                 image={configureImage(
                                     LastAccessedProps.image,
                                     LastAccessedProps.type,
@@ -114,8 +115,9 @@ const FLXCourseNavigation: React.FC<IProps> = ({
                         <SANTypography mb={6} color='grey.7' level={5} strong>
                             {t('course.itemSuggest')}
                         </SANTypography>
-                        {!isLastContent && SuggestedItemProps ? (
+                        {isLastContent && SuggestedItemProps ? (
                             <SANCardCourseModule
+                                data-testid='next-suggested-content'
                                 image={SuggestedItemProps.image}
                                 title={SuggestedItemProps.title}
                                 moduleName={SuggestedItemProps.moduleName}
@@ -130,6 +132,8 @@ const FLXCourseNavigation: React.FC<IProps> = ({
                                     ),
                                     image: baseQuestions,
                                     ButtonProps: {
+                                        'data-testid':
+                                            'suggested-item-question',
                                         children: t(
                                             'course.banners.questionsBase.action'
                                         )
