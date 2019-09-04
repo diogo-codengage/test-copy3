@@ -27,7 +27,7 @@ type ISANTypographyProps = PropTypes.InferProps<
     TypographyProps
 
 const SANTypography: SANElement<ISANTypographyProps> = SANStyled(ESTypography)`
-    && {
+    &&& {
         ${compose(
             space,
             flexbox,
