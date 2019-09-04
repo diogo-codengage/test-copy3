@@ -200,6 +200,7 @@ const ESJwPlayer = forwardRef(
                                     color='white'
                                     onClick={BookmarkProps.onClick}
                                     className='mr-xs'
+                                    bold
                                 >
                                     {BookmarkProps.value ? (
                                         <ESEvaIcon

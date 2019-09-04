@@ -51,6 +51,13 @@ const RowItem = styled.div`
     position: relative;
 `
 
+const SANBoxStyled = styled(SANBox)`
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+`
+
 const Accept = styled.div`
     padding: 0 40px;
     position: absolute;
@@ -84,7 +91,13 @@ const renderItem = t => (_, index) => (
                 {index + 1}
             </SANTypography>
         </Badge>
-        <SANTypography level={5} mb='md' ml='xxl' color='grey.8'>
+        <SANTypography
+            regular
+            fontSize={{ md: '4', _: '3' }}
+            mb='md'
+            ml='xxl'
+            color='grey.8'
+        >
             {t(`startQuiz.pass${index + 1}`)}
         </SANTypography>
     </RowItem>
@@ -100,7 +113,7 @@ const SANStartQuiz = ({
         <SANRowStyled type='flex'>
             <SANColStyled xs={24} sm={24} md={16} lg={17} xl={19}>
                 <SANTypography
-                    fontSize={{ md: '6', _: '5' }}
+                    fontSize={{ md: '6', _: '4' }}
                     regular
                     mb='xl'
                     color='grey.8'
@@ -135,19 +148,24 @@ const SANStartQuiz = ({
                 </Accept>
             </SANColImage>
 
-            <SANCol xs={24} sm={24} md={0} bg='grey-solid.8' py='sm'>
-                <SANBox displayFlex alignItems='center' justifyContent='center'>
-                    <SANButton
-                        color='primary'
-                        size='medium'
-                        variant='solid'
-                        uppercase
-                        {...ButtonProps}
-                    >
-                        {t('startQuiz.start')}
-                    </SANButton>
-                </SANBox>
-            </SANCol>
+            <SANBoxStyled
+                displayFlex
+                alignItems='center'
+                justifyContent='center'
+                bg='grey-solid.8'
+                py='sm'
+            >
+                <SANButton
+                    px='8'
+                    color='light'
+                    size='small'
+                    variant='outlined'
+                    uppercase
+                    {...ButtonProps}
+                >
+                    {t('startQuiz.start')}
+                </SANButton>
+            </SANBoxStyled>
         </SANRowStyled>
     )
 }
