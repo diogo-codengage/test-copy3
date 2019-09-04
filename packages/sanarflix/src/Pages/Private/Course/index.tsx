@@ -199,7 +199,10 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
                             }}
                         />
                         <FLXCourseNavigation
-                            isLastContent={course.nextContent.last_content}
+                            isLastContent={
+                                !course.nextContent ||
+                                course.nextContent.last_content
+                            }
                             hasLastAccessed={!!course.lastAccessed}
                             LastAccessedProps={{
                                 ...(course &&
