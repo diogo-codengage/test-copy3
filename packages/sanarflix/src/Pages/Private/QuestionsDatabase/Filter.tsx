@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
+import { theme } from 'styled-tools'
 import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useApolloClient } from '@apollo/react-hooks'
@@ -12,7 +13,8 @@ import {
     SANCol,
     SANButton,
     SANCardSelectFilter,
-    SANBox
+    SANBox,
+    SANStyled
 } from '@sanar/components'
 
 import {
@@ -28,6 +30,14 @@ import {
 
 import courseSvg from 'Assets/images/filters/course.svg'
 import themeSvg from 'Assets/images/filters/theme.svg'
+
+const SANCardSelectFilterStyled = SANStyled(SANCardSelectFilter)`
+    & {
+        & .es-card-select-filter__footer--checked {
+            background-color: ${theme('colors.primary-10')};
+        }
+    }
+`
 
 const FLXFilter = ({ history }) => {
     const { t } = useTranslation('sanarflix')
@@ -119,7 +129,7 @@ const FLXFilter = ({ history }) => {
                             />
                         </SANCol>
                         <SANCol sm={24} md={12} mb='xl'>
-                            <SANCardSelectFilter
+                            <SANCardSelectFilterStyled
                                 labelSelecteds={t(
                                     'questionsDatabase.filter.course.labelSelecteds'
                                 )}
@@ -136,7 +146,7 @@ const FLXFilter = ({ history }) => {
                             />
                         </SANCol>
                         <SANCol sm={24} md={12} mb='xl'>
-                            <SANCardSelectFilter
+                            <SANCardSelectFilterStyled
                                 labelSelecteds={t(
                                     'questionsDatabase.filter.theme.labelSelecteds'
                                 )}
