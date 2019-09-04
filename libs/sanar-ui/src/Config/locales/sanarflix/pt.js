@@ -8,6 +8,7 @@ export default {
         allCourses: 'Todos os cursos',
         about: 'Sobre o SanarFlix',
         copyright: 'Todos os direitos reservados',
+        course: 'Curso',
         completenessFilters: {
             all: 'Todos',
             completed: 'Concluídos',

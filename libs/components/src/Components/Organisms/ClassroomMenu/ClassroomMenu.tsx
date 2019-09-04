@@ -33,7 +33,7 @@ const SANClassroomMenu: React.FC<IProps> = ({
         <SANBox height='100%' backgroundColor='grey-solid.8'>
             <SANBox px={4} pt={6}>
                 <SANBox>
-                    <SANTypography mb={1} color='white.7' variant='overline'>
+                    <SANTypography mb={1} color='white.5' variant='overline'>
                         {knowledgeArea}
                     </SANTypography>
                     <SANTypography
