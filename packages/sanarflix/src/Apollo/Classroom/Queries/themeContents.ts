@@ -21,7 +21,7 @@ export interface ITheme {
         id: string
         title: string
     }
-    question: {
+    quiz: {
         id: string
     }
 }
@@ -48,8 +48,9 @@ export const GET_THEME_CONTENTS = gql`
                     id
                     title
                 }
-                question {
+                quiz {
                     id
+                    title
                 }
             }
         }

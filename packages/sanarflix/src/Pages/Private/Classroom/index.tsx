@@ -15,7 +15,7 @@ const renderResourceContent = type => {
             return <FLXClassroomVideo />
         case 'documento':
             return <FLXClassroomDocument />
-        case 'questao':
+        case 'questoes':
             return <div>Quiz</div>
         default:
             return <Redirect to='/portal/inicio' />
