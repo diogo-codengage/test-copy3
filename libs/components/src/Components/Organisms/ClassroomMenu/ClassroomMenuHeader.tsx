@@ -24,12 +24,12 @@ const SANClassroomMenuHeader: React.FC<IProps> = ({ onBack, onClose }) => {
         >
             <SANButton onClick={onBack} variant='text' uppercase color='white'>
                 <SANEvaIcon size='large' name='arrow-back-outline' />
-                <SANTypography ml={1} variant='caption'>
+                <SANTypography ml={1} variant='caption' color='white.7'>
                     {t('global.goToBegin')}
                 </SANTypography>
             </SANButton>
-            <SANButton variant='text' color='white' uppercase onClick={onClose}>
-                <SANEvaIcon size='large' name='close-outline' />
+            <SANButton variant='text' uppercase onClick={onClose}>
+                <SANEvaIcon size='large' color='white.7' name='close-outline' />
             </SANButton>
         </SANBox>
     )
