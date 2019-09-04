@@ -11,6 +11,7 @@ import ESCollapse, { ESCollapsePanel } from 'sanar-ui/dist/Components/Atoms/Coll
 import iconSpecialties from '../../../assets/images/icon-specialties.png'
 import iconSubSpecialties from '../../../assets/images/icon-subspecialties.png'
 import iconTheme from '../../../assets/images/icon-theme.png'
+import iconCategories from '../../../assets/images/icon-categories.svg'
 
 import { RMContainer } from '../../../Components/RMContainer'
 import { YEARS } from './years'
@@ -96,7 +97,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
                     <ESCardSelectFilter
                       style={{marginTop: isSmall ?  20 : 0 }}
                       filterName="Categoria de prova"
-                      image={iconSpecialties}
+                      image={iconCategories}
                       items={props.allCategories}
                       onChange={props.setSelectedCategories}
                       value={props.selectedCategories}

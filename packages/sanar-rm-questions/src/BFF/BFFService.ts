@@ -6,6 +6,7 @@ import { QuestionsInputFilter } from './QuestionsInputFilter'
 import { getQuestionsQuery } from './Apollo/Queries/get-questions'
 import { questionAnswer } from './Apollo/Mutations/questionAnswer'
 import { ISelectOption } from '../Components/ESSelect'
+import capitalize from 'lodash/capitalize'
 
 const normalizeSpecialties = (list) => {
 
@@ -65,10 +66,17 @@ const getCategories = () => {
         .then((items: ISelectOption[]) => {
             return items.sort((o1, o2) => (o1.label.localeCompare(o2.label)))
         })
-        .then( (items: ISelectOption[]) => {
-            items.forEach(i => i.label = i.label.toLocaleUpperCase());
+        .then((items: ISelectOption[]) => {
+            items.forEach(i => i.label = upper(i.label))
             return items;
         })
+}
+
+const upper = (str: string): string => {
+    const spl = str.split("-")
+    return spl.length > 1
+      ? spl[0] + " - " + capitalize(spl[1].trim())
+      : capitalize(spl[0].trim())
 }
 
 export const BFFService = {

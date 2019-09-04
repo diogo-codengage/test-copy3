@@ -25,6 +25,12 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
         }
     }
 
+    if(filter.categoriesIds.length > 0) {
+        where.category_id = {
+            inq: filter.categoriesIds
+        }
+    }
+
     if (filter.state) {
         state = filter.state
     }
@@ -49,12 +55,11 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
                             text,
                             correct
                         }
-                    }
+                    },
                     institution {
                         name,
                         state
                     },
-
                     comments{
                         data {
                             id
@@ -65,9 +70,16 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
                             }
                             labels
                         }
-                    }
-
+                    },
                     tags {
+                        data {
+                            name
+                        }
+                    },
+                    category {
+                        name
+                    },
+                    specialties {
                         data {
                             name
                         }

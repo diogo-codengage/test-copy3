@@ -101,6 +101,7 @@ export const QuestionsPageProvider = (props: IProps) => {
             state: selectedState,
             years: selectedYears.map(v => v.value),
             isCommentedByExpert: isCommentedByExpert,
+            categoriesIds: selectedCategories.map( c => c.value )
         }
     }
 
