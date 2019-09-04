@@ -19,7 +19,13 @@ const ESCommonBadge = ({
         ...style,
         ...(fontSize && { fontSize })
     }
-    return <div style={styles} className={classes}>{`${count}${suffix}`}</div>
+    return (
+        <div
+            style={styles}
+            className={classes}
+            data-testid='es-common-badge'
+        >{`${count}${suffix}`}</div>
+    )
 }
 
 ESCommonBadge.propTypes = {

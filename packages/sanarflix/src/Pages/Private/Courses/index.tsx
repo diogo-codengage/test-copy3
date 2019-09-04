@@ -16,10 +16,14 @@ import { GET_TOPICS, ITopics, ITopic } from 'Apollo/Courses/Queries/topics'
 import FLXCoursesList from './List'
 import FLXCoursesProvider from './Context'
 
-const renderTab = (topic: ITopic) => (
+const renderTab = (topic: ITopic, index: number) => (
     <SANTabPane
         tab={
-            <SANTypography variant='subtitle2' strong>
+            <SANTypography
+                variant='subtitle2'
+                strong
+                data-testid={`tab-big-area-${index + 1}`}
+            >
                 {topic.name}
             </SANTypography>
         }
@@ -38,7 +42,11 @@ const Topics = () => {
                 <SANTabs defaultActiveKey='all' flex='1' container>
                     <SANTabPane
                         tab={
-                            <SANTypography variant='subtitle2' strong>
+                            <SANTypography
+                                variant='subtitle2'
+                                strong
+                                data-testid='tab-big-area-0'
+                            >
                                 {t('global.allCourses')}
                             </SANTypography>
                         }

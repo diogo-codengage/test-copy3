@@ -74,6 +74,7 @@ const renderTheme = history => (theme, index) => (
         customKey={theme.id}
         index={index}
         title={theme.name}
+        data-testid={`theme-${theme.name}`}
     >
         <SANQuery
             query={GET_THEME_CONTENTS}
