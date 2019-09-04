@@ -8,6 +8,7 @@ import {
 } from 'Apollo/Classroom/Queries/themeContents'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { useLayoutContext } from '../Context'
+import { useTranslation } from 'react-i18next'
 
 const types = {
     Video: 'video',
@@ -22,6 +23,7 @@ const defaultCourse = {
 }
 
 const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
+    const { t } = useTranslation('sanarflix')
     const client = useApolloClient()
     const { onCloseMenu, setNavigations } = useLayoutContext()
 
@@ -83,7 +85,14 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     }
 
     const onSelect = async item => {
-        getThemeContents(item)
+        configureNewTheme(item)
+    }
+
+    const configureNewTheme = theme => {
+        if (!!themes.length) {
+            const newTheme = themes.find(item => item.id === theme.id)
+            getThemeContents(newTheme)
+        }
     }
 
     const currentResource = useMemo(() => {
@@ -96,24 +105,6 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
             return 0
         }
     }, [themeContents, resourceId])
-
-    useEffect(() => {
-        loadThemes(courseId)
-        getThemeContents(theme)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    useEffect(() => {
-        if (themeContents.length) {
-            const previous = makeAction(themeContents[currentResource - 1])
-            const next = makeAction(themeContents[currentResource + 1])
-            setNavigations({
-                previous,
-                next
-            })
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [themeContents, currentResource])
 
     const makeAction = resource =>
         !!resource
@@ -140,11 +131,34 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
         hasClose && onCloseMenu()
     }
 
+    useEffect(() => {
+        loadThemes(courseId)
+        getThemeContents(theme)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        if (themeContents.length) {
+            const previous = makeAction(themeContents[currentResource - 1])
+            const next = makeAction(themeContents[currentResource + 1])
+            setNavigations({
+                previous,
+                next
+            })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [themeContents, currentResource])
+
+    useEffect(() => {
+        configureNewTheme({ id: window.location.hash.split('/')[4] })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [window.location.hash.split('/')[4]])
+
     return (
         <SANClassroomMenu
             course={{
                 ...(currentCourse && {
-                    knowledgeArea: currentCourse.knowledge_area,
+                    knowledgeArea: t('global.course'),
                     name: currentCourse.name,
                     progress: currentCourse.progress_percentage || 0
                 })
