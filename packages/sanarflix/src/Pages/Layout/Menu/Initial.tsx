@@ -32,6 +32,13 @@ const FLXMenuInitial: React.FC = () => {
                     title={t('mainMenu.initial.allCourses')}
                 />
                 <SANNavigationListItem
+                    to='/portal/banco-questoes/filtro'
+                    icon={<SANEvaIcon name='edit-outline' color='default' />}
+                    onClick={onCloseMenu}
+                    dataTestid='flx-menu__go-to--questions'
+                    title={t('mainMenu.initial.questions')}
+                />
+                <SANNavigationListItem
                     to='#'
                     icon={<SANEvaIcon name='heart-outline' color='default' />}
                     onClick={onCloseMenu}

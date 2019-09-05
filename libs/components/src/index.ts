@@ -35,6 +35,7 @@ import { SANScrollTop } from 'Components/Atoms/ScrollTop'
 import { SANCardInfo } from 'Components/Molecules/CardInfo'
 import { SANJwPlayer } from 'Components/Molecules/JwPlayer'
 import { SANClassroomHeader } from 'Components/Molecules/ClassroomHeader'
+import { SANCardSelectFilter } from 'Components/Molecules/CardSelectFilter'
 import {
     SANCollapseTheme,
     SANCollapseThemePanel,
@@ -99,5 +100,6 @@ export {
     SANPdfReader,
     SANClassroomHeader,
     SANRate,
-    SANScrollTop
+    SANScrollTop,
+    SANCardSelectFilter
 }

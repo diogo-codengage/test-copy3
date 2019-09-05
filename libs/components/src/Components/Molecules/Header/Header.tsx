@@ -1,7 +1,7 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
-import { theme, ifProp, prop } from 'styled-tools'
+import { theme } from 'styled-tools'
 
 import { SANButton } from '../../Atoms/Button'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
@@ -11,22 +11,28 @@ import {
 } from '../../Atoms/SessionTitle'
 import { SANLayoutContainer } from '../../Organisms/Layout'
 
+const SANButtonBack = styled(SANButton)``
+
 const SANHeaderStyled = styled.div`
     min-height: 124px;
     border-bottom: 1px solid ${theme('colors.grey.2')};
     display: flex;
     align-items: center;
 
+    ${theme('mediaQueries.down.sm')} {
+        padding: ${theme('space.xl')} 0;
+    }
+
     ${SANLayoutContainer} {
         position: relative;
 
         ${theme('mediaQueries.down.xl')} {
-            ${SANButton} {
+            ${SANButtonBack} {
                 display: none !important;
             }
         }
 
-        ${SANButton} {
+        ${SANButtonBack} {
             position: absolute;
             left: -24px;
             top: 6px;
@@ -56,7 +62,7 @@ const SANHeader: React.FC<ISANHeaderProps> = ({
     return (
         <SANHeaderStyled data-testid='san-header'>
             <SANLayoutContainer>
-                <SANButton
+                <SANButtonBack
                     circle
                     size='xsmall'
                     variant='text'
@@ -64,7 +70,7 @@ const SANHeader: React.FC<ISANHeaderProps> = ({
                     data-testid='san-header__back'
                 >
                     <SANEvaIcon name='arrow-ios-back-outline' size='medium' />
-                </SANButton>
+                </SANButtonBack>
                 <SANSessionTitle {...{ ...SessionTitleProps, levelTitle: 4 }} />
             </SANLayoutContainer>
         </SANHeaderStyled>
