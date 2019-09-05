@@ -146,7 +146,7 @@ export default {
         addedContents: {
             title: 'Adicionados',
             subtitle:
-                'Conteúdos adicionados toda semana! Aulas, resumos e outros materiaos que acabaram de chegar'
+                'Conteúdos adicionados toda semana! Aulas, resumos e outros materiais que acabaram de chegar'
         },
         banners: {
             allCourses: {

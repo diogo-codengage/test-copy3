@@ -47,7 +47,7 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
         >
             {({ data: { resource } }) => (
-                <SANBox minHeight='100vh'>
+                <SANBox>
                     <SANClassroomHeader
                         title={resource.document.title}
                         subtitle={resource.course.name}
