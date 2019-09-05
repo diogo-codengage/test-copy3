@@ -11,7 +11,7 @@ import ESCollapse, { ESCollapsePanel } from 'sanar-ui/dist/Components/Atoms/Coll
 import iconSpecialties from '../../../assets/images/icon-specialties.png'
 import iconSubSpecialties from '../../../assets/images/icon-subspecialties.png'
 import iconTheme from '../../../assets/images/icon-theme.png'
-import iconCategories from '../../../assets/images/icon-categories.svg'
+import iconCategories from '../../../assets/images/icon-categories.png'
 
 import { RMContainer } from '../../../Components/RMContainer'
 import { YEARS } from './years'
