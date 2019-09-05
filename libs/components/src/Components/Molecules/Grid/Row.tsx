@@ -5,6 +5,8 @@ import {
     space,
     layout,
     flexbox,
+    border,
+    BorderProps,
     ColorProps,
     FlexboxProps,
     LayoutProps,
@@ -19,7 +21,8 @@ export type ISANRowProps = PropTypes.InferProps<typeof ESRow.propTypes> &
     SpaceProps &
     LayoutProps &
     FlexboxProps &
-    ColorProps
+    ColorProps &
+    BorderProps
 
 const SANRow = SANStyled(ESRow)`
     && {
@@ -27,6 +30,7 @@ const SANRow = SANStyled(ESRow)`
         ${layout}
         ${flexbox}
         ${color}
+        ${border}
     }
 `
 

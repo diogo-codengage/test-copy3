@@ -103,6 +103,53 @@ export const GET_RESOURCE = gql`
                     url
                 }
             }
+            quiz {
+                id
+                title
+                questionItems {
+                    data {
+                        question {
+                            id
+                            statement
+                            images {
+                                data {
+                                    id
+                                    # sizedImages {
+                                    #     id
+                                    #     small {
+                                    #         id
+                                    #         filename
+                                    #         url
+                                    #         height
+                                    #         width
+                                    #     }
+                                    #     medium {
+                                    #         id
+                                    #         filename
+                                    #         url
+                                    #         height
+                                    #         width
+                                    #     }
+                                    #     large {
+                                    #         id
+                                    #         filename
+                                    #         url
+                                    #         height
+                                    #         width
+                                    #     }
+                                    # }
+                                }
+                            }
+                            alternatives {
+                                data {
+                                    id
+                                    text
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 `

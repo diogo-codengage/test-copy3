@@ -34,6 +34,7 @@ import { SANThemeProvider } from 'Components/Atoms/ThemeProvider'
 import { SANScrollTop } from 'Components/Atoms/ScrollTop'
 import { SANCardInfo } from 'Components/Molecules/CardInfo'
 import { SANJwPlayer } from 'Components/Molecules/JwPlayer'
+import { SANStartQuiz } from 'Components/Molecules/StartQuiz'
 import { SANClassroomHeader } from 'Components/Molecules/ClassroomHeader'
 import {
     SANCollapseTheme,
@@ -99,5 +100,6 @@ export {
     SANPdfReader,
     SANClassroomHeader,
     SANRate,
-    SANScrollTop
+    SANScrollTop,
+    SANStartQuiz
 }

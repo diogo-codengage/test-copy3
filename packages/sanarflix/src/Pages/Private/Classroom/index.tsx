@@ -8,6 +8,7 @@ import FLXClassroomProvider from './Context'
 
 const FLXClassroomVideo = React.lazy(() => import('./Video'))
 const FLXClassroomDocument = React.lazy(() => import('./Document'))
+const FLXClassroomQuiz = React.lazy(() => import('./Quiz'))
 
 const renderResourceContent = type => {
     switch (type) {
@@ -16,7 +17,7 @@ const renderResourceContent = type => {
         case 'documento':
             return <FLXClassroomDocument />
         case 'questoes':
-            return <div>Quiz</div>
+            return <FLXClassroomQuiz />
         default:
             return <Redirect to='/portal/inicio' />
     }
