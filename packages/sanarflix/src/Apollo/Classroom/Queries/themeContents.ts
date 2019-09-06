@@ -1,11 +1,5 @@
 import gql from 'graphql-tag'
 
-interface ICourse {
-    knowledge_area: string | null
-    name: string | null
-    progress_percentage: number | null
-}
-
 export interface ITheme {
     id: string
     title: string
@@ -13,6 +7,7 @@ export interface ITheme {
     resource_id: string
     completed: boolean
     index: number
+    type: string
     document: {
         id: string
         title: string
@@ -21,13 +16,14 @@ export interface ITheme {
         id: string
         title: string
     }
-    question: {
+    quiz: {
         id: string
+        title: string
     }
 }
 
 export interface IThemeContents {
-    data: ITheme
+    data: ITheme[]
 }
 
 export const GET_THEME_CONTENTS = gql`
@@ -40,6 +36,7 @@ export const GET_THEME_CONTENTS = gql`
                 resource_id
                 completed
                 index
+                type
                 document {
                     id
                     title
@@ -48,7 +45,8 @@ export const GET_THEME_CONTENTS = gql`
                     id
                     title
                 }
-                question {
+                quiz {
+                    title
                     id
                 }
             }
