@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react'
 
+import { theme } from 'styled-tools'
 import { useApolloClient } from '@apollo/react-hooks'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -13,7 +14,8 @@ import {
     SANQuestion,
     SANQuestionMap,
     SANStopwatch,
-    SANEvaIcon
+    SANEvaIcon,
+    SANStyled
 } from '@sanar/components'
 
 import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
@@ -23,6 +25,50 @@ import { useClassroomContext } from '../Context'
 
 interface IParams {
     questionId: string
+}
+
+const FloatTimer = SANStyled(SANBox)`
+    && {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: ${theme('space.sm')};
+        box-shadow: 0 -1px 2px ${theme('colors.grey.4')};
+        z-index; 1;
+    }
+`
+
+const Timer = ({
+    questionsMap,
+    toggleVisible,
+    index,
+    visible,
+    stopwatchRef
+}) => {
+    const { t } = useTranslation('sanarflix')
+    return (
+        <SANBox display='flex' alignItems='center'>
+            <SANQuestionMap
+                items={questionsMap}
+                current={index}
+                mock
+                onCancel={toggleVisible}
+                visible={visible}
+            />
+            <SANButton
+                size='small'
+                variant='outlined'
+                color='light'
+                mr='xl'
+                onClick={toggleVisible}
+            >
+                <SANEvaIcon name='map-outline' mr='xs' />
+                {t('classroom.quiz.questionMap')}
+            </SANButton>
+            <SANStopwatch dark ref={stopwatchRef} />
+        </SANBox>
+    )
 }
 
 const FLXClassRoomQuizQuestion = ({
@@ -160,9 +206,13 @@ const FLXClassRoomQuizQuestion = ({
 
     return (
         <>
-            <SANRow type='flex' align='middle'>
+            <SANRow type='flex' align='middle' justifyContent='space-between'>
                 <SANCol xs={24} sm={8}>
-                    <SANBox display='flex' alignItems='center'>
+                    <SANBox
+                        display='flex'
+                        alignItems='center'
+                        mb={{ sm: '0', _: 'md' }}
+                    >
                         <SANTypography color='white.10' level={4} mr='xs'>
                             {t('classroom.quiz.question')} {index + 1}
                         </SANTypography>
@@ -171,30 +221,22 @@ const FLXClassRoomQuizQuestion = ({
                         </SANTypography>
                     </SANBox>
                 </SANCol>
-                <SANCol xs={0} sm={8}>
-                    <SANBox display='flex' alignItems='center'>
-                        <SANQuestionMap
-                            items={questionsMap}
-                            current={index}
-                            mock
-                            onCancel={toggleVisible}
-                            visible={visible}
-                        />
-                        <SANButton
-                            size='small'
-                            variant='outlined'
-                            color='light'
-                            mr='xl'
-                            onClick={toggleVisible}
-                        >
-                            <SANEvaIcon name='map-outline' mr='xs' />
-                            {t('classroom.quiz.questionMap')}
-                        </SANButton>
-                        <SANStopwatch dark ref={stopwatchRef} />
-                    </SANBox>
+                <SANCol xs={0} sm={0} md={8}>
+                    <Timer
+                        {...{
+                            questionsMap,
+                            toggleVisible,
+                            index,
+                            visible,
+                            stopwatchRef
+                        }}
+                    />
                 </SANCol>
                 <SANCol xs={24} sm={8}>
-                    <SANBox display='flex' justifyContent='flex-end'>
+                    <SANBox
+                        display='flex'
+                        justifyContent={{ sm: 'flex-end', _: 'start' }}
+                    >
                         <SANButton
                             variant='text'
                             color='white'
@@ -225,7 +267,7 @@ const FLXClassRoomQuizQuestion = ({
                 </SANCol>
             </SANRow>
 
-            <SANBox mt='8'>
+            <SANBox mt={{ sm: '8', _: 'sm' }}>
                 <SANQuestion
                     question={questions[index]}
                     {...responses.find(
@@ -237,6 +279,22 @@ const FLXClassRoomQuizQuestion = ({
                     onNext={handleNext}
                 />
             </SANBox>
+            <FloatTimer
+                p='sm'
+                bg='grey-solid.8'
+                justifyContent='center'
+                display={{ md: 'none', _: 'flex' }}
+            >
+                <Timer
+                    {...{
+                        questionsMap,
+                        toggleVisible,
+                        index,
+                        visible,
+                        stopwatchRef
+                    }}
+                />
+            </FloatTimer>
         </>
     )
 }

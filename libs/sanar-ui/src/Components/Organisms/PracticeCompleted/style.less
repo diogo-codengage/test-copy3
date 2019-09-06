@@ -12,14 +12,11 @@
 
         .es-typography {
             color: @grey-7;
+            margin-left: @margin-sm;
         }
 
-        i {
-            margin-right: @margin-xs;
-
-            svg {
-                font-size: @font-size-sm * 2;
-            }
+        & .es-eva-icon svg {
+            font-size: 34px;
         }
 
         h3 {
@@ -39,8 +36,8 @@
             &--icon {
                 background: @white;
                 border-radius: 100%;
-                width: 44px;
-                height: 44px;
+                width: 40px;
+                height: 40px;
                 border: 1px solid @grey-3;
                 display: flex;
                 align-items: center;
@@ -149,5 +146,6 @@
         top: 0;
         bottom: 60%;
         background: fade(@primary-1, 30%);
+        border-bottom: 1px solid @grey-3;
     }
 }

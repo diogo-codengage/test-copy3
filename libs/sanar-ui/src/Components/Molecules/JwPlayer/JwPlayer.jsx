@@ -151,7 +151,8 @@ const ESJwPlayer = forwardRef(
 
         const player = getPlayer(playerId)
 
-        const isIdle = !!player && player.getState() === 'idle'
+        const isIdle =
+            !!player && player.getState && player.getState() === 'idle'
 
         return (
             <div className={classes} ref={wrapperRef}>

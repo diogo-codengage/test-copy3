@@ -1,12 +1,22 @@
 import React from 'react'
 
-import { SANPracticeCompleted } from '@sanar/components'
+import { theme } from 'styled-tools'
+
+import { SANPracticeCompleted, SANStyled } from '@sanar/components'
 import {
     esUtilConvertSecondsToTime,
     esConvertFormattedTimeToSeconds
 } from 'sanar-ui/dist/Util/Date'
 
 import { useClassroomQuizContext } from './Context'
+
+const SANPracticeCompletedStyled = SANStyled(SANPracticeCompleted)`
+    && {
+        &:before {
+            background: ${theme('colors.primary-10')};
+        }
+    }
+`
 
 const FLXClassRoomQuizFinished = () => {
     const {
@@ -26,7 +36,7 @@ const FLXClassRoomQuizFinished = () => {
         averageQuestionTime: getAverageTime(time || '00:00')
     }
 
-    return <SANPracticeCompleted values={summary} />
+    return <SANPracticeCompletedStyled values={summary} />
 }
 
 export default FLXClassRoomQuizFinished

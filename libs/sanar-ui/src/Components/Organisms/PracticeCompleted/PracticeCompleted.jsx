@@ -35,11 +35,11 @@ const GraphContent = ({ label, value }) => (
             className='mb-xxs'
             regular
             transform='initial'
-            variant='overline'
+            variant='subtitle2'
         >
             {label}
         </ESTypography>
-        <ESTypography variant='caption' strong>
+        <ESTypography variant='caption' strong level={5}>
             {value}%
         </ESTypography>
     </div>
@@ -62,8 +62,8 @@ const ESPracticeCompleted = ({
     return (
         <ESCard className={classes}>
             <div className='es-practice-completed--title'>
-                <ESEvaIcon size='xlarge' name='checkmark-circle-outline' />
-                <ESTypography level={4} regular>
+                <ESEvaIcon name='checkmark-circle-outline' />
+                <ESTypography level={3} regular>
                     {t('practiceCompleted.title')}
                 </ESTypography>
             </div>
@@ -93,7 +93,7 @@ const ESPracticeCompleted = ({
                     gutter={32}
                 >
                     <ESCol className='es-practice-completed__content__summary__questions d-flex justify-content-center align-items-center'>
-                        <ESTypography className='mr-lg mb-no' regular level={2}>
+                        <ESTypography className='mb-no' regular level={2}>
                             {sawQuestions}
                         </ESTypography>
                         <ESTypography className='es-practice-completed__content__summary__questions--description'>
@@ -102,7 +102,7 @@ const ESPracticeCompleted = ({
                     </ESCol>
                     <ESCol className='es-practice-completed__content__summary__questions--graphs'>
                         <ESRow
-                            gutter={8}
+                            gutter={32}
                             type='flex'
                             align='middle'
                             justify='space-between'
@@ -119,7 +119,7 @@ const ESPracticeCompleted = ({
                                             value={percent}
                                         />
                                     )}
-                                    width={76}
+                                    width={100}
                                     percent={correct}
                                     status='success'
                                 />
@@ -134,7 +134,7 @@ const ESPracticeCompleted = ({
                                             value={percent}
                                         />
                                     )}
-                                    width={76}
+                                    width={100}
                                     percent={wrong}
                                     status='error'
                                 />
@@ -151,7 +151,7 @@ const ESPracticeCompleted = ({
                                             value={percent}
                                         />
                                     )}
-                                    width={76}
+                                    width={100}
                                     percent={skipped}
                                     status='normal'
                                 />
