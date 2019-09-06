@@ -7,7 +7,7 @@ const TabPane = Tabs.TabPane
 
 const ESTabPane = ({ className, ...props }) => {
     const classes = classNames('es-tab-pane', className)
-    console.log(props)
+
     return <TabPane className={classes} {...props} />
 }
 

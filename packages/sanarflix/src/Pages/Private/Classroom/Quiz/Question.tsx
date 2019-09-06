@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo, useEffect, forwardRef } from 'react'
 
 import { theme } from 'styled-tools'
 import { useApolloClient } from '@apollo/react-hooks'
@@ -39,37 +39,33 @@ const FloatTimer = SANStyled(SANBox)`
     }
 `
 
-const Timer = ({
-    questionsMap,
-    toggleVisible,
-    index,
-    visible,
-    stopwatchRef
-}) => {
-    const { t } = useTranslation('sanarflix')
-    return (
-        <SANBox display='flex' alignItems='center'>
-            <SANQuestionMap
-                items={questionsMap}
-                current={index}
-                mock
-                onCancel={toggleVisible}
-                visible={visible}
-            />
-            <SANButton
-                size='small'
-                variant='outlined'
-                color='light'
-                mr='xl'
-                onClick={toggleVisible}
-            >
-                <SANEvaIcon name='map-outline' mr='xs' />
-                {t('classroom.quiz.questionMap')}
-            </SANButton>
-            <SANStopwatch dark ref={stopwatchRef} />
-        </SANBox>
-    )
-}
+const Timer = forwardRef<any, any>(
+    ({ questionsMap, toggleVisible, index, visible }, ref) => {
+        const { t } = useTranslation('sanarflix')
+        return (
+            <SANBox display='flex' alignItems='center'>
+                <SANQuestionMap
+                    items={questionsMap}
+                    current={index}
+                    mock
+                    onCancel={toggleVisible}
+                    visible={visible}
+                />
+                <SANButton
+                    size='small'
+                    variant='outlined'
+                    color='light'
+                    mr='xl'
+                    onClick={toggleVisible}
+                >
+                    <SANEvaIcon name='map-outline' mr='xs' />
+                    {t('classroom.quiz.questionMap')}
+                </SANButton>
+                <SANStopwatch dark ref={ref} />
+            </SANBox>
+        )
+    }
+)
 
 const FLXClassRoomQuizQuestion = ({
     history,
@@ -190,7 +186,9 @@ const FLXClassRoomQuizQuestion = ({
     )
 
     useEffect(() => {
+        console.log({ stopwatchRef })
         if (!!stopwatchRef && !!stopwatchRef.current) {
+            console.log('start')
             stopwatchRef.current.start()
         }
     }, [stopwatchRef])
@@ -223,12 +221,12 @@ const FLXClassRoomQuizQuestion = ({
                 </SANCol>
                 <SANCol xs={0} sm={0} md={8}>
                     <Timer
+                        ref={stopwatchRef}
                         {...{
                             questionsMap,
                             toggleVisible,
                             index,
-                            visible,
-                            stopwatchRef
+                            visible
                         }}
                     />
                 </SANCol>
@@ -286,12 +284,12 @@ const FLXClassRoomQuizQuestion = ({
                 display={{ md: 'none', _: 'flex' }}
             >
                 <Timer
+                    ref={stopwatchRef}
                     {...{
                         questionsMap,
                         toggleVisible,
                         index,
-                        visible,
-                        stopwatchRef
+                        visible
                     }}
                 />
             </FloatTimer>

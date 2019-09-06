@@ -4,6 +4,13 @@
         align-items: center;
     }
 
+    &__no-user {
+        & .ant-comment-content-author,
+        & .ant-comment-avatar {
+            display: none;
+        }
+    }
+
     &__badge {
         border-radius: @border-radius-base;
         margin-left: @margin-sm;

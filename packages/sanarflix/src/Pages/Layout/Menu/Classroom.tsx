@@ -76,7 +76,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
             const incomplete = data.themeContents.data.find(
                 item => !item.completed
             )
-            !!incomplete && goToResource(incomplete, theme.id, false)
+            // !!incomplete && goToResource(incomplete, theme.id, false)
         } catch (e) {
             throw e
         }
