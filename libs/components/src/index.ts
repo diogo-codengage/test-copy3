@@ -52,6 +52,8 @@ import {
     SANClassroomMenuHeader
 } from 'Components/Organisms/ClassroomMenu'
 
+import { SANIcon } from 'Components/Atoms/Icon'
+
 export {
     SANButton,
     SANEvaIcon,
@@ -99,5 +101,6 @@ export {
     SANPdfReader,
     SANClassroomHeader,
     SANRate,
-    SANScrollTop
+    SANScrollTop,
+    SANIcon
 }
