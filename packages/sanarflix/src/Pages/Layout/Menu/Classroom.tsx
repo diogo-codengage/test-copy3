@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react'
-import { SANClassroomMenu } from '@sanar/components'
+import { SANClassroomMenu, SANEvaIcon } from '@sanar/components'
 import { GET_THEMES } from 'Apollo/Classroom/Queries/themes'
 import { useApolloClient } from '@apollo/react-hooks'
 import {
@@ -10,10 +10,15 @@ import { withRouter, RouteComponentProps } from 'react-router'
 import { useLayoutContext } from '../Context'
 import { useTranslation } from 'react-i18next'
 
+import { SANIcon } from '@sanar/components'
+
+// Playlist item image
+import { FlowChartSVG, MentalmapSVG } from 'Assets/images/playlist'
+
 const types = {
     Video: 'video',
     Document: 'documento',
-    Question: 'questao'
+    Quiz: 'questao'
 }
 
 const defaultCourse = {
@@ -62,20 +67,58 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
         setLoadingThemes(false)
     }
 
-    const getThemeContents = async theme => {
-        try {
-            setTheme(theme)
-            setLoadingContents(true)
+    const configureThemeContentsIcon = (resourceType, type) => {
+        switch (resourceType) {
+            case 'Video':
+                return <SANEvaIcon name='play-circle-outline' />
+            case 'Quiz':
+                return <SANEvaIcon name='edit-outline' />
+            case 'Document':
+                switch (type) {
+                    case 'flowchart':
+                        return <FlowChartSVG />
+                    case 'mentalmap':
+                        return <MentalmapSVG />
+                    case 'question':
+                        return <SANEvaIcon name='edit-outline' />
+                    default:
+                        return <SANEvaIcon name='file-text-outline' />
+                }
+            default:
+                return <SANEvaIcon name='file-text-outline' />
+        }
+    }
 
-            const { data } = await client.query({
+    const getThemeContents = async nextTheme => {
+        try {
+            setLoadingContents(true)
+            setTheme(nextTheme)
+
+            const {
+                data: { themeContents }
+            } = await client.query({
                 query: GET_THEME_CONTENTS,
-                variables: { themeId: theme.id }
+                variables: { themeId: nextTheme.id }
             })
 
-            setThemeContents(data.themeContents.data)
-            const incomplete = data.themeContents.data.find(
-                item => !item.completed
-            )
+            const themeContentsIcons = themeContents.data.map(item => ({
+                ...item,
+                icon: (
+                    <SANIcon
+                        component={() =>
+                            configureThemeContentsIcon(
+                                item.resource_type,
+                                item.type
+                            )
+                        }
+                    />
+                )
+            }))
+
+            // setTheme(nextTheme)
+            setThemeContents(themeContentsIcons)
+
+            const incomplete = themeContents.data.find(item => !item.completed)
             !!incomplete && goToResource(incomplete, theme.id, false)
         } catch (e) {
             throw e
@@ -91,6 +134,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     const configureNewTheme = theme => {
         if (!!themes.length && theme.id) {
             const newTheme = themes.find(item => item.id === theme.id)
+
             getThemeContents(newTheme)
         }
     }
@@ -150,11 +194,9 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     }, [themeContents, currentResource])
 
     useEffect(() => {
-        return () => {
-            configureNewTheme({ id: window.location.hash.split('/')[4] })
-        }
+        configureNewTheme({ id: window.location.hash.split('/')[4] })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [window.location.hash.split('/')[4]])
+    }, [])
 
     return (
         <SANClassroomMenu
@@ -169,7 +211,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 onSelect,
                 activeItem: theme,
                 items: themes,
-                loading: loadingThemes,
+                loading: loadingThemes || loadingContents,
                 progress: 50
             }}
             PlaylistProps={{
