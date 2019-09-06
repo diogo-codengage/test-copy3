@@ -110,34 +110,32 @@ export const GET_RESOURCE = gql`
                     data {
                         question {
                             id
+                            bookmarked
                             statement
                             images {
                                 data {
                                     id
-                                    # sizedImages {
-                                    #     id
-                                    #     small {
-                                    #         id
-                                    #         filename
-                                    #         url
-                                    #         height
-                                    #         width
-                                    #     }
-                                    #     medium {
-                                    #         id
-                                    #         filename
-                                    #         url
-                                    #         height
-                                    #         width
-                                    #     }
-                                    #     large {
-                                    #         id
-                                    #         filename
-                                    #         url
-                                    #         height
-                                    #         width
-                                    #     }
-                                    # }
+                                    sizedImages {
+                                        id
+                                        small {
+                                            filename
+                                            url
+                                            height
+                                            width
+                                        }
+                                        medium {
+                                            filename
+                                            url
+                                            height
+                                            width
+                                        }
+                                        large {
+                                            filename
+                                            url
+                                            height
+                                            width
+                                        }
+                                    }
                                 }
                             }
                             alternatives {

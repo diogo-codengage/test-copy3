@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 const types = {
     Video: 'video',
     Document: 'documento',
-    Question: 'questao'
+    Quiz: 'questoes'
 }
 
 const defaultCourse = {

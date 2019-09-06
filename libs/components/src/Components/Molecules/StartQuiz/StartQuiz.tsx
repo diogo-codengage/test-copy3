@@ -13,7 +13,10 @@ import { SANTypography } from '../../Atoms/Typography'
 import startQuizSvg from '../../../Assets//images/start-quiz/start-quiz.svg'
 
 const SANRowStyled = styled(SANRow)`
-    border-radius: ${theme('radii.base')};
+    && {
+        border-radius: ${theme('radii.base')};
+        background-color: ${theme('colors.white.10')};
+    }
 `
 
 const SANColStyled = styled(SANCol)`

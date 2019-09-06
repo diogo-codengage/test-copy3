@@ -184,6 +184,11 @@ export default {
         },
         video: {
             rate: 'Avaliar aula:'
+        },
+        quiz: {
+            bookmark: 'Favoritar Questão',
+            questionMap: 'Mapa de questões',
+            question: 'Questão'
         }
     }
 }
