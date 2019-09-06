@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, forwardRef } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 
 import { theme } from 'styled-tools'
 import { useApolloClient } from '@apollo/react-hooks'
@@ -27,45 +27,19 @@ interface IParams {
     questionId: string
 }
 
-const FloatTimer = SANStyled(SANBox)`
+const SANColFloat = SANStyled(SANCol)`
     && {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: ${theme('space.sm')};
-        box-shadow: 0 -1px 2px ${theme('colors.grey.4')};
-        z-index: 1;
+        ${theme('mediaQueries.down.md')} {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: ${theme('space.sm')};
+            box-shadow: 0 -1px 2px ${theme('colors.grey.4')};
+            z-index: 1;
+        }
     }
 `
-
-const Timer = ({ questionsMap, toggleVisible, index, visible }, ref) => {
-    const { t } = useTranslation('sanarflix')
-    return (
-        <SANBox display='flex' alignItems='center'>
-            <SANQuestionMap
-                items={questionsMap}
-                current={index}
-                mock
-                onCancel={toggleVisible}
-                visible={visible}
-            />
-            <SANButton
-                size='small'
-                variant='outlined'
-                color='light'
-                mr='xl'
-                onClick={toggleVisible}
-            >
-                <SANEvaIcon name='map-outline' mr='xs' />
-                {t('classroom.quiz.questionMap')}
-            </SANButton>
-            <SANStopwatch dark ref={ref} />
-        </SANBox>
-    )
-}
-
-const Test = forwardRef(Timer)
 
 const FLXClassRoomQuizQuestion = ({
     history,
@@ -187,9 +161,7 @@ const FLXClassRoomQuizQuestion = ({
     )
 
     useEffect(() => {
-        console.log({ stopwatchRef })
         if (!!stopwatchRef && !!stopwatchRef.current) {
-            console.log('start')
             stopwatchRef.current.start()
         }
     }, [stopwatchRef])
@@ -211,17 +183,12 @@ const FLXClassRoomQuizQuestion = ({
                         </SANTypography>
                     </SANBox>
                 </SANCol>
-                <SANCol xs={0} sm={0} md={8}>
-                    {/* <Test
-                        ref={stopwatchRef}
-                        {...{
-                            questionsMap,
-                            toggleVisible,
-                            index,
-                            visible
-                        }}
-                    /> */}
-                    <SANBox display='flex' alignItems='center'>
+                <SANColFloat md={8} bg='grey-solid.8'>
+                    <SANBox
+                        display='flex'
+                        alignItems='center'
+                        justifyContent='center'
+                    >
                         <SANQuestionMap
                             items={questionsMap}
                             current={index}
@@ -241,7 +208,7 @@ const FLXClassRoomQuizQuestion = ({
                         </SANButton>
                         <SANStopwatch dark ref={stopwatchRef} />
                     </SANBox>
-                </SANCol>
+                </SANColFloat>
                 <SANCol xs={24} sm={8}>
                     <SANBox
                         display='flex'
@@ -289,22 +256,6 @@ const FLXClassRoomQuizQuestion = ({
                     onNext={handleNext}
                 />
             </SANBox>
-            <FloatTimer
-                p='sm'
-                bg='grey-solid.8'
-                justifyContent='center'
-                display={{ md: 'none', _: 'flex' }}
-            >
-                <Test
-                    // ref={stopwatchRef}
-                    {...{
-                        questionsMap,
-                        toggleVisible,
-                        index,
-                        visible
-                    }}
-                />
-            </FloatTimer>
         </>
     )
 }
