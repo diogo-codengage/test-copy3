@@ -13,7 +13,7 @@ const icons = {
     Quiz: 'edit-outline'
 }
 
-const ESPlaylist = ({ className, index, item, current, onClick }) => {
+const ESPlaylistItem = ({ className, index, item, current, onClick }) => {
     const { title, progress, durationInSeconds } = item[
         item.resource_type.toLowerCase()
     ]
@@ -33,11 +33,17 @@ const ESPlaylist = ({ className, index, item, current, onClick }) => {
                 <ESTypography variant='overline' className='index'>
                     {index + 1}
                 </ESTypography>
-                <ESEvaIcon
-                    size='large'
-                    name={icons[item.resource_type] || 'play-circle-outline'}
-                    className='icon'
-                />
+                {item.icon ? (
+                    item.icon
+                ) : (
+                    <ESEvaIcon
+                        size='large'
+                        name={
+                            icons[item.resource_type] || 'play-circle-outline'
+                        }
+                        className='icon'
+                    />
+                )}
                 <ESTypography
                     ellipsis
                     variant='subtitle2'
@@ -57,7 +63,7 @@ const ESPlaylist = ({ className, index, item, current, onClick }) => {
     )
 }
 
-ESPlaylist.propTypes = {
+ESPlaylistItem.propTypes = {
     className: PropTypes.string,
     index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     type: PropTypes.oneOf(Object.keys(icons)),
@@ -65,6 +71,6 @@ ESPlaylist.propTypes = {
     time: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
     current: PropTypes.bool
 }
-ESPlaylist.defaultProps = {}
+ESPlaylistItem.defaultProps = {}
 
-export default ESPlaylist
+export default ESPlaylistItem
