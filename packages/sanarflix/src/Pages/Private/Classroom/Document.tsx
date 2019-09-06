@@ -24,6 +24,15 @@ interface IParams {
 
 const PdfReader = styled(SANPdfReader)`
     && {
+        ${theme('mediaQueries.ip.md')} {
+            min-height: calc(100vh - 99px);
+        }
+        ${theme('mediaQueries.down.md')} {
+            min-height: calc(100vh - 204px);
+        }
+        ${theme('mediaQueries.down.sm')} {
+            min-height: calc(100vh - 180px);
+        }
         ${theme('mediaQueries.down.xs')} {
             min-height: calc(100vh - 174px);
         }
