@@ -5,7 +5,7 @@ interface IStats {
     wrong: number
     skipped: number
     total: number
-    time: number
+    time: string
 }
 
 interface IFLXClassroomQuizProviderValue {
@@ -27,7 +27,7 @@ const FLXClassroomQuizProvider: React.FC = ({ children }) => {
         wrong: 0,
         skipped: 0,
         total: 0,
-        time: 0
+        time: '00:00:00'
     })
 
     const value: IFLXClassroomQuizProviderValue = {

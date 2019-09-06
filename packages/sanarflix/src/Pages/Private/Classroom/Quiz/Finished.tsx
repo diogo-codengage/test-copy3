@@ -20,20 +20,28 @@ const SANPracticeCompletedStyled = SANStyled(SANPracticeCompleted)`
 
 const FLXClassRoomQuizFinished = () => {
     const {
-        stats: { correct = 0, wrong = 0, skipped = 0, total = 0, time = 0 }
+        stats: {
+            correct = 0,
+            wrong = 0,
+            skipped = 0,
+            total = 0,
+            time = '00:00:00'
+        }
     } = useClassroomQuizContext()
-    const getAverageTime = time =>
-        esUtilConvertSecondsToTime(
-            (esConvertFormattedTimeToSeconds(time) / Number(total)).toFixed(0)
-        )
+    const getAverageTime = time => {
+        const seconds = esConvertFormattedTimeToSeconds(time)
+        return seconds
+            ? esUtilConvertSecondsToTime((seconds / Number(total)).toFixed(0))
+            : time
+    }
 
     const summary = {
         correct: Math.round((correct * 100) / total),
         wrong: Math.round((wrong * 100) / total),
         skipped: Math.round((skipped * 100) / total),
         sawQuestions: total,
-        elapsedTime: time || '00:00',
-        averageQuestionTime: getAverageTime(time || '00:00')
+        elapsedTime: time,
+        averageQuestionTime: getAverageTime(time)
     }
 
     return <SANPracticeCompletedStyled values={summary} />

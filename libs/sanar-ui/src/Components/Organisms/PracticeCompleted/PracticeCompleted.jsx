@@ -31,17 +31,10 @@ const LineIndicator = ({ time, description }) => (
 
 const GraphContent = ({ label, value }) => (
     <div className='mr-no'>
-        <ESTypography
-            className='mb-xxs'
-            regular
-            transform='initial'
-            variant='subtitle2'
-        >
+        <ESTypography className='mb-xxs' variant='subtitle2' regular>
             {label}
         </ESTypography>
-        <ESTypography variant='caption' strong level={5}>
-            {value}%
-        </ESTypography>
+        <ESTypography level={5}>{value}%</ESTypography>
     </div>
 )
 
@@ -100,9 +93,9 @@ const ESPracticeCompleted = ({
                             {t('practiceCompleted.sawQuestions')}
                         </ESTypography>
                     </ESCol>
-                    <ESCol className='es-practice-completed__content__summary__questions--graphs'>
+                    <ESCol className='graphs'>
                         <ESRow
-                            gutter={32}
+                            gutter={16}
                             type='flex'
                             align='middle'
                             justify='space-between'
