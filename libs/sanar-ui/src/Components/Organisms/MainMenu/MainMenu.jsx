@@ -51,7 +51,8 @@ const ESMainMenu = forwardRef(
             onHome,
             context: contextProp,
             onOpenOrClose,
-            continueCourseProps
+            continueCourseProps,
+            onToggle
         },
         ref
     ) => {
@@ -140,6 +141,7 @@ const ESMainMenu = forwardRef(
                 return
             }
             setToggle(action)
+            !!onToggle && onToggle(action)
         }
 
         useEffect(() => {
@@ -219,7 +221,8 @@ ESMainMenu.propTypes = {
         onContinue: PropTypes.func,
         module: PropTypes.string,
         description: PropTypes.string
-    })
+    }),
+    onToggle: PropTypes.func
 }
 ESMainMenu.defaultProps = {
     theme: 'primary',

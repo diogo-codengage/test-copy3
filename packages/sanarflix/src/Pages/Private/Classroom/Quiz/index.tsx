@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { compose } from 'ramda'
 import {
@@ -38,7 +38,7 @@ const FLXClassRoomQuiz = (props: RouteComponentProps<IParams>) => {
             params: { themeId, resourceId }
         }
     } = props
-    const { onOpenMenu, navigations, menuRef } = useLayoutContext()
+    const { onOpenMenu, navigations, menuRef, menuState } = useLayoutContext()
     const { setQuestions, stopwatchRef } = useClassroomQuizContext()
 
     const setQuestionContext = ({ resource }) => {
@@ -46,17 +46,18 @@ const FLXClassRoomQuiz = (props: RouteComponentProps<IParams>) => {
         setQuestions(questions)
     }
 
-    const handleOpenMenu = () => {
-        onOpenMenu()
+    useEffect(() => {
         if (
             !!menuRef &&
             !!menuRef.current &&
             !!stopwatchRef &&
             !!stopwatchRef.current
         ) {
-            stopwatchRef.current.pause()
+            menuState
+                ? stopwatchRef.current.pause()
+                : stopwatchRef.current.start()
         }
-    }
+    }, [menuState])
 
     return (
         <SANQuery
@@ -72,7 +73,7 @@ const FLXClassRoomQuiz = (props: RouteComponentProps<IParams>) => {
                     <SANClassroomHeader
                         title={resource.quiz.title}
                         subtitle={resource.course.name}
-                        onOpenMenu={handleOpenMenu}
+                        onOpenMenu={onOpenMenu}
                         ButtonPreviousProps={navigations.previous}
                         ButtonNextProps={navigations.next}
                     />

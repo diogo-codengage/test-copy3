@@ -35,37 +35,37 @@ const FloatTimer = SANStyled(SANBox)`
         right: 0;
         padding: ${theme('space.sm')};
         box-shadow: 0 -1px 2px ${theme('colors.grey.4')};
-        z-index; 1;
+        z-index: 1;
     }
 `
 
-const Timer = forwardRef<any, any>(
-    ({ questionsMap, toggleVisible, index, visible }, ref) => {
-        const { t } = useTranslation('sanarflix')
-        return (
-            <SANBox display='flex' alignItems='center'>
-                <SANQuestionMap
-                    items={questionsMap}
-                    current={index}
-                    mock
-                    onCancel={toggleVisible}
-                    visible={visible}
-                />
-                <SANButton
-                    size='small'
-                    variant='outlined'
-                    color='light'
-                    mr='xl'
-                    onClick={toggleVisible}
-                >
-                    <SANEvaIcon name='map-outline' mr='xs' />
-                    {t('classroom.quiz.questionMap')}
-                </SANButton>
-                <SANStopwatch dark ref={ref} />
-            </SANBox>
-        )
-    }
-)
+const Timer = ({ questionsMap, toggleVisible, index, visible }, ref) => {
+    const { t } = useTranslation('sanarflix')
+    return (
+        <SANBox display='flex' alignItems='center'>
+            <SANQuestionMap
+                items={questionsMap}
+                current={index}
+                mock
+                onCancel={toggleVisible}
+                visible={visible}
+            />
+            <SANButton
+                size='small'
+                variant='outlined'
+                color='light'
+                mr='xl'
+                onClick={toggleVisible}
+            >
+                <SANEvaIcon name='map-outline' mr='xs' />
+                {t('classroom.quiz.questionMap')}
+            </SANButton>
+            <SANStopwatch dark ref={ref} />
+        </SANBox>
+    )
+}
+
+const Test = forwardRef(Timer)
 
 const FLXClassRoomQuizQuestion = ({
     history,
@@ -79,12 +79,13 @@ const FLXClassRoomQuizQuestion = ({
         questions,
         setQuestions,
         stopwatchRef,
-        setStats
+        setStats,
+        questionsMap,
+        setQuestionsMap
     } = useClassroomQuizContext()
     const { handleBookmark } = useClassroomContext()
     const [visible, setVisible] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [questionsMap, setQuestionsMap] = useState<any[]>([])
     const [responses, setResponses] = useState<any[]>([])
 
     const goToNext = () => {
@@ -193,15 +194,6 @@ const FLXClassRoomQuizQuestion = ({
         }
     }, [stopwatchRef])
 
-    useEffect(() => {
-        setQuestionsMap(questions)
-        setStats(old => ({
-            ...old,
-            total: questions.length
-        }))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [questions])
-
     return (
         <>
             <SANRow type='flex' align='middle' justifyContent='space-between'>
@@ -220,7 +212,7 @@ const FLXClassRoomQuizQuestion = ({
                     </SANBox>
                 </SANCol>
                 <SANCol xs={0} sm={0} md={8}>
-                    <Timer
+                    {/* <Test
                         ref={stopwatchRef}
                         {...{
                             questionsMap,
@@ -228,7 +220,27 @@ const FLXClassRoomQuizQuestion = ({
                             index,
                             visible
                         }}
-                    />
+                    /> */}
+                    <SANBox display='flex' alignItems='center'>
+                        <SANQuestionMap
+                            items={questionsMap}
+                            current={index}
+                            mock
+                            onCancel={toggleVisible}
+                            visible={visible}
+                        />
+                        <SANButton
+                            size='small'
+                            variant='outlined'
+                            color='light'
+                            mr='xl'
+                            onClick={toggleVisible}
+                        >
+                            <SANEvaIcon name='map-outline' mr='xs' />
+                            {t('classroom.quiz.questionMap')}
+                        </SANButton>
+                        <SANStopwatch dark ref={stopwatchRef} />
+                    </SANBox>
                 </SANCol>
                 <SANCol xs={24} sm={8}>
                     <SANBox
@@ -283,8 +295,8 @@ const FLXClassRoomQuizQuestion = ({
                 justifyContent='center'
                 display={{ md: 'none', _: 'flex' }}
             >
-                <Timer
-                    ref={stopwatchRef}
+                <Test
+                    // ref={stopwatchRef}
                     {...{
                         questionsMap,
                         toggleVisible,

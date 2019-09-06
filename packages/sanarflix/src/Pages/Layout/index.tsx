@@ -34,7 +34,8 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
         menuRef,
         currentMenuTitle,
         darkMode,
-        menuContext
+        menuContext,
+        setMenuState
     } = useLayoutContext()
     const [showModalTerms, setShowModalTerms] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
@@ -51,7 +52,8 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
         title: currentMenuTitle,
         onHome: () => history.push('/portal/inicio'),
         context: menuContext,
-        theme: darkMode ? 'dark' : 'primary'
+        theme: darkMode ? 'dark' : 'primary',
+        onToggle: setMenuState
     }
 
     const Copyright = () => {
