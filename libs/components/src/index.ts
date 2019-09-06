@@ -38,6 +38,7 @@ import { SANStartQuiz } from 'Components/Molecules/StartQuiz'
 import { SANClassroomHeader } from 'Components/Molecules/ClassroomHeader'
 import { SANQuestionMap } from 'Components/Molecules/QuestionMap'
 import { SANQuestion } from 'Components/Molecules/Question'
+import { SANCardSelectFilter } from 'Components/Molecules/CardSelectFilter'
 import {
     SANCollapseTheme,
     SANCollapseThemePanel,
@@ -110,5 +111,6 @@ export {
     SANStopwatch,
     SANQuestionMap,
     SANQuestion,
-    SANPracticeCompleted
+    SANPracticeCompleted,
+    SANCardSelectFilter
 }
