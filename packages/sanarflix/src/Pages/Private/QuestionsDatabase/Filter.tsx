@@ -67,9 +67,9 @@ const FLXFilter = ({ history }) => {
                     const { data }: { data: IThemes } = await client.query({
                         query: GET_THEMES,
                         variables: {
-                            courseId:
-                                selectedCourses[selectedCourses.length - 1]
-                                    .value
+                            courseIds: selectedCourses.map(
+                                selected => selected.value
+                            )
                         }
                     })
                     setThemes(old => [...old, ...data.themes.data])

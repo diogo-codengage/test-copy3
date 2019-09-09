@@ -128,6 +128,7 @@
         top: ~'calc(100% / 2 - 19px)';
         color: @white-7;
         visibility: hidden;
+        transition: visibility 0.3s ease-in;
         cursor: pointer;
 
         & svg {
@@ -470,15 +471,11 @@
         & .previous-center:not(.idle),
         & .next-center:not(.idle) {
             top: ~'calc(100% / 2 - 29px)';
+        }
+
+        & .previous-center.paused,
+        & .next-center.paused {
             visibility: visible;
         }
-    }
-
-    @media (max-width: 436px) {
-        // & .previous-center:not(.idle),
-        // & .next-center:not(.idle) {
-        //     top: ~'calc(100% / 2 - 29px)';
-        //     visibility: visible;
-        // }
     }
 }

@@ -2,19 +2,24 @@ import React from 'react'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { getInstance } from 'Config/AWSCognito'
+import {  CognitoUserSession } from 'amazon-cognito-identity-js'
 
 const config = getInstance()
 
+setInterval(async () => {
+    const cognitoUser = config.userPool.getCurrentUser()
+    if (cognitoUser) {
+        cognitoUser.getSession((_, session) => {
+            cognitoUser.refreshSession( session.getRefreshToken(), (_, s: CognitoUserSession) => {
+            })
+        })
+    }
+}, /* 10 minutes */ 10 * 60 *  1000)
+
 const getValidSession = cognitoUser => {
-    return cognitoUser.getSession((_, session) => {
+    return cognitoUser.getSession((_, session: CognitoUserSession) => {
+        console.log('isValid ===', session.isValid())
         if (session.isValid()) return session
-        else
-            cognitoUser.refreshSession(
-                session.getRefreshToken(),
-                (err, nSession) => {
-                    return nSession
-                }
-            )
     })
 }
 
@@ -23,6 +28,9 @@ const getAccessToken = async () => {
 
     if (!!cognitoUser) {
         const session = getValidSession(cognitoUser)
+
+        // console.log('current token =====', session.getIdToken().getJwtToken())
+
         return session.getIdToken().getJwtToken()
     }
 }
@@ -48,7 +56,7 @@ const client = new ApolloClient({
                 Authorization: await getAccessToken()
             }
         })
-})
+} as any)
 
 const FLXGraphQLProvider = props => (
     <ApolloProvider client={client} {...props} />
