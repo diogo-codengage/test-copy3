@@ -1,11 +1,12 @@
 import { Speciality } from './speciality'
 import { apolloClient } from './Apollo/RMGraphQLProvider'
-import { GET_INSTITUTIONS, GET_SPECIALTIES_WITH_TAGS } from './Apollo/Queries/get-filters'
+import { GET_INSTITUTIONS, GET_SPECIALTIES_WITH_TAGS, GET_CATEGORIES } from './Apollo/Queries/get-filters'
 import { questionSkip } from './Apollo/Mutations/questionSkip'
 import { QuestionsInputFilter } from './QuestionsInputFilter'
 import { getQuestionsQuery } from './Apollo/Queries/get-questions'
 import { questionAnswer } from './Apollo/Mutations/questionAnswer'
 import { ISelectOption } from '../Components/ESSelect'
+import capitalize from 'lodash/capitalize'
 
 const normalizeSpecialties = (list) => {
 
@@ -58,10 +59,31 @@ const getInstitutions = () => {
         })
 }
 
+
+const getCategories = () => {
+    return apolloClient.query({ query: GET_CATEGORIES})
+        .then(({ data }) => data.categories.data)
+        .then((items: ISelectOption[]) => {
+            return items.sort((o1, o2) => (o1.label.localeCompare(o2.label)))
+        })
+        .then((items: ISelectOption[]) => {
+            items.forEach(i => i.label = upper(i.label))
+            return items;
+        })
+}
+
+const upper = (str: string): string => {
+    const spl = str.split("-")
+    return spl.length > 1
+      ? spl[0] + " - " + capitalize(spl[1].trim())
+      : capitalize(spl[0].trim())
+}
+
 export const BFFService = {
     getSpecialties,
     getInstitutions,
     skipQuestion,
     loadMoreQuestions,
-    confirmResponse
+    confirmResponse,
+    getCategories
 }
