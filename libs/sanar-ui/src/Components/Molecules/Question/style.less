@@ -1,0 +1,87 @@
+.es-question {
+    background-color: @white;
+
+    & .ant-card-body {
+        padding: 0;
+    }
+
+    & .es-spin {
+        min-height: 100% !important;
+    }
+
+    &__full {
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 0;
+    }
+
+    &__content {
+        padding: @padding-xl;
+
+        & .es-alternative {
+            margin-bottom: @margin-md;
+
+            &:last-child {
+                margin: 0;
+            }
+        }
+
+        &-comment {
+            margin: 0 @padding-xl @padding-xl @padding-xl;
+            border-radius: @border-radius-base;
+            background-color: fade(@gold-1, 20);
+            border: 1px solid @grey-3;
+
+            @media (max-width: @screen-lg) {
+                margin: 0;
+                border-radius: 0;
+                border-left: 0;
+                border-right: 0;
+                border-bottom: 0;
+            }
+
+            &__header {
+                padding: @padding-sm @padding-md;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-bottom: 1px solid @grey-3;
+            }
+            &__body {
+                padding: @padding-lg - 4px;
+
+                & .ant-comment-inner {
+                    padding: 0;
+                }
+            }
+        }
+
+        @media (max-width: @screen-lg) {
+            padding: @padding-md;
+        }
+    }
+
+    &__footer {
+        display: flex;
+        align-content: center;
+        justify-content: space-between;
+        border-top: 1px solid @grey-3;
+        padding: @padding-lg @padding-xl;
+
+        &-bookmarked {
+            &--actions {
+                display: flex;
+            }
+
+            @media (max-width: @screen-xs) {
+                flex-direction: column;
+                &--actions {
+                    justify-content: space-between;
+                    order: 2;
+                    margin-top: @margin-sm;
+                }
+            }
+        }
+    }
+}

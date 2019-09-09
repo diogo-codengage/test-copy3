@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter } from 'react-router'
@@ -17,6 +17,7 @@ import { usePortalContext } from 'Pages/Portal/Context'
 import { getClassRoute } from 'Utils/getClassRoute'
 
 const toDarkMode = [6, 9]
+const hideContinueBarContext = ['questionPractice', 'classroom']
 
 //TODO: Improve setTab
 const MenuContent = ({ indexMenu, setMenuTab: setTab, handleBack }) => {
@@ -106,6 +107,14 @@ const SANMenu = ({ history }) => {
         })
     }
 
+    // Whenever close menu the set initial tab
+    useEffect(() => {
+        if (menuRef && menuRef.current) {
+            !menuRef.current.toggle && indexMenu && setMenuTab(0)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [menuRef.current])
+
     return (
         <ESMainMenu
             ref={menuRef}
@@ -113,7 +122,7 @@ const SANMenu = ({ history }) => {
             onHome={handleHome}
             title={menuTitle}
             theme={theme}
-            showContinueBar
+            showContinueBar={!hideContinueBarContext.includes(pageContext)}
             context={pageContext}
             className='san-main-menu'
             continueCourseProps={continueCourseProps}

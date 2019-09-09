@@ -23,9 +23,9 @@ import { useLayoutContext } from '../../Layout/Context'
 import { useTranslation } from 'react-i18next'
 
 const CommonProgress = () => {
-    const { getEnrollment } = useAuthContext()
-
-    const { id: enrollmentId } = getEnrollment()
+    const {
+        enrollment: { id: enrollmentId }
+    } = useAuthContext()
 
     return (
         <Query
@@ -105,11 +105,12 @@ const SANClassPlaylist = ({ history }) => {
         getResource
     } = usePortalContext()
 
-    const { getEnrollment } = useAuthContext()
+    const {
+        enrollment: { course, id }
+    } = useAuthContext()
     const { menuOpenOrClose } = useLayoutContext()
 
     const [modules, setModules] = useState(null)
-    const { course, id } = getEnrollment()
 
     const progressTest = ({ level_contents: { data: lessons } }) => {
         if (!currentModule) return 0
@@ -215,7 +216,11 @@ const SANClassPlaylist = ({ history }) => {
             ) : (
                 <>
                     <div className='d-flex justify-content-between mb-xs pl-md pr-md'>
-                        <ESTypography transform='uppercase' variant='caption'>
+                        <ESTypography
+                            className='text-white'
+                            transform='uppercase'
+                            variant='caption'
+                        >
                             {t('global.subject')}
                         </ESTypography>
                         <ESTypography

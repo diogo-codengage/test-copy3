@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
@@ -18,6 +18,8 @@ import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import ESDatePicker from 'sanar-ui/dist/Components/Atoms/DatePicker'
 import { ESFormItem } from 'sanar-ui/dist/Components/Molecules/Form'
 
+import useOnClickOutside from 'sanar-ui/dist/Hooks/useOnClickOutside'
+
 import { useQuestionsContext } from '../Context'
 
 const Title = props => (
@@ -29,10 +31,16 @@ const Title = props => (
 const intlPath = 'questionBase.filter.advanced.'
 
 const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
+    const itemPickerRef = useRef()
     const { t } = useTranslation('esanar')
     const { formState } = useQuestionsContext()
     const [open, setOpen] = useState(false)
     const [openCalendar, setOpenCalendar] = useState(false)
+
+    useOnClickOutside([itemPickerRef], () => setOpenCalendar(false), [
+        itemPickerRef,
+        setOpenCalendar
+    ])
 
     return (
         <ESCollapse
@@ -55,24 +63,30 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
                 <div className='questions-filter__advanced__content'>
                     <ESRow gutter={32} className='mb-md mt-lg'>
                         <ESCol xs={24} lg={7}>
-                            <ESFormItem
-                                name='year'
-                                label={t(`${intlPath}year.label`)}
-                                trigger={'onPanelChange'}
-                                initialValue={formState && formState.year}
-                            >
-                                <ESDatePicker
-                                    placeholder={t(
-                                        `${intlPath}year.placeholder`
-                                    )}
-                                    mode='year'
-                                    size='large'
-                                    open={openCalendar}
-                                    format='YYYY'
-                                    onOpenChange={() => setOpenCalendar(true)}
-                                    onPanelChange={() => setOpenCalendar(false)}
-                                />
-                            </ESFormItem>
+                            <span ref={itemPickerRef}>
+                                <ESFormItem
+                                    name='year'
+                                    label={t(`${intlPath}year.label`)}
+                                    trigger={'onPanelChange'}
+                                    initialValue={formState && formState.year}
+                                >
+                                    <ESDatePicker
+                                        placeholder={t(
+                                            `${intlPath}year.placeholder`
+                                        )}
+                                        mode='year'
+                                        size='large'
+                                        open={openCalendar}
+                                        format='YYYY'
+                                        onOpenChange={() =>
+                                            setOpenCalendar(true)
+                                        }
+                                        onPanelChange={() =>
+                                            setOpenCalendar(false)
+                                        }
+                                    />
+                                </ESFormItem>
+                            </span>
                         </ESCol>
                         <ESCol xs={24} lg={7}>
                             <ESFormItem

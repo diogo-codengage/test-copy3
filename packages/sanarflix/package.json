@@ -1,0 +1,35 @@
+{
+    "name": "sanarflix",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "amazon-cognito-identity-js": "^3.0.15",
+        "react-lines-ellipsis": "^0.14.1"
+    },
+    "scripts": {
+        "start": "env-cmd -f ./environments/.env.development react-app-rewired start",
+        "build:development": "env-cmd -f ./environments/.env.staging react-app-rewired build",
+        "build:staging": "env-cmd -f ./environments/.env.staging react-app-rewired build",
+        "build:production": "env-cmd -f ./environments/.env.production react-app-rewired build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@types/styled-system": "^5.0.1"
+    }
+}

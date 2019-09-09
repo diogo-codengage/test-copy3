@@ -54,9 +54,9 @@ export const Question = () => {
         .then(({data}) => {
             setStats(data.questionAnswer.stats.alternatives)
             setLoading(false)
-            if(correct) {
+            if (correct) {
                 questionsCtx.increaseTotalCorrect()
-            }else {
+            } else {
                 questionsCtx.increaseTotalWrong()
             }
             questionsCtx.setCurrentAnswerId(answerId)

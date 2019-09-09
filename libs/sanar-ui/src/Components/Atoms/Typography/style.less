@@ -1,0 +1,139 @@
+.ant-typography + h1.ant-typography,
+.ant-typography + h2.ant-typography,
+.ant-typography + h3.ant-typography,
+.ant-typography + h4.ant-typography,
+h4.ant-typography,
+.ant-typography h4,
+h1.ant-typography,
+.ant-typography h1,
+h5.ant-typography,
+.ant-typography h5,
+h6.ant-typography,
+.ant-typography h6,
+div.ant-typography,
+.ant-typography p {
+    margin: 0;
+}
+
+.es-typography {
+    &--ellipsis-action {
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    &--regular {
+        font-weight: 400 !important;
+    }
+
+    &--disabled {
+        cursor: not-allowed;
+        color: @grey-6;
+    }
+
+    &--delete {
+        text-decoration: line-through;
+    }
+
+    &--ellipsis {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    &__heading {
+        font-weight: 600;
+        color: @grey-solid-10;
+
+        &--h1 {
+            font-size: 60px;
+        }
+
+        &--h2 {
+            font-size: 48px;
+        }
+
+        &--h3 {
+            font-size: 34px;
+        }
+
+        &--h4 {
+            font-size: 24px;
+        }
+
+        &--h5 {
+            font-size: 20px;
+        }
+
+        &--h6 {
+            font-size: 16px;
+        }
+    }
+
+    &--strong {
+        font-weight: 600;
+    }
+
+    &--transform {
+        &-initial {
+            text-transform: initial !important;
+        }
+
+        &-uppercase {
+            text-transform: uppercase !important;
+        }
+    }
+
+    &--light {
+        color: @white-7 !important;
+    }
+    &--info {
+        color: @info-color !important;
+    }
+    &--danger {
+        color: @error-color !important;
+    }
+    &--success {
+        color: @success-color !important;
+    }
+    &--warning {
+        color: @warning-color !important;
+    }
+    &--muted {
+        color: @text-color-secondary !important;
+    }
+    &--secondary {
+        color: @secondary-color !important;
+    }
+
+    &--subtitle1 {
+        font-size: @font-size-lg;
+        line-height: 1.4;
+    }
+    &--subtitle2 {
+        font-size: @font-size-base;
+        line-height: 1.4;
+    }
+    &--body1 {
+        font-size: @font-size-lg;
+        line-height: @line-height-base;
+    }
+    &--body2 {
+        font-size: @font-size-base;
+        line-height: @line-height-base;
+    }
+    &--caption {
+        font-size: @font-size-sm;
+        line-height: 1.25;
+    }
+    &--overline {
+        font-size: @font-size-sm - 2px;
+        letter-spacing: 0.4px;
+        line-height: 1.25;
+        text-transform: uppercase;
+    }
+
+    & .es-eva-icon {
+        margin: 0 4px;
+        vertical-align: bottom;
+    }
+}

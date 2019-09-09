@@ -1,0 +1,78 @@
+.es-comment {
+    &__title {
+        display: flex;
+        align-items: center;
+    }
+
+    &__no-user {
+        & .ant-comment-content-author,
+        & .ant-comment-avatar {
+            display: none;
+        }
+    }
+
+    &__badge {
+        border-radius: @border-radius-base;
+        margin-left: @margin-sm;
+        padding: 0 4px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        font-size: @font-size-xs;
+        background-color: @secondary-color;
+        color: @gold-4;
+    }
+
+    & .ant-comment {
+        &-avatar {
+            margin-right: @margin-lg;
+        }
+
+        &-content-author {
+            margin-bottom: @margin-sm;
+
+            &-name {
+                align-items: center;
+                display: flex;
+            }
+
+            &-time {
+                white-space: normal;
+                &:before {
+                    content: '•';
+                    margin-right: @margin-xs;
+                }
+            }
+        }
+    }
+
+    &__dark {
+        & .ant-comment-content {
+            &-detail .es-typography {
+                color: @grey-solid-2;
+            }
+
+            &-author {
+                &-name {
+                    & .es-typography {
+                        color: @white-7 !important;
+                    }
+                }
+                &-time {
+                    color: @white-5 !important;
+                }
+            }
+        }
+    }
+
+    @media (max-width: @screen-xs) {
+        & .ant-comment-content-detail {
+            margin-top: @margin-lg;
+        }
+        & .ant-comment-actions,
+        & .ant-comment-content-detail {
+            margin-left: -56px;
+        }
+    }
+}

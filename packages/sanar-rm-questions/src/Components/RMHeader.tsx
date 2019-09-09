@@ -53,7 +53,7 @@ const RMHeaderTemplate = ({ title, rightElement, className }: IProp) => {
                 <p>Tem certeza que deseja sair da página de prática?</p>
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <ESButton
-                        color='outlined'
+                        color='black'
                         variant='text'
                         uppercase
                         blockOnlyMobile

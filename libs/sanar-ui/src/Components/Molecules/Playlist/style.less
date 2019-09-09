@@ -1,0 +1,120 @@
+.es-playlist {
+    &__description-skeleton {
+        margin-top: @margin-lg;
+        padding: 0 @padding-md
+    }
+
+    &__current-info {
+        margin: @margin-lg @margin-md;
+        position: relative;
+
+        &__description {
+            margin-left: 52px;
+            & .title {
+                color: @white-6;
+            }
+
+            & .description {
+                color: @white;
+            }
+        }
+
+        &__index {
+            position: absolute;
+            border-radius: @border-radius-base;
+            background-color: @white-1;
+            width: 36px;
+            height: 36px;
+            margin-right: @margin-md;
+            & .es-typography {
+                color: @white;
+                line-height: 36px;
+                text-align: center;
+            }
+        }
+    }
+
+    &-list {
+        &__item {
+            padding: @padding-sm @padding-md;
+            position: relative;
+            cursor: pointer;
+
+            &:nth-child(odd) {
+                background-color: @grey-2;
+            }
+            &:nth-child(even) {
+                background-color: @grey-4;
+            }
+
+            & .anticon,
+            & .icon {
+                padding: 0 @padding-xs;
+            }
+
+            & .index {
+                width: 12px;
+                min-width: 12px;
+                text-align: center;
+            }
+
+            & .icon,
+            & .anticon,
+            & .index {
+                color: @white-4;
+            }
+            & .description {
+                color: @white-6;
+                &--time {
+                    width: ~'calc(100% - 95px)';
+                }
+            }
+            & .time {
+                color: @white-5;
+                position: absolute;
+                right: 16px;
+                top: ~'calc(100% - 26px)';
+            }
+
+            &--finish {
+                & .anticon svg path {
+                    fill: @secondary-color
+                }
+                .icon, .anticon, .es-icon {
+                    color: @secondary-color !important;
+                }
+            }
+
+            &--current {
+                & .anticon svg path {
+                    fill: @white
+                }
+
+                & .icon,
+                & .anticon,
+                &  .es-icon,
+                & .es-typography {
+                    color: @white !important;
+                }
+
+                &:before {
+                    content: '';
+                    position: absolute;
+                    width: 2px;
+                    height: 100%;
+                    left: 0;
+                    top: 0;
+                    background-color: @secondary-color;
+                }
+            }
+
+            &:hover {
+                & .icon,
+                & .anticon,
+                & .es-typography {
+                    color: @white-8;
+                }
+            }
+        }
+    }
+}

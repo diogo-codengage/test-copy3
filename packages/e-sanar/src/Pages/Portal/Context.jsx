@@ -42,7 +42,9 @@ const reducer = (state, action) => {
 const PortalProvider = ({ children, history }) => {
     const client = useApolloContext()
     const { t } = useTranslation('esanar')
-    const { getEnrollment } = useAuthContext()
+    const {
+        enrollment: { id: enrollmentId }
+    } = useAuthContext()
     const [prevResource, setPrevResource] = useState(null)
     const [currentResource, setCurrentResource] = useState(null)
     const [nextResource, setNextResource] = useState(null)
@@ -50,8 +52,6 @@ const PortalProvider = ({ children, history }) => {
     const [error, setError] = useState(null)
 
     const [state, dispatch] = useReducer(reducer, initialState)
-
-    const { id: enrollmentId } = getEnrollment()
 
     const getResource = item => item[item.resource_type.toLowerCase()]
 

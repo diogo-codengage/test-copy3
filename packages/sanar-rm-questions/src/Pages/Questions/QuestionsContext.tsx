@@ -73,10 +73,13 @@ export interface IQuestionsContext {
     setSelectedSubSpecialties: (selectedSubSpecialties: Speciality[]) => void
     selectedTags: Tag[]
     setSelectedTags: (selectedTags: Tag[]) => void
+    selectedCategories: ISelectOption[]
+    setSelectedCategories: (selectedTags: ISelectOption[]) => void
 
     allSpecialties: Speciality[]
     allTags: Tag[]
     allInstitutions: ISelectOption[]
+    allCategories: ISelectOption[]
 
     showAdvancedFilters: boolean
     setShowAdvancedFilters: (showAdvancedFilters: boolean) => void
