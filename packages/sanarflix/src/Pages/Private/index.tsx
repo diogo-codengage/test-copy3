@@ -37,6 +37,7 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
             }
         }
         fetchMe()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

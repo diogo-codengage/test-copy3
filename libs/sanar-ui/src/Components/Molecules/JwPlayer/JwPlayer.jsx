@@ -151,8 +151,7 @@ const ESJwPlayer = forwardRef(
 
         const player = getPlayer(playerId)
 
-        const isIdle =
-            !!player && player.getState && player.getState() === 'idle'
+        const state = !!player && player.getState && player.getState()
 
         return (
             <div className={classes} ref={wrapperRef}>
@@ -236,14 +235,16 @@ const ESJwPlayer = forwardRef(
                         <ESEvaIcon
                             name='skip-back'
                             className={classNames('previous-center', {
-                                idle: isIdle
+                                idle: state === 'idle',
+                                paused: state === 'paused'
                             })}
                             onClick={onPrevious}
                         />
                         <ESEvaIcon
                             name='skip-forward'
                             className={classNames('next-center', {
-                                idle: isIdle
+                                idle: state === 'idle',
+                                paused: state === 'paused'
                             })}
                             onClick={onNext}
                         />
