@@ -56,6 +56,7 @@ const ESJwPlayer = forwardRef(
         const wrapperRef = useRef()
         const { t } = useTranslation('sanarui')
         const { width } = useWindowSize()
+        const [player, setPlayer] = useState()
         const [isReady, setIsReady] = useState(false)
         const [error, setError] = useState(false)
         const [isPause, setIsPause] = useState(!props.autostart)
@@ -64,72 +65,51 @@ const ESJwPlayer = forwardRef(
         const handleSetupError = () => setError(true)
 
         const handleReady = e => {
-            const player = getPlayer(playerId)
+            const instance = getPlayer(playerId)
+            setPlayer(instance)
 
-            player.addButton(
+            instance.addButton(
                 '',
                 t('jwplayer.advance'),
                 function() {
-                    player.seek(player.getPosition() + 10)
+                    instance.seek(instance.getPosition() + 10)
                 },
                 'es-jw-advance',
                 'jw-svg-icon-advance'
             )
 
-            onNext &&
-                player.addButton(
-                    '',
-                    t('jwplayer.next'),
-                    function(e) {
-                        onNext(e)
-                    },
-                    'es-jw-next',
-                    'jw-svg-icon-next'
-                )
-
-            onPrevious &&
-                player.addButton(
-                    '',
-                    t('jwplayer.previous'),
-                    function(e) {
-                        onPrevious(e)
-                    },
-                    'es-jw-previous',
-                    'jw-svg-icon-previous'
-                )
-
-            player.on('error', function() {
+            instance.on('error', function() {
                 setError(true)
-                player.load({
+                instance.load({
                     file:
                         '//content.jwplatform.com/videos/7RtXk3vl-52qL9xLP.mp4',
                     image: '//content.jwplatform.com/thumbs/7RtXk3vl-480.jpg'
                 })
-                player.play()
+                instance.play()
             })
 
-            player.on('pause', function() {
+            instance.on('pause', function() {
                 setIsPause(true)
             })
-            player.on('play', function() {
+            instance.on('play', function() {
                 setIsPause(false)
             })
 
-            if (player.getWidth() > 1024) {
-                player.resize('100%', '100vh')
-            } else if (player.getWidth() > 576) {
-                player.resize('100%', 'calc(100vh - 60px)')
+            if (instance.getWidth() > 1024) {
+                instance.resize('100%', '100vh')
+            } else if (instance.getWidth() > 576) {
+                instance.resize('100%', 'calc(100vh - 60px)')
             }
 
             setIsReady(true)
-            player.setCaptions(captions)
+            instance.setCaptions(captions)
             onReady && onReady(e)
         }
 
         useImperativeHandle(ref, () => ({
             ...playerRef,
-            position: () => getPlayer(playerId).getPosition(),
-            seek: seconds => getPlayer(playerId).seek(seconds)
+            position: () => player.getPosition(),
+            seek: seconds => player.seek(seconds)
         }))
 
         const height = useMemo(
@@ -140,19 +120,41 @@ const ESJwPlayer = forwardRef(
         )
 
         useEffect(() => {
-            if (width < 1024) {
-                const player = getPlayer(playerId)
-                player && player.resize('100%', 'calc(100vh - 60px)')
-            } else {
-                const player = getPlayer(playerId)
-                player && player.resize('100%', '100vh')
+            if (!!player) {
+                if (width < 1024) {
+                    player.resize('100%', 'calc(100vh - 60px)')
+                } else {
+                    player.resize('100%', '100vh')
+                }
             }
         }, [width])
 
-        const player = getPlayer(playerId)
+        useEffect(() => {
+            if (!!player) {
+                onNext &&
+                    player.addButton(
+                        '',
+                        t('jwplayer.next'),
+                        function(e) {
+                            onNext(e)
+                        },
+                        'es-jw-next',
+                        'jw-svg-icon-next'
+                    )
+                onPrevious &&
+                    player.addButton(
+                        '',
+                        t('jwplayer.previous'),
+                        function(e) {
+                            onPrevious(e)
+                        },
+                        'es-jw-previous',
+                        'jw-svg-icon-previous'
+                    )
+            }
+        }, [isReady, onNext, onPrevious])
 
-        const isIdle =
-            !!player && player.getState && player.getState() === 'idle'
+        const state = !!player && player.getState && player.getState()
 
         return (
             <div className={classes} ref={wrapperRef}>
@@ -236,14 +238,16 @@ const ESJwPlayer = forwardRef(
                         <ESEvaIcon
                             name='skip-back'
                             className={classNames('previous-center', {
-                                idle: isIdle
+                                idle: state === 'idle',
+                                paused: state === 'paused'
                             })}
                             onClick={onPrevious}
                         />
                         <ESEvaIcon
                             name='skip-forward'
                             className={classNames('next-center', {
-                                idle: isIdle
+                                idle: state === 'idle',
+                                paused: state === 'paused'
                             })}
                             onClick={onNext}
                         />

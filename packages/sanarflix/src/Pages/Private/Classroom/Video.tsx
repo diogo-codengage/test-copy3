@@ -75,10 +75,12 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                 const file = resource.video.providers.data.find(
                     provider => provider.code === 'jwplayer'
                 )
-                const playlist = {
-                    file: file && file.files.smil.url,
-                    image: resource.video.thumbnails.large
-                }
+                const playlist = [
+                    {
+                        file: file && file.files.smil.url,
+                        image: resource.video.thumbnails.large
+                    }
+                ]
                 return (
                     <>
                         <SANBox

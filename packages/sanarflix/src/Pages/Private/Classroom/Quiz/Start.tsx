@@ -4,28 +4,21 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import { SANStartQuiz } from '@sanar/components'
 
-import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
-
-import { useLayoutContext } from 'Pages/Layout/Context'
-import { useClassroomQuizContext } from './Context'
+import { useAuthContext } from 'Hooks/auth'
+import { useClassroomQuizContext, initialStats } from './Context'
 
 const FLXClassRoomQuizStart = ({ history }: RouteComponentProps) => {
-    const { width } = useWindowSize()
-    const { setFooterProps } = useLayoutContext()
-    const { questions } = useClassroomQuizContext()
+    const { me } = useAuthContext()
+    const { questions, setStats } = useClassroomQuizContext()
 
     useEffect(() => {
-        if (width <= 768) {
-            setFooterProps({
-                mb: 8
-            })
-        }
+        setStats(old => ({ ...initialStats, total: old.total }))
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [width])
+    }, [])
 
     return (
         <SANStartQuiz
-            name='Diogo Biz'
+            name={me.name}
             ButtonProps={{
                 onClick: () => history.push(`./${questions[0].id}`)
             }}

@@ -41,7 +41,8 @@ export default {
     },
     cardSelectFilter: {
         selectAll: 'Selecionar todos',
-        clearSelect: 'Limpar seleção'
+        clearSelect: 'Limpar seleção',
+        noData: 'Não há dados'
     },
     formValidateMessages: {
         default: 'Erro de validação no campo %s',
