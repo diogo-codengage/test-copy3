@@ -55,7 +55,11 @@ const FLXHome: React.FC<RouteComponentProps> = ({ history }) => {
                                 image: baseQuestions,
                                 ButtonProps: {
                                     children: t(`${intl}.questionsBase.action`),
-                                    'data-testid': 'banner-questions-database'
+                                    'data-testid': 'banner-questions-database',
+                                    onClick: () =>
+                                        history.push(
+                                            '/portal/banco-questoes/filtro'
+                                        )
                                 }
                             }}
                         />
