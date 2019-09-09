@@ -33,6 +33,7 @@ import themeSvg from 'Assets/images/filters/theme.svg'
 
 const SANCardSelectFilterStyled = SANStyled(SANCardSelectFilter)`
     & {
+        & .es-card-select-filter__content .badge,
         & .es-card-select-filter__footer--checked {
             background-color: ${theme('colors.primary-10')};
         }
