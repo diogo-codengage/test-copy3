@@ -28,13 +28,13 @@ const SideButton = ({ name, ...props }) => {
 }
 
 const SearchButton = ({ name = 'search-outline', ...props }) => (
-    <SideButton name={name} {...props} />
+    <SideButton name={name} {...props} data-testid='menu-search-button' />
 )
 const HomeButton = ({ name = 'home-outline', ...props }) => (
-    <SideButton name={name} {...props} />
+    <SideButton name={name} {...props} data-testid='menu-home-button' />
 )
 const InitalButton = ({ name = 'keypad-outline', ...props }) => (
-    <SideButton name={name} {...props} />
+    <SideButton name={name} {...props} data-testid='menu-initial-button' />
 )
 
 const ESMainMenu = forwardRef(
@@ -51,7 +51,8 @@ const ESMainMenu = forwardRef(
             onHome,
             context: contextProp,
             onOpenOrClose,
-            continueCourseProps
+            continueCourseProps,
+            onToggle
         },
         ref
     ) => {
@@ -140,6 +141,7 @@ const ESMainMenu = forwardRef(
                 return
             }
             setToggle(action)
+            !!onToggle && onToggle(action)
         }
 
         useEffect(() => {
@@ -219,7 +221,8 @@ ESMainMenu.propTypes = {
         onContinue: PropTypes.func,
         module: PropTypes.string,
         description: PropTypes.string
-    })
+    }),
+    onToggle: PropTypes.func
 }
 ESMainMenu.defaultProps = {
     theme: 'primary',

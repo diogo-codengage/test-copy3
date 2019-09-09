@@ -11,8 +11,10 @@ export type ISANButtonProps = PropTypes.InferProps<typeof propTypes> &
     LayoutProps
 
 const SANButton = SANStyled(ESButton)`
-    ${space}
-    ${layout}
+    && {
+        ${space}
+        ${layout}
+    }
 `
 
 const propTypes = ESButton['propTypes']

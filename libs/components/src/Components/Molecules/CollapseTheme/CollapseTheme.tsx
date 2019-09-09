@@ -98,7 +98,7 @@ export interface ISANCollapseThemeProps {
 
 const types = {
     Video: 'video',
-    Question: 'questao',
+    Quiz: 'questoes',
     Document: 'documento'
 }
 

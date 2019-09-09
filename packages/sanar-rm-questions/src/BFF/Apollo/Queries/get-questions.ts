@@ -6,13 +6,11 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
     let state:string = '';
 
     if(filter.specialtiesIds.length > 0) {
-        where.specialty_ids = {
-            inq : filter.specialtiesIds
-        }
+        where.specialties = filter.specialtiesIds
     }
 
     if(filter.tagsIds.length > 0) {
-        where.tag_ids = filter.tagsIds
+        where.tags = filter.tagsIds
     }
 
     if(filter.institutionsIds.length > 0){
@@ -24,6 +22,12 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
     if(filter.years.length > 0) {
         where.year = {
             inq: filter.years.map(parseInt)
+        }
+    }
+
+    if(filter.categoriesIds.length > 0) {
+        where.category_id = {
+            inq: filter.categoriesIds
         }
     }
 
@@ -51,12 +55,11 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
                             text,
                             correct
                         }
-                    }
+                    },
                     institution {
                         name,
                         state
                     },
-
                     comments{
                         data {
                             id
@@ -67,9 +70,16 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
                             }
                             labels
                         }
-                    }
-
+                    },
                     tags {
+                        data {
+                            name
+                        }
+                    },
+                    category {
+                        name
+                    },
+                    specialties {
                         data {
                             name
                         }

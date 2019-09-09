@@ -46,3 +46,14 @@ export const GET_SPECIALTIES_WITH_TAGS = gql`
     }
 
 `
+
+export const GET_CATEGORIES = gql`
+query {
+  categories {
+    data {
+        value: id
+        label: name
+    }
+  }
+}
+`

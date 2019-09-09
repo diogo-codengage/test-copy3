@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { theme, ifProp } from 'styled-tools'
+import { space } from 'styled-system'
 
 import { SANLayoutContainer } from '.'
 import { SANFlexbox } from '../../Atoms/Flexbox'
@@ -21,6 +22,7 @@ const SANLayoutFooterStyled = styled.footer`
         theme('pureWhite')
     )};
     flex: 0 0 auto;
+    ${space}
 `
 
 const Infos = styled.div`
@@ -104,10 +106,11 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
     instagram: instagramProp,
     youtube: youtubeProp,
     copyright,
-    darkMode
+    darkMode,
+    ...props
 }) => {
     return (
-        <SANLayoutFooterStyled {...{ darkMode }}>
+        <SANLayoutFooterStyled {...{ darkMode, ...props }}>
             <Infos {...{ darkMode }}>
                 <SANLayoutContainer>
                     <SANFlexbox

@@ -29,6 +29,10 @@ type IFLXLayoutProviderValue = {
     menuContext?: IMenuContext
     navigations: INagivations
     setNavigations: (nav: INagivations) => void
+    menuState: boolean
+    setMenuState: (state: boolean) => void
+    footerProps: Object
+    setFooterProps: (state: Object) => void
 }
 
 const defaultNavigations = {
@@ -44,7 +48,11 @@ const defaultValue: IFLXLayoutProviderValue = {
     onOpenMenu: () => {},
     menuRef: null,
     setNavigations: () => {},
-    navigations: defaultNavigations
+    navigations: defaultNavigations,
+    menuState: false,
+    setMenuState: () => {},
+    footerProps: false,
+    setFooterProps: () => {}
 }
 
 const Context = createContext(defaultValue)
@@ -85,6 +93,8 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
     const [navigations, setNavigations] = useState<INagivations>(
         defaultNavigations
     )
+    const [menuState, setMenuState] = useState(false)
+    const [footerProps, setFooterProps] = useState({})
 
     //TODO: type Ref with TS into @sanar/components
     const menuRef: any = useRef()
@@ -145,7 +155,11 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
         darkMode: state.darkMode,
         menuContext: state.menuContext,
         navigations,
-        setNavigations
+        setNavigations,
+        menuState,
+        setMenuState,
+        footerProps,
+        setFooterProps
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

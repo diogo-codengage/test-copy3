@@ -8,6 +8,7 @@ import FLXClassroomProvider from './Context'
 
 const FLXClassroomVideo = React.lazy(() => import('./Video'))
 const FLXClassroomDocument = React.lazy(() => import('./Document'))
+const FLXClassroomQuiz = React.lazy(() => import('./Quiz'))
 
 const renderResourceContent = type => {
     switch (type) {
@@ -15,8 +16,8 @@ const renderResourceContent = type => {
             return <FLXClassroomVideo />
         case 'documento':
             return <FLXClassroomDocument />
-        case 'questao':
-            return <div>Quiz</div>
+        case 'questoes':
+            return <FLXClassroomQuiz />
         default:
             return <Redirect to='/portal/inicio' />
     }
@@ -30,6 +31,9 @@ interface IParams {
 
 const Wrapper = styled.div`
     background-color: ${theme('colors.grey-solid.8')};
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 `
 
 const FLXCourses: React.FC<RouteComponentProps<IParams>> = ({

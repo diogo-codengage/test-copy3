@@ -9,6 +9,7 @@ const FLXHome = React.lazy(() => import('./Home'))
 const FLXCourses = React.lazy(() => import('./Courses'))
 const FLXCourse = React.lazy(() => import('./Course'))
 const FLXClassroom = React.lazy(() => import('./Classroom'))
+const FLXQuestionsDatabase = React.lazy(() => import('./QuestionsDatabase'))
 
 type FLXPrivatePages = {}
 
@@ -29,6 +30,10 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
                         <Route
                             path={`${url}/sala-aula/:courseId/:themeId/:type/:resourceId`}
                             component={FLXClassroom}
+                        />
+                        <Route
+                            path={`${url}/banco-questoes`}
+                            component={FLXQuestionsDatabase}
                         />
                         <Route
                             path={[`${url}`, `${url}/`]}

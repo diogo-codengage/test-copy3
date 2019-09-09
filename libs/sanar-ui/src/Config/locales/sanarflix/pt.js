@@ -146,7 +146,7 @@ export default {
         addedContents: {
             title: 'Adicionados',
             subtitle:
-                'Conteúdos adicionados toda semana! Aulas, resumos e outros materiaos que acabaram de chegar'
+                'Conteúdos adicionados toda semana! Aulas, resumos e outros materiais que acabaram de chegar'
         },
         banners: {
             allCourses: {
@@ -175,7 +175,8 @@ export default {
             questionBase: 'Banco de questões',
             bookmarks: 'Favoritos',
             invites: 'Indique e ganhe',
-            account: 'Minha conta'
+            account: 'Minha conta',
+            questions: 'Banco de questões'
         }
     },
     classroom: {
@@ -184,6 +185,34 @@ export default {
         },
         video: {
             rate: 'Avaliar aula:'
+        },
+        quiz: {
+            bookmark: 'Favoritar Questão',
+            questionMap: 'Mapa de questões',
+            question: 'Questão'
+        }
+    },
+    questionsDatabase: {
+        filter: {
+            header: {
+                title: 'Banco de Questões',
+                subtitle: 'Preencha os filtros de sua preferência',
+                actions: {
+                    start: 'Iniciar prática',
+                    historic: 'Histórico'
+                }
+            },
+            subheader: 'Preencha os filtros de sua preferência',
+            course: {
+                labelSelecteds: 'Cursos',
+                placeholder: 'Escolher curso',
+                filterName: 'Curso'
+            },
+            theme: {
+                labelSelecteds: 'Temas',
+                placeholder: 'Escolher tema',
+                filterName: 'Tema'
+            }
         }
     }
 }

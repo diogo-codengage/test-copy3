@@ -46,8 +46,8 @@ export const GET_THEME_CONTENTS = gql`
                     title
                 }
                 quiz {
-                    title
                     id
+                    title
                 }
             }
         }

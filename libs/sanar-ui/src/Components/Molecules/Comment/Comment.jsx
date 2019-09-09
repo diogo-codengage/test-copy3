@@ -56,7 +56,8 @@ const ESComment = ({
     const classes = classNames(
         'es-comment',
         {
-            'es-comment__dark': dark
+            'es-comment__dark': dark,
+            'es-comment__no-user': !user
         },
         className
     )
@@ -72,19 +73,23 @@ const ESComment = ({
             className={classes}
             actions={actions}
             author={
-                <Title
-                    name={user && user.name}
-                    monitor={monitor}
-                    labelMonitor={labelMonitor}
-                    commentedByUser={commented_by_user}
-                />
+                user && (
+                    <Title
+                        name={user && user.name}
+                        monitor={monitor}
+                        labelMonitor={labelMonitor}
+                        commentedByUser={commented_by_user}
+                    />
+                )
             }
             avatar={
-                <Avatar
-                    src={user && user.profile_picture}
-                    icon='user'
-                    alt={user && user.name}
-                />
+                user && (
+                    <Avatar
+                        src={user && user.profile_picture}
+                        icon='user'
+                        alt={user && user.name}
+                    />
+                )
             }
             content={
                 <ESTypography variant='body2'>
@@ -97,11 +102,10 @@ const ESComment = ({
                 </ESTypography>
             }
             datetime={
-                diff && (
-                    i18n.language == 'pt'
-                        ? diff.replace('aproximadamente', 'Há')
-                        : diff
-                )
+                diff &&
+                (i18n.language == 'pt'
+                    ? diff.replace('aproximadamente', 'Há')
+                    : diff)
             }
         />
     )

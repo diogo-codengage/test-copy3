@@ -27,8 +27,21 @@ const getAccessToken = async () => {
     }
 }
 
+const onError = ({ graphQLErrors, forward, operation }) => {
+    if (graphQLErrors) {
+        graphQLErrors.forEach(error => {
+            if (error.message.includes('AUTH_REQUIRED')) {
+                localStorage.clear()
+                window.location.hash = '/#/auth'
+            }
+        })
+        return forward(operation)
+    }
+}
+
 const client = new ApolloClient({
     uri: process.env.REACT_APP_URL_API,
+    onError,
     request: async operation =>
         operation.setContext({
             headers: {

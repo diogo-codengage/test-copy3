@@ -103,6 +103,51 @@ export const GET_RESOURCE = gql`
                     url
                 }
             }
+            quiz {
+                id
+                title
+                questionItems {
+                    data {
+                        question {
+                            id
+                            bookmarked
+                            statement
+                            images {
+                                data {
+                                    id
+                                    sizedImages {
+                                        id
+                                        small {
+                                            filename
+                                            url
+                                            height
+                                            width
+                                        }
+                                        medium {
+                                            filename
+                                            url
+                                            height
+                                            width
+                                        }
+                                        large {
+                                            filename
+                                            url
+                                            height
+                                            width
+                                        }
+                                    }
+                                }
+                            }
+                            alternatives {
+                                data {
+                                    id
+                                    text
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 `

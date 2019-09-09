@@ -21,10 +21,12 @@ interface IProps {
 }
 
 const SANSpinStyled = styled(SANSpin)`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: ${theme('space.sm')};
+    && {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: ${theme('space.sm')};
+    }
 `
 
 const SANButton: React.FC<IProps> = props => {

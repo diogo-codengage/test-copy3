@@ -53,7 +53,11 @@ const ESCardCourseModule = ({
     }
 
     return (
-        <ESCard className={classes} {...props}>
+        <ESCard
+            className={classes}
+            data-testid='es-card-course-module'
+            {...props}
+        >
             <>
                 <div className='es-car-course-module__content'>
                     <div className='es-car-course-module__content__module-data'>

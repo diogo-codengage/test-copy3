@@ -21,7 +21,7 @@ export interface ISANClassroomHeaderProps {
 }
 
 const SANButtonMenu = SANStyled(SANButton)`
-    && {
+    &&& {
         background-color: ${theme('colors.secondary')};
         &:focus,
         &:active,
@@ -127,10 +127,13 @@ const SANClassroomHeader = ({
     return (
         <SANRow
             p={{ sm: 'xl', _: 'md' }}
+            pb={{ sm: 'xl', _: 'xs' }}
             type='flex'
             justify='space-between'
             align='middle'
-            bg='grey-solid.7'
+            bg='grey-solid.8'
+            borderBottom='1px solid'
+            borderColor='white.2'
         >
             <SANCol {...grid}>
                 <SANBox
@@ -179,9 +182,16 @@ const SANClassroomHeader = ({
                         >
                             <SANDivider />
                         </SANCol>
-                        <SANCol xs={24} sm={24} md={8} order={{ _: 3, md: 1 }}>
-                            <SANButton {...mergeButtonBookmarkProps} />
-                        </SANCol>
+                        {!!ButtonBookmarkProps && (
+                            <SANCol
+                                xs={24}
+                                sm={24}
+                                md={8}
+                                order={{ _: 3, md: 1 }}
+                            >
+                                <SANButton {...mergeButtonBookmarkProps} />
+                            </SANCol>
+                        )}
                         <SANCol xs={12} sm={12} md={8} order={{ _: 1, md: 3 }}>
                             <SANButton {...mergeButtonPreviousProps} />
                         </SANCol>
