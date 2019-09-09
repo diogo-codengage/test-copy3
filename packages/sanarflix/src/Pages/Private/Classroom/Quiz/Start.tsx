@@ -7,9 +7,11 @@ import { SANStartQuiz } from '@sanar/components'
 import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
 import { useLayoutContext } from 'Pages/Layout/Context'
+import { useAuthContext } from 'Hooks/auth'
 import { useClassroomQuizContext } from './Context'
 
 const FLXClassRoomQuizStart = ({ history }: RouteComponentProps) => {
+    const { me } = useAuthContext()
     const { width } = useWindowSize()
     const { setFooterProps } = useLayoutContext()
     const { questions } = useClassroomQuizContext()
@@ -25,7 +27,7 @@ const FLXClassRoomQuizStart = ({ history }: RouteComponentProps) => {
 
     return (
         <SANStartQuiz
-            name='Diogo Biz'
+            name={me.name}
             ButtonProps={{
                 onClick: () => history.push(`./${questions[0].id}`)
             }}

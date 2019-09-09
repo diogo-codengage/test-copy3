@@ -12,10 +12,6 @@
         }
     }
 
-    & .jwplayer {
-        z-index: 2;
-    }
-
     &:before {
         content: '';
         z-index: 1;
@@ -476,5 +472,13 @@
             top: ~'calc(100% / 2 - 29px)';
             visibility: visible;
         }
+    }
+
+    @media (max-width: 436px) {
+        // & .previous-center:not(.idle),
+        // & .next-center:not(.idle) {
+        //     top: ~'calc(100% / 2 - 29px)';
+        //     visibility: visible;
+        // }
     }
 }

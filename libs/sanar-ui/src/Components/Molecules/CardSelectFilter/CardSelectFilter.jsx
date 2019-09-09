@@ -33,7 +33,8 @@ const ESCardSelectFilter = ({
     items,
     labelSelecteds,
     onChange,
-    value = []
+    value = [],
+    disabled
 }) => {
     const dropdownRef = useRef()
     const menuRef = useRef()
@@ -110,7 +111,7 @@ const ESCardSelectFilter = ({
                 : open
                 ? t('global.filter')
                 : placeholder,
-        [value, open]
+        [value, open, placeholder]
     )
 
     const suffixIcon = useMemo(
@@ -153,6 +154,7 @@ const ESCardSelectFilter = ({
                 >
                     <span style={{ width: '100%' }} ref={dropdownRef}>
                         <ESInput
+                            disabled={disabled}
                             onFocus={onFocus}
                             placeholder={makePlaceholder}
                             prefix={open && <ESEvaIcon name='search-outline' />}
@@ -209,7 +211,8 @@ ESCardSelectFilter.propTypes = {
             value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
         })
     ),
-    labelSelecteds: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
+    labelSelecteds: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    disabled: PropTypes.bool
 }
 ESCardSelectFilter.defaultProps = {}
 

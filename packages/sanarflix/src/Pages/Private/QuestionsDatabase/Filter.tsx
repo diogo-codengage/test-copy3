@@ -150,9 +150,15 @@ const FLXFilter = ({ history }) => {
                                 labelSelecteds={t(
                                     'questionsDatabase.filter.theme.labelSelecteds'
                                 )}
-                                placeholder={t(
-                                    'questionsDatabase.filter.theme.placeholder'
-                                )}
+                                placeholder={
+                                    !!selectedCourses.length
+                                        ? t(
+                                              'questionsDatabase.filter.theme.placeholder'
+                                          )
+                                        : t(
+                                              'questionsDatabase.filter.theme.selectCourses'
+                                          )
+                                }
                                 filterName={t(
                                     'questionsDatabase.filter.theme.filterName'
                                 )}
@@ -160,6 +166,7 @@ const FLXFilter = ({ history }) => {
                                 items={themes}
                                 value={selectedThemes}
                                 onChange={setSelectedThemes}
+                                disabled={!selectedCourses.length}
                             />
                         </SANCol>
                     </SANRow>

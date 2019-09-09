@@ -18,7 +18,7 @@ import { FlowChartSVG, MentalmapSVG } from 'Assets/images/playlist'
 const types = {
     Video: 'video',
     Document: 'documento',
-    Quiz: 'questao'
+    Quiz: 'questoes'
 }
 
 const defaultCourse = {
@@ -121,7 +121,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 themeContents.data.find(item => !item.completed) ||
                 themeContents.data[0]
 
-            goToResource(incomplete, nextTheme.id, false)
+            !resourceId && goToResource(incomplete, nextTheme.id, false)
         } catch (e) {
             throw e
         }
