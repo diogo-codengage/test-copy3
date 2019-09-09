@@ -47,6 +47,7 @@
                 background-color: @grey-4;
             }
 
+            & .anticon,
             & .icon {
                 padding: 0 @padding-xs;
             }
@@ -58,6 +59,7 @@
             }
 
             & .icon,
+            & .anticon,
             & .index {
                 color: @white-4;
             }
@@ -74,15 +76,27 @@
                 top: ~'calc(100% - 26px)';
             }
 
-            &--finish .icon {
-                color: @secondary-color;
+            &--finish {
+                & .anticon svg path {
+                    fill: @secondary-color
+                }
+                .icon, .anticon, .es-icon {
+                    color: @secondary-color !important;
+                }
             }
 
             &--current {
-                & .icon,
-                & .es-typography {
-                    color: @white;
+                & .anticon svg path {
+                    fill: @white
                 }
+
+                & .icon,
+                & .anticon,
+                &  .es-icon,
+                & .es-typography {
+                    color: @white !important;
+                }
+
                 &:before {
                     content: '';
                     position: absolute;
@@ -96,6 +110,7 @@
 
             &:hover {
                 & .icon,
+                & .anticon,
                 & .es-typography {
                     color: @white-8;
                 }

@@ -38,13 +38,6 @@ const FLXMenuInitial: React.FC = () => {
                     dataTestid='flx-menu__go-to--questions'
                     title={t('mainMenu.initial.questions')}
                 />
-                <SANNavigationListItem
-                    to='#'
-                    icon={<SANEvaIcon name='heart-outline' color='default' />}
-                    onClick={onCloseMenu}
-                    dataTestid='flx-menu__go-to--bookmarks'
-                    title={t('mainMenu.initial.bookmarks')}
-                />
             </SANNavigationList>
         </>
     )

@@ -58,6 +58,8 @@ import {
 } from 'Components/Organisms/ClassroomMenu'
 import { SANPracticeCompleted } from 'Components/Organisms/PracticeCompleted'
 
+import { SANIcon } from 'Components/Atoms/Icon'
+
 export {
     SANButton,
     SANButtonGroup,
@@ -107,6 +109,7 @@ export {
     SANClassroomHeader,
     SANRate,
     SANScrollTop,
+    SANIcon,
     SANStartQuiz,
     SANStopwatch,
     SANQuestionMap,

@@ -3,13 +3,27 @@ import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { getInstance } from 'Config/AWSCognito'
 
-const getAccessToken = () => {
-    const config = getInstance()
+const config = getInstance()
+
+const getValidSession = cognitoUser => {
+    return cognitoUser.getSession((_, session) => {
+        if (session.isValid()) return session
+        else
+            cognitoUser.refreshSession(
+                session.getRefreshToken(),
+                (err, nSession) => {
+                    return nSession
+                }
+            )
+    })
+}
+
+const getAccessToken = async () => {
     const cognitoUser = config.userPool.getCurrentUser()
+
     if (!!cognitoUser) {
-        return cognitoUser.getSession((_, session) => {
-            return session.getIdToken().getJwtToken()
-        })
+        const session = getValidSession(cognitoUser)
+        return session.getIdToken().getJwtToken()
     }
 }
 
