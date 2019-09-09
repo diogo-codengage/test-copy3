@@ -35,7 +35,8 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
         currentMenuTitle,
         darkMode,
         menuContext,
-        setMenuState
+        setMenuState,
+        footerProps
     } = useLayoutContext()
     const [showModalTerms, setShowModalTerms] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
@@ -106,7 +107,8 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
         youtube:
             'youtube.com/sanarmedicina?utm_source=youtube&utm_medium=sanarmed&utm_campaign=sanarflix-tf-youtube&utm_term=sanarflix-med',
         copyright: <Copyright />,
-        darkMode
+        darkMode,
+        ...footerProps
     }
 
     return (

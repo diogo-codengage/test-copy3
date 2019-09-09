@@ -17,9 +17,11 @@ import {
     SANEvaIcon,
     SANStyled
 } from '@sanar/components'
+import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
 import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
 
+import { useLayoutContext } from 'Pages/Layout/Context'
 import { useClassroomQuizContext } from './Context'
 import { useClassroomContext } from '../Context'
 
@@ -49,6 +51,8 @@ const FLXClassRoomQuizQuestion = ({
 }: RouteComponentProps<IParams>) => {
     const client = useApolloClient()
     const { t } = useTranslation('sanarflix')
+    const { width } = useWindowSize()
+    const { setFooterProps } = useLayoutContext()
     const {
         questions,
         setQuestions,
@@ -165,6 +169,15 @@ const FLXClassRoomQuizQuestion = ({
             stopwatchRef.current.start()
         }
     }, [stopwatchRef])
+
+    useEffect(() => {
+        if (width <= 768) {
+            setFooterProps({
+                mb: 8
+            })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [width])
 
     return (
         <>

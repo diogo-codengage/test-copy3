@@ -57,6 +57,7 @@ const FLXClassRoomQuiz = (props: RouteComponentProps<IParams>) => {
                 ? stopwatchRef.current.pause()
                 : stopwatchRef.current.start()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [menuState])
 
     return (
