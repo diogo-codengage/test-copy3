@@ -211,7 +211,8 @@ export default {
             theme: {
                 labelSelecteds: 'Temas',
                 placeholder: 'Escolher tema',
-                filterName: 'Tema'
+                filterName: 'Tema',
+                selectCourses: 'Selecione algum curso'
             }
         }
     }
