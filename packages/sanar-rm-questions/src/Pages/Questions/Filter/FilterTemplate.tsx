@@ -11,6 +11,7 @@ import ESCollapse, { ESCollapsePanel } from 'sanar-ui/dist/Components/Atoms/Coll
 import iconSpecialties from '../../../assets/images/icon-specialties.png'
 import iconSubSpecialties from '../../../assets/images/icon-subspecialties.png'
 import iconTheme from '../../../assets/images/icon-theme.png'
+import iconCategories from '../../../assets/images/icon-categories.png'
 
 import { RMContainer } from '../../../Components/RMContainer'
 import { YEARS } from './years'
@@ -46,6 +47,9 @@ export interface IFilterTemplateProps {
   allInstitutions: ISelectOption[]
   selectedInstitutions: ISelectOption[]
   setSelectedInstitutions: (values: ISelectOption[]) => void
+  allCategories: ISelectOption[]
+  selectedCategories: ISelectOption[]
+  setSelectedCategories: (values: ISelectOption[]) => void
 
   showAdvancedFilters: boolean,
   setShowAdvancedFilters: (value: boolean) => {},
@@ -57,7 +61,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
 
   const { width } = useWindowSize()
   const isSmall = width < 768
-  const cardSpan = isSmall ? 24 : 8
+  const cardSpan = isSmall ? 24 : 6
   const filterSpan = isSmall ? 24 : 12
 
   let placeholderInstitutions = ''
@@ -69,7 +73,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
   }
 
   let allTags = props.allTags.filter(createDistinctFilter<Tag>(t => t.value)).sort(sortByLabel)
-  let allSpecialties = props.allSpecialties.filter((value) => value.children.length > 0)
+  let allSpecialties = props.allSpecialties.filter((value) => value.tags.length > 0)
   let allSubSpecialties = props.allSpecialties.flatMap(s => s.children).sort(sortByLabel)
 
   if (props.selectedTags.length > 0) {
@@ -86,41 +90,52 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
     allSubSpecialties = props.selectedSpecialties.flatMap(s => s.children)
   }
 
-  return <>
-    <RMContainer>
-      <ESRow gutter={24} style={{ marginBottom: 12 }}>
-        <ESCol span={cardSpan}>
-          <ESCardSelectFilter
-            style={{ marginTop: isSmall ? 20 : 0 }}
-            filterName="Especialidade"
-            image={iconSpecialties}
-            items={allSpecialties}
-            onChange={props.setSelectedSpecialties}
-            value={props.selectedSpecialties}
-            labelSelecteds={props.selectedSpecialties.map(e => e.label).join(', ')}
-          />
-        </ESCol>
-        <ESCol span={cardSpan} style={{ marginTop: isSmall ? 12 : 0 }}>
-          <ESCardSelectFilter
-            filterName="Subespecialidade"
-            image={iconSubSpecialties}
-            items={allSubSpecialties}
-            onChange={props.setSelectedSubSpecialties}
-            value={props.selectedSubSpecialties}
-            labelSelecteds={props.selectedSubSpecialties.map(e => e.label).join(', ')}
-          />
-        </ESCol>
-        <ESCol span={cardSpan} style={{ marginTop: isSmall ? 12 : 0 }}>
-          <ESCardSelectFilter
-            filterName="Tema"
-            image={iconTheme}
-            items={allTags}
-            onChange={props.setSelectedTags}
-            value={props.selectedTags}
-            labelSelecteds={props.selectedTags.map(e => e.label).join(', ')}
-          />
-        </ESCol>
-      </ESRow>
+    return <>
+        <RMContainer>
+            <ESRow gutter={24} style={{ marginBottom: 12 }}>
+                <ESCol span={cardSpan}>
+                    <ESCardSelectFilter
+                      style={{marginTop: isSmall ?  20 : 0 }}
+                      filterName="Categoria de prova"
+                      image={iconCategories}
+                      items={props.allCategories}
+                      onChange={props.setSelectedCategories}
+                      value={props.selectedCategories}
+                      labelSelecteds={props.selectedCategories.map(e => e.label).join(', ') }
+                    />
+                </ESCol>
+                <ESCol span={cardSpan}>
+                    <ESCardSelectFilter
+                        style={{marginTop: isSmall ?  20 : 0 }}
+                        filterName="Especialidade"
+                        image={iconSpecialties}
+                        items={allSpecialties}
+                        onChange={props.setSelectedSpecialties}
+                        value={props.selectedSpecialties}
+                        labelSelecteds={props.selectedSpecialties.map(e => e.label).join(', ') }
+                    />
+                </ESCol>
+                <ESCol span={cardSpan}  style={{marginTop: isSmall ?  12 : 0 }}>
+                    <ESCardSelectFilter
+                        filterName="Subespecialidade"
+                        image={iconSubSpecialties}
+                        items={allSubSpecialties}
+                        onChange={props.setSelectedSubSpecialties}
+                        value={props.selectedSubSpecialties}
+                        labelSelecteds={ props.selectedSubSpecialties.map(e => e.label).join(', ') }
+                    />
+                </ESCol>
+                <ESCol span={cardSpan} style={{marginTop: isSmall ?  12 : 0 }}>
+                    <ESCardSelectFilter
+                        filterName="Tema"
+                        image={iconTheme}
+                        items={allTags}
+                        onChange={props.setSelectedTags}
+                        value={props.selectedTags}
+                        labelSelecteds={props.selectedTags.map(e => e.label).join(', ') }
+                    />
+                </ESCol>
+            </ESRow>
 
       <ESRow style={{ marginBottom: 20 }}>
         <ESCollapse

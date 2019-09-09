@@ -19,6 +19,7 @@ export const QuestionsPage:React.FC<IProps> = (props) => {
     const [allSpecialties, setAllSpecialties ] = useState();
     const [allTags, setAllTags ] = useState()
     const [allInstitutions, setAllInstitutions] = useState()
+    const [allCategories, setAllCategories] = useState()
 
     useEffect(() => {
         BFFService.getSpecialties().then((specialties) => {
@@ -27,12 +28,14 @@ export const QuestionsPage:React.FC<IProps> = (props) => {
                 .flatMap(s => s.children).flatMap(s => s.tags)));
         })
         BFFService.getInstitutions().then(setAllInstitutions)
+        BFFService.getCategories().then(setAllCategories)
     }, [])
 
     if( !!allSpecialties && !!allTags ) {
         const selectedSpecialties = [];
         const selectedSubSpecialties = [];
         const selectedTags = [];
+        const selectedCategories = [];
 
         if(props.course){
             const specialty = allSpecialties
@@ -61,10 +64,12 @@ export const QuestionsPage:React.FC<IProps> = (props) => {
                 allSpecialties={allSpecialties}
                 allTags={allTags}
                 allInstitutions={allInstitutions}
+                allCategories={allCategories}
 
                 selectedSpecialties={selectedSpecialties}
                 selectedSubSpecialties={selectedSubSpecialties}
                 selectedTags={selectedTags}
+                selectedCategories={selectedCategories}
             />
         )
     } else {

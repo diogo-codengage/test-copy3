@@ -19,6 +19,7 @@ export const Filter: React.FC = () => {
         allSpecialties: ctx.allSpecialties,
         allSubSpecialties,
         allTags: ctx.allTags,
+        allCategories: ctx.allCategories,
 
         setSelectedSpecialties: (specialities: Speciality[]) => {
             ctx.setSelectedSpecialties(specialities)
@@ -30,7 +31,6 @@ export const Filter: React.FC = () => {
         },
         setSelectedTags: v => {
             ctx.setSelectedTags(v)
-
             clearQuestions()
         },
         setSelectedState: v => {
@@ -45,6 +45,10 @@ export const Filter: React.FC = () => {
             ctx.setCommentedByExpert(v)
             clearQuestions()
         },
+        setSelectedCategories: v => {
+            ctx.setSelectedCategories(v)
+            clearQuestions()
+        },
 
         selectedSpecialties: ctx.selectedSpecialties,
         selectedSubSpecialties: ctx.selectedSubSpecialties,
@@ -52,6 +56,7 @@ export const Filter: React.FC = () => {
         selectedState: ctx.selectedState,
         selectedYears: ctx.selectedYears,
         isCommentedByExpert: ctx.isCommentedByExpert,
+        selectedCategories: ctx.selectedCategories,
 
         showAdvancedFilters: ctx.showAdvancedFilters,
         setShowAdvancedFilters: ctx.setShowAdvancedFilters,
