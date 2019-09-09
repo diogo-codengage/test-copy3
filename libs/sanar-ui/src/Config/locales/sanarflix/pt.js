@@ -15,7 +15,7 @@ export default {
             incomplete: 'Incompletos'
         },
         resourceTypes: {
-            document: 'Document',
+            document: 'Documento',
             video: 'Video',
             question: 'Questão'
         },
