@@ -150,6 +150,7 @@ const ESJwPlayer = forwardRef(
         }, [width])
 
         const player = getPlayer(playerId)
+
         const isIdle =
             !!player && player.getState && player.getState() === 'idle'
 

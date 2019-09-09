@@ -11,8 +11,7 @@ const Circle = ({ index, status, current, mock }) => {
     const classes = classNames('es-question-map__circle', {
         [`es-question-map__circle--${status}`]: !mock,
         'es-question-map__circle--current': current,
-        'es-question-map__circle--mock--answered':
-            mock && (status === 'correct' || status === 'wrong')
+        'es-question-map__circle--mock--answered': mock && !!status
     })
     return (
         <div className={classes}>

@@ -13,23 +13,31 @@ import { SANTypography } from '../../Atoms/Typography'
 import startQuizSvg from '../../../Assets//images/start-quiz/start-quiz.svg'
 
 const SANRowStyled = styled(SANRow)`
-    border-radius: ${theme('radii.base')};
+    && {
+        border-radius: ${theme('radii.base')};
+        background-color: ${theme('colors.white.10')};
+    }
 `
 
 const SANColStyled = styled(SANCol)`
-    background-color: ${theme('colors.white.10')};
-    border-radius: ${theme('radii.base')} 0 0 ${theme('radii.base')};
-    padding: 56px 72px 46px 72px;
+    && {
+        background-color: ${theme('colors.white.10')};
+        border-radius: ${theme('radii.base')} 0 0 ${theme('radii.base')};
+        padding: 56px 72px 46px 72px;
 
-    ${theme('mediaQueries.down.md')} {
-        padding: ${theme('space.xl')} ${theme('space.md')} ${theme('space.xl')}
-            ${theme('space.md')};
+        ${theme('mediaQueries.down.md')} {
+            border-radius: ${theme('radii.base')};
+            padding: ${theme('space.xl')} ${theme('space.md')}
+                ${theme('space.xl')} ${theme('space.md')};
+        }
     }
 `
 
 const SANColImage = styled(SANCol)`
-    position: relative;
-    border-radius: 0 ${theme('radii.base')} ${theme('radii.base')} 0;
+    && {
+        position: relative;
+        border-radius: 0 ${theme('radii.base')} ${theme('radii.base')} 0;
+    }
 `
 
 const Badge = styled.div`
@@ -52,10 +60,14 @@ const RowItem = styled.div`
 `
 
 const SANBoxStyled = styled(SANBox)`
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    && {
+        position: fixed;
+        z-index: 2;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        box-shadow: 0 -1px 2px ${theme('colors.grey.4')};
+    }
 `
 
 const Accept = styled.div`
@@ -65,6 +77,7 @@ const Accept = styled.div`
 `
 
 const Background = styled.div<{ image: string }>`
+    border-radius: 0 ${theme('radii.base')} ${theme('radii.base')} 0;
     position: absolute;
     background-image: url(${prop('image')});
     background-position: center;
@@ -111,7 +124,7 @@ const SANStartQuiz = ({
     const { t } = useTranslation('components')
     return (
         <SANRowStyled type='flex'>
-            <SANColStyled xs={24} sm={24} md={16} lg={17} xl={19}>
+            <SANColStyled xs={24} sm={24} md={16} lg={17} xl={18}>
                 <SANTypography
                     fontSize={{ md: '6', _: '4' }}
                     regular
@@ -129,7 +142,7 @@ const SANStartQuiz = ({
 
                 {arr.map(renderItem(t))}
             </SANColStyled>
-            <SANColImage xs={0} sm={0} md={8} lg={7} xl={5}>
+            <SANColImage xs={0} sm={0} md={8} lg={7} xl={6}>
                 <Background image={image} />
                 <Accept>
                     <SANTypography level={5} regular mb='xxl' color='grey.8'>
@@ -149,7 +162,7 @@ const SANStartQuiz = ({
             </SANColImage>
 
             <SANBoxStyled
-                displayFlex
+                display={{ md: 'none', _: 'flex' }}
                 alignItems='center'
                 justifyContent='center'
                 bg='grey-solid.8'

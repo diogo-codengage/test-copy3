@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 const types = {
     Video: 'video',
     Document: 'documento',
-    Question: 'questao'
+    Quiz: 'questoes'
 }
 
 const defaultCourse = {
@@ -73,10 +73,6 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
             })
 
             setThemeContents(data.themeContents.data)
-            const incomplete = data.themeContents.data.find(
-                item => !item.completed
-            )
-            !!incomplete && goToResource(incomplete, theme.id, false)
         } catch (e) {
             throw e
         }
