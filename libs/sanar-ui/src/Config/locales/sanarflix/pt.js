@@ -212,7 +212,7 @@ export default {
                 labelSelecteds: 'Temas',
                 placeholder: 'Escolher tema',
                 filterName: 'Tema',
-                selectCourses: 'Selecione algum curso'
+                selectCourses: 'Escolha primeiro um curso'
             }
         }
     }

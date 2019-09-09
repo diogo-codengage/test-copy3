@@ -1,9 +1,14 @@
-import React, { Suspense } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
-import { RouteComponentProps } from 'react-router'
+import React, { Suspense, useEffect } from 'react'
+
+import { Route, Switch, Redirect, RouteComponentProps } from 'react-router-dom'
+import { useApolloClient } from '@apollo/react-hooks'
+
 import FLXLayout from 'Pages/Layout'
 import FLXSplashLoader from 'Components/SplashLoader'
 import FLXLayoutProvider from 'Pages/Layout/Context'
+
+import { GET_ME } from 'Apollo/User/Queries/me'
+import { useAuthContext } from 'Hooks/auth'
 
 const FLXHome = React.lazy(() => import('./Home'))
 const FLXCourses = React.lazy(() => import('./Courses'))
@@ -14,8 +19,26 @@ const FLXQuestionsDatabase = React.lazy(() => import('./QuestionsDatabase'))
 type FLXPrivatePages = {}
 
 const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
+    history,
     match: { url }
 }) => {
+    const client = useApolloClient()
+    const { setMe } = useAuthContext()
+
+    useEffect(() => {
+        const fetchMe = async () => {
+            try {
+                const {
+                    data: { me }
+                } = await client.query({ query: GET_ME })
+                setMe(me)
+            } catch {
+                history.push('/auth/signin')
+            }
+        }
+        fetchMe()
+    }, [])
+
     return (
         <FLXLayoutProvider>
             <FLXLayout>

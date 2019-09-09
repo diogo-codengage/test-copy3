@@ -1,13 +1,20 @@
 import React, { createContext, useState, useContext } from 'react'
 
+interface IMe {
+    id: string
+    name: string
+}
+
 type FLXAuthContextValues = {
-    me: any
-    setMe(me: any): void
+    me: IMe
+    setMe(me: IMe): void
 }
 
 type FLXAuthContextProviderProps = {}
 
-export const FLXAuthContext = createContext<Partial<FLXAuthContextValues>>({})
+export const FLXAuthContext = createContext<FLXAuthContextValues>(
+    {} as FLXAuthContextValues
+)
 
 export const useAuthContext = () => useContext(FLXAuthContext)
 
