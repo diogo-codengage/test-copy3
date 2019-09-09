@@ -6,6 +6,10 @@ import React, {
     useEffect
 } from 'react'
 
+import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
+
+import { useLayoutContext } from 'Pages/Layout/Context'
+
 interface IStats {
     correct: number
     wrong: number
@@ -37,6 +41,8 @@ export const initialStats = {
 
 const FLXClassroomQuizProvider: React.FC = ({ children }) => {
     const stopwatchRef = useRef()
+    const { width } = useWindowSize()
+    const { setFooterProps } = useLayoutContext()
     const [questions, setQuestions] = useState<any[]>([])
     const [questionsMap, setQuestionsMap] = useState<any[]>([])
     const [stats, setStats] = useState<IStats>(initialStats)
@@ -48,6 +54,19 @@ const FLXClassroomQuizProvider: React.FC = ({ children }) => {
             total: questions.length
         }))
     }, [questions])
+
+    useEffect(() => {
+        if (width <= 768) {
+            setFooterProps({
+                mb: 8
+            })
+        } else {
+            setFooterProps({
+                mb: 0
+            })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [width])
 
     const value: IFLXClassroomQuizProviderValue = {
         questions,
