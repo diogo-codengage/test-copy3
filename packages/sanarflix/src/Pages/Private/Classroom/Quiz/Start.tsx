@@ -8,13 +8,13 @@ import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
 import { useLayoutContext } from 'Pages/Layout/Context'
 import { useAuthContext } from 'Hooks/auth'
-import { useClassroomQuizContext } from './Context'
+import { useClassroomQuizContext, initialStats } from './Context'
 
 const FLXClassRoomQuizStart = ({ history }: RouteComponentProps) => {
     const { me } = useAuthContext()
     const { width } = useWindowSize()
     const { setFooterProps } = useLayoutContext()
-    const { questions } = useClassroomQuizContext()
+    const { questions, setStats } = useClassroomQuizContext()
 
     useEffect(() => {
         if (width <= 768) {
@@ -24,6 +24,11 @@ const FLXClassRoomQuizStart = ({ history }: RouteComponentProps) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [width])
+
+    useEffect(() => {
+        setStats(old => ({ ...initialStats, total: old.total }))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <SANStartQuiz
