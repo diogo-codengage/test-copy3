@@ -54,7 +54,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 }
             } = await client.query({
                 query: GET_THEMES,
-                variables: { courseId }
+                variables: { courseIds: [courseId] }
             })
 
             setCurrentCourse(themes[0].course)

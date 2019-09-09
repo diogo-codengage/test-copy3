@@ -12,8 +12,8 @@ export interface IThemes {
 }
 
 export const GET_THEMES = gql`
-    query Themes($courseId: ID!) {
-        themes(courseId: $courseId) {
+    query Themes($courseIds: [ID]!) {
+        themes(courseIds: $courseIds) {
             data {
                 value: id
                 label: name
