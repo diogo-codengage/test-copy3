@@ -92,7 +92,6 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     const getThemeContents = async nextTheme => {
         try {
             setLoadingContents(true)
-            setTheme(nextTheme)
 
             const {
                 data: { themeContents }
@@ -115,11 +114,14 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 )
             }))
 
-            // setTheme(nextTheme)
+            setTheme(nextTheme)
             setThemeContents(themeContentsIcons)
 
-            const incomplete = themeContents.data.find(item => !item.completed)
-            !!incomplete && goToResource(incomplete, theme.id, false)
+            const incomplete =
+                themeContents.data.find(item => !item.completed) ||
+                themeContents.data[0]
+
+            goToResource(incomplete, nextTheme.id, false)
         } catch (e) {
             throw e
         }
@@ -131,11 +133,13 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
         configureNewTheme(item)
     }
 
-    const configureNewTheme = theme => {
+    const configureNewTheme = async theme => {
         if (!!themes.length && theme.id) {
             const newTheme = themes.find(item => item.id === theme.id)
 
             getThemeContents(newTheme)
+        } else {
+            loadThemes(courseId)
         }
     }
 
@@ -176,12 +180,6 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     }
 
     useEffect(() => {
-        loadThemes(courseId)
-        getThemeContents(theme)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    useEffect(() => {
         if (themeContents.length) {
             const previous = makeAction(themeContents[currentResource - 1])
             const next = makeAction(themeContents[currentResource + 1])
@@ -194,7 +192,19 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     }, [themeContents, currentResource])
 
     useEffect(() => {
-        configureNewTheme({ id: window.location.hash.split('/')[4] })
+        configureNewTheme(theme)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [themes])
+
+    useEffect(() => {
+        return () => {
+            configureNewTheme({ id: window.location.hash.split('/')[4] })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [window.location.hash.split('/')[4]])
+
+    useEffect(() => {
+        loadThemes(courseId)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
