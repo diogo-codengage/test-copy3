@@ -5,13 +5,25 @@ import { getInstance } from 'Config/AWSCognito'
 
 const config = getInstance()
 
-const getAccessToken = () => {
+const getValidSession = cognitoUser => {
+    return cognitoUser.getSession((_, session) => {
+        if (session.isValid()) return session
+        else
+            cognitoUser.refreshSession(
+                session.getRefreshToken(),
+                (err, nSession) => {
+                    return nSession
+                }
+            )
+    })
+}
+
+const getAccessToken = async () => {
     const cognitoUser = config.userPool.getCurrentUser()
-    console.log({ cognitoUser })
+
     if (!!cognitoUser) {
-        return cognitoUser.getSession((_, session) => {
-            return session.getIdToken().getJwtToken()
-        })
+        const session = getValidSession(cognitoUser)
+        return session.getIdToken().getJwtToken()
     }
 }
 
