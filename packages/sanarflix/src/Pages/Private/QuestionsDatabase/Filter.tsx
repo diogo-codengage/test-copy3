@@ -72,7 +72,7 @@ const FLXFilter = ({ history }) => {
                             )
                         }
                     })
-                    setThemes(old => [...old, ...data.themes.data])
+                    setThemes(data.themes.data)
                 } catch {}
             }
             fetchThemes()

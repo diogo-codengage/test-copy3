@@ -26,6 +26,22 @@ const SANPracticeCompletedStyled = SANStyled(SANPracticeCompleted)`
     }
 `
 
+const SANBoxStyled = SANStyled(SANBox)`
+    && {
+        ${theme('mediaQueries.down.md')} {
+            position: fixed;
+            margin: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: ${theme('space.sm')};
+            box-shadow: 0 -1px 2px ${theme('colors.grey.4')};
+            z-index: 1;
+            background-color: ${theme('colors.grey-solid.8')};
+        }
+    }
+`
+
 const FLXClassRoomQuizFinished = () => {
     const { t } = useTranslation('sanarflix')
     const {
@@ -60,7 +76,7 @@ const FLXClassRoomQuizFinished = () => {
 
     return (
         <SANBox>
-            <SANBox
+            <SANBoxStyled
                 display='flex'
                 alignItems='center'
                 justifyContent='center'
@@ -81,7 +97,7 @@ const FLXClassRoomQuizFinished = () => {
                     <SANEvaIcon name='map-outline' mr='xs' />
                     {t('classroom.quiz.questionMap')}
                 </SANButton>
-            </SANBox>
+            </SANBoxStyled>
             <SANPracticeCompletedStyled values={summary} />
         </SANBox>
     )
