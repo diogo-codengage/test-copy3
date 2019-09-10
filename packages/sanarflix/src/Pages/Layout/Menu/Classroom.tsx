@@ -89,7 +89,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
         }
     }
 
-    const getThemeContents = async nextTheme => {
+    const getThemeContents = async (nextTheme, doRedirect = false) => {
         try {
             setLoadingContents(true)
 
@@ -117,11 +117,13 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
             setTheme(nextTheme)
             setThemeContents(themeContentsIcons)
 
-            const incomplete =
-                themeContents.data.find(item => !item.completed) ||
-                themeContents.data[0]
+            if (doRedirect) {
+                const incomplete =
+                    themeContents.data.find(item => !item.completed) ||
+                    themeContents.data[0]
 
-            !resourceId && goToResource(incomplete, nextTheme.id, false)
+                goToResource(incomplete, nextTheme.id, false)
+            }
         } catch (e) {
             throw e
         }
@@ -130,14 +132,14 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     }
 
     const onSelect = async item => {
-        configureNewTheme(item)
+        configureNewTheme(item, true)
     }
 
-    const configureNewTheme = async theme => {
+    const configureNewTheme = async (theme, doRedirect = false) => {
         if (!!themes.length && theme.id) {
             const newTheme = themes.find(item => item.id === theme.id)
 
-            getThemeContents(newTheme)
+            getThemeContents(newTheme, doRedirect)
         } else {
             loadThemes(courseId)
         }
