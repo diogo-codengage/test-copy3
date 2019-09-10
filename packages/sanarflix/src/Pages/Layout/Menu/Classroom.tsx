@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useMemo, useReducer } from 'react'
 import { SANClassroomMenu, SANEvaIcon } from '@sanar/components'
 import { GET_THEMES } from 'Apollo/Classroom/Queries/themes'
 import { useApolloClient } from '@apollo/react-hooks'
@@ -21,50 +21,89 @@ const types = {
     Quiz: 'questoes'
 }
 
-const defaultCourse = {
-    name: null,
-    knowledge_area: null,
-    progress_percentage: 0
+const initialState = {
+    themes: [],
+    totalThemes: 0,
+    fetchingContents: false,
+    themeContents: [],
+    currentCourse: {
+        id: window.location.hash.split('/')[3],
+        name: null,
+        knowledge_area: null,
+        progress_percentage: 0
+    },
+    theme: { id: window.location.hash.split('/')[4], index: 1 }
+}
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'updateTheme':
+            return {
+                ...state,
+                theme: action.payload
+            }
+        case 'fetchingContents':
+            return {
+                ...state,
+                fetchingContents: action.payload
+            }
+        case 'updateThemeContents':
+            return {
+                ...state,
+                theme: action.payload.theme,
+                themeContents: action.payload.themeContents
+            }
+        case 'updateThemes':
+            return {
+                ...state,
+                theme: action.payload.themes.find(
+                    item => item.id === state.theme.id
+                ),
+                themes: action.payload.themes,
+                currentCourse: action.payload.currentCourse,
+                totalThemes: action.payload.totalThemes
+            }
+        default:
+            return state
+    }
 }
 
 const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('sanarflix')
     const client = useApolloClient()
     const { onCloseMenu, setNavigations } = useLayoutContext()
-
-    const [themeContents, setThemeContents] = useState<ITheme[]>([])
-    const [themes, setThemes] = useState<any[]>([])
-    const [loadingContents, setLoadingContents] = useState(false)
-    const [loadingThemes, setLoadingThemes] = useState(false)
-    const [currentCourse, setCurrentCourse] = useState(defaultCourse)
-    const [theme, setTheme] = useState({
-        id: window.location.hash.split('/')[4]
-    })
+    const [state, dispatch] = useReducer(reducer, initialState)
 
     const courseId = window.location.hash.split('/')[3]
     const resourceId = window.location.hash.split('/')[6]
 
     const loadThemes = async courseId => {
-        setLoadingThemes(true)
+        dispatch({ type: 'fetchingContents', payload: true })
 
         try {
             const {
                 data: {
-                    themes: { data: themes }
+                    themes: { data: themes, count: totalThemes }
                 }
             } = await client.query({
                 query: GET_THEMES,
                 variables: { courseIds: [courseId] }
             })
 
-            setCurrentCourse(themes[0].course)
-            setThemes(themes)
-            setTheme(themes.find(item => item.id === theme.id))
+            dispatch({
+                type: 'updateThemes',
+                payload: {
+                    themes,
+                    currentCourse: themes[0].course,
+                    totalThemes,
+                    fetchingContents: false
+                }
+            })
         } catch (e) {
             throw e
         }
 
-        setLoadingThemes(false)
+        dispatch({ type: 'fetchingContents', payload: false })
     }
 
     const configureThemeContentsIcon = (resourceType, type) => {
@@ -90,9 +129,9 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     }
 
     const getThemeContents = async (nextTheme, doRedirect = false) => {
-        try {
-            setLoadingContents(true)
+        dispatch({ type: 'fetchingContents', payload: true })
 
+        try {
             const {
                 data: { themeContents }
             } = await client.query({
@@ -114,8 +153,16 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 )
             }))
 
-            setTheme(nextTheme)
-            setThemeContents(themeContentsIcons)
+            dispatch({
+                type: 'updateThemeContents',
+                payload: {
+                    theme: state.themes.find(item => {
+                        return item.id === nextTheme.id
+                    }),
+                    themeContents: themeContentsIcons,
+                    fetchingContents: false
+                }
+            })
 
             if (doRedirect) {
                 const incomplete =
@@ -128,33 +175,23 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
             throw e
         }
 
-        setLoadingContents(false)
+        dispatch({ type: 'fetchingContents', payload: false })
     }
 
     const onSelect = async item => {
-        configureNewTheme(item, true)
-    }
-
-    const configureNewTheme = async (theme, doRedirect = false) => {
-        if (!!themes.length && theme.id) {
-            const newTheme = themes.find(item => item.id === theme.id)
-
-            getThemeContents(newTheme, doRedirect)
-        } else {
-            loadThemes(courseId)
-        }
+        getThemeContents(item, true)
     }
 
     const currentResource = useMemo(() => {
-        if (!!themeContents.length) {
-            const index = themeContents.findIndex(
+        if (!!state.themeContents.length) {
+            const index = state.themeContents.findIndex(
                 item => item.resource_id === resourceId
             )
             return index >= 0 ? index : 0
         } else {
             return 0
         }
-    }, [themeContents, resourceId])
+    }, [state.themeContents, resourceId])
 
     const makeAction = resource =>
         !!resource
@@ -169,7 +206,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
 
     const goToResource = (
         item: ITheme,
-        themeId = theme.id,
+        themeId = state.theme.id,
         hasClose = true
     ) => {
         history.push(
@@ -182,53 +219,64 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     }
 
     useEffect(() => {
-        if (themeContents.length) {
-            const previous = makeAction(themeContents[currentResource - 1])
-            const next = makeAction(themeContents[currentResource + 1])
+        if (state.themeContents.length) {
+            const previous = makeAction(
+                state.themeContents[currentResource - 1]
+            )
+            const next = makeAction(state.themeContents[currentResource + 1])
             setNavigations({
                 previous,
                 next
             })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [themeContents, currentResource])
+    }, [state.themeContents, currentResource])
 
     useEffect(() => {
-        configureNewTheme(theme)
+        !!state.themes.length && getThemeContents(state.theme)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [themes])
+    }, [state.themes])
 
     useEffect(() => {
-        return () => {
-            configureNewTheme({ id: window.location.hash.split('/')[4] })
-        }
+        !!state.themes.length &&
+            window.location.hash.split('/')[4] &&
+            getThemeContents({ id: window.location.hash.split('/')[4] })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [window.location.hash.split('/')[4]])
 
     useEffect(() => {
+        dispatch({
+            type: 'updateTheme',
+            payload: {
+                id: window.location.hash.split('/')[4],
+                index: 1
+            }
+        })
         loadThemes(courseId)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
         <SANClassroomMenu
+            currentThemeIndex={state.theme && state.theme.index}
+            totalThemes={state.totalThemes}
             course={{
-                ...(currentCourse && {
+                ...(state.currentCourse && {
                     knowledgeArea: t('global.course'),
-                    name: currentCourse.name,
-                    progress: currentCourse.progress_percentage || 0
+                    name: state.currentCourse.name,
+                    progress: state.currentCourse.progress_percentage || 0
                 })
             }}
             DisciplineDropdownProps={{
                 onSelect,
-                activeItem: theme,
-                items: themes,
-                loading: loadingThemes || loadingContents,
+                activeItem: state.theme,
+                items: state.themes,
+                loading: state.fetchingContents,
                 progress: 50
             }}
             PlaylistProps={{
-                items: themeContents,
-                loading: loadingContents,
+                items: state.themeContents,
+                loading: state.fetchingContents,
                 currentIndex: currentResource,
                 goToResource
             }}

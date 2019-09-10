@@ -41,6 +41,7 @@
         "typescript": "^3.5.3"
     },
     "dependencies": {
+        "@opuscapita/react-perfect-scrollbar": "^3.0.4",
         "@types/react-infinite-scroller": "^1.2.1",
         "react-infinite-scroller": "^1.2.4",
         "react-router-dom": "^5.0.0"
