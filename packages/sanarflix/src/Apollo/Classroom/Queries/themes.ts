@@ -4,10 +4,12 @@ interface ICourse {
     id: string
     knowledge_area: string
     name: string
+    index: number
     progress_percentage: string
 }
 
 export interface IThemes {
+    count: number
     data: {
         id: string
         name: string
@@ -23,9 +25,11 @@ export interface IThemes {
 export const GET_THEMES = gql`
     query Themes($courseIds: [ID]!) {
         themes(courseIds: $courseIds) {
+            count
             data {
                 id
                 name
+                index
                 course {
                     id
                     name
