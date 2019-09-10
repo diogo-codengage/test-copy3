@@ -57,6 +57,7 @@ import {
     SANClassroomMenuHeader
 } from 'Components/Organisms/ClassroomMenu'
 import { SANPracticeCompleted } from 'Components/Organisms/PracticeCompleted'
+import { SANScroll } from 'Components/Atoms/Scroll'
 
 import { SANIcon } from 'Components/Atoms/Icon'
 
@@ -115,5 +116,6 @@ export {
     SANQuestionMap,
     SANQuestion,
     SANPracticeCompleted,
-    SANCardSelectFilter
+    SANCardSelectFilter,
+    SANScroll
 }
