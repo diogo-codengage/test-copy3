@@ -90,7 +90,6 @@ const FLXFilter = ({ history }) => {
                 onBack={() => history.goBack()}
                 SessionTitleProps={{
                     title: t('questionsDatabase.filter.header.title'),
-                    subtitle: t('questionsDatabase.filter.header.subtitle'),
                     extra: (
                         <SANBox displayFlex flex='1'>
                             <SANButton
@@ -122,9 +121,9 @@ const FLXFilter = ({ history }) => {
                 }}
             />
             <SANBox bg='grey-solid.1' flex='1'>
-                <SANLayoutContainer mt={8}>
+                <SANLayoutContainer mt={7}>
                     <SANRow gutter={24}>
-                        <SANCol sm={0} md={24}>
+                        <SANCol mb={7}>
                             <SANSessionTitle
                                 title={t('questionsDatabase.filter.subheader')}
                             />
