@@ -1,1 +1,1 @@
-export { default as SANStopwatch, SANStopwatchProps } from './Stopwatch'
+export { default as SANStopwatch, ISANStopwatchProps } from './Stopwatch'
