@@ -1,14 +1,112 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 
 import { useTranslation } from 'react-i18next'
 
 import {
     SANNavigationList,
     SANNavigationListItem,
-    SANEvaIcon
+    SANEvaIcon,
+    SANLeftOff,
+    SANLeftOffError,
+    SANLeftOffLoading,
+    SANQuery
 } from '@sanar/components'
 
 import { useLayoutContext } from '../Context'
+import {
+    GET_LAST_ACCESSED,
+    IType,
+    ILastAccessed,
+    ILastAccessedPayload
+} from 'Apollo/Menu/Queries/last-accessed'
+
+// Images
+import questionImage from 'Assets/images/course-items/question.svg'
+import mentalmapImage from 'Assets/images/course-items/mental-map.svg'
+import flowchartImage from 'Assets/images/course-items/flow.svg'
+import articleImage from 'Assets/images/course-items/article.svg'
+import documentImage from 'Assets/images/course-items/document.svg'
+
+const resources = {
+    Document: 'documento',
+    Video: 'video',
+    Question: 'quiz'
+}
+
+const configureThumbnail = (type: IType, resourceType, image) => {
+    switch (resourceType) {
+        case 'Video':
+            return image
+        case 'Question':
+            return questionImage
+        case 'Document':
+            switch (type) {
+                case 'mentalmap':
+                    return mentalmapImage
+                case 'flowchart':
+                    return flowchartImage
+                case 'article':
+                    return articleImage
+                default:
+                    return documentImage
+            }
+        default:
+            return documentImage
+    }
+}
+
+const FLXLeftOff = withRouter(({ history }) => {
+    const { t } = useTranslation('sanarflix')
+    const goToResource = (lastAccessed: ILastAccessed) => {
+        history.push(
+            `/portal/sala-aula/${lastAccessed.course.id}/${
+                lastAccessed.theme_id
+            }/${resources[lastAccessed.resource_type]}/${
+                lastAccessed.resource_id
+            }`
+        )
+    }
+    return (
+        <SANQuery
+            query={GET_LAST_ACCESSED}
+            loaderComp={<SANLeftOffLoading />}
+            errorComp={<SANLeftOffError />}
+            options={{
+                fetchPolicy: 'netword-only'
+            }}
+        >
+            {({ data }: { data: ILastAccessedPayload }) => {
+                return (
+                    <SANLeftOff
+                        label={t('course.continue')}
+                        onClick={() => goToResource(data.lastAccessed)}
+                        title={
+                            data.lastAccessed && data.lastAccessed.course.name
+                        }
+                        resourceType={
+                            data.lastAccessed && data.lastAccessed.resource_type
+                        }
+                        thumbnail={
+                            data.lastAccessed &&
+                            configureThumbnail(
+                                data.lastAccessed.type,
+                                data.lastAccessed.resource_type,
+                                data.lastAccessed.thumbnail
+                            )
+                        }
+                        classReference={
+                            data.lastAccessed && data.lastAccessed.content_name
+                        }
+                        moduleReference={
+                            data.lastAccessed && data.lastAccessed.theme_title
+                        }
+                    />
+                )
+            }}
+        </SANQuery>
+    )
+})
 
 const FLXMenuInitial: React.FC = () => {
     const { t } = useTranslation('sanarflix')
@@ -16,6 +114,8 @@ const FLXMenuInitial: React.FC = () => {
 
     return (
         <>
+            <FLXLeftOff />
+
             <SANNavigationList>
                 <SANNavigationListItem
                     to='/portal/inicio'
