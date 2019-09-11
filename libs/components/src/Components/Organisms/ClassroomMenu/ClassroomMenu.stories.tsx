@@ -70,6 +70,8 @@ storiesOf('Organisms.ClassroomMenu', module).add(
     () => (
         <div style={{ width: 320, height: '100vh' }}>
             <SANClassroomMenu
+                currentThemeIndex={0}
+                totalThemes={0}
                 course={{
                     knowledgeArea: text('Knowledge area', 'Enfermagem'),
                     name: text('Course name', 'Primeiros Socorros'),

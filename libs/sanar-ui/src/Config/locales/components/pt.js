@@ -7,6 +7,10 @@ export default {
     empty: {
         title: 'Não encontramos o que você buscou.'
     },
+    error: {
+        leftOff:
+            'Ocorreu um erro ao tentar carregar o último conteúdo acessado.'
+    },
     startQuiz: {
         title: 'Olá {{name}}, tudo bem?',
         longDescription: `
