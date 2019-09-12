@@ -21,6 +21,7 @@ const Input = styled.input`
     font-size: ${theme('fontSizes.md')};
     transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
     width: 100%;
+    padding: 0 ${theme('space.md')};
 
     ${switchProp('customSize', {
         large: css`
@@ -36,9 +37,17 @@ const Input = styled.input`
 
     ${ifProp(
         'round',
-        css`
-            border-radius: 50vh;
-        `,
+        switchProp('customSize', {
+            large: css`
+                border-radius: 20px;
+            `,
+            medium: css`
+                border-radius: 16px;
+            `,
+            small: css`
+                border-radius: 12px;
+            `
+        }),
         css`
             border-radius: ${theme('radii.base')};
         `
@@ -118,21 +127,21 @@ const Wrapper = styled.div`
 
 export interface ISANInputProps
     extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
-    round: boolean
-    size: 'large' | 'medium' | 'small'
-    iconRight: string
-    iconLeft: string
+    round?: boolean
+    size?: 'large' | 'medium' | 'small'
+    iconRight?: string
+    iconLeft?: string
 }
 
-const SANInput: React.FC<Partial<ISANInputProps>> = (
-    { placeholder, iconRight, iconLeft, disabled, ...props },
+const SANInput: React.FC<ISANInputProps> = (
+    { placeholder, iconRight, iconLeft, disabled, size = 'medium', ...props },
     ref
 ) => {
     const customPlaceholder = props.required ? `${placeholder} *` : placeholder
 
     const inputProps = {
-        ...omit(['size'], props),
-        customSize: props.size,
+        ...props,
+        customSize: size,
         disabled
     }
 
