@@ -1,0 +1,14 @@
+{
+    "name": "@sanar/utils",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "cross-env BABEL_ENV=build babel src -d dist --source-maps --delete-dir-on-start --config-file ./babel.config.js --extensions \".ts,.tsx\" --no-comments --copy-files",
+        "build:types": "tsc --emitDeclarationOnly -w",
+        "start": "yarn build -w",
+        "start:dev": "npm-run-all --parallel start build:types"
+    },
+    "author": "Vinicius Lohmann Kieling",
+    "license": "ISC"
+}
