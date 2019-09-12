@@ -27,7 +27,7 @@ import { ifProp } from 'styled-tools'
 
 import { SANStyled } from '../../../Theme/createTheme'
 
-interface IProps
+export interface ISANBoxProps
     extends SpaceProps,
         FlexboxProps,
         ColorProps,
@@ -38,9 +38,12 @@ interface IProps
         PositionProps,
         ShadowProps {
     displayFlex?: boolean
+    as?: 'img'
+    src?: string
+    alt?: string
 }
 
-const SANBox: React.FC<IProps> = SANStyled('div')`
+const SANBox: React.FC<ISANBoxProps> = SANStyled('div')`
     ${compose(
         space,
         flexbox,
