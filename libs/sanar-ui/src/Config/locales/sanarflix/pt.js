@@ -26,7 +26,8 @@ export default {
             article: 'Artigos e Diretrizes',
             lesson: 'Aula',
             question: 'Questão'
-        }
+        },
+        search: 'Busque por cursos, aulas, resumos e muito mais'
     },
     auth: {
         accessAccount: 'Acessar conta',

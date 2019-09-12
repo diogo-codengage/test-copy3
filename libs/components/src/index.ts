@@ -41,6 +41,7 @@ import { SANClassroomHeader } from 'Components/Molecules/ClassroomHeader'
 import { SANQuestionMap } from 'Components/Molecules/QuestionMap'
 import { SANQuestion } from 'Components/Molecules/Question'
 import { SANCardSelectFilter } from 'Components/Molecules/CardSelectFilter'
+import { SANSearch } from 'Components/Molecules/Search'
 import {
     SANCollapseTheme,
     SANCollapseThemePanel,
@@ -126,5 +127,6 @@ export {
     SANScroll,
     SANAnimationSlide,
     SANSkeleton,
-    ISANSkeletonProps
+    ISANSkeletonProps,
+    SANSearch
 }

@@ -27,10 +27,15 @@ const Dropdown = styled.div`
     z-index: 1050;
 
     @media (max-width: 414px) {
-        border: none;
-        box-shadow: none;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
+        ${ifProp(
+            'hasFocus',
+            css`
+                border: none;
+                box-shadow: none;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            `
+        )}
     }
 `
 
@@ -47,9 +52,14 @@ const ItemStyled = styled(SANBox)`
             background-color: ${theme('colors.grey.0')};
         }
         @media (max-width: 414px) {
-            border-radius: 0;
-            border-bottom-right-radius: 0;
-            border-bottom-left-radius: 0;
+            ${ifProp(
+                'hasFocus',
+                css`
+                    border-radius: 0;
+                    border-bottom-right-radius: 0;
+                    border-bottom-left-radius: 0;
+                `
+            )}
         }
         &:last-child {
             ${borderBottomRadius}
@@ -57,9 +67,9 @@ const ItemStyled = styled(SANBox)`
     }
 `
 
-const Search = styled(SANInput)<{ hasItems: boolean }>`
+const Search = styled(SANInput)<{ hasItems: boolean; hasFocus: boolean }>`
     && {
-        transition: all 0.3s ease-in;
+        transition: all 0.2s ease-in;
         ${ifProp(
             'hasItems',
             css`
@@ -71,8 +81,13 @@ const Search = styled(SANInput)<{ hasItems: boolean }>`
         )}
 
         @media (max-width: 414px) {
-            margin: ${theme('spance.md')};
-            height: 32px;
+            ${ifProp(
+                'hasFocus',
+                css`
+                    margin: ${theme('spance.md')};
+                    height: 32px;
+                `
+            )}
         }
     }
 `
@@ -81,18 +96,29 @@ const Wrapper = styled.div`
     position: relative;
 
     @media (max-width: 414px) {
-        background-color: ${theme('colors.white.10')};
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        ${ifProp(
+            'hasFocus',
+            css`
+                background-color: ${theme('colors.white.10')};
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 10;
+            `
+        )}
     }
 `
 
 const Padding = styled.div`
     @media (max-width: 414px) {
-        padding: ${theme('space.md')};
+        ${ifProp(
+            'hasFocus',
+            css`
+                padding: ${theme('space.md')};
+            `
+        )}
     }
 `
 
@@ -160,20 +186,28 @@ const SANSearch: React.FC<ISANSearchProps> = ({
     const inputRef = useRef()
     const dropdownRef = useRef()
     const [items, setItems] = useState<IItem[]>([])
+    const [hasFocus, setFocus] = useState(false)
 
     const handleKeyDown = e => {
         if (e.key === 'Enter' && !!onEnter) {
             onEnter(e)
         }
+        if (e.key === 'Escape') {
+            setFocus(false)
+        }
     }
 
-    const handleFocus = () => {
+    const handleFocus = e => {
+        setFocus(true)
         if (!!data && !!data.length) {
             setItems(data)
         }
     }
 
-    const clickOutside = () => !!items.length && setItems([])
+    const clickOutside = () => {
+        !!items.length && setItems([])
+        hasFocus && setFocus(false)
+    }
 
     useOnClickOutside([inputRef, dropdownRef], clickOutside, [
         inputRef,
@@ -186,8 +220,8 @@ const SANSearch: React.FC<ISANSearchProps> = ({
     }, [data])
 
     return (
-        <Wrapper>
-            <Padding>
+        <Wrapper {...{ hasFocus }}>
+            <Padding {...{ hasFocus }}>
                 <Search
                     iconRight='search-outline'
                     round
@@ -195,16 +229,18 @@ const SANSearch: React.FC<ISANSearchProps> = ({
                     onFocus={handleFocus}
                     {...InputProps}
                     hasItems={!!items.length}
+                    hasFocus={hasFocus}
                     ref={inputRef}
                 />
             </Padding>
             {!!items.length && (
-                <Dropdown ref={dropdownRef}>
+                <Dropdown ref={dropdownRef} {...{ hasFocus }}>
                     {items.map(renderItem(InputProps.value))}
                     <Item
                         onClick={seeMore}
                         icon='menu-2-outline'
                         title='Ver mais resultados'
+                        {...{ hasFocus }}
                     />
                 </Dropdown>
             )}
