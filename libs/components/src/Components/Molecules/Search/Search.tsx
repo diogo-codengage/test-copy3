@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { theme, ifProp } from 'styled-tools'
+import { useTranslation } from 'react-i18next'
 
 import useOnClickOutside from 'sanar-ui/dist/Hooks/useOnClickOutside'
 
@@ -183,6 +184,7 @@ const SANSearch: React.FC<ISANSearchProps> = ({
     seeMore,
     data = []
 }) => {
+    const { t } = useTranslation('components')
     const inputRef = useRef()
     const dropdownRef = useRef()
     const [items, setItems] = useState<IItem[]>([])
@@ -239,7 +241,7 @@ const SANSearch: React.FC<ISANSearchProps> = ({
                     <Item
                         onClick={seeMore}
                         icon='menu-2-outline'
-                        title='Ver mais resultados'
+                        title={t('search.seeMore')}
                         {...{ hasFocus }}
                     />
                 </Dropdown>
