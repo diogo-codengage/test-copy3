@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 
@@ -16,7 +15,6 @@ type IProps = {
 
 const SANLeftOffStyled = styled.div`
     margin: ${theme('space.md')};
-    margin-bottom: ${theme('space.8')};
     margin-top: 0;
 `
 

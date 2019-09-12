@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useReducer } from 'react'
-import { SANClassroomMenu, SANEvaIcon } from '@sanar/components'
 import { GET_THEMES } from 'Apollo/Classroom/Queries/themes'
 import { useApolloClient } from '@apollo/react-hooks'
 import {
@@ -10,7 +9,7 @@ import { withRouter, RouteComponentProps } from 'react-router'
 import { useLayoutContext } from '../Context'
 import { useTranslation } from 'react-i18next'
 
-import { SANIcon } from '@sanar/components'
+import { SANClassroomMenu, SANEvaIcon, SANIcon } from '@sanar/components'
 
 // Playlist item image
 import { FlowChartSVG, MentalmapSVG } from 'Assets/images/playlist'

@@ -15,6 +15,7 @@ const ESLeftOff = ({
     classReference,
     moduleReference,
     label,
+    resourceType,
     onClick
 }) => {
     const { t } = useTranslation('sanarui')
@@ -41,9 +42,14 @@ const ESLeftOff = ({
                                 className='es-left-off__class--img-background'
                                 style={{ backgroundImage: `url(${thumbnail})` }}
                             />
-                            <div className='es-left-off__class--img--overlay'>
-                                <ESEvaIcon name='play-circle' size='large' />
-                            </div>
+                            {resourceType === 'Video' && (
+                                <div className='es-left-off__class--img--overlay'>
+                                    <ESEvaIcon
+                                        name='play-circle'
+                                        size='large'
+                                    />
+                                </div>
+                            )}
                         </div>
                         <div className='es-left-off__class--info pt-xs pb-xs pl-sm pr-sm'>
                             <ESTypography
@@ -75,9 +81,21 @@ ESLeftOff.propTypes = {
     thumbnail: PropTypes.string,
     classReference: PropTypes.string,
     moduleReference: PropTypes.string,
-    label: PropTypes.node
+    label: PropTypes.node,
+    resourceType: PropTypes.oneOf([
+        'Book',
+        'Course',
+        'Content',
+        'Question',
+        'Video',
+        'Document',
+        'Download',
+        'Theme'
+    ])
 }
 
-ESLeftOff.defaultProps = {}
+ESLeftOff.defaultProps = {
+    resourceType: 'Video'
+}
 
 export default ESLeftOff
