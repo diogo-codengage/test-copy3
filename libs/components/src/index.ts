@@ -49,6 +49,7 @@ import { SANDivider } from 'Components/Atoms/Divider'
 import { SANPdfReader } from 'Components/Atoms/PdfReader'
 import { SANRate } from 'Components/Atoms/Rate'
 import { SANStopwatch } from 'Components/Atoms/Stopwatch'
+import { SANAnimationSlide } from 'Components/Atoms/AnimationSlide'
 
 import { SANStyled, SANElement } from 'Theme/'
 
@@ -117,5 +118,6 @@ export {
     SANQuestion,
     SANPracticeCompleted,
     SANCardSelectFilter,
-    SANScroll
+    SANScroll,
+    SANAnimationSlide
 }

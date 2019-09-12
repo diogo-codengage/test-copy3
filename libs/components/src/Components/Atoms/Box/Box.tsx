@@ -28,7 +28,8 @@ import { ifProp } from 'styled-tools'
 import { SANStyled } from '../../../Theme/createTheme'
 
 interface IProps
-    extends SpaceProps,
+    extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'>,
+        SpaceProps,
         FlexboxProps,
         ColorProps,
         LayoutProps,
