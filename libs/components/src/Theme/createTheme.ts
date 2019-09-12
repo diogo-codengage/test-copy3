@@ -3,6 +3,16 @@ import styled, {
     StyledComponent
 } from 'styled-components'
 
+import logoAssets from 'Assets/images/brand/sanar.svg'
+import {
+    typeIconPrimaryBook,
+    typeIconPrimaryFile,
+    typeIconPrimaryFlowchart,
+    typeIconPrimaryMentalchart,
+    typeIconPrimaryQuestion,
+    typeIconPrimaryVideo
+} from 'Assets'
+
 import { createColorVariants } from './colors'
 
 export const defaultColors = {
@@ -174,7 +184,19 @@ defaultZIndices.modal = 1300
 
 export const createTheme = ({
     name = 'default',
-    assets = {},
+    assets = {
+        logo: logoAssets,
+        typeIcons: {
+            primary: {
+                book: typeIconPrimaryBook,
+                file: typeIconPrimaryFile,
+                flowchart: typeIconPrimaryFlowchart,
+                mentalmap: typeIconPrimaryMentalchart,
+                question: typeIconPrimaryQuestion,
+                video: typeIconPrimaryVideo
+            }
+        }
+    },
     colors = {},
     breakpoints = defaultBreakpoints,
     borderRadius = defaultBorderRadius,
