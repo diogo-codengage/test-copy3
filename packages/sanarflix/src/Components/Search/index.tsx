@@ -25,7 +25,7 @@ const FLXSearch = ({ size = 'medium', history }: IProps) => {
 
     const goToItemSearch = item => {
         if (item.resource_type === 'Course') {
-            history.push(`/portal/curso/${item.course.id}`)
+            history.push(`/portal/curso/${item.resource_id}`)
         } else {
             history.push(
                 `/portal/sala-aula/${item.course.id}/${item.theme.id}/${
