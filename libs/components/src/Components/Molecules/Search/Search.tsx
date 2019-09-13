@@ -10,6 +10,7 @@ import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
 import { SANInput, ISANInputProps } from '../../Atoms/Input'
 import { SANBox } from '../../Atoms/Box'
+import { SANButton } from '../../Atoms/Button'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
 
@@ -109,13 +110,16 @@ const Wrapper = styled.div`
                 left: 0;
                 right: 0;
                 bottom: 0;
-                z-index: 10;
+                z-index: 1000;
             `
         )}
     }
 `
 
 const Padding = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     @media (max-width: 414px) {
         ${ifProp(
             'hasFocus',
@@ -199,7 +203,7 @@ const SANSearch: React.FC<ISANSearchProps> = ({
             onEnter(e)
         }
         if (e.key === 'Escape') {
-            setFocus(false)
+            clickOutside()
         }
     }
 
@@ -215,6 +219,9 @@ const SANSearch: React.FC<ISANSearchProps> = ({
     const clickOutside = () => {
         !!items.length && setItems([])
         hasFocus && setFocus(false)
+        if (!!inputRef && !!inputRef.current) {
+            inputRef.current.blur()
+        }
     }
 
     useOnClickOutside([inputRef, dropdownRef], clickOutside, [
@@ -242,6 +249,16 @@ const SANSearch: React.FC<ISANSearchProps> = ({
                         hasFocus={hasFocus}
                         ref={inputRef}
                     />
+                    {hasFocus && width <= 414 && (
+                        <SANButton
+                            onClick={clickOutside}
+                            variant='text'
+                            size='small'
+                            ml='xs'
+                        >
+                            {t('search.cancel')}
+                        </SANButton>
+                    )}
                 </Padding>
                 {!!items.length && (
                     <Dropdown ref={dropdownRef} {...{ hasFocus }}>
