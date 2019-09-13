@@ -28,6 +28,7 @@ storiesOf('Atoms.List', module)
     .add('Default Item', () => (
         <SANList>
             <SANDefaultListItem
+                onClick={console.log}
                 title={text('Title', 'Lorem ipsum dolor sit amet.')}
                 type={select('Type', typeOptions)}
                 hasIcon={boolean('Has icon', true)}

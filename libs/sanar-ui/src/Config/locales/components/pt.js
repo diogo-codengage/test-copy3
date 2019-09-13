@@ -38,7 +38,8 @@ export default {
         article: 'Artigos e Diretrizes',
         lesson: 'Aula',
         question: 'Questão',
-        video: 'Video'
+        video: 'Video',
+        course: 'Curso'
     },
     search: {
         seeMore: 'Ver mais resultados'

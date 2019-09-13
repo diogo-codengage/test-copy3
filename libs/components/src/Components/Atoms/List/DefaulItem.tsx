@@ -33,10 +33,12 @@ interface ISANDefaultListItemProps {
     title: string
     type: ITypes
     hasIcon?: boolean
+    onClick: () => void
 }
 
 const SANDefaultListItemStyled = SANStyled(SANListItem)`
     && {
+        cursor: pointer;
         padding: 10px;
     }
 `
@@ -44,7 +46,8 @@ const SANDefaultListItemStyled = SANStyled(SANListItem)`
 const SANDefaultListItem: React.FC<ISANDefaultListItemProps> = ({
     title,
     type = 'video',
-    hasIcon
+    hasIcon,
+    onClick
 }) => {
     const {
         assets: {
@@ -65,6 +68,7 @@ const SANDefaultListItem: React.FC<ISANDefaultListItemProps> = ({
             case 'question':
                 return question
             case 'video':
+            case 'lesson':
                 return video
             default:
                 return file
@@ -72,7 +76,7 @@ const SANDefaultListItem: React.FC<ISANDefaultListItemProps> = ({
     }
 
     return (
-        <SANDefaultListItemStyled>
+        <SANDefaultListItemStyled onClick={onClick}>
             <SANTypography
                 component='div'
                 variant='subtitle2'

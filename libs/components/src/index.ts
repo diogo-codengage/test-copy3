@@ -18,6 +18,8 @@ import {
 import {
     SANMainMenu,
     SANLeftOff,
+    SANLeftOffError,
+    SANLeftOffLoading,
     SANNavigationList,
     SANNavigationListItem
 } from 'Components/Organisms/MainMenu'
@@ -39,6 +41,7 @@ import { SANClassroomHeader } from 'Components/Molecules/ClassroomHeader'
 import { SANQuestionMap } from 'Components/Molecules/QuestionMap'
 import { SANQuestion } from 'Components/Molecules/Question'
 import { SANCardSelectFilter } from 'Components/Molecules/CardSelectFilter'
+import { SANSearch } from 'Components/Molecules/Search'
 import {
     SANCollapseTheme,
     SANCollapseThemePanel,
@@ -49,6 +52,7 @@ import { SANDivider } from 'Components/Atoms/Divider'
 import { SANPdfReader } from 'Components/Atoms/PdfReader'
 import { SANRate } from 'Components/Atoms/Rate'
 import { SANStopwatch } from 'Components/Atoms/Stopwatch'
+import { SANAnimationSlide } from 'Components/Atoms/AnimationSlide'
 
 import { SANStyled, SANElement } from 'Theme/'
 
@@ -60,6 +64,7 @@ import { SANPracticeCompleted } from 'Components/Organisms/PracticeCompleted'
 import { SANScroll } from 'Components/Atoms/Scroll'
 
 import { SANIcon } from 'Components/Atoms/Icon'
+import { SANSkeleton, ISANSkeletonProps } from 'Components/Atoms/Skeleton'
 
 import { SANList, SANListItem, SANListItemDefault } from 'Components/Atoms/List'
 
@@ -82,6 +87,8 @@ export {
     ISANLayoutFooterProps,
     SANMainMenu,
     SANLeftOff,
+    SANLeftOffError,
+    SANLeftOffLoading,
     SANNavigationList,
     SANNavigationListItem,
     SANThemeCreateTheme,
@@ -122,5 +129,9 @@ export {
     SANScroll,
     SANList,
     SANListItem,
-    SANListItemDefault
+    SANListItemDefault,
+    SANAnimationSlide,
+    SANSkeleton,
+    ISANSkeletonProps,
+    SANSearch
 }
