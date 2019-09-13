@@ -21,6 +21,8 @@ const SANEvaIconStyled = styled.i`
     ${typography}
     & svg {
         fill: currentColor !important;
+        width: 1em;
+        height: 1em;
     }
 
     & > i {
@@ -30,12 +32,12 @@ const SANEvaIconStyled = styled.i`
     ${switchProp('size', {
         xsmall: css`
             svg {
-                font-size: @font-size-base - 2px;
+                font-size: 12px;
             }
         `,
         small: css`
             svg {
-                font-size: @font-size-base;
+                font-size: 14px;
             }
         `,
         medium: css`
@@ -117,7 +119,7 @@ export interface ISANEvaIconProps
 
 const SANEvaIcon: React.FC<ISANEvaIconProps> = ({
     color,
-    size,
+    size = 'medium',
     name,
     ...props
 }) => {
