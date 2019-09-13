@@ -43,7 +43,7 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
     return (
         <FLXLayoutProvider>
             <FLXLayout>
-                <Suspense fallback={<FLXSplashLoader />}>
+                <Suspense fallback={<FLXSplashLoader size='flexible' />}>
                     <Switch>
                         <Route path={`${url}/inicio`} component={FLXHome} />
                         <Route path={`${url}/cursos`} component={FLXCourses} />
