@@ -24,6 +24,7 @@ const FLXSearch = ({ size = 'medium', history }: IProps) => {
     const [items, setItems] = useState([])
 
     const goToItemSearch = item => {
+        console.log(item)
         if (item.resource_type === 'Course') {
             history.push(`/portal/curso/${item.course.id}`)
         } else {

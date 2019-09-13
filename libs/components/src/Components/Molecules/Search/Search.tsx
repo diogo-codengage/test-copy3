@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import { theme, ifProp } from 'styled-tools'
@@ -209,13 +209,17 @@ const SANSearch: React.FC<ISANSearchProps> = ({
     }
 
     const handleFocus = e => {
+        e.stopPropagation()
         setFocus(true)
         if (!!data && !!data.length) {
             setItems(data)
         }
     }
 
-    const handleBlur = () => setFocus(false)
+    const handleBlur = e => {
+        e.stopPropagation()
+        setFocus(false)
+    }
 
     const clickOutside = () => {
         !!items.length && setItems([])
@@ -244,7 +248,7 @@ const SANSearch: React.FC<ISANSearchProps> = ({
                             iconRight='search-outline'
                             round
                             onKeyDown={handleKeyDown}
-                            onBlur={clickOutside}
+                            onBlur={handleBlur}
                             onFocus={handleFocus}
                             {...InputProps}
                             hasItems={!!items.length}
