@@ -21,28 +21,37 @@ const Input = styled.input`
     font-size: ${theme('fontSizes.md')};
     transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
     width: 100%;
+    padding: 0 ${theme('space.md')};
 
     ${switchProp('customSize', {
-        large: css`
+    large: css`
             height: 40px;
         `,
-        medium: css`
+    medium: css`
             height: 32px;
         `,
-        small: css`
+    small: css`
             height: 24px;
         `
-    })}
+})}
 
     ${ifProp(
-        'round',
-        css`
-            border-radius: 50vh;
-        `,
-        css`
+    'round',
+    switchProp('customSize', {
+        large: css`
+                border-radius: 20px;
+            `,
+        medium: css`
+                border-radius: 16px;
+            `,
+        small: css`
+                border-radius: 12px;
+            `
+    }),
+    css`
             border-radius: ${theme('radii.base')};
         `
-    )}
+)}
 
     &:disabled {
         background-color: ${theme('colors.grey-solid.2')};
@@ -54,8 +63,8 @@ const Input = styled.input`
     }
 
     &:focus {
-        border-color: ${theme('colors.blue.1')};
-        caret-color: ${theme('colors.blue.1')};
+        border-color: ${theme('colors.primary')};
+        caret-color: ${theme('colors.primary')};
     }
 
     ::placeholder {
@@ -74,65 +83,65 @@ const Wrapper = styled.div`
     width: 100%;
 
     ${ifProp(
-        'iconLeft',
-        css`
+    'iconLeft',
+    css`
             & ${SANEvaIconStyled}:first-child {
                 left: ${theme('space.sm')};
             }
         `
-    )}
+)}
 
     ${ifProp(
-        'disabled',
-        css`
+    'disabled',
+    css`
             & ${SANEvaIconStyled} {
                 color: ${theme('colors.grey-solid.3')};
             }
         `
-    )}
+)}
 
     ${ifProp(
-        'iconRight',
-        css`
+    'iconRight',
+    css`
             & ${SANEvaIconStyled}:last-child {
                 right: ${theme('space.sm')};
             }
         `
-    )}
+)}
 
     ${Input} {
         ${ifProp(
-            'iconLeft',
-            css`
+    'iconLeft',
+    css`
                 padding-left: 36px;
             `
-        )}
+)}
         ${ifProp(
-            'iconRight',
-            css`
+    'iconRight',
+    css`
                 padding-right: 36px;
             `
-        )}
+)}
     }
 `
 
 export interface ISANInputProps
     extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
-    round: boolean
-    size: 'large' | 'medium' | 'small'
-    iconRight: string
-    iconLeft: string
+    round?: boolean
+    size?: 'large' | 'medium' | 'small'
+    iconRight?: string
+    iconLeft?: string
 }
 
-const SANInput: React.FC<Partial<ISANInputProps>> = (
-    { placeholder, iconRight, iconLeft, disabled, ...props },
+const SANInput: React.FC<ISANInputProps> = (
+    { placeholder, iconRight, iconLeft, disabled, size = 'medium', ...props },
     ref
 ) => {
     const customPlaceholder = props.required ? `${placeholder} *` : placeholder
 
     const inputProps = {
-        ...omit(['size'], props),
-        customSize: props.size,
+        ...props,
+        customSize: size,
         disabled
     }
 
