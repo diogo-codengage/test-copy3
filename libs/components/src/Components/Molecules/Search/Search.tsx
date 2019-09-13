@@ -95,6 +95,7 @@ const Search = styled(SANInput)<{ hasItems: boolean; hasFocus: boolean }>`
 
 const Wrapper = styled.div`
     position: relative;
+    width: 100%;
 
     @media (max-width: 414px) {
         ${ifProp(
