@@ -32,6 +32,7 @@ export default {
             'Confira o gabarito e faça a avaliação de como foi, analisando quais assuntos foram mais fáceis ou mais difíceis para você e onde você precisa melhorar.'
     },
     search: {
-        seeMore: 'Ver mais resultados'
+        seeMore: 'Ver mais resultados',
+        cancel: 'Cancelar'
     }
 }

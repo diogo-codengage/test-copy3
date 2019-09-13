@@ -11,11 +11,29 @@ interface IProps extends RouteComponentProps {
     size?: 'large' | 'medium' | 'small'
 }
 
+const type = {
+    Video: 'video',
+    Quiz: 'questoes',
+    Document: 'documento'
+}
+
 const FLXSearch = ({ size = 'medium', history }: IProps) => {
     const { t } = useTranslation('sanarflix')
     const client = useApolloClient()
     const [value, setValue] = useState('')
     const [items, setItems] = useState([])
+
+    const goToItemSearch = item => {
+        if (item.resource_type === 'Course') {
+            history.push(`/portal/curso/${item.course.id}`)
+        } else {
+            history.push(
+                `/portal/sala-aula/${item.course.id}/${item.theme.id}/${
+                    type[item.resource_type]
+                }/${item.id}`
+            )
+        }
+    }
 
     const onSearch = async search => {
         if (!search || search.length < 3) return
@@ -26,7 +44,11 @@ const FLXSearch = ({ size = 'medium', history }: IProps) => {
                 query: GET_GLOBAL_SEARCH,
                 variables: { limit: 5, value: search }
             })
-            setItems(globalSearch.data)
+            const data = globalSearch.data.map(item => ({
+                ...item,
+                onClick: () => goToItemSearch(item)
+            }))
+            setItems(data)
         } catch {}
     }
 
