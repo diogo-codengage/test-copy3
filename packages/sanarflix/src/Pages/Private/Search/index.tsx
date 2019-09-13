@@ -2,22 +2,41 @@ import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
+    GET_GLOBAL_SEARCH,
+    IGlobalSearch
+} from 'Apollo/Search/Queries/page-global-search'
+import { useTranslation } from 'react-i18next'
+
+import {
     SANBox,
     SANHeader,
     SANLayoutContainer,
     SANList,
     SANListItemDefault,
     SANTypography,
-    SANInfiniteScroll
+    SANInfiniteScroll,
+    SANEmpty,
+    SANQuery
 } from '@sanar/components'
-import { useQuery } from '@apollo/react-hooks'
-import { GET_GLOBAL_SEARCH } from 'Apollo/Search/Queries/page-global-search'
-import { useTranslation } from 'react-i18next'
+import FLXSearch from 'Components/Search'
 
 const resources = {
     Document: 'documento',
     Video: 'video',
     Question: 'quiz'
+}
+
+const updateGlobalSearchCache = (prev: any, { fetchMoreResult }) => {
+    if (!fetchMoreResult) return prev
+    return Object.assign({}, prev, {
+        globalSearch: {
+            ...prev.globalSearch,
+            data: [
+                ...prev.globalSearch.data,
+                ...fetchMoreResult.globalSearch.data
+            ]
+        }
+    })
 }
 
 const FLXSearchPage: React.FC<RouteComponentProps> = ({
@@ -26,13 +45,6 @@ const FLXSearchPage: React.FC<RouteComponentProps> = ({
 }) => {
     const { t } = useTranslation('sanarflix')
     let params: any = new URLSearchParams(location.search)
-
-    const { data, loading, fetchMore } = useQuery(GET_GLOBAL_SEARCH, {
-        variables: {
-            value: params.get('pesquisa') || 'xpto',
-            limit: 20
-        }
-    })
 
     const goToResource = ({
         resource_id: resource,
@@ -61,59 +73,89 @@ const FLXSearchPage: React.FC<RouteComponentProps> = ({
                 SessionTitleProps={{
                     title: 'Resultado da busca'
                 }}
+                extra={<FLXSearch />}
             />
             <SANLayoutContainer mt={8} pb={6} style={{ overflow: 'hidden' }}>
-                <SANBox mb={7}>
-                    <SANTypography component='span' variant='caption-2' strong>
-                        {(data.globalSearch && data.globalSearch.count) || 0}{' '}
-                    </SANTypography>
-                    <SANTypography component='span' variant='caption-2'>
-                        {t('global.foundResults')}
-                    </SANTypography>{' '}
-                    <SANTypography component='span' variant='caption-2' strong>
-                        {params.get('pesquisa')}
-                    </SANTypography>
-                </SANBox>
-                <SANInfiniteScroll
-                    threshold={64}
-                    loadMore={() =>
-                        fetchMore({
-                            variables: {
-                                skip: data.globalSearch.data.length
-                            },
-                            updateQuery: (prev: any, { fetchMoreResult }) => {
-                                if (!fetchMoreResult) return prev
-                                return Object.assign({}, prev, {
-                                    globalSearch: {
-                                        ...prev.globalSearch,
-                                        data: [
-                                            ...prev.globalSearch.data,
-                                            ...fetchMoreResult.globalSearch.data
-                                        ]
-                                    }
-                                })
-                            }
-                        })
-                    }
-                    hasMore={
-                        !!data.globalSearch &&
-                        data.globalSearch.data.length < data.globalSearch.count
-                    }
+                <SANQuery
+                    query={GET_GLOBAL_SEARCH}
+                    loaderProps={{ flex: true }}
+                    options={{
+                        variables: {
+                            value: params.get('pesquisa') || '',
+                            limit: 20
+                        }
+                    }}
                 >
-                    <SANList
-                        loading={loading}
-                        dataSource={data.globalSearch && data.globalSearch.data}
-                        renderItem={(item, index) => (
-                            <SANListItemDefault
-                                key={index}
-                                title={item.resource_title}
-                                type={item.type}
-                                hasIcon
-                                onClick={() => goToResource(item)}
-                            />
-                        )}
-                    />
-                </SANInfiniteScroll>
+                    {({
+                        data: { globalSearch },
+                        fetchMore
+                    }: {
+                        data: IGlobalSearch
+                        fetchMore: (data: any) => Object
+                    }) => (
+                        <>
+                            <SANBox mb={7}>
+                                <SANTypography
+                                    component='span'
+                                    variant='caption-2'
+                                    strong
+                                >
+                                    {(globalSearch && globalSearch.count) || 0}{' '}
+                                </SANTypography>
+                                <SANTypography
+                                    component='span'
+                                    variant='caption-2'
+                                >
+                                    {t('global.foundResults')}
+                                </SANTypography>{' '}
+                                <SANTypography
+                                    component='span'
+                                    variant='caption-2'
+                                    strong
+                                >
+                                    {params.get('pesquisa')}
+                                </SANTypography>
+                            </SANBox>
+                            {globalSearch && !!globalSearch.data.length ? (
+                                <SANInfiniteScroll
+                                    threshold={64}
+                                    loadMore={() =>
+                                        fetchMore({
+                                            variables: {
+                                                skip: globalSearch.data.length
+                                            },
+                                            updateQuery: updateGlobalSearchCache
+                                        })
+                                    }
+                                    hasMore={
+                                        !!globalSearch &&
+                                        globalSearch.data.length <
+                                            globalSearch.count
+                                    }
+                                >
+                                    <SANList
+                                        dataSource={
+                                            globalSearch && globalSearch.data
+                                        }
+                                        renderItem={(item, index) => (
+                                            <SANListItemDefault
+                                                key={index}
+                                                title={item.resource_title}
+                                                type={item.type}
+                                                hasIcon
+                                                onClick={() =>
+                                                    goToResource(item)
+                                                }
+                                            />
+                                        )}
+                                    />
+                                </SANInfiniteScroll>
+                            ) : (
+                                <SANEmpty />
+                            )}
+                        </>
+                    )}
+                </SANQuery>
             </SANLayoutContainer>
         </SANBox>
     )
