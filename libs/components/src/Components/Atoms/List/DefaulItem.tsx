@@ -16,7 +16,8 @@ const types = {
     article: i18n.t('components:types.article'),
     lesson: i18n.t('components:types.lesson'),
     question: i18n.t('components:types.question'),
-    video: i18n.t('components:types.video')
+    video: i18n.t('components:types.video'),
+    course: i18n.t('components:types.course')
 }
 
 type ITypes =

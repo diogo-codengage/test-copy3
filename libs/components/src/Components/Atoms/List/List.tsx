@@ -13,6 +13,7 @@ const SANList: React.FC<IProps> = SANStyled(ESListView)`
         background: ${theme('colors.white.10')};
         border-radius: ${theme('radii.base')};
         box-shadow: 0 1px 2px ${theme('colors.grey.2')};
+        border: 0.5pt solid ${theme('colors.grey.2')}
     }
 `
 
