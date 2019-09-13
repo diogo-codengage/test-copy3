@@ -1,10 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useMemo } from 'react'
 import styled, { css } from 'styled-components'
 
 import { theme, ifProp } from 'styled-tools'
 import { useTranslation } from 'react-i18next'
+import { RemoveScroll } from 'react-remove-scroll'
 
 import useOnClickOutside from 'sanar-ui/dist/Hooks/useOnClickOutside'
+import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
 import { SANInput, ISANInputProps } from '../../Atoms/Input'
 import { SANBox } from '../../Atoms/Box'
@@ -186,6 +188,7 @@ const SANSearch: React.FC<ISANSearchProps> = ({
     data = []
 }) => {
     const { t } = useTranslation('components')
+    const { width } = useWindowSize()
     const inputRef = useRef()
     const dropdownRef = useRef()
     const [items, setItems] = useState<IItem[]>([])
@@ -207,6 +210,8 @@ const SANSearch: React.FC<ISANSearchProps> = ({
         }
     }
 
+    const handleBlur = () => setFocus(false)
+
     const clickOutside = () => {
         !!items.length && setItems([])
         hasFocus && setFocus(false)
@@ -223,31 +228,34 @@ const SANSearch: React.FC<ISANSearchProps> = ({
     }, [data])
 
     return (
-        <Wrapper {...{ hasFocus }}>
-            <Padding {...{ hasFocus }}>
-                <Search
-                    iconRight='search-outline'
-                    round
-                    onKeyDown={handleKeyDown}
-                    onFocus={handleFocus}
-                    {...InputProps}
-                    hasItems={!!items.length}
-                    hasFocus={hasFocus}
-                    ref={inputRef}
-                />
-            </Padding>
-            {!!items.length && (
-                <Dropdown ref={dropdownRef} {...{ hasFocus }}>
-                    {items.map(renderItem(InputProps.value))}
-                    <Item
-                        onClick={seeMore}
-                        icon='menu-2-outline'
-                        title={t('search.seeMore')}
-                        {...{ hasFocus }}
+        <RemoveScroll enabled={hasFocus && width <= 414}>
+            <Wrapper {...{ hasFocus }}>
+                <Padding {...{ hasFocus }}>
+                    <Search
+                        iconRight='search-outline'
+                        round
+                        onKeyDown={handleKeyDown}
+                        onBlur={handleBlur}
+                        onFocus={handleFocus}
+                        {...InputProps}
+                        hasItems={!!items.length}
+                        hasFocus={hasFocus}
+                        ref={inputRef}
                     />
-                </Dropdown>
-            )}
-        </Wrapper>
+                </Padding>
+                {!!items.length && (
+                    <Dropdown ref={dropdownRef} {...{ hasFocus }}>
+                        {items.map(renderItem(InputProps.value))}
+                        <Item
+                            onClick={seeMore}
+                            icon='menu-2-outline'
+                            title={t('search.seeMore')}
+                            {...{ hasFocus }}
+                        />
+                    </Dropdown>
+                )}
+            </Wrapper>
+        </RemoveScroll>
     )
 }
 
