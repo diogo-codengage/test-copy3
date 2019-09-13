@@ -217,5 +217,10 @@ export default {
                 selectCourses: 'Escolha primeiro um curso'
             }
         }
+    },
+    search: {
+        title: 'Olá, {{name}}. Bem-vindo ao SanarFlix!',
+        subtitle:
+            'Nós temos milhares de conteúdos de medicina que se encaixam no seu perfil. O que você quer aprender hoje?'
     }
 }

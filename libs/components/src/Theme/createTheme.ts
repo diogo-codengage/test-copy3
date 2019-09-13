@@ -141,7 +141,8 @@ const defaultSpace: any = [
     '20px',
     '24px',
     '32px',
-    '48px'
+    '48px',
+    '60px'
 ]
 defaultSpace.xs = defaultSpace[2]
 defaultSpace.sm = defaultSpace[3]

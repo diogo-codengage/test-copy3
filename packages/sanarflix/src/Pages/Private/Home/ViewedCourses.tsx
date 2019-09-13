@@ -18,14 +18,14 @@ import {
     ICourse
 } from 'Apollo/Home/Queries/courses-last-viewed'
 
-export const responsive = [
+export const responsive = size => [
     {
         breakpoint: 1200,
         settings: {
-            slidesToShow: 3,
+            slidesToShow: 2,
             arrows: false,
             centerMode: true,
-            infinite: true,
+            infinite: size > 2,
             swipeToSlide: true
         }
     },
@@ -35,7 +35,7 @@ export const responsive = [
             slidesToShow: 2,
             arrows: false,
             centerMode: true,
-            infinite: true,
+            infinite: size > 2,
             swipeToSlide: true
         }
     },
@@ -45,7 +45,7 @@ export const responsive = [
             slidesToShow: 1,
             arrows: false,
             centerMode: true,
-            infinite: true,
+            infinite: size > 1,
             swipeToSlide: true
         }
     }
@@ -98,7 +98,9 @@ const FLXViewedCourses = ({ history }: RouteComponentProps) => {
                                 draggable
                                 lazyLoad
                                 swipeToSlide
-                                responsive={responsive}
+                                responsive={responsive(
+                                    data.courses.data.length
+                                )}
                             >
                                 {data.courses.data.map(renderCourse(history))}
                             </SANCarousel>

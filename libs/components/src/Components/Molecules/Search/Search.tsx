@@ -1,13 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useMemo } from 'react'
 import styled, { css } from 'styled-components'
 
 import { theme, ifProp } from 'styled-tools'
 import { useTranslation } from 'react-i18next'
+import { RemoveScroll } from 'react-remove-scroll'
+import FocusLock from 'react-focus-lock'
 
 import useOnClickOutside from 'sanar-ui/dist/Hooks/useOnClickOutside'
+import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
 import { SANInput, ISANInputProps } from '../../Atoms/Input'
 import { SANBox } from '../../Atoms/Box'
+import { SANButton } from '../../Atoms/Button'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
 
@@ -95,6 +99,7 @@ const Search = styled(SANInput)<{ hasItems: boolean; hasFocus: boolean }>`
 
 const Wrapper = styled.div`
     position: relative;
+    width: 100%;
 
     @media (max-width: 414px) {
         ${ifProp(
@@ -106,13 +111,16 @@ const Wrapper = styled.div`
                 left: 0;
                 right: 0;
                 bottom: 0;
-                z-index: 10;
+                z-index: 1000;
             `
         )}
     }
 `
 
 const Padding = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     @media (max-width: 414px) {
         ${ifProp(
             'hasFocus',
@@ -185,6 +193,7 @@ const SANSearch: React.FC<ISANSearchProps> = ({
     data = []
 }) => {
     const { t } = useTranslation('components')
+    const { width } = useWindowSize()
     const inputRef = useRef()
     const dropdownRef = useRef()
     const [items, setItems] = useState<IItem[]>([])
@@ -195,7 +204,7 @@ const SANSearch: React.FC<ISANSearchProps> = ({
             onEnter(e)
         }
         if (e.key === 'Escape') {
-            setFocus(false)
+            clickOutside()
         }
     }
 
@@ -206,9 +215,14 @@ const SANSearch: React.FC<ISANSearchProps> = ({
         }
     }
 
+    const handleBlur = () => setFocus(false)
+
     const clickOutside = () => {
         !!items.length && setItems([])
         hasFocus && setFocus(false)
+        if (!!inputRef && !!inputRef.current) {
+            inputRef.current.blur()
+        }
     }
 
     useOnClickOutside([inputRef, dropdownRef], clickOutside, [
@@ -222,31 +236,46 @@ const SANSearch: React.FC<ISANSearchProps> = ({
     }, [data])
 
     return (
-        <Wrapper {...{ hasFocus }}>
-            <Padding {...{ hasFocus }}>
-                <Search
-                    iconRight='search-outline'
-                    round
-                    onKeyDown={handleKeyDown}
-                    onFocus={handleFocus}
-                    {...InputProps}
-                    hasItems={!!items.length}
-                    hasFocus={hasFocus}
-                    ref={inputRef}
-                />
-            </Padding>
-            {!!items.length && (
-                <Dropdown ref={dropdownRef} {...{ hasFocus }}>
-                    {items.map(renderItem(InputProps.value))}
-                    <Item
-                        onClick={seeMore}
-                        icon='menu-2-outline'
-                        title={t('search.seeMore')}
-                        {...{ hasFocus }}
-                    />
-                </Dropdown>
-            )}
-        </Wrapper>
+        <RemoveScroll enabled={hasFocus && width <= 414}>
+            <FocusLock disabled={!hasFocus}>
+                <Wrapper {...{ hasFocus }}>
+                    <Padding {...{ hasFocus }}>
+                        <Search
+                            iconRight='search-outline'
+                            round
+                            onKeyDown={handleKeyDown}
+                            onBlur={clickOutside}
+                            onFocus={handleFocus}
+                            {...InputProps}
+                            hasItems={!!items.length}
+                            hasFocus={hasFocus}
+                            ref={inputRef}
+                        />
+                        {hasFocus && width <= 414 && (
+                            <SANButton
+                                onClick={clickOutside}
+                                variant='text'
+                                size='small'
+                                ml='xs'
+                            >
+                                {t('search.cancel')}
+                            </SANButton>
+                        )}
+                    </Padding>
+                    {!!items.length && (
+                        <Dropdown ref={dropdownRef} {...{ hasFocus }}>
+                            {items.map(renderItem(InputProps.value))}
+                            <Item
+                                onClick={seeMore}
+                                icon='menu-2-outline'
+                                title={t('search.seeMore')}
+                                {...{ hasFocus }}
+                            />
+                        </Dropdown>
+                    )}
+                </Wrapper>
+            </FocusLock>
+        </RemoveScroll>
     )
 }
 

@@ -62,6 +62,8 @@ const SANHeader: React.FC<ISANHeaderProps> = ({
     onBack,
     extra
 }) => {
+    const responsive = !!extra ? { xs: 24, sm: 12, md: 14 } : { xs: 24 }
+
     return (
         <SANHeaderStyled data-testid='san-header'>
             <SANLayoutContainer>
@@ -80,7 +82,7 @@ const SANHeader: React.FC<ISANHeaderProps> = ({
                     justify='space-between'
                     gutter={24}
                 >
-                    <SANCol xs={24} sm={12} md={14}>
+                    <SANCol {...responsive}>
                         <SANSessionTitle
                             {...{ ...SessionTitleProps, levelTitle: 4 }}
                         />

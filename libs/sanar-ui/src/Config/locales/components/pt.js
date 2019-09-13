@@ -42,6 +42,7 @@ export default {
         course: 'Curso'
     },
     search: {
-        seeMore: 'Ver mais resultados'
+        seeMore: 'Ver mais resultados',
+        cancel: 'Cancelar'
     }
 }

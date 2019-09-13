@@ -65,6 +65,7 @@ import { SANScroll } from 'Components/Atoms/Scroll'
 
 import { SANIcon } from 'Components/Atoms/Icon'
 import { SANSkeleton, ISANSkeletonProps } from 'Components/Atoms/Skeleton'
+import { SANSplashLoader } from 'Components/Atoms/SplashLoader'
 
 import { SANList, SANListItem, SANListItemDefault } from 'Components/Atoms/List'
 
@@ -133,5 +134,6 @@ export {
     SANAnimationSlide,
     SANSkeleton,
     ISANSkeletonProps,
-    SANSearch
+    SANSearch,
+    SANSplashLoader
 }
