@@ -12,7 +12,7 @@ export const getYears = () => {
     const currentYear = getCurrentYear()
     const years: Array<Year> = []
 
-    for (let i = start; i < currentYear; i++) {
+    for (let i = start; i <= currentYear; i++) {
         years.push(
             {
                 label: i.toString(),
