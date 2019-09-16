@@ -27,7 +27,8 @@ export default {
             lesson: 'Aula',
             question: 'Questão'
         },
-        search: 'Busque por cursos, aulas, resumos e muito mais'
+        search: 'Busque por cursos, aulas, resumos e muito mais',
+        foundResults: ' resultados encontrados para '
     },
     auth: {
         accessAccount: 'Acessar conta',

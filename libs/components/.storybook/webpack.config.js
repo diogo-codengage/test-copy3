@@ -26,7 +26,9 @@ module.exports = ({ config }) => {
     config.resolve = {
         ...config.resolve,
         alias: {
-            Components: path.resolve(__dirname, '../src/Components')
+            Components: path.resolve(__dirname, '../src/Components'),
+            Assets: path.resolve(__dirname, '../src/Assets'),
+            Theme: path.resolve(__dirname, '../src/Theme')
         }
     }
 

@@ -1,1 +1,1 @@
-export { default as SANBox } from './Box'
+export { default as SANBox, ISANBoxProps } from './Box'

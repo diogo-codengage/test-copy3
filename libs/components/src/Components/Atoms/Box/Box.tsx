@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styled, { css } from 'styled-components'
+import { css, StyledComponent } from 'styled-components'
 import {
     SpaceProps,
     space,
@@ -25,9 +25,9 @@ import {
 
 import { ifProp } from 'styled-tools'
 
-import { SANStyled } from '../../../Theme/createTheme'
+import { SANStyled, SANElement } from '../../../Theme/createTheme'
 
-interface IProps
+export interface ISANBoxProps
     extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'>,
         SpaceProps,
         FlexboxProps,
@@ -39,9 +39,12 @@ interface IProps
         PositionProps,
         ShadowProps {
     displayFlex?: boolean
+    as?: 'img'
+    src?: string
+    alt?: string
 }
 
-const SANBox: React.FC<IProps> = SANStyled('div')`
+const SANBox = SANStyled('div')`
     ${compose(
         space,
         flexbox,
@@ -62,4 +65,4 @@ const SANBox: React.FC<IProps> = SANStyled('div')`
     )}
 `
 
-export default SANBox
+export default SANBox as SANElement<ISANBoxProps>

@@ -4,6 +4,17 @@ import { RouteComponentProps } from 'react-router'
 import { useTranslation } from 'react-i18next'
 
 import {
+    GET_LAST_ACCESSED,
+    ILastAccessed
+} from 'Apollo/Course/Queries/last-accessed'
+import {
+    GET_NEXT_CONTENT,
+    INextContent
+} from 'Apollo/Course/Queries/next-content'
+import { IType } from 'Apollo/Course/Queries/course'
+
+import FLXBanner from 'Components/Banner'
+import {
     SANTypography,
     SANBox,
     SANLayoutContainer,
@@ -12,19 +23,6 @@ import {
     SANCol,
     SANQuery
 } from '@sanar/components'
-import {
-    GET_LAST_ACCESSED,
-    ILastAccessed
-} from 'Apollo/Course/Queries/last-accessed'
-import {
-    GET_NEXT_CONTENT,
-    INextContent
-} from 'Apollo/Course/Queries/next-content'
-
-import FLXBanner from 'Components/Banner'
-
-import baseQuestions from 'Assets/images/banners/base-questions.png'
-import { IType } from 'Apollo/Course/Queries/course'
 
 // Images
 import document from 'Assets/images/resources/document.png'
@@ -32,6 +30,7 @@ import question from 'Assets/images/resources/question.png'
 import flowchart from 'Assets/images/resources/flowchart.png'
 import mentalmap from 'Assets/images/resources/mentalmap.png'
 import article from 'Assets/images/resources/article.png'
+import baseQuestions from 'Assets/images/banners/base-questions.png'
 
 type IResourceType = 'Document' | 'Video' | 'Question'
 

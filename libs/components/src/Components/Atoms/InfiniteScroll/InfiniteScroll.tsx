@@ -26,6 +26,7 @@ const SANSpinStyled = styled(SANSpin)`
         align-items: center;
         justify-content: center;
         padding: ${theme('space.sm')};
+        padding-top: ${theme('space.xxl')};
     }
 `
 

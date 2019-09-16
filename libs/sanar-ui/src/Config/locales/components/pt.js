@@ -31,6 +31,16 @@ export default {
         pass4:
             'Confira o gabarito e faça a avaliação de como foi, analisando quais assuntos foram mais fáceis ou mais difíceis para você e onde você precisa melhorar.'
     },
+    types: {
+        resume: 'Resumo',
+        mentalmap: 'Mapa mental',
+        flowchart: 'Fluxograma',
+        article: 'Artigos e Diretrizes',
+        lesson: 'Aula',
+        question: 'Questão',
+        video: 'Video',
+        course: 'Curso'
+    },
     search: {
         seeMore: 'Ver mais resultados',
         cancel: 'Cancelar'

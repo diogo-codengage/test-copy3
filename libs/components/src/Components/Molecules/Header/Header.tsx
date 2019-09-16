@@ -19,7 +19,7 @@ const SANHeaderStyled = styled.div`
     border-bottom: 1px solid ${theme('colors.grey.2')};
     display: flex;
     align-items: center;
-
+    background: ${theme('colors.white.10')};
     ${theme('mediaQueries.down.sm')} {
         padding: ${theme('space.xl')} 0;
     }
