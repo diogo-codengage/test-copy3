@@ -216,17 +216,18 @@ const SANSearch: React.FC<ISANSearchProps> = ({
         }
     }
 
-    const handleBlur = e => {
-        e.stopPropagation()
-        setFocus(false)
-    }
-
     const clickOutside = () => {
         !!items.length && setItems([])
         hasFocus && setFocus(false)
         if (!!inputRef && !!inputRef.current) {
             inputRef.current.blur()
         }
+    }
+
+    const handleSeeMore = () => {
+        !!seeMore && seeMore()
+        !!items.length && setItems([])
+        hasFocus && setFocus(false)
     }
 
     useOnClickOutside([inputRef, dropdownRef], clickOutside, [
@@ -248,7 +249,6 @@ const SANSearch: React.FC<ISANSearchProps> = ({
                             iconRight='search-outline'
                             round
                             onKeyDown={handleKeyDown}
-                            onBlur={handleBlur}
                             onFocus={handleFocus}
                             {...InputProps}
                             hasItems={!!items.length}
@@ -270,7 +270,7 @@ const SANSearch: React.FC<ISANSearchProps> = ({
                         <Dropdown ref={dropdownRef} {...{ hasFocus }}>
                             {items.map(renderItem(InputProps.value))}
                             <Item
-                                onClick={seeMore}
+                                onClick={handleSeeMore}
                                 icon='menu-2-outline'
                                 title={t('search.seeMore')}
                                 {...{ hasFocus }}
