@@ -76,11 +76,12 @@ const ESMainMenu = forwardRef(
         const classes = classNames(
             'es-main-menu',
             `es-main-menu__${theme}`,
-            className,
-            {
-                'es-main-menu__classroom': context === 'classroom'
-            }
+            className
         )
+
+        const classesWrapper = classNames({
+            'es-main-menu__classroom': context === 'classroom'
+        })
 
         const scrollableClasses = classNames(
             'es-main-menu__content--scrollable',
@@ -157,7 +158,10 @@ const ESMainMenu = forwardRef(
         }))
 
         return (
-            <RemoveScroll enabled={toggle && width <= breakpoint}>
+            <RemoveScroll
+                className={classesWrapper}
+                enabled={toggle && width <= breakpoint}
+            >
                 <div className={classes}>
                     <div className={classesContent}>
                         {typeof title === 'string' ? (
