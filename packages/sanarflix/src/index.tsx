@@ -26,4 +26,4 @@ const FLXApp: React.FC = () => (
 )
 
 ReactDOM.render(<FLXApp />, document.getElementById('root'))
-serviceWorker.unregister()
+serviceWorker.register()
