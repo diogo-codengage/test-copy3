@@ -65,6 +65,10 @@ const FLXClassroomQuizProvider: React.FC = ({ children }) => {
                 mb: 0
             })
         }
+        return () =>
+            setFooterProps({
+                mb: 0
+            })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [width])
 
