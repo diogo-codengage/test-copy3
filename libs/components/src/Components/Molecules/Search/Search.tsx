@@ -105,11 +105,12 @@ const Wrapper = styled.div`
         ${ifProp(
             'hasFocus',
             css`
+                overflow: hidden;
                 background-color: ${theme('colors.white.10')};
                 position: fixed;
                 top: 0;
-                left: 0;
                 right: 0;
+                left: 0;
                 bottom: 0;
                 z-index: 1000;
             `
@@ -214,6 +215,9 @@ const SANSearch: React.FC<ISANSearchProps> = ({
         if (!!data && !!data.length) {
             setItems(data)
         }
+
+        window.scrollTo(0, 0)
+        document.body.scrollTop = 0
     }
 
     const clickOutside = () => {
