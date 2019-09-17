@@ -58,11 +58,13 @@ const defaultValue: IFLXLayoutProviderValue = {
 const Context = createContext(defaultValue)
 export const useLayoutContext = () => useContext(Context)
 
+const hasClassroom = window.location.href.split('/').includes('sala-aula')
+
 const initialState: IInitialState = {
     indexMenu: 0,
     menuTitle: 'Menu',
-    darkMode: false,
-    menuContext: 'general'
+    darkMode: hasClassroom,
+    menuContext: hasClassroom ? 'classroom' : 'general'
 }
 
 const reducer = (state = initialState, { payload, type }) => {

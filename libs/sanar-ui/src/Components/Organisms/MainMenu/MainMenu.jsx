@@ -160,7 +160,10 @@ const ESMainMenu = forwardRef(
         return (
             <RemoveScroll
                 className={classesWrapper}
-                enabled={toggle && width <= breakpoint}
+                enabled={
+                    (toggle && width <= breakpoint) ||
+                    (toggle && context === 'classroom')
+                }
             >
                 <div className={classes}>
                     <div className={classesContent}>
