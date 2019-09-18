@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
     SANNavigationList,
@@ -14,15 +15,33 @@ import {
 } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
+import FLXLogout from 'Components/ModalLogout'
 import { useLayoutContext } from '../Context'
 
-const FLXMenuAccount: React.FC = () => {
+import { getInstance } from 'Config/AWSCognito'
+
+const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('sanarflix')
     const { me } = useAuthContext()
     const { onCloseMenu } = useLayoutContext()
+    const [visibleLogout, setVisibleLogout] = useState(false)
+
+    const signOut = () => {
+        const config = getInstance()
+        const user = config.userPool.getCurrentUser()
+        if (!!user) {
+            user.signOut()
+            history.push('/')
+        }
+    }
 
     return (
         <>
+            <FLXLogout
+                visible={visibleLogout}
+                onLeave={signOut}
+                onCancel={() => setVisibleLogout(false)}
+            />
             <SANBox px='md'>
                 <SANButton
                     mb='md'
@@ -104,7 +123,7 @@ const FLXMenuAccount: React.FC = () => {
                     title={t('mainMenu.account.support')}
                 />
                 <SANNavigationListItem
-                    onClick={onCloseMenu}
+                    onClick={() => setVisibleLogout(true)}
                     dataTestid='flix_menu_my-account__go_to--leave-account'
                     title={t('mainMenu.account.signOut')}
                 />
@@ -113,4 +132,4 @@ const FLXMenuAccount: React.FC = () => {
     )
 }
 
-export default FLXMenuAccount
+export default withRouter(FLXMenuAccount)

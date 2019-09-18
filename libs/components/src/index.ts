@@ -43,6 +43,7 @@ import { SANQuestionMap } from 'Components/Molecules/QuestionMap'
 import { SANQuestion } from 'Components/Molecules/Question'
 import { SANCardSelectFilter } from 'Components/Molecules/CardSelectFilter'
 import { SANSearch } from 'Components/Molecules/Search'
+import { SANModal, SANModalFooter } from 'Components/Molecules/Modal'
 import {
     SANCollapseTheme,
     SANCollapseThemePanel,
@@ -137,5 +138,7 @@ export {
     SANSkeleton,
     ISANSkeletonProps,
     SANSearch,
-    SANSplashLoader
+    SANSplashLoader,
+    SANModal,
+    SANModalFooter
 }

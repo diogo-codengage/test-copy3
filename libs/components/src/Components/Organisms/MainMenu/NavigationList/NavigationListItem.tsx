@@ -51,7 +51,7 @@ const propTypes = {
     to: PropTypes.string,
     title: PropTypes.string.isRequired,
     dataTestid: PropTypes.string.isRequired,
-    icon: PropTypes.node.isRequired,
+    icon: PropTypes.node,
     onClick: PropTypes.func
 }
 

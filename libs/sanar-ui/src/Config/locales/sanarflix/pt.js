@@ -28,7 +28,13 @@ export default {
             question: 'Questão'
         },
         search: 'Busque por cursos, aulas, resumos e muito mais',
-        foundResults: ' resultados encontrados para '
+        foundResults: ' resultados encontrados para ',
+        leave: 'Sair',
+        back: 'Voltar'
+    },
+    logout: {
+        message: 'Tem certeza que deseja sair da conta agora?',
+        signOut: 'Sair da Conta'
     },
     auth: {
         accessAccount: 'Acessar conta',
