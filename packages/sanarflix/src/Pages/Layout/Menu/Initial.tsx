@@ -7,7 +7,8 @@ import {
     SANNavigationList,
     SANNavigationListItem,
     SANEvaIcon,
-    SANLeftOff
+    SANLeftOff,
+    SANLeftOffError
 } from '@sanar/components'
 
 import { useLayoutContext } from '../Context'
@@ -61,6 +62,11 @@ const FLXLeftOff = withRouter(({ history }) => {
             }`
         )
     }
+
+    if (lastAccessed && lastAccessed.hasError) {
+        return <SANLeftOffError />
+    }
+
     return (
         <SANLeftOff
             label={t('course.continue')}
