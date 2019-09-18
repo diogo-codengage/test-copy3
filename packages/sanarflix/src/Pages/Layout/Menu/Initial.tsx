@@ -110,7 +110,12 @@ const FLXLeftOff = withRouter(({ history }) => {
 
 const FLXMenuInitial: React.FC = () => {
     const { t } = useTranslation('sanarflix')
-    const { onCloseMenu } = useLayoutContext()
+    const { onCloseMenu, setMenuTab } = useLayoutContext()
+
+    const handleAccount = () => {
+        setMenuTab(2)
+        onCloseMenu()
+    }
 
     return (
         <>
@@ -137,6 +142,13 @@ const FLXMenuInitial: React.FC = () => {
                     onClick={onCloseMenu}
                     dataTestid='flx-menu__go-to--questions'
                     title={t('mainMenu.initial.questions')}
+                />
+                <SANNavigationListItem
+                    to='/portal/minha-conta'
+                    icon={<SANEvaIcon name='person-outline' color='default' />}
+                    onClick={handleAccount}
+                    dataTestid='flx-menu__go-to--account'
+                    title={t('mainMenu.initial.account')}
                 />
             </SANNavigationList>
         </>

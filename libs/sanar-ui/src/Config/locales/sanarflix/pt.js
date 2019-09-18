@@ -170,6 +170,7 @@ export default {
         }
     },
     mainMenu: {
+        back: 'Voltar ao menu principal',
         initial: {
             begin: 'Início',
             allCourses: 'Todos os cursos',
@@ -178,7 +179,21 @@ export default {
             bookmarks: 'Favoritos',
             invites: 'Indique e ganhe',
             account: 'Minha conta',
-            questions: 'Banco de questões'
+            questions: 'Banco de questões',
+            account: 'Minha conta'
+        },
+        account: {
+            title: 'Minha Conta',
+            management: 'Gerenciamento',
+            myData: 'Meus dados',
+            changePassword: 'Trocar minha senha',
+            signature: 'Assinatura',
+            myPlan: 'Meu plano',
+            paymentMethods: 'Formas de pagamento',
+            unsubscribe: 'Cancelar assinatura',
+            otherLinks: 'Outros links',
+            support: 'Suporte',
+            signOut: 'Sair da conta'
         }
     },
     classroom: {

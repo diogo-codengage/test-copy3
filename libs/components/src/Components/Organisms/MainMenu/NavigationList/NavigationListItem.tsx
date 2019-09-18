@@ -10,7 +10,8 @@ const SANNavigationListStyled = styled.span`
     li {
         height: 48px !important;
 
-        a {
+        a,
+        div {
             height: 100%;
             color: ${theme('colors.white.7')};
 

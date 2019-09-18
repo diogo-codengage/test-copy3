@@ -3,6 +3,7 @@ import React, { createContext, useState, useContext } from 'react'
 interface IMe {
     id: string
     name: string
+    profile_picture: string
 }
 
 type FLXAuthContextValues = {

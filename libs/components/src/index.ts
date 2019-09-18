@@ -21,7 +21,8 @@ import {
     SANLeftOffError,
     SANLeftOffLoading,
     SANNavigationList,
-    SANNavigationListItem
+    SANNavigationListItem,
+    SANAvatarMenu
 } from 'Components/Organisms/MainMenu'
 import { createTheme as SANThemeCreateTheme } from 'Theme'
 import { SANSpin } from 'Components/Atoms/Spin'
@@ -92,6 +93,7 @@ export {
     SANLeftOffLoading,
     SANNavigationList,
     SANNavigationListItem,
+    SANAvatarMenu,
     SANThemeCreateTheme,
     SANSpin,
     SANInfiniteScroll,
