@@ -8,3 +8,5 @@ export { default as SANNavigationList } from './NavigationList/NavigationList'
 export {
     default as SANNavigationListItem
 } from './NavigationList/NavigationListItem'
+
+export { default as SANAvatarMenu } from './Avatar'

@@ -21,7 +21,8 @@ import {
     SANLeftOffError,
     SANLeftOffLoading,
     SANNavigationList,
-    SANNavigationListItem
+    SANNavigationListItem,
+    SANAvatarMenu
 } from 'Components/Organisms/MainMenu'
 import { createTheme as SANThemeCreateTheme } from 'Theme'
 import { SANSpin } from 'Components/Atoms/Spin'
@@ -42,6 +43,7 @@ import { SANQuestionMap } from 'Components/Molecules/QuestionMap'
 import { SANQuestion } from 'Components/Molecules/Question'
 import { SANCardSelectFilter } from 'Components/Molecules/CardSelectFilter'
 import { SANSearch } from 'Components/Molecules/Search'
+import { SANModal, SANModalFooter } from 'Components/Molecules/Modal'
 import {
     SANCollapseTheme,
     SANCollapseThemePanel,
@@ -92,6 +94,7 @@ export {
     SANLeftOffLoading,
     SANNavigationList,
     SANNavigationListItem,
+    SANAvatarMenu,
     SANThemeCreateTheme,
     SANSpin,
     SANInfiniteScroll,
@@ -135,5 +138,7 @@ export {
     SANSkeleton,
     ISANSkeletonProps,
     SANSearch,
-    SANSplashLoader
+    SANSplashLoader,
+    SANModal,
+    SANModalFooter
 }

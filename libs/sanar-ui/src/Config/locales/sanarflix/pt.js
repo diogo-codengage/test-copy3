@@ -28,7 +28,13 @@ export default {
             question: 'Questão'
         },
         search: 'Busque por cursos, aulas, resumos e muito mais',
-        foundResults: ' resultados encontrados para '
+        foundResults: ' resultados encontrados para ',
+        leave: 'Sair',
+        back: 'Voltar'
+    },
+    logout: {
+        message: 'Tem certeza que deseja sair da conta agora?',
+        signOut: 'Sair da Conta'
     },
     auth: {
         accessAccount: 'Acessar conta',
@@ -170,6 +176,7 @@ export default {
         }
     },
     mainMenu: {
+        back: 'Voltar ao menu principal',
         initial: {
             begin: 'Início',
             allCourses: 'Todos os cursos',
@@ -178,7 +185,21 @@ export default {
             bookmarks: 'Favoritos',
             invites: 'Indique e ganhe',
             account: 'Minha conta',
-            questions: 'Banco de questões'
+            questions: 'Banco de questões',
+            account: 'Minha conta'
+        },
+        account: {
+            title: 'Minha Conta',
+            management: 'Gerenciamento',
+            myData: 'Meus dados',
+            changePassword: 'Trocar minha senha',
+            signature: 'Assinatura',
+            myPlan: 'Meu plano',
+            paymentMethods: 'Formas de pagamento',
+            unsubscribe: 'Cancelar assinatura',
+            otherLinks: 'Outros links',
+            support: 'Suporte',
+            signOut: 'Sair da conta'
         }
     },
     classroom: {

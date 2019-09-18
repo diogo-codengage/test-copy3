@@ -6,6 +6,8 @@ import React, {
     useRef
 } from 'react'
 
+import { useTranslation } from 'react-i18next'
+
 import { SANClassroomMenuHeader } from '@sanar/components'
 import { withRouter } from 'react-router'
 
@@ -91,6 +93,7 @@ interface INagivations {
 }
 
 const FLXLayoutProvider: any = withRouter(({ history, children }) => {
+    const { t } = useTranslation('sanarflix')
     const [state, dispatch] = useReducer(reducer, initialState)
     const [navigations, setNavigations] = useState<INagivations>(
         defaultNavigations
@@ -136,6 +139,15 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
                         ),
                         darkMode: true,
                         menuContext: 'classroom'
+                    }
+                })
+                break
+            case 2:
+                dispatch({
+                    type: 'changeMenuTab',
+                    payload: {
+                        indexMenu: index,
+                        menuTitle: t('mainMenu.account.title')
                     }
                 })
                 break

@@ -15,20 +15,17 @@ export interface ISANDividerProps
         ColorProps,
         FlexboxProps {}
 
-const SANDivider = SANStyled.div<ISANDividerProps>`
+const SANDivider = SANStyled.hr<ISANDividerProps>`
     ${space}
     ${color}
     ${flexbox}
     
     background-color: ${props =>
-        props.backgroundColor || props.bg || theme('colors.grey.2')};
+        theme(`colors.${props.backgroundColor}`) ||
+        theme(`colors.${props.bg}`) ||
+        theme('colors.grey.2')};
 
-    display: block;
-    clear: both;
-    width: 100%;
-    min-width: 100%;
     height: 1px;
-    position: relative;
-    top: -0.06em;
+    border: 0;
 `
 export default SANDivider

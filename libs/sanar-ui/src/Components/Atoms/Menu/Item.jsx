@@ -24,7 +24,7 @@ const ESItem = ({ className, to, activeClassName, children, ...props }) => {
 
     return (
         <Item className={classes} {...props}>
-            {children}
+            <div className='es-item--nav-link'>{children}</div>
         </Item>
     )
 }

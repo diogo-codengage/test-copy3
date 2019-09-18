@@ -10,7 +10,8 @@ const SANNavigationListStyled = styled.span`
     li {
         height: 48px !important;
 
-        a {
+        a,
+        div {
             height: 100%;
             color: ${theme('colors.white.7')};
 
@@ -50,7 +51,7 @@ const propTypes = {
     to: PropTypes.string,
     title: PropTypes.string.isRequired,
     dataTestid: PropTypes.string.isRequired,
-    icon: PropTypes.node.isRequired,
+    icon: PropTypes.node,
     onClick: PropTypes.func
 }
 
