@@ -3,11 +3,14 @@ import React, {
     useState,
     createContext,
     useReducer,
-    useRef
+    useRef,
+    useEffect
 } from 'react'
 
 import { SANClassroomMenuHeader } from '@sanar/components'
 import { withRouter } from 'react-router'
+import { useApolloClient } from '@apollo/react-hooks'
+import { GET_LAST_ACCESSED } from 'Apollo/Menu/Queries/last-accessed'
 
 type IMenuContext = 'general' | 'classroom'
 
@@ -33,6 +36,8 @@ type IFLXLayoutProviderValue = {
     setMenuState: (state: boolean) => void
     footerProps: Object
     setFooterProps: (state: Object) => void
+    lastAccessed: any
+    setLastAccessed: (item) => void
 }
 
 const defaultNavigations = {
@@ -52,7 +57,9 @@ const defaultValue: IFLXLayoutProviderValue = {
     menuState: false,
     setMenuState: () => {},
     footerProps: false,
-    setFooterProps: () => {}
+    setFooterProps: () => {},
+    lastAccessed: {},
+    setLastAccessed: () => {}
 }
 
 const Context = createContext(defaultValue)
@@ -94,10 +101,14 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
         defaultNavigations
     )
     const [menuState, setMenuState] = useState(false)
+    const [lastAccessed, setLastAccessed] = useState()
+
     const [footerProps, setFooterProps] = useState({})
 
     //TODO: type Ref with TS into @sanar/components
     const menuRef: any = useRef()
+
+    const client = useApolloClient()
 
     const onCloseMenu = () => {
         menuRef && menuRef.current && menuRef.current.setToggle(false)
@@ -106,6 +117,27 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
     const onOpenMenu = () => {
         menuRef && menuRef.current && menuRef.current.setToggle(true)
     }
+
+    useEffect(() => {
+        const loadLastAcessed = async () => {
+            try {
+                const { data } = await client.query({
+                    query: GET_LAST_ACCESSED,
+                    fetchPolicy: 'network-only'
+                })
+
+                setLastAccessed(data.lastAccessed)
+            } catch (e) {
+                setLastAccessed({ hasError: true, loading: false })
+            }
+        }
+
+        loadLastAcessed()
+    }, [])
+
+    useEffect(() => {
+        console.log('last accessed')
+    }, [lastAccessed])
 
     const setMenuTab = index => {
         switch (index) {
@@ -159,7 +191,9 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
         menuState,
         setMenuState,
         footerProps,
-        setFooterProps
+        setFooterProps,
+        lastAccessed,
+        setLastAccessed
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

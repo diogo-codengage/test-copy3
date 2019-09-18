@@ -12,6 +12,7 @@ const ESCardContinueCourse = ({
     module,
     description,
     borderRadius,
+    resourceType,
     loading
 }) => {
     const classes = classNames('es-card-continue-course', className, {
@@ -44,7 +45,14 @@ const ESCardContinueCourse = ({
                     </ESTypography>
                 </div>
 
-                <ESEvaIcon name='play-circle' size='xlarge' />
+                <ESEvaIcon
+                    name={
+                        resourceType === 'Video'
+                            ? 'play-circle'
+                            : 'chevron-right-outline'
+                    }
+                    size='xlarge'
+                />
             </ESSkeleton>
         </div>
     )
@@ -56,10 +64,12 @@ ESCardContinueCourse.propTypes = {
     module: PropTypes.string,
     description: PropTypes.string,
     borderRadius: PropTypes.bool,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    resourceType: PropTypes.oneOf(['Video', 'Document', 'Question'])
 }
 ESCardContinueCourse.defaultProps = {
-    borderRadius: true
+    borderRadius: true,
+    resourceType: 'Video'
 }
 
 export default ESCardContinueCourse

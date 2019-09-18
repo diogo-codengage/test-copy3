@@ -5,6 +5,10 @@
     background-color: @white-1;
     cursor: pointer;
 
+    &--title {
+        color: @white !important;
+    }
+
     &__class {
         border: 1px solid @grey-2;
         border-radius: @border-radius-base;
@@ -25,9 +29,10 @@
             position: relative;
             flex: 1;
             background: @white;
+            min-width: 88px;
 
             &-background {
-                background-size: cover;
+                background-size: contain;
                 background-repeat: no-repeat;
                 background-position: center;
                 width: 100%;
@@ -48,6 +53,14 @@
                 align-items: center;
                 justify-content: center;
                 background-color: @grey-6;
+            }
+        }
+
+        &--video {
+            background: none;
+
+            .es-left-off__class--img-background {
+                background-size: cover;
             }
         }
     }
