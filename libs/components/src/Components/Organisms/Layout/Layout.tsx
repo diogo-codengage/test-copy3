@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
-import { ifProp, theme } from 'styled-tools'
+import { ifProp, theme, switchProp } from 'styled-tools'
 
 import { SANMainMenu } from '../MainMenu'
 import SANLayoutFooter from './Footer'
@@ -33,6 +33,12 @@ const SANContentContainer = styled.section`
         `
     )}
 
+    ${switchProp('context', {
+        classroom: css`
+            padding-bottom: 0;
+        `
+    })}
+
     @media screen and (min-width: 1025px) {
         padding-left: 56px;
         padding-bottom: 0;
@@ -59,6 +65,7 @@ const SANLayout: React.FC<IProps> = ({
     MenuProps,
     FooterProps,
     showContinueBar,
+    context,
     children
 }) => {
     const MergeMenuProps = {
@@ -76,7 +83,7 @@ const SANLayout: React.FC<IProps> = ({
     return (
         <SANLayoutStyled>
             <SANMainMenu {...MergeMenuProps} />
-            <SANContentContainer {...{ showContinueBar }}>
+            <SANContentContainer {...{ showContinueBar, context }}>
                 <SANLayoutContentStyled>{children}</SANLayoutContentStyled>
                 <SANLayoutFooter {...MergeFooterProps} />
             </SANContentContainer>
@@ -88,7 +95,8 @@ const propTypes = {
     MenuProps: PropTypes.object.isRequired,
     ContentProps: PropTypes.object,
     FooterProps: PropTypes.object.isRequired,
-    showContinueBar: PropTypes.bool
+    showContinueBar: PropTypes.bool,
+    context: PropTypes.string
 }
 
 SANLayout.propTypes = propTypes

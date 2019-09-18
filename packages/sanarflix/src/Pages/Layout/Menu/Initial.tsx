@@ -7,19 +7,11 @@ import {
     SANNavigationList,
     SANNavigationListItem,
     SANEvaIcon,
-    SANLeftOff,
-    SANLeftOffError,
-    SANLeftOffLoading,
-    SANQuery
+    SANLeftOff
 } from '@sanar/components'
 
 import { useLayoutContext } from '../Context'
-import {
-    GET_LAST_ACCESSED,
-    IType,
-    ILastAccessed,
-    ILastAccessedPayload
-} from 'Apollo/Menu/Queries/last-accessed'
+import { IType, ILastAccessed } from 'Apollo/Menu/Queries/last-accessed'
 
 // Images
 import questionImage from 'Assets/images/course-items/question.svg'

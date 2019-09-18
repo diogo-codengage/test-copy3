@@ -13,6 +13,7 @@ import { useApolloClient } from '@apollo/react-hooks'
 import { GET_LAST_ACCESSED } from 'Apollo/Menu/Queries/last-accessed'
 
 type IMenuContext = 'general' | 'classroom'
+type IContext = 'general' | 'classroom'
 
 interface IInitialState {
     indexMenu: number
@@ -38,6 +39,8 @@ type IFLXLayoutProviderValue = {
     setFooterProps: (state: Object) => void
     lastAccessed: any
     setLastAccessed: (item) => void
+    context: any
+    setContext: (context) => void
 }
 
 const defaultNavigations = {
@@ -59,7 +62,9 @@ const defaultValue: IFLXLayoutProviderValue = {
     footerProps: false,
     setFooterProps: () => {},
     lastAccessed: {},
-    setLastAccessed: () => {}
+    setLastAccessed: () => {},
+    context: {},
+    setContext: () => {}
 }
 
 const Context = createContext(defaultValue)
@@ -101,6 +106,7 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
         defaultNavigations
     )
     const [menuState, setMenuState] = useState(false)
+    const [context, setContext] = useState(false)
     const [lastAccessed, setLastAccessed] = useState()
 
     const [footerProps, setFooterProps] = useState({})
@@ -133,11 +139,8 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
         }
 
         loadLastAcessed()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    useEffect(() => {
-        console.log('last accessed')
-    }, [lastAccessed])
 
     const setMenuTab = index => {
         switch (index) {
@@ -193,7 +196,9 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
         footerProps,
         setFooterProps,
         lastAccessed,
-        setLastAccessed
+        setLastAccessed,
+        context,
+        setContext
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

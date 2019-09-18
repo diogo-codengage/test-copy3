@@ -42,7 +42,8 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
         menuContext,
         setMenuState,
         footerProps,
-        lastAccessed
+        lastAccessed,
+        context
     } = useLayoutContext()
     const [showModalTerms, setShowModalTerms] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
@@ -133,12 +134,11 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
         ...footerProps
     }
 
-    console.log(!!lastAccessed)
-
     return (
         <>
             <SANLayout
-                showContinueBar={!!lastAccessed}
+                showContinueBar={context !== 'classroom' && !!lastAccessed}
+                context={context}
                 FooterProps={FooterProps}
                 MenuProps={MenuProps}
             >
