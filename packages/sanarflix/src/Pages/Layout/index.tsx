@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { withRouter, RouterProps } from 'react-router'
+import { useLayoutContext } from './Context'
 
 import {
     SANLayout,
@@ -9,14 +12,16 @@ import {
     SANTypography
 } from '@sanar/components'
 import FLXMenuContent from './Menu'
-
-import { withRouter, RouterProps } from 'react-router'
-import { useLayoutContext } from './Context'
+import FLXModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 
 import logo from 'Assets/images/brand/logo-menu.svg'
 import logoFooter from 'Assets/images/brand/logo-grey.svg'
-import FLXModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
-import { useTranslation } from 'react-i18next'
+
+const resources = {
+    Document: 'documento',
+    Video: 'video',
+    Question: 'quiz'
+}
 
 const ButtonAbout = ({ darkMode, ...props }) => (
     <SANButton
@@ -36,7 +41,9 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
         darkMode,
         menuContext,
         setMenuState,
-        footerProps
+        footerProps,
+        lastAccessed,
+        context
     } = useLayoutContext()
     const [showModalTerms, setShowModalTerms] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
@@ -54,7 +61,23 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
         onHome: () => history.push('/portal/inicio'),
         context: menuContext,
         theme: darkMode ? 'dark' : 'primary',
-        onToggle: setMenuState
+        onToggle: setMenuState,
+        continueCourseProps: {
+            loading: !lastAccessed,
+            ...(lastAccessed && {
+                module: lastAccessed.theme_title,
+                description: lastAccessed.content_name,
+                resourceType: lastAccessed.resource_type,
+                onContinue: () =>
+                    history.push(
+                        `/portal/sala-aula/${lastAccessed.course.id}/${
+                            lastAccessed.theme_id
+                        }/${resources[lastAccessed.resource_type]}/${
+                            lastAccessed.resource_id
+                        }`
+                    )
+            })
+        }
     }
 
     const Copyright = () => {
@@ -114,7 +137,8 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
     return (
         <>
             <SANLayout
-                showContinueBar={true}
+                showContinueBar={context !== 'classroom' && !!lastAccessed}
+                context={context}
                 FooterProps={FooterProps}
                 MenuProps={MenuProps}
             >

@@ -8,6 +8,7 @@ interface IProps {
     onOpenOrClose: () => void
     onHome: () => void
     showContinueBar?: boolean
+    continueProps?: any
     theme?: Theme
 }
 

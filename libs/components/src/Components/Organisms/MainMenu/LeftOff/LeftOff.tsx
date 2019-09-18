@@ -7,6 +7,7 @@ import { ESLeftOff } from 'sanar-ui/dist/Components/Organisms/MainMenu'
 type IProps = {
     title?: string
     thumbnail?: string
+    resourceType?: string
     classReference?: number | string
     moduleReference?: number | string
     label?: string

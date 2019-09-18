@@ -20,6 +20,9 @@ const ESLeftOff = ({
 }) => {
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-left-off', className)
+    const classesImage = classNames('es-left-off__class--img', {
+        'es-left-off__class--video': resourceType === 'Video'
+    })
 
     return (
         <div className={classes} onClick={onClick}>
@@ -27,7 +30,11 @@ const ESLeftOff = ({
                 <ESSkeleton paragraph={{ rows: 3 }} dark />
             ) : (
                 <>
-                    <ESTypography level={6} className='mb-xs'>
+                    <ESTypography
+                        className='es-left-off--title mb-xs'
+                        ellipsis
+                        level={6}
+                    >
                         {title}
                     </ESTypography>
                     <ESTypography
@@ -37,7 +44,7 @@ const ESLeftOff = ({
                         {label || t('mainMenu.leftOff')}
                     </ESTypography>
                     <div className='es-left-off__class'>
-                        <div className='es-left-off__class--img'>
+                        <div className={classesImage}>
                             <div
                                 className='es-left-off__class--img-background'
                                 style={{ backgroundImage: `url(${thumbnail})` }}

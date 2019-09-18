@@ -7,19 +7,11 @@ import {
     SANNavigationList,
     SANNavigationListItem,
     SANEvaIcon,
-    SANLeftOff,
-    SANLeftOffError,
-    SANLeftOffLoading,
-    SANQuery
+    SANLeftOff
 } from '@sanar/components'
 
 import { useLayoutContext } from '../Context'
-import {
-    GET_LAST_ACCESSED,
-    IType,
-    ILastAccessed,
-    ILastAccessedPayload
-} from 'Apollo/Menu/Queries/last-accessed'
+import { IType, ILastAccessed } from 'Apollo/Menu/Queries/last-accessed'
 
 // Images
 import questionImage from 'Assets/images/course-items/question.svg'
@@ -31,7 +23,7 @@ import documentImage from 'Assets/images/course-items/document.svg'
 const resources = {
     Document: 'documento',
     Video: 'video',
-    Question: 'quiz'
+    Quiz: 'questoes'
 }
 
 const configureThumbnail = (type: IType, resourceType, image) => {
@@ -58,6 +50,8 @@ const configureThumbnail = (type: IType, resourceType, image) => {
 
 const FLXLeftOff = withRouter(({ history }) => {
     const { t } = useTranslation('sanarflix')
+    const { lastAccessed } = useLayoutContext()
+
     const goToResource = (lastAccessed: ILastAccessed) => {
         history.push(
             `/portal/sala-aula/${lastAccessed.course.id}/${
@@ -68,43 +62,22 @@ const FLXLeftOff = withRouter(({ history }) => {
         )
     }
     return (
-        <SANQuery
-            query={GET_LAST_ACCESSED}
-            loaderComp={<SANLeftOffLoading />}
-            errorComp={<SANLeftOffError />}
-            options={{
-                fetchPolicy: 'netword-only'
-            }}
-        >
-            {({ data }: { data: ILastAccessedPayload }) => {
-                return (
-                    <SANLeftOff
-                        label={t('course.continue')}
-                        onClick={() => goToResource(data.lastAccessed)}
-                        title={
-                            data.lastAccessed && data.lastAccessed.course.name
-                        }
-                        resourceType={
-                            data.lastAccessed && data.lastAccessed.resource_type
-                        }
-                        thumbnail={
-                            data.lastAccessed &&
-                            configureThumbnail(
-                                data.lastAccessed.type,
-                                data.lastAccessed.resource_type,
-                                data.lastAccessed.thumbnail
-                            )
-                        }
-                        classReference={
-                            data.lastAccessed && data.lastAccessed.content_name
-                        }
-                        moduleReference={
-                            data.lastAccessed && data.lastAccessed.theme_title
-                        }
-                    />
+        <SANLeftOff
+            label={t('course.continue')}
+            onClick={() => goToResource(lastAccessed)}
+            title={lastAccessed && lastAccessed.course.name}
+            resourceType={lastAccessed && lastAccessed.resource_type}
+            thumbnail={
+                lastAccessed &&
+                configureThumbnail(
+                    lastAccessed.type,
+                    lastAccessed.resource_type,
+                    lastAccessed.thumbnail
                 )
-            }}
-        </SANQuery>
+            }
+            classReference={lastAccessed && lastAccessed.content_name}
+            moduleReference={lastAccessed && lastAccessed.theme_title}
+        />
     )
 })
 
