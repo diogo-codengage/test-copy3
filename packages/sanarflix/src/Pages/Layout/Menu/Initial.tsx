@@ -23,7 +23,7 @@ import documentImage from 'Assets/images/course-items/document.svg'
 const resources = {
     Document: 'documento',
     Video: 'video',
-    Question: 'quiz'
+    Quiz: 'questoes'
 }
 
 const configureThumbnail = (type: IType, resourceType, image) => {
