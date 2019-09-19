@@ -15,7 +15,7 @@ import {
     BorderProps
 } from 'styled-system'
 
-const SANContainer: SANElement<IProps> = SANStyled.div`
+const SANContainer: SANElement<ISANContainerProps> = SANStyled.div`
     width: 100%;
     max-width: 1008px;
     padding-right: ${theme('space.md')};
@@ -39,7 +39,7 @@ const SANContainer: SANElement<IProps> = SANStyled.div`
     ${border}
 `
 
-type IProps = SpaceProps &
+export type ISANContainerProps = SpaceProps &
     LayoutProps &
     FlexboxProps &
     BorderProps &

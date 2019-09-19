@@ -71,6 +71,8 @@ import { SANSplashLoader } from 'Components/Atoms/SplashLoader'
 
 import { SANList, SANListItem, SANListItemDefault } from 'Components/Atoms/List'
 
+import { SANPage } from 'Components/Templates/Page'
+
 export {
     SANButton,
     SANButtonGroup,
@@ -140,5 +142,6 @@ export {
     SANSearch,
     SANSplashLoader,
     SANModal,
-    SANModalFooter
+    SANModalFooter,
+    SANPage
 }
