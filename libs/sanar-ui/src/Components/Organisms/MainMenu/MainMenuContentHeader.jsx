@@ -14,7 +14,11 @@ const ESMainMenuContentHeader = ({ className, title, onClose }) => {
 
     return (
         <div className={classes}>
-            <ESTypography level={5} regular data-testid='es-main-menu__title'>
+            <ESTypography
+                level={5}
+                regular
+                data-testid='flix_menu_es-typography--title'
+            >
                 {title}
             </ESTypography>
             {showClose && (
