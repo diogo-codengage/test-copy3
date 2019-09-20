@@ -14,6 +14,8 @@ export interface ISANSliderProps {
 
 const SliderStyle = styled(Slider)`
     position: relative;
+    min-height: 45px;
+    margin-top: ${theme('space.xxs')};
     width: 100%;
 `
 
@@ -51,7 +53,7 @@ const Number = styled.div<{ count: number; percent: number; active: boolean }>`
     )};
 
     position: absolute;
-    margin-top: 20px;
+    margin-top: ${theme('space.sm')};
     text-align: center;
     margin-left: ${props => -(100 / props.count) / 2}%;
     width: ${props => 100 / props.count}%;
