@@ -64,12 +64,17 @@ import {
 } from 'Components/Organisms/ClassroomMenu'
 import { SANPracticeCompleted } from 'Components/Organisms/PracticeCompleted'
 import { SANScroll } from 'Components/Atoms/Scroll'
+import { SANAvatar } from 'Components/Atoms/Avatar'
 
 import { SANIcon } from 'Components/Atoms/Icon'
 import { SANSkeleton, ISANSkeletonProps } from 'Components/Atoms/Skeleton'
 import { SANSplashLoader } from 'Components/Atoms/SplashLoader'
 
 import { SANList, SANListItem, SANListItemDefault } from 'Components/Atoms/List'
+
+import { SANPage } from 'Components/Templates/Page'
+
+import { SANProfile } from 'Components/Page/Profile'
 
 export {
     SANButton,
@@ -140,5 +145,8 @@ export {
     SANSearch,
     SANSplashLoader,
     SANModal,
-    SANModalFooter
+    SANModalFooter,
+    SANPage,
+    SANAvatar,
+    SANProfile
 }

@@ -23,7 +23,7 @@ import { getInstance } from 'Config/AWSCognito'
 const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('sanarflix')
     const { me } = useAuthContext()
-    const { onCloseMenu } = useLayoutContext()
+    const { onCloseMenu, setMenuTab } = useLayoutContext()
     const [visibleLogout, setVisibleLogout] = useState(false)
 
     const signOut = () => {
@@ -49,6 +49,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     variant='outlined'
                     color='white'
                     block
+                    onClick={() => setMenuTab(0)}
                 >
                     <SANEvaIcon name='arrow-back-outline' />
                     {t('mainMenu.back')}
@@ -64,6 +65,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
             </SANTypography>
             <SANNavigationList>
                 <SANNavigationListItem
+                    to='/portal/minha-conta/meus-dados'
                     icon={<SANEvaIcon name='folder-outline' color='default' />}
                     onClick={onCloseMenu}
                     dataTestid='flix_menu_my-account__go_to--profile'
