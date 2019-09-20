@@ -44,5 +44,29 @@ export default {
     search: {
         seeMore: 'Ver mais resultados',
         cancel: 'Cancelar'
+    },
+    profile: {
+        title: 'Meus Dados',
+        save: 'Salvar alterações',
+        tab1: {
+            title: 'Dados pessoais',
+            name: 'Nome',
+            document: 'CPF',
+            phone: 'Celular',
+            college: 'Faculdade',
+            semester: 'Semestre'
+        },
+        tab2: {
+            title: 'Dados de Endereço',
+            postalCode: 'CEP',
+            address: 'Endereço',
+            neighborhood: 'Bairro',
+            complement: {
+                label: 'Complemento',
+                placeholder: 'Casa, apartamento...'
+            },
+            city: 'Cidade',
+            state: 'Estado'
+        }
     }
 }

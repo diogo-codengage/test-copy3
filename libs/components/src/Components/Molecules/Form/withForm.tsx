@@ -1,9 +1,9 @@
-import React from 'react'
-
 import { Form } from 'antd'
+import { FormComponentProps } from 'antd/lib/form'
+
 import i18n from 'sanar-ui/dist/Config/i18n'
 
-const withSANForm = (component, options = {}) => {
+function withSANForm<T extends FormComponentProps>(component, options = {}) {
     const defaultOptions = {
         validateMessages: i18n.t('sanarui:formValidateMessages', {
             returnObjects: true
@@ -14,7 +14,7 @@ const withSANForm = (component, options = {}) => {
         options = options(defaultOptions)
     }
 
-    return Form.create({
+    return Form.create<T>({
         ...defaultOptions,
         ...options
     })(component)

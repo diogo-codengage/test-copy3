@@ -122,6 +122,12 @@ const Wrapper = styled.div`
                 padding-right: 36px;
             `
         )}
+        ${ifProp(
+            'uppercase',
+            css`
+                text-transform: uppercase;
+            `
+        )}
     }
 `
 
@@ -132,10 +138,19 @@ export interface ISANInputProps
     iconRight?: string
     iconLeft?: string
     as?: React.ElementType
+    uppercase?: boolean
 }
 
 const SANInput: React.FC<ISANInputProps> = (
-    { placeholder, iconRight, iconLeft, disabled, size = 'medium', ...props },
+    {
+        placeholder,
+        iconRight,
+        iconLeft,
+        disabled,
+        uppercase,
+        size = 'medium',
+        ...props
+    },
     ref
 ) => {
     const customPlaceholder = props.required ? `${placeholder} *` : placeholder
@@ -149,7 +164,8 @@ const SANInput: React.FC<ISANInputProps> = (
     const wrapperProps = {
         iconRight,
         iconLeft,
-        disabled
+        disabled,
+        uppercase
     }
 
     return (

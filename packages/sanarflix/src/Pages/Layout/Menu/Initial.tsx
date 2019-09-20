@@ -132,7 +132,6 @@ const FLXMenuInitial: React.FC = () => {
                     title={t('mainMenu.initial.questions')}
                 />
                 <SANNavigationListItem
-                    to='/portal/minha-conta'
                     icon={<SANEvaIcon name='person-outline' color='default' />}
                     onClick={handleAccount}
                     dataTestid='flx-menu__go-to--account'

@@ -64,6 +64,7 @@ import {
 } from 'Components/Organisms/ClassroomMenu'
 import { SANPracticeCompleted } from 'Components/Organisms/PracticeCompleted'
 import { SANScroll } from 'Components/Atoms/Scroll'
+import { SANAvatar } from 'Components/Atoms/Avatar'
 
 import { SANIcon } from 'Components/Atoms/Icon'
 import { SANSkeleton, ISANSkeletonProps } from 'Components/Atoms/Skeleton'
@@ -75,9 +76,10 @@ import { SANForm, SANFormItem, withSANForm } from 'Components/Molecules/Form'
 import { SANInput } from 'Components/Atoms/Input'
 import { SANDropdown, SANDropdownButton } from 'Components/Atoms/Dropdown'
 import { SANSelect, SANSelectOption } from 'Components/Atoms/Select'
-
 import { SANTextArea } from 'Components/Atoms/TextArea'
 import { SANSlider } from 'Components/Atoms/Slider'
+import { SANPage } from 'Components/Templates/Page'
+import { SANProfile } from 'Components/Page/Profile'
 
 export {
     SANButton,
@@ -158,5 +160,8 @@ export {
     SANSelect,
     SANSelectOption,
     SANTextArea,
-    SANSlider
+    SANSlider,
+    SANPage,
+    SANAvatar,
+    SANProfile
 }
