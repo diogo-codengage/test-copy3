@@ -74,6 +74,8 @@ import { SANList, SANListItem, SANListItemDefault } from 'Components/Atoms/List'
 
 import { SANPage } from 'Components/Templates/Page'
 
+import { SANProfile } from 'Components/Page/Profile'
+
 export {
     SANButton,
     SANButtonGroup,
@@ -145,5 +147,6 @@ export {
     SANModal,
     SANModalFooter,
     SANPage,
-    SANAvatar
+    SANAvatar,
+    SANProfile
 }

@@ -21,11 +21,22 @@ const user = {
     state: 'Paraná'
 }
 
+const states = [
+    { id: '1', name: 'Acre (AC)' },
+    { id: '2', name: 'Alagoas (AL) ' },
+    { id: '3', name: 'Amapá (AP)' },
+    { id: '4', name: 'Amazonas (AM)' },
+    { id: '5', name: 'Bahia (BA)' },
+    { id: '6', name: 'Ceará (CE)' },
+    { id: '7', name: 'Distrito Federal (DF)' }
+]
+
 storiesOf('Page.Profile', module).add(
     'Simple',
     () => (
         <SANProfile
             onBack={() => console.log('onBack')}
+            states={states}
             user={user}
             onSubmit={console.log}
         />

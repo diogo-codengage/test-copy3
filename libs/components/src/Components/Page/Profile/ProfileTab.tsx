@@ -12,10 +12,12 @@ import { SANRow, SANCol } from '../../Molecules/Grid'
 import { SANTabs, SANTabPane } from '../../Molecules/Tabs'
 import { SANForm, SANFormItem, withSANForm } from '../../Molecules/Form'
 
-import { IUser } from './Profile'
+import { IUser, IState } from './Profile'
 
 export interface ProfileTabProps {
-    user: any
+    states: IState[]
+    user?: IUser
+    onSubmit?: (user: IUser) => void
     form: any
 }
 
@@ -27,8 +29,23 @@ const renderSemester = (item, index) => (
     </SANSelectOption>
 )
 
-const ProfileTab = ({ user = {}, form }: ProfileTabProps) => {
+const renderState = state => (
+    <SANSelectOption key={state.id} value={state.id}>
+        {state.name}
+    </SANSelectOption>
+)
+
+const ProfileTab = ({ user, onSubmit, states, form }) => {
     const { t } = useTranslation('components')
+
+    const handleSubmit = e => {
+        e.preventDefault()
+        form.validateFields((err, values) => {
+            if (!err) {
+                onSubmit(values)
+            }
+        })
+    }
 
     return (
         <SANBox
@@ -41,12 +58,12 @@ const ProfileTab = ({ user = {}, form }: ProfileTabProps) => {
             <SANTabs defaultActiveKey='1' center>
                 <SANTabPane tab={t('profile.tab1.title')} key='1'>
                     <SANBox p='xl'>
-                        <SANForm form={form} onSubmit={console.log}>
+                        <SANForm form={form} onSubmit={handleSubmit}>
                             <SANBox px={{ sm: '9', _: 0 }}>
                                 <SANFormItem
                                     name='name'
                                     label={t('profile.tab1.name')}
-                                    initialValue={user.name || ''}
+                                    initialValue={user.name || undefined}
                                 >
                                     <SANInput
                                         placeholder={t('profile.tab1.name')}
@@ -56,7 +73,7 @@ const ProfileTab = ({ user = {}, form }: ProfileTabProps) => {
                                 <SANFormItem
                                     name='document'
                                     label={t('profile.tab1.document')}
-                                    initialValue={user.document || ''}
+                                    initialValue={user.document || undefined}
                                 >
                                     <SANInput
                                         placeholder={t('profile.tab1.document')}
@@ -68,7 +85,7 @@ const ProfileTab = ({ user = {}, form }: ProfileTabProps) => {
                                 <SANFormItem
                                     name='phone'
                                     label={t('profile.tab1.phone')}
-                                    initialValue={user.phone || ''}
+                                    initialValue={user.phone || undefined}
                                 >
                                     <SANInputMask
                                         mask='PHONE'
@@ -86,7 +103,9 @@ const ProfileTab = ({ user = {}, form }: ProfileTabProps) => {
                                             name='college'
                                             label={t('profile.tab1.college')}
                                             mb='md'
-                                            initialValue={user.college || ''}
+                                            initialValue={
+                                                user.college || undefined
+                                            }
                                         >
                                             <SANInput
                                                 placeholder={t(
@@ -101,7 +120,9 @@ const ProfileTab = ({ user = {}, form }: ProfileTabProps) => {
                                             name='semester'
                                             label={t('profile.tab1.semester')}
                                             mb='md'
-                                            initialValue={user.semester || ''}
+                                            initialValue={
+                                                user.semester || undefined
+                                            }
                                         >
                                             <SANSelect
                                                 placeholder={t(
@@ -134,12 +155,12 @@ const ProfileTab = ({ user = {}, form }: ProfileTabProps) => {
                 </SANTabPane>
                 <SANTabPane tab={t('profile.tab2.title')} key='2'>
                     <SANBox p='xl'>
-                        <SANForm form={form} onSubmit={console.log}>
+                        <SANForm form={form} onSubmit={handleSubmit}>
                             <SANBox px={{ sm: '9', _: 0 }}>
                                 <SANFormItem
                                     name='postalCode'
                                     label={t('profile.tab2.postalCode')}
-                                    initialValue={user.postalCode || ''}
+                                    initialValue={user.postalCode || undefined}
                                 >
                                     <SANInputMask
                                         mask='POSTAL_CODE'
@@ -154,7 +175,7 @@ const ProfileTab = ({ user = {}, form }: ProfileTabProps) => {
                                 <SANFormItem
                                     name='address'
                                     label={t('profile.tab2.address')}
-                                    initialValue={user.address || ''}
+                                    initialValue={user.address || undefined}
                                 >
                                     <SANInput
                                         placeholder={t('profile.tab2.address')}
@@ -164,7 +185,9 @@ const ProfileTab = ({ user = {}, form }: ProfileTabProps) => {
                                 <SANFormItem
                                     name='neighborhood'
                                     label={t('profile.tab2.neighborhood')}
-                                    initialValue={user.neighborhood || ''}
+                                    initialValue={
+                                        user.neighborhood || undefined
+                                    }
                                 >
                                     <SANInput
                                         placeholder={t(
@@ -176,7 +199,7 @@ const ProfileTab = ({ user = {}, form }: ProfileTabProps) => {
                                 <SANFormItem
                                     name='complement'
                                     label={t('profile.tab2.complement.label')}
-                                    initialValue={user.complement || ''}
+                                    initialValue={user.complement || undefined}
                                 >
                                     <SANInput
                                         placeholder={t(
@@ -191,13 +214,16 @@ const ProfileTab = ({ user = {}, form }: ProfileTabProps) => {
                                             name='city'
                                             label={t('profile.tab2.city')}
                                             mb='md'
-                                            initialValue={user.city || ''}
+                                            initialValue={
+                                                user.city || undefined
+                                            }
                                         >
                                             <SANInput
                                                 placeholder={t(
                                                     'profile.tab2.city'
                                                 )}
                                                 size='large'
+                                                uppercase
                                             />
                                         </SANFormItem>
                                     </SANCol>
@@ -206,14 +232,18 @@ const ProfileTab = ({ user = {}, form }: ProfileTabProps) => {
                                             name='state'
                                             label={t('profile.tab2.state')}
                                             mb='md'
-                                            initialValue={user.state || ''}
+                                            initialValue={
+                                                user.state || undefined
+                                            }
                                         >
                                             <SANSelect
                                                 placeholder={t(
                                                     'profile.tab2.state'
                                                 )}
                                                 size='large'
-                                            ></SANSelect>
+                                            >
+                                                {states.map(renderState)}
+                                            </SANSelect>
                                         </SANFormItem>
                                     </SANCol>
                                 </SANRow>
@@ -240,4 +270,4 @@ const ProfileTab = ({ user = {}, form }: ProfileTabProps) => {
     )
 }
 
-export default withSANForm(ProfileTab)
+export default withSANForm<ProfileTabProps>(ProfileTab)

@@ -11,23 +11,29 @@ import ProfileAvatar from './ProfileAvatar'
 import ProfileTab from './ProfileTab'
 
 export interface IUser {
+    id?: string
+    name?: string
+    profilePicture?: string
+    document?: string
+    email?: string
+    phone?: string
+    college?: string
+    semester?: number
+    postalCode?: string
+    address?: string
+    neighborhood?: string
+    complement?: string
+    city?: string
+    state?: string
+}
+
+export interface IState {
     id: string
     name: string
-    profilePicture?: string
-    document: string
-    email: string
-    phone: string
-    college: string
-    semester: number
-    postalCode: string
-    address: string
-    neighborhood: string
-    complement?: string
-    city: string
-    state: string
 }
 
 export interface ISANProfileProps extends Pick<ISANHeaderProps, 'onBack'> {
+    states: IState[]
     user: IUser
     onSubmit?: (user: IUser) => void
 }
@@ -36,7 +42,12 @@ const PageStyled = styled(SANPage)`
     overflow-x: hidden;
 `
 
-const SANProfile: React.FC<ISANProfileProps> = ({ user, onSubmit, onBack }) => {
+const SANProfile: React.FC<ISANProfileProps> = ({
+    user,
+    onSubmit,
+    states,
+    onBack
+}) => {
     const { t } = useTranslation('components')
 
     return (
@@ -63,7 +74,11 @@ const SANProfile: React.FC<ISANProfileProps> = ({ user, onSubmit, onBack }) => {
                     />
                 </SANCol>
                 <SANCol sm={24} md={16}>
-                    <ProfileTab />
+                    <ProfileTab
+                        onSubmit={onSubmit}
+                        user={user}
+                        states={states}
+                    />
                 </SANCol>
             </SANRow>
         </PageStyled>
