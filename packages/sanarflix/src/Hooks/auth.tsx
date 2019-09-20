@@ -4,6 +4,7 @@ interface IMe {
     id: string
     name: string
     profile_picture: string
+    email: string
 }
 
 type FLXAuthContextValues = {
