@@ -131,6 +131,7 @@ export interface ISANInputProps
     size?: 'large' | 'medium' | 'small'
     iconRight?: string
     iconLeft?: string
+    as?: React.ElementType
 }
 
 const SANInput: React.FC<ISANInputProps> = (
