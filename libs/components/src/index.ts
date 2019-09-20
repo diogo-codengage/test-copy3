@@ -64,6 +64,7 @@ import {
 } from 'Components/Organisms/ClassroomMenu'
 import { SANPracticeCompleted } from 'Components/Organisms/PracticeCompleted'
 import { SANScroll } from 'Components/Atoms/Scroll'
+import { SANAvatar } from 'Components/Atoms/Avatar'
 
 import { SANIcon } from 'Components/Atoms/Icon'
 import { SANSkeleton, ISANSkeletonProps } from 'Components/Atoms/Skeleton'
@@ -143,5 +144,6 @@ export {
     SANSplashLoader,
     SANModal,
     SANModalFooter,
-    SANPage
+    SANPage,
+    SANAvatar
 }
