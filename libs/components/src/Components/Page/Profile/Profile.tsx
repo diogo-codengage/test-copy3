@@ -1,6 +1,7 @@
 import React from 'react'
 
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 import { SANRow, SANCol } from '../../Molecules/Grid'
 import { ISANHeaderProps } from '../../Molecules/Header'
@@ -36,6 +37,8 @@ const PageStyled = styled(SANPage)`
 `
 
 const SANProfile: React.FC<ISANProfileProps> = ({ user, onSubmit, onBack }) => {
+    const { t } = useTranslation('components')
+
     return (
         <PageStyled
             hasContainer
@@ -47,7 +50,7 @@ const SANProfile: React.FC<ISANProfileProps> = ({ user, onSubmit, onBack }) => {
             HeaderProps={{
                 onBack,
                 SessionTitleProps: {
-                    title: 'Meus Dados'
+                    title: t('profile.title')
                 }
             }}
         >

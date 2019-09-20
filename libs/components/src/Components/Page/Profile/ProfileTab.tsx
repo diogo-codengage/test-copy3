@@ -1,7 +1,10 @@
 import React from 'react'
 
+import { useTranslation } from 'react-i18next'
+
 import { SANBox } from '../../Atoms/Box'
 import { SANDivider } from '../../Atoms/Divider'
+import { SANSelect, SANSelectOption } from '../../Atoms/Select'
 import { SANInput } from '../../Atoms/Input'
 import { SANInputMask } from '../../Atoms/InputMask'
 import { SANButton } from '../../Atoms/Button'
@@ -12,11 +15,21 @@ import { SANForm, SANFormItem, withSANForm } from '../../Molecules/Form'
 import { IUser } from './Profile'
 
 export interface ProfileTabProps {
-    user: IUser
+    user: any
     form: any
 }
 
-const ProfileTab = ({ form }: ProfileTabProps) => {
+const semesters = new Array(12).fill(1).map((_, i) => i + 1)
+
+const renderSemester = (item, index) => (
+    <SANSelectOption key={index} value={item}>
+        {item}
+    </SANSelectOption>
+)
+
+const ProfileTab = ({ user = {}, form }: ProfileTabProps) => {
+    const { t } = useTranslation('components')
+
     return (
         <SANBox
             bg='white.10'
@@ -26,26 +39,43 @@ const ProfileTab = ({ form }: ProfileTabProps) => {
             boxShadow='1'
         >
             <SANTabs defaultActiveKey='1' center>
-                <SANTabPane tab='Dados pessoais' key='1'>
+                <SANTabPane tab={t('profile.tab1.title')} key='1'>
                     <SANBox p='xl'>
                         <SANForm form={form} onSubmit={console.log}>
                             <SANBox px={{ sm: '9', _: 0 }}>
-                                <SANFormItem name='name' label='Nome'>
-                                    <SANInput placeholder='Nome' size='large' />
-                                </SANFormItem>
-                                <SANFormItem name='document' label='CPF'>
+                                <SANFormItem
+                                    name='name'
+                                    label={t('profile.tab1.name')}
+                                    initialValue={user.name || ''}
+                                >
                                     <SANInput
-                                        placeholder='CPF'
+                                        placeholder={t('profile.tab1.name')}
+                                        size='large'
+                                    />
+                                </SANFormItem>
+                                <SANFormItem
+                                    name='document'
+                                    label={t('profile.tab1.document')}
+                                    initialValue={user.document || ''}
+                                >
+                                    <SANInput
+                                        placeholder={t('profile.tab1.document')}
                                         size='large'
                                         disabled
                                         iconRight='slash-outline'
                                     />
                                 </SANFormItem>
-                                <SANFormItem name='phone' label='Celular'>
+                                <SANFormItem
+                                    name='phone'
+                                    label={t('profile.tab1.phone')}
+                                    initialValue={user.phone || ''}
+                                >
                                     <SANInputMask
                                         mask='PHONE'
                                         InputProps={{
-                                            placeholder: 'Celular',
+                                            placeholder: t(
+                                                'profile.tab1.phone'
+                                            ),
                                             size: 'large'
                                         }}
                                     />
@@ -54,11 +84,14 @@ const ProfileTab = ({ form }: ProfileTabProps) => {
                                     <SANCol xs={12}>
                                         <SANFormItem
                                             name='college'
-                                            label='Faculdade'
+                                            label={t('profile.tab1.college')}
                                             mb='md'
+                                            initialValue={user.college || ''}
                                         >
                                             <SANInput
-                                                placeholder='Faculdade'
+                                                placeholder={t(
+                                                    'profile.tab1.college'
+                                                )}
                                                 size='large'
                                             />
                                         </SANFormItem>
@@ -66,13 +99,18 @@ const ProfileTab = ({ form }: ProfileTabProps) => {
                                     <SANCol xs={12}>
                                         <SANFormItem
                                             name='semester'
-                                            label='Semestre'
+                                            label={t('profile.tab1.semester')}
                                             mb='md'
+                                            initialValue={user.semester || ''}
                                         >
-                                            <SANInput
-                                                placeholder='Semestre'
+                                            <SANSelect
+                                                placeholder={t(
+                                                    'profile.tab1.semester'
+                                                )}
                                                 size='large'
-                                            />
+                                            >
+                                                {semesters.map(renderSemester)}
+                                            </SANSelect>
                                         </SANFormItem>
                                     </SANCol>
                                 </SANRow>
@@ -87,44 +125,63 @@ const ProfileTab = ({ form }: ProfileTabProps) => {
                                         bold
                                         htmlType='submit'
                                     >
-                                        Salvar alterações
+                                        {t('profile.save')}
                                     </SANButton>
                                 </SANBox>
                             </SANFormItem>
                         </SANForm>
                     </SANBox>
                 </SANTabPane>
-                <SANTabPane tab='Dados de Endereço' key='2'>
+                <SANTabPane tab={t('profile.tab2.title')} key='2'>
                     <SANBox p='xl'>
                         <SANForm form={form} onSubmit={console.log}>
                             <SANBox px={{ sm: '9', _: 0 }}>
-                                <SANFormItem name='name' label='CEP'>
+                                <SANFormItem
+                                    name='postalCode'
+                                    label={t('profile.tab2.postalCode')}
+                                    initialValue={user.postalCode || ''}
+                                >
                                     <SANInputMask
                                         mask='POSTAL_CODE'
                                         InputProps={{
-                                            placeholder: 'CEP',
+                                            placeholder: t(
+                                                'profile.tab2.postalCode'
+                                            ),
                                             size: 'large'
                                         }}
                                     />
                                 </SANFormItem>
-                                <SANFormItem name='address' label='Endereço'>
+                                <SANFormItem
+                                    name='address'
+                                    label={t('profile.tab2.address')}
+                                    initialValue={user.address || ''}
+                                >
                                     <SANInput
-                                        placeholder='Endereço'
+                                        placeholder={t('profile.tab2.address')}
                                         size='large'
                                     />
                                 </SANFormItem>
-                                <SANFormItem name='neighborhood' label='Bairro'>
+                                <SANFormItem
+                                    name='neighborhood'
+                                    label={t('profile.tab2.neighborhood')}
+                                    initialValue={user.neighborhood || ''}
+                                >
                                     <SANInput
-                                        placeholder='Bairro'
+                                        placeholder={t(
+                                            'profile.tab2.neighborhood'
+                                        )}
                                         size='large'
                                     />
                                 </SANFormItem>
                                 <SANFormItem
                                     name='complement'
-                                    label='Complemento'
+                                    label={t('profile.tab2.complement.label')}
+                                    initialValue={user.complement || ''}
                                 >
                                     <SANInput
-                                        placeholder='Casa, apartamento...'
+                                        placeholder={t(
+                                            'profile.tab2.complement.placeholder'
+                                        )}
                                         size='large'
                                     />
                                 </SANFormItem>
@@ -132,11 +189,14 @@ const ProfileTab = ({ form }: ProfileTabProps) => {
                                     <SANCol xs={12}>
                                         <SANFormItem
                                             name='city'
-                                            label='Cidade'
+                                            label={t('profile.tab2.city')}
                                             mb='md'
+                                            initialValue={user.city || ''}
                                         >
                                             <SANInput
-                                                placeholder='Cidade'
+                                                placeholder={t(
+                                                    'profile.tab2.city'
+                                                )}
                                                 size='large'
                                             />
                                         </SANFormItem>
@@ -144,13 +204,16 @@ const ProfileTab = ({ form }: ProfileTabProps) => {
                                     <SANCol xs={12}>
                                         <SANFormItem
                                             name='state'
-                                            label='Estado'
+                                            label={t('profile.tab2.state')}
                                             mb='md'
+                                            initialValue={user.state || ''}
                                         >
-                                            <SANInput
-                                                placeholder='Estado'
+                                            <SANSelect
+                                                placeholder={t(
+                                                    'profile.tab2.state'
+                                                )}
                                                 size='large'
-                                            />
+                                            ></SANSelect>
                                         </SANFormItem>
                                     </SANCol>
                                 </SANRow>
@@ -165,7 +228,7 @@ const ProfileTab = ({ form }: ProfileTabProps) => {
                                         bold
                                         htmlType='submit'
                                     >
-                                        Salvar alterações
+                                        {t('profile.save')}
                                     </SANButton>
                                 </SANBox>
                             </SANFormItem>
