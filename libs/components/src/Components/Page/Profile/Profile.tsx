@@ -2,13 +2,12 @@ import React from 'react'
 
 import styled from 'styled-components'
 
-import { SANBox } from '../../Atoms/Box'
 import { SANRow, SANCol } from '../../Molecules/Grid'
 import { ISANHeaderProps } from '../../Molecules/Header'
-import { SANTabs, SANTabPane } from '../../Molecules/Tabs'
 import { SANPage } from '../../Templates/Page'
 
 import ProfileAvatar from './ProfileAvatar'
+import ProfileTab from './ProfileTab'
 
 export interface IUser {
     id: string
@@ -36,7 +35,7 @@ const PageStyled = styled(SANPage)`
     overflow-x: hidden;
 `
 
-const SANProfile: React.FC<ISANProfileProps> = ({ user, onBack }) => {
+const SANProfile: React.FC<ISANProfileProps> = ({ user, onSubmit, onBack }) => {
     return (
         <PageStyled
             hasContainer
@@ -61,22 +60,7 @@ const SANProfile: React.FC<ISANProfileProps> = ({ user, onBack }) => {
                     />
                 </SANCol>
                 <SANCol sm={24} md={16}>
-                    <SANBox
-                        bg='white.10'
-                        borderRadius='base'
-                        border='1px solid'
-                        borderColor='grey.2'
-                        boxShadow='1'
-                    >
-                        <SANTabs defaultActiveKey='1' center>
-                            <SANTabPane tab='Dados pessoais' key='1'>
-                                <SANBox px={100} pt='xxl'></SANBox>
-                            </SANTabPane>
-                            <SANTabPane tab='Dados de Endereço' key='2'>
-                                Tab - 02
-                            </SANTabPane>
-                        </SANTabs>
-                    </SANBox>
+                    <ProfileTab />
                 </SANCol>
             </SANRow>
         </PageStyled>
