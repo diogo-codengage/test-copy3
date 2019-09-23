@@ -163,12 +163,6 @@ export {
     SANAvatar,
     SANProfile,
     SANSupport,
-    SANForm,
-    SANFormItem,
-    withSANForm,
-    SANInput,
     SANInputMask,
-    SANSelect,
-    SANSelectOption,
     SANTooltip
 }
