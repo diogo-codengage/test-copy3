@@ -91,10 +91,7 @@ const FLXMenuInitial: React.FC = () => {
     const { t } = useTranslation('sanarflix')
     const { onCloseMenu, setMenuTab } = useLayoutContext()
 
-    const handleAccount = () => {
-        setMenuTab(2)
-        onCloseMenu()
-    }
+    const handleAccount = () => setMenuTab(2)
 
     return (
         <>
