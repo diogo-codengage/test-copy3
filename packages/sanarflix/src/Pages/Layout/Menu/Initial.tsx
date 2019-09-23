@@ -8,7 +8,8 @@ import {
     SANNavigationListItem,
     SANEvaIcon,
     SANLeftOff,
-    SANLeftOffError
+    SANLeftOffError,
+    SANLeftOffLoading
 } from '@sanar/components'
 
 import { useLayoutContext } from '../Context'
@@ -61,6 +62,14 @@ const FLXLeftOff = withRouter(({ history }) => {
                 lastAccessed.resource_id
             }`
         )
+    }
+
+    // if (!!lastAccessed) {
+    //     return null
+    // }
+
+    if (lastAccessed && lastAccessed.loading) {
+        return <SANLeftOffLoading />
     }
 
     if (lastAccessed && lastAccessed.hasError) {
