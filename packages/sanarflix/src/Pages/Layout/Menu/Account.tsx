@@ -13,7 +13,8 @@ import {
     SANButton,
     SANTypography,
     SANDivider,
-    SANSupport
+    SANSupport,
+    useSnackbarContext
 } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
@@ -26,6 +27,7 @@ import { getInstance } from 'Config/AWSCognito'
 const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
     const client = useApolloClient()
     const { t } = useTranslation('sanarflix')
+    const snackbar = useSnackbarContext()
     const { me } = useAuthContext()
     const { onCloseMenu, setMenuTab } = useLayoutContext()
     const [visibleLogout, setVisibleLogout] = useState(false)
@@ -51,7 +53,16 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                 }
             })
             setVisibleSupport(false)
-        } catch {}
+            snackbar({
+                message: t('mainMenu.account.support.success'),
+                theme: 'success'
+            })
+        } catch {
+            snackbar({
+                message: t('mainMenu.account.support.error'),
+                theme: 'error'
+            })
+        }
     }
 
     return (
@@ -154,7 +165,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                 <SANNavigationListItem
                     onClick={() => setVisibleSupport(true)}
                     dataTestid='flix_menu_my-account__go_to--suport'
-                    title={t('mainMenu.account.support')}
+                    title={t('mainMenu.account.support.title')}
                 />
                 <SANNavigationListItem
                     onClick={() => setVisibleLogout(true)}

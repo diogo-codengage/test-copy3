@@ -25,7 +25,8 @@ import {
     SANButton,
     SANEvaIcon,
     SANTooltip,
-    SANSpin
+    SANSpin,
+    useSnackbarContext
 } from '@sanar/components'
 
 import i18n from 'sanar-ui/dist/Config/i18n'
@@ -78,6 +79,7 @@ const LabelCvv = () => {
 const FLXPayment = ({ history, form }) => {
     const { t } = useTranslation('sanarflix')
     const { me } = useAuthContext()
+    const snackbar = useSnackbarContext()
     const [submitting, setSubmitting] = useState(false)
     const client = useApolloClient()
 
@@ -100,7 +102,16 @@ const FLXPayment = ({ history, form }) => {
                     card_cvv: Number(values.card_cvv)
                 }
             })
-        } catch {}
+            snackbar({
+                message: t('account.creditCard.success'),
+                theme: 'success'
+            })
+        } catch {
+            snackbar({
+                message: t('account.creditCard.success'),
+                theme: 'error'
+            })
+        }
         setSubmitting(false)
     }
 

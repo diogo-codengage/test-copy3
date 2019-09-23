@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
+
+import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useApolloClient } from '@apollo/react-hooks'
 
-import { SANProfile } from '@sanar/components'
+import { SANProfile, useSnackbarContext } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
 import { GET_STATES, IState } from 'Apollo/User/Queries/states'
@@ -16,6 +18,8 @@ interface IStatesQuery {
 
 const FLXMyData = ({ history }: RouteComponentProps) => {
     const client = useApolloClient()
+    const { t } = useTranslation('sanarflix')
+    const snackbar = useSnackbarContext()
     const { me } = useAuthContext()
     const [states, setStates] = useState<IState[]>([])
 
@@ -38,7 +42,16 @@ const FLXMyData = ({ history }: RouteComponentProps) => {
                 mutation: EDIT_USER_MUTATION,
                 variables: values
             })
-        } catch {}
+            snackbar({
+                message: t('account.myData.success'),
+                theme: 'success'
+            })
+        } catch {
+            snackbar({
+                message: t('account.myData.error'),
+                theme: 'error'
+            })
+        }
         setSubmitting(false)
     }
 
