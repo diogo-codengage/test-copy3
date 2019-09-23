@@ -59,16 +59,16 @@ export const defaultColors = {
     ],
 
     'grey-solid': [
-        '#ffffff',
-        '#f7f9fa',
-        '#ebeef2',
-        '#d1d9e8',
-        '#bfc7d9',
-        '#a4adbf',
-        '#5a6275',
-        '#37404f',
-        '#242938',
-        '#0f1117'
+        '#ffffff', // 0
+        '#f7f9fa', // 1
+        '#ebeef2', // 2
+        '#d1d9e8', // 3
+        '#bfc7d9', // 4
+        '#a4adbf', // 5
+        '#5a6275', // 6
+        '#37404f', // 7
+        '#242938', // 8
+        '#0f1117' // 9
     ],
 
     white: [
@@ -144,6 +144,8 @@ const defaultSpace: any = [
     '48px',
     '60px'
 ]
+
+defaultSpace.xxs = defaultSpace[1]
 defaultSpace.xs = defaultSpace[2]
 defaultSpace.sm = defaultSpace[3]
 defaultSpace.md = defaultSpace[4]

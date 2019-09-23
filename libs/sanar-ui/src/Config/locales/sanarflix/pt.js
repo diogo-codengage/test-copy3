@@ -258,6 +258,29 @@ export default {
         subtitle:
             'Nós temos milhares de conteúdos de medicina que se encaixam no seu perfil. O que você quer aprender hoje?'
     },
+    sigmentManagement: {
+        email: 'Escreva aqui o seu e-mail pessoal',
+        nameLabel: 'Nome completo',
+        name: 'Escreva aqui o seu nome completo',
+        selectPeriod: 'Selecione aqui o período',
+        selectReason: 'Selecione o motivo',
+        writeReasonLabel: 'Qual o motivo você escolheu a nota acima?',
+        writeReason: 'Escreva seu motivo aqui',
+        writeReasonToPauseLabel: 'Por que você quer pausar a sua assinatura?',
+        writeReasonToPause: 'Selecione o motivo',
+        typePasswordLabel: 'Confirme a sua senha',
+        typePassword: 'Digite aqui a sua senha',
+        selectPeriodLabel: 'Qual é o seu período na graduação?',
+        selectPeriod: 'Selecione aqui o período',
+        selectCancelReasonLabel: 'Qual o motivo do cancelamento?',
+        selectCancelReason: 'Selecione o motivo',
+        howMuchTimeLabel: 'Por quanto tempo você quer pausar?',
+        howMuchTime: {
+            key: 'howMuchTime',
+            keyWithCount: '{{count}} mês',
+            keyWithCount_plural: '{{count}} meses'
+        }
+    },
     paymentMethods: {
         title: 'Formas de pagamento',
         creditCard: {
