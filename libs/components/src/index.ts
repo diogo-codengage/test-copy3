@@ -80,6 +80,7 @@ import { SANTextArea } from 'Components/Atoms/TextArea'
 import { SANSlider } from 'Components/Atoms/Slider'
 import { SANPage } from 'Components/Templates/Page'
 import { SANProfile } from 'Components/Page/Profile'
+import { SANSupport } from 'Components/Organisms/Support'
 
 export {
     SANButton,
@@ -163,5 +164,6 @@ export {
     SANSlider,
     SANPage,
     SANAvatar,
-    SANProfile
+    SANProfile,
+    SANSupport
 }

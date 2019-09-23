@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { useApolloClient } from '@apollo/react-hooks'
 
 import {
     SANNavigationList,
@@ -11,20 +12,24 @@ import {
     SANBox,
     SANButton,
     SANTypography,
-    SANDivider
+    SANDivider,
+    SANSupport
 } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
+import { SUPPORT_MESSAGE_MUTATION } from 'Apollo/Support/Mutations/support-message'
 import FLXLogout from 'Components/ModalLogout'
 import { useLayoutContext } from '../Context'
 
 import { getInstance } from 'Config/AWSCognito'
 
 const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
+    const client = useApolloClient()
     const { t } = useTranslation('sanarflix')
     const { me } = useAuthContext()
     const { onCloseMenu, setMenuTab } = useLayoutContext()
     const [visibleLogout, setVisibleLogout] = useState(false)
+    const [visibleSupport, setVisibleSupport] = useState(false)
 
     const signOut = () => {
         const config = getInstance()
@@ -35,8 +40,32 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
         }
     }
 
+    const handleSubmitSupport = async values => {
+        try {
+            await client.mutate({
+                mutation: SUPPORT_MESSAGE_MUTATION,
+                variables: {
+                    email: values.email,
+                    message: values.message,
+                    allow_sanar_contact: values.check
+                }
+            })
+            setVisibleSupport(false)
+        } catch {}
+    }
+
     return (
         <>
+            <SANSupport
+                onSubmit={handleSubmitSupport}
+                data={{
+                    email: me.email
+                }}
+                ModalProps={{
+                    visible: visibleSupport,
+                    onCancel: () => setVisibleSupport(false)
+                }}
+            />
             <FLXLogout
                 visible={visibleLogout}
                 onLeave={signOut}
@@ -120,7 +149,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
             </SANTypography>
             <SANNavigationList>
                 <SANNavigationListItem
-                    onClick={onCloseMenu}
+                    onClick={() => setVisibleSupport(true)}
                     dataTestid='flix_menu_my-account__go_to--suport'
                     title={t('mainMenu.account.support')}
                 />

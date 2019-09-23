@@ -46,8 +46,19 @@ const SANSupport = ({ form, onSubmit, data = {} as IForm, ModalProps }) => {
                     name='email'
                     label={t('support.email')}
                     initialValue={data.email || undefined}
+                    rules={[
+                        {
+                            required: true,
+                            message: t('formValidateMessages.required')
+                        },
+                        {
+                            type: 'email',
+                            message: t('formValidateMessages.types.email')
+                        }
+                    ]}
                 >
                     <SANInput
+                        required
                         placeholder={t('support.email')}
                         size='large'
                         iconLeft='email-outline'
@@ -57,16 +68,23 @@ const SANSupport = ({ form, onSubmit, data = {} as IForm, ModalProps }) => {
                     name='message'
                     label={t('support.message.title')}
                     initialValue={data.message || undefined}
+                    rules={[
+                        {
+                            required: true,
+                            message: t('formValidateMessages.types.email')
+                        }
+                    ]}
                 >
                     <SANTextArea
                         placeholder={t('support.message.placeholder')}
                         size='large'
                         rows={4}
+                        required
                     />
                 </SANFormItem>
                 <SANFormItem
                     name='check'
-                    initialValue={data.check || undefined}
+                    initialValue={data.check || true}
                     mb='xl'
                 >
                     <SANCheckbox>{t('support.check')}</SANCheckbox>
