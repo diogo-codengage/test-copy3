@@ -86,7 +86,9 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                 <SANAvatarMenu
                     src={me.profile_picture}
                     title={me.name}
-                    subtitle='Inserir plano'
+                    subtitle={t(
+                        `mainMenu.account.plan.${me.plan.payment_frequency}`
+                    )}
                 />
             </SANBox>
             <SANTypography variant='overline' px='md' pt='xl' color='white.5'>

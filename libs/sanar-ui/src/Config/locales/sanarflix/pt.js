@@ -213,7 +213,12 @@ export default {
             unsubscribe: 'Cancelar assinatura',
             otherLinks: 'Outros links',
             support: 'Suporte',
-            signOut: 'Sair da conta'
+            signOut: 'Sair da conta',
+            plan: {
+                month: 'Plano Mensal',
+                semiannual: 'Plano Semestral',
+                yearly: 'Plano Anual'
+            }
         }
     },
     classroom: {
