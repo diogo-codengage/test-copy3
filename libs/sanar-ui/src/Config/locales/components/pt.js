@@ -68,5 +68,17 @@ export default {
             city: 'Cidade',
             state: 'Estado'
         }
+    },
+    support: {
+        title: 'Em que podemos ajudar?',
+        email: 'Seu e-mail',
+        message: {
+            title: 'O que você quer nos dizer?',
+            placeholder: 'Escreva aqui a sua mensagem'
+        },
+        check:
+            'Permitir o contato da Sanar para tirar dúvidas sobre o feedback.',
+        cancel: 'Cancelar',
+        send: 'Enviar'
     }
 }
