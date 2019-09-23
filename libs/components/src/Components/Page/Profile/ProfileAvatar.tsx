@@ -7,9 +7,13 @@ import { SANAvatar } from '../../Atoms/Avatar'
 import { IUser } from './Profile'
 
 export interface ProfileAvatarProps
-    extends Pick<IUser, 'email' | 'name' | 'profilePicture'> {}
+    extends Pick<IUser, 'email' | 'name' | 'profile_picture'> {}
 
-const ProfileAvatar = ({ email, name, profilePicture }: ProfileAvatarProps) => {
+const ProfileAvatar = ({
+    email,
+    name,
+    profile_picture
+}: ProfileAvatarProps) => {
     return (
         <SANBox
             p='8'
@@ -23,7 +27,7 @@ const ProfileAvatar = ({ email, name, profilePicture }: ProfileAvatarProps) => {
             boxShadow='1'
         >
             <SANAvatar
-                src={profilePicture}
+                src={profile_picture}
                 size={100}
                 borderRadius={50}
                 border='1px solid'

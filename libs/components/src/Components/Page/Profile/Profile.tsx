@@ -13,18 +13,21 @@ import ProfileTab from './ProfileTab'
 export interface IUser {
     id?: string
     name?: string
-    profilePicture?: string
-    document?: string
+    profile_picture?: string
+    cpf?: string
     email?: string
-    phone?: string
+    phone_number?: string
     college?: string
-    semester?: number
-    postalCode?: string
-    address?: string
-    neighborhood?: string
-    complement?: string
-    city?: string
-    state?: string
+    period?: number
+    address?: {
+        id?: string
+        postal_code?: string
+        address?: string
+        district?: string
+        complement?: string
+        city_name?: string
+        state_id?: string
+    }
 }
 
 export interface IState {
@@ -34,7 +37,7 @@ export interface IState {
 
 export interface ISANProfileProps extends Pick<ISANHeaderProps, 'onBack'> {
     states: IState[]
-    user: IUser
+    user?: IUser
     onSubmit?: (user: IUser) => void
 }
 
@@ -43,7 +46,7 @@ const PageStyled = styled(SANPage)`
 `
 
 const SANProfile: React.FC<ISANProfileProps> = ({
-    user,
+    user = {},
     onSubmit,
     states,
     onBack
@@ -68,9 +71,9 @@ const SANProfile: React.FC<ISANProfileProps> = ({
             <SANRow gutter={24}>
                 <SANCol sm={24} md={8} mb='xl'>
                     <ProfileAvatar
-                        name={user.name}
-                        email={user.email}
-                        profilePicture={user.profilePicture}
+                        name={!!user ? user.name : ''}
+                        email={user.email || ''}
+                        profile_picture={user.profile_picture || ''}
                     />
                 </SANCol>
                 <SANCol sm={24} md={16}>
