@@ -78,6 +78,10 @@ import { SANSlider } from 'Components/Atoms/Slider'
 import { SANPage } from 'Components/Templates/Page'
 import { SANProfile } from 'Components/Page/Profile'
 import { SANSupport } from 'Components/Organisms/Support'
+import {
+    SANSnackbarProvider,
+    useSnackbarContext
+} from 'Components/Molecules/Snackbar'
 
 export {
     SANButton,
@@ -164,5 +168,7 @@ export {
     SANProfile,
     SANSupport,
     SANInputMask,
-    SANTooltip
+    SANTooltip,
+    SANSnackbarProvider,
+    useSnackbarContext
 }
