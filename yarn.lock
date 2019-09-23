@@ -14351,6 +14351,15 @@ react-slick@~0.24.0:
     lodash.debounce "^4.0.8"
     resize-observer-polyfill "^1.5.0"
 
+react-snackbar-alert@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-snackbar-alert/-/react-snackbar-alert-2.1.0.tgz#bccedbfc0396606de471ca99263ac99761753395"
+  integrity sha512-SKL1LZUaz1EFB5eRiCXC4FHLPjMqQyxq2+2m2QP7kGDhWESnyPAZipXg1das+FurubglvZTcq3ZQbNk1eDEsDw==
+  dependencies:
+    prop-types "^15.7.2"
+    react-transition-group "^4.0.1"
+    uuid "^3.3.2"
+
 react-style-singleton@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.0.0.tgz#fdc9ff3a82674c256f0033d140b7b1d9d37e7f17"

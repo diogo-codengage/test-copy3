@@ -55,9 +55,7 @@ import { SANPdfReader } from 'Components/Atoms/PdfReader'
 import { SANRate } from 'Components/Atoms/Rate'
 import { SANStopwatch } from 'Components/Atoms/Stopwatch'
 import { SANAnimationSlide } from 'Components/Atoms/AnimationSlide'
-
 import { SANStyled, SANElement } from 'Theme/'
-
 import {
     SANClassroomMenu,
     SANClassroomMenuHeader
@@ -65,13 +63,10 @@ import {
 import { SANPracticeCompleted } from 'Components/Organisms/PracticeCompleted'
 import { SANScroll } from 'Components/Atoms/Scroll'
 import { SANAvatar } from 'Components/Atoms/Avatar'
-
 import { SANIcon } from 'Components/Atoms/Icon'
 import { SANSkeleton, ISANSkeletonProps } from 'Components/Atoms/Skeleton'
 import { SANSplashLoader } from 'Components/Atoms/SplashLoader'
-
 import { SANList, SANListItem, SANListItemDefault } from 'Components/Atoms/List'
-
 import { SANForm, SANFormItem, withSANForm } from 'Components/Molecules/Form'
 import { SANInput } from 'Components/Atoms/Input'
 import { SANDropdown, SANDropdownButton } from 'Components/Atoms/Dropdown'
@@ -80,6 +75,10 @@ import { SANTextArea } from 'Components/Atoms/TextArea'
 import { SANSlider } from 'Components/Atoms/Slider'
 import { SANPage } from 'Components/Templates/Page'
 import { SANProfile } from 'Components/Page/Profile'
+import {
+    SANSnackbarProvider,
+    useSnackbarContext
+} from 'Components/Molecules/Snackbar'
 
 export {
     SANButton,
@@ -163,5 +162,7 @@ export {
     SANSlider,
     SANPage,
     SANAvatar,
-    SANProfile
+    SANProfile,
+    SANSnackbarProvider,
+    useSnackbarContext
 }
