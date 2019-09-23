@@ -120,6 +120,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     title={t('mainMenu.account.myPlan')}
                 />
                 <SANNavigationListItem
+                    to='/portal/minha-conta/formas-pagamento'
                     icon={
                         <SANEvaIcon
                             name='credit-card-outline'

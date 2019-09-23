@@ -30,7 +30,21 @@ export default {
         search: 'Busque por cursos, aulas, resumos e muito mais',
         foundResults: ' resultados encontrados para ',
         leave: 'Sair',
-        back: 'Voltar'
+        back: 'Voltar',
+        months: [
+            'Janeiro',
+            'Fevereiro',
+            'Março',
+            'Abril',
+            'Maio',
+            'Junho',
+            'Julho',
+            'Agosto',
+            'Setembro',
+            'Outubro',
+            'Novembro',
+            'Dezembro'
+        ]
     },
     logout: {
         message: 'Tem certeza que deseja sair da conta agora?',
@@ -265,6 +279,24 @@ export default {
             key: 'howMuchTime',
             keyWithCount: '{{count}} mês',
             keyWithCount_plural: '{{count}} meses'
+        }
+    },
+    paymentMethods: {
+        title: 'Formas de pagamento',
+        creditCard: {
+            title: 'Atualizar forma de pagamento',
+            subtitle: 'Cartão de Crédito',
+            number: 'Cartão de Crédito',
+            cvv: {
+                title: 'CVV',
+                tooltip:
+                    '3 ou 4 números impressos no cartão de crédito. O CVV é um código de segurança contra fraudes em transações feitas na Internet.'
+            },
+            expiration: 'Data de Validade',
+            month: 'Mês',
+            year: 'Ano',
+            name: 'Nome do Titular',
+            confirm: 'Confirmar'
         }
     }
 }
