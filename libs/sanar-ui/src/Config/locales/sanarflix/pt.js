@@ -269,6 +269,8 @@ export default {
             keyWithCount: '{{count}} mês',
             keyWithCount_plural: '{{count}} meses'
         },
+        confirmPause: 'Confirmar pausa',
+        confirmCancel: 'Confirmar cancelamento',
         pausePage: {
             header: 'Pausar Assinatura',
             completeFields: 'Preencha os campos abaixo para continuar:',
