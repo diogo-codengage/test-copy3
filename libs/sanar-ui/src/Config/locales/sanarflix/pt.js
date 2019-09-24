@@ -285,6 +285,28 @@ export default {
         },
         confirmPause: 'Confirmar pausa',
         confirmCancel: 'Confirmar cancelamento',
+        cancelPage: {
+            header: 'Cancelar Assinatura',
+            doYouWant: 'Quer mesmo cancelar?',
+            doYouWantSubtitle1: 'No Sanarflix você pode pausar sua assinatura!',
+            doYouWantSubtitle2:
+                'Com a pausa você não paga por até 3 meses e volta quando quiser!',
+            doYouWantExtra: 'Pausar',
+            modal: {
+                title: 'Cancelamento confirmado',
+                description:
+                    'Seu pedido está sendo processado e sua assinatura será cancelada dentro de algumas horas. Esperamos que sua experiência SanarFlix tenha sido proveitosa.',
+                ok: 'Certo, entendi'
+            },
+            notice: {
+                header: 'Fique atento às seguintes informações:',
+                item1:
+                    ' O seu acesso será suspenso e as cobranças futuras serão canceladas em até 48h.',
+                item2:
+                    ' Se você possui um plano semestral ou anual, será cobrada uma taxa rescisória de 25% sobre as cobranças futuras caso solicite o cancelamento após os 7 dias de período gratuito.',
+                knowMore: 'Saiba mais'
+            }
+        },
         pausePage: {
             header: 'Pausar Assinatura',
             completeFields: 'Preencha os campos abaixo para continuar:',

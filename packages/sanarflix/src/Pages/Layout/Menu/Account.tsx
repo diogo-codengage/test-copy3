@@ -132,6 +132,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     title={t('mainMenu.account.paymentMethods')}
                 />
                 <SANNavigationListItem
+                    to='/portal/minha-conta/cancelar-assinatura'
                     icon={
                         <SANEvaIcon
                             name='close-square-outline'
