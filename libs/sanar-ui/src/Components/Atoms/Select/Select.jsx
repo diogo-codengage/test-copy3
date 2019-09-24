@@ -13,7 +13,7 @@ const ESSelect = forwardRef(({ className, suffixIcon, ...props }, ref) => {
         <ESEvaIcon name='chevron-down-outline' />
     )
 
-    return <Select ref={ref} suffixIcon={icon} className={classes} {...props} />
+    return <Select dropdownClassName='es-select--dropdown' ref={ref} suffixIcon={icon} className={classes} {...props} />
 })
 
 ESSelect.propTypes = Object.assign(

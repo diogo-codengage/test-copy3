@@ -77,6 +77,10 @@ import { SANTextArea } from 'Components/Atoms/TextArea'
 import { SANSlider } from 'Components/Atoms/Slider'
 import { SANPage } from 'Components/Templates/Page'
 import { SANProfile } from 'Components/Page/Profile'
+import {
+    SANSnackbarProvider,
+    useSnackbarContext
+} from 'Components/Molecules/Snackbar'
 import { SANSupport } from 'Components/Organisms/Support'
 
 export {
@@ -162,6 +166,8 @@ export {
     SANPage,
     SANAvatar,
     SANProfile,
+    SANSnackbarProvider,
+    useSnackbarContext,
     SANSupport,
     SANInputMask,
     SANTooltip
