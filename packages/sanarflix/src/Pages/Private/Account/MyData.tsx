@@ -7,6 +7,7 @@ import { useApolloClient } from '@apollo/react-hooks'
 import { SANProfile, useSnackbarContext } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
+import { IMe } from 'Apollo/User/Queries/me'
 import { GET_STATES, IState } from 'Apollo/User/Queries/states'
 import { EDIT_USER_MUTATION } from 'Apollo/User/Mutations/edit-user'
 
@@ -20,7 +21,7 @@ const FLXMyData = ({ history }: RouteComponentProps) => {
     const client = useApolloClient()
     const { t } = useTranslation('sanarflix')
     const snackbar = useSnackbarContext()
-    const { me } = useAuthContext()
+    const { me, setMe } = useAuthContext()
     const [states, setStates] = useState<IState[]>([])
 
     useEffect(() => {
@@ -38,10 +39,13 @@ const FLXMyData = ({ history }: RouteComponentProps) => {
 
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
-            await client.mutate({
+            const {
+                data: { editUser }
+            } = await client.mutate<IMe>({
                 mutation: EDIT_USER_MUTATION,
                 variables: values
             })
+            setMe(old => ({ ...old, ...editUser }))
             snackbar({
                 message: t('account.myData.success'),
                 theme: 'success'

@@ -4,7 +4,7 @@ import { IMe } from 'Apollo/User/Queries/me'
 
 type FLXAuthContextValues = {
     me: IMe
-    setMe(me: IMe): void
+    setMe: React.Dispatch<React.SetStateAction<IMe | undefined>>
 }
 
 type FLXAuthContextProviderProps = {}

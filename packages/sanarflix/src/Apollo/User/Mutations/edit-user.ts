@@ -36,21 +36,6 @@ export const EDIT_USER_MUTATION = gql`
                 state_id
                 city_name
             }
-            plan {
-                id
-                description
-                payment_currency
-                payment_value
-                payment_frequency
-            }
-            card {
-                id
-                holder_name
-                card_expiration_month
-                card_expiration_year
-                card_number
-                card_cvv
-            }
         }
     }
 `

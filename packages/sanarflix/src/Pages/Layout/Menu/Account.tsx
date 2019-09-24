@@ -70,7 +70,8 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
             <SANSupport
                 onSubmit={handleSubmitSupport}
                 data={{
-                    email: me.email
+                    email: me.email,
+                    message: ''
                 }}
                 ModalProps={{
                     visible: visibleSupport,
