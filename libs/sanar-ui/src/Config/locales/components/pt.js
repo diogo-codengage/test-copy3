@@ -4,6 +4,53 @@ export default {
         courseProgress: 'Progresso do Curso',
         goToBegin: 'Voltar para o início'
     },
+    formValidateMessages: {
+        default: 'Erro de validação no campo %s',
+        required: 'Este campo é obrigatório',
+        enum: '%s deve ser um dos %s',
+        whitespace: '%s não pode estar vazio',
+        date: {
+            format: '%s data %s é inválida para o formato %s',
+            parse: '%s data não pôde ser analisada, %s é inválida',
+            invalid: '%s data %s é inválida'
+        },
+        types: {
+            string: '%s não é %s',
+            method: '%s não é %s (função)',
+            array: '%s não é %s',
+            object: '%s não é %s',
+            number: '%s não é %s',
+            date: '%s não é %s',
+            boolean: '%s não é %s',
+            integer: '%s não é %s',
+            float: '%s não é %s',
+            regexp: '%s não é valido %s',
+            email: 'Este não é um e-mail válido.',
+            url: '%s não é valido %s',
+            hex: '%s não é valido %s'
+        },
+        string: {
+            len: '%s deve ser exatamente %s caracteres',
+            min: '%s deve ter pelo menos %s caracteres',
+            max: '%s não pode ser maior que %s caracteres',
+            range: '%s deve estar entre %s and %s caracteres'
+        },
+        number: {
+            len: '%s deve ser igual a %s',
+            min: '%s não pode ser menor que %s',
+            max: '%s não pode ser maior que %s',
+            range: '%s deve estar entre %s e %s'
+        },
+        array: {
+            len: '%s deve ter exatamente %s de comprimento',
+            min: '%s não pode ter menos que %s de comprimento',
+            max: '%s não pode ser maior que %s de comprimento',
+            range: '%s deve estar entre %s e %s de comprimento'
+        },
+        pattern: {
+            mismatch: '%s valor %s não corresponde ao padrão %s'
+        }
+    },
     empty: {
         title: 'Não encontramos o que você buscou.'
     },
@@ -68,5 +115,17 @@ export default {
             city: 'Cidade',
             state: 'Estado'
         }
+    },
+    support: {
+        title: 'Em que podemos ajudar?',
+        email: 'Seu e-mail',
+        message: {
+            title: 'O que você quer nos dizer?',
+            placeholder: 'Escreva aqui a sua mensagem'
+        },
+        check:
+            'Permitir o contato da Sanar para tirar dúvidas sobre o feedback.',
+        cancel: 'Cancelar',
+        send: 'Enviar'
     }
 }

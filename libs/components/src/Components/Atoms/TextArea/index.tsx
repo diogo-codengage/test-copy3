@@ -9,6 +9,7 @@ const TextArea = styled('textarea')`
     line-height: 21.6px;
     padding: ${theme('space.sm')};
     height: auto;
+    resize: none;
 `
 
 export const SANTextArea = props => <SANInput as={TextArea} {...props} />
