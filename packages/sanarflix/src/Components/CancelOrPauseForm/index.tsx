@@ -34,15 +34,15 @@ export const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
         const { me } = useAuthContext()
         const [loading, setLoading] = useState(false)
 
-        const onSubmit: (e: any) => Object = async e => {
+        const onSubmit = async e => {
             e.preventDefault()
             setLoading(true)
             try {
                 await form.validateFields()
 
-                const { password } = form.getFieldsValue()
-                await signInByEmail(me.email, password)
-                onSubmitProp(await form.getFieldsValue())
+                const values = form.getFieldsValue()
+                await signInByEmail(me.email, values.password)
+                onSubmitProp(values)
             } catch (e) {
                 if (!!e.message) {
                     createSnackbar({
@@ -342,7 +342,9 @@ export const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
                             uppercase
                             loading={loading}
                         >
-                            confirmar cancelamento
+                            {destiny === 'cancel'
+                                ? t('sigmentManagement.confirmCancel')
+                                : t('sigmentManagement.confirmPause')}
                         </SANButton>
                     </SANBox>
                 </SANForm>
