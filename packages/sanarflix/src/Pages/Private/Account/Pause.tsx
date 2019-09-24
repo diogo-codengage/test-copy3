@@ -55,7 +55,7 @@ const Notice = () => {
     )
 }
 
-const FLXPausePage: React.FC<RouteComponentProps> = ({ history }) => {
+const FLXPausePage = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
     const [modalVisible, setModalVisible] = useState(false)
     const client = useApolloClient()
@@ -79,14 +79,12 @@ const FLXPausePage: React.FC<RouteComponentProps> = ({ history }) => {
         }
     }
 
-    useEffect(() => console.log(modalVisible), [modalVisible])
-
     return (
         <>
             <SANPage
                 hasContainer
                 HeaderProps={{
-                    goBack: console.log,
+                    onBack: () => history.goBack(),
                     SessionTitleProps: {
                         title: t('sigmentManagement.pausePage.header')
                     }
