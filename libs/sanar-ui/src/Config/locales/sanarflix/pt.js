@@ -213,8 +213,17 @@ export default {
             paymentMethods: 'Formas de pagamento',
             unsubscribe: 'Cancelar assinatura',
             otherLinks: 'Outros links',
-            support: 'Suporte',
-            signOut: 'Sair da conta'
+            signOut: 'Sair da conta',
+            plan: {
+                month: 'Plano Mensal',
+                semiannual: 'Plano Semestral',
+                yearly: 'Plano Anual'
+            },
+            support: {
+                title: 'Suporte',
+                success: 'Mensagem enviada com sucesso',
+                error: 'Falha ao enviar mensagem'
+            }
         }
     },
     classroom: {
@@ -322,6 +331,16 @@ export default {
             year: 'Ano',
             name: 'Nome do Titular',
             confirm: 'Confirmar'
+        }
+    },
+    account: {
+        myData: {
+            success: 'Dados salvos com sucesso',
+            error: 'Falha ao salvar dados'
+        },
+        creditCard: {
+            success: 'Dados salvos com sucesso',
+            error: 'Falha ao salvar dados'
         }
     }
 }
