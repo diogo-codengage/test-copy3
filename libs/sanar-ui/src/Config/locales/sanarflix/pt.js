@@ -9,6 +9,7 @@ export default {
         about: 'Sobre o SanarFlix',
         copyright: 'Todos os direitos reservados',
         course: 'Curso',
+        year: 'ano',
         completenessFilters: {
             all: 'Todos',
             completed: 'Concluídos',
@@ -284,10 +285,34 @@ export default {
         selectCancelReasonLabel: 'Qual o motivo do cancelamento?',
         selectCancelReason: 'Selecione o motivo',
         howMuchTimeLabel: 'Por quanto tempo você quer pausar?',
+        formedResident: 'Formado (Residente)',
+        formedActing: 'Formado (Atuando)',
         howMuchTime: {
             key: 'howMuchTime',
             keyWithCount: '{{count}} mês',
             keyWithCount_plural: '{{count}} meses'
+        },
+        confirmPause: 'Confirmar pausa',
+        confirmCancel: 'Confirmar cancelamento',
+        pausePage: {
+            header: 'Pausar Assinatura',
+            completeFields: 'Preencha os campos abaixo para continuar:',
+            toComplete:
+                'Para completar sua solicitação de pausa responda nossa pesquisa.',
+            completeAll: 'Todos os campos de preenchimento são obrigatórios.',
+            notice: {
+                header: 'Fique atento às seguintes informações:',
+                item1:
+                    ' A pausa é permitida apenas para assinantes do Plano Mensal.',
+                item2:
+                    'Dentro de 48h pausaremos sua assinatura por até 3 meses. Sua assinatura voltará a ser cobrada após esse período, assim como seu acesso ao SanarFlix.'
+            },
+            modal: {
+                title: 'Pausa confirmada',
+                description:
+                    'Seu pedido está sendo processado e sua assinatura será pausada dentro de algumas horas. Esperamos que sua experiência SanarFlix tenha sido proveitosa!',
+                ok: 'Certo, entendi'
+            }
         }
     },
     paymentMethods: {

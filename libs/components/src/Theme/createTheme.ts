@@ -33,7 +33,7 @@ export const defaultColors = {
 
     purple: ['#e1ccff', ' #905adb', '#753dc3', ' #45108f'],
 
-    red: ['#ffbdbd', '#ff7d7d', '#d94a4b', '#a61717'],
+    red: ['#ffbdbd', '#ff7d7d', '#d94a4b', '#a61717', '#f7d4d4', '#FDF6F6'],
 
     burgundy: ['#ffdbe7', '#ba5677', '#882445', '#6e1230'],
 
@@ -133,16 +133,16 @@ defaultFontWeights.medium = defaultFontWeights[1]
 defaultFontWeights.bold = defaultFontWeights[2]
 
 const defaultSpace: any = [
-    '0px',
-    '4px',
-    '8px',
-    '12px',
-    '16px',
-    '20px',
-    '24px',
-    '32px',
-    '48px',
-    '60px'
+    '0px', // 0
+    '4px', // 1
+    '8px', // 2
+    '12px', // 3
+    '16px', // 4
+    '20px', // 5
+    '24px', // 6
+    '32px', // 7
+    '48px', // 8
+    '60px' // 9
 ]
 
 defaultSpace.xxs = defaultSpace[1]

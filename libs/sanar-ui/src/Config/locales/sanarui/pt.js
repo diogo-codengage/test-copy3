@@ -8,6 +8,9 @@ export default {
         sendFeedback: 'Enviar feedback',
         you: 'Você'
     },
+    error: {
+        default: 'Ocorreu um erro. Tente novamente mais tarde.'
+    },
     mainMenu: {
         leftOff: 'Continuar onde parei',
         rankingPoints: 'pontos'
