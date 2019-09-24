@@ -33,7 +33,9 @@ export default {
             len: '%s deve ser exatamente %s caracteres',
             min: '%s deve ter pelo menos %s caracteres',
             max: '%s não pode ser maior que %s caracteres',
-            range: '%s deve estar entre %s and %s caracteres'
+            range: '%s deve estar entre %s and %s caracteres',
+            passwordsMismatch: 'As senhas não conferem.',
+            minPassword: 'Senha deve ter no mínimo {{min}} caracteres.'
         },
         number: {
             len: '%s deve ser igual a %s',

@@ -129,8 +129,8 @@ const SANEvaIcon: React.FC<ISANEvaIconProps> = ({
     const key = useMemo(() => random(), [name])
 
     return (
-        <SANEvaIconStyled {...{ color, size, ...props }}>
-            <Icon name={name} key={key} />
+        <SANEvaIconStyled key={key} {...{ color, size, ...props }}>
+            <Icon name={name} />
         </SANEvaIconStyled>
     )
 }

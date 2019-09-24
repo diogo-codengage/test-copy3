@@ -1,10 +1,10 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import SANPasswordRecoveryTemplate from './PasswordRecovery'
+import SANChangePassword from './ChangePassword'
 
-storiesOf('Templates.PasswordRecovery', module).add(
+storiesOf('Page.ChangePassword', module).add(
     'Simple',
-    () => <SANPasswordRecoveryTemplate />,
+    () => <SANChangePassword />,
     {
         style: {
             padding: 0,

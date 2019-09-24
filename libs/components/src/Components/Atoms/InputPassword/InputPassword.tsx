@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { SANInput } from '../Input'
+import { SANInput, ISANInputProps } from '../Input'
 
 const password = {
     type: 'password',
@@ -11,6 +11,8 @@ const text = {
     type: 'text',
     icon: 'eye-off-outline'
 }
+
+export interface ISANInputPasswordProps extends ISANInputProps {}
 
 const SANInputPassword = props => {
     const [input, setInput] = useState(password)

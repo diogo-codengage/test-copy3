@@ -1,16 +1,12 @@
-import React, { ImgHTMLAttributes, useMemo } from 'react'
+import React, { useMemo } from 'react'
 
-import styled from 'styled-components'
-
-import { SANBox } from '../Box'
+import { SANBox, ISANBoxProps } from '../Box'
 
 import { useThemeContext } from '@sanar/utils/dist/Hooks'
 
-export interface ISANBrandHeaderProps extends ImgHTMLAttributes<any> {
+export interface ISANBrandHeaderProps extends ISANBoxProps {
     dark?: boolean
 }
-
-const Image = styled.img``
 
 const SANBrandHeader = ({ dark, ...props }: ISANBrandHeaderProps) => {
     const {
@@ -42,8 +38,9 @@ const SANBrandHeader = ({ dark, ...props }: ISANBrandHeaderProps) => {
             display='flex'
             alignItems='center'
             justifyContent='center'
+            {...props}
         >
-            <Image {...props} src={dark ? darkLogo : lightLogo} />
+            <img src={dark ? darkLogo : lightLogo} alt='' />
         </SANBox>
     )
 }
