@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
     SANPage,
     SANBox,
@@ -11,25 +11,14 @@ import {
     SANButton
 } from '@sanar/components'
 
-import { FLXCancelOrPauseForm } from 'Components/CancelOrPauseForm'
+import {
+    FLXCancelOrPauseForm,
+    FLXCancelOrPauseFormSubtitle
+} from 'Components/CancelOrPauseForm'
 import { useApolloClient } from '@apollo/react-hooks'
 import { PAUSE_SUBSCRIPTION } from 'Apollo/SignmentManagement/Mutations/pause'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router'
-
-const Subtitle = () => {
-    const { t } = useTranslation('sanarflix')
-    return (
-        <>
-            <SANTypography>
-                {t('sigmentManagement.pausePage.toComplete')}
-            </SANTypography>
-            <SANTypography color='primary'>
-                {t('sigmentManagement.pausePage.completeAll')}
-            </SANTypography>
-        </>
-    )
-}
 
 const Notice = () => {
     const { t } = useTranslation('sanarflix')
@@ -97,7 +86,7 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
                     mt={6}
                     mb={6}
                     title={t('sigmentManagement.pausePage.completeFields')}
-                    subtitle={<Subtitle />}
+                    subtitle={<FLXCancelOrPauseFormSubtitle />}
                 />
                 <SANRow gutter={12}>
                     <SANCol lg={16}>

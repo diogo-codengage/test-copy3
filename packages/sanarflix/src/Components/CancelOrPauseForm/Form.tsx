@@ -13,7 +13,8 @@ import {
     SANRadio,
     SANTextArea,
     SANSlider,
-    useSnackbarContext
+    useSnackbarContext,
+    SANTypography
 } from '@sanar/components'
 import { useTranslation } from 'react-i18next'
 import signInByEmail from 'Pages/Auth/SignIn/signIn'
@@ -21,13 +22,14 @@ import { useAuthContext } from 'Hooks/auth'
 import { useQuery } from '@apollo/react-hooks'
 import { GET_CANCEL_REASONS } from 'Apollo/SignmentManagement/Query/cancel-reasons'
 import { graduatePeriod } from './staticData'
+import { omit } from 'ramda'
 
 interface IProps {
     onSubmit?: any
     destiny?: 'pause' | 'cancel'
 }
 
-export const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
+const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
     ({ onSubmit: onSubmitProp, destiny = 'cancel', form }) => {
         const { t } = useTranslation('sanarflix')
         const createSnackbar = useSnackbarContext()
@@ -42,7 +44,7 @@ export const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
 
                 const values = form.getFieldsValue()
                 await signInByEmail(me.email, values.password)
-                onSubmitProp(values)
+                onSubmitProp(omit(['password'], values))
             } catch (e) {
                 if (!!e.message) {
                     createSnackbar({
@@ -352,3 +354,5 @@ export const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
         )
     }
 )
+
+export default FLXCancelOrPauseForm
