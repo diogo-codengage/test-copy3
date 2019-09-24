@@ -8,6 +8,8 @@ import typeIconPrimaryVideo from './images/type-icons/primary/video.svg'
 import logoLight from './images/logos/logo-light.svg'
 import logoDark from './images/logos/logo-dark.svg'
 
+import changePassword from './images/change-password/change-password.png'
+
 export {
     typeIconPrimaryBook,
     typeIconPrimaryFile,
@@ -16,5 +18,6 @@ export {
     typeIconPrimaryQuestion,
     typeIconPrimaryVideo,
     logoLight,
-    logoDark
+    logoDark,
+    changePassword
 }

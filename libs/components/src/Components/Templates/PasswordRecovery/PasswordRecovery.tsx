@@ -1,71 +1,166 @@
-// import React from 'react'
+import React from 'react'
 
-// // import ESBrandHeader from '../../Atoms/BrandHeader'
-// import { SANTypography } from '../../Atoms/Typography'
+import { useTranslation } from 'react-i18next'
+import styled from 'styled-components'
+import { theme } from 'styled-tools'
 
-// import logo from '../../../assets/images/logo/logo-grey.svg'
+import { SANBrandHeader } from '../../Atoms/BrandHeader'
+import { SANTypography } from '../../Atoms/Typography'
+import { SANBox } from '../../Atoms/Box'
+import { SANInput } from '../../Atoms/Input'
+import { SANButton } from '../../Atoms/Button'
+import { SANForm, SANFormItem, withSANForm } from '../../Molecules/Form'
 
-// const ESPasswordRecoveryTemplate = ({
-//     className,
-//     image,
-//     title,
-//     subtitle,
-//     actionsMargin,
-//     actions,
-//     brandHeader,
-//     header,
-//     fullHeight
-// }) => {
-//     return (
-//         <div className={classes}>
-//             <div className='es-password-recovery-template__container-content'>
-//                 <div className='es-password-recovery-template__container-content__content'>
-//                     <div className={classesInfo}>
-//                         <img src={image} />
-//                         <SANTypography
-//                             className='es-password-recovery-template__container-content__content__infos--title mb-md'
-//                             level={4}
-//                         >
-//                             {title}
-//                         </SANTypography>
-//                         <SANTypography
-//                             className='es-password-recovery-template__container-content__content__infos--subtitle'
-//                             variant='subtitle2'
-//                         >
-//                             {subtitle}
-//                         </SANTypography>
-//                     </div>
+import { useThemeContext } from '@sanar/utils/dist/Hooks'
 
-//                     <div className='es-password-recovery-template__container-content__content__actions'>
-//                         {actions}
-//                     </div>
-//                 </div>
-//             </div>
+const Image = styled.img`
+    width: 392px;
+    margin-bottom: ${theme('space.xxl')};
 
-//             {fullHeight && (
-//                 <div className='es-password-recovery-template__footer'>
-//                     <img src={logo} alt='sanar-logo' />
-//                 </div>
-//             )}
-//         </div>
-//     )
-// }
+    ${theme('mediaQueries.down.md')} {
+        width: 228px;
+    }
+`
 
-// ESPasswordRecoveryTemplate.propTypes = {
-//     className: PropTypes.string,
-//     title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-//     subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-//     image: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-//     actions: PropTypes.node,
-//     actionsMargin: PropTypes.oneOf(['default', 'large']),
-//     brandHeader: PropTypes.bool,
-//     header: PropTypes.node,
-//     fullHeight: PropTypes.bool
-// }
-// ESPasswordRecoveryTemplate.defaultProps = {
-//     actionsMargin: 'default',
-//     brandHeader: true,
-//     fullHeight: true
-// }
+const SANPasswordRecoveryTemplate = ({ form }) => {
+    const {
+        assets: {
+            icons: {
+                auth: { changePassword }
+            }
+        }
+    } = useThemeContext()
+    const { t } = useTranslation('components')
 
-// export default ESPasswordRecoveryTemplate
+    const compareToFirstPassword = (rule, value, callback) => {
+        if (value && value !== form.getFieldValue('password')) {
+            callback('')
+        } else {
+            callback()
+        }
+    }
+
+    const validateToNextPassword = (rule, value, callback) => {
+        const { passwordConfirm } = form.getFieldsValue()
+        if (value && passwordConfirm) {
+            form.validateFields(['passwordConfirm'], { force: true })
+        }
+        callback()
+    }
+
+    return (
+        <SANBox display='flex' flexDirection='column' bg='white.10'>
+            <SANBrandHeader />
+            <SANBox
+                display='flex'
+                flexDirection='column'
+                alignItems='center'
+                my={9}
+            >
+                <Image src={changePassword} />
+                <SANTypography
+                    fontSize={{ xs: '6', _: 'xxl' }}
+                    strong
+                    textAlign='center'
+                >
+                    {t('changePassword.title')}
+                </SANTypography>
+                <SANTypography
+                    fontSize={{ xs: 'lg', _: 'md' }}
+                    my='md'
+                    textAlign='center'
+                >
+                    {t('changePassword.subtitle')}
+                </SANTypography>
+
+                <SANForm form={form}>
+                    <SANFormItem
+                        name='password'
+                        rules={[
+                            {
+                                required: true,
+                                message: t(
+                                    'sanarui:formValidateMessages.required'
+                                )
+                            },
+                            {
+                                min: 6,
+                                message: t('auth.validations.minPassword', {
+                                    min: 6
+                                })
+                            },
+                            {
+                                validator: validateToNextPassword
+                            }
+                        ]}
+                    >
+                        <SANInput
+                            size='large'
+                            placeholder={t('changePassword.current')}
+                        />
+                    </SANFormItem>{' '}
+                    <SANFormItem
+                        name='new'
+                        rules={[
+                            {
+                                required: true,
+                                message: t(
+                                    'sanarui:formValidateMessages.required'
+                                )
+                            },
+                            {
+                                min: 6,
+                                message: t('auth.validations.minPassword', {
+                                    min: 6
+                                })
+                            },
+                            {
+                                validator: validateToNextPassword
+                            }
+                        ]}
+                    >
+                        <SANInput
+                            size='large'
+                            placeholder={t('changePassword.new')}
+                        />
+                    </SANFormItem>
+                    <SANFormItem
+                        name='passwordConfirm'
+                        rules={[
+                            {
+                                required: true,
+                                message: t(
+                                    'sanarui:formValidateMessages.required'
+                                )
+                            },
+                            {
+                                validator: compareToFirstPassword,
+                                message: t('auth.validations.passwordsMismatch')
+                            }
+                        ]}
+                    >
+                        <SANInput
+                            size='large'
+                            placeholder={t('changePassword.confirmPassword')}
+                        />
+                    </SANFormItem>
+                    <SANButton
+                        htmlType='submit'
+                        uppercase
+                        block
+                        variant='solid'
+                        color='primary'
+                        className='mb-md'
+                    >
+                        {t('changePassword.confirm')}
+                    </SANButton>
+                    <SANButton uppercase block variant='text' color='primary'>
+                        {t('changePassword.forgot')}
+                    </SANButton>
+                </SANForm>
+            </SANBox>
+        </SANBox>
+    )
+}
+
+export default withSANForm(SANPasswordRecoveryTemplate)

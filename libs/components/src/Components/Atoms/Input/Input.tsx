@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react'
 
-import { omit } from 'ramda'
 import styled, { css } from 'styled-components'
 import { theme, ifProp, switchProp } from 'styled-tools'
 
@@ -139,6 +138,8 @@ export interface ISANInputProps
     iconLeft?: string
     as?: React.ElementType
     uppercase?: boolean
+    rightClick?: () => void
+    leftClick?: () => void
 }
 
 const SANInput: React.FC<ISANInputProps> = (
@@ -149,6 +150,8 @@ const SANInput: React.FC<ISANInputProps> = (
         disabled,
         uppercase,
         size = 'medium',
+        leftClick,
+        rightClick,
         ...props
     },
     ref
@@ -170,9 +173,13 @@ const SANInput: React.FC<ISANInputProps> = (
 
     return (
         <Wrapper {...wrapperProps}>
-            {!!iconLeft && <SANEvaIconStyled name={iconLeft} />}
+            {!!iconLeft && (
+                <SANEvaIconStyled name={iconLeft} onClick={leftClick} />
+            )}
             <Input ref={ref} {...inputProps} placeholder={customPlaceholder} />
-            {!!iconRight && <SANEvaIconStyled name={iconRight} />}
+            {!!iconRight && (
+                <SANEvaIconStyled name={iconRight} onClick={rightClick} />
+            )}
         </Wrapper>
     )
 }

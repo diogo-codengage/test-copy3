@@ -1,4 +1,1 @@
-// export {
-//     default as SANPasswordRecovery,
-//     ISANPasswordRecoveryProps
-// } from './PasswordRecovery'
+export { default as SANPasswordRecovery } from './PasswordRecovery'

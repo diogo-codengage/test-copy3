@@ -12,7 +12,8 @@ import {
     typeIconPrimaryQuestion,
     typeIconPrimaryVideo,
     logoLight,
-    logoDark
+    logoDark,
+    changePassword
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -173,6 +174,9 @@ export const createTheme = ({
             logo: {
                 light: logoLight,
                 dark: logoDark
+            },
+            auth: {
+                changePassword
             }
         },
         typeIcons: {
