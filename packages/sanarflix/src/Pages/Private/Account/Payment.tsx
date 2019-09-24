@@ -81,7 +81,10 @@ const FLXPayment = ({ history, form }) => {
     const { me } = useAuthContext()
     const snackbar = useSnackbarContext()
     const [submitting, setSubmitting] = useState(false)
+    const [focus, setFocus] = useState(false)
     const client = useApolloClient()
+
+    const onFocus = () => !focus && setFocus(true)
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -180,7 +183,12 @@ const FLXPayment = ({ history, form }) => {
                                                 >
                                                     <SANInputMask
                                                         required
-                                                        mask='CREDIT_CARD'
+                                                        onFocus={onFocus}
+                                                        mask={
+                                                            focus
+                                                                ? 'CREDIT_CARD'
+                                                                : 'CREDIT_CARD_PREVIEW'
+                                                        }
                                                         InputProps={{
                                                             placeholder: t(
                                                                 'paymentMethods.creditCard.number'
