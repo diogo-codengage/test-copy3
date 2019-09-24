@@ -5,11 +5,16 @@ import typeIconPrimaryMentalchart from './images/type-icons/primary/mentalchart.
 import typeIconPrimaryQuestion from './images/type-icons/primary/question.svg'
 import typeIconPrimaryVideo from './images/type-icons/primary/video.svg'
 
+import logoLight from './images/logos/logo-light.svg'
+import logoDark from './images/logos/logo-dark.svg'
+
 export {
     typeIconPrimaryBook,
     typeIconPrimaryFile,
     typeIconPrimaryFlowchart,
     typeIconPrimaryMentalchart,
     typeIconPrimaryQuestion,
-    typeIconPrimaryVideo
+    typeIconPrimaryVideo,
+    logoLight,
+    logoDark
 }
