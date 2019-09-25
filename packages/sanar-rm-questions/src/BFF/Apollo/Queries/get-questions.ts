@@ -41,6 +41,13 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
 
     const whereFilter = ` ,where: "${JSON.stringify(where).replace(/"/g, '\\"') }" `
 
+    const imageData = `{
+        filename
+        url
+        height
+        width
+    }`
+
     const queryWithParams = `
         {
             questions(limit: 10, random:true ${whereFilter}, state: "${state}"){
@@ -82,6 +89,17 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
                     specialties {
                         data {
                             name
+                        }
+                    },
+                    images {
+                        data {
+                            id
+                            sized_images {
+                                small ${imageData}
+                                medium ${imageData}
+                                large ${imageData}
+                                original ${imageData}
+                            }
                         }
                     }
                 }
