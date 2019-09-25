@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { SANSpin } from '../../Atoms/Spin'
 import { SANBox } from '../../Atoms/Box'
 import { SANDivider } from '../../Atoms/Divider'
+import { SANTypography } from '../../Atoms/Typography'
 import { SANSelect, SANSelectOption } from '../../Atoms/Select'
 import { SANInput } from '../../Atoms/Input'
 import { SANInputMask } from '../../Atoms/InputMask'
@@ -63,7 +64,15 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
             <SANSpin spinning={submitting} flex>
                 <SANTabs defaultActiveKey='1' center>
                     <SANTabPane
-                        tab={t('profile.tab1.title')}
+                        tab={
+                            <SANTypography
+                                fontSize='lg'
+                                strong
+                                data-testid='flix_my_account-profile--tab-personal'
+                            >
+                                {t('profile.tab1.title')}
+                            </SANTypography>
+                        }
                         key={1}
                         forceRender
                     >
@@ -84,6 +93,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         ]}
                                     >
                                         <SANInput
+                                            data-testid='flix_profile_tab-personal--input-name'
                                             required
                                             placeholder={t('profile.tab1.name')}
                                             size='large'
@@ -95,6 +105,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         initialValue={user.cpf || undefined}
                                     >
                                         <SANInput
+                                            data-testid='flix_profile_tab-personal--input-cpf'
                                             placeholder={t(
                                                 'profile.tab1.document'
                                             )}
@@ -111,6 +122,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         }
                                     >
                                         <SANInputMask
+                                            data-testid='flix_profile_tab-personal--input-cellphone'
                                             mask='PHONE'
                                             InputProps={{
                                                 placeholder: t(
@@ -133,6 +145,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                                 }
                                             >
                                                 <SANInput
+                                                    data-testid='flix_profile_tab-personal--input-university'
                                                     placeholder={t(
                                                         'profile.tab1.college'
                                                     )}
@@ -152,6 +165,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                                 }
                                             >
                                                 <SANSelect
+                                                    data-testid='flix_profile_tab-personal--select-period'
                                                     placeholder={t(
                                                         'profile.tab1.semester'
                                                     )}
@@ -186,7 +200,15 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                         </SANBox>
                     </SANTabPane>
                     <SANTabPane
-                        tab={t('profile.tab2.title')}
+                        tab={
+                            <SANTypography
+                                fontSize='lg'
+                                strong
+                                data-testid='flix_my_account-profile--tab-address'
+                            >
+                                {t('profile.tab2.title')}
+                            </SANTypography>
+                        }
                         key={2}
                         forceRender
                     >
@@ -203,6 +225,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         }
                                     >
                                         <SANInputMask
+                                            data-testid='flix_profile_tab-personal--input-cep'
                                             mask='POSTAL_CODE'
                                             InputProps={{
                                                 placeholder: t(
@@ -222,6 +245,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         }
                                     >
                                         <SANInput
+                                            data-testid='flix_profile_tab-personal--input-address'
                                             placeholder={t(
                                                 'profile.tab2.address'
                                             )}
@@ -238,6 +262,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         }
                                     >
                                         <SANInput
+                                            data-testid='flix_profile_tab-personal--input-neighborhood'
                                             placeholder={t(
                                                 'profile.tab2.neighborhood'
                                             )}
@@ -256,6 +281,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         }
                                     >
                                         <SANInput
+                                            data-testid='flix_profile_tab-personal--input-city'
                                             placeholder={t(
                                                 'profile.tab2.complement.placeholder'
                                             )}
@@ -275,6 +301,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                                 }
                                             >
                                                 <SANInput
+                                                    data-testid='flix_profile_tab-personal--select-state'
                                                     placeholder={t(
                                                         'profile.tab2.city'
                                                     )}
