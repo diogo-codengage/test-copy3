@@ -13,8 +13,7 @@ import {
     SANRadio,
     SANTextArea,
     SANSlider,
-    useSnackbarContext,
-    SANTypography
+    useSnackbarContext
 } from '@sanar/components'
 import { useTranslation } from 'react-i18next'
 import signInByEmail from 'Pages/Auth/SignIn/signIn'
