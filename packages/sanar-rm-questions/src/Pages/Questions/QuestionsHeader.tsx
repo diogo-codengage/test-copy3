@@ -56,8 +56,6 @@ export const QuestionsHeader = () => {
                     } else {
                         setShowModalNoQuestionsForFilter(true)
                     }
-                    // @ts-ignore
-                    // window.analytics.track('FilterQuestions', data.filters);
                 })
             }}
         > {questionsRequests === 0 ? 'INICIAR PRÁTICA' : 'VOLTAR A PRÁTICA'} </ESButton>
