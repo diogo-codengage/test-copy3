@@ -47,7 +47,7 @@ export const QuestionsHeader = () => {
             loading={loadingQuestions}
             onClick={() => {
                 setLoadingQuestions(true)
-                loadMoreQuestions(true).then( success => {
+                loadMoreQuestions(true, true).then( success => {
                     setLoadingQuestions(false)
                     if(success){
                         setCurrentQuestion(null)
@@ -56,6 +56,8 @@ export const QuestionsHeader = () => {
                     } else {
                         setShowModalNoQuestionsForFilter(true)
                     }
+                    // @ts-ignore
+                    // window.analytics.track('FilterQuestions', data.filters);
                 })
             }}
         > {questionsRequests === 0 ? 'INICIAR PRÁTICA' : 'VOLTAR A PRÁTICA'} </ESButton>

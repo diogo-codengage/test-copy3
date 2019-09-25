@@ -84,7 +84,7 @@ export interface IQuestionsContext {
     showAdvancedFilters: boolean
     setShowAdvancedFilters: (showAdvancedFilters: boolean) => void
 
-    loadMoreQuestions: (clearOld: boolean) => Promise<Boolean>
+    loadMoreQuestions: (clearOld: boolean, sendEvent?: boolean) => Promise<Boolean>
 }
 
 export const QuestionsContext = createContext<IQuestionsContext>(null)
