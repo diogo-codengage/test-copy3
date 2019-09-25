@@ -1,6 +1,5 @@
 import React, { useMemo, ImgHTMLAttributes } from 'react'
 
-import { omit } from 'ramda'
 import styled, { css } from 'styled-components'
 import {
     SpaceProps,
@@ -74,9 +73,6 @@ const IconWrapper = styled.div<IIconWrapperProps>`
 `
 
 const SANAvatar = (props: ISANAvatarProps) => {
-    if (!props.size) {
-        props.size = 40
-    }
     const customProps = useMemo(
         () => ({
             ...props,

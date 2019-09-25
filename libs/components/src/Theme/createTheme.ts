@@ -10,7 +10,10 @@ import {
     typeIconPrimaryFlowchart,
     typeIconPrimaryMentalchart,
     typeIconPrimaryQuestion,
-    typeIconPrimaryVideo
+    typeIconPrimaryVideo,
+    logoLight,
+    logoDark,
+    changePassword
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -153,7 +156,11 @@ defaultSpace.lg = defaultSpace[5]
 defaultSpace.xl = defaultSpace[6]
 defaultSpace.xxl = defaultSpace[7]
 
-const defaultShadows = ['none', '0px 1px 2px rgba(17, 19, 23, 0.15)']
+const defaultShadows = [
+    'none',
+    '0px 1px 2px rgba(17, 19, 23, 0.15)',
+    '0px 1px 2px #0f1117'
+]
 
 const defaultZIndices: any = []
 defaultZIndices.sidebar = 1200
@@ -163,6 +170,15 @@ export const createTheme = ({
     name = 'default',
     assets = {
         logo: logoAssets,
+        icons: {
+            logo: {
+                light: logoLight,
+                dark: logoDark
+            },
+            auth: {
+                changePassword
+            }
+        },
         typeIcons: {
             primary: {
                 book: typeIconPrimaryBook,

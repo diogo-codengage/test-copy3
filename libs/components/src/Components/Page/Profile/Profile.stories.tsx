@@ -6,19 +6,21 @@ import SANProfile from './Profile'
 const user = {
     id: '1',
     name: 'Diogo Biz',
-    profilePicture:
+    profile_picture:
         'http://www.maxmoto.com.br/wp-content/uploads/2015/09/Biz-125-Cinza-3.4-FD-copy-3.jpg',
-    document: '00000000000',
+    cpf: '00000000000',
     email: 'diogo@codengage.com',
-    phone: '46999375562',
+    phone_number: '46999375562',
     college: 'UNISEP',
-    semester: 8,
-    postalCode: '85660000',
-    address: 'R. Estevão Skorek, 111',
-    neighborhood: 'Jardim Concórdia',
-    complement: '',
-    city: 'Dois Vizinhos',
-    state: 'Paraná'
+    period: 1,
+    address: {
+        postal_code: '85660000',
+        address: 'R. Estevão Skorek, 111',
+        district: 'Jardim Concórdia',
+        complement: '',
+        city_name: 'Dois Vizinhos',
+        state_id: '1'
+    }
 }
 
 const states = [

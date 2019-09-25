@@ -13,7 +13,9 @@ import {
     SANButton,
     SANTypography,
     SANDivider,
-    SANSupport
+    SANSupport,
+    SANScroll,
+    useSnackbarContext
 } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
@@ -26,6 +28,7 @@ import { getInstance } from 'Config/AWSCognito'
 const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
     const client = useApolloClient()
     const { t } = useTranslation('sanarflix')
+    const snackbar = useSnackbarContext()
     const { me } = useAuthContext()
     const { onCloseMenu, setMenuTab } = useLayoutContext()
     const [visibleLogout, setVisibleLogout] = useState(false)
@@ -51,15 +54,25 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                 }
             })
             setVisibleSupport(false)
-        } catch {}
+            snackbar({
+                message: t('mainMenu.account.support.success'),
+                theme: 'success'
+            })
+        } catch {
+            snackbar({
+                message: t('mainMenu.account.support.error'),
+                theme: 'error'
+            })
+        }
     }
 
     return (
-        <>
+        <SANScroll>
             <SANSupport
                 onSubmit={handleSubmitSupport}
                 data={{
-                    email: me.email
+                    email: me.email,
+                    message: ''
                 }}
                 ModalProps={{
                     visible: visibleSupport,
@@ -86,7 +99,9 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                 <SANAvatarMenu
                     src={me.profile_picture}
                     title={me.name}
-                    subtitle='Inserir plano'
+                    subtitle={t(
+                        `mainMenu.account.plan.${me.plan.payment_frequency}`
+                    )}
                 />
             </SANBox>
             <SANTypography variant='overline' px='md' pt='xl' color='white.5'>
@@ -101,6 +116,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     title={t('mainMenu.account.myData')}
                 />
                 <SANNavigationListItem
+                    to='/portal/minha-conta/alterar-senha'
                     icon={<SANEvaIcon name='lock-outline' color='default' />}
                     onClick={onCloseMenu}
                     dataTestid='flix_menu_my-account__go_to--change-password'
@@ -153,7 +169,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                 <SANNavigationListItem
                     onClick={() => setVisibleSupport(true)}
                     dataTestid='flix_menu_my-account__go_to--suport'
-                    title={t('mainMenu.account.support')}
+                    title={t('mainMenu.account.support.title')}
                 />
                 <SANNavigationListItem
                     onClick={() => setVisibleLogout(true)}
@@ -161,7 +177,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     title={t('mainMenu.account.signOut')}
                 />
             </SANNavigationList>
-        </>
+        </SANScroll>
     )
 }
 

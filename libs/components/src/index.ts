@@ -68,6 +68,7 @@ import { SANSkeleton, ISANSkeletonProps } from 'Components/Atoms/Skeleton'
 import { SANSplashLoader } from 'Components/Atoms/SplashLoader'
 import { SANList, SANListItem, SANListItemDefault } from 'Components/Atoms/List'
 import { SANInput } from 'Components/Atoms/Input'
+import { SANInputPassword } from 'Components/Atoms/InputPassword'
 import { SANInputMask } from 'Components/Atoms/InputMask'
 import { SANSelect, SANSelectOption } from 'Components/Atoms/Select'
 import { SANTooltip } from 'Components/Atoms/Tooltip'
@@ -77,11 +78,12 @@ import { SANTextArea } from 'Components/Atoms/TextArea'
 import { SANSlider } from 'Components/Atoms/Slider'
 import { SANPage } from 'Components/Templates/Page'
 import { SANProfile } from 'Components/Page/Profile'
+import { SANChangePassword } from 'Components/Page/ChangePassword'
+import { SANSupport } from 'Components/Organisms/Support'
 import {
     SANSnackbarProvider,
     useSnackbarContext
 } from 'Components/Molecules/Snackbar'
-import { SANSupport } from 'Components/Organisms/Support'
 
 export {
     SANButton,
@@ -170,5 +172,7 @@ export {
     useSnackbarContext,
     SANSupport,
     SANInputMask,
-    SANTooltip
+    SANTooltip,
+    SANInputPassword,
+    SANChangePassword
 }

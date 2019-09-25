@@ -4,6 +4,10 @@ export default {
         courseProgress: 'Progresso do Curso',
         goToBegin: 'Voltar para o início'
     },
+    customFormMessages: {
+        passwordsMismatch: 'As senhas não conferem.',
+        minPassword: 'Senha deve ter no mínimo {{min}} caracteres.'
+    },
     formValidateMessages: {
         default: 'Erro de validação no campo %s',
         required: 'Este campo é obrigatório',
@@ -127,5 +131,16 @@ export default {
             'Permitir o contato da Sanar para tirar dúvidas sobre o feedback.',
         cancel: 'Cancelar',
         send: 'Enviar'
+    },
+    changePassword: {
+        title: 'Troque sua senha',
+        subtitle: 'Cadastre uma nova senha preenchendo os campos abaixo:',
+        fields: {
+            current: 'Digite a senha atual',
+            new: 'Digite a senha nova',
+            confirm: 'Confirme a senha nova'
+        },
+        confirm: 'Confirmar',
+        forgot: 'Esqueci a senha'
     }
 }
