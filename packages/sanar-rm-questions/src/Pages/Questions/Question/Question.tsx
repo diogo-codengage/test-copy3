@@ -54,11 +54,17 @@ export const Question = () => {
         .then(({data}) => {
             setStats(data.questionAnswer.stats.alternatives)
             setLoading(false)
+            let event = 'QuestionAnsweredCorrectly'
             if (correct) {
                 questionsCtx.increaseTotalCorrect()
             } else {
+                event = 'QuestionAnsweredWrongly'
                 questionsCtx.increaseTotalWrong()
             }
+            // @ts-ignore
+            window.analytics.track(event, {
+                questionId
+            });
             questionsCtx.setCurrentAnswerId(answerId)
         })
     }

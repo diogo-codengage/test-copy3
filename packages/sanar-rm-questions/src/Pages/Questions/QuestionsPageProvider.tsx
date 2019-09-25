@@ -71,8 +71,12 @@ export const QuestionsPageProvider = (props: IProps) => {
         setTotalWrong(totalWrong + 1)
     }
 
-    const loadMoreQuestions = async (clearOld: boolean) => {
+    const loadMoreQuestions = async (clearOld: boolean, sendEvent?: boolean) => {
         const filters = await getParamsFromFilters()
+        if (sendEvent) {
+            // @ts-ignore
+            window.analytics.track('FilterQuestions', filters);
+        }
         return BFFService.loadMoreQuestions(filters)
             .then(function({ data }) {
                 if(data.questions.data.length === 0 && !clearOld){
