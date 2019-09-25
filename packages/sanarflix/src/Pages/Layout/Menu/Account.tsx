@@ -14,6 +14,7 @@ import {
     SANTypography,
     SANDivider,
     SANSupport,
+    SANScroll,
     useSnackbarContext
 } from '@sanar/components'
 
@@ -66,7 +67,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
     }
 
     return (
-        <>
+        <SANScroll>
             <SANSupport
                 onSubmit={handleSubmitSupport}
                 data={{
@@ -115,6 +116,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     title={t('mainMenu.account.myData')}
                 />
                 <SANNavigationListItem
+                    to='/portal/minha-conta/alterar-senha'
                     icon={<SANEvaIcon name='lock-outline' color='default' />}
                     onClick={onCloseMenu}
                     dataTestid='flix_menu_my-account__go_to--change-password'
@@ -174,7 +176,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     title={t('mainMenu.account.signOut')}
                 />
             </SANNavigationList>
-        </>
+        </SANScroll>
     )
 }
 
