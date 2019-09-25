@@ -5,6 +5,7 @@ export interface IMe {
     name: string
     profile_picture: string
     email: string
+    status: 'active' | 'inactive'
 }
 
 export const GET_ME = gql`
@@ -14,6 +15,7 @@ export const GET_ME = gql`
             name
             email
             profile_picture
+            status
         }
     }
 `

@@ -5,6 +5,7 @@ interface IMe {
     name: string
     profile_picture: string
     email: string
+    status: 'active' | 'inactive'
 }
 
 type FLXAuthContextValues = {
