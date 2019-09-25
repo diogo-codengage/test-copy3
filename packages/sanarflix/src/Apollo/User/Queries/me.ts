@@ -32,8 +32,9 @@ export interface IMe {
     name: string
     profile_picture: string
     email: string
+    status: 'active' | 'inactive'
     cpf: string
-    phone_number
+    phone_number: string
     college: string
     period: string
     address: IAddress
@@ -48,6 +49,7 @@ export const GET_ME = gql`
             name
             email
             profile_picture
+            status
             cpf
             phone_number
             college
