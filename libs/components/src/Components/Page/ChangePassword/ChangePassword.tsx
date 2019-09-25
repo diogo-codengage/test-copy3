@@ -26,6 +26,7 @@ interface IOptions {
 
 export interface ISANChangePasswordProps {
     onSubmit?: (values: IFormValues, options: IOptions) => IFormValues
+    onForgot?: () => void
     form: any
 }
 
@@ -38,7 +39,7 @@ const Image = styled.img`
     }
 `
 
-const SANChangePassword = ({ form, onSubmit }) => {
+const SANChangePassword = ({ form, onSubmit, onForgot }) => {
     const {
         assets: {
             icons: {
@@ -69,7 +70,7 @@ const SANChangePassword = ({ form, onSubmit }) => {
 
     const compareToFirstPassword = (rule, value, callback) => {
         if (!!value && value !== form.getFieldValue('new')) {
-            callback(t('formValidateMessages.string.passwordsMismatch'))
+            callback(t('customFormMessages.passwordsMismatch'))
         } else {
             callback()
         }
@@ -89,7 +90,7 @@ const SANChangePassword = ({ form, onSubmit }) => {
 
     const min = {
         min: 6,
-        message: t('formValidateMessages.string.minPassword', {
+        message: t('customFormMessages.minPassword', {
             min: 6
         })
     }
@@ -188,6 +189,7 @@ const SANChangePassword = ({ form, onSubmit }) => {
                                     bold
                                     variant='text'
                                     color='primary'
+                                    onClick={onForgot}
                                 >
                                     {t('changePassword.forgot')}
                                 </SANButton>

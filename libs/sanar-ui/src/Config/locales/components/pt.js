@@ -4,6 +4,10 @@ export default {
         courseProgress: 'Progresso do Curso',
         goToBegin: 'Voltar para o início'
     },
+    customFormMessages: {
+        passwordsMismatch: 'As senhas não conferem.',
+        minPassword: 'Senha deve ter no mínimo {{min}} caracteres.'
+    },
     formValidateMessages: {
         default: 'Erro de validação no campo %s',
         required: 'Este campo é obrigatório',
@@ -33,9 +37,7 @@ export default {
             len: '%s deve ser exatamente %s caracteres',
             min: '%s deve ter pelo menos %s caracteres',
             max: '%s não pode ser maior que %s caracteres',
-            range: '%s deve estar entre %s and %s caracteres',
-            passwordsMismatch: 'As senhas não conferem.',
-            minPassword: 'Senha deve ter no mínimo {{min}} caracteres.'
+            range: '%s deve estar entre %s and %s caracteres'
         },
         number: {
             len: '%s deve ser igual a %s',

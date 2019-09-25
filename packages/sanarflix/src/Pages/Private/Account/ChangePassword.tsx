@@ -1,46 +1,54 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import { compose } from 'ramda'
-import { withRouter } from 'react-router-dom'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import styled from 'styled-components'
-import { theme } from 'styled-tools'
-import { useApolloClient } from '@apollo/react-hooks'
+import { SANChangePassword, useSnackbarContext } from '@sanar/components'
+import { changePassword } from '@sanar/utils/dist/Auth'
 
-import {
-    SANTypography,
-    SANPage,
-    SANSessionTitle,
-    SANRow,
-    SANCol,
-    SANBox,
-    SANForm,
-    SANFormItem,
-    withSANForm,
-    SANInput,
-    SANInputMask,
-    SANSelect,
-    SANSelectOption,
-    SANDivider,
-    SANButton,
-    SANEvaIcon,
-    SANTooltip,
-    SANSpin,
-    useSnackbarContext
-} from '@sanar/components'
+import { getInstance } from 'Config/AWSCognito'
 
-import i18n from 'sanar-ui/dist/Config/i18n'
-
-import { useAuthContext } from 'Hooks/auth'
-
-
-const FLXChangePassword = ({ history, form }) => {
+const FLXChangePassword = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
-    const { me } = useAuthContext()
+    const snackbar = useSnackbarContext()
+
+    const handleSubmit = (
+        { old: oldPassword, new: newPassword },
+        { setSubmitting }
+    ) => {
+        const config = getInstance()
+        const cognitoUser = config.userPool.getCurrentUser()
+
+        if (!!cognitoUser) {
+            cognitoUser.getSession(async (_, session) => {
+                if (session.isValid()) {
+                    try {
+                        await changePassword(cognitoUser)({
+                            oldPassword,
+                            newPassword
+                        })
+                        snackbar({
+                            message: t('changePassword.feedback.success'),
+                            theme: 'success'
+                        })
+                    } catch (err) {
+                        snackbar({
+                            message: err.message,
+                            theme: 'error'
+                        })
+                    }
+                }
+            })
+        }
+
+        setSubmitting(false)
+    }
 
     return (
+        <SANChangePassword
+            onSubmit={handleSubmit}
+            onForgot={() => history.push('/auth/recuperar-senha')}
+        />
     )
 }
 
-
-export default FLXChangePassword
+export default withRouter(FLXChangePassword)

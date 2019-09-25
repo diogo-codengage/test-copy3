@@ -342,5 +342,10 @@ export default {
             success: 'Dados salvos com sucesso',
             error: 'Falha ao salvar dados'
         }
+    },
+    changePassword: {
+        feedback: {
+            success: 'A sua senha foi atualizada com sucesso!'
+        }
     }
 }
