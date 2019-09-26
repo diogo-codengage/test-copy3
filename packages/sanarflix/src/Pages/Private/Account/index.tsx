@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Switch, Redirect, RouteComponentProps } from 'react-router-dom'
+import { useLayoutContext } from 'Pages/Layout/Context'
 
 const SANMyData = React.lazy(() => import('./MyData'))
 const SANPausePage = React.lazy(() => import('./Pause'))
@@ -7,18 +8,32 @@ const SANCancelPage = React.lazy(() => import('./Cancel'))
 const SANPayment = React.lazy(() => import('./Payment'))
 const SANChangePassword = React.lazy(() => import('./ChangePassword'))
 
-const FLXAccount = ({ match: { url } }: RouteComponentProps) => (
-    <Switch>
-        <Route path={`${url}/meus-dados`} component={SANMyData} />
-        <Route path={`${url}/pause-assinatura`} component={SANPausePage} />
-        <Route path={`${url}/cancelar-assinatura`} component={SANCancelPage} />
-        <Route path={`${url}/formas-pagamento`} component={SANPayment} />
-        <Route path={`${url}/alterar-senha`} component={SANChangePassword} />
-        <Route
-            path={[`${url}`, `${url}/`]}
-            render={() => <Redirect to={`${url}/meus-dados`} />}
-        />
-    </Switch>
-)
+const FLXAccount = ({ match: { url } }: RouteComponentProps) => {
+    const { setMenuTab } = useLayoutContext()
+
+    useEffect(() => {
+        setMenuTab(2)
+    }, [])
+
+    return (
+        <Switch>
+            <Route path={`${url}/meus-dados`} component={SANMyData} />
+            <Route path={`${url}/pause-assinatura`} component={SANPausePage} />
+            <Route
+                path={`${url}/cancelar-assinatura`}
+                component={SANCancelPage}
+            />
+            <Route path={`${url}/formas-pagamento`} component={SANPayment} />
+            <Route
+                path={`${url}/alterar-senha`}
+                component={SANChangePassword}
+            />
+            <Route
+                path={[`${url}`, `${url}/`]}
+                render={() => <Redirect to={`${url}/meus-dados`} />}
+            />
+        </Switch>
+    )
+}
 
 export default FLXAccount
