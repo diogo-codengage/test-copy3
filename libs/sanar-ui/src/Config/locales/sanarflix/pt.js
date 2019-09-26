@@ -261,6 +261,24 @@ export default {
                 filterName: 'Tema',
                 selectCourses: 'Escolha primeiro um curso'
             }
+        },
+        question: {
+            saveQuestion: 'Salvar Questão',
+            seeFilters: 'Ver filtros',
+            corrects: 'Corretas:',
+            wrong: 'Erradas:',
+            skipped: 'Puladas:',
+            continue: 'Continuar',
+            failHandleBookmark: 'Ocorreu um erro ao favoritar questão.',
+            failReplyQuestion: 'Ocorreu um erro ao responder questão.',
+            empty:
+                'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos',
+            endPracticeButton: 'Encerrar prática',
+            title: 'Questão'
+        },
+        finished: {
+            title: 'Resultado',
+            questionsDatabase: 'Banco de questões'
         }
     },
     search: {

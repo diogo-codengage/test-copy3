@@ -113,7 +113,7 @@ const ESPracticeCompleted = ({
                                         />
                                     )}
                                     width={100}
-                                    percent={correct}
+                                    percent={Math.round(correct)}
                                     status='success'
                                 />
                             </ESCol>
@@ -128,7 +128,7 @@ const ESPracticeCompleted = ({
                                         />
                                     )}
                                     width={100}
-                                    percent={wrong}
+                                    percent={Math.round(wrong)}
                                     status='error'
                                 />
                             </ESCol>
@@ -145,7 +145,7 @@ const ESPracticeCompleted = ({
                                         />
                                     )}
                                     width={100}
-                                    percent={skipped}
+                                    percent={Math.round(skipped)}
                                     status='normal'
                                 />
                             </ESCol>
