@@ -45,7 +45,9 @@ export default {
             'Outubro',
             'Novembro',
             'Dezembro'
-        ]
+        ],
+        yes: 'Sim',
+        no: 'Não'
     },
     logout: {
         message: 'Tem certeza que deseja sair da conta agora?',
@@ -273,7 +275,20 @@ export default {
             failReplyQuestion: 'Ocorreu um erro ao responder questão.',
             empty:
                 'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos',
-            endPracticeButton: 'Encerrar prática',
+            endPractice: {
+                button: 'Encerrar prática',
+                modal: {
+                    title: 'Ops! Nenhuma questão foi respondida.',
+                    subtitle:
+                        'Que tal aprimorar seus conhecimentos reiniciando a prática?',
+                    close: 'Encerrar',
+                    restart: 'Reiniciar prática'
+                }
+            },
+            exit: {
+                title: 'Ops! Você está saindo da prática.',
+                subtitle: 'Deseja realmente encerrar a prática?'
+            },
             title: 'Questão'
         },
         finished: {

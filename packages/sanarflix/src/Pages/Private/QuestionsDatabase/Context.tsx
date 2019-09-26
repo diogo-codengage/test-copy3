@@ -70,6 +70,20 @@ const FLXQuestionsProvider: React.FC = ({ children }) => {
         }
     }
 
+    const reset = () => {
+        setFilter(oldFilter => ({
+            ...oldFilter,
+            reset: true
+        }))
+        setStats(initialStats)
+        setCurrentIndex(0)
+
+        if (stopwatchRef && stopwatchRef.current) {
+            stopwatchRef.current.reset()
+            stopwatchRef.current.start()
+        }
+    }
+
     const value = {
         setFilter,
         filter,
@@ -81,7 +95,8 @@ const FLXQuestionsProvider: React.FC = ({ children }) => {
         setStats,
         stats,
         calcPercent,
-        totalAnsweredQuestions
+        totalAnsweredQuestions,
+        reset
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

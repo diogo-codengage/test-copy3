@@ -13,9 +13,22 @@ import { useQuestionsContext } from '../Context'
 
 const FLXFilter = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
-    const { filter, startStopwatch, pauseStopwatch } = useQuestionsContext()
+    const {
+        filter,
+        startStopwatch,
+        pauseStopwatch,
+        setFilter
+    } = useQuestionsContext()
     const [selectedCourses, setSelectedCourses] = useState<ICourse[]>([])
     const [selectedThemes, setSelectedThemes] = useState<ITheme[]>([])
+
+    const handleStart = () => {
+        setFilter({
+            selectedCourses,
+            selectedThemes
+        })
+        history.push('/portal/banco-questoes/perguntas/pratica')
+    }
 
     useEffect(() => {
         !!filter.selectedCourses && setSelectedCourses(filter.selectedCourses)
@@ -37,9 +50,7 @@ const FLXFilter = ({ history }: RouteComponentProps) => {
                     color='primary'
                     bold
                     uppercase
-                    onClick={() =>
-                        history.push('/portal/banco-questoes/perguntas/pratica')
-                    }
+                    onClick={handleStart}
                 >
                     {t('questionsDatabase.question.continue')}
                 </SANButton>

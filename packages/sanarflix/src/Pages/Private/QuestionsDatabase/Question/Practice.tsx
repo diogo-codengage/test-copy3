@@ -160,7 +160,7 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
         }
         fetchQuestions()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [filter])
 
     useEffect(() => {
         if (questions && questions.length) {
