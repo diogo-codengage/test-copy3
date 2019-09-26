@@ -32,22 +32,16 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
     const client = useApolloClient()
     const snackbar = useSnackbarContext()
     const {
-        currentIndex,
-        setCurrentIndex,
         startStopwatch,
         pauseStopwatch,
-        setStats,
-        questions,
-        setLoading,
-        loading,
-        bookmarked,
-        setBookmark
+        state,
+        dispatch
     } = useQuestionsContext()
     const [response, setResponse] = useState(initialResponse)
 
     const handleConfirm = async alternativeId => {
         pauseStopwatch()
-        setLoading(true)
+        dispatch({ type: 'loading' })
         try {
             const {
                 data: {
@@ -60,22 +54,26 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
             } = await client.mutate({
                 mutation: ANSWER_MUTATION,
                 variables: {
-                    questionId: questions[currentIndex]['id'],
+                    questionId: state.questions[state.currentIndex]['id'],
                     alternativeId
                 }
             })
 
             const correct = alternatives.data.find(getCorrect)
             if (correct.id === alternativeId) {
-                setStats(oldStats => ({
-                    ...oldStats,
-                    correct: oldStats.correct + 1
-                }))
+                dispatch({
+                    type: 'stats',
+                    stats: {
+                        correct: state.stats.correct + 1
+                    }
+                })
             } else {
-                setStats(oldStats => ({
-                    ...oldStats,
-                    wrong: oldStats.wrong + 1
-                }))
+                dispatch({
+                    type: 'stats',
+                    stats: {
+                        wrong: state.stats.wrong + 1
+                    }
+                })
             }
 
             setResponse({
@@ -86,42 +84,56 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
                 answer: correct.id,
                 questionId
             })
-        } catch (e) {
+            dispatch({ type: 'loaded' })
+        } catch (error) {
+            dispatch({
+                type: 'error',
+                error
+            })
             snackbar({
                 message: t('questionsDatabase.question.failReplyQuestion'),
                 theme: 'error'
             })
         }
-        setLoading(false)
     }
 
     const handleJump = () => {
-        setStats(oldStats => ({
-            ...oldStats,
-            skipped: oldStats.skipped + 1
-        }))
+        dispatch({
+            type: 'stats',
+            stats: {
+                skipped: state.stats.skipped + 1
+            }
+        })
         handleNext()
     }
 
     const handleNext = () => {
         window.scrollTo(0, 0)
-        setCurrentIndex(old => old + 1)
+        dispatch({
+            type: 'next'
+        })
         setResponse(initialResponse)
         startStopwatch()
     }
 
     const handleBookmark = async () => {
         try {
-            setBookmark(old => !old)
+            dispatch({
+                type: 'bookmark',
+                bookmarked: !state.bookmarked
+            })
             await client.mutate({
                 mutation: CREATE_BOOKMARK,
                 variables: {
-                    resourceId: questions[0]['id'],
+                    resourceId: state.questions[state.currentIndex]['id'],
                     resourceType: 'Question'
                 }
             })
         } catch {
-            setBookmark(questions[currentIndex]['bookmarked'])
+            dispatch({
+                type: 'bookmark',
+                bookmarked: state.questions[state.currentIndex]['bookmarked']
+            })
             snackbar({
                 message: t('questionsDatabase.question.failHandleBookmark'),
                 theme: 'error'
@@ -134,7 +146,7 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    if (!questions.length && !loading) {
+    if (!state.questions.length && !state.loading) {
         pauseStopwatch()
         return <FLXEmpty />
     }
@@ -149,7 +161,7 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
                         bold
                         onClick={handleBookmark}
                     >
-                        {bookmarked ? (
+                        {state.bookmarked ? (
                             <SANEvaIcon
                                 name='heart'
                                 color='primary'
@@ -182,11 +194,11 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
                 </SANBox>
             </FLXSubheader>
             <SANQuestion
-                question={questions[currentIndex]}
+                question={state.questions[state.currentIndex]}
                 onConfirm={handleConfirm}
                 onJump={handleJump}
                 onNext={handleNext}
-                loading={loading}
+                loading={state.loading}
                 {...response}
             />
         </>

@@ -29,7 +29,9 @@ const SANPracticeCompletedStyled = SANStyled(SANPracticeCompleted)`
 const FLXClassRoomQuizFinished = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
     const {
-        stats: { time = '00:00:00' },
+        state: {
+            stats: { time = '00:00:00' }
+        },
         calcPercent,
         totalAnsweredQuestions
     } = useQuestionsContext()

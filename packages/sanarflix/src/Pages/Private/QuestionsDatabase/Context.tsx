@@ -1,11 +1,11 @@
 import React, {
     useContext,
     createContext,
-    useState,
     useRef,
     useMemo,
     useCallback,
-    useEffect
+    useEffect,
+    useReducer
 } from 'react'
 
 import { useTranslation } from 'react-i18next'
@@ -16,25 +16,14 @@ import { useSnackbarContext } from '@sanar/components'
 import { GET_QUESTIONS } from 'Apollo/QuestionsDatabase/Queries/questions'
 
 interface IFLXQuestionsProviderValue {
-    setFilter: React.Dispatch<React.SetStateAction<IFilter>>
-    filter: IFilter
     stopwatchRef: any
-    setCurrentIndex: React.Dispatch<React.SetStateAction<number>>
-    currentIndex: number
     pauseStopwatch: () => void
     startStopwatch: () => void
-    setStats: React.Dispatch<React.SetStateAction<IStats>>
-    stats: IStats
     calcPercent: (type: 'correct' | 'wrong' | 'skipped') => number
     totalAnsweredQuestions: number
     reset: () => void
-    setSkip: React.Dispatch<React.SetStateAction<number>>
-    skip: number
-    questions: any[]
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>
-    loading: boolean
-    bookmarked: boolean
-    setBookmark: React.Dispatch<React.SetStateAction<boolean>>
+    state: IState
+    dispatch: React.Dispatch<IAction>
 }
 
 const Context = createContext<IFLXQuestionsProviderValue>(
@@ -70,41 +59,132 @@ export const initialStats = {
 
 const getId = e => e.value
 
+interface IState {
+    filter: IFilter
+    currentIndex: number
+    stats: IStats
+    skip: number
+    questions: any[]
+    loading: boolean
+    bookmarked: boolean
+}
+
+type IAction =
+    | {
+          type: 'reset'
+      }
+    | { type: 'loading' }
+    | { type: 'loaded' }
+    | { type: 'stats'; stats: Partial<IStats> }
+    | { type: 'success'; questions: any[]; count: number }
+    | { type: 'next' }
+    | { type: 'error'; error: any }
+    | { type: 'bookmark'; bookmarked: boolean }
+    | { type: 'filter'; filter: IFilter }
+
+const initialState = {
+    filter: {
+        selectedCourses: [],
+        selectedThemes: []
+    },
+    currentIndex: 0,
+    stats: initialStats,
+    skip: 0,
+    questions: [],
+    loading: false,
+    bookmarked: false
+}
+
+const reducer: React.Reducer<IState, IAction> = (state, action) => {
+    switch (action.type) {
+        case 'reset':
+            return initialState
+        case 'loading':
+            return {
+                ...state,
+                loading: true
+            }
+        case 'loaded':
+            return {
+                ...state,
+                loading: false
+            }
+        case 'success':
+            return {
+                ...state,
+                error: false,
+                loading: false,
+                skip: state.skip + action.questions.length,
+                questions: [...state.questions, ...action.questions],
+                stats: {
+                    ...state.stats,
+                    total: action.count
+                }
+            }
+        case 'error':
+            return {
+                ...state,
+                loading: false,
+                error: action.error
+            }
+        case 'next':
+            return {
+                ...state,
+                currentIndex: state.currentIndex + 1
+            }
+        case 'bookmark':
+            return {
+                ...state,
+                bookmarked: action.bookmarked
+            }
+        case 'filter':
+            return {
+                ...state,
+                filter: action.filter,
+                skip: 0
+            }
+        case 'stats':
+            return {
+                ...state,
+                stats: {
+                    ...state.stats,
+                    ...action.stats
+                }
+            }
+        default:
+            throw new Error()
+    }
+}
+
 const FLXQuestionsProvider: React.FC = ({ children }) => {
     const { t } = useTranslation('sanarflix')
     const client = useApolloClient()
     const snackbar = useSnackbarContext()
     const stopwatchRef = useRef<any>()
-    const [currentIndex, setCurrentIndex] = useState(0)
-    const [bookmarked, setBookmark] = useState(false)
-    const [skip, setSkip] = useState(0)
-    const [loading, setLoading] = useState(false)
-    const [stats, setStats] = useState<IStats>(initialStats)
-    const [questions, setQuestions] = useState<any[]>([])
-    const [filter, setFilter] = useState<IFilter>({
-        selectedCourses: [],
-        selectedThemes: []
-    })
+    const [state, dispatch] = useReducer<React.Reducer<IState, IAction>>(
+        reducer,
+        initialState
+    )
 
     const totalAnsweredQuestions = useMemo(
-        () => stats.correct + stats.wrong + stats.skipped,
-        [stats]
+        () => state.stats.correct + state.stats.wrong + state.stats.skipped,
+        [state.stats]
     )
 
     const calcPercent = useCallback(
         type => {
             switch (type) {
                 case 'skipped':
-                    return (stats.skipped * 100) / totalAnsweredQuestions
+                    return (state.stats.skipped * 100) / totalAnsweredQuestions
                 case 'wrong':
-                    return (stats.wrong * 100) / totalAnsweredQuestions
+                    return (state.stats.wrong * 100) / totalAnsweredQuestions
                 case 'correct':
-                    return (stats.correct * 100) / totalAnsweredQuestions
+                    return (state.stats.correct * 100) / totalAnsweredQuestions
                 default:
                     return 0
             }
         },
-        [stats, totalAnsweredQuestions]
+        [state.stats, totalAnsweredQuestions]
     )
 
     const pauseStopwatch = () => {
@@ -120,13 +200,7 @@ const FLXQuestionsProvider: React.FC = ({ children }) => {
     }
 
     const reset = () => {
-        setFilter(oldFilter => ({
-            ...oldFilter,
-            reset: true
-        }))
-        setStats(initialStats)
-        setCurrentIndex(0)
-        setSkip(0)
+        dispatch({ type: 'reset' })
 
         if (stopwatchRef && stopwatchRef.current) {
             stopwatchRef.current.reset()
@@ -135,8 +209,8 @@ const FLXQuestionsProvider: React.FC = ({ children }) => {
     }
 
     const fetchQuestions = async (load = false) => {
-        load && setLoading(true)
-        const { selectedCourses, selectedThemes } = filter
+        load && dispatch({ type: 'loading' })
+        const { selectedCourses, selectedThemes } = state.filter
         const courseIds = !!selectedCourses.length && selectedCourses.map(getId)
         const levelIds = !!selectedThemes.length && selectedThemes.map(getId)
         try {
@@ -149,64 +223,55 @@ const FLXQuestionsProvider: React.FC = ({ children }) => {
                     ...(!!courseIds && { courseIds }),
                     ...(!!levelIds && { levelIds }),
                     limit: 20,
-                    skip
+                    skip: state.skip
                 }
             })
-            setQuestions(old => [...old, ...questions.data])
-            setSkip(old => old + questions.data.length)
-            setStats(oldStats => ({
-                ...oldStats,
-                total: questions.count
-            }))
-        } catch {
+            dispatch({
+                type: 'success',
+                questions: questions.data,
+                count: questions.count
+            })
+        } catch (error) {
+            dispatch({ type: 'error', error })
             snackbar({
                 message: t('questionsDatabase.question.failLoadQuestions'),
                 theme: 'error'
             })
         }
-        load && setLoading(false)
     }
 
     useEffect(() => {
-        if (questions && questions.length) {
-            setBookmark(questions[currentIndex]['bookmarked'])
+        if (state.questions && state.questions.length) {
+            dispatch({
+                type: 'bookmark',
+                bookmarked: state.questions[state.currentIndex]['bookmarked']
+            })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentIndex, questions])
+    }, [state.currentIndex, state.questions])
 
     useEffect(() => {
         fetchQuestions(true)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filter])
+    }, [state.filter])
 
     useEffect(() => {
-        const index = currentIndex + 1
-        if (index === skip || index === skip - 3) {
+        const index = state.currentIndex + 1
+        if (index === state.skip || index === state.skip - 3) {
             fetchQuestions()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentIndex])
+    }, [state.currentIndex])
 
     const value = {
-        setFilter,
-        filter,
         stopwatchRef,
-        setCurrentIndex,
-        currentIndex,
         pauseStopwatch,
         startStopwatch,
-        setStats,
-        stats,
         calcPercent,
         totalAnsweredQuestions,
         reset,
-        setSkip,
-        skip,
-        questions,
-        setLoading,
-        loading,
-        bookmarked,
-        setBookmark
+        state,
+        dispatch
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

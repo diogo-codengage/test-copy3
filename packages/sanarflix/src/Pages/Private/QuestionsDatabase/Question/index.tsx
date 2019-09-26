@@ -106,11 +106,10 @@ const FLXQuestion = ({ match: { url }, history }) => {
     const { t } = useTranslation('sanarflix')
     const {
         stopwatchRef,
-        stats,
-        setStats,
-        currentIndex,
         totalAnsweredQuestions,
-        reset
+        reset,
+        state,
+        dispatch
     } = useQuestionsContext()
     const [visibleFinish, setVisibleFinish] = useState(false)
     const [visibleExit, setVisibleExit] = useState(false)
@@ -118,13 +117,16 @@ const FLXQuestion = ({ match: { url }, history }) => {
     const validatePractice = () => {
         if (
             totalAnsweredQuestions === 0 ||
-            totalAnsweredQuestions === stats.skipped
+            totalAnsweredQuestions === state.stats.skipped
         ) {
             setVisibleFinish(true)
             return
         } else {
             !!stopwatchRef.current &&
-                setStats(old => ({ ...old, time: stopwatchRef.current.time() }))
+                dispatch({
+                    type: 'stats',
+                    stats: { time: stopwatchRef.current.time() }
+                })
             history.push('/portal/banco-questoes/finalizado')
         }
     }
@@ -152,7 +154,7 @@ const FLXQuestion = ({ match: { url }, history }) => {
             if (
                 !route &&
                 totalAnsweredQuestions > 0 &&
-                totalAnsweredQuestions > stats.skipped
+                totalAnsweredQuestions > state.stats.skipped
             ) {
                 setVisibleExit(true)
                 return false
@@ -162,7 +164,7 @@ const FLXQuestion = ({ match: { url }, history }) => {
         })
         return () => unblock()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [totalAnsweredQuestions, stats])
+    }, [totalAnsweredQuestions, state.stats])
 
     return (
         <>
@@ -214,12 +216,12 @@ const FLXQuestion = ({ match: { url }, history }) => {
                             <SANBox display='flex' alignItems='center'>
                                 <SANTypography level={4} mr='xs'>
                                     {t('questionsDatabase.question.title')}{' '}
-                                    {currentIndex + 1}
+                                    {state.currentIndex + 1}
                                 </SANTypography>
                                 <SANTypography variant='body1' color='grey.5'>
-                                    {stats.total > 999
+                                    {state.stats.total > 999
                                         ? `/ 999+`
-                                        : `/ ${stats.total}`}
+                                        : `/ ${state.stats.total}`}
                                 </SANTypography>
                             </SANBox>
                         )
