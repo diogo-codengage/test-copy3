@@ -17,6 +17,7 @@ import { useClassroomContext } from './Context'
 import { useLayoutContext } from 'Pages/Layout/Context'
 
 interface IParams {
+    courseId: string
     resourceId: string
     themeId: string
     type: string
@@ -42,7 +43,7 @@ const PdfReader = styled(SANPdfReader)`
 const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
     const {
         match: {
-            params: { themeId, resourceId }
+            params: { themeId, resourceId, courseId }
         }
     } = props
     const { t } = useTranslation('sanarflix')
@@ -52,7 +53,7 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
     return (
         <SANQuery
             query={GET_RESOURCE}
-            options={{ variables: { themeId, resourceId } }}
+            options={{ variables: { themeId, resourceId, courseId } }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
         >
             {({ data: { resource } }) => (
