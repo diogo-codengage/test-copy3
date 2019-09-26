@@ -64,7 +64,7 @@ const FinishWithoutQuestions = ({ onClose, onRestart, ...props }) => {
     )
 }
 
-const GetOutPractice = ({ ...props }) => {
+const GetOutPractice = ({ onConfirm, ...props }) => {
     const { t } = useTranslation('sanarflix')
     return (
         <SANModal
@@ -93,7 +93,7 @@ const GetOutPractice = ({ ...props }) => {
                     color='primary'
                     uppercase
                     bold
-                    // onClick={onConfirm}
+                    onClick={onConfirm}
                 >
                     {t('global.yes')}
                 </SANButton>
@@ -112,7 +112,7 @@ const FLXQuestion = ({ match: { url }, history }) => {
         totalAnsweredQuestions,
         reset
     } = useQuestionsContext()
-    const [visible, setVisible] = useState(false)
+    const [visibleFinish, setVisibleFinish] = useState(false)
     const [visibleExit, setVisibleExit] = useState(false)
 
     const validatePractice = () => {
@@ -120,7 +120,7 @@ const FLXQuestion = ({ match: { url }, history }) => {
             totalAnsweredQuestions === 0 ||
             totalAnsweredQuestions === stats.skipped
         ) {
-            setVisible(true)
+            setVisibleFinish(true)
             return
         } else {
             !!stopwatchRef.current &&
@@ -136,7 +136,12 @@ const FLXQuestion = ({ match: { url }, history }) => {
 
     const onRestart = () => {
         reset()
-        setVisible(false)
+        setVisibleFinish(false)
+    }
+
+    const onConfirm = () => {
+        history.push('/portal/banco-questoes/finalizado')
+        setVisibleExit(false)
     }
 
     useEffect(() => {
@@ -162,14 +167,15 @@ const FLXQuestion = ({ match: { url }, history }) => {
     return (
         <>
             <FinishWithoutQuestions
-                onCancel={() => setVisible(false)}
-                visible={visible}
+                onCancel={() => setVisibleFinish(false)}
+                visible={visibleFinish}
                 onClose={onClose}
                 onRestart={onRestart}
             />
             <GetOutPractice
                 onCancel={() => setVisibleExit(false)}
                 visible={visibleExit}
+                onConfirm={onConfirm}
             />
             <SANPage
                 hasContainer
