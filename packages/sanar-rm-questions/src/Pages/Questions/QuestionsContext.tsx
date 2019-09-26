@@ -63,6 +63,8 @@ export interface IQuestionsContext {
     setSelectedYears: (values: ISelectOption[]) => void
     isCommentedByExpert: boolean
     setCommentedByExpert: (value: boolean) => void
+    withImagesOnly: boolean
+    setWithImagesOnly: (value: boolean) => void
 
     selectedInstitutions: ISelectOption[]
     setSelectedInstitutions: (values: ISelectOption[]) => void

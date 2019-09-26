@@ -36,6 +36,7 @@ export interface IFilterTemplateProps {
   setSelectedState: (value: string) => void,
   setSelectedYears: (values: ISelectOption[]) => void,
   setCommentedByExpert: (value: boolean) => void,
+  setWithImagesOnly: (value: boolean) => void,
 
   selectedSpecialties: Speciality[],
   selectedSubSpecialties: Speciality[],
@@ -43,6 +44,7 @@ export interface IFilterTemplateProps {
   selectedState: string,
   selectedYears: ISelectOption[],
   isCommentedByExpert: boolean,
+  withImagesOnly: boolean,
 
   allInstitutions: ISelectOption[]
   selectedInstitutions: ISelectOption[]
@@ -63,6 +65,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
   const isSmall = width < 768
   const cardSpan = isSmall ? 24 : 6
   const filterSpan = isSmall ? 24 : 12
+  const filterSpan2 = isSmall ? 24 : 8
 
   let placeholderInstitutions = ''
   if (props.selectedInstitutions.length === 1) {
@@ -88,6 +91,18 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
     const childrenTags = (props.selectedSpecialties.flatMap(s => s.children)).flatMap(c => c.tags)
     allTags = uniqBy((specialtiesTags.concat(childrenTags)).sort(sortByLabel), 'value')
     allSubSpecialties = props.selectedSpecialties.flatMap(s => s.children)
+  }
+
+  const switchStyle = {
+    marginTop: '20px',
+    padding: '4px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    backgroundColor: '#F7F9FA',
+    border: '1px solid rgba(17,19,23,0.1)',
+    borderRadius: '4px',
+    flexGrow: 1,
+    height: '100%'
   }
 
     return <>
@@ -180,7 +195,7 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
               </ESCol>
             </ESRow>
             <ESRow gutter={24} style={{ margin: isSmall ? 0 : 60 }}>
-              <ESCol span={filterSpan}>
+              <ESCol span={filterSpan2}>
                 <FilterInputContainer
                   label={'Estado'}>
                   <ESSelect
@@ -194,23 +209,22 @@ export const FilterTemplate: React.FC<IFilterTemplateProps> = (props) => {
                   </ESSelect>
                 </FilterInputContainer>
               </ESCol>
-              <ESCol span={filterSpan} style={{ display: 'flex' }}>
-                <div style={
-                  {
-                    marginTop: '20px',
-                    padding: '4px',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    backgroundColor: '#F7F9FA',
-                    border: '1px solid rgba(17,19,23,0.1)',
-                    borderRadius: '4px',
-                    flexGrow: 1,
-                    height: '100%'
-                  }
-                }>
-                  Apenas comentadas<ESSwitch
-                  onChange={props.setCommentedByExpert}
-                  checked={props.isCommentedByExpert}/>
+              <ESCol span={filterSpan2} style={{ display: 'flex' }}>
+                <div style={switchStyle}>
+                  Apenas comentadas
+                  <ESSwitch
+                    onChange={props.setCommentedByExpert}
+                    checked={props.isCommentedByExpert}
+                  />
+                </div>
+              </ESCol>
+              <ESCol span={filterSpan2} style={{ display: 'flex' }}>
+                <div style={switchStyle}>
+                  Apenas com imagens
+                  <ESSwitch
+                    onChange={props.setWithImagesOnly}
+                    checked={props.withImagesOnly}
+                  />
                 </div>
               </ESCol>
             </ESRow>
