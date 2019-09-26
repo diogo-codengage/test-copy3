@@ -53,8 +53,12 @@ export interface IResource {
 }
 
 export const GET_RESOURCE = gql`
-    query Resource($themeId: ID!, $resourceId: ID!) {
-        resource(themeId: $themeId, resourceId: $resourceId) {
+    query Resource($themeId: ID!, $resourceId: ID!, $courseId: ID!) {
+        resource(
+            themeId: $themeId
+            resourceId: $resourceId
+            courseId: $courseId
+        ) {
             id
             resource_type
             type
@@ -68,11 +72,6 @@ export const GET_RESOURCE = gql`
                 title
                 durationInSeconds
                 bookmarked
-                # progress {
-                #     id
-                #     percentage
-                #     timeInSeconds
-                # }
                 thumbnails {
                     small
                     medium
