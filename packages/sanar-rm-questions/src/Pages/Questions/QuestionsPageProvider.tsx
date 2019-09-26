@@ -49,6 +49,7 @@ export const QuestionsPageProvider = (props: IProps) => {
     const [selectedState, setSelectedState] = useState('')
     const [selectedYears, setSelectedYears] = useState([])
     const [isCommentedByExpert, setCommentedByExpert] = useState(false)
+    const [withImagesOnly, setWithImagesOnly] = useState(false)
 
     const allSpecialties = props.allSpecialties
     const allTags = props.allTags
@@ -105,6 +106,7 @@ export const QuestionsPageProvider = (props: IProps) => {
             state: selectedState,
             years: selectedYears.map(v => v.value),
             isCommentedByExpert: isCommentedByExpert,
+            withImagesOnly: withImagesOnly,
             categoriesIds: selectedCategories.map( c => c.value )
         }
     }
@@ -179,6 +181,8 @@ export const QuestionsPageProvider = (props: IProps) => {
         setSelectedCategories,
         isCommentedByExpert,
         setCommentedByExpert,
+        withImagesOnly,
+        setWithImagesOnly,
 
         showAdvancedFilters,
         setShowAdvancedFilters,

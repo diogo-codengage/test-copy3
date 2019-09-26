@@ -39,6 +39,10 @@ export const getQuestionsQuery = (filter: QuestionsInputFilter) => {
         where.isCommentedByExpert = true;
     }
 
+    if(filter.withImagesOnly) {
+        where.images = true;
+    }
+
     const whereFilter = ` ,where: "${JSON.stringify(where).replace(/"/g, '\\"') }" `
 
     const imageData = `{
