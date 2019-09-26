@@ -13,6 +13,7 @@ import emptySvg from '../../../Assets/images/empty/empty.svg'
 export interface ISANEmptyProps extends SpaceProps {
     title?: React.ReactNode
     image?: React.ReactNode
+    hasTitle?: boolean
 }
 
 const ImgStyled = SANStyled.img`
@@ -25,14 +26,26 @@ const ImgStyled = SANStyled.img`
     ${space}
 `
 
-const SANEmpty = ({ title, image }: ISANEmptyProps) => {
+const SANEmpty = ({
+    title,
+    image,
+    hasTitle = true,
+    ...props
+}: ISANEmptyProps) => {
     const { t } = useTranslation('components')
     return (
-        <SANBox displayFlex flexDirection='column' alignItems='center'>
+        <SANBox
+            displayFlex
+            flexDirection='column'
+            alignItems='center'
+            {...props}
+        >
             {image ? image : <ImgStyled src={emptySvg} alt='' />}
-            <SANTypography variant='subtitle2' strong>
-                {title || t('empty.title')}
-            </SANTypography>
+            {hasTitle && (
+                <SANTypography variant='subtitle2' strong>
+                    {title || t('empty.title')}
+                </SANTypography>
+            )}
         </SANBox>
     )
 }

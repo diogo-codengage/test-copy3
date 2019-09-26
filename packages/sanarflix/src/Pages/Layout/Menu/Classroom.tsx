@@ -135,10 +135,10 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 data: { themeContents }
             } = await client.query({
                 query: GET_THEME_CONTENTS,
-                variables: { themeId: nextTheme.id }
+                variables: { themeId: nextTheme.id, courseId }
             })
 
-            const themeContentsIcons = themeContents.data.map(item => ({
+            const themeContentsIcons = (themeContents.data || []).map(item => ({
                 ...item,
                 icon: (
                     <SANIcon
