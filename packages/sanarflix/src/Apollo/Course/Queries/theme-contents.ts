@@ -24,8 +24,8 @@ export interface IThemeContents {
 }
 
 export const GET_THEME_CONTENTS = gql`
-    query ThemeContents($themeId: ID!) {
-        themeContents(themeId: $themeId) {
+    query ThemeContents($themeId: ID!, $courseId: ID!) {
+        themeContents(themeId: $themeId, courseId: $courseId) {
             data {
                 id
                 index

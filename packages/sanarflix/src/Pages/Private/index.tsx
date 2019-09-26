@@ -6,6 +6,7 @@ import { useApolloClient } from '@apollo/react-hooks'
 import FLXLayout from 'Pages/Layout'
 import FLXSplashLoader from 'Components/SplashLoader'
 import FLXLayoutProvider from 'Pages/Layout/Context'
+import FLXActiveAccountRoute from './ActiveAccountRoute'
 
 import { GET_ME } from 'Apollo/User/Queries/me'
 import { useAuthContext } from 'Hooks/auth'
@@ -47,21 +48,27 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
             <FLXLayout>
                 <Suspense fallback={<FLXSplashLoader size='flexible' />}>
                     <Switch>
-                        <Route path={`${url}/inicio`} component={FLXHome} />
-                        <Route path={`${url}/cursos`} component={FLXCourses} />
-                        <Route
+                        <FLXActiveAccountRoute
+                            path={`${url}/inicio`}
+                            component={FLXHome}
+                        />
+                        <FLXActiveAccountRoute
+                            path={`${url}/cursos`}
+                            component={FLXCourses}
+                        />
+                        <FLXActiveAccountRoute
                             path={`${url}/curso/:id`}
                             component={FLXCourse}
                         />
-                        <Route
+                        <FLXActiveAccountRoute
                             path={`${url}/sala-aula/:courseId/:themeId/:type/:resourceId`}
                             component={FLXClassroom}
                         />
-                        <Route
+                        <FLXActiveAccountRoute
                             path={`${url}/banco-questoes`}
                             component={FLXQuestionsDatabase}
                         />
-                        <Route
+                        <FLXActiveAccountRoute
                             path={`${url}/busca`}
                             component={FLXSearchPage}
                         />

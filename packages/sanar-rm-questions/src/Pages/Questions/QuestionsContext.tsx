@@ -63,6 +63,8 @@ export interface IQuestionsContext {
     setSelectedYears: (values: ISelectOption[]) => void
     isCommentedByExpert: boolean
     setCommentedByExpert: (value: boolean) => void
+    withImagesOnly: boolean
+    setWithImagesOnly: (value: boolean) => void
 
     selectedInstitutions: ISelectOption[]
     setSelectedInstitutions: (values: ISelectOption[]) => void
@@ -84,7 +86,7 @@ export interface IQuestionsContext {
     showAdvancedFilters: boolean
     setShowAdvancedFilters: (showAdvancedFilters: boolean) => void
 
-    loadMoreQuestions: (clearOld: boolean) => Promise<Boolean>
+    loadMoreQuestions: (clearOld: boolean, sendEvent?: boolean) => Promise<Boolean>
 }
 
 export const QuestionsContext = createContext<IQuestionsContext>(null)

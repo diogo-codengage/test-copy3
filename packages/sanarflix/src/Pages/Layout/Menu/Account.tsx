@@ -130,12 +130,6 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
             </SANTypography>
             <SANNavigationList>
                 <SANNavigationListItem
-                    icon={<SANEvaIcon name='menu-2-outline' color='default' />}
-                    onClick={onCloseMenu}
-                    dataTestid='flix_menu_my-account__go_to--account-plan'
-                    title={t('mainMenu.account.myPlan')}
-                />
-                <SANNavigationListItem
                     to='/portal/minha-conta/formas-pagamento'
                     icon={
                         <SANEvaIcon

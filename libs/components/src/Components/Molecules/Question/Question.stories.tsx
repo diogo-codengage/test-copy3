@@ -9,7 +9,7 @@ const question = {
     images: {
         data: [
             {
-                sizedImages: {
+                sized_images: {
                     small: {
                         width: 665,
                         height: 429,

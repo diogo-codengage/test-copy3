@@ -15,6 +15,7 @@ export interface ISANEmptyProps extends SpaceProps {
     image?: React.ReactNode
     children?: React.ReactNode
     BoxProps?: ISANBoxProps
+    hasTitle?: boolean
 }
 
 const ImgStyled = SANStyled.img`
@@ -28,15 +29,31 @@ const ImgStyled = SANStyled.img`
 `
 
 const SANEmpty = ({ title, image, children, BoxProps }: ISANEmptyProps) => {
+const SANEmpty = ({
+    title,
+    image,
+    hasTitle = true,
+    ...props
+}: ISANEmptyProps) => {
     const { t } = useTranslation('components')
     return (
-        <SANBox displayFlex flexDirection='column' alignItems='center'>
+        <SANBox
+            displayFlex
+            flexDirection='column'
+            alignItems='center'
+            {...props}
+        >
             {image ? image : <ImgStyled src={emptySvg} alt='' />}
             <SANBox {...BoxProps}>
                 <SANTypography variant='subtitle2' strong textAlign='center'>
                     {title || t('empty.title')}
                 </SANTypography>
             </SANBox>
+            {hasTitle && (
+                <SANTypography variant='subtitle2' strong>
+                    {title || t('empty.title')}
+                </SANTypography>
+            )}
             {children}
         </SANBox>
     )
