@@ -17,8 +17,8 @@ import {
 
 import { useQuestionsContext } from '../Context'
 
-const FLXPractice = React.lazy(() => import('./Practice'))
-const FLXFilter = React.lazy(() => import('./Filter'))
+import FLXPractice from './Practice'
+import FLXFilter from './Filter'
 
 const SANStopwatchStyled = styled(SANStopwatch)`
     && {

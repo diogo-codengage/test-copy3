@@ -17,17 +17,23 @@ const FLXFilter = ({ history }: RouteComponentProps) => {
         filter,
         startStopwatch,
         pauseStopwatch,
-        setFilter
+        setFilter,
+        setSkip
     } = useQuestionsContext()
     const [selectedCourses, setSelectedCourses] = useState<ICourse[]>([])
     const [selectedThemes, setSelectedThemes] = useState<ITheme[]>([])
 
     const handleStart = () => {
-        setFilter({
-            selectedCourses,
-            selectedThemes
-        })
-        history.push('/portal/banco-questoes/perguntas/pratica')
+        const newFilter = { selectedCourses, selectedThemes }
+        if (JSON.stringify(filter) !== JSON.stringify(newFilter)) {
+            setSkip(0)
+            setFilter({
+                selectedCourses,
+                selectedThemes
+            })
+        }
+
+        history.push('./pratica')
     }
 
     useEffect(() => {

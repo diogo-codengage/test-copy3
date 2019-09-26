@@ -273,6 +273,7 @@ export default {
             continue: 'Continuar',
             failHandleBookmark: 'Ocorreu um erro ao favoritar questão.',
             failReplyQuestion: 'Ocorreu um erro ao responder questão.',
+            failLoadQuestions: 'Ocorreu um erro ao carregar questões.',
             empty:
                 'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos',
             endPractice: {

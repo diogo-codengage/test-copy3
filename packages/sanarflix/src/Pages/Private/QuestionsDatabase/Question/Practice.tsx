@@ -12,15 +12,12 @@ import {
     useSnackbarContext
 } from '@sanar/components'
 
-import { GET_QUESTIONS } from 'Apollo/QuestionsDatabase/Queries/questions'
 import { ANSWER_MUTATION } from 'Apollo/QuestionsDatabase/Mutations/answer'
 import { CREATE_BOOKMARK } from 'Apollo/Classroom/Mutations/bookmark'
 
 import FLXSubheader from './Subheader'
 import FLXEmpty from './Empty'
 import { useQuestionsContext } from '../Context'
-
-const getId = e => e.value
 
 const getCorrect = alternative => alternative.correct
 
@@ -35,17 +32,18 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
     const client = useApolloClient()
     const snackbar = useSnackbarContext()
     const {
-        filter,
         currentIndex,
         setCurrentIndex,
         startStopwatch,
         pauseStopwatch,
-        setStats
+        setStats,
+        questions,
+        setLoading,
+        loading,
+        bookmarked,
+        setBookmark
     } = useQuestionsContext()
-    const [loading, setLoading] = useState(false)
-    const [bookmarked, setBookmark] = useState(false)
     const [response, setResponse] = useState(initialResponse)
-    const [questions, setQuestions] = useState([])
 
     const handleConfirm = async alternativeId => {
         pauseStopwatch()
@@ -132,44 +130,6 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
     }
 
     useEffect(() => {
-        const fetchQuestions = async () => {
-            setLoading(true)
-            const { selectedCourses, selectedThemes } = filter
-            const courseIds =
-                !!selectedCourses.length && selectedCourses.map(getId)
-            const levelIds =
-                !!selectedThemes.length && selectedThemes.map(getId)
-            try {
-                const {
-                    data: { questions }
-                } = await client.query({
-                    query: GET_QUESTIONS,
-                    variables: {
-                        ...(!!courseIds && { courseIds }),
-                        ...(!!levelIds && { levelIds }),
-                        limit: 20
-                    }
-                })
-                setQuestions(questions.data)
-                setStats(oldStats => ({
-                    ...oldStats,
-                    total: questions.count
-                }))
-            } catch (error) {}
-            setLoading(false)
-        }
-        fetchQuestions()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filter])
-
-    useEffect(() => {
-        if (questions && questions.length) {
-            setBookmark(questions[currentIndex]['bookmarked'])
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentIndex, questions])
-
-    useEffect(() => {
         startStopwatch()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -210,11 +170,7 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
                         variant='text'
                         bold
                         ml='xl'
-                        onClick={() =>
-                            history.push(
-                                '/portal/banco-questoes/perguntas/filtro'
-                            )
-                        }
+                        onClick={() => history.push('./filtro')}
                     >
                         <SANEvaIcon
                             name='options-2-outline'

@@ -148,7 +148,7 @@ const FLXFilter = ({ history }) => {
     const { t } = useTranslation('sanarflix')
     const [selectedCourses, setSelectedCourses] = useState<ICourse[]>([])
     const [selectedThemes, setSelectedThemes] = useState<ITheme[]>([])
-    const { setFilter } = useQuestionsContext()
+    const { setFilter, reset } = useQuestionsContext()
 
     const handleStart = () => {
         setFilter({
@@ -157,6 +157,11 @@ const FLXFilter = ({ history }) => {
         })
         history.push('/portal/banco-questoes/perguntas/pratica')
     }
+
+    useEffect(() => {
+        reset()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <SANPage

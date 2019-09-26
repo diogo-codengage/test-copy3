@@ -3,9 +3,9 @@ import { Route, Switch, RouteComponentProps } from 'react-router-dom'
 
 import FLXQuestionsProvider from './Context'
 
-const FLXFilter = React.lazy(() => import('./Filter'))
-const FLXQuestion = React.lazy(() => import('./Question'))
-const FLXFinished = React.lazy(() => import('./Finished'))
+import FLXFilter from './Filter'
+import FLXQuestion from './Question'
+import FLXFinished from './Finished'
 
 const FLXQuestionsDatabase = ({ match: { url } }: RouteComponentProps) => (
     <FLXQuestionsProvider>
