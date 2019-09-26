@@ -36,7 +36,7 @@ const SANQuestionsHistoric = () => {
 
     const getImage = images => {
         if (images && images.data && images.data.length) {
-            return images.data[0].sizedImages.small.url
+            return images.data[0].sized_images.small.url
         }
     }
 
