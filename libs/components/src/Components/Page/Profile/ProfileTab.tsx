@@ -46,7 +46,13 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
         setSubmitting(true)
         form.validateFields((err, values) => {
             if (!err) {
-                onSubmit(values, { setSubmitting })
+                onSubmit(
+                    {
+                        ...values,
+                        period: values.period.toString()
+                    },
+                    { setSubmitting }
+                )
             } else {
                 setSubmitting(false)
             }
