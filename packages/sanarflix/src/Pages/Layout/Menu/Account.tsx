@@ -43,7 +43,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
         }
     }
 
-    const handleSubmitSupport = async values => {
+    const handleSubmitSupport = async (values, { setSubmitting }) => {
         try {
             await client.mutate({
                 mutation: SUPPORT_MESSAGE_MUTATION,
@@ -64,6 +64,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                 theme: 'error'
             })
         }
+        setSubmitting(false)
     }
 
     return (

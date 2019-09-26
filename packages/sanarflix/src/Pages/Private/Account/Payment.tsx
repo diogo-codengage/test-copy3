@@ -154,7 +154,7 @@ const FLXPayment = ({ history, form }) => {
                                 boxShadow='1'
                             >
                                 <SANBox p={{ xs: 'xl', _: 'sm' }}>
-                                    <SANTypography level={6}>
+                                    <SANTypography level={6} color='grey.7'>
                                         {t(
                                             'paymentMethods.creditCard.subtitle'
                                         )}
@@ -241,6 +241,7 @@ const FLXPayment = ({ history, form }) => {
                                                         <SANBox
                                                             mr='xs'
                                                             flex='1'
+                                                            maxWidth='50%'
                                                         >
                                                             <SANFormItem
                                                                 name='card_expiration_month'
@@ -261,7 +262,10 @@ const FLXPayment = ({ history, form }) => {
                                                                 </SANSelect>
                                                             </SANFormItem>
                                                         </SANBox>
-                                                        <SANBox flex='1'>
+                                                        <SANBox
+                                                            flex='1'
+                                                            maxWidth='50%'
+                                                        >
                                                             <SANFormItem
                                                                 name='card_expiration_year'
                                                                 rules={[
@@ -313,6 +317,7 @@ const FLXPayment = ({ history, form }) => {
                                                             uppercase
                                                             bold
                                                             htmlType='submit'
+                                                            blockOnlyMobile
                                                         >
                                                             {t(
                                                                 'paymentMethods.creditCard.confirm'

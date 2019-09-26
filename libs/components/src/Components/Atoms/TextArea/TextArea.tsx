@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { SANInput } from '../Input'
@@ -11,6 +11,8 @@ const TextArea = styled('textarea')`
     height: auto;
     resize: none;
 `
-const SANTextArea = props => <SANInput as={TextArea} {...props} />
+const SANTextArea = (props, ref) => (
+    <SANInput ref={ref} as={TextArea} {...props} />
+)
 
-export default SANTextArea
+export default forwardRef(SANTextArea)

@@ -110,14 +110,17 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         label={t('profile.tab1.document')}
                                         initialValue={user.cpf || undefined}
                                     >
-                                        <SANInput
+                                        <SANInputMask
                                             data-testid='flix_profile_tab-personal--input-cpf'
-                                            placeholder={t(
-                                                'profile.tab1.document'
-                                            )}
-                                            size='large'
+                                            mask='CPF_PREVIEW'
                                             disabled
-                                            iconRight='slash-outline'
+                                            InputProps={{
+                                                placeholder: t(
+                                                    'profile.tab1.document'
+                                                ),
+                                                size: 'large',
+                                                iconRight: 'slash-outline'
+                                            }}
                                         />
                                     </SANFormItem>
                                     <SANFormItem
@@ -163,7 +166,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                             <SANFormItem
                                                 name='period'
                                                 label={t(
-                                                    'profile.tab1.semester'
+                                                    'profile.tab1.semester.label'
                                                 )}
                                                 mb='md'
                                                 initialValue={
@@ -173,7 +176,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                                 <SANSelect
                                                     data-testid='flix_profile_tab-personal--select-period'
                                                     placeholder={t(
-                                                        'profile.tab1.semester'
+                                                        'profile.tab1.semester.placeholder'
                                                     )}
                                                     size='large'
                                                 >
@@ -287,7 +290,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         }
                                     >
                                         <SANInput
-                                            data-testid='flix_profile_tab-personal--input-city'
+                                            data-testid='flix_profile_tab-personal--input-complement'
                                             placeholder={t(
                                                 'profile.tab2.complement.placeholder'
                                             )}
@@ -312,14 +315,15 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                                         'profile.tab2.city'
                                                     )}
                                                     size='large'
-                                                    uppercase
                                                 />
                                             </SANFormItem>
                                         </SANCol>
                                         <SANCol xs={12}>
                                             <SANFormItem
                                                 name='address.state_id'
-                                                label={t('profile.tab2.state')}
+                                                label={t(
+                                                    'profile.tab2.state.label'
+                                                )}
                                                 mb='md'
                                                 initialValue={
                                                     !!user.address
@@ -329,7 +333,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                             >
                                                 <SANSelect
                                                     placeholder={t(
-                                                        'profile.tab2.state'
+                                                        'profile.tab2.state.placeholder'
                                                     )}
                                                     size='large'
                                                 >

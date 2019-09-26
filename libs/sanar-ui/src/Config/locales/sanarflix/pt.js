@@ -342,7 +342,7 @@ export default {
         creditCard: {
             title: 'Atualizar forma de pagamento',
             subtitle: 'Cartão de Crédito',
-            number: 'Cartão de Crédito',
+            number: 'Número do Cartão',
             cvv: {
                 title: 'CVV',
                 tooltip:

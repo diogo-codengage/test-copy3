@@ -105,7 +105,10 @@ export default {
             document: 'CPF',
             phone: 'Celular',
             college: 'Faculdade',
-            semester: 'Semestre'
+            semester: {
+                label: 'Semestre',
+                placeholder: 'Selecione o semestre'
+            }
         },
         tab2: {
             title: 'Dados de Endereço',
@@ -117,7 +120,10 @@ export default {
                 placeholder: 'Casa, apartamento...'
             },
             city: 'Cidade',
-            state: 'Estado'
+            state: {
+                label: 'Estado',
+                placeholder: 'Selecione o estado'
+            }
         }
     },
     support: {
