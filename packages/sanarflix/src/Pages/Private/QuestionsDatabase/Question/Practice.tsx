@@ -178,6 +178,7 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
         pauseStopwatch()
         return <FLXEmpty />
     }
+    return <FLXEmpty />
 
     return (
         <>

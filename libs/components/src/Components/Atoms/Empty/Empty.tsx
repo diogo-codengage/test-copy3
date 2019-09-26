@@ -28,11 +28,12 @@ const ImgStyled = SANStyled.img`
     ${space}
 `
 
-const SANEmpty = ({ title, image, children, BoxProps }: ISANEmptyProps) => {
 const SANEmpty = ({
     title,
     image,
     hasTitle = true,
+    BoxProps,
+    children,
     ...props
 }: ISANEmptyProps) => {
     const { t } = useTranslation('components')
@@ -44,15 +45,12 @@ const SANEmpty = ({
             {...props}
         >
             {image ? image : <ImgStyled src={emptySvg} alt='' />}
-            <SANBox {...BoxProps}>
-                <SANTypography variant='subtitle2' strong textAlign='center'>
-                    {title || t('empty.title')}
-                </SANTypography>
-            </SANBox>
             {hasTitle && (
-                <SANTypography variant='subtitle2' strong>
-                    {title || t('empty.title')}
-                </SANTypography>
+                <SANBox {...BoxProps}>
+                    <SANTypography variant='subtitle2' strong>
+                        {title || t('empty.title')}
+                    </SANTypography>
+                </SANBox>
             )}
             {children}
         </SANBox>
