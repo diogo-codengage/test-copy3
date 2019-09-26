@@ -187,7 +187,7 @@ const ESQuestion = ({
                                 {question.images && question.images.data[0] && (
                                     <ESImageViewer
                                         images={
-                                            question.images.data[0].sizedImages
+                                            question.images.data[0].sized_images
                                         }
                                         className='mb-md'
                                     />
@@ -264,7 +264,7 @@ ESQuestion.propTypes = {
             data: PropTypes.arrayOf(
                 PropTypes.shape({
                     id: PropTypes.string,
-                    sizedImages: PropTypes.shape({
+                    sized_images: PropTypes.shape({
                         small: PropTypes.shape({
                             width: PropTypes.number,
                             height: PropTypes.number,

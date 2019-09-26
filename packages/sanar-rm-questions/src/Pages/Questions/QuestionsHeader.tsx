@@ -47,7 +47,7 @@ export const QuestionsHeader = () => {
             loading={loadingQuestions}
             onClick={() => {
                 setLoadingQuestions(true)
-                loadMoreQuestions(true).then( success => {
+                loadMoreQuestions(true, true).then( success => {
                     setLoadingQuestions(false)
                     if(success){
                         setCurrentQuestion(null)

@@ -45,6 +45,10 @@ export const Filter: React.FC = () => {
             ctx.setCommentedByExpert(v)
             clearQuestions()
         },
+        setWithImagesOnly: v => {
+            ctx.setWithImagesOnly(v)
+            clearQuestions()
+        },
         setSelectedCategories: v => {
             ctx.setSelectedCategories(v)
             clearQuestions()
@@ -56,6 +60,7 @@ export const Filter: React.FC = () => {
         selectedState: ctx.selectedState,
         selectedYears: ctx.selectedYears,
         isCommentedByExpert: ctx.isCommentedByExpert,
+        withImagesOnly: ctx.withImagesOnly,
         selectedCategories: ctx.selectedCategories,
 
         showAdvancedFilters: ctx.showAdvancedFilters,

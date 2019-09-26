@@ -6,4 +6,5 @@ export interface QuestionsInputFilter {
     state: string,
     years: string[],
     isCommentedByExpert: boolean;
+    withImagesOnly: boolean;
 }
