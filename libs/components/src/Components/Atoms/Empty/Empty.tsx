@@ -6,13 +6,15 @@ import { space, SpaceProps } from 'styled-system'
 
 import { SANStyled } from '../../../Theme/createTheme'
 import { SANTypography } from '../Typography'
-import { SANBox } from '../Box'
+import { SANBox, ISANBoxProps } from '../Box'
 
 import emptySvg from '../../../Assets/images/empty/empty.svg'
 
 export interface ISANEmptyProps extends SpaceProps {
     title?: React.ReactNode
     image?: React.ReactNode
+    children?: React.ReactNode
+    BoxProps?: ISANBoxProps
     hasTitle?: boolean
 }
 
@@ -30,6 +32,8 @@ const SANEmpty = ({
     title,
     image,
     hasTitle = true,
+    BoxProps,
+    children,
     ...props
 }: ISANEmptyProps) => {
     const { t } = useTranslation('components')
@@ -42,10 +46,13 @@ const SANEmpty = ({
         >
             {image ? image : <ImgStyled src={emptySvg} alt='' />}
             {hasTitle && (
-                <SANTypography variant='subtitle2' strong>
-                    {title || t('empty.title')}
-                </SANTypography>
+                <SANBox {...BoxProps}>
+                    <SANTypography variant='subtitle2' strong>
+                        {title || t('empty.title')}
+                    </SANTypography>
+                </SANBox>
             )}
+            {children}
         </SANBox>
     )
 }

@@ -3,18 +3,18 @@ import { Route, Switch, RouteComponentProps } from 'react-router-dom'
 
 import FLXQuestionsProvider from './Context'
 
-const SANFilter = React.lazy(() => import('./Filter'))
+import FLXFilter from './Filter'
+import FLXQuestion from './Question'
+import FLXFinished from './Finished'
 
-type FLXPrivatePages = {}
-
-const FLXFilter: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
-    match: { url }
-}) => (
+const FLXQuestionsDatabase = ({ match: { url } }: RouteComponentProps) => (
     <FLXQuestionsProvider>
         <Switch>
-            <Route path={`${url}/filtro`} component={SANFilter} />
+            <Route path={`${url}/filtro`} component={FLXFilter} />
+            <Route path={`${url}/perguntas`} component={FLXQuestion} />
+            <Route path={`${url}/finalizado`} component={FLXFinished} />
         </Switch>
     </FLXQuestionsProvider>
 )
 
-export default FLXFilter
+export default FLXQuestionsDatabase

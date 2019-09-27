@@ -1,6 +1,9 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { withRouter } from 'react-router-dom'
+
+import { useApolloClient } from '@apollo/react-hooks'
+
 import signInByEmail from './signIn'
 
 import ESSignInForm from 'sanar-ui/dist/Components/Organisms/SignInForm'
@@ -16,6 +19,7 @@ import imageMarketing from 'Assets/images/auth/marketing.png'
 
 const FLXSignIn: React.FC<any> = ({ history }) => {
     const { t } = useTranslation('sanarflix')
+    const client = useApolloClient()
     const [keepMeLoggedIn, setKeepMeLoggedIn] = useState(false)
     const [showModalTerms, setShowModalTerms] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
@@ -61,6 +65,13 @@ const FLXSignIn: React.FC<any> = ({ history }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         []
     )
+
+    useEffect(() => {
+        return () => {
+            client.cache.reset()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <>

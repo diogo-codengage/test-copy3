@@ -114,7 +114,7 @@ export const GET_RESOURCE = gql`
                             images {
                                 data {
                                     id
-                                    sizedImages {
+                                    sized_images: sizedImages {
                                         id
                                         small {
                                             filename
