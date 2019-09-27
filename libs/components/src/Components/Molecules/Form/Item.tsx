@@ -24,6 +24,10 @@ const SANFormItem: SANElement<ISANFormItemProps> = styled(ESFormItem)`
             }
         }
 
+        .ant-form-item-label > label {
+            margin-left: -4px;
+        }
+
         ${compose(space)}
     }
 `

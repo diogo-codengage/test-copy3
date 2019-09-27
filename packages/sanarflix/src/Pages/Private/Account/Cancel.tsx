@@ -30,7 +30,7 @@ const Notice = ({ action }) => {
             borderRadius='base'
             borderColor='red.4'
             backgroundColor='red.5'
-            p={6}
+            p={{ xs: 6, _: 'sm' }}
         >
             <SANTypography color='grey.7' mb={4} level={6}>
                 {t('sigmentManagement.cancelPage.notice.header')}
@@ -59,12 +59,14 @@ const Subtitle = () => {
     const { t } = useTranslation('sanarflix')
     return (
         <>
-            <SANTypography>
+            <SANTypography fontSize={{ xs: 'lg', _: '13px' }} color='grey.6'>
                 {t('sigmentManagement.cancelPage.doYouWantSubtitle1')}
             </SANTypography>
-            <SANTypography>
-                {t('sigmentManagement.cancelPage.doYouWantSubtitle2')}
-            </SANTypography>
+            <SANBox display={{ xs: 'block', _: 'none' }}>
+                <SANTypography fontSize={{ xs: 'lg', _: 'md' }} color='grey.6'>
+                    {t('sigmentManagement.cancelPage.doYouWantSubtitle2')}
+                </SANTypography>
+            </SANBox>
         </>
     )
 }
@@ -100,7 +102,8 @@ const FLXCancelPage = ({ history }: RouteComponentProps) => {
                 HeaderProps={{
                     onBack: () => history.goBack(),
                     SessionTitleProps: {
-                        title: t('sigmentManagement.cancelPage.header')
+                        title: t('sigmentManagement.cancelPage.header'),
+                        subtitle: t('sigmentManagement.cancelPage.subtitle')
                     }
                 }}
             >
@@ -138,12 +141,11 @@ const FLXCancelPage = ({ history }: RouteComponentProps) => {
                         <Notice action={() => setShowModalTerms(true)} />
                     </SANBox>
                     <SANSessionTitle
-                        mt={6}
-                        mb={6}
+                        my={6}
                         title={t('sigmentManagement.pausePage.completeFields')}
                         subtitle={<FLXCancelOrPauseFormSubtitle />}
                     />
-                    <SANRow gutter={12}>
+                    <SANRow gutter={24}>
                         <SANCol lg={16}>
                             <FLXCancelOrPauseForm
                                 onSubmit={onSubmit}
@@ -159,6 +161,7 @@ const FLXCancelPage = ({ history }: RouteComponentProps) => {
             <SANModal
                 visible={modalVisible}
                 centered
+                closable={false}
                 title={t('sigmentManagement.cancelPage.modal.title')}
                 footer={
                     <SANBox
@@ -167,16 +170,27 @@ const FLXCancelPage = ({ history }: RouteComponentProps) => {
                         justifyContent='flex-end'
                     >
                         <SANButton
+                            size='small'
                             onClick={() => history.push('/portal')}
                             color='primary'
                             variant='solid'
+                            bold
                         >
                             {t('sigmentManagement.cancelPage.modal.ok')}
                         </SANButton>
                     </SANBox>
                 }
             >
-                {t('sigmentManagement.cancelPage.modal.description')}
+                <SANTypography
+                    variant='subtitle1'
+                    color='grey.7'
+                    mb={{ sm: 'md', _: 'xs' }}
+                >
+                    {t('sigmentManagement.cancelPage.modal.description1')}
+                </SANTypography>
+                <SANTypography variant='subtitle1' color='grey.7'>
+                    {t('sigmentManagement.cancelPage.modal.description2')}
+                </SANTypography>
             </SANModal>
             <FLXModalTermsAndPrivacy
                 onCancel={() => setShowModalTerms(false)}

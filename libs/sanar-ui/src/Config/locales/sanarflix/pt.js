@@ -332,6 +332,7 @@ export default {
         confirmCancel: 'Confirmar cancelamento',
         cancelPage: {
             header: 'Cancelar Assinatura',
+            subtitle: 'Formulário de cancelamento',
             doYouWant: 'Quer mesmo cancelar?',
             doYouWantSubtitle1: 'No Sanarflix você pode pausar sua assinatura!',
             doYouWantSubtitle2:
@@ -339,8 +340,10 @@ export default {
             doYouWantExtra: 'Pausar',
             modal: {
                 title: 'Cancelamento confirmado',
-                description:
-                    'Seu pedido está sendo processado e sua assinatura será cancelada dentro de algumas horas. Esperamos que sua experiência SanarFlix tenha sido proveitosa.',
+                description1:
+                    'Seu pedido está sendo processado e sua assinatura será cancelada dentro de algumas horas.',
+                description2:
+                    'Esperamos que sua experiência SanarFlix tenha sido proveitosa.',
                 ok: 'Certo, entendi'
             },
             notice: {
@@ -354,6 +357,7 @@ export default {
         },
         pausePage: {
             header: 'Pausar Assinatura',
+            subtitle: 'Preencha o formulário para pausar',
             completeFields: 'Preencha os campos abaixo para continuar:',
             toComplete:
                 'Para completar sua solicitação de pausa responda nossa pesquisa.',

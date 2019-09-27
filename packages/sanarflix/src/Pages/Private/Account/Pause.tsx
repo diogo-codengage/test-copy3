@@ -75,7 +75,8 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
                 HeaderProps={{
                     onBack: () => history.goBack(),
                     SessionTitleProps: {
-                        title: t('sigmentManagement.pausePage.header')
+                        title: t('sigmentManagement.pausePage.header'),
+                        subtitle: t('sigmentManagement.pausePage.subtitle')
                     }
                 }}
             >
@@ -83,12 +84,11 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
                     <Notice />
                 </SANBox>
                 <SANSessionTitle
-                    mt={6}
-                    mb={6}
+                    my={6}
                     title={t('sigmentManagement.pausePage.completeFields')}
                     subtitle={<FLXCancelOrPauseFormSubtitle />}
                 />
-                <SANRow gutter={12}>
+                <SANRow gutter={24}>
                     <SANCol lg={16}>
                         <FLXCancelOrPauseForm
                             onSubmit={onSubmit}
@@ -103,6 +103,7 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
             <SANModal
                 visible={modalVisible}
                 centered
+                closable={false}
                 title={t('sigmentManagement.pausePage.modal.title')}
                 footer={
                     <SANBox
@@ -111,16 +112,22 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
                         justifyContent='flex-end'
                     >
                         <SANButton
+                            size='small'
                             onClick={() => history.push('/portal')}
                             color='primary'
                             variant='solid'
+                            bold
                         >
                             {t('sigmentManagement.pausePage.modal.ok')}
                         </SANButton>
                     </SANBox>
                 }
             >
-                <SANTypography variant='subtitle1' color='grey.7' mb='xs'>
+                <SANTypography
+                    variant='subtitle1'
+                    color='grey.7'
+                    mb={{ sm: 'md', _: 'xs' }}
+                >
                     {t('sigmentManagement.pausePage.modal.description1')}
                 </SANTypography>
                 <SANTypography variant='subtitle1' color='grey.7'>

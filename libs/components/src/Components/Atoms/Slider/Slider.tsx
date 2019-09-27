@@ -57,7 +57,18 @@ const Number = styled.div<{ count: number; percent: number; active: boolean }>`
     text-align: center;
     margin-left: ${props => -(100 / props.count) / 2}%;
     width: ${props => 100 / props.count}%;
-    left: ${prop('percent')}%;
+
+    &:not(:last-of-type):not(:first-of-type) {
+        left: ${prop('percent')}%;
+    }
+
+    &:first-of-type {
+        left: 2px;
+    }
+
+    &:last-of-type {
+        left: calc(100% - 8px);
+    }
 `
 
 const Track = styled.div<{ sourcePercent: number; targetPercent: number }>`
@@ -71,7 +82,7 @@ const Track = styled.div<{ sourcePercent: number; targetPercent: number }>`
 const SANSlider = ({ initialValue, onChange }: ISANSliderProps) => {
     const [value, setValue] = useState(initialValue)
 
-    const handleChange = values => onChange(values[0])
+    const handleChange = values => !!onChange && onChange(values[0])
 
     const handleUpdate = values => setValue(values[0])
 

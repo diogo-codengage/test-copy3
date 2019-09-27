@@ -300,7 +300,7 @@ const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
                             }
                         ]}
                     >
-                        <SANSlider onChange={console.log} />
+                        <SANSlider />
                     </SANFormItem>
                     <SANFormItem
                         name='ratingObservation'
