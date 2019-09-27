@@ -69,40 +69,46 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
 
     return (
         <SANScroll>
-            <SANSupport
-                onSubmit={handleSubmitSupport}
-                data={{
-                    email: me.email,
-                    message: ''
-                }}
-                ModalProps={{
-                    visible: visibleSupport,
-                    onCancel: () => setVisibleSupport(false)
-                }}
-            />
+            {me && (
+                <SANSupport
+                    onSubmit={handleSubmitSupport}
+                    data={{
+                        email: me.email,
+                        message: ''
+                    }}
+                    ModalProps={{
+                        visible: visibleSupport,
+                        onCancel: () => setVisibleSupport(false)
+                    }}
+                />
+            )}
             <FLXLogout
                 visible={visibleLogout}
                 onLeave={signOut}
                 onCancel={() => setVisibleLogout(false)}
             />
             <SANBox px='md'>
-                <SANButton
-                    mb='md'
-                    size='xsmall'
-                    variant='outlined'
-                    color='white'
-                    block
-                    onClick={() => setMenuTab(0)}
-                >
-                    <SANEvaIcon name='arrow-back-outline' />
-                    {t('mainMenu.back')}
-                </SANButton>
+                {me && me.status === 'active' && (
+                    <SANButton
+                        mb='md'
+                        size='xsmall'
+                        variant='outlined'
+                        color='white'
+                        block
+                        onClick={() => setMenuTab(0)}
+                    >
+                        <SANEvaIcon name='arrow-back-outline' />
+                        {t('mainMenu.back')}
+                    </SANButton>
+                )}
                 <SANAvatarMenu
-                    src={me.profile_picture}
-                    title={me.name}
-                    subtitle={t(
-                        `mainMenu.account.plan.${me.plan.payment_frequency}`
-                    )}
+                    loading={!me}
+                    src={me && me.profile_picture}
+                    title={me && me.name}
+                    subtitle={
+                        me &&
+                        t(`mainMenu.account.plan.${me.plan.payment_frequency}`)
+                    }
                 />
             </SANBox>
             <SANTypography variant='overline' px='md' pt='xl' color='white.5'>

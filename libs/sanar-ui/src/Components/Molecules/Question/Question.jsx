@@ -173,9 +173,7 @@ const ESQuestion = ({
                             <>
                                 {question.institution && (
                                     <ESTypography level={6} className='mb-md'>
-                                        {`${question.institution.name}, ${
-                                            question.year
-                                        }`}
+                                        {`${question.institution.name}, ${question.year}`}
                                     </ESTypography>
                                 )}
                                 <ESTypography

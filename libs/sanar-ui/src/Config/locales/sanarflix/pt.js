@@ -45,7 +45,9 @@ export default {
             'Outubro',
             'Novembro',
             'Dezembro'
-        ]
+        ],
+        yes: 'Sim',
+        no: 'Não'
     },
     logout: {
         message: 'Tem certeza que deseja sair da conta agora?',
@@ -261,6 +263,38 @@ export default {
                 filterName: 'Tema',
                 selectCourses: 'Escolha primeiro um curso'
             }
+        },
+        question: {
+            saveQuestion: 'Salvar Questão',
+            seeFilters: 'Ver filtros',
+            corrects: 'Corretas:',
+            wrong: 'Erradas:',
+            skipped: 'Puladas:',
+            continue: 'Continuar',
+            failHandleBookmark: 'Ocorreu um erro ao favoritar questão.',
+            failReplyQuestion: 'Ocorreu um erro ao responder questão.',
+            failLoadQuestions: 'Ocorreu um erro ao carregar questões.',
+            empty:
+                'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos',
+            endPractice: {
+                button: 'Encerrar prática',
+                modal: {
+                    title: 'Ops! Nenhuma questão foi respondida.',
+                    subtitle:
+                        'Que tal aprimorar seus conhecimentos reiniciando a prática?',
+                    close: 'Encerrar',
+                    restart: 'Reiniciar prática'
+                }
+            },
+            exit: {
+                title: 'Ops! Você está saindo da prática.',
+                subtitle: 'Deseja realmente encerrar a prática?'
+            },
+            title: 'Questão'
+        },
+        finished: {
+            title: 'Resultado',
+            questionsDatabase: 'Banco de questões'
         }
     },
     search: {
