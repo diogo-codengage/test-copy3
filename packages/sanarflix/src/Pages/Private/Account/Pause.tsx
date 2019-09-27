@@ -77,6 +77,7 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
         if (plan.payment_frequency !== 'month') {
             history.push('/portal/minha-conta/cancelar-assinatura')
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
