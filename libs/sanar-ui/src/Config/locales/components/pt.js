@@ -149,5 +149,11 @@ export default {
         },
         confirm: 'Confirmar',
         forgot: 'Esqueci a senha'
+    },
+    error404: {
+        title: 'Oops! Não encontramos o que você buscou.',
+        subtitle:
+            'A página que você tentou acessar está indisponível ou não existe.',
+        button: 'Página principal'
     }
 }
