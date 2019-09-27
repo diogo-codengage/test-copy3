@@ -120,7 +120,12 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
                     </SANBox>
                 }
             >
-                {t('sigmentManagement.pausePage.modal.description')}
+                <SANTypography variant='subtitle1' color='grey.7' mb='xs'>
+                    {t('sigmentManagement.pausePage.modal.description1')}
+                </SANTypography>
+                <SANTypography variant='subtitle1' color='grey.7'>
+                    {t('sigmentManagement.pausePage.modal.description2')}
+                </SANTypography>
             </SANModal>
         </>
     )

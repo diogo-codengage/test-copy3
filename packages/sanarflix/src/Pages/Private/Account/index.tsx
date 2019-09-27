@@ -13,6 +13,7 @@ const FLXAccount = ({ match: { url } }: RouteComponentProps) => {
 
     useEffect(() => {
         setMenuTab(2)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

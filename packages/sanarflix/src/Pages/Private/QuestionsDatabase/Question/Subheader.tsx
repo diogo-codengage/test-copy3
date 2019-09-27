@@ -3,16 +3,16 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { SANTypography, SANBox, SANCircleProgress } from '@sanar/components'
-import { ISANCircleProgressProps } from '@sanar/components/dist/Components/Molecules/CircleProgress'
 
 import { useQuestionsContext } from '../Context'
 
-interface IIndicator extends ISANCircleProgressProps {
+interface IIndicator {
     text: string
     percent: number
+    status?: 'normal' | 'error' | 'success' | 'warning'
 }
 
-const Indicator = ({ text, percent, status }: IIndicator) => (
+const Indicator = ({ text, percent, status = 'normal' }: IIndicator) => (
     <SANBox display='flex' alignItems='center' mr='xl'>
         <SANTypography variant='body2' mr='md'>{`${text}:`}</SANTypography>
         <SANCircleProgress

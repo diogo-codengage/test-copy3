@@ -114,6 +114,8 @@ const FLXCancelPage = ({ history }: RouteComponentProps) => {
                             extra={
                                 <SANButton
                                     px={8}
+                                    uppercase
+                                    bold
                                     blockOnlyMobile
                                     onClick={() =>
                                         history.push(

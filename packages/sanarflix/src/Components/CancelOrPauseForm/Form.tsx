@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 
+import { useQuery } from '@apollo/react-hooks'
+import { useTranslation } from 'react-i18next'
+
 import {
     SANForm,
     SANFormItem,
     withSANForm,
     SANInput,
+    SANInputPassword,
     SANSelect,
     SANSelectOption,
     SANBox,
@@ -13,15 +17,14 @@ import {
     SANRadio,
     SANTextArea,
     SANSlider,
-    useSnackbarContext
+    useSnackbarContext,
+    SANDivider
 } from '@sanar/components'
-import { useTranslation } from 'react-i18next'
+
+import { GET_CANCEL_REASONS } from 'Apollo/SignmentManagement/Query/cancel-reasons'
 import signInByEmail from 'Pages/Auth/SignIn/signIn'
 import { useAuthContext } from 'Hooks/auth'
-import { useQuery } from '@apollo/react-hooks'
-import { GET_CANCEL_REASONS } from 'Apollo/SignmentManagement/Query/cancel-reasons'
 import { graduatePeriod } from './staticData'
-import { omit } from 'ramda'
 
 interface IProps {
     onSubmit?: any
@@ -41,9 +44,9 @@ const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
             try {
                 await form.validateFields()
 
-                const values = form.getFieldsValue()
-                await signInByEmail(me.email, values.password)
-                onSubmitProp(omit(['password'], values))
+                const { password, ...rest } = form.getFieldsValue()
+                await signInByEmail(me.email, password)
+                onSubmitProp(rest)
             } catch (e) {
                 if (!!e.message) {
                     createSnackbar({
@@ -66,10 +69,16 @@ const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
                 borderColor={{ lg: 'grey.2' }}
                 borderRadius={{ lg: 1 }}
                 backgroundColor='white.10'
-                py={6}
-                px={4}
-                m={{ xs: '0 -16px -60px -16px', lg: 0 }}
+                py={{ lg: 8, _: 'md' }}
+                px={{ lg: 9, _: 'md' }}
+                m={{ _: '0 -16px -60px -16px', lg: 0 }}
             >
+                <SANDivider
+                    display={{ lg: 'none', _: 'block' }}
+                    bg='grey.2'
+                    mb='xl'
+                    mx='-16px'
+                />
                 <SANForm form={form} onSubmit={onSubmit}>
                     {destiny === 'pause' ? (
                         <>
@@ -204,8 +213,9 @@ const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
                                     }
                                 ]}
                             >
-                                <SANInput
+                                <SANTextArea
                                     size='large'
+                                    rows='3'
                                     placeholder={t(
                                         'sigmentManagement.writeReason'
                                     )}
@@ -266,7 +276,9 @@ const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
                                 <SANTextArea
                                     size='large'
                                     rows='3'
-                                    placeholder={t('sigmentManagement.name')}
+                                    placeholder={t(
+                                        'sigmentManagement.causeObservation'
+                                    )}
                                 />
                             </SANFormItem>
                         </>
@@ -275,7 +287,8 @@ const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
                     )}
                     <SANFormItem
                         name='rating'
-                        label={t('sigmentManagement.writeReasonLabel')}
+                        label={t('sigmentManagement.recommend')}
+                        initialValue={8}
                         rules={[
                             {
                                 type: 'number',
@@ -287,10 +300,7 @@ const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
                             }
                         ]}
                     >
-                        <SANSlider
-                            onChange={console.log}
-                            placeholder={t('sigmentManagement.writeReason')}
-                        />
+                        <SANSlider onChange={console.log} />
                     </SANFormItem>
                     <SANFormItem
                         name='ratingObservation'
@@ -323,9 +333,8 @@ const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
                             }
                         ]}
                     >
-                        <SANInput
+                        <SANInputPassword
                             size='large'
-                            type='password'
                             placeholder={t('sigmentManagement.typePassword')}
                         />
                     </SANFormItem>
@@ -340,8 +349,10 @@ const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
                             htmlType='submit'
                             color='primary'
                             variant='solid'
+                            bold
                             uppercase
                             loading={loading}
+                            blockOnlyMobile
                         >
                             {destiny === 'cancel'
                                 ? t('sigmentManagement.confirmCancel')

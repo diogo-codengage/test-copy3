@@ -318,6 +318,8 @@ export default {
         selectPeriod: 'Selecione aqui o período',
         selectCancelReasonLabel: 'Qual o motivo do cancelamento?',
         selectCancelReason: 'Selecione o motivo',
+        causeObservation: 'Escreva seu motivo aqui',
+        recommend: 'Quanto você recomendaria o SanarFlix a um amigo?',
         howMuchTimeLabel: 'Por quanto tempo você quer pausar?',
         formedResident: 'Formado (Residente)',
         formedActing: 'Formado (Atuando)',
@@ -365,8 +367,10 @@ export default {
             },
             modal: {
                 title: 'Pausa confirmada',
-                description:
-                    'Seu pedido está sendo processado e sua assinatura será pausada dentro de algumas horas. Esperamos que sua experiência SanarFlix tenha sido proveitosa!',
+                description1:
+                    'Seu pedido está sendo processado e sua assinatura será pausada dentro de algumas horas.',
+                description2:
+                    'Esperamos que sua experiência SanarFlix tenha sido proveitosa!',
                 ok: 'Certo, entendi'
             }
         }
