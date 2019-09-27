@@ -7,7 +7,7 @@ import { SANSearch } from '../../Molecules/Search'
 storiesOf('Page.Error404', module).add(
     'Simple',
     () => (
-        <SANError404>
+        <SANError404 onClick={console.log}>
             <SANSearch
                 InputProps={{
                     placeholder:

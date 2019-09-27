@@ -11,6 +11,7 @@ import logoDark from './images/logos/logo-dark.svg'
 import changePassword from './images/change-password/change-password.png'
 
 import error404 from './images/errors-page/404.svg'
+import error500 from './images/errors-page/500.svg'
 
 export {
     typeIconPrimaryBook,
@@ -22,5 +23,6 @@ export {
     logoLight,
     logoDark,
     changePassword,
-    error404
+    error404,
+    error500
 }
