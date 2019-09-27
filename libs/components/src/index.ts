@@ -79,6 +79,8 @@ import { SANTextArea } from 'Components/Atoms/TextArea'
 import { SANSlider } from 'Components/Atoms/Slider'
 import { SANPage } from 'Components/Templates/Page'
 import { SANProfile } from 'Components/Page/Profile'
+import { SANError404 } from 'Components/Page/Error404'
+import { SANError500 } from 'Components/Page/Error500'
 import { SANChangePassword } from 'Components/Page/ChangePassword'
 import { SANSupport } from 'Components/Organisms/Support'
 import {
@@ -176,5 +178,7 @@ export {
     SANTooltip,
     SANInputPassword,
     SANChangePassword,
-    SANCircleProgress
+    SANCircleProgress,
+    SANError404,
+    SANError500
 }

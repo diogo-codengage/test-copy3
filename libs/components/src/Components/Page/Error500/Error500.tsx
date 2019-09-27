@@ -8,15 +8,15 @@ import { SANButton } from '../../Atoms/Button'
 
 import { useThemeContext } from '@sanar/utils/dist/Hooks'
 
-export interface ISANError404Props {
+export interface ISANError500Props {
     onClick: () => void
 }
 
-const SANError404: React.FC<ISANError404Props> = ({ children, onClick }) => {
+const SANError500: React.FC<ISANError500Props> = ({ children, onClick }) => {
     const {
         assets: {
             icons: {
-                errors: { error404 }
+                errors: { error500 }
             }
         }
     } = useThemeContext()
@@ -39,26 +39,27 @@ const SANError404: React.FC<ISANError404Props> = ({ children, onClick }) => {
                 flexDirection='column'
                 alignItems='center'
                 mt={{ xs: '0', _: '8' }}
+                maxWidth='650px'
             >
                 <SANBox
-                    src={error404}
+                    src={error500}
                     as='img'
-                    width={{ xs: '530px', _: '240px' }}
+                    width={{ xs: '380px', _: '220px' }}
                     mb='xxl'
                 />
                 <SANTypography
                     fontWeight='bold'
-                    fontSize={{ xs: '30px', _: 'lg' }}
+                    fontSize={{ xs: '30px', _: 'xl' }}
                     textAlign='center'
                 >
-                    {t('error404.title')}
+                    {t('error500.title')}
                 </SANTypography>
                 <SANTypography
-                    fontSize={{ xs: 'xl', _: 'sm' }}
+                    fontSize={{ xs: 'xl', _: 'md' }}
                     textAlign='center'
                     mb='xl'
                 >
-                    {t('error404.subtitle')}
+                    {t('error500.subtitle')}
                 </SANTypography>
                 {children}
             </SANBox>
@@ -77,11 +78,11 @@ const SANError404: React.FC<ISANError404Props> = ({ children, onClick }) => {
                     mt='xl'
                     onClick={onClick}
                 >
-                    {t('error404.button')}
+                    {t('error500.button')}
                 </SANButton>
             </SANBox>
         </SANBox>
     )
 }
 
-export default SANError404
+export default SANError500

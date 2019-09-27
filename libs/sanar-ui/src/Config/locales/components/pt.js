@@ -155,5 +155,11 @@ export default {
         subtitle:
             'A página que você tentou acessar está indisponível ou não existe.',
         button: 'Página principal'
+    },
+    error500: {
+        title: 'Alguma coisa está errada…',
+        subtitle:
+            'Nosso time já identificou o problema e está trabalhando para resolvê-lo!Por favor, tente novamente em alguns minutos.',
+        button: 'Tentar novamente'
     }
 }
