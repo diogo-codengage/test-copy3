@@ -132,6 +132,12 @@ const Padding = styled.div`
     }
 `
 
+const RemoveScrollStyled = styled(RemoveScroll)`
+    && {
+        width: 100%;
+    }
+`
+
 interface IItem {
     id: string
     title: string
@@ -245,7 +251,7 @@ const SANSearch: React.FC<ISANSearchProps> = ({
     }, [data])
 
     return (
-        <RemoveScroll enabled={hasFocus && width <= 414}>
+        <RemoveScrollStyled enabled={hasFocus && width <= 414}>
             <FocusLock disabled={!hasFocus}>
                 <Wrapper {...{ hasFocus }}>
                     <Padding {...{ hasFocus }}>
@@ -283,7 +289,7 @@ const SANSearch: React.FC<ISANSearchProps> = ({
                     )}
                 </Wrapper>
             </FocusLock>
-        </RemoveScroll>
+        </RemoveScrollStyled>
     )
 }
 
