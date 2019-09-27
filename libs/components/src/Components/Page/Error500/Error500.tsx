@@ -33,6 +33,7 @@ const SANError500: React.FC<ISANError500Props> = ({ children, onClick }) => {
             height='100%'
             position='relative'
             bg='white.10'
+            flex='1'
         >
             <SANBox
                 display='flex'

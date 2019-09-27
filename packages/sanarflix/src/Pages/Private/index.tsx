@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react'
 
-import { Route, Switch, Redirect, RouteComponentProps } from 'react-router-dom'
+import { Route, Switch, RouteComponentProps } from 'react-router-dom'
 import { useApolloClient } from '@apollo/react-hooks'
 
 import FLXLayout from 'Pages/Layout'
@@ -18,6 +18,8 @@ const FLXClassroom = React.lazy(() => import('./Classroom'))
 const FLXQuestionsDatabase = React.lazy(() => import('./QuestionsDatabase'))
 const FLXSearchPage = React.lazy(() => import('./Search'))
 const FLXAccount = React.lazy(() => import('./Account'))
+const FLXError500 = React.lazy(() => import('Components/Error500'))
+const FLXError404 = React.lazy(() => import('Components/Error404'))
 
 type FLXPrivatePages = {}
 
@@ -81,9 +83,10 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
                                 component={FLXAccount}
                             />
                             <Route
-                                path={[`${url}`, `${url}/`]}
-                                render={() => <Redirect to={`${url}/inicio`} />}
+                                path={`${url}/erro`}
+                                component={FLXError500}
                             />
+                            <Route component={FLXError404} />
                         </Switch>
                     ) : (
                         <FLXSplashLoader size='flexible' />

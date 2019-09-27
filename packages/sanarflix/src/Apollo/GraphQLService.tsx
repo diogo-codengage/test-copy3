@@ -34,7 +34,7 @@ const getAccessToken = async () => {
     }
 }
 
-const onError = ({ graphQLErrors, forward, operation }) => {
+const onError = ({ graphQLErrors, forward, operation, networkError }) => {
     if (graphQLErrors) {
         graphQLErrors.forEach(error => {
             if (error.message.includes('AUTH_REQUIRED')) {
@@ -43,6 +43,11 @@ const onError = ({ graphQLErrors, forward, operation }) => {
             }
         })
         return forward(operation)
+    }
+
+    if (networkError) {
+        console.error('[Network error]: %o', networkError)
+        window.location.hash = '/#/portal/erro'
     }
 }
 

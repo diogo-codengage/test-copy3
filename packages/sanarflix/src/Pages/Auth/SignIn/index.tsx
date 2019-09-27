@@ -17,6 +17,8 @@ import logo from 'Assets/images/brand/logo.svg'
 import sanar from 'Assets/images/brand/sanar.svg'
 import imageMarketing from 'Assets/images/auth/marketing.png'
 
+import { getInstance } from 'Config/AWSCognito'
+
 const FLXSignIn: React.FC<any> = ({ history }) => {
     const { t } = useTranslation('sanarflix')
     const client = useApolloClient()
@@ -67,6 +69,16 @@ const FLXSignIn: React.FC<any> = ({ history }) => {
     )
 
     useEffect(() => {
+        const config = getInstance()
+        const cognitoUser = config.userPool.getCurrentUser()
+
+        if (!!cognitoUser) {
+            cognitoUser.getSession(async (_, session) => {
+                if (session.isValid()) {
+                    history.push('/portal/inicio')
+                }
+            })
+        }
         return () => {
             client.cache.reset()
         }
