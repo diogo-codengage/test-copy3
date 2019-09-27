@@ -159,7 +159,7 @@ defaultSpace.xxl = defaultSpace[7]
 const defaultShadows = [
     'none',
     '0px 1px 2px rgba(17, 19, 23, 0.15)',
-    '0px 1px 2px #0f1117'
+    '0px 3px 6px rgba(0, 0, 0, 0.16)'
 ]
 
 const defaultZIndices: any = []

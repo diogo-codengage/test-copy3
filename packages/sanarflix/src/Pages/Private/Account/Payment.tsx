@@ -133,7 +133,8 @@ const FLXPayment = ({ history, form }) => {
                 HeaderProps={{
                     onBack: () => history.goBack(),
                     SessionTitleProps: {
-                        title: t('paymentMethods.title')
+                        title: t('paymentMethods.title'),
+                        subtitle: t('paymentMethods.subtitle')
                     }
                 }}
             >

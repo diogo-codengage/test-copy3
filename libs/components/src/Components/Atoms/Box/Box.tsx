@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { css, StyledComponent } from 'styled-components'
+import { css } from 'styled-components'
 import {
     SpaceProps,
     space,

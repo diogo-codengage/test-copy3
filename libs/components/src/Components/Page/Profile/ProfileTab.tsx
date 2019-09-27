@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
+import { useWindowSize } from '@sanar/utils/dist/Hooks'
+
 import { SANSpin } from '../../Atoms/Spin'
 import { SANBox } from '../../Atoms/Box'
 import { SANDivider } from '../../Atoms/Divider'
@@ -38,6 +40,7 @@ const renderState = state => (
 )
 
 const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
+    const { width } = useWindowSize()
     const { t } = useTranslation('components')
     const [submitting, setSubmitting] = useState(false)
 
@@ -68,7 +71,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
             boxShadow='1'
         >
             <SANSpin spinning={submitting} flex>
-                <SANTabs defaultActiveKey='1' center>
+                <SANTabs defaultActiveKey='1' center={width > 400}>
                     <SANTabPane
                         tab={
                             <SANTypography
@@ -142,7 +145,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         />
                                     </SANFormItem>
                                     <SANRow gutter={24}>
-                                        <SANCol xs={12}>
+                                        <SANCol xs={15}>
                                             <SANFormItem
                                                 name='college'
                                                 label={t(
@@ -162,7 +165,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                                 />
                                             </SANFormItem>
                                         </SANCol>
-                                        <SANCol xs={12}>
+                                        <SANCol xs={9}>
                                             <SANFormItem
                                                 name='period'
                                                 label={t(
@@ -298,7 +301,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         />
                                     </SANFormItem>
                                     <SANRow gutter={24}>
-                                        <SANCol xs={12}>
+                                        <SANCol xs={24} sm={12}>
                                             <SANFormItem
                                                 name='address.city_name'
                                                 label={t('profile.tab2.city')}
@@ -318,7 +321,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                                 />
                                             </SANFormItem>
                                         </SANCol>
-                                        <SANCol xs={12}>
+                                        <SANCol xs={24} sm={12}>
                                             <SANFormItem
                                                 name='address.state_id'
                                                 label={t(

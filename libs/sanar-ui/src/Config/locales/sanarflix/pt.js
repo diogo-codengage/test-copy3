@@ -339,6 +339,7 @@ export default {
     },
     paymentMethods: {
         title: 'Formas de pagamento',
+        subtitle: 'Atualizar sua forma de pagamento',
         creditCard: {
             title: 'Atualizar forma de pagamento',
             subtitle: 'Cartão de Crédito',

@@ -29,9 +29,9 @@ const SANSupport = ({ form, onSubmit, data = {} as IForm, ModalProps }) => {
 
     const handleSubmit = e => {
         e.preventDefault()
-        setSubmitting(true)
         form.validateFields((err, values) => {
             if (!err) {
+                setSubmitting(true)
                 onSubmit(values, { setSubmitting })
                 form.setFieldsValue({
                     message: ''
@@ -48,7 +48,7 @@ const SANSupport = ({ form, onSubmit, data = {} as IForm, ModalProps }) => {
             {...ModalProps}
         >
             <SANSpin spinning={submitting}>
-                <SANForm form={form} onSubmit={handleSubmit}>
+                <SANForm form={form} onSubmit={handleSubmit} novalidate>
                     <SANFormItem
                         mb='xl'
                         name='email'
@@ -66,7 +66,6 @@ const SANSupport = ({ form, onSubmit, data = {} as IForm, ModalProps }) => {
                         ]}
                     >
                         <SANInput
-                            required
                             placeholder={t('support.email')}
                             size='large'
                             iconLeft='email-outline'
@@ -86,7 +85,6 @@ const SANSupport = ({ form, onSubmit, data = {} as IForm, ModalProps }) => {
                             placeholder={t('support.message.placeholder')}
                             size='large'
                             rows={4}
-                            required
                         />
                     </SANFormItem>
                     <SANFormItem name='check' mb='xl'>

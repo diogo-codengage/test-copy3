@@ -25,6 +25,10 @@ const SANSelect: SANElement<ISANSelectProps> = styled(ESSelect)`
         .ant-select-selection__rendered {
             margin: 0 ${theme('space.md')};
         }
+
+        &.ant-select-lg {
+            font-size: ${theme('fontSizes.md')};
+        }
     }
 `
 

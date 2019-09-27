@@ -98,6 +98,7 @@ export default {
     },
     profile: {
         title: 'Meus Dados',
+        subtitle: 'Atualize seus dados sempre que quiser',
         save: 'Salvar alterações',
         tab1: {
             title: 'Dados pessoais',

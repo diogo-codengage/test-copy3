@@ -141,6 +141,7 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
                 context={context}
                 FooterProps={FooterProps}
                 MenuProps={MenuProps}
+                darkMode={darkMode}
             >
                 {children}
             </SANLayout>
