@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     SANPage,
     SANBox,
@@ -19,6 +19,8 @@ import { useApolloClient } from '@apollo/react-hooks'
 import { PAUSE_SUBSCRIPTION } from 'Apollo/SignmentManagement/Mutations/pause'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router'
+
+import { useAuthContext } from 'Hooks/auth'
 
 const Notice = () => {
     const { t } = useTranslation('sanarflix')
@@ -48,6 +50,9 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
     const [modalVisible, setModalVisible] = useState(false)
     const client = useApolloClient()
+    const {
+        me: { plan }
+    } = useAuthContext()
     const createSnackbar = useSnackbarContext()
 
     const onSubmit = async values => {
@@ -67,6 +72,12 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
             })
         }
     }
+
+    useEffect(() => {
+        if (plan.payment_frequency !== 'month') {
+            history.push('/portal/minha-conta/cancelar-assinatura')
+        }
+    }, [])
 
     return (
         <>

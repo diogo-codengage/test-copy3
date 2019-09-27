@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 
 import { Route, Switch, Redirect, RouteComponentProps } from 'react-router-dom'
 import { useApolloClient } from '@apollo/react-hooks'
@@ -27,9 +27,11 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
 }) => {
     const client = useApolloClient()
     const { setMe } = useAuthContext()
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         const fetchMe = async () => {
+            setLoading(true)
             try {
                 const {
                     data: { me }
@@ -38,6 +40,7 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
             } catch {
                 history.push('/auth/signin')
             }
+            setLoading(false)
         }
         fetchMe()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,40 +50,44 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
         <FLXLayoutProvider>
             <FLXLayout>
                 <Suspense fallback={<FLXSplashLoader size='flexible' />}>
-                    <Switch>
-                        <FLXActiveAccountRoute
-                            path={`${url}/inicio`}
-                            component={FLXHome}
-                        />
-                        <FLXActiveAccountRoute
-                            path={`${url}/cursos`}
-                            component={FLXCourses}
-                        />
-                        <FLXActiveAccountRoute
-                            path={`${url}/curso/:id`}
-                            component={FLXCourse}
-                        />
-                        <FLXActiveAccountRoute
-                            path={`${url}/sala-aula/:courseId/:themeId/:type/:resourceId`}
-                            component={FLXClassroom}
-                        />
-                        <FLXActiveAccountRoute
-                            path={`${url}/banco-questoes`}
-                            component={FLXQuestionsDatabase}
-                        />
-                        <FLXActiveAccountRoute
-                            path={`${url}/busca`}
-                            component={FLXSearchPage}
-                        />
-                        <Route
-                            path={`${url}/minha-conta`}
-                            component={FLXAccount}
-                        />
-                        <Route
-                            path={[`${url}`, `${url}/`]}
-                            render={() => <Redirect to={`${url}/inicio`} />}
-                        />
-                    </Switch>
+                    {!loading ? (
+                        <Switch>
+                            <FLXActiveAccountRoute
+                                path={`${url}/inicio`}
+                                component={FLXHome}
+                            />
+                            <FLXActiveAccountRoute
+                                path={`${url}/cursos`}
+                                component={FLXCourses}
+                            />
+                            <FLXActiveAccountRoute
+                                path={`${url}/curso/:id`}
+                                component={FLXCourse}
+                            />
+                            <FLXActiveAccountRoute
+                                path={`${url}/sala-aula/:courseId/:themeId/:type/:resourceId`}
+                                component={FLXClassroom}
+                            />
+                            <FLXActiveAccountRoute
+                                path={`${url}/banco-questoes`}
+                                component={FLXQuestionsDatabase}
+                            />
+                            <FLXActiveAccountRoute
+                                path={`${url}/busca`}
+                                component={FLXSearchPage}
+                            />
+                            <Route
+                                path={`${url}/minha-conta`}
+                                component={FLXAccount}
+                            />
+                            <Route
+                                path={[`${url}`, `${url}/`]}
+                                render={() => <Redirect to={`${url}/inicio`} />}
+                            />
+                        </Switch>
+                    ) : (
+                        <FLXSplashLoader size='flexible' />
+                    )}
                 </Suspense>
             </FLXLayout>
         </FLXLayoutProvider>
