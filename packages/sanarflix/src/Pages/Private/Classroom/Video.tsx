@@ -25,6 +25,7 @@ import { useClassroomContext } from './Context'
 import { useLayoutContext } from 'Pages/Layout/Context'
 
 interface IParams {
+    courseId: string
     resourceId: string
     themeId: string
     type: string
@@ -45,7 +46,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
     const { t } = useTranslation('sanarflix')
     const {
         match: {
-            params: { themeId, resourceId }
+            params: { themeId, resourceId, courseId }
         }
     } = props
     const playerRef = useRef()
@@ -68,17 +69,19 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
     return (
         <SANQuery
             query={GET_RESOURCE}
-            options={{ variables: { themeId, resourceId } }}
+            options={{ variables: { themeId, resourceId, courseId } }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
         >
             {({ data: { resource } }) => {
                 const file = resource.video.providers.data.find(
                     provider => provider.code === 'jwplayer'
                 )
-                const playlist = {
-                    file: file && file.files.smil.url,
-                    image: resource.video.thumbnails.large
-                }
+                const playlist = [
+                    {
+                        file: file && file.files.smil.url,
+                        image: resource.video.thumbnails.large
+                    }
+                ]
                 return (
                     <>
                         <SANBox

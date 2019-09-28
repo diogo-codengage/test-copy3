@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import styled, { css } from 'styled-components'
 import Icon from 'react-eva-icons'
@@ -21,6 +21,8 @@ const SANEvaIconStyled = styled.i`
     ${typography}
     & svg {
         fill: currentColor !important;
+        width: 1em;
+        height: 1em;
     }
 
     & > i {
@@ -30,12 +32,12 @@ const SANEvaIconStyled = styled.i`
     ${switchProp('size', {
         xsmall: css`
             svg {
-                font-size: @font-size-base - 2px;
+                font-size: 12px;
             }
         `,
         small: css`
             svg {
-                font-size: @font-size-base;
+                font-size: 14px;
             }
         `,
         medium: css`
@@ -106,7 +108,8 @@ const SANEvaIconStyled = styled.i`
 `
 
 export interface ISANEvaIconProps
-    extends BackgroundColorProps,
+    extends React.HTMLAttributes<HTMLElement>,
+        BackgroundColorProps,
         OpacityProps,
         SpaceProps,
         TypographyProps {
@@ -115,14 +118,18 @@ export interface ISANEvaIconProps
     name?: string
 }
 
+const random = () => Math.floor(Math.random() * 999)
+
 const SANEvaIcon: React.FC<ISANEvaIconProps> = ({
     color,
-    size,
+    size = 'medium',
     name,
     ...props
 }) => {
+    const key = useMemo(() => random(), [name])
+
     return (
-        <SANEvaIconStyled {...{ color, size, ...props }}>
+        <SANEvaIconStyled key={key} {...{ color, size, ...props }}>
             <Icon name={name} />
         </SANEvaIconStyled>
     )

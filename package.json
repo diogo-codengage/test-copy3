@@ -90,7 +90,8 @@
         "test": "yarn && yarn sanarui:build && yarn esanar:build:development && yarn sanarflix:build:development && yarn sanarrm:build",
         "@sanar/components:build": "yarn workspace @sanar/components build",
         "@sanar/components:start:dev": "yarn workspace @sanar/components start:dev",
-        "@sanar/components:start:dev:storybook": "yarn workspace @sanar/components start:dev:storybook"
+        "@sanar/components:start:dev:storybook": "yarn workspace @sanar/components start:dev:storybook",
+        "@sanar/utils:build": "yarn workspace @sanar/utils build"
     },
     "husky": {
         "hooks": {

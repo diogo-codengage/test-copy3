@@ -21,6 +21,12 @@ const ESImageViewer = ({ className, images, alt }) => {
         'es-image-viewer__full--mobile': isMobile
     })
 
+    const imageToZoom = images.large
+        ? images.large.url
+        : images.medium
+            ? images.medium.url
+            : images.small.url
+
     useEffect(() => setMobile(width <= 992), [width, open])
 
     return (
@@ -29,7 +35,7 @@ const ESImageViewer = ({ className, images, alt }) => {
                 className='es-image-viewer__small'
                 onClick={() => setOpen(true)}
             >
-                <img src={images.small.url} alt={alt} />
+                <img src={imageToZoom} alt={alt} />
                 <div className='es-image-viewer__small--hover'>
                     <ESEvaIcon name='maximize-outline' />
                 </div>

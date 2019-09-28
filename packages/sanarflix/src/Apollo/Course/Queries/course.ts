@@ -9,16 +9,13 @@ export type IType =
     | 'lesson'
     | 'question'
 
-export interface ILastAccessed {
+export interface INextContent {
     theme_title: string
     theme_id: string
     resource_id: string
     thumbnail: string
     resource_type: 'Document' | 'Video' | 'Question'
     type: IType
-}
-
-export interface INextContent extends ILastAccessed {
     last_content: boolean
 }
 
@@ -36,8 +33,6 @@ export interface ICourse {
     id: string
     name: string
     description: string
-    lastAccessed: ILastAccessed
-    nextContent: INextContent
     counters: ICourseCounters
 }
 
@@ -54,22 +49,6 @@ export const GET_COURSE = gql`
                 id
                 name
                 description
-                lastAccessed {
-                    theme_title
-                    thumbnail
-                    resource_type
-                    resource_id
-                    type
-                    theme_id
-                }
-                nextContent {
-                    theme_title
-                    thumbnail
-                    resource_type
-                    resource_id
-                    type
-                    theme_id
-                }
                 counters {
                     questions
                     certificates

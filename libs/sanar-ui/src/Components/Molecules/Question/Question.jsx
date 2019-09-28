@@ -173,9 +173,7 @@ const ESQuestion = ({
                             <>
                                 {question.institution && (
                                     <ESTypography level={6} className='mb-md'>
-                                        {`${question.institution.name}, ${
-                                            question.year
-                                        }`}
+                                        {`${question.institution.name}, ${question.year}`}
                                     </ESTypography>
                                 )}
                                 <ESTypography
@@ -187,7 +185,7 @@ const ESQuestion = ({
                                 {question.images && question.images.data[0] && (
                                     <ESImageViewer
                                         images={
-                                            question.images.data[0].sizedImages
+                                            question.images.data[0].sized_images
                                         }
                                         className='mb-md'
                                     />
@@ -264,7 +262,7 @@ ESQuestion.propTypes = {
             data: PropTypes.arrayOf(
                 PropTypes.shape({
                     id: PropTypes.string,
-                    sizedImages: PropTypes.shape({
+                    sized_images: PropTypes.shape({
                         small: PropTypes.shape({
                             width: PropTypes.number,
                             height: PropTypes.number,

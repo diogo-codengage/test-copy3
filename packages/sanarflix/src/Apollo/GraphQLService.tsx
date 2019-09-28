@@ -2,19 +2,25 @@ import React from 'react'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { getInstance } from 'Config/AWSCognito'
+import { CognitoUserSession } from 'amazon-cognito-identity-js'
 
 const config = getInstance()
 
-const getValidSession = cognitoUser => {
-    return cognitoUser.getSession((_, session) => {
-        if (session.isValid()) return session
-        else
+setInterval(async () => {
+    const cognitoUser = config.userPool.getCurrentUser()
+    if (cognitoUser) {
+        cognitoUser.getSession((_, session) => {
             cognitoUser.refreshSession(
                 session.getRefreshToken(),
-                (err, nSession) => {
-                    return nSession
-                }
+                (_, s: CognitoUserSession) => {}
             )
+        })
+    }
+}, /* 10 minutes */ 10 * 60 * 1000)
+
+const getValidSession = cognitoUser => {
+    return cognitoUser.getSession((_, session: CognitoUserSession) => {
+        if (session.isValid()) return session
     })
 }
 
@@ -23,11 +29,12 @@ const getAccessToken = async () => {
 
     if (!!cognitoUser) {
         const session = getValidSession(cognitoUser)
+
         return session.getIdToken().getJwtToken()
     }
 }
 
-const onError = ({ graphQLErrors, forward, operation }) => {
+const onError = ({ graphQLErrors, forward, operation, networkError }) => {
     if (graphQLErrors) {
         graphQLErrors.forEach(error => {
             if (error.message.includes('AUTH_REQUIRED')) {
@@ -36,6 +43,11 @@ const onError = ({ graphQLErrors, forward, operation }) => {
             }
         })
         return forward(operation)
+    }
+
+    if (networkError) {
+        console.error('[Network error]: %o', networkError)
+        window.location.hash = '/#/portal/erro'
     }
 }
 
@@ -48,7 +60,7 @@ const client = new ApolloClient({
                 Authorization: await getAccessToken()
             }
         })
-})
+} as any)
 
 const FLXGraphQLProvider = props => (
     <ApolloProvider client={client} {...props} />

@@ -8,6 +8,9 @@ export default {
         sendFeedback: 'Enviar feedback',
         you: 'Você'
     },
+    error: {
+        default: 'Ocorreu um erro. Tente novamente mais tarde.'
+    },
     mainMenu: {
         leftOff: 'Continuar onde parei',
         rankingPoints: 'pontos'
@@ -41,7 +44,8 @@ export default {
     },
     cardSelectFilter: {
         selectAll: 'Selecionar todos',
-        clearSelect: 'Limpar seleção'
+        clearSelect: 'Limpar seleção',
+        noData: 'Não há dados'
     },
     formValidateMessages: {
         default: 'Erro de validação no campo %s',

@@ -58,7 +58,7 @@ const makeOptimisticResponse = ({ resourceId, resourceType, bookmark }) => {
 
 const FLXClassroomProvider: React.FC = ({ children }) => {
     const client = useApolloClient()
-    const { setMenuTab } = useLayoutContext()
+    const { setMenuTab, setContext } = useLayoutContext()
 
     const handleBookmark = async ({ resourceId, resourceType, bookmark }) => {
         try {
@@ -79,8 +79,10 @@ const FLXClassroomProvider: React.FC = ({ children }) => {
 
     useEffect(() => {
         setMenuTab(1)
+        setContext('classroom')
         return () => {
             setMenuTab(0)
+            setContext('general')
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

@@ -8,13 +8,13 @@ import { useApolloClient } from '@apollo/react-hooks'
 import {
     SANLayoutContainer,
     SANSessionTitle,
-    SANHeader,
     SANRow,
     SANCol,
     SANButton,
     SANCardSelectFilter,
     SANBox,
-    SANStyled
+    SANStyled,
+    SANPage
 } from '@sanar/components'
 
 import {
@@ -31,21 +31,36 @@ import {
 import courseSvg from 'Assets/images/filters/course.svg'
 import themeSvg from 'Assets/images/filters/theme.svg'
 
+import { useQuestionsContext } from './Context'
+
 const SANCardSelectFilterStyled = SANStyled(SANCardSelectFilter)`
     & {
+        & .es-card-select-filter__content .badge,
         & .es-card-select-filter__footer--checked {
             background-color: ${theme('colors.primary-10')};
         }
     }
 `
 
-const FLXFilter = ({ history }) => {
+interface IFLXSelectsFilter {
+    selectedCourses: ICourse[]
+    setSelectedCourses: (courses: ICourse[]) => void
+    selectedThemes: ITheme[]
+    setSelectedThemes: (themes: ITheme[]) => void
+    hasTitle?: boolean
+}
+
+export const FLXSelectsFilter = ({
+    selectedCourses,
+    setSelectedCourses,
+    selectedThemes,
+    setSelectedThemes,
+    hasTitle
+}: IFLXSelectsFilter) => {
     const { t } = useTranslation('sanarflix')
     const client = useApolloClient()
     const [courses, setCouses] = useState<ICourse[]>([])
-    const [selectedCourses, setSelectedCourses] = useState<ICourse[]>([])
     const [themes, setThemes] = useState<ITheme[]>([])
-    const [selectedThemes, setSelectedThemes] = useState<ITheme[]>([])
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -53,7 +68,7 @@ const FLXFilter = ({ history }) => {
                 const { data }: { data: ICourses } = await client.query({
                     query: GET_COURSES
                 })
-                setCouses(data.courses.data)
+                setCouses(data.courses.data || [])
             } catch {}
         }
         fetchCourses()
@@ -67,12 +82,12 @@ const FLXFilter = ({ history }) => {
                     const { data }: { data: IThemes } = await client.query({
                         query: GET_THEMES,
                         variables: {
-                            courseId:
-                                selectedCourses[selectedCourses.length - 1]
-                                    .value
+                            courseIds: selectedCourses.map(
+                                selected => selected.value
+                            )
                         }
                     })
-                    setThemes(old => [...old, ...data.themes.data])
+                    setThemes(data.themes.data || [])
                 } catch {}
             }
             fetchThemes()
@@ -84,26 +99,87 @@ const FLXFilter = ({ history }) => {
     }, [selectedCourses])
 
     return (
-        <>
-            <SANHeader
-                onBack={() => history.goBack()}
-                SessionTitleProps={{
+        <SANRow gutter={24}>
+            {hasTitle && (
+                <SANCol mb={7}>
+                    <SANSessionTitle
+                        title={t('questionsDatabase.filter.subheader')}
+                    />
+                </SANCol>
+            )}
+            <SANCol sm={24} md={12} mb='xl'>
+                <SANCardSelectFilterStyled
+                    labelSelecteds={t(
+                        'questionsDatabase.filter.course.labelSelecteds'
+                    )}
+                    placeholder={t(
+                        'questionsDatabase.filter.course.placeholder'
+                    )}
+                    filterName={t('questionsDatabase.filter.course.filterName')}
+                    image={courseSvg}
+                    items={courses}
+                    value={selectedCourses}
+                    onChange={setSelectedCourses}
+                />
+            </SANCol>
+            <SANCol sm={24} md={12} mb='xl'>
+                <SANCardSelectFilterStyled
+                    labelSelecteds={t(
+                        'questionsDatabase.filter.theme.labelSelecteds'
+                    )}
+                    placeholder={
+                        !!selectedCourses.length
+                            ? t('questionsDatabase.filter.theme.placeholder')
+                            : t('questionsDatabase.filter.theme.selectCourses')
+                    }
+                    filterName={t('questionsDatabase.filter.theme.filterName')}
+                    image={themeSvg}
+                    items={themes}
+                    value={selectedThemes}
+                    onChange={setSelectedThemes}
+                    disabled={!selectedCourses.length}
+                />
+            </SANCol>
+        </SANRow>
+    )
+}
+
+const FLXFilter = ({ history }) => {
+    const { t } = useTranslation('sanarflix')
+    const [selectedCourses, setSelectedCourses] = useState<ICourse[]>([])
+    const [selectedThemes, setSelectedThemes] = useState<ITheme[]>([])
+    const { reset, dispatch } = useQuestionsContext()
+
+    const handleStart = () => {
+        dispatch({
+            type: 'filter',
+            filter: {
+                selectedCourses,
+                selectedThemes
+            }
+        })
+        history.push('/portal/banco-questoes/perguntas/pratica')
+    }
+
+    useEffect(() => {
+        reset()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    return (
+        <SANPage
+            hasContainer
+            BoxProps={{
+                bg: 'grey-solid.1',
+                flex: '1',
+                py: { xs: '8', _: 'md' }
+            }}
+            HeaderProps={{
+                onBack: () => history.goBack(),
+                SessionTitleProps: {
                     title: t('questionsDatabase.filter.header.title'),
-                    subtitle: t('questionsDatabase.filter.header.subtitle'),
                     extra: (
                         <SANBox displayFlex flex='1'>
-                            <SANButton
-                                variant='text'
-                                uppercase
-                                bold
-                                size='small'
-                                mr='xl'
-                                block
-                            >
-                                {t(
-                                    'questionsDatabase.filter.header.actions.historic'
-                                )}
-                            </SANButton>
                             <SANButton
                                 variant='solid'
                                 color='primary'
@@ -111,6 +187,7 @@ const FLXFilter = ({ history }) => {
                                 bold
                                 size='small'
                                 block
+                                onClick={handleStart}
                             >
                                 {t(
                                     'questionsDatabase.filter.header.actions.start'
@@ -118,61 +195,21 @@ const FLXFilter = ({ history }) => {
                             </SANButton>
                         </SANBox>
                     )
-                }}
-            />
+                }
+            }}
+        >
             <SANBox bg='grey-solid.1' flex='1'>
-                <SANLayoutContainer mt={8}>
-                    <SANRow gutter={24}>
-                        <SANCol sm={0} md={24}>
-                            <SANSessionTitle
-                                title={t('questionsDatabase.filter.subheader')}
-                            />
-                        </SANCol>
-                        <SANCol sm={24} md={12} mb='xl'>
-                            <SANCardSelectFilterStyled
-                                labelSelecteds={t(
-                                    'questionsDatabase.filter.course.labelSelecteds'
-                                )}
-                                placeholder={t(
-                                    'questionsDatabase.filter.course.placeholder'
-                                )}
-                                filterName={t(
-                                    'questionsDatabase.filter.course.filterName'
-                                )}
-                                image={courseSvg}
-                                items={courses}
-                                value={selectedCourses}
-                                onChange={setSelectedCourses}
-                            />
-                        </SANCol>
-                        <SANCol sm={24} md={12} mb='xl'>
-                            <SANCardSelectFilterStyled
-                                labelSelecteds={t(
-                                    'questionsDatabase.filter.theme.labelSelecteds'
-                                )}
-                                placeholder={
-                                    !!selectedCourses.length
-                                        ? t(
-                                              'questionsDatabase.filter.theme.placeholder'
-                                          )
-                                        : t(
-                                              'questionsDatabase.filter.theme.selectCourses'
-                                          )
-                                }
-                                filterName={t(
-                                    'questionsDatabase.filter.theme.filterName'
-                                )}
-                                image={themeSvg}
-                                items={themes}
-                                value={selectedThemes}
-                                onChange={setSelectedThemes}
-                                disabled={!selectedCourses.length}
-                            />
-                        </SANCol>
-                    </SANRow>
+                <SANLayoutContainer>
+                    <FLXSelectsFilter
+                        setSelectedCourses={setSelectedCourses}
+                        selectedCourses={selectedCourses}
+                        setSelectedThemes={setSelectedThemes}
+                        selectedThemes={selectedThemes}
+                        hasTitle
+                    />
                 </SANLayoutContainer>
             </SANBox>
-        </>
+        </SANPage>
     )
 }
 

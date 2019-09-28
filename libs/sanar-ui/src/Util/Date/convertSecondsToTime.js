@@ -1,10 +1,4 @@
-const pad = number => (number < 10 ? `0${number}` : number)
-
-const esConvertSecondsToTime = seconds => {
-    let min = Math.floor(seconds / 60)
-    seconds = seconds - min * 60
-
-    return `${pad(min)}:${pad(seconds)}`
-}
+const esConvertSecondsToTime = seconds =>
+    new Date(seconds * 1000).toISOString().substr(11, 8)
 
 export default esConvertSecondsToTime

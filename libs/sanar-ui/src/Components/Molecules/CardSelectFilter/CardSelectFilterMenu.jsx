@@ -98,7 +98,8 @@ const ESCardSelectFilterMenu = forwardRef(
                             ) : (
                                 <Empty
                                     className='mt-md'
-                                    style={{ height: 206 }}
+                                    description={t('cardSelectFilter.noData')}
+                                    style={{ height: 174 }}
                                 />
                             )}
                         </div>

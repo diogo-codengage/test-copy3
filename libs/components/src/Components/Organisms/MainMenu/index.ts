@@ -1,10 +1,12 @@
 export { default as SANMainMenu } from './MainMenu'
 
 // Left off
-export { default as SANLeftOff } from './LeftOff'
+export { SANLeftOff, SANLeftOffError, SANLeftOffLoading } from './LeftOff'
 
 // Navigation list
 export { default as SANNavigationList } from './NavigationList/NavigationList'
 export {
     default as SANNavigationListItem
 } from './NavigationList/NavigationListItem'
+
+export { default as SANAvatarMenu } from './Avatar'

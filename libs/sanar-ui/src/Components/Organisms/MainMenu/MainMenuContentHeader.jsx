@@ -14,7 +14,13 @@ const ESMainMenuContentHeader = ({ className, title, onClose }) => {
 
     return (
         <div className={classes}>
-            <ESTypography level={5} regular>{title}</ESTypography>
+            <ESTypography
+                level={5}
+                regular
+                data-testid='flix_menu_es-typography--title'
+            >
+                {title}
+            </ESTypography>
             {showClose && (
                 <ESButton
                     onClick={() => onClose(false)}

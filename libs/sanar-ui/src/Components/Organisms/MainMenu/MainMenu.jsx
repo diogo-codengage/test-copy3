@@ -1,6 +1,7 @@
 import React, { useEffect, forwardRef, useImperativeHandle } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
+import { RemoveScroll } from 'react-remove-scroll'
 
 import { withMainMenuProvider, useMainMenuContext } from './context'
 
@@ -11,6 +12,8 @@ import ESButton from '../../Atoms/Button'
 
 import MainMenuContentHeader from './MainMenuContentHeader'
 import ESCardContinueCourse from '../../Atoms/CardContinueCourse/CardContinueCourse'
+
+const breakpoint = 1365
 
 const SideButton = ({ name, ...props }) => {
     const { theme } = useMainMenuContext()
@@ -73,11 +76,12 @@ const ESMainMenu = forwardRef(
         const classes = classNames(
             'es-main-menu',
             `es-main-menu__${theme}`,
-            className,
-            {
-                'es-main-menu__classroom': context === 'classroom'
-            }
+            className
         )
+
+        const classesWrapper = classNames({
+            'es-main-menu__classroom': context === 'classroom'
+        })
 
         const scrollableClasses = classNames(
             'es-main-menu__content--scrollable',
@@ -107,7 +111,7 @@ const ESMainMenu = forwardRef(
         }, [showContinueBarProp])
 
         const initialClick = e => {
-            if (width <= 1365 || context === 'classroom') {
+            if (width <= breakpoint || context === 'classroom') {
                 handleOpenOrClose()
             } else {
                 handleOpenOrClose(true)
@@ -136,7 +140,7 @@ const ESMainMenu = forwardRef(
         }
 
         const handleOpenOrClose = (action = !toggle) => {
-            if (width >= 1365 && context != 'classroom') {
+            if (width >= breakpoint && context != 'classroom') {
                 setToggle(true)
                 return
             }
@@ -154,57 +158,69 @@ const ESMainMenu = forwardRef(
         }))
 
         return (
-            <div className={classes}>
-                <div className={classesContent}>
-                    {typeof title === 'string' ? (
-                        <MainMenuContentHeader
-                            onClose={handleOpenOrClose}
-                            title={title}
-                        />
-                    ) : (
-                        title
-                    )}
-
-                    <div className={scrollableClasses}>{children}</div>
-                </div>
-
-                {position === 'left' ? (
-                    <div className='es-main-menu__sidebar-left'>
-                        <div className='es-main-menu__sidebar-left--actions'>
-                            <InitalButton onClick={initialClick} />
-                            {onSearchClick && (
-                                <SearchButton onClick={searchClick} />
-                            )}
-                        </div>
-                        <img className='logo' src={logo} />
-                    </div>
-                ) : (
-                    <>
-                        {showContinueBar && (
-                            <ESCardContinueCourse
-                                className='es-main-menu__continue'
-                                {...continueCourseProps}
-                                borderRadius={false}
+            <RemoveScroll
+                className={classesWrapper}
+                enabled={
+                    (toggle && width <= breakpoint) ||
+                    (toggle && context === 'classroom')
+                }
+            >
+                <div className={classes}>
+                    <div className={classesContent}>
+                        {typeof title === 'string' ? (
+                            <MainMenuContentHeader
+                                onClose={handleOpenOrClose}
+                                title={title}
                             />
+                        ) : (
+                            title
                         )}
-                        {context !== 'classroom' && (
-                            <div className='es-main-menu__sidebar-bottom'>
-                                <HomeButton onClick={onHome} />
+
+                        <div className={scrollableClasses}>{children}</div>
+                    </div>
+
+                    {position === 'left' ? (
+                        <div className='es-main-menu__sidebar-left'>
+                            <div className='es-main-menu__sidebar-left--actions'>
+                                <InitalButton onClick={initialClick} />
                                 {onSearchClick && (
-                                    <SearchButton onClick={searchBottomClick} />
+                                    <SearchButton onClick={searchClick} />
                                 )}
-                                <InitalButton onClick={initialBottomClick} />
                             </div>
-                        )}
-                    </>
-                )}
-                {(staticToolbar || context === 'classroom') && (
-                    <div
-                        onClick={() => handleOpenOrClose(false)}
-                        className='backdrop'
-                    />
-                )}
-            </div>
+                            <img className='logo' src={logo} />
+                        </div>
+                    ) : (
+                        <>
+                            {showContinueBar && (
+                                <ESCardContinueCourse
+                                    className='es-main-menu__continue'
+                                    {...continueCourseProps}
+                                    borderRadius={false}
+                                />
+                            )}
+                            {context !== 'classroom' && (
+                                <div className='es-main-menu__sidebar-bottom'>
+                                    <HomeButton onClick={onHome} />
+                                    {onSearchClick && (
+                                        <SearchButton
+                                            onClick={searchBottomClick}
+                                        />
+                                    )}
+                                    <InitalButton
+                                        onClick={initialBottomClick}
+                                    />
+                                </div>
+                            )}
+                        </>
+                    )}
+                    {(staticToolbar || context === 'classroom') && (
+                        <div
+                            onClick={() => handleOpenOrClose(false)}
+                            className='backdrop'
+                        />
+                    )}
+                </div>
+            </RemoveScroll>
         )
     }
 )

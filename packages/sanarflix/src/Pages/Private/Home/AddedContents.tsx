@@ -62,7 +62,9 @@ const FLXAddedContents = () => {
                                 draggable
                                 lazyLoad
                                 swipeToSlide
-                                responsive={responsive}
+                                responsive={responsive(
+                                    data.lastAddedContents.length
+                                )}
                             >
                                 {data.lastAddedContents.map(renderContent)}
                             </SANCarousel>

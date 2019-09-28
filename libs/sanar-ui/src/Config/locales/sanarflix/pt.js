@@ -9,13 +9,14 @@ export default {
         about: 'Sobre o SanarFlix',
         copyright: 'Todos os direitos reservados',
         course: 'Curso',
+        year: 'ano',
         completenessFilters: {
             all: 'Todos',
             completed: 'Concluídos',
             incomplete: 'Incompletos'
         },
         resourceTypes: {
-            document: 'Document',
+            document: 'Documento',
             video: 'Video',
             question: 'Questão'
         },
@@ -26,7 +27,31 @@ export default {
             article: 'Artigos e Diretrizes',
             lesson: 'Aula',
             question: 'Questão'
-        }
+        },
+        search: 'Busque por cursos, aulas, resumos e muito mais',
+        foundResults: ' resultados encontrados para ',
+        leave: 'Sair',
+        back: 'Voltar',
+        months: [
+            'Janeiro',
+            'Fevereiro',
+            'Março',
+            'Abril',
+            'Maio',
+            'Junho',
+            'Julho',
+            'Agosto',
+            'Setembro',
+            'Outubro',
+            'Novembro',
+            'Dezembro'
+        ],
+        yes: 'Sim',
+        no: 'Não'
+    },
+    logout: {
+        message: 'Tem certeza que deseja sair da conta agora?',
+        signOut: 'Sair da Conta'
     },
     auth: {
         accessAccount: 'Acessar conta',
@@ -168,6 +193,7 @@ export default {
         }
     },
     mainMenu: {
+        back: 'Voltar ao menu principal',
         initial: {
             begin: 'Início',
             allCourses: 'Todos os cursos',
@@ -176,7 +202,30 @@ export default {
             bookmarks: 'Favoritos',
             invites: 'Indique e ganhe',
             account: 'Minha conta',
-            questions: 'Banco de questões'
+            questions: 'Banco de questões',
+            account: 'Minha conta'
+        },
+        account: {
+            title: 'Minha Conta',
+            management: 'Gerenciamento',
+            myData: 'Meus dados',
+            changePassword: 'Trocar minha senha',
+            signature: 'Assinatura',
+            myPlan: 'Meu plano',
+            paymentMethods: 'Formas de pagamento',
+            unsubscribe: 'Cancelar assinatura',
+            otherLinks: 'Outros links',
+            signOut: 'Sair da conta',
+            plan: {
+                month: 'Plano Mensal',
+                semiannual: 'Plano Semestral',
+                yearly: 'Plano Anual'
+            },
+            support: {
+                title: 'Suporte',
+                success: 'Mensagem enviada com sucesso',
+                error: 'Falha ao enviar mensagem'
+            }
         }
     },
     classroom: {
@@ -214,6 +263,154 @@ export default {
                 filterName: 'Tema',
                 selectCourses: 'Escolha primeiro um curso'
             }
+        },
+        question: {
+            saveQuestion: 'Salvar Questão',
+            seeFilters: 'Ver filtros',
+            corrects: 'Corretas:',
+            wrong: 'Erradas:',
+            skipped: 'Puladas:',
+            continue: 'Continuar',
+            failHandleBookmark: 'Ocorreu um erro ao favoritar questão.',
+            failReplyQuestion: 'Ocorreu um erro ao responder questão.',
+            failLoadQuestions: 'Ocorreu um erro ao carregar questões.',
+            empty:
+                'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos',
+            endPractice: {
+                button: 'Encerrar prática',
+                modal: {
+                    title: 'Ops! Nenhuma questão foi respondida.',
+                    subtitle:
+                        'Que tal aprimorar seus conhecimentos reiniciando a prática?',
+                    close: 'Encerrar',
+                    restart: 'Reiniciar prática'
+                }
+            },
+            exit: {
+                title: 'Ops! Você está saindo da prática.',
+                subtitle: 'Deseja realmente encerrar a prática?'
+            },
+            title: 'Questão'
+        },
+        finished: {
+            title: 'Resultado',
+            questionsDatabase: 'Banco de questões'
+        }
+    },
+    search: {
+        title: 'Olá, {{name}}. Bem-vindo ao SanarFlix!',
+        subtitle:
+            'Nós temos milhares de conteúdos de medicina que se encaixam no seu perfil. O que você quer aprender hoje?'
+    },
+    sigmentManagement: {
+        email: 'Escreva aqui o seu e-mail pessoal',
+        nameLabel: 'Nome completo',
+        name: 'Escreva aqui o seu nome completo',
+        selectPeriod: 'Selecione aqui o período',
+        selectReason: 'Selecione o motivo',
+        writeReasonLabel: 'Qual o motivo você escolheu a nota acima?',
+        writeReason: 'Escreva seu motivo aqui',
+        writeReasonToPauseLabel: 'Por que você quer pausar a sua assinatura?',
+        writeReasonToPause: 'Selecione o motivo',
+        typePasswordLabel: 'Confirme a sua senha',
+        typePassword: 'Digite aqui a sua senha',
+        selectPeriodLabel: 'Qual é o seu período na graduação?',
+        selectPeriod: 'Selecione aqui o período',
+        selectCancelReasonLabel: 'Qual o motivo do cancelamento?',
+        selectCancelReason: 'Selecione o motivo',
+        causeObservation: 'Escreva seu motivo aqui',
+        recommend: 'Quanto você recomendaria o SanarFlix a um amigo?',
+        howMuchTimeLabel: 'Por quanto tempo você quer pausar?',
+        formedResident: 'Formado (Residente)',
+        formedActing: 'Formado (Atuando)',
+        howMuchTime: {
+            key: 'howMuchTime',
+            keyWithCount: '{{count}} mês',
+            keyWithCount_plural: '{{count}} meses'
+        },
+        confirmPause: 'Confirmar pausa',
+        confirmCancel: 'Confirmar cancelamento',
+        cancelPage: {
+            header: 'Cancelar Assinatura',
+            subtitle: 'Formulário de cancelamento',
+            doYouWant: 'Quer mesmo cancelar?',
+            doYouWantSubtitle1: 'No Sanarflix você pode pausar sua assinatura!',
+            doYouWantSubtitle2:
+                'Com a pausa você não paga por até 3 meses e volta quando quiser!',
+            doYouWantExtra: 'Pausar',
+            modal: {
+                title: 'Cancelamento confirmado',
+                description1:
+                    'Seu pedido está sendo processado e sua assinatura será cancelada dentro de algumas horas.',
+                description2:
+                    'Esperamos que sua experiência SanarFlix tenha sido proveitosa.',
+                ok: 'Certo, entendi'
+            },
+            notice: {
+                header: 'Fique atento às seguintes informações:',
+                item1:
+                    ' O seu acesso será suspenso e as cobranças futuras serão canceladas em até 48h.',
+                item2:
+                    ' Se você possui um plano semestral ou anual, será cobrada uma taxa rescisória de 25% sobre as cobranças futuras caso solicite o cancelamento após os 7 dias de período gratuito.',
+                knowMore: 'Saiba mais'
+            }
+        },
+        pausePage: {
+            header: 'Pausar Assinatura',
+            subtitle: 'Preencha o formulário para pausar',
+            completeFields: 'Preencha os campos abaixo para continuar:',
+            toComplete:
+                'Para completar sua solicitação de pausa responda nossa pesquisa.',
+            completeAll: 'Todos os campos de preenchimento são obrigatórios.',
+            notice: {
+                header: 'Fique atento às seguintes informações:',
+                item1:
+                    ' A pausa é permitida apenas para assinantes do Plano Mensal.',
+                item2:
+                    'Dentro de 48h pausaremos sua assinatura por até 3 meses. Sua assinatura voltará a ser cobrada após esse período, assim como seu acesso ao SanarFlix.'
+            },
+            modal: {
+                title: 'Pausa confirmada',
+                description1:
+                    'Seu pedido está sendo processado e sua assinatura será pausada dentro de algumas horas.',
+                description2:
+                    'Esperamos que sua experiência SanarFlix tenha sido proveitosa!',
+                ok: 'Certo, entendi'
+            }
+        }
+    },
+    paymentMethods: {
+        title: 'Formas de pagamento',
+        subtitle: 'Atualizar sua forma de pagamento',
+        creditCard: {
+            title: 'Atualizar forma de pagamento',
+            subtitle: 'Cartão de Crédito',
+            number: 'Número do Cartão',
+            cvv: {
+                title: 'CVV',
+                tooltip:
+                    '3 ou 4 números impressos no cartão de crédito. O CVV é um código de segurança contra fraudes em transações feitas na Internet.'
+            },
+            expiration: 'Data de Validade',
+            month: 'Mês',
+            year: 'Ano',
+            name: 'Nome do Titular',
+            confirm: 'Confirmar'
+        }
+    },
+    account: {
+        myData: {
+            success: 'Dados salvos com sucesso',
+            error: 'Falha ao salvar dados'
+        },
+        creditCard: {
+            success: 'Dados salvos com sucesso',
+            error: 'Falha ao salvar dados'
+        }
+    },
+    changePassword: {
+        feedback: {
+            success: 'A sua senha foi atualizada com sucesso!'
         }
     }
 }

@@ -69,7 +69,7 @@ const updateCacheThemes = (prev, { fetchMoreResult }) => {
     })
 }
 
-const renderTheme = history => (theme, index) => (
+const renderTheme = (history, courseId) => (theme, index) => (
     <SANCollapseThemePanel
         customKey={theme.id}
         index={index}
@@ -78,26 +78,30 @@ const renderTheme = history => (theme, index) => (
     >
         <SANQuery
             query={GET_THEME_CONTENTS}
-            options={{ variables: { themeId: theme.id } }}
+            options={{ variables: { themeId: theme.id, courseId } }}
             loaderProps={{ minHeight: 70, flex: true }}
         >
             {({ data: { themeContents } }: { data: IThemeContents }) =>
-                themeContents.data.map(content =>
-                    renderClass({
-                        themeId: theme.id,
-                        resourceType: content.resource_type,
-                        id: content.id,
-                        title: content.title,
-                        subtitle: i18n.t(
-                            `sanarflix:global.types.${content.type}`
-                        ),
-                        icon: typesIcon[content.type],
-                        checked: content.completed,
-                        onClick: ({ themeId, resourceType }) =>
-                            history.push(
-                                `/portal/sala-aula/${theme.course.id}/${themeId}/${resourceType}/${content.resource_id}`
-                            )
-                    })
+                !!themeContents.data && themeContents.data.length ? (
+                    themeContents.data.map(content =>
+                        renderClass({
+                            themeId: theme.id,
+                            resourceType: content.resource_type,
+                            id: content.id,
+                            title: content.title,
+                            subtitle: i18n.t(
+                                `sanarflix:global.types.${content.type}`
+                            ),
+                            icon: typesIcon[content.type],
+                            checked: content.completed,
+                            onClick: ({ themeId, resourceType }) =>
+                                history.push(
+                                    `/portal/sala-aula/${theme.course.id}/${themeId}/${resourceType}/${content.resource_id}`
+                                )
+                        })
+                    )
+                ) : (
+                    <SANEmpty p='md' hasTitle={false} />
                 )
             }
         </SANQuery>
@@ -172,7 +176,9 @@ const Themes = ({
                                     hasMore={themes.data.length < themes.count}
                                 >
                                     <SANCollapseTheme>
-                                        {themes.data.map(renderTheme(history))}
+                                        {themes.data.map(
+                                            renderTheme(history, courseId)
+                                        )}
                                     </SANCollapseTheme>
                                 </SANInfiniteScroll>
                             ) : (

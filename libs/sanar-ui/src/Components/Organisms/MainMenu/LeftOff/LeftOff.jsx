@@ -15,10 +15,14 @@ const ESLeftOff = ({
     classReference,
     moduleReference,
     label,
+    resourceType,
     onClick
 }) => {
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-left-off', className)
+    const classesImage = classNames('es-left-off__class--img', {
+        'es-left-off__class--video': resourceType === 'Video'
+    })
 
     return (
         <div className={classes} onClick={onClick}>
@@ -26,7 +30,11 @@ const ESLeftOff = ({
                 <ESSkeleton paragraph={{ rows: 3 }} dark />
             ) : (
                 <>
-                    <ESTypography level={6} className='mb-xs'>
+                    <ESTypography
+                        className='es-left-off--title mb-xs'
+                        ellipsis
+                        level={6}
+                    >
                         {title}
                     </ESTypography>
                     <ESTypography
@@ -36,14 +44,19 @@ const ESLeftOff = ({
                         {label || t('mainMenu.leftOff')}
                     </ESTypography>
                     <div className='es-left-off__class'>
-                        <div className='es-left-off__class--img'>
+                        <div className={classesImage}>
                             <div
                                 className='es-left-off__class--img-background'
                                 style={{ backgroundImage: `url(${thumbnail})` }}
                             />
-                            <div className='es-left-off__class--img--overlay'>
-                                <ESEvaIcon name='play-circle' size='large' />
-                            </div>
+                            {resourceType === 'Video' && (
+                                <div className='es-left-off__class--img--overlay'>
+                                    <ESEvaIcon
+                                        name='play-circle'
+                                        size='large'
+                                    />
+                                </div>
+                            )}
                         </div>
                         <div className='es-left-off__class--info pt-xs pb-xs pl-sm pr-sm'>
                             <ESTypography
@@ -75,9 +88,21 @@ ESLeftOff.propTypes = {
     thumbnail: PropTypes.string,
     classReference: PropTypes.string,
     moduleReference: PropTypes.string,
-    label: PropTypes.node
+    label: PropTypes.node,
+    resourceType: PropTypes.oneOf([
+        'Book',
+        'Course',
+        'Content',
+        'Question',
+        'Video',
+        'Document',
+        'Download',
+        'Theme'
+    ])
 }
 
-ESLeftOff.defaultProps = {}
+ESLeftOff.defaultProps = {
+    resourceType: 'Video'
+}
 
 export default ESLeftOff

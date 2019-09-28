@@ -15,7 +15,7 @@ export interface IThemes {
 export const GET_THEMES = gql`
     query Themes($courseId: ID!, $skip: Int, $completeness: CompletenessType) {
         themes(
-            courseId: $courseId
+            courseIds: [$courseId]
             limit: 10
             skip: $skip
             completeness: $completeness

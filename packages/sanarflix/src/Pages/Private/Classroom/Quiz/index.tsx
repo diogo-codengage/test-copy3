@@ -26,6 +26,7 @@ import FLXClassRoomQuizQuestion from './Question'
 import FLXClassRoomQuizFinished from './Finished'
 
 interface IParams {
+    courseId: string
     resourceId: string
     themeId: string
     type: string
@@ -35,7 +36,7 @@ const FLXClassRoomQuiz = (props: RouteComponentProps<IParams>) => {
     const {
         match: {
             url,
-            params: { themeId, resourceId }
+            params: { themeId, resourceId, courseId }
         }
     } = props
     const { onOpenMenu, navigations, menuRef, menuState } = useLayoutContext()
@@ -64,7 +65,7 @@ const FLXClassRoomQuiz = (props: RouteComponentProps<IParams>) => {
         <SANQuery
             query={GET_RESOURCE}
             options={{
-                variables: { themeId, resourceId },
+                variables: { themeId, resourceId, courseId },
                 onCompleted: setQuestionContext
             }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}

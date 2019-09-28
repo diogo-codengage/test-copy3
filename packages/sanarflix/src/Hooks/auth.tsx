@@ -1,13 +1,10 @@
 import React, { createContext, useState, useContext } from 'react'
 
-interface IMe {
-    id: string
-    name: string
-}
+import { IMe } from 'Apollo/User/Queries/me'
 
 type FLXAuthContextValues = {
     me: IMe
-    setMe(me: IMe): void
+    setMe: React.Dispatch<React.SetStateAction<IMe | undefined>>
 }
 
 type FLXAuthContextProviderProps = {}

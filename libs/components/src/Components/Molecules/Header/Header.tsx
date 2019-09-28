@@ -9,6 +9,7 @@ import {
     SANSessionTitle,
     ISANSessionTitleProps
 } from '../../Atoms/SessionTitle'
+import { SANRow, SANCol } from '../Grid'
 import { SANLayoutContainer } from '../../Organisms/Layout'
 
 const SANButtonBack = styled(SANButton)``
@@ -18,7 +19,7 @@ const SANHeaderStyled = styled.div`
     border-bottom: 1px solid ${theme('colors.grey.2')};
     display: flex;
     align-items: center;
-
+    background: ${theme('colors.white.10')};
     ${theme('mediaQueries.down.sm')} {
         padding: ${theme('space.xl')} 0;
     }
@@ -53,25 +54,50 @@ const SANHeaderStyled = styled.div`
 export interface ISANHeaderProps {
     SessionTitleProps?: ISANSessionTitleProps
     onBack?: () => void
+    extra?: React.ReactNode
 }
 
 const SANHeader: React.FC<ISANHeaderProps> = ({
     SessionTitleProps,
-    onBack
+    onBack,
+    extra
 }) => {
+    const responsive = !!extra ? { xs: 24, sm: 12, md: 14 } : { xs: 24 }
+
     return (
         <SANHeaderStyled data-testid='san-header'>
             <SANLayoutContainer>
-                <SANButtonBack
-                    circle
-                    size='xsmall'
-                    variant='text'
-                    onClick={onBack}
-                    data-testid='san-header__back'
+                {!!onBack && (
+                    <SANButtonBack
+                        circle
+                        size='xsmall'
+                        variant='text'
+                        onClick={onBack}
+                        data-testid='san-header__back'
+                    >
+                        <SANEvaIcon
+                            name='arrow-ios-back-outline'
+                            size='medium'
+                        />
+                    </SANButtonBack>
+                )}
+                <SANRow
+                    type='flex'
+                    align='middle'
+                    justify='space-between'
+                    gutter={24}
                 >
-                    <SANEvaIcon name='arrow-ios-back-outline' size='medium' />
-                </SANButtonBack>
-                <SANSessionTitle {...{ ...SessionTitleProps, levelTitle: 4 }} />
+                    <SANCol {...responsive}>
+                        <SANSessionTitle
+                            {...{ ...SessionTitleProps, levelTitle: 4 }}
+                        />
+                    </SANCol>
+                    {!!extra && (
+                        <SANCol mt={{ sm: 0, _: 'md' }} xs={24} sm={12} md={10}>
+                            {extra}
+                        </SANCol>
+                    )}
+                </SANRow>
             </SANLayoutContainer>
         </SANHeaderStyled>
     )

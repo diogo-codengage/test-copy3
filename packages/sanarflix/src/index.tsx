@@ -9,6 +9,7 @@ import FLXGraphQLProvider from './Apollo/GraphQLService'
 import { FLXAuthProvider } from './Hooks/auth'
 import { FLXGlobalStyle } from './Styles'
 import { FLXThemeProvider } from 'Hooks/theme'
+import { SANSnackbarProvider } from '@sanar/components'
 
 import 'sanar-ui/dist/Config/i18n'
 
@@ -16,14 +17,16 @@ const FLXApp: React.FC = () => (
     <FLXGraphQLProvider>
         <FLXAuthProvider>
             <FLXThemeProvider>
-                <>
-                    <FLXGlobalStyle />
-                    <App />
-                </>
+                <SANSnackbarProvider>
+                    <>
+                        <FLXGlobalStyle />
+                        <App />
+                    </>
+                </SANSnackbarProvider>
             </FLXThemeProvider>
         </FLXAuthProvider>
     </FLXGraphQLProvider>
 )
 
 ReactDOM.render(<FLXApp />, document.getElementById('root'))
-serviceWorker.unregister()
+serviceWorker.register()

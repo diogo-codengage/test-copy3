@@ -1,5 +1,6 @@
 .es-card-continue-course {
     width: 100%;
+    z-index: 2;
     background-color: @white-10;
     padding: @padding-sm @padding-md;
     cursor: pointer;
@@ -19,5 +20,14 @@
 
     &--radius {
         border-radius: @border-radius-base;
+    }
+
+    .ant-skeleton-title {
+        margin: 0;
+    }
+
+    .ant-skeleton-paragraph {
+        margin-top: @margin-xs !important;
+        margin-bottom: 0;
     }
 }

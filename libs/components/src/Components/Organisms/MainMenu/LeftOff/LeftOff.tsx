@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 
@@ -8,6 +7,7 @@ import { ESLeftOff } from 'sanar-ui/dist/Components/Organisms/MainMenu'
 type IProps = {
     title?: string
     thumbnail?: string
+    resourceType?: string
     classReference?: number | string
     moduleReference?: number | string
     label?: string
@@ -16,7 +16,6 @@ type IProps = {
 
 const SANLeftOffStyled = styled.div`
     margin: ${theme('space.md')};
-    margin-bottom: ${theme('space.8')};
     margin-top: 0;
 `
 
