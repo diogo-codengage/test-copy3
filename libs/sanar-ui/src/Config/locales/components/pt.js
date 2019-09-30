@@ -101,7 +101,7 @@ export default {
         subtitle: 'Atualize seus dados sempre que quiser',
         save: 'Salvar alterações',
         tab1: {
-            title: 'Dados pessoais',
+            title: 'Dados Pessoais',
             name: 'Nome',
             document: 'CPF',
             phone: 'Celular',
