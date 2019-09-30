@@ -32,7 +32,7 @@ const FLXSignIn: React.FC<any> = ({ history }) => {
     }
 
     const action = (): void => {
-        history.push('/portal')
+        history.push('/portal/inicio')
     }
 
     const modalTermsOpen = defaultKey => {
