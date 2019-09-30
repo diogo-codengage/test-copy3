@@ -74,6 +74,8 @@ import { SANSelect, SANSelectOption } from 'Components/Atoms/Select'
 import { SANTooltip } from 'Components/Atoms/Tooltip'
 import { SANForm, SANFormItem, withSANForm } from 'Components/Molecules/Form'
 import { SANCircleProgress } from 'Components/Molecules/CircleProgress'
+import { SANGenericError } from 'Components/Molecules/GenericError'
+import { SANErrorBoundary } from 'Components/Page/ErrorBoundary'
 import { SANDropdown, SANDropdownButton } from 'Components/Atoms/Dropdown'
 import { SANTextArea } from 'Components/Atoms/TextArea'
 import { SANSlider } from 'Components/Atoms/Slider'
@@ -180,5 +182,7 @@ export {
     SANChangePassword,
     SANCircleProgress,
     SANError404,
-    SANError500
+    SANError500,
+    SANGenericError,
+    SANErrorBoundary
 }

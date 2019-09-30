@@ -15,7 +15,8 @@ import {
     logoDark,
     changePassword,
     error404,
-    error500
+    error500,
+    errorGeneric
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -182,7 +183,8 @@ export const createTheme = ({
             },
             errors: {
                 error404,
-                error500
+                error500,
+                errorGeneric
             }
         },
         typeIcons: {

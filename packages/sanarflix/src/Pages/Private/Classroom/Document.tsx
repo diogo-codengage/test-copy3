@@ -55,6 +55,7 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
             query={GET_RESOURCE}
             options={{ variables: { themeId, resourceId, courseId } }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
+            errorProps={{ dark: true }}
         >
             {({ data: { resource } }) => (
                 <SANBox>
