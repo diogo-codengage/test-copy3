@@ -180,7 +180,7 @@ const FLXCancelPage = ({ history }: RouteComponentProps) => {
                     >
                         <SANButton
                             size='small'
-                            onClick={() => history.push('/portal')}
+                            onClick={() => history.push('/portal/inicio')}
                             color='primary'
                             variant='solid'
                             bold
