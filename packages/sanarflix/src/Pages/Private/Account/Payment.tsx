@@ -114,14 +114,23 @@ const FLXPayment = ({ history, form }) => {
         })
     }
 
+    const replaceAll = char => new RegExp(char, 'ig')
+
     const handleSave = async values => {
         setSubmitting(true)
         try {
+            const underline = replaceAll('_')
+            const asterisk = replaceAll('\\*')
+            const card_cvv = values.card_cvv.replace(underline, '')
+            const card_number = values.card_number
+                .replace(asterisk, '')
+                .replace(underline, '')
             await client.mutate({
                 mutation: EDIT_CREDIT_CARD_MUTATION,
                 variables: {
                     ...values,
-                    card_cvv: Number(values.card_cvv)
+                    card_number: card_number,
+                    card_cvv: Number(card_cvv)
                 }
             })
             snackbar({
@@ -130,7 +139,7 @@ const FLXPayment = ({ history, form }) => {
             })
         } catch {
             snackbar({
-                message: t('account.creditCard.success'),
+                message: t('account.creditCard.error'),
                 theme: 'error'
             })
         }
