@@ -10,9 +10,14 @@ import { useThemeContext } from '@sanar/utils/dist/Hooks'
 
 export interface ISANError500Props {
     onClick: () => void
+    text?: React.ReactNode | string
 }
 
-const SANError500: React.FC<ISANError500Props> = ({ children, onClick }) => {
+const SANError500: React.FC<ISANError500Props> = ({
+    children,
+    onClick,
+    text
+}) => {
     const {
         assets: {
             icons: {
@@ -29,7 +34,7 @@ const SANError500: React.FC<ISANError500Props> = ({ children, onClick }) => {
             alignItems='center'
             justifyContent={{ xs: 'center', _: 'flex-start' }}
             py='xxl'
-            px={{ xs: ' 8', _: '40px' }}
+            px={{ xs: '8', _: '40px' }}
             height='100%'
             position='relative'
             bg='white.10'
@@ -79,7 +84,7 @@ const SANError500: React.FC<ISANError500Props> = ({ children, onClick }) => {
                     mt='xl'
                     onClick={onClick}
                 >
-                    {t('error500.button')}
+                    {text || t('error500.button')}
                 </SANButton>
             </SANBox>
         </SANBox>

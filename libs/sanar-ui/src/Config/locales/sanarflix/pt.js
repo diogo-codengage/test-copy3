@@ -47,7 +47,8 @@ export default {
             'Dezembro'
         ],
         yes: 'Sim',
-        no: 'Não'
+        no: 'Não',
+        backStart: 'Voltar ao início'
     },
     logout: {
         message: 'Tem certeza que deseja sair da conta agora?',

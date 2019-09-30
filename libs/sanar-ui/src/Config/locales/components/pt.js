@@ -161,5 +161,8 @@ export default {
         subtitle:
             'Nosso time já identificou o problema e está trabalhando para resolvê-lo!Por favor, tente novamente em alguns minutos.',
         button: 'Tentar novamente'
+    },
+    genericError: {
+        message: 'Ocorreu um erro. Tente novamente mais tarde.'
     }
 }
