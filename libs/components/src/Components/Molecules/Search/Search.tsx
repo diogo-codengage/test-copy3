@@ -139,7 +139,6 @@ const RemoveScrollStyled = styled(RemoveScroll)`
 `
 
 interface IItem {
-    id: string
     title: string
     onClick: () => void
 }
@@ -159,10 +158,10 @@ const boldString = (text: string, search: string) => {
     return text.replace(regexp, replaceMask)
 }
 
-const renderItem = search => item => (
+const renderItem = search => (item, index) => (
     <Item
         onClick={item.onClick}
-        key={item.id}
+        key={`${item.title}-${index}`}
         title={item.title}
         icon='search-outline'
         search={search}

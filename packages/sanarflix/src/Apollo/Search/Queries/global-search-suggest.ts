@@ -32,20 +32,11 @@ export interface ISearch {
     theme: IOwner
 }
 
-export const GET_GLOBAL_SEARCH = gql`
-    query GlobalSearch($skip: Int, $limit: Int, $value: String!) {
-        globalSearch(limit: $limit, skip: $skip, value: $value) {
+export const GET_GLOBAL_SEARCH_SUGGEST = gql`
+    query GlobalSearchAux($skip: Int, $limit: Int, $value: String!) {
+        globalSearchAux(limit: $limit, skip: $skip, value: $value) {
             data {
                 title: resource_title
-                id: resource_id
-                resource_type
-                type
-                course {
-                    id
-                }
-                theme {
-                    id
-                }
             }
         }
     }

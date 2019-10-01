@@ -20,6 +20,8 @@ import {
 
 import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
 
+import { events } from 'Config/Segment'
+
 import { useClassroomQuizContext } from './Context'
 import { useClassroomContext } from '../Context'
 
@@ -165,6 +167,13 @@ const FLXClassRoomQuizQuestion = ({
             stopwatchRef.current.start()
         }
     }, [stopwatchRef])
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
 
     return (
         <>

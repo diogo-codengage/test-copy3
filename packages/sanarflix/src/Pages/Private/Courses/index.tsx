@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -14,6 +14,7 @@ import {
 import { GET_TOPICS, ITopics, ITopic } from 'Apollo/Courses/Queries/topics'
 
 import FLXSearch from 'Components/Search'
+import { events } from 'Config/Segment'
 
 import FLXCoursesList from './List'
 import FLXCoursesProvider from './Context'
@@ -65,6 +66,14 @@ const Topics = () => {
 
 const FLXCourses: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('sanarflix')
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
+
     return (
         <FLXCoursesProvider>
             <SANBox displayFlex flexDirection='column' flex='1'>

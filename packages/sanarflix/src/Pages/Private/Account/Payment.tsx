@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { compose } from 'ramda'
 import { withRouter } from 'react-router-dom'
@@ -33,6 +33,8 @@ import i18n from 'sanar-ui/dist/Config/i18n'
 
 import { useAuthContext } from 'Hooks/auth'
 import { EDIT_CREDIT_CARD_MUTATION } from 'Apollo/User/Mutations/edit-credit-card'
+
+import { events } from 'Config/Segment'
 
 const years = new Array(31).fill(1).map((_, i) => i + 2000)
 const months = new Array(12).fill(1).map((_, i) => i)
@@ -145,6 +147,13 @@ const FLXPayment = ({ history, form }) => {
         }
         setSubmitting(false)
     }
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
 
     return (
         <>

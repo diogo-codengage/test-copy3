@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     SANPage,
     SANBox,
@@ -22,6 +22,7 @@ import { CANCEL_SUBSCRIPTION } from 'Apollo/SignmentManagement/Mutations/cancel'
 import FLXModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 
 import { useAuthContext } from 'Hooks/auth'
+import { events } from 'Config/Segment'
 
 const Notice = ({ action }) => {
     const { t } = useTranslation('sanarflix')
@@ -100,6 +101,13 @@ const FLXCancelPage = ({ history }: RouteComponentProps) => {
             })
         }
     }
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
 
     return (
         <>
