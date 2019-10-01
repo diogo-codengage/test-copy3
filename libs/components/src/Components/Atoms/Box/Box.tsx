@@ -20,7 +20,9 @@ import {
     BackgroundProps,
     PositionProps,
     ShadowProps,
-    compose
+    compose,
+    typography,
+    TypographyProps
 } from 'styled-system'
 
 import { ifProp } from 'styled-tools'
@@ -37,6 +39,7 @@ export interface ISANBoxProps
         BorderProps,
         BackgroundProps,
         PositionProps,
+        TypographyProps,
         ShadowProps {
     displayFlex?: boolean
     as?: 'img'
@@ -54,7 +57,8 @@ const SANBox = SANStyled('div')`
         border,
         background,
         position,
-        shadow
+        shadow,
+        typography
     )}
 
     ${ifProp(
