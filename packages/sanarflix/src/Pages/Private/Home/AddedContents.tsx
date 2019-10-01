@@ -40,7 +40,7 @@ const FLXAddedContents = () => {
             loaderProps={{ minHeight: 186, flex: true }}
         >
             {({ data }: { data: IContents }) => {
-                if (!data.lastAddedContents.length) {
+                if (!!data.lastAddedContents.data.length) {
                     return null
                 }
                 return (
@@ -63,10 +63,10 @@ const FLXAddedContents = () => {
                                 lazyLoad
                                 swipeToSlide
                                 responsive={responsive(
-                                    data.lastAddedContents.length
+                                    data.lastAddedContents.data.length
                                 )}
                             >
-                                {data.lastAddedContents.map(renderContent)}
+                                {data.lastAddedContents.data.map(renderContent)}
                             </SANCarousel>
                         </SANLayoutContainer>
                     </>

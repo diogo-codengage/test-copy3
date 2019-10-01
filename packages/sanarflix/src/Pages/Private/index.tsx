@@ -18,6 +18,7 @@ const FLXClassroom = React.lazy(() => import('./Classroom'))
 const FLXQuestionsDatabase = React.lazy(() => import('./QuestionsDatabase'))
 const FLXSearchPage = React.lazy(() => import('./Search'))
 const FLXAccount = React.lazy(() => import('./Account'))
+const FLXAddedPage = React.lazy(() => import('./Added'))
 
 type FLXPrivatePages = {}
 
@@ -71,6 +72,10 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
                         <FLXActiveAccountRoute
                             path={`${url}/busca`}
                             component={FLXSearchPage}
+                        />
+                        <FLXActiveAccountRoute
+                            path={`${url}/adicionados`}
+                            component={FLXAddedPage}
                         />
                         <Route
                             path={`${url}/minha-conta`}

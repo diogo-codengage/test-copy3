@@ -122,6 +122,15 @@ const FLXMenuInitial: React.FC = () => {
                     title={t('mainMenu.initial.allCourses')}
                 />
                 <SANNavigationListItem
+                    to='/portal/adicionados'
+                    icon={
+                        <SANEvaIcon name='file-add-outline' color='default' />
+                    }
+                    onClick={onCloseMenu}
+                    dataTestid='flx-menu__go-to--added'
+                    title={t('mainMenu.initial.added')}
+                />
+                <SANNavigationListItem
                     to='/portal/banco-questoes/filtro'
                     icon={<SANEvaIcon name='edit-outline' color='default' />}
                     onClick={onCloseMenu}
