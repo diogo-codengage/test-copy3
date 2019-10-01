@@ -33,7 +33,7 @@ const SANPage: React.FC<ISANPageProps> = ({
     return (
         <SANBox display='flex' flexDirection='column' flex='1'>
             {!!HeaderProps && <SANHeader {...HeaderProps} />}
-            <SANBox pb={9} {...BoxProps}>
+            <SANBox flex={1} pb={9} {...BoxProps}>
                 {content}
             </SANBox>
         </SANBox>
