@@ -107,7 +107,7 @@ const FLXPayment = ({ history, form }) => {
 
     const handleSubmit = e => {
         e.preventDefault()
-        form.validateFields((err, values) => {
+        form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 handleSave(values)
             }
@@ -211,7 +211,7 @@ const FLXPayment = ({ history, form }) => {
                                                     rules={[required]}
                                                 >
                                                     <SANInputMask
-                                                        required
+                                                        customRequired
                                                         onFocus={onFocus}
                                                         mask={
                                                             focus
@@ -234,7 +234,7 @@ const FLXPayment = ({ history, form }) => {
                                                     rules={[required]}
                                                 >
                                                     <SANInputMask
-                                                        required
+                                                        customRequired
                                                         mask='CVV'
                                                         InputProps={{
                                                             placeholder: t(
@@ -254,7 +254,7 @@ const FLXPayment = ({ history, form }) => {
                                                     rules={[required]}
                                                 >
                                                     <SANSelect
-                                                        required
+                                                        customRequired
                                                         placeholder={t(
                                                             'paymentMethods.creditCard.month'
                                                         )}
@@ -270,7 +270,7 @@ const FLXPayment = ({ history, form }) => {
                                                     rules={[required]}
                                                 >
                                                     <SANSelect
-                                                        required
+                                                        customRequired
                                                         placeholder={t(
                                                             'paymentMethods.creditCard.year'
                                                         )}
@@ -289,7 +289,7 @@ const FLXPayment = ({ history, form }) => {
                                                     rules={[required]}
                                                 >
                                                     <SANInput
-                                                        required
+                                                        customRequired
                                                         placeholder={t(
                                                             'paymentMethods.creditCard.name'
                                                         )}

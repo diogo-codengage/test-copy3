@@ -129,6 +129,14 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
         menuRef && menuRef.current && menuRef.current.setToggle(true)
     }
 
+    const handleClassroomBack = () => {
+        dispatch({
+            type: 'changeMenuTab',
+            payload: initialState
+        })
+        history.push(`/portal/curso/${window.location.hash.split('/')[3]}`)
+    }
+
     useEffect(() => {
         const loadLastAcessed = async () => {
             try {
@@ -162,13 +170,7 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
                         indexMenu: index,
                         menuTitle: (
                             <SANClassroomMenuHeader
-                                onBack={() =>
-                                    history.push(
-                                        `/portal/curso/${
-                                            window.location.hash.split('/')[3]
-                                        }`
-                                    )
-                                }
+                                onBack={handleClassroomBack}
                                 onClose={onCloseMenu}
                             />
                         ),
