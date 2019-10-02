@@ -98,7 +98,8 @@ ESButton.propTypes = Object.assign(
             'white',
             'black',
             'default',
-            'light'
+            'light',
+            'grey'
         ]),
         bold: PropTypes.bool,
         blockOnlyMobile: PropTypes.bool

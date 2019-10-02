@@ -32,6 +32,7 @@ export default {
         foundResults: ' resultados encontrados para ',
         leave: 'Sair',
         back: 'Voltar',
+        all: 'Todos',
         months: [
             'Janeiro',
             'Fevereiro',
@@ -204,7 +205,8 @@ export default {
             invites: 'Indique e ganhe',
             account: 'Minha conta',
             questions: 'Banco de questões',
-            account: 'Minha conta'
+            account: 'Minha conta',
+            added: 'Adicionados'
         },
         account: {
             title: 'Minha Conta',
@@ -412,6 +414,15 @@ export default {
     changePassword: {
         feedback: {
             success: 'A sua senha foi atualizada com sucesso!'
+        }
+    },
+    added: {
+        title: 'Adicionados',
+        totalItems: {
+            key: 'totalItems',
+            key_0: 'Sem itens adicionados nessa semana',
+            keyWithCount: '{{count}} item adicionado nessa semana',
+            keyWithCount_plural: '{{count}} itens adicionados nessa semana'
         }
     }
 }

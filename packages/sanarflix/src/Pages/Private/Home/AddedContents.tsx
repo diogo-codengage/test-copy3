@@ -40,7 +40,7 @@ const FLXAddedContents = () => {
             loaderProps={{ minHeight: 186, flex: true }}
         >
             {({ data }: { data: IContents }) => {
-                if (!data.lastAddedContents.data.length) {
+                if (!!data.lastAddedContents.data.length) {
                     return null
                 }
                 return (
