@@ -22,12 +22,7 @@ const App: React.FC = () => {
                             path='/portal'
                             component={FLXPrivatePages}
                         />
-                        <Route
-                            path={['/', '']}
-                            exact
-                            render={() => <Redirect to='/portal' />}
-                        />
-                        <Route path='*' render={() => <h1>Not found</h1>} />
+                        <Route render={() => <Redirect to='/auth' />} />
                     </Switch>
                 </SANScrollTop>
             </Router>

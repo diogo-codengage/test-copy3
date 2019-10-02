@@ -67,15 +67,20 @@ const SANHeader: React.FC<ISANHeaderProps> = ({
     return (
         <SANHeaderStyled data-testid='san-header'>
             <SANLayoutContainer>
-                <SANButtonBack
-                    circle
-                    size='xsmall'
-                    variant='text'
-                    onClick={onBack}
-                    data-testid='san-header__back'
-                >
-                    <SANEvaIcon name='arrow-ios-back-outline' size='medium' />
-                </SANButtonBack>
+                {!!onBack && (
+                    <SANButtonBack
+                        circle
+                        size='xsmall'
+                        variant='text'
+                        onClick={onBack}
+                        data-testid='san-header__back'
+                    >
+                        <SANEvaIcon
+                            name='arrow-ios-back-outline'
+                            size='medium'
+                        />
+                    </SANButtonBack>
+                )}
                 <SANRow
                     type='flex'
                     align='middle'

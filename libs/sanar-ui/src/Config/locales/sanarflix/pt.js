@@ -46,7 +46,10 @@ export default {
             'Outubro',
             'Novembro',
             'Dezembro'
-        ]
+        ],
+        yes: 'Sim',
+        no: 'Não',
+        backStart: 'Voltar ao início'
     },
     logout: {
         message: 'Tem certeza que deseja sair da conta agora?',
@@ -263,6 +266,38 @@ export default {
                 filterName: 'Tema',
                 selectCourses: 'Escolha primeiro um curso'
             }
+        },
+        question: {
+            saveQuestion: 'Salvar Questão',
+            seeFilters: 'Ver filtros',
+            corrects: 'Corretas:',
+            wrong: 'Erradas:',
+            skipped: 'Puladas:',
+            continue: 'Continuar',
+            failHandleBookmark: 'Ocorreu um erro ao favoritar questão.',
+            failReplyQuestion: 'Ocorreu um erro ao responder questão.',
+            failLoadQuestions: 'Ocorreu um erro ao carregar questões.',
+            empty:
+                'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos',
+            endPractice: {
+                button: 'Encerrar prática',
+                modal: {
+                    title: 'Ops! Nenhuma questão foi respondida.',
+                    subtitle:
+                        'Que tal aprimorar seus conhecimentos reiniciando a prática?',
+                    close: 'Encerrar',
+                    restart: 'Reiniciar prática'
+                }
+            },
+            exit: {
+                title: 'Ops! Você está saindo da prática.',
+                subtitle: 'Deseja realmente encerrar a prática?'
+            },
+            title: 'Questão'
+        },
+        finished: {
+            title: 'Resultado',
+            questionsDatabase: 'Banco de questões'
         }
     },
     search: {
@@ -286,6 +321,8 @@ export default {
         selectPeriod: 'Selecione aqui o período',
         selectCancelReasonLabel: 'Qual o motivo do cancelamento?',
         selectCancelReason: 'Selecione o motivo',
+        causeObservation: 'Escreva seu motivo aqui',
+        recommend: 'Quanto você recomendaria o SanarFlix a um amigo?',
         howMuchTimeLabel: 'Por quanto tempo você quer pausar?',
         formedResident: 'Formado (Residente)',
         formedActing: 'Formado (Atuando)',
@@ -298,6 +335,7 @@ export default {
         confirmCancel: 'Confirmar cancelamento',
         cancelPage: {
             header: 'Cancelar Assinatura',
+            subtitle: 'Formulário de cancelamento',
             doYouWant: 'Quer mesmo cancelar?',
             doYouWantSubtitle1: 'No Sanarflix você pode pausar sua assinatura!',
             doYouWantSubtitle2:
@@ -305,8 +343,10 @@ export default {
             doYouWantExtra: 'Pausar',
             modal: {
                 title: 'Cancelamento confirmado',
-                description:
-                    'Seu pedido está sendo processado e sua assinatura será cancelada dentro de algumas horas. Esperamos que sua experiência SanarFlix tenha sido proveitosa.',
+                description1:
+                    'Seu pedido está sendo processado e sua assinatura será cancelada dentro de algumas horas.',
+                description2:
+                    'Esperamos que sua experiência SanarFlix tenha sido proveitosa.',
                 ok: 'Certo, entendi'
             },
             notice: {
@@ -320,6 +360,7 @@ export default {
         },
         pausePage: {
             header: 'Pausar Assinatura',
+            subtitle: 'Preencha o formulário para pausar',
             completeFields: 'Preencha os campos abaixo para continuar:',
             toComplete:
                 'Para completar sua solicitação de pausa responda nossa pesquisa.',
@@ -333,18 +374,21 @@ export default {
             },
             modal: {
                 title: 'Pausa confirmada',
-                description:
-                    'Seu pedido está sendo processado e sua assinatura será pausada dentro de algumas horas. Esperamos que sua experiência SanarFlix tenha sido proveitosa!',
+                description1:
+                    'Seu pedido está sendo processado e sua assinatura será pausada dentro de algumas horas.',
+                description2:
+                    'Esperamos que sua experiência SanarFlix tenha sido proveitosa!',
                 ok: 'Certo, entendi'
             }
         }
     },
     paymentMethods: {
         title: 'Formas de pagamento',
+        subtitle: 'Atualizar sua forma de pagamento',
         creditCard: {
             title: 'Atualizar forma de pagamento',
             subtitle: 'Cartão de Crédito',
-            number: 'Cartão de Crédito',
+            number: 'Número do Cartão',
             cvv: {
                 title: 'CVV',
                 tooltip:

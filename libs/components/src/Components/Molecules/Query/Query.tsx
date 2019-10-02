@@ -3,6 +3,7 @@ import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { DocumentNode } from 'graphql'
 import { SANSpin } from '../../Atoms/Spin'
+import { SANGenericError, ISANGenericErrorProps } from '../GenericError'
 
 export interface ISANQueryProps {
     children: (data: any) => React.ReactElement
@@ -11,7 +12,7 @@ export interface ISANQueryProps {
     loaderComp?: React.ReactElement
     errorComp?: React.ReactElement
     loaderProps?: Object
-    errorProps?: Object
+    errorProps?: ISANGenericErrorProps
 }
 
 const SANQuery = ({
@@ -20,12 +21,18 @@ const SANQuery = ({
     options,
     loaderComp,
     errorComp,
-    loaderProps
+    loaderProps,
+    errorProps
 }: ISANQueryProps) => {
     const { data, loading, error, ...props } = useQuery(query, options)
 
     if (loading) return loaderComp ? loaderComp : <SANSpin {...loaderProps} />
-    if (error) return errorComp ? errorComp : <p>error</p>
+    if (error)
+        return errorComp ? (
+            errorComp
+        ) : (
+            <SANGenericError mb='xl' {...errorProps} />
+        )
     if (!data) return null
 
     return children({ data, loading, error, ...props })

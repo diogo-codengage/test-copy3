@@ -11,6 +11,10 @@ const FLXGlobalStyle = createGlobalStyle`
     overflow-x: hidden;
     background-color: ${theme('colors.grey-solid.0')};
   }
+
+  #root {
+    height: 100%;
+  }
 `
 
 export default FLXGlobalStyle

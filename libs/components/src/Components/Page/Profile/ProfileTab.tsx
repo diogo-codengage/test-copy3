@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
+import { useWindowSize } from '@sanar/utils/dist/Hooks'
+
 import { SANSpin } from '../../Atoms/Spin'
 import { SANBox } from '../../Atoms/Box'
 import { SANDivider } from '../../Atoms/Divider'
@@ -38,6 +40,7 @@ const renderState = state => (
 )
 
 const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
+    const { width } = useWindowSize()
     const { t } = useTranslation('components')
     const [submitting, setSubmitting] = useState(false)
 
@@ -46,7 +49,13 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
         setSubmitting(true)
         form.validateFields((err, values) => {
             if (!err) {
-                onSubmit(values, { setSubmitting })
+                onSubmit(
+                    {
+                        ...values,
+                        period: values.period.toString()
+                    },
+                    { setSubmitting }
+                )
             } else {
                 setSubmitting(false)
             }
@@ -62,7 +71,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
             boxShadow='1'
         >
             <SANSpin spinning={submitting} flex>
-                <SANTabs defaultActiveKey='1' center>
+                <SANTabs defaultActiveKey='1' center={width > 400}>
                     <SANTabPane
                         tab={
                             <SANTypography
@@ -104,14 +113,17 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         label={t('profile.tab1.document')}
                                         initialValue={user.cpf || undefined}
                                     >
-                                        <SANInput
+                                        <SANInputMask
                                             data-testid='flix_profile_tab-personal--input-cpf'
-                                            placeholder={t(
-                                                'profile.tab1.document'
-                                            )}
-                                            size='large'
+                                            mask='CPF_PREVIEW'
                                             disabled
-                                            iconRight='slash-outline'
+                                            InputProps={{
+                                                placeholder: t(
+                                                    'profile.tab1.document'
+                                                ),
+                                                size: 'large',
+                                                iconRight: 'slash-outline'
+                                            }}
                                         />
                                     </SANFormItem>
                                     <SANFormItem
@@ -133,7 +145,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         />
                                     </SANFormItem>
                                     <SANRow gutter={24}>
-                                        <SANCol xs={12}>
+                                        <SANCol xs={15}>
                                             <SANFormItem
                                                 name='college'
                                                 label={t(
@@ -153,11 +165,11 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                                 />
                                             </SANFormItem>
                                         </SANCol>
-                                        <SANCol xs={12}>
+                                        <SANCol xs={9}>
                                             <SANFormItem
                                                 name='period'
                                                 label={t(
-                                                    'profile.tab1.semester'
+                                                    'profile.tab1.semester.label'
                                                 )}
                                                 mb='md'
                                                 initialValue={
@@ -167,7 +179,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                                 <SANSelect
                                                     data-testid='flix_profile_tab-personal--select-period'
                                                     placeholder={t(
-                                                        'profile.tab1.semester'
+                                                        'profile.tab1.semester.placeholder'
                                                     )}
                                                     size='large'
                                                 >
@@ -281,7 +293,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         }
                                     >
                                         <SANInput
-                                            data-testid='flix_profile_tab-personal--input-city'
+                                            data-testid='flix_profile_tab-personal--input-complement'
                                             placeholder={t(
                                                 'profile.tab2.complement.placeholder'
                                             )}
@@ -289,7 +301,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         />
                                     </SANFormItem>
                                     <SANRow gutter={24}>
-                                        <SANCol xs={12}>
+                                        <SANCol xs={24} sm={12}>
                                             <SANFormItem
                                                 name='address.city_name'
                                                 label={t('profile.tab2.city')}
@@ -306,14 +318,15 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                                         'profile.tab2.city'
                                                     )}
                                                     size='large'
-                                                    uppercase
                                                 />
                                             </SANFormItem>
                                         </SANCol>
-                                        <SANCol xs={12}>
+                                        <SANCol xs={24} sm={12}>
                                             <SANFormItem
                                                 name='address.state_id'
-                                                label={t('profile.tab2.state')}
+                                                label={t(
+                                                    'profile.tab2.state.label'
+                                                )}
                                                 mb='md'
                                                 initialValue={
                                                     !!user.address
@@ -323,7 +336,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                             >
                                                 <SANSelect
                                                     placeholder={t(
-                                                        'profile.tab2.state'
+                                                        'profile.tab2.state.placeholder'
                                                     )}
                                                     size='large'
                                                 >

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     SANPage,
     SANBox,
@@ -19,6 +19,8 @@ import { useApolloClient } from '@apollo/react-hooks'
 import { PAUSE_SUBSCRIPTION } from 'Apollo/SignmentManagement/Mutations/pause'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router'
+
+import { useAuthContext } from 'Hooks/auth'
 
 const Notice = () => {
     const { t } = useTranslation('sanarflix')
@@ -48,6 +50,9 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
     const [modalVisible, setModalVisible] = useState(false)
     const client = useApolloClient()
+    const {
+        me: { plan }
+    } = useAuthContext()
     const createSnackbar = useSnackbarContext()
 
     const onSubmit = async values => {
@@ -68,6 +73,13 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
         }
     }
 
+    useEffect(() => {
+        if (plan.payment_frequency !== 'month') {
+            history.push('/portal/minha-conta/cancelar-assinatura')
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <>
             <SANPage
@@ -75,7 +87,8 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
                 HeaderProps={{
                     onBack: () => history.goBack(),
                     SessionTitleProps: {
-                        title: t('sigmentManagement.pausePage.header')
+                        title: t('sigmentManagement.pausePage.header'),
+                        subtitle: t('sigmentManagement.pausePage.subtitle')
                     }
                 }}
             >
@@ -83,12 +96,11 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
                     <Notice />
                 </SANBox>
                 <SANSessionTitle
-                    mt={6}
-                    mb={6}
+                    my={6}
                     title={t('sigmentManagement.pausePage.completeFields')}
                     subtitle={<FLXCancelOrPauseFormSubtitle />}
                 />
-                <SANRow gutter={12}>
+                <SANRow gutter={24}>
                     <SANCol lg={16}>
                         <FLXCancelOrPauseForm
                             onSubmit={onSubmit}
@@ -103,6 +115,7 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
             <SANModal
                 visible={modalVisible}
                 centered
+                closable={false}
                 title={t('sigmentManagement.pausePage.modal.title')}
                 footer={
                     <SANBox
@@ -111,16 +124,27 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
                         justifyContent='flex-end'
                     >
                         <SANButton
+                            size='small'
                             onClick={() => history.push('/portal')}
                             color='primary'
                             variant='solid'
+                            bold
                         >
                             {t('sigmentManagement.pausePage.modal.ok')}
                         </SANButton>
                     </SANBox>
                 }
             >
-                {t('sigmentManagement.pausePage.modal.description')}
+                <SANTypography
+                    variant='subtitle1'
+                    color='grey.7'
+                    mb={{ sm: 'md', _: 'xs' }}
+                >
+                    {t('sigmentManagement.pausePage.modal.description1')}
+                </SANTypography>
+                <SANTypography variant='subtitle1' color='grey.7'>
+                    {t('sigmentManagement.pausePage.modal.description2')}
+                </SANTypography>
             </SANModal>
         </>
     )
