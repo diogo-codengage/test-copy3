@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { theme } from 'styled-tools'
 import { useTranslation } from 'react-i18next'
@@ -15,6 +15,8 @@ import {
     esUtilConvertSecondsToTime,
     esConvertFormattedTimeToSeconds
 } from 'sanar-ui/dist/Util/Date'
+
+import { events } from 'Config/Segment'
 
 import { useClassroomQuizContext } from './Context'
 
@@ -73,6 +75,13 @@ const FLXClassRoomQuizFinished = () => {
         elapsedTime: time,
         averageQuestionTime: getAverageTime(time)
     }
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
 
     return (
         <SANBox>

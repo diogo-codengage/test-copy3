@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
@@ -19,6 +19,8 @@ import {
     SANQuery
 } from '@sanar/components'
 import FLXSearch from 'Components/Search'
+
+import { events } from 'Config/Segment'
 
 const resources = {
     Document: 'documento',
@@ -52,14 +54,35 @@ const FLXSearchPage: React.FC<RouteComponentProps> = ({
         course,
         theme
     }) => {
+        const content = {
+            resource,
+            type,
+            course,
+            theme
+        }
         if (type.toLocaleLowerCase() === 'course') {
+            const link = `/portal/curso/${resource}`
+            window.analytics.track(events['Search Result Clicked'].event, {
+                link,
+                content
+            })
             history.push(`/portal/curso/${resource}`)
         } else {
-            history.push(
-                `/portal/sala-aula/${course.id}/${theme.id}/${resources[type]}/${resource}`
-            )
+            const link = `/portal/sala-aula/${course.id}/${theme.id}/${resources[type]}/${resource}`
+            window.analytics.track(events['Search Result Clicked'].event, {
+                link,
+                content
+            })
+            history.push(link)
         }
     }
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
 
     return (
         <SANBox

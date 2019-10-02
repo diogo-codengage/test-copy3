@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -35,6 +35,8 @@ import {
 } from 'Apollo/Course/Queries/course'
 
 import FLXSearch from 'Components/Search'
+
+import { events } from 'Config/Segment'
 
 import Themes from './Themes'
 import FLXCourseNavigation from './Navigation'
@@ -167,6 +169,13 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
 }) => {
     const { t } = useTranslation('sanarflix')
     const [showDescription, setShowDescription] = useState(false)
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
 
     return (
         <SANQuery

@@ -40,6 +40,7 @@ const ESJwPlayer = forwardRef(
             className,
             playerId,
             onReady,
+            onPlaybackRateChanged,
             onOpenMenu,
             onFavorite,
             onNext,
@@ -93,6 +94,10 @@ const ESJwPlayer = forwardRef(
             })
             instance.on('play', function() {
                 setIsPause(false)
+            })
+
+            instance.on('playbackRateChanged', function(event) {
+                !!onPlaybackRateChanged && onPlaybackRateChanged(event)
             })
 
             if (instance.getWidth() > 1024) {

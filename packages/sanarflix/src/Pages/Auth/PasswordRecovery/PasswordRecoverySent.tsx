@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
@@ -6,12 +6,21 @@ import ESPasswordRecoveryTemplate from 'sanar-ui/dist/Components/Templates/Passw
 import ESButton from 'sanar-ui/dist/Components/Atoms/Button'
 import ESBrandHeader from 'sanar-ui/dist/Components/Atoms/BrandHeader'
 
+import { events } from 'Config/Segment'
+
 import logo from 'Assets/images/brand/logo.svg'
 import image from 'Assets/images/mail.png'
 
 const FLXPasswordRecoverySent: React.FC<any> = ({ location, history }) => {
     const { t } = useTranslation('sanarflix')
     const params = new URLSearchParams(location.search)
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
 
     return (
         <ESPasswordRecoveryTemplate

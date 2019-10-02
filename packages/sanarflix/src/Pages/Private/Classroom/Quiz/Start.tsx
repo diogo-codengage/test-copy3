@@ -4,6 +4,8 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import { SANStartQuiz } from '@sanar/components'
 
+import { events } from 'Config/Segment'
+
 import { useAuthContext } from 'Hooks/auth'
 import { useClassroomQuizContext, initialStats } from './Context'
 
@@ -14,6 +16,13 @@ const FLXClassRoomQuizStart = ({ history }: RouteComponentProps) => {
     useEffect(() => {
         setStats(old => ({ ...initialStats, total: old.total }))
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
     }, [])
 
     return (

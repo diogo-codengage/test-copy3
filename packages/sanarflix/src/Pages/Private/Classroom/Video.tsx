@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 
 import { theme } from 'styled-tools'
 import styled from 'styled-components'
@@ -18,6 +18,8 @@ import {
     SANButton,
     SANEvaIcon
 } from '@sanar/components'
+
+import { events } from 'Config/Segment'
 
 import { GET_RESOURCE } from 'Apollo/Classroom/Queries/resource'
 import { CREATE_RATING } from 'Apollo/Classroom/Mutations/rating'
@@ -55,6 +57,10 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
 
     const handleRating = async ({ value, resourceId }) => {
         try {
+            window.analytics.track(
+                events['E-Learning']['Content Video Evaluated'].event,
+                events['E-Learning']['Content Video Evaluated'].data
+            )
             await client.mutate({
                 mutation: CREATE_RATING,
                 variables: {
@@ -65,6 +71,41 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
             })
         } catch {}
     }
+
+    const handlePlay = () => {
+        window.analytics.track(
+            events['E-Learning']['Content Watched'].event,
+            events['E-Learning']['Content Watched'].data
+        )
+    }
+
+    const handlePause = () => {
+        window.analytics.track(
+            events['E-Learning']['Content Stopped'].event,
+            events['E-Learning']['Content Stopped'].data
+        )
+    }
+
+    const handleComplete = () => {
+        window.analytics.track(
+            events['E-Learning']['Content Completed'].event,
+            events['E-Learning']['Content Completed'].data
+        )
+    }
+
+    const handlePlaybackRateChanged = () => {
+        window.analytics.track(
+            events['E-Learning']['Content Video Evaluated'].event,
+            events['E-Learning']['Content Video Evaluated'].data
+        )
+    }
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
 
     return (
         <SANQuery
@@ -111,6 +152,12 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                 subtitle={resource.course.name}
                                 onNext={navigations.next.onClick}
                                 onPrevious={navigations.previous.onClick}
+                                onPlay={handlePlay}
+                                onPause={handlePause}
+                                onOneHundredPercent={handleComplete}
+                                onPlaybackRateChanged={
+                                    handlePlaybackRateChanged
+                                }
                                 rate={{
                                     value:
                                         resource.video.rating &&

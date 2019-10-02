@@ -28,6 +28,8 @@ import {
     ITheme
 } from 'Apollo/QuestionsDatabase/Queries/themes'
 
+import { events } from 'Config/Segment'
+
 import courseSvg from 'Assets/images/filters/course.svg'
 import themeSvg from 'Assets/images/filters/theme.svg'
 
@@ -164,6 +166,13 @@ const FLXFilter = ({ history }) => {
     useEffect(() => {
         reset()
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
     }, [])
 
     return (

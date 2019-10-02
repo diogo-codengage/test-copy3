@@ -7,6 +7,8 @@ import { SANButton } from '@sanar/components'
 import { ICourse } from 'Apollo/QuestionsDatabase/Queries/courses'
 import { ITheme } from 'Apollo/QuestionsDatabase/Queries/themes'
 
+import { events } from 'Config/Segment'
+
 import FLXSubheader from './Subheader'
 import { FLXSelectsFilter } from '../Filter'
 import { useQuestionsContext } from '../Context'
@@ -48,6 +50,13 @@ const FLXFilter = ({ history }: RouteComponentProps) => {
         pauseStopwatch()
         return () => startStopwatch()
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
     }, [])
 
     return (

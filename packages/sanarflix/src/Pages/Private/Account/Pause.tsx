@@ -21,6 +21,7 @@ import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router'
 
 import { useAuthContext } from 'Hooks/auth'
+import { events } from 'Config/Segment'
 
 const Notice = () => {
     const { t } = useTranslation('sanarflix')
@@ -78,6 +79,13 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
             history.push('/portal/minha-conta/cancelar-assinatura')
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
     }, [])
 
     return (

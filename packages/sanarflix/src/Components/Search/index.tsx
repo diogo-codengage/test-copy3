@@ -5,16 +5,12 @@ import { useApolloClient } from '@apollo/react-hooks'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { SANSearch } from '@sanar/components'
 
-import { GET_GLOBAL_SEARCH } from 'Apollo/Search/Queries/global-search'
+import { events } from 'Config/Segment'
+
+import { GET_GLOBAL_SEARCH_SUGGEST } from 'Apollo/Search/Queries/global-search-suggest'
 
 interface IProps extends RouteComponentProps {
     size?: 'large' | 'medium' | 'small'
-}
-
-const type = {
-    Video: 'video',
-    Quiz: 'questoes',
-    Document: 'documento'
 }
 
 const FLXSearch = ({ size = 'medium', history }: IProps) => {
@@ -23,41 +19,34 @@ const FLXSearch = ({ size = 'medium', history }: IProps) => {
     const [value, setValue] = useState('')
     const [items, setItems] = useState([])
 
-    const goToItemSearch = item => {
-        if (item.resource_type === 'Course') {
-            history.push(`/portal/curso/${item.resource_id}`)
-        } else {
-            history.push(
-                `/portal/sala-aula/${item.course.id}/${item.theme.id}/${
-                    type[item.resource_type]
-                }/${item.id}`
-            )
-        }
-    }
-
     const onSearch = async search => {
         if (!search || search.length < 3) return
         try {
             const {
-                data: { globalSearch }
+                data: { globalSearchAux }
             } = await client.query({
-                query: GET_GLOBAL_SEARCH,
+                query: GET_GLOBAL_SEARCH_SUGGEST,
                 variables: { limit: 5, value: search }
             })
-            const data = globalSearch.data.map(item => ({
+            const data = globalSearchAux.data.map(item => ({
                 ...item,
-                onClick: () => goToItemSearch(item)
+                onClick: () =>
+                    history.push(`/portal/busca?pesquisa=${item.title}`)
             }))
             setItems(data)
         } catch {}
     }
 
     const onChange = value => {
-        if (!value.trim().length) {
+        const valueTrim = value.trim()
+        if (!valueTrim.length) {
             setItems([])
         }
-        setValue(value.trim())
-        onSearch(value.trim())
+        window.analytics.track(events['Content Searched'].event, {
+            term: valueTrim
+        })
+        setValue(valueTrim)
+        onSearch(valueTrim)
     }
 
     const seeMore = () => history.push(`/portal/busca?pesquisa=${value}`)

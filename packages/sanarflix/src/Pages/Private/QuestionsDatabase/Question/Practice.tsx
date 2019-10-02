@@ -15,6 +15,8 @@ import {
 import { ANSWER_MUTATION } from 'Apollo/QuestionsDatabase/Mutations/answer'
 import { CREATE_BOOKMARK } from 'Apollo/Classroom/Mutations/bookmark'
 
+import { events } from 'Config/Segment'
+
 import FLXSubheader from './Subheader'
 import FLXEmpty from './Empty'
 import { useQuestionsContext } from '../Context'
@@ -144,6 +146,13 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
     useEffect(() => {
         startStopwatch()
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
     }, [])
 
     if (!state.questions.length && !state.loading) {

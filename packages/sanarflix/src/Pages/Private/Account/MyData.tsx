@@ -11,6 +11,8 @@ import { IMe } from 'Apollo/User/Queries/me'
 import { GET_STATES, IState } from 'Apollo/User/Queries/states'
 import { EDIT_USER_MUTATION } from 'Apollo/User/Mutations/edit-user'
 
+import { events } from 'Config/Segment'
+
 interface IStatesQuery {
     states: {
         data: IState[]
@@ -58,6 +60,13 @@ const FLXMyData = ({ history }: RouteComponentProps) => {
         }
         setSubmitting(false)
     }
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
 
     return (
         <SANProfile
