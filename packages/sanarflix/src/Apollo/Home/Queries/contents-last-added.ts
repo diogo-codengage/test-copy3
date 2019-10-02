@@ -16,16 +16,20 @@ export interface IContent {
 }
 
 export interface IContents {
-    lastAddedContents: IContent[]
+    lastAddedContents: {
+        data: IContent[]
+    }
 }
 
 export const GET_CONTENTS_LAST_ADDED = gql`
     {
         lastAddedContents(limit: 50) {
-            id
-            title
-            thumbnail
-            type
+            data {
+                id
+                title
+                thumbnail
+                type
+            }
         }
     }
 `
