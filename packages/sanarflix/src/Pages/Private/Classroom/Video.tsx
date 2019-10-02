@@ -57,6 +57,10 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
 
     const handleRating = async ({ value, resourceId }) => {
         try {
+            window.analytics.track(
+                events['E-Learning']['Content Video Evaluated'].event,
+                events['E-Learning']['Content Video Evaluated'].data
+            )
             await client.mutate({
                 mutation: CREATE_RATING,
                 variables: {
