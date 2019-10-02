@@ -9,6 +9,7 @@ import {
     SANBox
 } from '@sanar/components'
 import { useAddedContext } from './Context'
+import { withRouter, RouterProps } from 'react-router'
 
 const updateAddedContents = (prev: any, { fetchMoreResult }) => {
     if (!fetchMoreResult) return prev
@@ -24,7 +25,13 @@ const updateAddedContents = (prev: any, { fetchMoreResult }) => {
     })
 }
 
-const FLXAddedList = () => {
+const resources = {
+    Document: 'documento',
+    Video: 'video',
+    Question: 'quiz'
+}
+
+const FLXAddedList = ({ history }: RouterProps) => {
     const { added, addedCount, loading, fetchMore, error } = useAddedContext()
 
     if (error) {
@@ -41,6 +48,14 @@ const FLXAddedList = () => {
 
     if (!added.length) {
         return <SANEmpty />
+    }
+
+    const onNavigate = item => {
+        history.push(
+            `/portal/sala-aula/${item.theme.course.id}/${item.theme.id}/${
+                resources[item.resource_type]
+            }/${item.id}`
+        )
     }
 
     return (
@@ -66,6 +81,7 @@ const FLXAddedList = () => {
                                 newBadge
                                 title={item.title}
                                 image={item.thumbnail}
+                                onClick={() => onNavigate(item)}
                             />
                         </SANCol>
                     ))}
@@ -74,4 +90,4 @@ const FLXAddedList = () => {
     )
 }
 
-export default FLXAddedList
+export default withRouter(FLXAddedList)

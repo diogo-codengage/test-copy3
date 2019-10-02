@@ -90,7 +90,9 @@ const FLXAddedFilter = () => {
                             defaultValue={null}
                             onChange={e => setFilter(e.target.value)}
                         >
-                            <SANRadioButton value={null}>Todos</SANRadioButton>
+                            <SANRadioButton value={null}>
+                                {t('global.all')}
+                            </SANRadioButton>
                             {contentTypes.map((item, index) => (
                                 <SANRadioButton value={item.type} key={index}>
                                     {item.description}
@@ -120,7 +122,7 @@ const FLXAddedFilter = () => {
                             onClick={() => setFilter(null)}
                             value={null}
                         >
-                            Todos
+                            {t('global.all')}
                         </SANButton>
                     </SANBox>
 

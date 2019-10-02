@@ -18,13 +18,7 @@ interface IContext {
     error?: ApolloError
 }
 
-export const FLXAddedContext = createContext<IContext>({
-    added: [{ title: '', thumbnail: '' }],
-    loading: false,
-    addedCount: 0,
-    filter: null,
-    setFilter: console.log
-})
+export const FLXAddedContext = createContext<IContext>({} as IContext)
 
 export const useAddedContext = () => useContext(FLXAddedContext)
 

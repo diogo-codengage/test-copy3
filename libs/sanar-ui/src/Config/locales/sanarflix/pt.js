@@ -32,6 +32,7 @@ export default {
         foundResults: ' resultados encontrados para ',
         leave: 'Sair',
         back: 'Voltar',
+        all: 'Todos',
         months: [
             'Janeiro',
             'Fevereiro',
