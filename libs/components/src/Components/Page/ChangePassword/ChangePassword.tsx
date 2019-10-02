@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import { theme } from 'styled-tools'
 
 import { SANSpin } from '../../Atoms/Spin'
-import { SANBrandHeader } from '../../Atoms/BrandHeader'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANBox } from '../../Atoms/Box'
 import { SANInputPassword } from '../../Atoms/InputPassword'
@@ -96,109 +95,104 @@ const SANChangePassword = ({ form, onSubmit, onForgot }) => {
     }
 
     return (
-        <>
-            <SANBrandHeader display={{ lg: 'none', _: 'flex' }} />
-            <SANBox display='flex' flexDirection='column' px='xl'>
-                <SANBox
-                    display='flex'
-                    flexDirection='column'
-                    alignItems='center'
-                    my={9}
-                >
-                    <Image src={changePassword} />
-                    <SANBox maxWidth={360} width='100%'>
-                        <SANTypography
-                            fontSize={{ xs: '6', _: 'xxl' }}
-                            strong
-                            textAlign='center'
-                        >
-                            {t('changePassword.title')}
-                        </SANTypography>
-                        <SANTypography
-                            fontSize={{ xs: 'lg', _: 'md' }}
-                            my='md'
-                            textAlign='center'
-                        >
-                            {t('changePassword.subtitle')}
-                        </SANTypography>
-                    </SANBox>
+        <SANBox display='flex' flexDirection='column' px='xl'>
+            <SANBox
+                display='flex'
+                flexDirection='column'
+                alignItems='center'
+                my={9}
+            >
+                <Image src={changePassword} />
+                <SANBox maxWidth={360} width='100%'>
+                    <SANTypography
+                        fontSize={{ xs: '6', _: 'xxl' }}
+                        strong
+                        textAlign='center'
+                    >
+                        {t('changePassword.title')}
+                    </SANTypography>
+                    <SANTypography
+                        fontSize={{ xs: 'lg', _: 'md' }}
+                        my='md'
+                        textAlign='center'
+                    >
+                        {t('changePassword.subtitle')}
+                    </SANTypography>
+                </SANBox>
 
-                    <SANBox maxWidth={360} width='100%'>
-                        <SANSpin spinning={submitting} flex>
-                            <SANForm form={form} onSubmit={handleSubmit}>
-                                <SANFormItem
-                                    mb='md'
-                                    name='old'
-                                    rules={[required, min]}
-                                >
-                                    <SANInputPassword
-                                        size='large'
-                                        placeholder={t(
-                                            'changePassword.fields.current'
-                                        )}
-                                    />
-                                </SANFormItem>{' '}
-                                <SANFormItem
-                                    mb='md'
-                                    name='new'
-                                    rules={[
-                                        required,
-                                        min,
-                                        { validator: validateToNextPassword }
-                                    ]}
-                                >
-                                    <SANInputPassword
-                                        size='large'
-                                        placeholder={t(
-                                            'changePassword.fields.new'
-                                        )}
-                                    />
-                                </SANFormItem>
-                                <SANFormItem
-                                    mb='md'
-                                    name='confirm'
-                                    rules={[
-                                        required,
-                                        {
-                                            validator: compareToFirstPassword
-                                        }
-                                    ]}
-                                >
-                                    <SANInputPassword
-                                        onBlur={handleConfirmBlur}
-                                        size='large'
-                                        placeholder={t(
-                                            'changePassword.fields.confirm'
-                                        )}
-                                    />
-                                </SANFormItem>
-                                <SANButton
-                                    htmlType='submit'
-                                    uppercase
-                                    block
-                                    bold
-                                    variant='solid'
-                                    color='primary'
-                                    mb='md'
-                                >
-                                    {t('changePassword.confirm')}
-                                </SANButton>
-                                <SANButton
-                                    uppercase
-                                    block
-                                    bold
-                                    variant='text'
-                                    color='primary'
-                                    onClick={onForgot}
-                                >
-                                    {t('changePassword.forgot')}
-                                </SANButton>
-                            </SANForm>
-                        </SANSpin>
-                    </SANBox>
+                <SANBox maxWidth={360} width='100%'>
+                    <SANSpin spinning={submitting} flex>
+                        <SANForm form={form} onSubmit={handleSubmit}>
+                            <SANFormItem
+                                mb='md'
+                                name='old'
+                                rules={[required, min]}
+                            >
+                                <SANInputPassword
+                                    size='large'
+                                    placeholder={t(
+                                        'changePassword.fields.current'
+                                    )}
+                                />
+                            </SANFormItem>{' '}
+                            <SANFormItem
+                                mb='md'
+                                name='new'
+                                rules={[
+                                    required,
+                                    min,
+                                    { validator: validateToNextPassword }
+                                ]}
+                            >
+                                <SANInputPassword
+                                    size='large'
+                                    placeholder={t('changePassword.fields.new')}
+                                />
+                            </SANFormItem>
+                            <SANFormItem
+                                mb='md'
+                                name='confirm'
+                                rules={[
+                                    required,
+                                    {
+                                        validator: compareToFirstPassword
+                                    }
+                                ]}
+                            >
+                                <SANInputPassword
+                                    onBlur={handleConfirmBlur}
+                                    size='large'
+                                    placeholder={t(
+                                        'changePassword.fields.confirm'
+                                    )}
+                                />
+                            </SANFormItem>
+                            <SANButton
+                                htmlType='submit'
+                                uppercase
+                                block
+                                bold
+                                variant='solid'
+                                color='primary'
+                                mb='md'
+                            >
+                                {t('changePassword.confirm')}
+                            </SANButton>
+                            <SANButton
+                                uppercase
+                                block
+                                bold
+                                variant='text'
+                                color='primary'
+                                onClick={onForgot}
+                            >
+                                {t('changePassword.forgot')}
+                            </SANButton>
+                        </SANForm>
+                    </SANSpin>
                 </SANBox>
             </SANBox>
-        </>
+        </SANBox>
     )
 }
 

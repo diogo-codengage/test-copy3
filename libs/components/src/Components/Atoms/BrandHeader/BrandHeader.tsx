@@ -21,7 +21,7 @@ const SANBrandHeader = ({ dark, ...props }: ISANBrandHeaderProps) => {
         () =>
             dark
                 ? {
-                      bg: 'grey-solid.9',
+                      bg: 'grey-solid.8',
                       boxShadow: '2'
                   }
                 : {
@@ -38,6 +38,7 @@ const SANBrandHeader = ({ dark, ...props }: ISANBrandHeaderProps) => {
             display='flex'
             alignItems='center'
             justifyContent='center'
+            zIndex={1}
             {...props}
         >
             <img src={dark ? darkLogo : lightLogo} alt='' />

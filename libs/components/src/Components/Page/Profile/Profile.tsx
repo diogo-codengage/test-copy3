@@ -59,12 +59,13 @@ const SANProfile: React.FC<ISANProfileProps> = ({
             BoxProps={{
                 bg: 'grey-solid.1',
                 flex: '1',
-                py: '8'
+                py: { xs: '8', _: 'xl' }
             }}
             HeaderProps={{
                 onBack,
                 SessionTitleProps: {
-                    title: t('profile.title')
+                    title: t('profile.title'),
+                    subtitle: t('profile.subtitle')
                 }
             }}
         >

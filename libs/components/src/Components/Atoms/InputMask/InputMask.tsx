@@ -4,15 +4,24 @@ import InputMask from 'react-input-mask'
 
 import { SANInput, ISANInputProps } from '../Input'
 
-export interface ISANInputMaskProps
-    extends Pick<ISANInputProps, 'value' | 'onChange'> {
-    InputProps?: Omit<ISANInputProps, 'value' | 'onChange'>
+type IInput =
+    | 'onChange'
+    | 'onPaste'
+    | 'onMouseDown'
+    | 'onFocus'
+    | 'onBlur'
+    | 'value'
+    | 'disabled'
+
+export interface ISANInputMaskProps extends Pick<ISANInputProps, IInput> {
+    InputProps?: Omit<ISANInputProps, IInput>
     mask?:
         | 'POSTAL_CODE'
         | 'PHONE'
         | 'CREDIT_CARD'
         | 'CVV'
         | 'CREDIT_CARD_PREVIEW'
+        | 'CPF_PREVIEW'
     customMask?: string
     alwaysShowMask?: boolean
     maskChar?: string
@@ -24,6 +33,7 @@ const masks = {
     PHONE: '(99) 99999-9999',
     CREDIT_CARD: '9999 9999 9999 9999',
     CREDIT_CARD_PREVIEW: '\\*\\*\\*\\*\\ \\*\\*\\*\\*\\ \\*\\*\\*\\*\\ 9999',
+    CPF_PREVIEW: '\\*\\*\\*\\ \\*\\*\\*\\ \\*\\99-99',
     CVV: '9999'
 }
 
@@ -35,7 +45,13 @@ const SANInputMask = ({
 }: ISANInputMaskProps) => {
     return (
         <InputMask mask={mask ? masks[mask] : customMask} {...props}>
-            {inputProps => <SANInput {...inputProps} {...InputProps} />}
+            {inputProps => (
+                <SANInput
+                    disabled={props.disabled}
+                    {...inputProps}
+                    {...InputProps}
+                />
+            )}
         </InputMask>
     )
 }

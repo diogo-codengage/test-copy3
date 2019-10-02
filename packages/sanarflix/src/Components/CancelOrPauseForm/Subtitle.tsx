@@ -6,10 +6,10 @@ const FLXCancelOrPauseFormSubtitle = () => {
     const { t } = useTranslation('sanarflix')
     return (
         <>
-            <SANTypography>
+            <SANTypography fontSize={{ xs: 'lg', _: 'md' }} color='grey.6'>
                 {t('sigmentManagement.pausePage.toComplete')}
             </SANTypography>
-            <SANTypography color='primary'>
+            <SANTypography fontSize={{ xs: 'lg', _: 'md' }} color='primary'>
                 {t('sigmentManagement.pausePage.completeAll')}
             </SANTypography>
         </>

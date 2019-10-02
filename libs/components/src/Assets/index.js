@@ -10,6 +10,10 @@ import logoDark from './images/logos/logo-dark.svg'
 
 import changePassword from './images/change-password/change-password.png'
 
+import error404 from './images/errors-page/404.svg'
+import error500 from './images/errors-page/500.svg'
+import errorGeneric from './images/errors-page/generic.svg'
+
 export {
     typeIconPrimaryBook,
     typeIconPrimaryFile,
@@ -19,5 +23,8 @@ export {
     typeIconPrimaryVideo,
     logoLight,
     logoDark,
-    changePassword
+    changePassword,
+    error404,
+    error500,
+    errorGeneric
 }

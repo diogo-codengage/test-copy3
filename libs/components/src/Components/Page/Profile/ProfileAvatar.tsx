@@ -34,10 +34,11 @@ const ProfileAvatar = ({
                 borderColor='grey.1'
                 data-testid='flix_my_account-profile--card-photo'
             />
-            <SANTypography level={6} mb='md' mt='xl'>
+            <SANTypography level={6} mb='md' mt='xl' color='grey.7'>
                 {name}
             </SANTypography>
             <SANTypography
+                color='grey.7'
                 variant='subtitle2'
                 data-testid='flix_my_account-profile--typography-email'
             >

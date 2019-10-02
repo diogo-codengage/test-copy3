@@ -2,9 +2,11 @@ import {
     SpaceProps,
     space,
     flexbox,
+    layout,
     FlexboxProps,
     color,
-    ColorProps
+    ColorProps,
+    LayoutProps
 } from 'styled-system'
 import { theme } from 'styled-tools'
 
@@ -13,12 +15,14 @@ import { SANStyled } from '../../../Theme/createTheme'
 export interface ISANDividerProps
     extends SpaceProps,
         ColorProps,
-        FlexboxProps {}
+        FlexboxProps,
+        LayoutProps {}
 
 const SANDivider = SANStyled.hr<ISANDividerProps>`
     ${space}
     ${color}
     ${flexbox}
+    ${layout}
     
     background-color: ${props =>
         theme(`colors.${props.backgroundColor}`) ||

@@ -98,14 +98,18 @@ export default {
     },
     profile: {
         title: 'Meus Dados',
+        subtitle: 'Atualize seus dados sempre que quiser',
         save: 'Salvar alterações',
         tab1: {
-            title: 'Dados pessoais',
+            title: 'Dados Pessoais',
             name: 'Nome',
             document: 'CPF',
             phone: 'Celular',
             college: 'Faculdade',
-            semester: 'Semestre'
+            semester: {
+                label: 'Semestre',
+                placeholder: 'Selecione o semestre'
+            }
         },
         tab2: {
             title: 'Dados de Endereço',
@@ -117,7 +121,10 @@ export default {
                 placeholder: 'Casa, apartamento...'
             },
             city: 'Cidade',
-            state: 'Estado'
+            state: {
+                label: 'Estado',
+                placeholder: 'Selecione o estado'
+            }
         }
     },
     support: {
@@ -142,5 +149,20 @@ export default {
         },
         confirm: 'Confirmar',
         forgot: 'Esqueci a senha'
+    },
+    error404: {
+        title: 'Oops! Não encontramos o que você buscou.',
+        subtitle:
+            'A página que você tentou acessar está indisponível ou não existe.',
+        button: 'Página principal'
+    },
+    error500: {
+        title: 'Alguma coisa está errada…',
+        subtitle:
+            'Nosso time já identificou o problema e está trabalhando para resolvê-lo!Por favor, tente novamente em alguns minutos.',
+        button: 'Tentar novamente'
+    },
+    genericError: {
+        message: 'Ocorreu um erro. Tente novamente mais tarde.'
     }
 }

@@ -5,9 +5,9 @@ import { SANEvaIcon } from 'Components/Atoms/EvaIcon'
 
 const Styled = styled.div`
     display: flex;
-    margin: 20px;
+    margin: 20px 0;
     align-items: center;
-    padding: 10px 16px;
+    padding: 12px 12px;
     background: #fff;
     border-radius: 4px;
     -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
