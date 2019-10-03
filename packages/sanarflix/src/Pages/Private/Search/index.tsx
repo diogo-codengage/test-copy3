@@ -41,12 +41,9 @@ const updateGlobalSearchCache = (prev: any, { fetchMoreResult }) => {
     })
 }
 
-const FLXSearchPage: React.FC<RouteComponentProps> = ({
-    location,
-    history
-}) => {
+const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
-    let params: any = new URLSearchParams(location.search)
+    const params: any = new URLSearchParams(location.search)
 
     const goToResource = ({
         resource_id: resource,
@@ -96,8 +93,11 @@ const FLXSearchPage: React.FC<RouteComponentProps> = ({
                 SessionTitleProps={{
                     title: 'Resultado da busca'
                 }}
-                extra={<FLXSearch />}
+                extra={
+                    <FLXSearch initialValue={params.get('pesquisa') || ''} />
+                }
             />
+            {console.log({ params })}
             <SANLayoutContainer mt={8} pb={6} style={{ overflow: 'hidden' }}>
                 <SANQuery
                     query={GET_GLOBAL_SEARCH}
@@ -135,9 +135,7 @@ const FLXSearchPage: React.FC<RouteComponentProps> = ({
                                     component='span'
                                     variant='caption-2'
                                     strong
-                                >
-                                    {params.get('pesquisa')}
-                                </SANTypography>
+                                ></SANTypography>
                             </SANBox>
                             {globalSearch && !!globalSearch.data.length ? (
                                 <SANInfiniteScroll

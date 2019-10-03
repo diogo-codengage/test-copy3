@@ -11,12 +11,13 @@ import { GET_GLOBAL_SEARCH_SUGGEST } from 'Apollo/Search/Queries/global-search-s
 
 interface IProps extends RouteComponentProps {
     size?: 'large' | 'medium' | 'small'
+    initialValue?: string
 }
 
-const FLXSearch = ({ size = 'medium', history }: IProps) => {
+const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
     const { t } = useTranslation('sanarflix')
     const client = useApolloClient()
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState(initialValue)
     const [items, setItems] = useState([])
 
     const onSearch = async search => {
