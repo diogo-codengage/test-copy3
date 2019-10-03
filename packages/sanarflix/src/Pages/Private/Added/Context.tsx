@@ -2,14 +2,14 @@ import React, { createContext, useContext, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import {
     GET_ADDED,
-    ILastAddedContents,
+    ILastAddedContent,
     ILastAddedContentsPayload
 } from 'Apollo/Added/Queries/added'
 import { IType } from 'Apollo/Added/Queries/content-types'
 import { ApolloError } from 'apollo-boost'
 
 interface IContext {
-    added: ILastAddedContents[]
+    added: ILastAddedContent[]
     addedCount: number
     fetchMore?: any
     loading: boolean
