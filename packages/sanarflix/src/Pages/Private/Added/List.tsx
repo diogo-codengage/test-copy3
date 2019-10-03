@@ -10,6 +10,7 @@ import {
 } from '@sanar/components'
 import { useAddedContext } from './Context'
 import { withRouter, RouterProps } from 'react-router'
+import { ILastAddedContent } from 'Apollo/Added/Queries/added'
 
 const updateAddedContents = (prev: any, { fetchMoreResult }) => {
     if (!fetchMoreResult) return prev
@@ -50,11 +51,11 @@ const FLXAddedList = ({ history }: RouterProps) => {
         return <SANEmpty />
     }
 
-    const onNavigate = item => {
+    const onNavigate = (item: ILastAddedContent) => {
         history.push(
             `/portal/sala-aula/${item.theme.course.id}/${item.theme.id}/${
                 resources[item.resource_type]
-            }/${item.id}`
+            }/${item.resource_id}`
         )
     }
 
