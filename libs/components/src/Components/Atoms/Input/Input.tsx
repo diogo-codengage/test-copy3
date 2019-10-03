@@ -133,6 +133,7 @@ const Wrapper = styled.div`
 export interface ISANInputProps
     extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
     round?: boolean
+    customRequired?: boolean
     size?: 'large' | 'medium' | 'small'
     iconRight?: string
     iconLeft?: string
@@ -156,7 +157,7 @@ const SANInput: React.FC<ISANInputProps> = (
     },
     ref
 ) => {
-    const customPlaceholder = props.required ? `${placeholder} *` : placeholder
+    const customPlaceholder = props.customRequired ? `${placeholder} *` : placeholder
 
     const inputProps = {
         ...props,
