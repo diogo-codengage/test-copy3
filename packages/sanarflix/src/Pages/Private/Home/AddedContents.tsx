@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { useTranslation } from 'react-i18next'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
     SANSessionTitle,
@@ -18,7 +19,13 @@ import {
     IContent
 } from 'Apollo/Home/Queries/contents-last-added'
 
-const renderContent = (content: IContent) => (
+const resourceTypes = {
+    Video: 'video',
+    Quiz: 'questoes',
+    Document: 'documento'
+}
+
+const renderContent = history => (content: IContent) => (
     <div key={content.id}>
         <SANCardCourseModule
             title={content.title}
@@ -27,11 +34,17 @@ const renderContent = (content: IContent) => (
             image={content.thumbnail}
             size='small'
             newBadge
+            onClick={() => {
+                const { theme, resource_type, resource_id } = content
+                history.push(
+                    `/portal/sala-aula/${theme.course.id}/${theme.id}/${resourceTypes[resource_type]}/${resource_id}`
+                )
+            }}
         />
     </div>
 )
 
-const FLXAddedContents = () => {
+const FLXAddedContents = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
 
     return (
@@ -40,7 +53,7 @@ const FLXAddedContents = () => {
             loaderProps={{ minHeight: 186, flex: true }}
         >
             {({ data }: { data: IContents }) => {
-                if (!!data.lastAddedContents.data.length) {
+                if (!data.lastAddedContents.data.length) {
                     return null
                 }
                 return (
@@ -66,7 +79,9 @@ const FLXAddedContents = () => {
                                     data.lastAddedContents.data.length
                                 )}
                             >
-                                {data.lastAddedContents.data.map(renderContent)}
+                                {data.lastAddedContents.data.map(
+                                    renderContent(history)
+                                )}
                             </SANCarousel>
                         </SANLayoutContainer>
                     </>
@@ -76,4 +91,4 @@ const FLXAddedContents = () => {
     )
 }
 
-export default FLXAddedContents
+export default withRouter(FLXAddedContents)
