@@ -206,7 +206,8 @@ const SANSearch: React.FC<ISANSearchProps> = ({
     const [hasFocus, setFocus] = useState(false)
 
     const handleKeyDown = e => {
-        if (e.key === 'Enter' && !!onEnter) {
+        const value = e.target.value.trim()
+        if (e.key === 'Enter' && !!onEnter && !!value) {
             onEnter(e)
         }
         if (e.key === 'Escape') {
