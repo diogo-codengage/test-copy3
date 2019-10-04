@@ -420,9 +420,9 @@ export default {
         title: 'Adicionados',
         totalItems: {
             key: 'totalItems',
-            key_0: 'Sem itens adicionados nessa semana',
-            keyWithCount: '{{count}} item adicionado nessa semana',
-            keyWithCount_plural: '{{count}} itens adicionados nessa semana'
+            key_0: '0 itens adicionados recentemente',
+            keyWithCount: '{{count}} item adicionado recentemente',
+            keyWithCount_plural: '{{count}} itens adicionados recentemente'
         }
     }
 }
