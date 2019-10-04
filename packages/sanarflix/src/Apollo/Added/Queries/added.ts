@@ -17,18 +17,19 @@ type ResourceType =
     | 'Document'
     | 'Download'
 
-export interface ILastAddedContents {
+export interface ILastAddedContent {
     id: string
     title: string
     thumbnail: string
     resource_type: ResourceType
     theme: ITheme
+    resource_id: string
 }
 
 export interface ILastAddedContentsPayload {
     lastAddedContents: {
         count: number
-        data: ILastAddedContents[]
+        data: ILastAddedContent[]
     }
 }
 
@@ -40,6 +41,7 @@ export const GET_ADDED = gql`
                 id
                 title
                 thumbnail
+                resource_id
                 resource_type
                 theme {
                     id
