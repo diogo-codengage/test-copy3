@@ -50,7 +50,10 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
         onSearch(valueTrim)
     }
 
-    const seeMore = () => history.push(`/portal/busca?pesquisa=${value}`)
+    const seeMore = () =>
+        value &&
+        value.length > 3 &&
+        history.push(`/portal/busca?pesquisa=${value}`)
 
     return (
         <SANSearch

@@ -65,7 +65,9 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
             })
             history.push(`/portal/curso/${resource}`)
         } else {
-            const link = `/portal/sala-aula/${course.id}/${theme.id}/${resources[type]}/${resource}`
+            const link = `/portal/sala-aula/${course.id}/${theme.id}/${
+                resources[type]
+            }/${resource}`
             window.analytics.track(events['Search Result Clicked'].event, {
                 link,
                 content
@@ -104,7 +106,7 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
                     loaderProps={{ flex: true }}
                     options={{
                         variables: {
-                            value: params.get('pesquisa') || '',
+                            value: params.get('pesquisa'),
                             limit: 20
                         }
                     }}
@@ -120,22 +122,26 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
                             <SANBox mb={7}>
                                 <SANTypography
                                     component='span'
-                                    variant='caption-2'
+                                    variant='caption2'
                                     strong
                                 >
                                     {(globalSearch && globalSearch.count) || 0}{' '}
                                 </SANTypography>
                                 <SANTypography
                                     component='span'
-                                    variant='caption-2'
+                                    variant='caption2'
                                 >
                                     {t('global.foundResults')}
-                                </SANTypography>{' '}
+                                </SANTypography>
                                 <SANTypography
                                     component='span'
-                                    variant='caption-2'
+                                    variant='caption2'
                                     strong
-                                ></SANTypography>
+                                >
+                                    {!!params.get('pesquisa').length
+                                        ? params.get('pesquisa')
+                                        : `\" \"`}
+                                </SANTypography>
                             </SANBox>
                             {globalSearch && !!globalSearch.data.length ? (
                                 <SANInfiniteScroll
