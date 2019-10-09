@@ -59,7 +59,7 @@ const FLXClassRoomQuizQuestion = ({
         questionsMap,
         setQuestionsMap
     } = useClassroomQuizContext()
-    const { handleBookmark } = useClassroomContext()
+    const { handleBookmark, handleProgress } = useClassroomContext()
     const [visible, setVisible] = useState(false)
     const [loading, setLoading] = useState(false)
     const [responses, setResponses] = useState<any[]>([])
@@ -84,6 +84,12 @@ const FLXClassRoomQuizQuestion = ({
 
     const handleConfirm = async alternativeId => {
         setLoading(true)
+        handleProgress({
+            resource: { id: questionId, type: 'Question' },
+            percentage: ((index + 1) * 100) / questions.length,
+            courseId: ''
+        })
+
         try {
             const {
                 data: {
@@ -130,9 +136,7 @@ const FLXClassRoomQuizQuestion = ({
             setQuestionsMap(oldMap =>
                 oldMap.map(e => (e.id === id ? { ...e, status: true } : e))
             )
-        } catch (e) {
-            console.error(e)
-        }
+        } catch (e) {}
         setLoading(false)
     }
 

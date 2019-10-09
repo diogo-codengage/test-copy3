@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 
 import { theme } from 'styled-tools'
 import styled from 'styled-components'
@@ -18,6 +18,7 @@ import {
     SANButton,
     SANEvaIcon
 } from '@sanar/components'
+import { createDebounce } from '@sanar/utils/dist/Debounce'
 
 import { events } from 'Config/Segment'
 
@@ -51,9 +52,12 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
             params: { themeId, resourceId, courseId }
         }
     } = props
-    const playerRef = useRef()
-    const { handleBookmark } = useClassroomContext()
+    const playerRef = useRef<any>()
+    const { handleBookmark, handleProgress } = useClassroomContext()
     const { onOpenMenu, navigations } = useLayoutContext()
+    const [videoError, seVideoError] = useState()
+
+    const handleVideoError = () => seVideoError(true)
 
     const handleRating = async ({ value, resourceId }) => {
         try {
@@ -114,16 +118,57 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
             errorProps={{ dark: true }}
         >
-            {({ data: { resource } }) => {
+            {({ data: { resource }, error }) => {
+                const onComplete = () => {
+                    handleProgress({
+                        percentage: 100,
+                        courseId,
+                        resource: {
+                            id: resourceId,
+                            type: 'Video'
+                        }
+                    })
+                    handleComplete()
+                }
+
+                const onProgress = percentage => {
+                    const videoPercentage =
+                        (resource &&
+                            resource.video.progress &&
+                            resource.video.progress.percentage) ||
+                        0
+
+                    if (!videoError && percentage > videoPercentage) {
+                        const timeInSeconds =
+                            playerRef && playerRef.current
+                                ? playerRef.current!.position()
+                                : 0
+
+                        handleProgress({
+                            timeInSeconds,
+                            percentage,
+                            courseId,
+                            resource: {
+                                id: resourceId,
+                                type: 'Video'
+                            }
+                        })
+                    }
+                }
+
                 const file = resource.video.providers.data.find(
                     provider => provider.code === 'jwplayer'
                 )
+
                 const playlist = [
                     {
                         file: file && file.files.smil.url,
                         image: resource.video.thumbnails.large
                     }
                 ]
+
+                const debounceProgress = createDebounce(onProgress, 500)
+
                 return (
                     <>
                         <SANBox
@@ -142,6 +187,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                             </Header>
                             <SANJwPlayer
                                 ref={playerRef}
+                                onError={handleVideoError}
                                 onOpenMenu={onOpenMenu}
                                 playerId='playerId'
                                 playerScript='/jwplayer/jwplayer.js'
@@ -154,7 +200,13 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                 onPrevious={navigations.previous.onClick}
                                 onPlay={handlePlay}
                                 onPause={handlePause}
-                                onOneHundredPercent={handleComplete}
+                                onOneHundredPercent={onComplete}
+                                onTwentyFivePercent={() => debounceProgress(25)}
+                                onFiftyPercent={() => debounceProgress(50)}
+                                onSeventyFivePercent={() =>
+                                    debounceProgress(75)
+                                }
+                                onFirstFrame={() => debounceProgress(1)}
                                 onPlaybackRateChanged={
                                     handlePlaybackRateChanged
                                 }

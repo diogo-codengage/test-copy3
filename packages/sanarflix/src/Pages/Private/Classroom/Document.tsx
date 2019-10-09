@@ -50,7 +50,7 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
         }
     } = props
     const { t } = useTranslation('sanarflix')
-    const { handleBookmark } = useClassroomContext()
+    const { handleBookmark, handleProgress } = useClassroomContext()
     const { onOpenMenu, navigations } = useLayoutContext()
 
     useEffect(() => {
@@ -62,6 +62,13 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
             events['E-Learning']['Content Viewed'].event,
             events['E-Learning']['Content Viewed'].data
         )
+
+        handleProgress({
+            percentage: 100,
+            courseId,
+            resource: { id: resourceId, type: 'Document' }
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

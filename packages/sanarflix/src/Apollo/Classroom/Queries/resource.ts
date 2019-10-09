@@ -72,6 +72,10 @@ export const GET_RESOURCE = gql`
                 title
                 durationInSeconds
                 bookmarked
+                progress {
+                    percentage
+                    timeInSeconds
+                }
                 thumbnails {
                     small
                     medium
