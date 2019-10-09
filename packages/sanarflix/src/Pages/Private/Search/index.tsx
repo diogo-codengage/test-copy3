@@ -140,7 +140,7 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
                                 >
                                     {!!params.get('pesquisa').length
                                         ? params.get('pesquisa')
-                                        : `\" \"`}
+                                        : `" "`}
                                 </SANTypography>
                             </SANBox>
                             {globalSearch && !!globalSearch.data.length ? (
