@@ -21,6 +21,7 @@ export interface ILastAddedContent {
     id: string
     title: string
     thumbnail: string
+    type: string
     resource_type: ResourceType
     theme: ITheme
     resource_id: string
@@ -43,6 +44,7 @@ export const GET_ADDED = gql`
                 thumbnail
                 resource_id
                 resource_type
+                type
                 theme {
                     id
                     course {

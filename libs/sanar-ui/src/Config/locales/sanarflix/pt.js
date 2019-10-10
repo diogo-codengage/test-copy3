@@ -268,11 +268,11 @@ export default {
             }
         },
         question: {
-            saveQuestion: 'Salvar Questão',
+            saveQuestion: 'Favoritar Questão',
             seeFilters: 'Ver filtros',
-            corrects: 'Corretas:',
-            wrong: 'Erradas:',
-            skipped: 'Puladas:',
+            corrects: 'Corretas',
+            wrong: 'Erradas',
+            skipped: 'Puladas',
             continue: 'Continuar',
             failHandleBookmark: 'Ocorreu um erro ao favoritar questão.',
             failReplyQuestion: 'Ocorreu um erro ao responder questão.',

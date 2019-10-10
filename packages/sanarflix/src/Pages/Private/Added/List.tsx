@@ -11,6 +11,7 @@ import {
 import { useAddedContext } from './Context'
 import { withRouter, RouterProps } from 'react-router'
 import { ILastAddedContent } from 'Apollo/Added/Queries/added'
+import { useTranslation } from 'react-i18next'
 
 const updateAddedContents = (prev: any, { fetchMoreResult }) => {
     if (!fetchMoreResult) return prev
@@ -33,6 +34,7 @@ const resources = {
 }
 
 const FLXAddedList = ({ history }: RouterProps) => {
+    const { t } = useTranslation('sanarflix')
     const { added, addedCount, loading, fetchMore, error } = useAddedContext()
 
     if (error) {
@@ -82,7 +84,9 @@ const FLXAddedList = ({ history }: RouterProps) => {
                                 newBadge
                                 title={item.title}
                                 image={item.thumbnail}
+                                actionName={t('global.access')}
                                 onClick={() => onNavigate(item)}
+                                moduleName={t(`global.types.${item.type}`)}
                             />
                         </SANCol>
                     ))}

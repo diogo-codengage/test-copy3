@@ -184,7 +184,7 @@ const FLXFilter = ({ history }) => {
                 py: { xs: '8', _: 'md' }
             }}
             HeaderProps={{
-                onBack: () => history.goBack(),
+                onBack: () => history.push('/portal/inicio'),
                 SessionTitleProps: {
                     title: t('questionsDatabase.filter.header.title'),
                     extra: (
