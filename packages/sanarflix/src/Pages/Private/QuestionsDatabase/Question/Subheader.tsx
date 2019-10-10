@@ -33,11 +33,12 @@ const FLXSubheader: React.FC = ({ children }) => {
     return (
         <SANBox
             display='flex'
-            alignItems='center'
+            flexDirection={{ _: 'column-reverse', lg: 'row' }}
+            alignItems={{ lg: 'center' }}
             justifyContent='space-between'
             mb='7'
         >
-            <SANBox display='flex' alignItems='center'>
+            <SANBox display={{ _: 'none', lg: 'flex' }} alignItems='center'>
                 <Indicator
                     text={t('questionsDatabase.question.corrects')}
                     percent={calcPercent('correct')}
