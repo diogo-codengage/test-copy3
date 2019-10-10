@@ -22,7 +22,9 @@ import FLXFilter from './Filter'
 
 const SANStopwatchStyled = styled(SANStopwatch)`
     && {
-        background-color: ${theme('colors.primary-10')};
+        &:not(.es-stopwatch--stopped) {
+            background-color: ${theme('colors.primary-10')};
+        }
     }
 `
 
