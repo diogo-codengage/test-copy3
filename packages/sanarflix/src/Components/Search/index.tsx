@@ -21,7 +21,7 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
     const [items, setItems] = useState([])
 
     const onSearch = async search => {
-        if (!search || search.length < 3) return
+        if (!search || search.length < 4) return
         try {
             const {
                 data: { globalSearchAux }

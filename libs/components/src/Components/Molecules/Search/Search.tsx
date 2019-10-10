@@ -257,6 +257,7 @@ const SANSearch: React.FC<ISANSearchProps> = ({
                     <Padding {...{ hasFocus }}>
                         <Search
                             iconRight='search-outline'
+                            rightClick={handleSeeMore}
                             round
                             onKeyDown={handleKeyDown}
                             onFocus={handleFocus}
