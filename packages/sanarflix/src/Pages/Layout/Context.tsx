@@ -15,7 +15,6 @@ import { useApolloClient } from '@apollo/react-hooks'
 import { GET_LAST_ACCESSED } from 'Apollo/Menu/Queries/last-accessed'
 
 type IMenuContext = 'general' | 'classroom'
-type IContext = 'general' | 'classroom'
 
 interface IInitialState {
     indexMenu: number
@@ -43,6 +42,7 @@ type IFLXLayoutProviderValue = {
     setLastAccessed: (item) => void
     context: any
     setContext: (context) => void
+    loadLastAcessed: () => void
 }
 
 const defaultNavigations = {
@@ -66,10 +66,11 @@ const defaultValue: IFLXLayoutProviderValue = {
     lastAccessed: {},
     setLastAccessed: () => {},
     context: {},
-    setContext: () => {}
+    setContext: () => {},
+    loadLastAcessed: () => {}
 }
 
-const Context = createContext(defaultValue)
+const Context = createContext<IFLXLayoutProviderValue>(defaultValue)
 export const useLayoutContext = () => useContext(Context)
 
 const hasClassroom = window.location.href.split('/').includes('sala-aula')
@@ -104,7 +105,7 @@ interface INagivations {
     previous: IAction
 }
 
-const FLXLayoutProvider: any = withRouter(({ history, children }) => {
+const FLXLayoutProvider = withRouter(({ history, children }) => {
     const { t } = useTranslation('sanarflix')
     const [state, dispatch] = useReducer(reducer, initialState)
     const [navigations, setNavigations] = useState<INagivations>(
@@ -137,20 +138,20 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
         history.push(`/portal/curso/${window.location.hash.split('/')[3]}`)
     }
 
-    useEffect(() => {
-        const loadLastAcessed = async () => {
-            try {
-                const { data } = await client.query({
-                    query: GET_LAST_ACCESSED,
-                    fetchPolicy: 'network-only'
-                })
+    const loadLastAcessed = async () => {
+        try {
+            const { data } = await client.query({
+                query: GET_LAST_ACCESSED,
+                fetchPolicy: 'network-only'
+            })
 
-                setLastAccessed(data.lastAccessed)
-            } catch (e) {
-                setLastAccessed({ hasError: true, loading: false })
-            }
+            setLastAccessed(data.lastAccessed)
+        } catch (e) {
+            setLastAccessed({ hasError: true, loading: false })
         }
+    }
 
+    useEffect(() => {
         loadLastAcessed()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -196,7 +197,7 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
         }
     }
 
-    const value: IFLXLayoutProviderValue = {
+    const value = {
         currentMenuIndex: state.indexMenu,
         currentMenuTitle: state.menuTitle,
         setMenuTab,
@@ -214,7 +215,8 @@ const FLXLayoutProvider: any = withRouter(({ history, children }) => {
         lastAccessed,
         setLastAccessed,
         context,
-        setContext
+        setContext,
+        loadLastAcessed
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>
