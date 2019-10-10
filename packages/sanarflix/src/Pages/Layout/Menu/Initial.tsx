@@ -64,9 +64,9 @@ const FLXLeftOff = withRouter(({ history }) => {
         )
     }
 
-    // if (!!lastAccessed) {
-    //     return null
-    // }
+    if (!lastAccessed) {
+        return null
+    }
 
     if (lastAccessed && lastAccessed.loading) {
         return <SANLeftOffLoading />
@@ -80,7 +80,9 @@ const FLXLeftOff = withRouter(({ history }) => {
         <SANLeftOff
             label={t('course.continue')}
             onClick={() => goToResource(lastAccessed)}
-            title={lastAccessed && lastAccessed.course.name}
+            title={
+                lastAccessed && lastAccessed.course && lastAccessed.course.name
+            }
             resourceType={lastAccessed && lastAccessed.resource_type}
             thumbnail={
                 lastAccessed &&
