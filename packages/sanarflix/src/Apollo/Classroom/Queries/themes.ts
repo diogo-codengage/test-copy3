@@ -13,6 +13,7 @@ export interface IThemes {
     data: {
         id: string
         name: string
+        progress_percentage
         progress: {
             done: number
             total: number
@@ -30,6 +31,7 @@ export const GET_THEMES = gql`
                 id
                 name
                 index
+                progress_percentage
                 course {
                     id
                     name

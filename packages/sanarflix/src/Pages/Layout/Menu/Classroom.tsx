@@ -272,7 +272,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 activeItem: state.theme,
                 items: state.themes,
                 loading: state.fetchingContents,
-                progress: 50
+                progress: parseInt(state.theme.progress_percentage)
             }}
             PlaylistProps={{
                 items: state.themeContents,
