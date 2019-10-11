@@ -14,6 +14,13 @@ import error404 from './images/errors-page/404.svg'
 import error500 from './images/errors-page/500.svg'
 import errorGeneric from './images/errors-page/generic.svg'
 
+import document from './images/card-course-module-thumbs/document.png'
+import question from './images/card-course-module-thumbs/question.png'
+import flowchart from './images/card-course-module-thumbs/flowchart.png'
+import mentalmap from './images/card-course-module-thumbs/mentalmap.png'
+import article from './images/card-course-module-thumbs/article.png'
+import baseQuestions from 'Assets/images/banners/base-questions.png'
+
 export {
     typeIconPrimaryBook,
     typeIconPrimaryFile,
@@ -26,5 +33,11 @@ export {
     changePassword,
     error404,
     error500,
-    errorGeneric
+    errorGeneric,
+    question,
+    flowchart,
+    mentalmap,
+    article,
+    document,
+    baseQuestions
 }

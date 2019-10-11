@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 
 import { GET_LAST_ACCESSED } from 'Apollo/Course/Queries/last-accessed'
 import { GET_NEXT_CONTENT } from 'Apollo/Course/Queries/next-content'
-import { IType } from 'Apollo/Course/Queries/course'
 
 import FLXBanner from 'Components/Banner'
 import {
@@ -19,16 +18,8 @@ import {
     SANGenericError
 } from '@sanar/components'
 
-// Images
-import document from 'Assets/images/resources/document.png'
-import question from 'Assets/images/resources/question.png'
-import flowchart from 'Assets/images/resources/flowchart.png'
-import mentalmap from 'Assets/images/resources/mentalmap.png'
-import article from 'Assets/images/resources/article.png'
 import baseQuestions from 'Assets/images/banners/base-questions.png'
 import { useApolloClient } from '@apollo/react-hooks'
-
-type IResourceType = 'Document' | 'Video' | 'Question'
 
 const resources = {
     Document: 'documento',
@@ -53,32 +44,6 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
         loading: true,
         error: false
     })
-
-    const configureImage = (
-        image: string,
-        type?: IType,
-        resourceType?: IResourceType
-    ): string => {
-        switch (resourceType) {
-            case 'Video':
-                return image || ''
-            case 'Document':
-                switch (type) {
-                    case 'flowchart':
-                        return flowchart
-                    case 'mentalmap':
-                        return mentalmap
-                    case 'article':
-                        return article
-                    default:
-                        return document
-                }
-            case 'Question':
-                return question
-            default:
-                return image
-        }
-    }
 
     const redirectTo = (themeId, resourceType, resourceId) =>
         history.push(
@@ -153,11 +118,11 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
                                     <SANCardCourseModule
                                         data-testid='last-accessed-content'
                                         actionName={t('global.access')}
-                                        image={configureImage(
-                                            lastAccessed.thumbnail,
-                                            lastAccessed.type,
+                                        type={lastAccessed.type}
+                                        resourceType={
                                             lastAccessed.resource_type
-                                        )}
+                                        }
+                                        image={lastAccessed.thumbnail}
                                         title={lastAccessed.theme_title}
                                         moduleName={t(
                                             `global.resourceTypes.${lastAccessed.resource_type.toLocaleLowerCase()}`
@@ -189,11 +154,9 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
                                 <SANCardCourseModule
                                     data-testid='next-suggested-content'
                                     actionName={t('global.access')}
-                                    image={configureImage(
-                                        nextContent.thumbnail,
-                                        nextContent.type,
-                                        nextContent.resource_type
-                                    )}
+                                    type={nextContent.type}
+                                    resourceType={nextContent.resource_type}
+                                    image={nextContent.thumbnail}
                                     title={nextContent.theme_title}
                                     moduleName={t(
                                         `global.resourceTypes.${nextContent.resource_type.toLocaleLowerCase()}`

@@ -83,6 +83,8 @@ const FLXAddedList = ({ history }: RouterProps) => {
                                 mb='xl'
                                 newBadge
                                 title={item.title}
+                                type={item.type}
+                                resourceType={item.resource_type}
                                 image={item.thumbnail}
                                 actionName={t('global.access')}
                                 onClick={() => onNavigate(item)}
