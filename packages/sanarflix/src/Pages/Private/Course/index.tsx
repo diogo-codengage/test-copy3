@@ -195,7 +195,9 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
                                 title: course.name
                             }}
                         />
-                        <FLXCourseNavigation />
+                        {course.progress_percentage > 0 && (
+                            <FLXCourseNavigation />
+                        )}
                         <SANLayoutContainer
                             mt={8}
                             style={{ overflow: 'hidden' }}
