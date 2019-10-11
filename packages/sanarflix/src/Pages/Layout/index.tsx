@@ -62,6 +62,7 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
         context: menuContext,
         theme: darkMode ? 'dark' : 'primary',
         onToggle: setMenuState,
+        showContinueBar: lastAccessed,
         continueCourseProps: {
             loading: !lastAccessed,
             ...(lastAccessed && {

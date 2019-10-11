@@ -18,7 +18,8 @@ export default {
         resourceTypes: {
             document: 'Documento',
             video: 'Video',
-            question: 'Questão'
+            question: 'Questão',
+            quiz: 'Questão'
         },
         types: {
             resume: 'Resumo',
@@ -26,7 +27,8 @@ export default {
             flowchart: 'Fluxograma',
             article: 'Artigos e Diretrizes',
             lesson: 'Aula',
-            question: 'Questão'
+            question: 'Questão',
+            quiz: 'Questão'
         },
         search: 'Busque por cursos, aulas, resumos e muito mais',
         foundResults: ' resultados encontrados para ',
