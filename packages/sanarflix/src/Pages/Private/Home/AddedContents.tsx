@@ -31,13 +31,17 @@ const renderContent = history => (content: IContent) => (
             title={content.title}
             moduleName={i18n.t(`sanarflix:global.types.${content.type}`)}
             actionName={i18n.t('sanarflix:global.access')}
+            type={content.type}
+            resourceType={content.resource_type}
             image={content.thumbnail}
             size='small'
             newBadge
             onClick={() => {
                 const { theme, resource_type, resource_id } = content
                 history.push(
-                    `/portal/sala-aula/${theme.course.id}/${theme.id}/${resourceTypes[resource_type]}/${resource_id}`
+                    `/portal/sala-aula/${theme.course.id}/${theme.id}/${
+                        resourceTypes[resource_type]
+                    }/${resource_id}`
                 )
             }}
         />

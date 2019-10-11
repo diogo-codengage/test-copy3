@@ -62,14 +62,17 @@ const FLXClassRoomDocument = (props: RouteComponentProps<IParams>) => {
             events['E-Learning']['Content Viewed'].event,
             events['E-Learning']['Content Viewed'].data
         )
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
+    useEffect(() => {
         handleProgress({
             percentage: 100,
             courseId,
             resource: { id: resourceId, type: 'Document' }
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [resourceId])
 
     return (
         <SANQuery

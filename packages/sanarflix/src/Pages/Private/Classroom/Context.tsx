@@ -96,8 +96,8 @@ const FLXClassroomProvider: React.FC = ({ children }) => {
         } catch {}
     }
 
-    const handleProgress = (data: IDataProgress): void => {
-        client.mutate({
+    const handleProgress = async (data: IDataProgress) => {
+        await client.mutate({
             mutation: CREATE_PROGRESS,
             variables: {
                 input: {
@@ -122,6 +122,7 @@ const FLXClassroomProvider: React.FC = ({ children }) => {
         setMenuTab(1)
         setContext('classroom')
         return () => {
+            console.log('here')
             setMenuTab(0)
             setContext('general')
         }

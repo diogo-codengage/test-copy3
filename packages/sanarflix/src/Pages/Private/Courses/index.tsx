@@ -40,7 +40,11 @@ const Topics = () => {
     const { t } = useTranslation('sanarflix')
 
     return (
-        <SANQuery query={GET_TOPICS} loaderProps={{ flex: true, minHeight: 0 }}>
+        <SANQuery
+            query={GET_TOPICS}
+            loaderProps={{ flex: true, minHeight: 0 }}
+            errorProps={{ justifyContent: 'center', flex: 1 }}
+        >
             {({ data }: { data: ITopics }) => (
                 <SANTabs defaultActiveKey='all' flex='1' container>
                     <SANTabPane
