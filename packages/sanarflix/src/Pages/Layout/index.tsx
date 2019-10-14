@@ -138,7 +138,7 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
     return (
         <>
             <SANLayout
-                showContinueBar={context !== 'classroom' && !!lastAccessed}
+                showContinueBar={context !== 'classroom' && !lastAccessed}
                 context={context}
                 FooterProps={FooterProps}
                 MenuProps={MenuProps}
