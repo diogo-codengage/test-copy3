@@ -113,6 +113,37 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
         )
     }, [])
 
+    const onProgress = percentage => {
+        if (!videoError) {
+            const timeInSeconds =
+                playerRef && playerRef.current
+                    ? playerRef.current!.position()
+                    : 0
+
+            handleProgress({
+                timeInSeconds,
+                percentage,
+                courseId,
+                resource: {
+                    id: resourceId,
+                    type: 'Video'
+                }
+            })
+        }
+    }
+
+    const onComplete = () => {
+        handleProgress({
+            percentage: 100,
+            courseId,
+            resource: {
+                id: resourceId,
+                type: 'Video'
+            }
+        })
+        handleComplete()
+    }
+
     return (
         <SANQuery
             query={GET_RESOURCE}
@@ -120,44 +151,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
             errorProps={{ dark: true }}
         >
-            {({ data: { resource }, error }) => {
-                const onComplete = () => {
-                    handleProgress({
-                        percentage: 100,
-                        courseId,
-                        resource: {
-                            id: resourceId,
-                            type: 'Video'
-                        }
-                    })
-                    handleComplete()
-                }
-
-                const onProgress = percentage => {
-                    const videoPercentage =
-                        (resource &&
-                            resource.video.progress &&
-                            resource.video.progress.percentage) ||
-                        0
-
-                    if (!videoError && percentage > videoPercentage) {
-                        const timeInSeconds =
-                            playerRef && playerRef.current
-                                ? playerRef.current!.position()
-                                : 0
-
-                        handleProgress({
-                            timeInSeconds,
-                            percentage,
-                            courseId,
-                            resource: {
-                                id: resourceId,
-                                type: 'Video'
-                            }
-                        })
-                    }
-                }
-
+            {({ data: { resource } }) => {
                 const file = resource.video.providers.data.find(
                     provider => provider.code === 'jwplayer'
                 )
