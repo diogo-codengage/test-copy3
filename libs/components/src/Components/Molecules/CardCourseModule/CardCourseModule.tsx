@@ -54,6 +54,7 @@ const SANCardCourseModule = ({
                         return document
                 }
             case 'Question':
+            case 'Quiz':
                 return question
             default:
                 return image
