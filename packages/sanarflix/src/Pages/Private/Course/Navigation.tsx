@@ -89,6 +89,8 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    if (!lastAccessed && !nextContent) return null
+
     return (
         <SANBox
             pb={8}
