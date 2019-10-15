@@ -122,7 +122,6 @@ const FLXClassroomProvider: React.FC = ({ children }) => {
         setMenuTab(1)
         setContext('classroom')
         return () => {
-            console.log('here')
             setMenuTab(0)
             setContext('general')
         }

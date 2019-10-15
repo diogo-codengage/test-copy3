@@ -56,6 +56,10 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
     const { handleBookmark, handleProgress } = useClassroomContext()
     const { onOpenMenu, navigations } = useLayoutContext()
     const [videoError, seVideoError] = useState()
+    const [videoReady, seVideoReady] = useState()
+    const [willStart, setWillStart] = useState(true)
+
+    const handleVideoReady = () => seVideoReady(true)
 
     const handleVideoError = () => seVideoError(true)
 
@@ -117,7 +121,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
         if (!videoError) {
             const timeInSeconds =
                 playerRef && playerRef.current
-                    ? playerRef.current!.position()
+                    ? playerRef.current.position()
                     : 0
 
             handleProgress({
@@ -144,10 +148,20 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
         handleComplete()
     }
 
+    const getStartTime = time => {
+        if (videoReady && playerRef && playerRef.current) {
+            playerRef.current.seek(time)
+            setWillStart(false)
+        }
+    }
+
     return (
         <SANQuery
             query={GET_RESOURCE}
-            options={{ variables: { themeId, resourceId, courseId } }}
+            options={{
+                variables: { themeId, resourceId, courseId },
+                fetchPolicy: 'network-only'
+            }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
             errorProps={{ dark: true }}
         >
@@ -164,6 +178,11 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                 ]
 
                 const debounceProgress = createDebounce(onProgress, 500)
+
+                willStart &&
+                    resource &&
+                    resource.video.progress &&
+                    getStartTime(resource.video.progress.timeInSeconds)
 
                 return (
                     <>
@@ -183,6 +202,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                             </Header>
                             <SANJwPlayer
                                 ref={playerRef}
+                                onReady={handleVideoReady}
                                 onError={handleVideoError}
                                 onOpenMenu={onOpenMenu}
                                 playerId='playerId'
