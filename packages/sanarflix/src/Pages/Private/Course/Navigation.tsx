@@ -147,53 +147,55 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
                         <SANTypography mb={6} color='grey.7' level={5} strong>
                             {t('course.itemSuggest')}
                         </SANTypography>
-                        {!nextContent.last_content ? (
-                            nextContent.loading ? (
-                                <SANSpin minHeight={178} flex />
-                            ) : nextContent.error ? (
-                                <SANGenericError mb={3} />
+                        {nextContent ? (
+                            !nextContent.last_content ? (
+                                nextContent.loading ? (
+                                    <SANSpin minHeight={178} flex />
+                                ) : nextContent.error ? (
+                                    <SANGenericError mb={3} />
+                                ) : (
+                                    <SANCardCourseModule
+                                        data-testid='next-suggested-content'
+                                        actionName={t('global.access')}
+                                        type={nextContent.type}
+                                        resourceType={nextContent.resource_type}
+                                        image={nextContent.thumbnail}
+                                        title={nextContent.theme_title}
+                                        moduleName={t(
+                                            `global.resourceTypes.${nextContent.resource_type.toLocaleLowerCase()}`
+                                        )}
+                                        onClick={() =>
+                                            redirectTo(
+                                                nextContent.theme_id,
+                                                nextContent.resource_type,
+                                                nextContent.resource_id
+                                            )
+                                        }
+                                        mb={{ _: 6, sm: 0 }}
+                                    />
+                                )
                             ) : (
-                                <SANCardCourseModule
-                                    data-testid='next-suggested-content'
-                                    actionName={t('global.access')}
-                                    type={nextContent.type}
-                                    resourceType={nextContent.resource_type}
-                                    image={nextContent.thumbnail}
-                                    title={nextContent.theme_title}
-                                    moduleName={t(
-                                        `global.resourceTypes.${nextContent.resource_type.toLocaleLowerCase()}`
-                                    )}
-                                    onClick={() =>
-                                        redirectTo(
-                                            nextContent.theme_id,
-                                            nextContent.resource_type,
-                                            nextContent.resource_id
-                                        )
-                                    }
-                                    mb={{ _: 6, sm: 0 }}
+                                <FLXBanner
+                                    BannerProps={{
+                                        title: t(
+                                            'course.banners.questionsBase.title'
+                                        ),
+                                        image: baseQuestions,
+                                        ButtonProps: {
+                                            'data-testid':
+                                                'suggested-item-question',
+                                            children: t(
+                                                'course.banners.questionsBase.action'
+                                            ),
+                                            onClick: () =>
+                                                history.push(
+                                                    '/portal/banco-questoes/filtro'
+                                                )
+                                        }
+                                    }}
                                 />
                             )
-                        ) : (
-                            <FLXBanner
-                                BannerProps={{
-                                    title: t(
-                                        'course.banners.questionsBase.title'
-                                    ),
-                                    image: baseQuestions,
-                                    ButtonProps: {
-                                        'data-testid':
-                                            'suggested-item-question',
-                                        children: t(
-                                            'course.banners.questionsBase.action'
-                                        ),
-                                        onClick: () =>
-                                            history.push(
-                                                '/portal/banco-questoes/filtro'
-                                            )
-                                    }
-                                }}
-                            />
-                        )}
+                        ) : null}
                     </SANCol>
                 </SANRow>
             </SANLayoutContainer>
