@@ -113,8 +113,10 @@ const ESJwPlayer = forwardRef(
 
         useImperativeHandle(ref, () => ({
             ...playerRef,
-            position: () => player.getPosition(),
-            seek: seconds => player.seek(seconds)
+            ...(player && {
+                position: () => player.getPosition(),
+                seek: seconds => player.seek(seconds)
+            })
         }))
 
         const height = useMemo(
