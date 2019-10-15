@@ -86,8 +86,10 @@ const FLXCoursesList: React.FC<RouteComponentProps & { id?: string }> = ({
                         ...(completenessFilter !== 'all' && {
                             completeness: completenessFilter
                         })
-                    }
+                    },
+                    fetchPolicy: 'cache-and-network'
                 }}
+                errorProps={{ background: 'red' }}
                 loaderProps={{ flex: true, minHeight: 200 }}
             >
                 {({
