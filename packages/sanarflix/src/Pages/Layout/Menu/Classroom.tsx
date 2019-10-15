@@ -264,13 +264,27 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 ...(state.currentCourse && {
                     knowledgeArea: t('global.course'),
                     name: state.currentCourse.name,
-                    progress: state.currentCourse.progress_percentage || 0
+                    progress:
+                        parseInt(state.currentCourse.progress_percentage) || 0
                 })
             }}
             DisciplineDropdownProps={{
                 onSelect,
                 activeItem: state.theme,
-                items: state.themes,
+                items: state.themes.map(item => {
+                    return {
+                        ...item,
+                        progress: {
+                            total: 2,
+                            done:
+                                item.progress_percentage === 0
+                                    ? 0
+                                    : item.progress_percentage < 100
+                                    ? 1
+                                    : 2
+                        }
+                    }
+                }),
                 loading: state.fetchingContents,
                 progress: parseInt(state.theme.progress_percentage)
             }}
