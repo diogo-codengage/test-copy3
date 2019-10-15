@@ -6,7 +6,8 @@ import {
     SANRow,
     SANSpin,
     SANEmpty,
-    SANBox
+    SANBox,
+    SANGenericError
 } from '@sanar/components'
 import { useAddedContext } from './Context'
 import { withRouter, RouterProps } from 'react-router'
@@ -38,7 +39,7 @@ const FLXAddedList = ({ history }: RouterProps) => {
     const { added, addedCount, loading, fetchMore, error } = useAddedContext()
 
     if (error) {
-        return <div>error</div>
+        return <SANGenericError />
     }
 
     if (loading) {
