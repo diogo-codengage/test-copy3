@@ -16,6 +16,7 @@ export interface INextContent {
     thumbnail: string
     resource_type: 'Document' | 'Video' | 'Question'
     type: IType
+    last_content: boolean
 }
 
 export const GET_NEXT_CONTENT = gql`
@@ -27,6 +28,7 @@ export const GET_NEXT_CONTENT = gql`
             resource_id
             type
             theme_id
+            last_content
         }
     }
 `

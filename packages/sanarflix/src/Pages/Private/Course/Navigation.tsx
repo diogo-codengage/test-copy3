@@ -147,7 +147,7 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
                         <SANTypography mb={6} color='grey.7' level={5} strong>
                             {t('course.itemSuggest')}
                         </SANTypography>
-                        {nextContent ? (
+                        {!nextContent.last_content ? (
                             nextContent.loading ? (
                                 <SANSpin minHeight={178} flex />
                             ) : nextContent.error ? (
