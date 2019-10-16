@@ -144,9 +144,16 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
                     )}
 
                     <SANCol xs={24} sm={12}>
-                        <SANTypography mb={6} color='grey.7' level={5} strong>
-                            {t('course.itemSuggest')}
-                        </SANTypography>
+                        {nextContent && (
+                            <SANTypography
+                                mb={6}
+                                color='grey.7'
+                                level={5}
+                                strong
+                            >
+                                {t('course.itemSuggest')}
+                            </SANTypography>
+                        )}
                         {nextContent ? (
                             !nextContent.last_content ? (
                                 nextContent.loading ? (
