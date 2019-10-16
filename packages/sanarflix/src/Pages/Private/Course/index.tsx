@@ -101,8 +101,7 @@ const getCardProps = (counters: ICourseCounters) => {
                     makeCardProps({
                         counters,
                         image: classSvg,
-                        item,
-                        suffix: 'h'
+                        item
                     })
                 )
                 break
@@ -148,7 +147,7 @@ const Cards = ({ counters }: { counters: ICourseCounters }) => {
                 slidesToScroll={1}
                 initialSlide={0}
                 arrows
-                infinite
+                infinite={false}
                 dots={false}
                 draggable
                 lazyLoad

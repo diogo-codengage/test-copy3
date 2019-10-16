@@ -112,7 +112,7 @@ const FLXLayoutProvider = withRouter(({ history, children }) => {
         defaultNavigations
     )
     const [menuState, setMenuState] = useState(false)
-    const [context, setContext] = useState(false)
+    const [context, setContext] = useState('general')
     const [lastAccessed, setLastAccessed] = useState()
 
     const [footerProps, setFooterProps] = useState({})

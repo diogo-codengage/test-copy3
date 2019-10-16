@@ -127,7 +127,7 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
                                         image={lastAccessed.thumbnail}
                                         title={lastAccessed.theme_title}
                                         moduleName={t(
-                                            `global.resourceTypes.${lastAccessed.resource_type.toLocaleLowerCase()}`
+                                            `global.types.${lastAccessed.type}`
                                         )}
                                         onClick={() =>
                                             redirectTo(
@@ -144,9 +144,16 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
                     )}
 
                     <SANCol xs={24} sm={12}>
-                        <SANTypography mb={6} color='grey.7' level={5} strong>
-                            {t('course.itemSuggest')}
-                        </SANTypography>
+                        {nextContent && (
+                            <SANTypography
+                                mb={6}
+                                color='grey.7'
+                                level={5}
+                                strong
+                            >
+                                {t('course.itemSuggest')}
+                            </SANTypography>
+                        )}
                         {nextContent ? (
                             !nextContent.last_content ? (
                                 nextContent.loading ? (
@@ -162,7 +169,7 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
                                         image={nextContent.thumbnail}
                                         title={nextContent.theme_title}
                                         moduleName={t(
-                                            `global.resourceTypes.${nextContent.resource_type.toLocaleLowerCase()}`
+                                            `global.types.${nextContent.type}`
                                         )}
                                         onClick={() =>
                                             redirectTo(
