@@ -127,7 +127,7 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
                                         image={lastAccessed.thumbnail}
                                         title={lastAccessed.theme_title}
                                         moduleName={t(
-                                            `global.resourceTypes.${lastAccessed.resource_type.toLocaleLowerCase()}`
+                                            `global.types.${lastAccessed.type}`
                                         )}
                                         onClick={() =>
                                             redirectTo(
@@ -169,7 +169,7 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
                                         image={nextContent.thumbnail}
                                         title={nextContent.theme_title}
                                         moduleName={t(
-                                            `global.resourceTypes.${nextContent.resource_type.toLocaleLowerCase()}`
+                                            `global.types.${nextContent.type}`
                                         )}
                                         onClick={() =>
                                             redirectTo(
