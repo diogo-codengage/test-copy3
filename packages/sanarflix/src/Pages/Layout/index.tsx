@@ -9,7 +9,8 @@ import {
     SANFlexbox,
     SANSpace,
     SANButton,
-    SANTypography
+    SANTypography,
+    SANScroll
 } from '@sanar/components'
 import FLXMenuContent from './Menu'
 import FLXModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
@@ -136,7 +137,7 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
     }
 
     return (
-        <>
+        <SANScroll>
             <SANLayout
                 showContinueBar={
                     context !== 'classroom' &&
@@ -157,7 +158,7 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
                 defaultActiveKey={activeKey}
                 scrolling
             />
-        </>
+        </SANScroll>
     )
 }
 
