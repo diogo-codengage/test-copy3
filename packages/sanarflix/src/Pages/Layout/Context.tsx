@@ -133,7 +133,11 @@ const FLXLayoutProvider = withRouter(({ history, children }) => {
     const handleClassroomBack = () => {
         dispatch({
             type: 'changeMenuTab',
-            payload: initialState
+            payload: {
+                ...initialState,
+                darkMode: false,
+                menuContext: 'general'
+            }
         })
         history.push(`/portal/curso/${window.location.hash.split('/')[3]}`)
     }
