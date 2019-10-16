@@ -78,7 +78,10 @@ const renderTheme = (history, courseId) => (theme, index) => (
     >
         <SANQuery
             query={GET_THEME_CONTENTS}
-            options={{ variables: { themeId: theme.id, courseId } }}
+            options={{
+                variables: { themeId: theme.id, courseId },
+                fetchPolicy: 'network-only'
+            }}
             loaderProps={{ minHeight: 70, flex: true }}
         >
             {({ data: { themeContents } }: { data: IThemeContents }) =>

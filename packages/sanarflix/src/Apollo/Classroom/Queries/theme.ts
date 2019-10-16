@@ -6,49 +6,14 @@ export interface ITheme {
 }
 
 export const GET_THEME = gql`
-    query Theme($id: ID!) {
-        theme(id: $id) {
+    query Theme($id: ID!, $courseId: ID!) {
+        theme(id: $id, courseId: $courseId) {
             id
             name
-            themeContents {
+            progress_percentage
+            course {
                 id
-                resource_type
-                type
-                title
-                video {
-                    id
-                    title
-                    durationInSeconds
-                    bookmarked
-                    progress {
-                        id
-                        percentage
-                        timeInSeconds
-                    }
-                    thumbnails {
-                        small
-                        medium
-                        large
-                    }
-                    providers {
-                        data {
-                            code
-                            files {
-                                smil {
-                                    url
-                                }
-                            }
-                        }
-                    }
-                }
-                document {
-                    id
-                    title
-                    bookmarked
-                    file {
-                        url
-                    }
-                }
+                progress_percentage
             }
         }
     }

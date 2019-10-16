@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useReducer } from 'react'
+
 import { GET_THEMES } from 'Apollo/Classroom/Queries/themes'
-import { useApolloClient } from '@apollo/react-hooks'
+import { GET_THEME } from 'Apollo/Classroom/Queries/theme'
+import { useApolloClient, useQuery } from '@apollo/react-hooks'
 import {
     GET_THEME_CONTENTS,
     ITheme
@@ -77,6 +79,14 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
 
     const courseId = window.location.hash.split('/')[3]
     const resourceId = window.location.hash.split('/')[6]
+
+    const { data } = useQuery(GET_THEME, {
+        variables: {
+            id: state.theme.id,
+            courseId
+        },
+        skip: !state.theme.id
+    })
 
     const configureThemeContentsIcon = (resourceType, type) => {
         switch (resourceType) {
@@ -264,8 +274,11 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 ...(state.currentCourse && {
                     knowledgeArea: t('global.course'),
                     name: state.currentCourse.name,
-                    progress:
-                        parseInt(state.currentCourse.progress_percentage) || 0
+                    progress: Math.round(
+                        data && data.theme
+                            ? data.theme.course.progress_percentage
+                            : 0
+                    )
                 })
             }}
             DisciplineDropdownProps={{
@@ -286,7 +299,9 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     }
                 }),
                 loading: state.fetchingContents,
-                progress: parseInt(state.theme.progress_percentage)
+                progress: Math.round(
+                    data && data.theme ? data.theme.progress_percentage : 0
+                )
             }}
             PlaylistProps={{
                 items: state.themeContents,
