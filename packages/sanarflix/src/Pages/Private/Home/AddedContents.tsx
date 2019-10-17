@@ -39,9 +39,7 @@ const renderContent = history => (content: IContent) => (
             onClick={() => {
                 const { theme, resource_type, resource_id } = content
                 history.push(
-                    `/portal/sala-aula/${theme.course.id}/${theme.id}/${
-                        resourceTypes[resource_type]
-                    }/${resource_id}`
+                    `/portal/sala-aula/${theme.course.id}/${theme.id}/${resourceTypes[resource_type]}/${resource_id}`
                 )
             }}
         />
