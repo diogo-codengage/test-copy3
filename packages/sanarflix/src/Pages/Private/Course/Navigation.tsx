@@ -14,7 +14,6 @@ import {
     SANCardCourseModule,
     SANRow,
     SANCol,
-    SANSpin,
     SANGenericError
 } from '@sanar/components'
 
@@ -36,14 +35,8 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
     const { t } = useTranslation('sanarflix')
     const client = useApolloClient()
 
-    const [lastAccessed, setLastAccessed] = useState<any>({
-        loading: true,
-        error: false
-    })
-    const [nextContent, setNextContent] = useState<any>({
-        loading: true,
-        error: false
-    })
+    const [lastAccessed, setLastAccessed] = useState<any>(null)
+    const [nextContent, setNextContent] = useState<any>(null)
 
     const redirectTo = (themeId, resourceType, resourceId) =>
         history.push(
@@ -65,7 +58,7 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
 
                 setLastAccessed(data.lastAccessed)
             } catch (e) {
-                setLastAccessed({ loading: false, error: true })
+                setLastAccessed({ error: true })
             }
         }
 
@@ -80,7 +73,7 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
                 })
                 setNextContent(data.nextContent)
             } catch (e) {
-                setNextContent({ loading: false, error: true })
+                setNextContent({ error: true })
             }
         }
 
@@ -111,9 +104,7 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
                             >
                                 {t('course.continue')}
                             </SANTypography>
-                            {lastAccessed.loading ? (
-                                <SANSpin minHeight={178} flex />
-                            ) : lastAccessed.error ? (
+                            {lastAccessed.error ? (
                                 <SANGenericError mb={3} />
                             ) : (
                                 <>
@@ -156,9 +147,7 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
                         )}
                         {nextContent ? (
                             !nextContent.last_content ? (
-                                nextContent.loading ? (
-                                    <SANSpin minHeight={178} flex />
-                                ) : nextContent.error ? (
+                                nextContent.error ? (
                                     <SANGenericError mb={3} />
                                 ) : (
                                     <SANCardCourseModule
