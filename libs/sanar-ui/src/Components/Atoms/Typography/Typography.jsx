@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import LinesEllipsis from 'react-lines-ellipsis'
 import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC'
 
-const ResponsiveLinesEllipsis = responsiveHOC(0)(LinesEllipsis)
+const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis)
 
 const SeeMoreOrLess = ({ onClick, indicator, ellipsed }) => {
     const { t } = useTranslation('sanarui')
@@ -62,7 +62,8 @@ const ESTypography = ({
     // It'll render a paragraph with ellipsis
     if (typeof ellipsis === 'object' && ellipsed) {
         return (
-            <ResponsiveLinesEllipsis
+            <ResponsiveEllipsis
+                style={{ whiteSpace: 'pre-wrap' }}
                 text={children}
                 maxLine={ellipsis.rows ? ellipsis.rows : 2}
                 basedOn={ellipsis.basedOn}
