@@ -164,5 +164,17 @@ export default {
     },
     genericError: {
         message: 'Ocorreu um erro. Tente novamente mais tarde.'
+    },
+    searchResult: {
+        new: 'NOVO!',
+        popular: 'POPULAR!',
+        pages: {
+            keyWithCount: '{{count}} página',
+            keyWithCount_plural: '{{count}} páginas'
+        },
+        themes: {
+            keyWithCount: '{{count}} tema',
+            keyWithCount_plural: '{{count}} temas'
+        }
     }
 }

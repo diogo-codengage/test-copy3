@@ -1,70 +1,76 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import SANSearchResult from './SearchResult'
+import SANSearchResultList from './SearchResult'
+import SANSearchResultItem, { IItem } from './SearchResultItem'
 
-type ResourceType =
-    | 'Book'
-    | 'Course'
-    | 'Content'
-    | 'Question'
-    | 'Quiz'
-    | 'Video'
-    | 'Document'
-    | 'Download'
-
-interface Course {
-    id: string
-    name: string
-}
-
-interface Theme {
-    id: string
-    name: string
-}
-
-interface CoverPicture {
-    small: SizeImage
-    medium?: SizeImage
-    large?: SizeImage
-    original?: SizeImage
-}
-
-interface SizeImage {
-    filename: string
-    url: string
-}
-
-interface IExample {
-    resourceTitle: string
-    resourceId: string
-    resourceType: ResourceType
-    totalPages?: number
-    timeInSeconds?: number
-    coverPictures: CoverPicture
-    course?: Course
-    theme?: Theme
-    type?: string
-    isNew?: boolean
-    professorName?: string
-}
-
-const data: IExample[] = [
+const data: IItem[] = [
     {
         resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
-        resourceId: '1',
-        resourceType: 'Course',
-        coverPictures: {
-            small: {
-                filename: '',
-                url: ''
-            }
-        },
-        type: 'string'
+        image:
+            'https://dhg1h5j42swfq.cloudfront.net/2018/05/02151819/Concurso-Medicina-para-Tribunais-conhe%C3%A7a-os-benef%C3%ADcios-e-vantagens-da-carreira-p%C3%BAblica.jpg',
+        type: 'course',
+        themes: 10
+    },
+    {
+        resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
+        image:
+            'https://dhg1h5j42swfq.cloudfront.net/2018/05/02151819/Concurso-Medicina-para-Tribunais-conhe%C3%A7a-os-benef%C3%ADcios-e-vantagens-da-carreira-p%C3%BAblica.jpg',
+        type: 'course',
+        themes: 10,
+        isNew: true,
+        isPopular: true
+    },
+    {
+        resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
+        type: 'lesson',
+        isNew: true,
+        timeInSeconds: 1080,
+        professorName: 'Diogo Biz',
+        course: 'Endocrinologia'
+    },
+    {
+        resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
+        type: 'resume',
+        pages: 10,
+        professorName: 'Diogo Biz',
+        course: 'Endocrinologia'
+    },
+    ,
+    {
+        resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
+        type: 'lesson',
+        isPopular: true,
+        timeInSeconds: 1080,
+        professorName: 'Diogo Biz',
+        course: 'Endocrinologia'
+    },
+    {
+        resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
+        type: 'mentalmap',
+        course: 'Endocrinologia'
+    },
+    {
+        resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
+        type: 'article',
+        pages: 10,
+        course: 'Endocrinologia'
+    },
+    {
+        resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
+        type: 'question',
+        course: 'Endocrinologia'
+    },
+    {
+        resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
+        type: 'flowchart',
+        course: 'Endocrinologia'
     }
 ]
 
-const renderItem = (item: IExample) => <div>{item.resourceTitle}</div>
+const renderItem = (item: IItem) => (
+    <SANSearchResultItem item={item} onClick={console.log} />
+)
 
 storiesOf('Organisms.SearchResult', module).add('Simple', () => (
-    <SANSearchResult<IExample> dataSource={data} renderItem={renderItem} />
+    <SANSearchResultList dataSource={data} renderItem={renderItem} />
 ))

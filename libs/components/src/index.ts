@@ -85,6 +85,7 @@ import { SANError404 } from 'Components/Page/Error404'
 import { SANError500 } from 'Components/Page/Error500'
 import { SANChangePassword } from 'Components/Page/ChangePassword'
 import { SANSupport } from 'Components/Organisms/Support'
+import { SANSearchResult } from 'Components/Organisms/SearchResult'
 import {
     SANSnackbarProvider,
     useSnackbarContext
@@ -176,6 +177,7 @@ export {
     SANSnackbarProvider,
     useSnackbarContext,
     SANSupport,
+    SANSearchResult,
     SANInputMask,
     SANTooltip,
     SANInputPassword,
