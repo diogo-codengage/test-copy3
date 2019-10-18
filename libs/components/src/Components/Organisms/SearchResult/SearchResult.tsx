@@ -3,12 +3,12 @@ import React from 'react'
 import { SANBox } from '../../Atoms/Box'
 import { IItem } from './SearchResultItem'
 
-export interface ISANSearchResultProps {
+export interface ISANSearchResultListProps {
     dataSource: IItem[]
     renderItem: (item: IItem, index: number, arr: IItem[]) => React.ReactNode
 }
 
-const SANSearchResultList = (props: ISANSearchResultProps) => {
+const SANSearchResultList = (props: ISANSearchResultListProps) => {
     const { dataSource, renderItem } = props
 
     return (

@@ -5,65 +5,95 @@ import SANSearchResultItem, { IItem } from './SearchResultItem'
 
 const data: IItem[] = [
     {
+        resourceId: '1',
         resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
         image:
             'https://dhg1h5j42swfq.cloudfront.net/2018/05/02151819/Concurso-Medicina-para-Tribunais-conhe%C3%A7a-os-benef%C3%ADcios-e-vantagens-da-carreira-p%C3%BAblica.jpg',
         type: 'course',
-        themes: 10
+        totalThemes: 10
     },
     {
+        resourceId: '2',
         resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
         image:
             'https://dhg1h5j42swfq.cloudfront.net/2018/05/02151819/Concurso-Medicina-para-Tribunais-conhe%C3%A7a-os-benef%C3%ADcios-e-vantagens-da-carreira-p%C3%BAblica.jpg',
         type: 'course',
-        themes: 10,
+        totalThemes: 10,
         isNew: true,
         isPopular: true
     },
     {
+        resourceId: '3',
         resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
         type: 'lesson',
         isNew: true,
         timeInSeconds: 1080,
         professorName: 'Diogo Biz',
-        course: 'Endocrinologia'
+        course: {
+            id: '1',
+            name: 'Endocrinologia'
+        }
     },
     {
+        resourceId: '3',
         resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
         type: 'resume',
-        pages: 10,
+        totalPages: 10,
         professorName: 'Diogo Biz',
-        course: 'Endocrinologia'
+        course: {
+            id: '1',
+            name: 'Endocrinologia'
+        }
     },
     ,
     {
+        resourceId: '4',
         resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
         type: 'lesson',
         isPopular: true,
         timeInSeconds: 1080,
         professorName: 'Diogo Biz',
-        course: 'Endocrinologia'
+        course: {
+            id: '1',
+            name: 'Endocrinologia'
+        }
     },
     {
+        resourceId: '5',
         resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
         type: 'mentalmap',
-        course: 'Endocrinologia'
+        course: {
+            id: '1',
+            name: 'Endocrinologia'
+        }
     },
     {
+        resourceId: '6',
         resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
         type: 'article',
-        pages: 10,
-        course: 'Endocrinologia'
+        totalPages: 10,
+        course: {
+            id: '1',
+            name: 'Endocrinologia'
+        }
     },
     {
+        resourceId: '7',
         resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
         type: 'question',
-        course: 'Endocrinologia'
+        course: {
+            id: '1',
+            name: 'Endocrinologia'
+        }
     },
     {
+        resourceId: '8',
         resourceTitle: 'Nome do Arquivo - Subtítulo do arquivo',
         type: 'flowchart',
-        course: 'Endocrinologia'
+        course: {
+            id: '1',
+            name: 'Endocrinologia'
+        }
     }
 ]
 

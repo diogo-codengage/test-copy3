@@ -1,12 +1,14 @@
 import gql from 'graphql-tag'
 
 export type IType =
-    | 'resume'
     | 'mentalmap'
     | 'flowchart'
     | 'article'
     | 'lesson'
     | 'question'
+    | 'resume'
+    | 'video'
+    | 'course'
 
 export type IResourceType =
     | 'Book'
@@ -20,16 +22,28 @@ export type IResourceType =
 
 interface IOwner {
     id: string
+    name: string
+}
+
+interface IPicture {
+    small: {
+        url: string
+    }
 }
 
 export interface ISearch {
-    id: string
-    title: string
-    resource_type: IResourceType
-    resource_id: string
+    resourceId: string
+    resourceTitle: string
+    resourceType: IResourceType
+    totalPages: number
+    timeInSeconds: number
     type: IType
-    course: IOwner
-    theme: IOwner
+    isNew: boolean
+    course?: IOwner
+    theme?: IOwner
+    image?: IPicture
+    professorName?: string
+    totalThemes?: number
 }
 
 export interface IGlobalSearch {
@@ -44,15 +58,27 @@ export const GET_GLOBAL_SEARCH = gql`
         globalSearch(value: $value, limit: $limit, skip: $skip, type: $type) {
             count
             data {
-                resource_title
-                resource_id
-                resource_type
+                resourceTitle: resource_title
+                resourceId: resource_id
+                resourceType: resource_type
+                totalPages: total_pages
+                timeInSeconds: time_in_seconds
+                professorName: professor_name
+                totalThemes: total_themes
                 type
+                isNew
+                image: cover_pictures {
+                    small {
+                        url
+                    }
+                }
                 theme {
                     id
+                    name
                 }
                 course {
                     id
+                    name
                 }
             }
         }

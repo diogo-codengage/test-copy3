@@ -32,19 +32,24 @@ type IType =
     | 'video'
     | 'course'
 
+interface IOwner {
+    id: string
+    name: string
+}
 export interface IItem {
+    resourceId: string
     resourceTitle: string
     resourceType?: IResourceType
     totalPages?: number
     timeInSeconds?: number
     image?: string
-    course?: string
-    themes?: number
+    course?: IOwner
+    theme?: IOwner
+    totalThemes?: number
     type: IType
     isNew?: boolean
     isPopular?: boolean
     professorName?: string
-    pages?: number
 }
 
 export interface ISANSearchResultItemProps {
@@ -157,14 +162,14 @@ const SANSearchResultItem = (props: ISANSearchResultItemProps) => {
         switch (item.type) {
             case 'course':
                 return t('searchResult.themes.keyWithCount', {
-                    count: item.themes
+                    count: item.totalThemes
                 })
             case 'lesson':
                 return formatSecondsToMin(item.timeInSeconds)
             case 'resume':
             case 'article':
                 return t('searchResult.pages.keyWithCount', {
-                    count: item.pages
+                    count: item.totalPages
                 })
             default:
                 return ''
@@ -179,7 +184,8 @@ const SANSearchResultItem = (props: ISANSearchResultItemProps) => {
                       sm: 16,
                       md: 17,
                       lg: 18,
-                      xl: 19
+                      xl: 19,
+                      xxl: 18
                   }
                 : {
                       span: 24
@@ -191,12 +197,12 @@ const SANSearchResultItem = (props: ISANSearchResultItemProps) => {
         <WrapperStyled
             bg='white.10'
             pt='xl'
-            px={{ md: 8, _: 'lg' }}
+            px={{ md: 8, _: 'md' }}
             onClick={() => onClick(item)}
         >
             <SANRow type='flex' align='center' gutter={24}>
                 {item.image && item.type === 'course' && (
-                    <SANCol xs={24} sm={8} md={7} lg={6} xl={5}>
+                    <SANCol xs={24} sm={8} md={7} lg={6} xl={5} xxl={6}>
                         <SANBox
                             as='img'
                             src={item.image}
@@ -242,11 +248,12 @@ const SANSearchResultItem = (props: ISANSearchResultItemProps) => {
 
                             {item.course && (
                                 <SANTypography
+                                    ellipsis
                                     fontSize='sm'
                                     color='grey.5'
                                     mb='xs'
                                 >
-                                    {item.course}
+                                    {item.course.name}
                                 </SANTypography>
                             )}
                             <SANBox display='flex' alignItems='center'>
