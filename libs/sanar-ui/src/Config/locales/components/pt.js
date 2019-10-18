@@ -101,7 +101,7 @@ export default {
         subtitle: 'Atualize seus dados sempre que quiser',
         save: 'Salvar alterações',
         tab1: {
-            title: 'Dados pessoais',
+            title: 'Dados Pessoais',
             name: 'Nome',
             document: 'CPF',
             phone: 'Celular',
@@ -161,5 +161,8 @@ export default {
         subtitle:
             'Nosso time já identificou o problema e está trabalhando para resolvê-lo!Por favor, tente novamente em alguns minutos.',
         button: 'Tentar novamente'
+    },
+    genericError: {
+        message: 'Ocorreu um erro. Tente novamente mais tarde.'
     }
 }

@@ -20,6 +20,8 @@ import {
 
 import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
 
+import { events } from 'Config/Segment'
+
 import { useClassroomQuizContext } from './Context'
 import { useClassroomContext } from '../Context'
 
@@ -55,12 +57,16 @@ const FLXClassRoomQuizQuestion = ({
         stopwatchRef,
         setStats,
         questionsMap,
-        setQuestionsMap
+        setQuestionsMap,
+        pauseStopwatch,
+        startStopwatch
     } = useClassroomQuizContext()
-    const { handleBookmark } = useClassroomContext()
+    const { handleBookmark, handleProgress } = useClassroomContext()
     const [visible, setVisible] = useState(false)
     const [loading, setLoading] = useState(false)
     const [responses, setResponses] = useState<any[]>([])
+
+    const courseId = window.location.hash.split('/')[3]
 
     const goToNext = () => {
         !!stopwatchRef.current &&
@@ -68,6 +74,7 @@ const FLXClassRoomQuizQuestion = ({
         questions[index + 1]
             ? history.push(`./${questions[index + 1].id}`)
             : history.push('./finalizado')
+        startStopwatch()
     }
 
     const handleJump = () => {
@@ -81,7 +88,16 @@ const FLXClassRoomQuizQuestion = ({
     const handleNext = () => goToNext()
 
     const handleConfirm = async alternativeId => {
+        pauseStopwatch()
         setLoading(true)
+        handleProgress({
+            resource: { id: window.location.hash.split('/')[6], type: 'Quiz' },
+            percentage: parseInt(
+                (((index + 1) * 100) / questions.length).toString()
+            ),
+            courseId
+        })
+
         try {
             const {
                 data: {
@@ -128,9 +144,7 @@ const FLXClassRoomQuizQuestion = ({
             setQuestionsMap(oldMap =>
                 oldMap.map(e => (e.id === id ? { ...e, status: true } : e))
             )
-        } catch (e) {
-            console.error(e)
-        }
+        } catch (e) {}
         setLoading(false)
     }
 
@@ -165,6 +179,13 @@ const FLXClassRoomQuizQuestion = ({
             stopwatchRef.current.start()
         }
     }, [stopwatchRef])
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
 
     return (
         <>

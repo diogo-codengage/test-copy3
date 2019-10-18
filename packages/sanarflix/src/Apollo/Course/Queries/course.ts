@@ -33,6 +33,7 @@ export interface ICourse {
     id: string
     name: string
     description: string
+    progress_percentage: number
     counters: ICourseCounters
 }
 
@@ -49,6 +50,7 @@ export const GET_COURSE = gql`
                 id
                 name
                 description
+                progress_percentage
                 counters {
                     questions
                     certificates

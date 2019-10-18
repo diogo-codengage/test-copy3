@@ -62,6 +62,7 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
         context: menuContext,
         theme: darkMode ? 'dark' : 'primary',
         onToggle: setMenuState,
+        showContinueBar: lastAccessed && context === 'general',
         continueCourseProps: {
             loading: !lastAccessed,
             ...(lastAccessed && {
@@ -137,7 +138,11 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
     return (
         <>
             <SANLayout
-                showContinueBar={context !== 'classroom' && !!lastAccessed}
+                showContinueBar={
+                    context !== 'classroom' &&
+                    lastAccessed &&
+                    !lastAccessed.hasError
+                }
                 context={context}
                 FooterProps={FooterProps}
                 MenuProps={MenuProps}

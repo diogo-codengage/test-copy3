@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -7,9 +7,9 @@ import { SANRow, SANCol, SANLayoutContainer, SANBox } from '@sanar/components'
 
 import FLXViewedCourses from './ViewedCourses'
 import FLXAddedContents from './AddedContents'
-import FLXHomeSearch from './Search'
 
 import FLXBanner from 'Components/Banner'
+import { events } from 'Config/Segment'
 
 import allCourses from 'Assets/images/banners/all-courses.png'
 import baseQuestions from 'Assets/images/banners/base-questions.png'
@@ -18,12 +18,18 @@ import indicateMobile from 'Assets/images/banners/indicate-mobile.png'
 
 const intl = 'home.banners'
 
-const FLXHome: React.FC<RouteComponentProps> = ({ history }) => {
+const FLXHome = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
 
     return (
         <SANBox bg='grey-solid.1' flex='1'>
-            <FLXHomeSearch />
             <SANLayoutContainer pt={8}>
                 <SANRow gutter={16}>
                     <SANCol xs={24} md={12}>

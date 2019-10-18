@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useReducer } from 'react'
+
 import { GET_THEMES } from 'Apollo/Classroom/Queries/themes'
-import { useApolloClient } from '@apollo/react-hooks'
+import { GET_THEME } from 'Apollo/Classroom/Queries/theme'
+import { useApolloClient, useQuery } from '@apollo/react-hooks'
 import {
     GET_THEME_CONTENTS,
     ITheme
@@ -10,6 +12,7 @@ import { useLayoutContext } from '../Context'
 import { useTranslation } from 'react-i18next'
 
 import { SANClassroomMenu, SANEvaIcon, SANIcon } from '@sanar/components'
+import { useTryToCrash } from '@sanar/utils/dist/Hooks'
 
 // Playlist item image
 import { FlowChartSVG, MentalmapSVG } from 'Assets/images/playlist'
@@ -70,40 +73,20 @@ const reducer = (state, action) => {
 const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('sanarflix')
     const client = useApolloClient()
+    const setCrash = useTryToCrash()
     const { onCloseMenu, setNavigations } = useLayoutContext()
     const [state, dispatch] = useReducer(reducer, initialState)
 
     const courseId = window.location.hash.split('/')[3]
     const resourceId = window.location.hash.split('/')[6]
 
-    const loadThemes = async courseId => {
-        dispatch({ type: 'fetchingContents', payload: true })
-
-        try {
-            const {
-                data: {
-                    themes: { data: themes, count: totalThemes }
-                }
-            } = await client.query({
-                query: GET_THEMES,
-                variables: { courseIds: [courseId] }
-            })
-
-            dispatch({
-                type: 'updateThemes',
-                payload: {
-                    themes,
-                    currentCourse: themes[0].course,
-                    totalThemes,
-                    fetchingContents: false
-                }
-            })
-        } catch (e) {
-            throw e
-        }
-
-        dispatch({ type: 'fetchingContents', payload: false })
-    }
+    const { data } = useQuery(GET_THEME, {
+        variables: {
+            id: state.theme.id,
+            courseId
+        },
+        skip: !state.theme.id
+    })
 
     const configureThemeContentsIcon = (resourceType, type) => {
         switch (resourceType) {
@@ -170,8 +153,8 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
 
                 goToResource(incomplete, nextTheme.id, false)
             }
-        } catch (e) {
-            throw e
+        } catch (error) {
+            setCrash(error)
         }
 
         dispatch({ type: 'fetchingContents', payload: false })
@@ -251,6 +234,34 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 index: 1
             }
         })
+        const loadThemes = async courseId => {
+            dispatch({ type: 'fetchingContents', payload: true })
+
+            try {
+                const {
+                    data: {
+                        themes: { data: themes, count: totalThemes }
+                    }
+                } = await client.query({
+                    query: GET_THEMES,
+                    variables: { courseIds: [courseId] }
+                })
+
+                dispatch({
+                    type: 'updateThemes',
+                    payload: {
+                        themes,
+                        currentCourse: themes[0].course,
+                        totalThemes,
+                        fetchingContents: false
+                    }
+                })
+            } catch (error) {
+                setCrash(error)
+            }
+
+            dispatch({ type: 'fetchingContents', payload: false })
+        }
         loadThemes(courseId)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -263,15 +274,34 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 ...(state.currentCourse && {
                     knowledgeArea: t('global.course'),
                     name: state.currentCourse.name,
-                    progress: state.currentCourse.progress_percentage || 0
+                    progress: Math.round(
+                        data && data.theme
+                            ? data.theme.course.progress_percentage
+                            : 0
+                    )
                 })
             }}
             DisciplineDropdownProps={{
                 onSelect,
                 activeItem: state.theme,
-                items: state.themes,
+                items: state.themes.map(item => {
+                    return {
+                        ...item,
+                        progress: {
+                            total: 2,
+                            done:
+                                item.progress_percentage === 0
+                                    ? 0
+                                    : item.progress_percentage < 100
+                                    ? 1
+                                    : 2
+                        }
+                    }
+                }),
                 loading: state.fetchingContents,
-                progress: 50
+                progress: Math.round(
+                    data && data.theme ? data.theme.progress_percentage : 0
+                )
             }}
             PlaylistProps={{
                 items: state.themeContents,

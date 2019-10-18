@@ -26,6 +26,8 @@ interface IFLXClassroomQuizProviderValue {
     stats: IStats
     setQuestionsMap: React.Dispatch<React.SetStateAction<any[]>>
     questionsMap: any[]
+    pauseStopwatch: () => void
+    startStopwatch: () => void
 }
 
 const Context = createContext<IFLXClassroomQuizProviderValue>({} as any)
@@ -40,12 +42,24 @@ export const initialStats = {
 }
 
 const FLXClassroomQuizProvider: React.FC = ({ children }) => {
-    const stopwatchRef = useRef()
+    const stopwatchRef = useRef<any>()
     const { width } = useWindowSize()
     const { setFooterProps } = useLayoutContext()
     const [questions, setQuestions] = useState<any[]>([])
     const [questionsMap, setQuestionsMap] = useState<any[]>([])
     const [stats, setStats] = useState<IStats>(initialStats)
+
+    const pauseStopwatch = () => {
+        if (stopwatchRef && stopwatchRef.current) {
+            stopwatchRef.current.pause()
+        }
+    }
+
+    const startStopwatch = () => {
+        if (stopwatchRef && stopwatchRef.current) {
+            stopwatchRef.current.start()
+        }
+    }
 
     useEffect(() => {
         setQuestionsMap(questions)
@@ -79,7 +93,9 @@ const FLXClassroomQuizProvider: React.FC = ({ children }) => {
         setStats,
         stats,
         setQuestionsMap,
-        questionsMap
+        questionsMap,
+        pauseStopwatch,
+        startStopwatch
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

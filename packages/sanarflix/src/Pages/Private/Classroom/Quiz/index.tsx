@@ -69,6 +69,7 @@ const FLXClassRoomQuiz = (props: RouteComponentProps<IParams>) => {
                 onCompleted: setQuestionContext
             }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
+            errorProps={{ dark: true }}
         >
             {({ data: { resource } }) => (
                 <SANBox flex='1'>

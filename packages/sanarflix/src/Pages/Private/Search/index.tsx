@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
@@ -20,6 +20,8 @@ import {
 } from '@sanar/components'
 import FLXSearch from 'Components/Search'
 
+import { events } from 'Config/Segment'
+
 const resources = {
     Document: 'documento',
     Video: 'video',
@@ -39,12 +41,9 @@ const updateGlobalSearchCache = (prev: any, { fetchMoreResult }) => {
     })
 }
 
-const FLXSearchPage: React.FC<RouteComponentProps> = ({
-    location,
-    history
-}) => {
+const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
-    let params: any = new URLSearchParams(location.search)
+    const params: any = new URLSearchParams(location.search)
 
     const goToResource = ({
         resource_id: resource,
@@ -52,14 +51,37 @@ const FLXSearchPage: React.FC<RouteComponentProps> = ({
         course,
         theme
     }) => {
+        const content = {
+            resource,
+            type,
+            course,
+            theme
+        }
         if (type.toLocaleLowerCase() === 'course') {
+            const link = `/portal/curso/${resource}`
+            window.analytics.track(events['Search Result Clicked'].event, {
+                link,
+                content
+            })
             history.push(`/portal/curso/${resource}`)
         } else {
-            history.push(
-                `/portal/sala-aula/${course.id}/${theme.id}/${resources[type]}/${resource}`
-            )
+            const link = `/portal/sala-aula/${course.id}/${theme.id}/${
+                resources[type]
+            }/${resource}`
+            window.analytics.track(events['Search Result Clicked'].event, {
+                link,
+                content
+            })
+            history.push(link)
         }
     }
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
 
     return (
         <SANBox
@@ -73,15 +95,18 @@ const FLXSearchPage: React.FC<RouteComponentProps> = ({
                 SessionTitleProps={{
                     title: 'Resultado da busca'
                 }}
-                extra={<FLXSearch />}
+                extra={
+                    <FLXSearch initialValue={params.get('pesquisa') || ''} />
+                }
             />
+            {console.log({ params })}
             <SANLayoutContainer mt={8} pb={6} style={{ overflow: 'hidden' }}>
                 <SANQuery
                     query={GET_GLOBAL_SEARCH}
                     loaderProps={{ flex: true }}
                     options={{
                         variables: {
-                            value: params.get('pesquisa') || '',
+                            value: params.get('pesquisa'),
                             limit: 20
                         }
                     }}
@@ -97,23 +122,25 @@ const FLXSearchPage: React.FC<RouteComponentProps> = ({
                             <SANBox mb={7}>
                                 <SANTypography
                                     component='span'
-                                    variant='caption-2'
+                                    variant='caption2'
                                     strong
                                 >
                                     {(globalSearch && globalSearch.count) || 0}{' '}
                                 </SANTypography>
                                 <SANTypography
                                     component='span'
-                                    variant='caption-2'
+                                    variant='caption2'
                                 >
                                     {t('global.foundResults')}
-                                </SANTypography>{' '}
+                                </SANTypography>
                                 <SANTypography
                                     component='span'
-                                    variant='caption-2'
+                                    variant='caption2'
                                     strong
                                 >
-                                    {params.get('pesquisa')}
+                                    {!!params.get('pesquisa').length
+                                        ? params.get('pesquisa')
+                                        : `" "`}
                                 </SANTypography>
                             </SANBox>
                             {globalSearch && !!globalSearch.data.length ? (

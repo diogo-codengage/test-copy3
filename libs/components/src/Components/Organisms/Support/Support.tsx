@@ -34,7 +34,8 @@ const SANSupport = ({ form, onSubmit, data = {} as IForm, ModalProps }) => {
                 setSubmitting(true)
                 onSubmit(values, { setSubmitting })
                 form.setFieldsValue({
-                    message: ''
+                    message: '',
+                    check: ''
                 })
             }
         })
@@ -72,6 +73,7 @@ const SANSupport = ({ form, onSubmit, data = {} as IForm, ModalProps }) => {
                         />
                     </SANFormItem>
                     <SANFormItem
+                        mb='xl'
                         name='message'
                         label={t('support.message.title')}
                         rules={[
@@ -87,7 +89,7 @@ const SANSupport = ({ form, onSubmit, data = {} as IForm, ModalProps }) => {
                             rows={4}
                         />
                     </SANFormItem>
-                    <SANFormItem name='check' mb='xl'>
+                    <SANFormItem name='check' mb='lg' valuePropName='checked'>
                         <SANCheckbox>{t('support.check')}</SANCheckbox>
                     </SANFormItem>
                     <SANModalFooter>

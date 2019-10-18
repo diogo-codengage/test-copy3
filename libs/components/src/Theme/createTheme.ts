@@ -15,7 +15,13 @@ import {
     logoDark,
     changePassword,
     error404,
-    error500
+    error500,
+    errorGeneric,
+    question,
+    flowchart,
+    mentalmap,
+    article,
+    document
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -182,8 +188,16 @@ export const createTheme = ({
             },
             errors: {
                 error404,
-                error500
+                error500,
+                errorGeneric
             }
+        },
+        cardCourseModuleThumbs: {
+            flowchart,
+            mentalmap,
+            article,
+            document,
+            question
         },
         typeIcons: {
             primary: {

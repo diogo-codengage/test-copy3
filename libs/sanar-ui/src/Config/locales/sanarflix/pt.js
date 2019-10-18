@@ -18,7 +18,8 @@ export default {
         resourceTypes: {
             document: 'Documento',
             video: 'Video',
-            question: 'Questão'
+            question: 'Questão',
+            quiz: 'Questão'
         },
         types: {
             resume: 'Resumo',
@@ -26,12 +27,14 @@ export default {
             flowchart: 'Fluxograma',
             article: 'Artigos e Diretrizes',
             lesson: 'Aula',
-            question: 'Questão'
+            question: 'Questão',
+            quiz: 'Questão'
         },
         search: 'Busque por cursos, aulas, resumos e muito mais',
         foundResults: ' resultados encontrados para ',
         leave: 'Sair',
         back: 'Voltar',
+        all: 'Todos',
         months: [
             'Janeiro',
             'Fevereiro',
@@ -47,7 +50,8 @@ export default {
             'Dezembro'
         ],
         yes: 'Sim',
-        no: 'Não'
+        no: 'Não',
+        backStart: 'Voltar ao início'
     },
     logout: {
         message: 'Tem certeza que deseja sair da conta agora?',
@@ -203,7 +207,8 @@ export default {
             invites: 'Indique e ganhe',
             account: 'Minha conta',
             questions: 'Banco de questões',
-            account: 'Minha conta'
+            account: 'Minha conta',
+            added: 'Adicionados'
         },
         account: {
             title: 'Minha Conta',
@@ -265,11 +270,11 @@ export default {
             }
         },
         question: {
-            saveQuestion: 'Salvar Questão',
+            saveQuestion: 'Favoritar Questão',
             seeFilters: 'Ver filtros',
-            corrects: 'Corretas:',
-            wrong: 'Erradas:',
-            skipped: 'Puladas:',
+            corrects: 'Corretas',
+            wrong: 'Erradas',
+            skipped: 'Puladas',
             continue: 'Continuar',
             failHandleBookmark: 'Ocorreu um erro ao favoritar questão.',
             failReplyQuestion: 'Ocorreu um erro ao responder questão.',
@@ -411,6 +416,15 @@ export default {
     changePassword: {
         feedback: {
             success: 'A sua senha foi atualizada com sucesso!'
+        }
+    },
+    added: {
+        title: 'Adicionados',
+        totalItems: {
+            key: 'totalItems',
+            key_0: '0 itens adicionados recentemente',
+            keyWithCount: '{{count}} item adicionado recentemente',
+            keyWithCount_plural: '{{count}} itens adicionados recentemente'
         }
     }
 }

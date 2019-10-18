@@ -15,8 +15,8 @@ const signInByEmail = (email, password): Promise<any> => {
         )
 
         getInstance(email).user.authenticateUser(authenticationDetails, {
-            onSuccess: () => {
-                resolve()
+            onSuccess: result => {
+                resolve(result)
             },
             onFailure: err => {
                 switch (err.code) {

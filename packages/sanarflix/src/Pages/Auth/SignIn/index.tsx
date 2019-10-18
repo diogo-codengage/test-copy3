@@ -18,6 +18,7 @@ import sanar from 'Assets/images/brand/sanar.svg'
 import imageMarketing from 'Assets/images/auth/marketing.png'
 
 import { getInstance } from 'Config/AWSCognito'
+import { events } from 'Config/Segment'
 
 const FLXSignIn: React.FC<any> = ({ history }) => {
     const { t } = useTranslation('sanarflix')
@@ -31,8 +32,12 @@ const FLXSignIn: React.FC<any> = ({ history }) => {
         description: t('auth.marketing.description')
     }
 
-    const action = (): void => {
-        history.push('/portal')
+    const action = data => {
+        window.analytics.identify({
+            name: data.idToken.name,
+            email: data.idToken.email
+        })
+        history.push('/portal/inicio')
     }
 
     const modalTermsOpen = defaultKey => {
@@ -83,6 +88,13 @@ const FLXSignIn: React.FC<any> = ({ history }) => {
             client.cache.reset()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
     }, [])
 
     return (

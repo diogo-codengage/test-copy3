@@ -74,6 +74,7 @@ const FLXViewedCourses = ({ history }: RouteComponentProps) => {
         <SANQuery
             query={GET_COURSES_LAST_VIEWED}
             loaderProps={{ minHeight: 186, flex: true }}
+            options={{ fetchPolicy: 'network-only' }}
         >
             {({ data }: { data: ICourses }) => {
                 if (!data.courses.data.length) {

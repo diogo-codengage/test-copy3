@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 
 import { theme } from 'styled-tools'
 import styled from 'styled-components'
@@ -18,6 +18,9 @@ import {
     SANButton,
     SANEvaIcon
 } from '@sanar/components'
+import { createDebounce } from '@sanar/utils/dist/Debounce'
+
+import { events } from 'Config/Segment'
 
 import { GET_RESOURCE } from 'Apollo/Classroom/Queries/resource'
 import { CREATE_RATING } from 'Apollo/Classroom/Mutations/rating'
@@ -49,12 +52,27 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
             params: { themeId, resourceId, courseId }
         }
     } = props
-    const playerRef = useRef()
-    const { handleBookmark } = useClassroomContext()
+    const playerRef = useRef<any>()
+    const { handleBookmark, handleProgress } = useClassroomContext()
     const { onOpenMenu, navigations } = useLayoutContext()
+    const [videoError, setVideoError] = useState()
+    const [videoReady, setVideoReady] = useState()
+    const [willStart, setWillStart] = useState(true)
+
+    const handleVideoReady = () => {
+        setVideoReady(true)
+    }
+
+    const handleVideoError = () => {
+        setVideoError(true)
+    }
 
     const handleRating = async ({ value, resourceId }) => {
         try {
+            window.analytics.track(
+                events['E-Learning']['Video Evaluated'].event,
+                events['E-Learning']['Video Evaluated'].data
+            )
             await client.mutate({
                 mutation: CREATE_RATING,
                 variables: {
@@ -66,22 +84,108 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
         } catch {}
     }
 
+    const handlePlay = () => {
+        window.analytics.track(
+            events['E-Learning']['Content Watched'].event,
+            events['E-Learning']['Content Watched'].data
+        )
+    }
+
+    const handlePause = () => {
+        window.analytics.track(
+            events['E-Learning']['Content Stopped'].event,
+            events['E-Learning']['Content Stopped'].data
+        )
+    }
+
+    const handleComplete = () => {
+        window.analytics.track(
+            events['E-Learning']['Content Completed'].event,
+            events['E-Learning']['Content Completed'].data
+        )
+    }
+
+    const handlePlaybackRateChanged = () => {
+        window.analytics.track(
+            events['E-Learning']['Content Video Evaluated'].event,
+            events['E-Learning']['Content Video Evaluated'].data
+        )
+    }
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
+
+    const onProgress = percentage => {
+        if (!videoError && videoReady) {
+            const timeInSeconds =
+                playerRef && playerRef.current
+                    ? playerRef.current.position()
+                    : 0
+
+            handleProgress({
+                timeInSeconds,
+                percentage,
+                courseId,
+                resource: {
+                    id: resourceId,
+                    type: 'Video'
+                }
+            })
+        }
+    }
+
+    const onComplete = () => {
+        handleProgress({
+            percentage: 100,
+            courseId,
+            resource: {
+                id: resourceId,
+                type: 'Video'
+            }
+        })
+        handleComplete()
+    }
+
+    const getStartTime = time => {
+        if (videoReady && playerRef && playerRef.current) {
+            playerRef.current.seek(time)
+            setWillStart(false)
+        }
+    }
+
     return (
         <SANQuery
             query={GET_RESOURCE}
-            options={{ variables: { themeId, resourceId, courseId } }}
+            options={{
+                variables: { themeId, resourceId, courseId },
+                fetchPolicy: 'network-only'
+            }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
+            errorProps={{ dark: true }}
         >
             {({ data: { resource } }) => {
                 const file = resource.video.providers.data.find(
                     provider => provider.code === 'jwplayer'
                 )
+
                 const playlist = [
                     {
                         file: file && file.files.smil.url,
                         image: resource.video.thumbnails.large
                     }
                 ]
+
+                const debounceProgress = createDebounce(onProgress, 500)
+
+                willStart &&
+                    resource &&
+                    resource.video.progress &&
+                    getStartTime(resource.video.progress.timeInSeconds)
+
                 return (
                     <>
                         <SANBox
@@ -100,6 +204,8 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                             </Header>
                             <SANJwPlayer
                                 ref={playerRef}
+                                onReady={handleVideoReady}
+                                onError={handleVideoError}
                                 onOpenMenu={onOpenMenu}
                                 playerId='playerId'
                                 playerScript='/jwplayer/jwplayer.js'
@@ -110,6 +216,18 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                 subtitle={resource.course.name}
                                 onNext={navigations.next.onClick}
                                 onPrevious={navigations.previous.onClick}
+                                onPlay={handlePlay}
+                                onPause={handlePause}
+                                onOneHundredPercent={onComplete}
+                                onTwentyFivePercent={() => debounceProgress(25)}
+                                onFiftyPercent={() => debounceProgress(50)}
+                                onSeventyFivePercent={() =>
+                                    debounceProgress(75)
+                                }
+                                onFirstFrame={() => debounceProgress(1)}
+                                onPlaybackRateChanged={
+                                    handlePlaybackRateChanged
+                                }
                                 rate={{
                                     value:
                                         resource.video.rating &&

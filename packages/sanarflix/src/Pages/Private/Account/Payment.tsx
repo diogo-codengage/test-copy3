@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { compose } from 'ramda'
 import { withRouter } from 'react-router-dom'
@@ -34,6 +34,8 @@ import i18n from 'sanar-ui/dist/Config/i18n'
 import { useAuthContext } from 'Hooks/auth'
 import { EDIT_CREDIT_CARD_MUTATION } from 'Apollo/User/Mutations/edit-credit-card'
 
+import { events } from 'Config/Segment'
+
 const years = new Array(31).fill(1).map((_, i) => i + 2000)
 const months = new Array(12).fill(1).map((_, i) => i)
 
@@ -52,6 +54,25 @@ const renderMonth = index => (
 const SANEvaIconStyled = styled(SANEvaIcon)`
     && {
         color: ${theme('colors.grey.3')};
+    }
+`
+
+const SANFormItemMonth = styled(SANFormItem)`
+    && {
+        width: 50%;
+        float: left;
+    }
+`
+
+const SANFormItemYear = styled(SANFormItem)`
+    && {
+        width: calc(50% - 8px);
+        float: right;
+        margin-top: 24px;
+
+        ${theme('mediaQueries.down.sm')} {
+            margin-top: 32px;
+        }
     }
 `
 
@@ -88,21 +109,30 @@ const FLXPayment = ({ history, form }) => {
 
     const handleSubmit = e => {
         e.preventDefault()
-        form.validateFields((err, values) => {
+        form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 handleSave(values)
             }
         })
     }
 
+    const replaceAll = char => new RegExp(char, 'ig')
+
     const handleSave = async values => {
         setSubmitting(true)
         try {
+            const underline = replaceAll('_')
+            const asterisk = replaceAll('\\*')
+            const card_cvv = values.card_cvv.replace(underline, '')
+            const card_number = values.card_number
+                .replace(asterisk, '')
+                .replace(underline, '')
             await client.mutate({
                 mutation: EDIT_CREDIT_CARD_MUTATION,
                 variables: {
                     ...values,
-                    card_cvv: Number(values.card_cvv)
+                    card_number: card_number,
+                    card_cvv: Number(card_cvv)
                 }
             })
             snackbar({
@@ -111,12 +141,19 @@ const FLXPayment = ({ history, form }) => {
             })
         } catch {
             snackbar({
-                message: t('account.creditCard.success'),
+                message: t('account.creditCard.error'),
                 theme: 'error'
             })
         }
         setSubmitting(false)
     }
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
 
     return (
         <>
@@ -168,7 +205,7 @@ const FLXPayment = ({ history, form }) => {
                                         onSubmit={handleSubmit}
                                     >
                                         <SANRow gutter={24}>
-                                            <SANCol xs={24} sm={10} lg={13}>
+                                            <SANCol xs={16} sm={9} lg={13}>
                                                 <SANFormItem
                                                     name='card_number'
                                                     label={t(
@@ -183,7 +220,7 @@ const FLXPayment = ({ history, form }) => {
                                                     rules={[required]}
                                                 >
                                                     <SANInputMask
-                                                        required
+                                                        customRequired
                                                         onFocus={onFocus}
                                                         mask={
                                                             focus
@@ -199,14 +236,14 @@ const FLXPayment = ({ history, form }) => {
                                                     />
                                                 </SANFormItem>
                                             </SANCol>
-                                            <SANCol xs={7} sm={4} lg={4}>
+                                            <SANCol xs={8} sm={5} lg={4}>
                                                 <SANFormItem
                                                     name='card_cvv'
                                                     label={<LabelCvv />}
                                                     rules={[required]}
                                                 >
                                                     <SANInputMask
-                                                        required
+                                                        customRequired
                                                         mask='CVV'
                                                         InputProps={{
                                                             placeholder: t(
@@ -217,77 +254,40 @@ const FLXPayment = ({ history, form }) => {
                                                     />
                                                 </SANFormItem>
                                             </SANCol>
-                                            <SANCol xs={17} sm={10} lg={7}>
-                                                <SANBox
-                                                    display='flex'
-                                                    flexDirection='column'
+                                            <SANCol xs={24} sm={10} lg={7}>
+                                                <SANFormItemMonth
+                                                    label={t(
+                                                        'paymentMethods.creditCard.expiration'
+                                                    )}
+                                                    name='card_expiration_month'
+                                                    rules={[required]}
                                                 >
-                                                    <SANTypography
-                                                        variant='body2'
-                                                        strong
-                                                        mb={{
-                                                            sm: '3px',
-                                                            _: '11px'
-                                                        }}
-                                                    >
-                                                        {t(
-                                                            'paymentMethods.creditCard.expiration'
+                                                    <SANSelect
+                                                        customRequired
+                                                        placeholder={t(
+                                                            'paymentMethods.creditCard.month'
                                                         )}
-                                                    </SANTypography>
-                                                    <SANBox
-                                                        display='flex'
-                                                        justifyContent='space-between'
-                                                        alignItems='flex-end'
+                                                        size='large'
                                                     >
-                                                        <SANBox
-                                                            mr='xs'
-                                                            flex='1'
-                                                            maxWidth='50%'
-                                                        >
-                                                            <SANFormItem
-                                                                name='card_expiration_month'
-                                                                rules={[
-                                                                    required
-                                                                ]}
-                                                            >
-                                                                <SANSelect
-                                                                    required
-                                                                    placeholder={t(
-                                                                        'paymentMethods.creditCard.month'
-                                                                    )}
-                                                                    size='large'
-                                                                >
-                                                                    {months.map(
-                                                                        renderMonth
-                                                                    )}
-                                                                </SANSelect>
-                                                            </SANFormItem>
-                                                        </SANBox>
-                                                        <SANBox
-                                                            flex='1'
-                                                            maxWidth='50%'
-                                                        >
-                                                            <SANFormItem
-                                                                name='card_expiration_year'
-                                                                rules={[
-                                                                    required
-                                                                ]}
-                                                            >
-                                                                <SANSelect
-                                                                    required
-                                                                    placeholder={t(
-                                                                        'paymentMethods.creditCard.year'
-                                                                    )}
-                                                                    size='large'
-                                                                >
-                                                                    {years.map(
-                                                                        renderYear
-                                                                    )}
-                                                                </SANSelect>
-                                                            </SANFormItem>
-                                                        </SANBox>
-                                                    </SANBox>
-                                                </SANBox>
+                                                        {months.map(
+                                                            renderMonth
+                                                        )}
+                                                    </SANSelect>
+                                                </SANFormItemMonth>
+                                                <SANFormItemYear
+                                                    name='card_expiration_year'
+                                                    rules={[required]}
+                                                >
+                                                    <SANSelect
+                                                        customRequired
+                                                        placeholder={t(
+                                                            'paymentMethods.creditCard.year'
+                                                        )}
+                                                        size='large'
+                                                    >
+                                                        {years.map(renderYear)}
+                                                    </SANSelect>
+                                                </SANFormItemYear>
                                             </SANCol>
                                             <SANCol xs={24}>
                                                 <SANFormItem
@@ -298,7 +298,7 @@ const FLXPayment = ({ history, form }) => {
                                                     rules={[required]}
                                                 >
                                                     <SANInput
-                                                        required
+                                                        customRequired
                                                         placeholder={t(
                                                             'paymentMethods.creditCard.name'
                                                         )}

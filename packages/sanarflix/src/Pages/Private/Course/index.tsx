@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -34,7 +34,7 @@ import {
     ICourseCounters
 } from 'Apollo/Course/Queries/course'
 
-import FLXSearch from 'Components/Search'
+import { events } from 'Config/Segment'
 
 import Themes from './Themes'
 import FLXCourseNavigation from './Navigation'
@@ -99,8 +99,7 @@ const getCardProps = (counters: ICourseCounters) => {
                     makeCardProps({
                         counters,
                         image: classSvg,
-                        item,
-                        suffix: 'h'
+                        item
                     })
                 )
                 break
@@ -146,7 +145,7 @@ const Cards = ({ counters }: { counters: ICourseCounters }) => {
                 slidesToScroll={1}
                 initialSlide={0}
                 arrows
-                infinite
+                infinite={false}
                 dots={false}
                 draggable
                 lazyLoad
@@ -168,6 +167,13 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
     const { t } = useTranslation('sanarflix')
     const [showDescription, setShowDescription] = useState(false)
 
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
+
     return (
         <SANQuery
             query={GET_COURSE}
@@ -181,7 +187,6 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
                     <SANBox displayFlex flexDirection='column' flex='1'>
                         <SANHeader
                             onBack={() => history.goBack()}
-                            extra={<FLXSearch />}
                             SessionTitleProps={{
                                 title: course.name
                             }}
@@ -235,7 +240,7 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
                                     </SANCol>
                                 )}
                             </SANRow>
-                            <SANDivider mt='md' />
+                            <SANDivider mt='md' bg='grey.2' />
                         </SANLayoutContainer>
                         <Themes courseId={course.id} />
                     </SANBox>

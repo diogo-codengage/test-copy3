@@ -40,6 +40,7 @@ const ESJwPlayer = forwardRef(
             className,
             playerId,
             onReady,
+            onPlaybackRateChanged,
             onOpenMenu,
             onFavorite,
             onNext,
@@ -95,6 +96,10 @@ const ESJwPlayer = forwardRef(
                 setIsPause(false)
             })
 
+            instance.on('playbackRateChanged', function(event) {
+                !!onPlaybackRateChanged && onPlaybackRateChanged(event)
+            })
+
             if (instance.getWidth() > 1024) {
                 instance.resize('100%', '100vh')
             } else if (instance.getWidth() > 576) {
@@ -108,8 +113,10 @@ const ESJwPlayer = forwardRef(
 
         useImperativeHandle(ref, () => ({
             ...playerRef,
-            position: () => player.getPosition(),
-            seek: seconds => player.seek(seconds)
+            ...(player && {
+                position: () => player.getPosition(),
+                seek: seconds => player.seek(seconds)
+            })
         }))
 
         const height = useMemo(

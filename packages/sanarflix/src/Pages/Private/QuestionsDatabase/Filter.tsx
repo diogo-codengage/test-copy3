@@ -28,6 +28,8 @@ import {
     ITheme
 } from 'Apollo/QuestionsDatabase/Queries/themes'
 
+import { events } from 'Config/Segment'
+
 import courseSvg from 'Assets/images/filters/course.svg'
 import themeSvg from 'Assets/images/filters/theme.svg'
 
@@ -166,6 +168,13 @@ const FLXFilter = ({ history }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
+
     return (
         <SANPage
             hasContainer
@@ -175,7 +184,7 @@ const FLXFilter = ({ history }) => {
                 py: { xs: '8', _: 'md' }
             }}
             HeaderProps={{
-                onBack: () => history.goBack(),
+                onBack: () => history.push('/portal/inicio'),
                 SessionTitleProps: {
                     title: t('questionsDatabase.filter.header.title'),
                     extra: (

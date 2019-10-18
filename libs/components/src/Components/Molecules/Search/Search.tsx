@@ -139,7 +139,6 @@ const RemoveScrollStyled = styled(RemoveScroll)`
 `
 
 interface IItem {
-    id: string
     title: string
     onClick: () => void
 }
@@ -159,10 +158,10 @@ const boldString = (text: string, search: string) => {
     return text.replace(regexp, replaceMask)
 }
 
-const renderItem = search => item => (
+const renderItem = search => (item, index) => (
     <Item
         onClick={item.onClick}
-        key={item.id}
+        key={`${item.title}-${index}`}
         title={item.title}
         icon='search-outline'
         search={search}
@@ -207,7 +206,8 @@ const SANSearch: React.FC<ISANSearchProps> = ({
     const [hasFocus, setFocus] = useState(false)
 
     const handleKeyDown = e => {
-        if (e.key === 'Enter' && !!onEnter) {
+        const value = e.target.value.trim()
+        if (e.key === 'Enter' && !!onEnter && !!value) {
             onEnter(e)
         }
         if (e.key === 'Escape') {
@@ -257,6 +257,7 @@ const SANSearch: React.FC<ISANSearchProps> = ({
                     <Padding {...{ hasFocus }}>
                         <Search
                             iconRight='search-outline'
+                            rightClick={handleSeeMore}
                             round
                             onKeyDown={handleKeyDown}
                             onFocus={handleFocus}

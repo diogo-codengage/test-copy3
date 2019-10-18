@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -6,6 +6,7 @@ import { SANChangePassword, useSnackbarContext } from '@sanar/components'
 import { changePassword } from '@sanar/utils/dist/Auth'
 
 import { getInstance } from 'Config/AWSCognito'
+import { events } from 'Config/Segment'
 
 const FLXChangePassword = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
@@ -42,6 +43,13 @@ const FLXChangePassword = ({ history }: RouteComponentProps) => {
 
         setSubmitting(false)
     }
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
 
     return (
         <SANChangePassword

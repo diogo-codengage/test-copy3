@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import ESPasswordRecoveryTemplate from 'sanar-ui/dist/Components/Templates/PasswordRecovery'
@@ -13,6 +13,8 @@ import ESBrandHeader from 'sanar-ui/dist/Components/Atoms/BrandHeader'
 import logo from 'Assets/images/brand/logo.svg'
 import { withRouter } from 'react-router'
 import { message } from 'antd'
+
+import { events } from 'Config/Segment'
 
 import forgotPassword from './utils/forgotPassword'
 
@@ -41,6 +43,13 @@ const FLXSendPasswordRecoveryPage: React.FC<any> = ({ form, history }) => {
 
         setLoading(false)
     }
+
+    useEffect(() => {
+        window.analytics.page(
+            events['Page Viewed'].event,
+            events['Page Viewed'].data
+        )
+    }, [])
 
     return (
         <ESPasswordRecoveryTemplate
