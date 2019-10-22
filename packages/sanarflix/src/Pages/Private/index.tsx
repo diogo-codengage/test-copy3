@@ -1,7 +1,7 @@
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { Suspense } from 'react'
 
 import { Route, Switch, RouteComponentProps } from 'react-router-dom'
-import { useApolloClient } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
 import { useTranslation } from 'react-i18next'
 
 import { SANErrorBoundary } from '@sanar/components'
@@ -19,7 +19,6 @@ const FLXCourses = React.lazy(() => import('./Courses'))
 const FLXCourse = React.lazy(() => import('./Course'))
 const FLXClassroom = React.lazy(() => import('./Classroom'))
 const FLXQuestionsDatabase = React.lazy(() => import('./QuestionsDatabase'))
-const FLXSearchPage = React.lazy(() => import('./Search'))
 const FLXAccount = React.lazy(() => import('./Account'))
 const FLXAddedPage = React.lazy(() => import('./Added'))
 const FLXError500 = React.lazy(() => import('Components/Error500'))
@@ -31,32 +30,18 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
     history,
     match: { url }
 }) => {
-    const client = useApolloClient()
+    const { loading, error, data } = useQuery(GET_ME)
     const { t } = useTranslation('sanarflix')
     const { setMe } = useAuthContext()
-    const [loading, setLoading] = useState(false)
 
     const reload = () => {
         history.push('/portal/inicio')
         window.location.reload()
     }
 
-    useEffect(() => {
-        const fetchMe = async () => {
-            setLoading(true)
-            try {
-                const {
-                    data: { me }
-                } = await client.query({ query: GET_ME })
-                setMe(me)
-            } catch {
-                history.push('/auth/signin')
-            }
-            setLoading(false)
-        }
-        fetchMe()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    if (!loading && !error) {
+        setMe(data.me)
+    }
 
     return (
         <SANErrorBoundary onClick={reload} text={t('global.backStart')}>
@@ -86,12 +71,8 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
                                     component={FLXQuestionsDatabase}
                                 />
                                 <FLXActiveAccountRoute
-                                    path={`${url}/busca`}
-                                    component={FLXSearchPage}
-                                />
-                                <FLXActiveAccountRoute
-                                  path={`${url}/adicionados`}
-                                  component={FLXAddedPage}
+                                    path={`${url}/adicionados`}
+                                    component={FLXAddedPage}
                                 />
                                 <Route
                                     path={`${url}/minha-conta`}
