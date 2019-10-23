@@ -90,6 +90,12 @@ const FLXCoursesList: React.FC<RouteComponentProps & { id?: string }> = ({
                     fetchPolicy: 'cache-and-network',
                     notifyOnNetworkStatusChange: false
                 }}
+                errorProps={{
+                    flex: true,
+                    height: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
                 loaderProps={{ flex: true, minHeight: 200 }}
             >
                 {({
