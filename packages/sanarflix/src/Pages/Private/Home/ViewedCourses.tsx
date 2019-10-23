@@ -60,7 +60,7 @@ const renderCourse = history => (course: ICourse) => (
             badge={`${round(course.progress_percentage)}%`}
             progress={round(course.progress_percentage)}
             actionName={i18n.t('sanarflix:global.viewCourse')}
-            image={course.cover_picture_url}
+            image={!!course.cover_pictures && course.cover_pictures.small.url}
             onClick={() => history.push(`/portal/curso/${course.id}`)}
             size='small'
         />

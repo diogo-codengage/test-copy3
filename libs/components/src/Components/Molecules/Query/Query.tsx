@@ -26,7 +26,8 @@ const SANQuery = ({
 }: ISANQueryProps) => {
     const { data, loading, error, ...props } = useQuery(query, options)
 
-    if (loading) return loaderComp ? loaderComp : <SANSpin {...loaderProps} />
+    if (loading && props.networkStatus !== 3)
+        return loaderComp ? loaderComp : <SANSpin {...loaderProps} />
     if (error)
         return errorComp ? (
             errorComp

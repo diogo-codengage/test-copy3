@@ -25,7 +25,11 @@ const FLXPrivateRoute: React.FC<FLXPrivateRouteProps> = ({
         <Route
             {...rest}
             render={props =>
-                logged ? <Component {...props} /> : <Redirect to='/auth' />
+                logged ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect to='/auth/signin' />
+                )
             }
         />
     )

@@ -46,7 +46,7 @@ const renderCourse = history => (course: ICourse) => (
         <SANCardCourseModule
             mb='xl'
             data-testid={`card-courses-${course.name}`}
-            image={course.cover_picture_url}
+            image={course.cover_pictures && course.cover_pictures.small.url}
             title={course.name}
             badge={`${round(course.progress_percentage)}%`}
             progress={round(course.progress_percentage)}
@@ -87,9 +87,15 @@ const FLXCoursesList: React.FC<RouteComponentProps & { id?: string }> = ({
                             completeness: completenessFilter
                         })
                     },
-                    fetchPolicy: 'cache-and-network'
+                    fetchPolicy: 'cache-and-network',
+                    notifyOnNetworkStatusChange: false
                 }}
-                errorProps={{ background: 'red' }}
+                errorProps={{
+                    flex: true,
+                    height: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
                 loaderProps={{ flex: true, minHeight: 200 }}
             >
                 {({
