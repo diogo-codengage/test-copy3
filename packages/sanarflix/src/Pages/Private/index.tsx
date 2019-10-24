@@ -14,6 +14,8 @@ import FLXActiveAccountRoute from './ActiveAccountRoute'
 import { GET_ME } from 'Apollo/User/Queries/me'
 import { useAuthContext } from 'Hooks/auth'
 
+import { getInstance } from 'Config/AWSCognito'
+
 const FLXHome = React.lazy(() => import('./Home'))
 const FLXCourses = React.lazy(() => import('./Courses'))
 const FLXCourse = React.lazy(() => import('./Course'))
@@ -40,16 +42,32 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
         window.location.reload()
     }
 
+    const logout = () => {
+        const config = getInstance()
+        const user = config.userPool.getCurrentUser()
+        if (!!user) {
+            user.signOut()
+            setMe(undefined)
+            history.push('/auth/signin')
+        }
+    }
+
     useEffect(() => {
         const fetchMe = async () => {
             setLoading(true)
             try {
                 const {
-                    data: { me }
+                    data: { me },
+                    errors
                 } = await client.query({ query: GET_ME })
-                setMe(me)
+
+                if (!!errors) {
+                    throw new Error()
+                } else {
+                    setMe(me)
+                }
             } catch {
-                history.push('/auth/signin')
+                logout()
             }
             setLoading(false)
         }
