@@ -1,25 +1,63 @@
 import React, { useState, useEffect } from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import {
+    Route,
+    Redirect,
+    withRouter,
+    RouteComponentProps
+} from 'react-router-dom'
+import { useApolloClient } from '@apollo/react-hooks'
 
 import { useAuthContext } from 'Hooks/auth'
 import { getInstance } from 'Config/AWSCognito'
+import { GET_ME } from 'Apollo/User/Queries/me'
 
-type FLXPrivateRouteProps = {
+interface FLXPrivateRouteProps extends RouteComponentProps {
     component: React.ElementType
     path: string
 }
 
 const FLXPrivateRoute: React.FC<FLXPrivateRouteProps> = ({
     component: Component,
+    history,
     ...rest
 }) => {
+    const client = useApolloClient()
     const { setMe } = useAuthContext()
     const [logged, setLogged] = useState(true)
 
+    const logout = () => {
+        const config = getInstance()
+        const user = config.userPool.getCurrentUser()
+        if (!!user) {
+            user.signOut()
+            setMe(undefined)
+            history.push('/auth/signin')
+        }
+    }
+
+    const fetchMe = async () => {
+        try {
+            const {
+                data: { me },
+                errors
+            } = await client.query({ query: GET_ME })
+
+            if (!!errors) {
+                throw new Error()
+            } else {
+                setMe(me)
+            }
+        } catch {
+            logout()
+        }
+    }
+
     useEffect(() => {
         getInstance().user.getSession((_, result) => {
-            if (!result) {
-                setMe(undefined)
+            if (!!result) {
+                fetchMe()
+            } else {
+                logout()
                 setLogged(false)
             }
         })
@@ -40,4 +78,4 @@ const FLXPrivateRoute: React.FC<FLXPrivateRouteProps> = ({
     )
 }
 
-export default FLXPrivateRoute
+export default withRouter(FLXPrivateRoute)
