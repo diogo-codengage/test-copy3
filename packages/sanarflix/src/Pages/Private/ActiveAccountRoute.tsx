@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { useAuthContext } from 'Hooks/auth'
+import FLXSplashLoader from 'Components/SplashLoader'
 
 type FLXActiveAccountRouteProps = {
     component: React.ElementType
@@ -19,10 +20,14 @@ const FLXActiveAccountRoute: React.FC<FLXActiveAccountRouteProps> = ({
         <Route
             {...rest}
             render={props =>
-                active ? (
-                    <Component {...props} />
+                me ? (
+                    active ? (
+                        <Component {...props} />
+                    ) : (
+                        <Redirect to='/portal/minha-conta' />
+                    )
                 ) : (
-                    <Redirect to='/portal/minha-conta' />
+                    <FLXSplashLoader />
                 )
             }
         />
