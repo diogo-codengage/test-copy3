@@ -6,13 +6,15 @@ import { SANScrollTop } from '@sanar/components'
 import './App.less'
 import FLXSplashLoader from './Components/SplashLoader'
 
+const RMAuth = React.lazy(() => import('Pages/Auth'))
+
 const RMApp: React.FC = () => {
     return (
         <Suspense fallback={<FLXSplashLoader />}>
             <Router>
                 <SANScrollTop>
                     <Switch>
-                        <Route path='/auth' render={() => <div>login</div>} />
+                        <Route path='/auth' component={RMAuth} />
                         <Route
                             path='/portal'
                             render={() => <div>inicio</div>}
