@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 interface IPicture {
-    small: {
+    original: {
         url: string
     }
 }
@@ -26,7 +26,7 @@ export const GET_COURSES_LAST_VIEWED = gql`
                 name
                 progress_percentage
                 cover_pictures {
-                    small {
+                    original {
                         url
                     }
                 }
