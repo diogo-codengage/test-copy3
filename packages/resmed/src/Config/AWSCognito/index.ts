@@ -54,7 +54,7 @@ const logout = () => {
     cognitoUser.signOut()
 }
 
-const login = ({ email, password }: { email: string; password: string }) => {
+const login = (email: string, password: string) => {
     const cognitoUser = getCognitoUser()
     if (!cognitoUser) {
         return

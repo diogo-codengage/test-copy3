@@ -4,6 +4,8 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import { useApolloClient } from '@apollo/react-hooks'
 
+import { SANButton } from '@sanar/components'
+
 import ESSignInForm from 'sanar-ui/dist/Components/Organisms/SignInForm'
 import ESAuthTemplate from 'sanar-ui/dist/Components/Templates/Auth'
 import ESBrandHeader from 'sanar-ui/dist/Components/Atoms/BrandHeader'
@@ -25,7 +27,8 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
 
     const marketing = {
         title: t('auth.marketing.title'),
-        description: t('auth.marketing.description')
+        description: t('auth.marketing.description'),
+        action: <SANButton>{t('auth.marketing.action')}</SANButton>
     }
 
     const action = () => {
@@ -41,7 +44,7 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
         setKeepMeLoggedIn(old => !old)
     }
 
-    const Terms = useMemo(
+    const terms = useMemo(
         () => (
             <ESRow type='flex' align='middle' justify='center'>
                 <ESCol>
@@ -61,7 +64,6 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
                 </ESCol>
             </ESRow>
         ),
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         []
     )
 
@@ -85,7 +87,7 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
         <ESAuthTemplate
             image={imageMarketing}
             marketing={marketing}
-            terms={Terms}
+            terms={terms}
             description={t('auth.signInDescription')}
             header={<ESBrandHeader logo={logo} />}
             form={
@@ -96,6 +98,7 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
                     action={action}
                     isKeepMeLoggedChecked={keepMeLoggedIn}
                     keepMeLogged={onKeepMeLoggedIn}
+                    signInByEmail={login}
                 />
             }
         />
