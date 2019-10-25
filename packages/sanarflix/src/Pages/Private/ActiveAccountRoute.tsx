@@ -14,9 +14,7 @@ const FLXActiveAccountRoute: React.FC<FLXActiveAccountRouteProps> = ({
 }) => {
     const { me } = useAuthContext()
 
-    const active = useMemo(() => {
-        return me && me.status === 'active'
-    }, [me])
+    const active = useMemo(() => me && me.status === 'active', [me])
 
     return (
         <Route
