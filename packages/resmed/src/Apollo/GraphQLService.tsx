@@ -1,5 +1,5 @@
 import React from 'react'
-import ApolloClient, { Operation, PresetConfig } from 'apollo-boost'
+import ApolloClient, { Operation } from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { ErrorResponse } from 'apollo-link-error'
 

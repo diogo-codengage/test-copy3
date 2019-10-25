@@ -1,47 +1,256 @@
 import {
     CognitoUserPool,
     CognitoUser,
-    ICognitoUserData,
+    CognitoUserSession,
+    AuthenticationDetails,
     ICognitoUserPoolData
 } from 'amazon-cognito-identity-js'
 
-const FLXAWSCognitoConfigKeys: ICognitoUserPoolData = {
+import i18n from 'sanar-ui/dist/Config/i18n'
+
+const config: ICognitoUserPoolData = {
     UserPoolId: process.env.REACT_APP_AWS_COGNITO_USER_POOL_ID || '',
     ClientId: process.env.REACT_APP_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID || ''
 }
 
-let user: CognitoUser
-let userEmail: string
-let userData: ICognitoUserData
-const userPool: CognitoUserPool = new CognitoUserPool(FLXAWSCognitoConfigKeys)
+// Gets a User Pool instance
+const getUserPool = () => new CognitoUserPool(config)
 
-const constructor = email => {
-    userEmail = email
+// Gets user attributes based on the passed cognitoUser
+const getUserAttributes = (user: CognitoUser) => {
+    return user.getUserAttributes((err, result) => {
+        if (err) {
+            return
+        }
+        return result
+    })
+}
 
-    userData = {
-        Username: userEmail,
-        Pool: userPool
+// Gets a cognito user
+const getCognitoUser = () => {
+    const pool = getUserPool()
+    return pool.getCurrentUser()
+}
+
+// The primary method for verifying/starting a CoginotID session
+const verifySession = () => {
+    const cognitoUser = getCognitoUser()
+
+    if (!!cognitoUser) {
+        cognitoUser.getSession((err: any, session: CognitoUserSession) => {
+            if (err) {
+                return
+            }
+            cognitoUser.refreshSession(session.getRefreshToken(), () => {})
+        })
+    }
+}
+
+const logout = () => {
+    const cognitoUser = getCognitoUser()
+    if (!cognitoUser) {
+        return
+    }
+    cognitoUser.signOut()
+}
+
+const login = ({ email, password }: { email: string; password: string }) => {
+    const cognitoUser = getCognitoUser()
+    if (!cognitoUser) {
+        return
     }
 
-    user = new CognitoUser(userData)
-    return { user, userPool }
+    const authenticationDetails = new AuthenticationDetails({
+        Username: email,
+        Password: password
+    })
+
+    return new Promise((resolve, reject) => {
+        cognitoUser.authenticateUser(authenticationDetails, {
+            onSuccess: result => {
+                return resolve(result)
+            },
+            onFailure: err => {
+                switch (err.code) {
+                    case 'UserNotFoundException':
+                        return reject({
+                            code: err.code,
+                            message: i18n.t(
+                                'sanarui:authMessages.userNotFoundException'
+                            )
+                        })
+                    case 'NotAuthorizedException':
+                        return reject({
+                            code: err.code,
+                            message: i18n.t(
+                                'sanarui:authMessages.notAuthorizedException'
+                            )
+                        })
+                    case 'UserLambdaValidationException':
+                        return reject({
+                            code: err.code,
+                            message: i18n.t('sanarui:authMessages.noEnrollment')
+                        })
+                    default:
+                        return reject({
+                            code: err.code,
+                            message: i18n.t('sanarui:authMessages.generic')
+                        })
+                }
+            }
+        })
+    })
 }
 
-const getStorageEmail = (): string => {
-    const emailKey =
-        Object.keys(localStorage).find(
-            item => item.indexOf('LastAuthUser') > -1
-        ) || ''
-    return localStorage.getItem(emailKey) || ''
-}
-
-const getInstance = (email?: string | null) => {
-    const newEmail = email || getStorageEmail()
-    if (!user || email !== userEmail) {
-        return constructor(newEmail)
+const changePassword = ({
+    oldPassword,
+    newPassword
+}: {
+    oldPassword: string
+    newPassword: string
+}) => {
+    const cognitoUser = getCognitoUser()
+    if (!cognitoUser) {
+        return
     }
 
-    return { user, userPool }
+    return new Promise((resolve, reject) =>
+        cognitoUser.changePassword(oldPassword, newPassword, function(
+            err: any,
+            result
+        ) {
+            if (err) {
+                switch (err) {
+                    case 'LimitExceededException':
+                        return reject({
+                            code: err.code,
+                            message: i18n.t(
+                                'sanarui:authMessages.limitExceededException'
+                            )
+                        })
+                    case 'UserNotFoundException':
+                        return reject({
+                            code: err.code,
+                            message: i18n.t(
+                                'sanarui:authMessages.userNotFoundException'
+                            )
+                        })
+                    default:
+                        return reject({
+                            code: err.code,
+                            message: i18n.t('sanarui:authMessages.generic')
+                        })
+                }
+            }
+            resolve(result)
+        })
+    )
 }
 
-export { getInstance }
+const forgotPassword = () => {
+    const cognitoUser = getCognitoUser()
+    if (!cognitoUser) {
+        return
+    }
+
+    return new Promise((resolve, reject) => {
+        cognitoUser.forgotPassword({
+            onSuccess: () => {
+                resolve()
+            },
+            onFailure: (error: any) => {
+                switch (error.code) {
+                    case 'LimitExceededException':
+                        return reject({
+                            code: error.code,
+                            message: i18n.t(
+                                'sanarui:authMessages.limitExceededException'
+                            )
+                        })
+                    case 'UserNotFoundException':
+                        return reject({
+                            code: error.code,
+                            message: i18n.t(
+                                'sanarui:authMessages.userNotFoundException'
+                            )
+                        })
+                    case 'InvalidParameterException':
+                        return reject({
+                            code: error.code,
+                            message: i18n.t(
+                                'sanarui:authMessages.invalidParameterException'
+                            )
+                        })
+                    default:
+                        return reject({
+                            code: error.code,
+                            message: i18n.t('sanarui:authMessages.generic')
+                        })
+                }
+            }
+        })
+    })
+}
+
+const resetPassword = ({
+    verificationCode,
+    newPassword
+}: {
+    verificationCode: string
+    newPassword: string
+}) => {
+    const cognitoUser = getCognitoUser()
+    if (!cognitoUser) {
+        return
+    }
+
+    return new Promise((resolve, reject) => {
+        cognitoUser.confirmPassword(verificationCode, newPassword, {
+            onSuccess() {
+                resolve()
+            },
+            onFailure: (err: any) => {
+                switch (err.code) {
+                    case 'ExpiredCodeException':
+                        return reject({
+                            code: 'ExpiredCodeException',
+                            message: i18n.t(
+                                'sanarui:authMessages.expiredCodeException'
+                            )
+                        })
+                    case 'CodeMismatchException':
+                        return reject({
+                            code: 'CodeMismatchException',
+                            message: i18n.t(
+                                'sanarui:authMessages.codeMismatchException'
+                            )
+                        })
+                    case 'LimitExceededException':
+                        return reject({
+                            code: 'LimitExceededException',
+                            message: i18n.t(
+                                'sanarui:authMessages.limitExceededException'
+                            )
+                        })
+                    default:
+                        return reject({
+                            code: 'Generic',
+                            message: i18n.t('sanarui:authMessages.generic')
+                        })
+                }
+            }
+        })
+    })
+}
+
+export {
+    getUserPool,
+    getUserAttributes,
+    verifySession,
+    getCognitoUser,
+    logout,
+    login,
+    changePassword,
+    forgotPassword,
+    resetPassword
+}

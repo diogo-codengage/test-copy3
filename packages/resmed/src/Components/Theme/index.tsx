@@ -7,7 +7,12 @@ type RMThemeContextProviderProps = {}
 
 const theme = {
     colors: {
-        primary: '#099E76'
+        primary: '#099E76',
+        'primary-1': '#d6fff4',
+        'primary-2': '#9ef0da',
+        'primary-3': '#4bcca9',
+        'primary-4': '#099e76',
+        'primary-5': '#066b50'
     }
 }
 
