@@ -88,7 +88,7 @@ const RMCard = () => {
                     <RMLink
                         ml='2'
                         as='a'
-                        href='http://globo.com'
+                        href='https://www.sanarmed.com/residenciamedica/'
                         target='_blanck'
                     >
                         {t('global.knowMore')}
