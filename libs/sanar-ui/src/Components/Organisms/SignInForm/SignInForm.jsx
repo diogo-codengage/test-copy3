@@ -39,9 +39,8 @@ const ESSignInForm = ({
     const signIn = e => {
         e.preventDefault()
         setLoading(true)
-        form.validateFields()
-            .then(() => {
-                const { email, password } = form.getFieldsValue()
+        form.validateFields((err, { email, password }) => {
+            if (!err) {
                 signInByEmail(email, password)
                     .then(response => {
                         setLoading(false)
@@ -51,8 +50,10 @@ const ESSignInForm = ({
                         setLoading(false)
                         message.error(error.message)
                     })
-            })
-            .catch(() => setLoading(false))
+            } else {
+                setLoading(false)
+            }
+        })
     }
 
     const signInFacebook = () => {

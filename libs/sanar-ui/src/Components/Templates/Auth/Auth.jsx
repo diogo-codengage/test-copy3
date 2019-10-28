@@ -63,8 +63,10 @@ const ESAuthTemplate = ({
                             href={marketing.link}
                             color='white'
                             bold
+                            size='small'
                             variant='outlined'
                             target='_blank'
+                            uppercase
                         >
                             {marketing.linkDescription}
                         </ESButton>
