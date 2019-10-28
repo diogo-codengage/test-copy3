@@ -323,6 +323,8 @@ export default {
         selectPeriod: 'Selecione aqui o período',
         selectCancelReasonLabel: 'Qual o motivo do cancelamento?',
         selectCancelReason: 'Selecione o motivo',
+        selectCancelReasonRM:
+            'A <strong>Sanar Residência Médica</strong> tem os cursos preparatórios perfeitos para você médica dos seus sonhos.',
         causeObservation: 'Escreva seu motivo aqui',
         recommend: 'Quanto você recomendaria o SanarFlix a um amigo?',
         howMuchTimeLabel: 'Por quanto tempo você quer pausar?',
