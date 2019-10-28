@@ -1,5 +1,6 @@
 export default {
     global: {
+        knowMore: 'Saiba mais',
         termsOfUse: 'Termos de Uso',
         privacyPolicy: 'Política de Privacidade',
         send: 'Enviar',

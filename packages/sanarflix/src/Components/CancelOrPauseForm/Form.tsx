@@ -91,7 +91,7 @@ const RMCard = () => {
                         href='http://globo.com'
                         target='_blanck'
                     >
-                        Saiba mais!
+                        {t('global.knowMore')}
                     </RMLink>
                 </SANTypography>
             </SANBox>
