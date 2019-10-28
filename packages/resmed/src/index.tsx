@@ -7,16 +7,19 @@ import 'sanar-ui/dist/Config/i18n'
 
 import { RMGraphQLProvider } from './Apollo/GraphQLService'
 import { RMThemeProvider } from './Components/Theme'
+import { RMAuthProvider } from './Hooks/auth'
 import { RMGlobalStyle } from './Styles'
 
 const RMApp: React.FC = () => (
     <RMGraphQLProvider>
-        <RMThemeProvider>
-            <>
-                <RMGlobalStyle />
-                <App />
-            </>
-        </RMThemeProvider>
+        <RMAuthProvider>
+            <RMThemeProvider>
+                <>
+                    <RMGlobalStyle />
+                    <App />
+                </>
+            </RMThemeProvider>
+        </RMAuthProvider>
     </RMGraphQLProvider>
 )
 
