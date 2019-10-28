@@ -1,7 +1,8 @@
 export default {
     global: {
         termsOfUse: 'Termos de Uso',
-        privacyPolicy: 'Política de Privacidade'
+        privacyPolicy: 'Política de Privacidade',
+        send: 'Enviar'
     },
     auth: {
         accessAccount: 'Acessar conta',
