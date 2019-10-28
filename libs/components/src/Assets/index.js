@@ -19,7 +19,6 @@ import question from './images/card-course-module-thumbs/question.png'
 import flowchart from './images/card-course-module-thumbs/flowchart.png'
 import mentalmap from './images/card-course-module-thumbs/mentalmap.png'
 import article from './images/card-course-module-thumbs/article.png'
-import baseQuestions from 'Assets/images/banners/base-questions.png'
 
 export {
     typeIconPrimaryBook,
@@ -38,6 +37,5 @@ export {
     flowchart,
     mentalmap,
     article,
-    document,
-    baseQuestions
+    document
 }
