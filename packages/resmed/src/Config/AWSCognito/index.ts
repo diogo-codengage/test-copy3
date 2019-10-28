@@ -54,19 +54,19 @@ const logout = () => {
     cognitoUser.signOut()
 }
 
-const login = ({ email, password }: { email: string; password: string }) => {
-    const cognitoUser = getCognitoUser()
-    if (!cognitoUser) {
-        return
-    }
-
+const login = (email: string, password: string) => {
     const authenticationDetails = new AuthenticationDetails({
         Username: email,
         Password: password
     })
 
+    const user = new CognitoUser({
+        Username: email,
+        Pool: getUserPool()
+    })
+
     return new Promise((resolve, reject) => {
-        cognitoUser.authenticateUser(authenticationDetails, {
+        user.authenticateUser(authenticationDetails, {
             onSuccess: result => {
                 return resolve(result)
             },

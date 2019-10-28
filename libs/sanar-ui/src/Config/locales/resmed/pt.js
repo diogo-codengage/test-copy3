@@ -1,8 +1,12 @@
 export default {
+    global: {
+        termsOfUse: 'Termos de Uso',
+        privacyPolicy: 'Política de Privacidade'
+    },
     auth: {
         accessAccount: 'Acessar conta',
         signInDescription:
-            'Sua conta SANAR é a chave para você acessar todos os cursos e ferramentas para otimizar e impulsionar sua carreira médica.',
+            'Sua conta é seu portal de acesso a cursos e todas as ferramentas necessárias para impulsionar a sua carreira',
         keepMeLoggedIn: 'Manter logado',
         forgotPassword: 'Esqueci minha senha',
         login: 'Entrar',
@@ -12,9 +16,10 @@ export default {
         messageChangeSuccess: 'Senha alterada com sucesso!',
         marketing: {
             title:
-                'Otimizar seus estudos e impulsionar sua carreira médica: esse é o nosso propósito!',
+                'Tenha uma experiência de excêlencia nos seus estudos e na sua carreira',
             description:
-                'Acesse seus cursos do SanarFlix ou Residência Médica e confira as milhares de questões, flashcards e artigos científicos que a Sanar Medicina separou para você!'
+                'Acompanhe seu desempenho, tenha acesso a questões, conteúdos exclusivos e diversos conteúdos que vão te ajudar a conseguir alcançar seus objetivos',
+            action: 'Conheça nosso cursos'
         },
         sendPasswordRecovery: {
             title: 'Esqueci minha senha',
