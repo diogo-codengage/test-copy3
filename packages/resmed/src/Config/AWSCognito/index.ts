@@ -46,12 +46,13 @@ const verifySession = () => {
     }
 }
 
-const logout = () => {
+const logout = ({ callback }: { callback?: Function }) => {
     const cognitoUser = getCognitoUser()
     if (!cognitoUser) {
         return
     }
     cognitoUser.signOut()
+    !!callback && callback()
 }
 
 const login = (email: string, password: string) => {
