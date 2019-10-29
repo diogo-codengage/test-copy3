@@ -3,6 +3,8 @@ import { ThemeContext } from 'styled-components'
 
 import { SANThemeCreateTheme, SANThemeProvider } from '@sanar/components'
 
+import { logoLight, logoDark } from 'Assets'
+
 type RMThemeContextProviderProps = {}
 
 const theme = {
@@ -13,6 +15,14 @@ const theme = {
         'primary-3': '#4bcca9',
         'primary-4': '#099e76',
         'primary-5': '#066b50'
+    },
+    assets: {
+        icons: {
+            logo: {
+                light: logoLight,
+                dark: logoDark
+            }
+        }
     }
 }
 

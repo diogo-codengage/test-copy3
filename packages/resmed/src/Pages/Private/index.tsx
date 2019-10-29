@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 
 import { RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-import { SANErrorBoundary, SANButton } from '@sanar/components'
+import { SANErrorBoundary } from '@sanar/components'
 
-import { logout } from 'Config/AWSCognito'
+import RMSplashLoader from 'Components/SplashLoader'
+import RMLayoutProvider from 'Pages/Private/Layout/Context'
+import RMLayout from 'Pages/Private/Layout'
 
 const RMPrivatePages: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
@@ -17,7 +19,13 @@ const RMPrivatePages: React.FC<RouteComponentProps> = ({ history }) => {
 
     return (
         <SANErrorBoundary onClick={reload} text={t('global.backStart')}>
-            <SANButton onClick={logout}>LOGOUT</SANButton>
+            <RMLayoutProvider>
+                <RMLayout>
+                    <Suspense fallback={<RMSplashLoader size='flexible' />}>
+                        INICIO
+                    </Suspense>
+                </RMLayout>
+            </RMLayoutProvider>
         </SANErrorBoundary>
     )
 }

@@ -4,7 +4,10 @@ export default {
         privacyPolicy: 'Política de Privacidade',
         send: 'Enviar',
         copyright: 'Todos os direitos reservados',
-        about: 'Sobre o SanarFlix'
+        about: 'Sobre o SanarFlix',
+        backStart: 'Voltar ao início',
+        leave: 'Sair',
+        back: 'Voltar'
     },
     auth: {
         accessAccount: 'Acessar conta',
@@ -53,5 +56,31 @@ export default {
             onEnter: 'Ao entrar na plataforma, você concorda com nossos',
             us: 'e nossa'
         }
+    },
+    mainMenu: {
+        back: 'Voltar ao menu principal',
+        initial: {
+            title: 'Menu',
+            begin: 'Início',
+            practiceArea: 'Área de Prática',
+            performance: 'Desempenho',
+            lives: 'Lives',
+            schedule: 'Cronograma',
+            account: 'Minha conta'
+        },
+        account: {
+            title: 'Minha Conta',
+            management: 'Gerenciamento',
+            myData: 'Meus dados',
+            changePassword: 'Trocar minha senha',
+            otherLinks: 'Outros links',
+            termsOfUse: 'Termos de Uso',
+            privacyPolicy: 'Política de Privacidade',
+            signOut: 'Sair da conta'
+        }
+    },
+    logout: {
+        message: 'Tem certeza que deseja sair da conta agora?',
+        signOut: 'Sair da Conta'
     }
 }
