@@ -8,7 +8,8 @@ import {
     SANSpace,
     SANFlexbox,
     SANTypography,
-    SANButton
+    SANButton,
+    SANBox
 } from '@sanar/components'
 
 import logoFooter from 'Assets/images/brand/logo-grey.svg'
@@ -41,19 +42,27 @@ const Copyright = () => {
     )
 }
 
+export const defaultFooterProps: ISANLayoutFooterProps = {
+    logo: logoFooter,
+    phone: '0800 327-0035',
+    email: 'atendimento@editorasanar.com.br',
+    copyright: <Copyright />,
+    attendance: 'Atendimento de Seg. a Sex. das 09h às 18h',
+    HelpButton: {
+        onClick: () => console.log('HelpButton')
+    }
+}
+
 const RMFooter = props => {
     const customProps: ISANLayoutFooterProps = {
-        logo: logoFooter,
-        phone: '0800 327-0035',
-        email: 'atendimento@editorasanar.com.br',
-        copyright: <Copyright />,
-        attendance: 'Atendimento de Seg. a Sex. das 09h às 18h',
-        HelpButton: {
-            onClick: () => console.log('HelpButton')
-        },
+        ...defaultFooterProps,
         ...props
     }
-    return <SANLayoutFooter {...customProps} />
+    return (
+        <SANBox width='100vw'>
+            <SANLayoutFooter {...customProps} />
+        </SANBox>
+    )
 }
 
 export default RMFooter

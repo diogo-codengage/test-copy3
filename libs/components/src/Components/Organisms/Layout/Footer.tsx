@@ -23,7 +23,6 @@ const SANLayoutFooterStyled = styled.footer`
         theme('pureWhite')
     )};
     flex: 0 0 auto;
-    width: 100vw;
     ${space}
 `
 
@@ -156,7 +155,8 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
                                         bold
                                         color={darkMode ? 'light' : 'default'}
                                         variant='outlined'
-                                        mb={{ md: 'none', _: 'xs' }}
+                                        mb={{ md: '0', _: 'xs' }}
+                                        mr={{ md: 'sm', _: '0' }}
                                         {...HelpButton}
                                     >
                                         {t('footer.helpButton')}

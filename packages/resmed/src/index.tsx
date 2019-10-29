@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 
+import { HashRouter as BrowserRouter } from 'react-router-dom'
+
 import 'sanar-ui/dist/Config/i18n'
 
 import { SANSnackbarProvider } from '@sanar/components'
@@ -13,16 +15,18 @@ import { RMGlobalStyle } from './Styles'
 
 const RMApp: React.FC = () => (
     <RMGraphQLProvider>
-        <SANSnackbarProvider>
-            <RMAuthProvider>
-                <RMThemeProvider>
-                    <>
-                        <RMGlobalStyle />
-                        <App />
-                    </>
-                </RMThemeProvider>
-            </RMAuthProvider>
-        </SANSnackbarProvider>
+        <BrowserRouter>
+            <SANSnackbarProvider>
+                <RMAuthProvider>
+                    <RMThemeProvider>
+                        <>
+                            <RMGlobalStyle />
+                            <App />
+                        </>
+                    </RMThemeProvider>
+                </RMAuthProvider>
+            </SANSnackbarProvider>
+        </BrowserRouter>
     </RMGraphQLProvider>
 )
 
