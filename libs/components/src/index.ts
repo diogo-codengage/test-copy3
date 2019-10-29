@@ -14,6 +14,7 @@ import { SANHeader } from 'Components/Molecules/Header'
 import {
     SANLayoutContainer,
     SANLayout,
+    SANLayoutFooter,
     ISANLayoutFooterProps
 } from 'Components/Organisms/Layout'
 import {
@@ -108,6 +109,7 @@ export {
     SANHeader,
     SANLayoutContainer,
     SANLayout,
+    SANLayoutFooter,
     ISANLayoutFooterProps,
     SANMainMenu,
     SANLeftOff,

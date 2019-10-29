@@ -19,6 +19,7 @@ import ESBrandHeader from 'sanar-ui/dist/Components/Atoms/BrandHeader'
 import logo from 'Assets/images/brand/logo.svg'
 import searching from 'Assets/images/forgot-password/searching.png'
 
+import RMFooter from 'Components/Footer'
 import { forgotPassword } from 'Config/AWSCognito'
 
 interface IProps extends RouteComponentProps {
@@ -36,7 +37,7 @@ const FLXSendPasswordRecoveryPage: React.FC<IProps> = ({ form, history }) => {
 
         try {
             const { email } = await form.validateFields()
-            await forgotPassword()
+            await forgotPassword(email)
 
             history.push({
                 pathname: 'recuperar-senha/sucesso',
@@ -55,61 +56,68 @@ const FLXSendPasswordRecoveryPage: React.FC<IProps> = ({ form, history }) => {
     }
 
     return (
-        <ESPasswordRecoveryTemplate
-            title={t('auth.sendPasswordRecovery.title')}
-            subtitle={t('auth.sendPasswordRecovery.subtitle')}
-            header={<ESBrandHeader logo={logo} />}
-            image={searching}
-            actionsMargin='large'
-            actions={
-                <SANForm form={form} onSubmit={onSubmit}>
-                    <SANFormItem
-                        rules={[
-                            {
-                                required: true,
-                                message: t(
-                                    'sanarui:formValidateMessages.required'
-                                )
-                            },
-                            {
-                                type: 'email',
-                                message: t(
-                                    'sanarui:formValidateMessages.types.email'
-                                )
-                            }
-                        ]}
-                        name='email'
-                    >
-                        <ESInput
-                            size='large'
-                            placeholder={t('auth.sendPasswordRecovery.email')}
-                        />
-                    </SANFormItem>
-                    <SANButton
-                        loading={loading}
-                        htmlType='submit'
-                        uppercase
-                        block
-                        bold
-                        variant='solid'
-                        color='primary'
-                        className='mb-md'
-                    >
-                        {t('global.send')}
-                    </SANButton>
-                    <SANButton
-                        href='/#/auth/entrar'
-                        uppercase
-                        block
-                        bold
-                        variant='text'
-                        color='primary'
-                    >
-                        {t('auth.accessAccount')}
-                    </SANButton>
-                </SANForm>
-            }
-        />
+        <>
+            <ESPasswordRecoveryTemplate
+                title={t('auth.sendPasswordRecovery.title')}
+                subtitle={t('auth.sendPasswordRecovery.subtitle')}
+                header={<ESBrandHeader logo={logo} />}
+                image={searching}
+                actionsMargin='large'
+                fullHeight={false}
+                hideImage={false}
+                actions={
+                    <SANForm form={form} onSubmit={onSubmit}>
+                        <SANFormItem
+                            rules={[
+                                {
+                                    required: true,
+                                    message: t(
+                                        'sanarui:formValidateMessages.required'
+                                    )
+                                },
+                                {
+                                    type: 'email',
+                                    message: t(
+                                        'sanarui:formValidateMessages.types.email'
+                                    )
+                                }
+                            ]}
+                            name='email'
+                        >
+                            <ESInput
+                                size='large'
+                                placeholder={t(
+                                    'auth.sendPasswordRecovery.email'
+                                )}
+                            />
+                        </SANFormItem>
+                        <SANButton
+                            loading={loading}
+                            htmlType='submit'
+                            uppercase
+                            block
+                            bold
+                            variant='solid'
+                            color='primary'
+                            className='mb-md'
+                        >
+                            {t('global.send')}
+                        </SANButton>
+                        <SANButton
+                            href='/#/auth/entrar'
+                            uppercase
+                            block
+                            bold
+                            variant='text'
+                            color='primary'
+                        >
+                            {t('auth.accessAccount')}
+                        </SANButton>
+                    </SANForm>
+                }
+            />
+            <RMFooter mt='xxl' />
+        </>
     )
 }
 

@@ -19,6 +19,7 @@ import ESBrandHeader from 'sanar-ui/dist/Components/Atoms/BrandHeader'
 import logo from 'Assets/images/brand/logo.svg'
 import image from 'Assets/images/forgot-password/chest.png'
 
+import RMFooter from 'Components/Footer'
 import { resetPassword } from 'Config/AWSCognito'
 
 interface IProps extends RouteComponentProps {
@@ -74,89 +75,96 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
     }
 
     return (
-        <ESPasswordRecoveryTemplate
-            title={t('auth.sendResetPassword.title')}
-            subtitle={t('auth.sendResetPassword.subtitle')}
-            image={image}
-            header={<ESBrandHeader logo={logo} />}
-            actionsMargin='large'
-            actions={
-                <SANForm form={form} onSubmit={onSubmit}>
-                    <SANFormItem
-                        name='password'
-                        rules={[
-                            {
-                                required: true,
-                                message: t(
-                                    'sanarui:formValidateMessages.required'
-                                )
-                            },
-                            {
-                                min: 6,
-                                message: t('auth.validations.minPassword', {
-                                    min: 6
-                                })
-                            },
-                            {
-                                validator: validateToNextPassword
-                            }
-                        ]}
-                    >
-                        <ESInput
-                            size='large'
-                            component={ESInput.Password}
-                            placeholder={t('auth.newPassword')}
-                        />
-                    </SANFormItem>
-                    <SANFormItem
-                        name='passwordConfirm'
-                        rules={[
-                            {
-                                required: true,
-                                message: t(
-                                    'sanarui:formValidateMessages.required'
-                                )
-                            },
-                            {
-                                validator: compareToFirstPassword,
-                                message: t('auth.validations.passwordsMismatch')
-                            }
-                        ]}
-                    >
-                        <ESInput
-                            size='large'
-                            component={ESInput.Password}
-                            placeholder={t(
-                                'auth.sendResetPassword.confirmPassword'
-                            )}
-                        />
-                    </SANFormItem>
+        <>
+            <ESPasswordRecoveryTemplate
+                title={t('auth.sendResetPassword.title')}
+                subtitle={t('auth.sendResetPassword.subtitle')}
+                image={image}
+                header={<ESBrandHeader logo={logo} />}
+                actionsMargin='large'
+                fullHeight={false}
+                hideImage={false}
+                actions={
+                    <SANForm form={form} onSubmit={onSubmit}>
+                        <SANFormItem
+                            name='password'
+                            rules={[
+                                {
+                                    required: true,
+                                    message: t(
+                                        'sanarui:formValidateMessages.required'
+                                    )
+                                },
+                                {
+                                    min: 6,
+                                    message: t('auth.validations.minPassword', {
+                                        min: 6
+                                    })
+                                },
+                                {
+                                    validator: validateToNextPassword
+                                }
+                            ]}
+                        >
+                            <ESInput
+                                size='large'
+                                component={ESInput.Password}
+                                placeholder={t('auth.newPassword')}
+                            />
+                        </SANFormItem>
+                        <SANFormItem
+                            name='passwordConfirm'
+                            rules={[
+                                {
+                                    required: true,
+                                    message: t(
+                                        'sanarui:formValidateMessages.required'
+                                    )
+                                },
+                                {
+                                    validator: compareToFirstPassword,
+                                    message: t(
+                                        'auth.validations.passwordsMismatch'
+                                    )
+                                }
+                            ]}
+                        >
+                            <ESInput
+                                size='large'
+                                component={ESInput.Password}
+                                placeholder={t(
+                                    'auth.sendResetPassword.confirmPassword'
+                                )}
+                            />
+                        </SANFormItem>
 
-                    <SANButton
-                        htmlType='submit'
-                        uppercase
-                        block
-                        bold
-                        variant='solid'
-                        color='primary'
-                        className='mb-md'
-                        loading={loading}
-                    >
-                        {t('global.send')}
-                    </SANButton>
-                    <SANButton
-                        onClick={() => history.push('/')}
-                        uppercase
-                        block
-                        bold
-                        variant='text'
-                        color='primary'
-                    >
-                        {t('auth.accessAccount')}
-                    </SANButton>
-                </SANForm>
-            }
-        />
+                        <SANButton
+                            htmlType='submit'
+                            uppercase
+                            block
+                            bold
+                            variant='solid'
+                            color='primary'
+                            className='mb-md'
+                            loading={loading}
+                        >
+                            {t('global.send')}
+                        </SANButton>
+                        <SANButton
+                            onClick={() => history.push('/')}
+                            uppercase
+                            block
+                            bold
+                            variant='text'
+                            color='primary'
+                        >
+                            {t('auth.accessAccount')}
+                        </SANButton>
+                    </SANForm>
+                }
+            />
+            <RMFooter mt='xxl' />
+        </>
     )
 }
 

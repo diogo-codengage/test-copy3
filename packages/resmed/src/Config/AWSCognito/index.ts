@@ -148,11 +148,11 @@ const changePassword = ({
     )
 }
 
-const forgotPassword = () => {
-    const cognitoUser = getCognitoUser()
-    if (!cognitoUser) {
-        return
-    }
+const forgotPassword = (email: string) => {
+    const cognitoUser = new CognitoUser({
+        Username: email,
+        Pool: getUserPool()
+    })
 
     return new Promise((resolve, reject) => {
         cognitoUser.forgotPassword({

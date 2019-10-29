@@ -11,7 +11,7 @@ const RMPasswordRecoverySent = React.lazy(() =>
 const FLXResetPassword = React.lazy(() => import('./ResetPassword'))
 
 const RMPasswordRecoveryAlignment = styled.div`
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
