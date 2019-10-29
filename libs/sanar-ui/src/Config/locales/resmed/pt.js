@@ -1,7 +1,10 @@
 export default {
     global: {
         termsOfUse: 'Termos de Uso',
-        privacyPolicy: 'Política de Privacidade'
+        privacyPolicy: 'Política de Privacidade',
+        send: 'Enviar',
+        copyright: 'Todos os direitos reservados',
+        about: 'Sobre o SanarFlix'
     },
     auth: {
         accessAccount: 'Acessar conta',

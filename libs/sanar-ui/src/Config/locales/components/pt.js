@@ -164,5 +164,8 @@ export default {
     },
     genericError: {
         message: 'Ocorreu um erro. Tente novamente mais tarde.'
+    },
+    footer: {
+        helpButton: 'Precisa de ajuda?'
     }
 }

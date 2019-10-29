@@ -5,6 +5,7 @@ import {
     ISANSessionTitleProps
 } from 'Components/Atoms/SessionTitle'
 import { SANTypography } from 'Components/Atoms/Typography'
+import { SANBrandHeader } from 'Components/Atoms/BrandHeader'
 import { SANBanner, ISANBannerProps } from 'Components/Molecules/Banner'
 import { SANCardCourseModule } from 'Components/Molecules/CardCourseModule'
 import { SANCarousel } from 'Components/Molecules/Carousel'
@@ -13,6 +14,7 @@ import { SANHeader } from 'Components/Molecules/Header'
 import {
     SANLayoutContainer,
     SANLayout,
+    SANLayoutFooter,
     ISANLayoutFooterProps
 } from 'Components/Organisms/Layout'
 import {
@@ -97,6 +99,7 @@ export {
     SANSessionTitle,
     ISANSessionTitleProps,
     SANTypography,
+    SANBrandHeader,
     SANBanner,
     ISANBannerProps,
     SANCardCourseModule,
@@ -106,6 +109,7 @@ export {
     SANHeader,
     SANLayoutContainer,
     SANLayout,
+    SANLayoutFooter,
     ISANLayoutFooterProps,
     SANMainMenu,
     SANLeftOff,
