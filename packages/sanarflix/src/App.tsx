@@ -20,7 +20,7 @@ import { getInstance } from 'Config/AWSCognito'
 const FLXAuth = React.lazy(() => import('./Pages/Auth'))
 const FLXPrivatePages = React.lazy(() => import('./Pages/Private'))
 
-const App: React.FC<RouteComponentProps> = ({ history }) => {
+const App: React.FC<RouteComponentProps> = ({ history, location }) => {
     const { me, setMe } = useAuthContext()
     const [loading, setLoading] = useState(true)
 
@@ -31,7 +31,8 @@ const App: React.FC<RouteComponentProps> = ({ history }) => {
             if (!result) {
                 setMe(undefined)
             } else {
-                history.push('/portal/inicio')
+                const { pathname } = location
+                pathname.includes('auth') && history.push('/portal/inicio')
             }
             setLoading(false)
         })
