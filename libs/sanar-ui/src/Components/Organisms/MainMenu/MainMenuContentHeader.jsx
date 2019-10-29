@@ -9,7 +9,6 @@ import ESTypography from '../../Atoms/Typography'
 import { useMainMenuContext } from './context'
 
 const ESMainMenuContentHeader = ({ className, title, onClose }) => {
-    const { showClose } = useMainMenuContext()
     const classes = classNames('es-main-menu__content--header', className)
 
     return (
@@ -21,17 +20,15 @@ const ESMainMenuContentHeader = ({ className, title, onClose }) => {
             >
                 {title}
             </ESTypography>
-            {showClose && (
-                <ESButton
-                    onClick={() => onClose(false)}
-                    size='medium'
-                    variant='text'
-                    color='white'
-                    circle
-                >
-                    <ESEvaIcon name='close-outline' />
-                </ESButton>
-            )}
+            <ESButton
+                onClick={() => onClose(false)}
+                size='medium'
+                variant='text'
+                color='white'
+                circle
+            >
+                <ESEvaIcon name='close-outline' />
+            </ESButton>
         </div>
     )
 }

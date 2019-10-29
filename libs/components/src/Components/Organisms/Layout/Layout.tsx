@@ -46,10 +46,6 @@ const SANContentContainer = styled.section`
         padding-left: 56px;
         padding-bottom: 0;
     }
-
-    @media screen and (min-width: 1365px) {
-        padding-left: 360px;
-    }
 `
 
 const SANLayoutStyled = styled.section`

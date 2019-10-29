@@ -23,6 +23,7 @@ const SANLayoutFooterStyled = styled.footer`
         theme('pureWhite')
     )};
     flex: 0 0 auto;
+    white-space: nowrap;
     ${space}
 `
 
