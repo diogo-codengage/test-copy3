@@ -23,11 +23,11 @@ const SANLayoutFooterStyled = styled.footer`
         theme('pureWhite')
     )};
     flex: 0 0 auto;
-    white-space: nowrap;
     ${space}
 `
 
 const Infos = styled.div`
+    white-space: nowrap;
     padding: ${theme('space.xxl')} 0;
     border-top: 1px solid
         ${ifProp('darkMode', theme('colors.white.2'), theme('colors.grey.2'))};
