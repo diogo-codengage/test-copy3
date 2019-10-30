@@ -1,1 +1,1 @@
-export { default as SANTypography } from './Typography'
+export { default as SANTypography, ISANTypographyProps } from './Typography'

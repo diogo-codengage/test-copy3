@@ -5,6 +5,7 @@ import {
     ISANSessionTitleProps
 } from 'Components/Atoms/SessionTitle'
 import { SANTypography } from 'Components/Atoms/Typography'
+import { SANProgress } from 'Components/Atoms/Progress'
 import { SANBrandHeader } from 'Components/Atoms/BrandHeader'
 import { SANBanner, ISANBannerProps } from 'Components/Molecules/Banner'
 import { SANCardCourseModule } from 'Components/Molecules/CardCourseModule'
@@ -91,8 +92,10 @@ import {
     SANSnackbarProvider,
     useSnackbarContext
 } from 'Components/Molecules/Snackbar'
+import { SANCardSpecialty } from 'Components/Molecules/CardSpecialty'
 
 export {
+    SANProgress,
     SANButton,
     SANButtonGroup,
     SANEvaIcon,
@@ -188,5 +191,6 @@ export {
     SANError404,
     SANError500,
     SANGenericError,
-    SANErrorBoundary
+    SANErrorBoundary,
+    SANCardSpecialty
 }
