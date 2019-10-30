@@ -36,17 +36,22 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
     const [loading, setLoading] = useState(false)
     const params = new URLSearchParams(location.search)
 
-    const onSubmit = async event => {
+    const onSubmit = event => {
         event.preventDefault()
         setLoading(true)
 
         try {
-            const { password } = await form.validateFields()
+            form.validateFields(async (err, { password }) => {
+                const verificationCode = params.get('codigo') || ''
 
-            const verificationCode = params.get('codigo') || ''
-
-            await resetPassword({ verificationCode, newPassword: password })
-            history.push('/auth/entrar')
+                if (!err) {
+                    await resetPassword({
+                        verificationCode,
+                        newPassword: password
+                    })
+                    history.push('/auth/entrar')
+                }
+            })
         } catch (error) {
             if (error.message) {
                 history.push('/auth/recuperar-senha')
@@ -56,6 +61,8 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
                 })
             }
         }
+
+        setLoading(false)
     }
 
     const compareToFirstPassword = (rule, value, callback) => {

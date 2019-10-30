@@ -14,7 +14,10 @@ const RMAuth: React.FC<RouteComponentProps> = ({ match: { url } }) => (
                 path={`${url}/recuperar-senha`}
                 component={RMPasswordRecovery}
             />
-            <Route render={() => <Redirect to={`${url}/entrar`} />} />
+            <Route
+                path={`${url}/`}
+                render={() => <Redirect to={`${url}/entrar`} />}
+            />
         </Switch>
     </Suspense>
 )
