@@ -4,17 +4,15 @@ import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { compose } from 'ramda'
 
-import {
-    useSnackbarContext,
-    SANForm,
-    SANFormItem,
-    withSANForm,
-    SANButton
-} from '@sanar/components'
+import { useSnackbarContext, SANButton } from '@sanar/components'
 
 import ESPasswordRecoveryTemplate from 'sanar-ui/dist/Components/Templates/PasswordRecovery'
 import ESInput from 'sanar-ui/dist/Components/Atoms/Input'
 import ESBrandHeader from 'sanar-ui/dist/Components/Atoms/BrandHeader'
+import ESForm, {
+    ESFormItem,
+    withESForm
+} from 'sanar-ui/dist/Components/Molecules/Form'
 
 import logo from 'Assets/images/brand/logo.svg'
 import image from 'Assets/images/forgot-password/chest.png'
@@ -36,17 +34,22 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
     const [loading, setLoading] = useState(false)
     const params = new URLSearchParams(location.search)
 
-    const onSubmit = async event => {
+    const onSubmit = event => {
         event.preventDefault()
         setLoading(true)
 
         try {
-            const { password } = await form.validateFields()
+            form.validateFields(async (err, { password }) => {
+                const verificationCode = params.get('codigo') || ''
 
-            const verificationCode = params.get('codigo') || ''
-
-            await resetPassword({ verificationCode, newPassword: password })
-            history.push('/auth/entrar')
+                if (!err) {
+                    await resetPassword({
+                        verificationCode,
+                        newPassword: password
+                    })
+                    history.push('/auth/entrar')
+                }
+            })
         } catch (error) {
             if (error.message) {
                 history.push('/auth/recuperar-senha')
@@ -56,6 +59,8 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
                 })
             }
         }
+
+        setLoading(false)
     }
 
     const compareToFirstPassword = (rule, value, callback) => {
@@ -84,8 +89,8 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
                 actionsMargin='large'
                 fullHeight={false}
                 actions={
-                    <SANForm form={form} onSubmit={onSubmit}>
-                        <SANFormItem
+                    <ESForm form={form} onSubmit={onSubmit}>
+                        <ESFormItem
                             name='password'
                             rules={[
                                 {
@@ -110,8 +115,8 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
                                 component={ESInput.Password}
                                 placeholder={t('auth.newPassword')}
                             />
-                        </SANFormItem>
-                        <SANFormItem
+                        </ESFormItem>
+                        <ESFormItem
                             name='passwordConfirm'
                             rules={[
                                 {
@@ -135,7 +140,7 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
                                     'auth.sendResetPassword.confirmPassword'
                                 )}
                             />
-                        </SANFormItem>
+                        </ESFormItem>
 
                         <SANButton
                             htmlType='submit'
@@ -159,7 +164,7 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
                         >
                             {t('auth.accessAccount')}
                         </SANButton>
-                    </SANForm>
+                    </ESForm>
                 }
             />
             <RMFooter mt='xxl' />
@@ -169,7 +174,7 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
 
 const enhance = compose(
     withRouter,
-    withSANForm
+    withESForm
 )
 
 export default enhance(FLXResetPasswordPage)
