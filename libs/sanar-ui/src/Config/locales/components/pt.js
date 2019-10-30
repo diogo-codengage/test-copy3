@@ -167,5 +167,10 @@ export default {
     },
     footer: {
         helpButton: 'Precisa de ajuda?'
+    },
+    cardSpecialty: {
+        access: 'Acessar',
+        you: 'Você',
+        others: 'Outros'
     }
 }
