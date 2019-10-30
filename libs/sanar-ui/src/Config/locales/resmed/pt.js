@@ -11,8 +11,9 @@ export default {
     },
     auth: {
         accessAccount: 'Acessar conta',
+        hello: 'Olá, futuro residente!',
         signInDescription:
-            'Sua conta é seu portal de acesso a cursos e todas as ferramentas necessárias para impulsionar a sua carreira',
+            'Seja bem-vindo(a) à plataforma de estudos da Sanar Residência Médica. Aqui você terá acesso à todos os conteúdos e informações para se preparar para a prova de Residência. Bons estudos!',
         keepMeLoggedIn: 'Manter logado',
         forgotPassword: 'Esqueci minha senha',
         login: 'Entrar',

@@ -21,8 +21,17 @@
             flex-direction: column;
             justify-content: center;
 
-            &--description {
+            &--description,
+            &--title {
                 text-align: center;
+            }
+
+            &--title {
+                margin-bottom: @margin-md;
+                color: @grey-solid-8;
+            }
+
+            &--description {
                 margin-bottom: @margin-xl + @margin-md !important;
             }
 

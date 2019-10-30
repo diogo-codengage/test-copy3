@@ -79,6 +79,7 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
             image={imageMarketing}
             marketing={marketing}
             terms={terms}
+            title={t('auth.hello')}
             description={t('auth.signInDescription')}
             header={<ESBrandHeader logo={logo} />}
             form={
