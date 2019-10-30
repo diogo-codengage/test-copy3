@@ -25,7 +25,8 @@ const FLXLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
             title: currentMenuTitle,
             onHome: () => history.push('/portal/inicio'),
             context: menuContext,
-            theme: darkMode ? 'dark' : 'primary'
+            theme: darkMode ? 'dark' : 'primary',
+            showContinueBar: false
         }),
         [darkMode, menuContext, currentMenuTitle, menuRef, history]
     )
@@ -40,6 +41,7 @@ const FLXLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
 
     return (
         <SANLayout
+            showContinueBar={false}
             FooterProps={FooterProps}
             MenuProps={MenuProps}
             darkMode={darkMode}

@@ -18,29 +18,17 @@ export const MainMenuProvider = ({ children }) => {
     const [theme, setTheme] = useState('primary')
     const [context, setContext] = useState(null)
     const [position, setPosition] = useState('left')
-    const [showClose, setShowClose] = useState()
     const [showContinueBar, setShowContinueBar] = useState(false)
-    const [staticToolbar, setStaticToolbar] = useState(false)
     const { width } = useWindowSize()
 
     useEffect(() => {
         setPosition(width <= 1024 ? 'bottom' : 'left')
-        setShowContinueBar(width <= 1024 && context !== 'classroom')
-        setToggle(
-            (toggle && width < 1024) ||
-                (width >= 1365 && context !== 'classroom')
-        ),
-            [width]
-        setStaticToolbar(width >= 1025 && width <= 1365)
-        setShowClose(width <= 1365)
     }, [width])
 
     useEffect(() => {
         if (context === 'classroom') {
             setToggle(false)
             setShowContinueBar(false)
-        } else if (width >= 1365) {
-            setToggle(true)
         }
     }, [context])
 
@@ -50,8 +38,6 @@ export const MainMenuProvider = ({ children }) => {
         setTheme,
         toggle,
         setToggle,
-        showClose,
-        staticToolbar,
         showContinueBar,
         setShowContinueBar,
         width,
