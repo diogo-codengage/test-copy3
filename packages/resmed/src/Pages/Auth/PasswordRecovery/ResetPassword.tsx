@@ -83,7 +83,6 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
                 header={<ESBrandHeader logo={logo} />}
                 actionsMargin='large'
                 fullHeight={false}
-                hideImage={false}
                 actions={
                     <SANForm form={form} onSubmit={onSubmit}>
                         <SANFormItem

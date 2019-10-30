@@ -64,7 +64,6 @@ const FLXSendPasswordRecoveryPage: React.FC<IProps> = ({ form, history }) => {
                 image={searching}
                 actionsMargin='large'
                 fullHeight={false}
-                hideImage={false}
                 actions={
                     <SANForm form={form} onSubmit={onSubmit}>
                         <SANFormItem

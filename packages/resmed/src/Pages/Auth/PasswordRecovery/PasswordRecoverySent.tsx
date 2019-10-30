@@ -27,7 +27,6 @@ const FLXPasswordRecoverySent: React.FC<RouteComponentProps> = ({
                 image={image}
                 header={<ESBrandHeader logo={logo} />}
                 fullHeight={false}
-                hideImage={false}
                 actions={
                     <>
                         <SANTypography mb='md' level={6}>
