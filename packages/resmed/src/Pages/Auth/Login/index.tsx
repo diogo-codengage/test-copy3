@@ -1,8 +1,7 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import { useApolloClient } from '@apollo/react-hooks'
 
 import ESSignInForm from 'sanar-ui/dist/Components/Organisms/SignInForm'
 import ESAuthTemplate from 'sanar-ui/dist/Components/Templates/Auth'
@@ -16,14 +15,13 @@ import logo from 'Assets/images/brand/logo.svg'
 import sanar from 'Assets/images/brand/sanar.svg'
 import imageMarketing from 'Assets/images/auth/marketing.png'
 
-import { login, getCognitoUser } from 'Config/AWSCognito'
+import { login } from 'Config/AWSCognito'
 
 const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
-    const client = useApolloClient()
     const [keepMeLoggedIn, setKeepMeLoggedIn] = useState(false)
 
-    const action = () => history.push('/portal')
+    const action = () => history.push('/inicio')
 
     const onKeepMeLoggedIn = () => {
         setKeepMeLoggedIn(old => !old)
@@ -57,23 +55,6 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
         }),
         [t]
     )
-
-    useEffect(() => {
-        const cognitoUser = getCognitoUser()
-
-        if (!!cognitoUser) {
-            cognitoUser.getSession((_, session) => {
-                if (session.isValid()) {
-                    history.push('/portal')
-                }
-            })
-        }
-        return () => {
-            client.cache.reset()
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
     return (
         <ESAuthTemplate
             image={imageMarketing}

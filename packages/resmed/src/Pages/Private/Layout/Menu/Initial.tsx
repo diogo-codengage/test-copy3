@@ -17,35 +17,35 @@ const RMMenuInitial: React.FC = () => {
     return (
         <SANNavigationList>
             <SANNavigationListItem
-                to='/portal/inicio'
+                to='/inicio/inicio'
                 icon={<SANEvaIcon name='home-outline' color='default' />}
                 onClick={onCloseMenu}
                 dataTestid='rm-menu__go-to--home'
                 title={t('mainMenu.initial.begin')}
             />
             <SANNavigationListItem
-                to='/portal/banco-questoes/filtro'
+                to='/inicio/banco-questoes/filtro'
                 icon={<SANEvaIcon name='edit-outline' color='default' />}
                 onClick={onCloseMenu}
                 dataTestid='rm-menu__go-to--practiceArea'
                 title={t('mainMenu.initial.practiceArea')}
             />
             <SANNavigationListItem
-                to='/portal/desempenho'
+                to='/inicio/desempenho'
                 icon={<SANEvaIcon name='pie-chart-outline' color='default' />}
                 onClick={onCloseMenu}
                 dataTestid='rm-menu__go-to--performance'
                 title={t('mainMenu.initial.performance')}
             />
             <SANNavigationListItem
-                to='/portal/lives'
+                to='/inicio/lives'
                 icon={<SANEvaIcon name='play-circle-outline' color='default' />}
                 onClick={onCloseMenu}
                 dataTestid='rm-menu__go-to--lives'
                 title={t('mainMenu.initial.lives')}
             />
             <SANNavigationListItem
-                to='/portal/cronograma'
+                to='/inicio/cronograma'
                 icon={<SANEvaIcon name='calendar-outline' color='default' />}
                 onClick={onCloseMenu}
                 dataTestid='rm-menu__go-to--schedule'

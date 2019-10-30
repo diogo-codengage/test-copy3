@@ -83,5 +83,13 @@ export default {
     logout: {
         message: 'Tem certeza que deseja sair da conta agora?',
         signOut: 'Sair da Conta'
+    },
+    home: {
+        general: {
+            title: 'Visão Geral'
+        },
+        about: {
+            title: 'Sobre o Curso'
+        }
     }
 }
