@@ -4,6 +4,7 @@ import typeIconPrimaryFlowchart from './images/type-icons/primary/flowchart.svg'
 import typeIconPrimaryMentalchart from './images/type-icons/primary/mentalchart.svg'
 import typeIconPrimaryQuestion from './images/type-icons/primary/question.svg'
 import typeIconPrimaryVideo from './images/type-icons/primary/video.svg'
+import typeIconPrimaryCourse from './images/type-icons/primary/course.svg'
 
 import logoLight from './images/logos/logo-light.svg'
 import logoDark from './images/logos/logo-dark.svg'
@@ -27,6 +28,7 @@ export {
     typeIconPrimaryMentalchart,
     typeIconPrimaryQuestion,
     typeIconPrimaryVideo,
+    typeIconPrimaryCourse,
     logoLight,
     logoDark,
     changePassword,

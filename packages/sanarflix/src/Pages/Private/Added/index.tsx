@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { withRouter } from 'react-router'
 import { SANPage } from '@sanar/components'
 
+import FLXSearch from 'Components/Search'
 import FLXAddedFilter from './Filter'
 import FLXAddedList from './List'
 import { FLXAddedProvider } from './Context'
@@ -21,6 +22,7 @@ const FLXAddedPage = ({ history }) => {
                 }}
                 HeaderProps={{
                     onBack: () => history.goBack(),
+                    extra: <FLXSearch />,
                     SessionTitleProps: {
                         title: t('added.title')
                     }

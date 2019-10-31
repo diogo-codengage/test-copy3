@@ -24,12 +24,12 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
         if (!search || search.length < 4) return
         try {
             const {
-                data: { globalSearchAux }
+                data: { globalSearch }
             } = await client.query({
                 query: GET_GLOBAL_SEARCH_SUGGEST,
                 variables: { limit: 5, value: search }
             })
-            const data = globalSearchAux.data.map(item => ({
+            const data = globalSearch.data.map(item => ({
                 ...item,
                 onClick: () =>
                     history.push(`/portal/busca?pesquisa=${item.title}`)

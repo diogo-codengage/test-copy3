@@ -11,6 +11,7 @@ import {
     typeIconPrimaryMentalchart,
     typeIconPrimaryQuestion,
     typeIconPrimaryVideo,
+    typeIconPrimaryCourse,
     logoLight,
     logoDark,
     changePassword,
@@ -212,7 +213,8 @@ export const createTheme = ({
                 flowchart: typeIconPrimaryFlowchart,
                 mentalmap: typeIconPrimaryMentalchart,
                 question: typeIconPrimaryQuestion,
-                video: typeIconPrimaryVideo
+                video: typeIconPrimaryVideo,
+                course: typeIconPrimaryCourse
             }
         }
     },
