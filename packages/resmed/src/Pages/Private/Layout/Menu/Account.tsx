@@ -23,7 +23,7 @@ import { logout } from 'Config/AWSCognito'
 
 const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
-    const { setMe } = useAuthContext()
+    const { setMe, me } = useAuthContext()
     const { onCloseMenu, setMenuTab } = useLayoutContext()
     const [visibleLogout, setVisibleLogout] = useState(false)
 
@@ -53,8 +53,9 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     {t('mainMenu.back')}
                 </SANButton>
                 <SANAvatarMenu
-                    src='https://carroecarros.com.br/wp-content/uploads/2015/09/nova-honda-biz-125-2015-2016-2.jpg'
-                    title={'Diogo Biz'}
+                    loading={!me}
+                    src={me.profilePicture}
+                    title={me.name}
                 />
             </SANBox>
             <SANTypography variant='overline' px='md' pt='xl' color='white.5'>

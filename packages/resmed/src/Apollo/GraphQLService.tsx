@@ -29,6 +29,7 @@ const onError = ({
 
 const client = new ApolloClient({
     uri: process.env.REACT_APP_URL_API,
+    // uri: 'http://192.168.0.154:4002/graphql',
     onError,
     request: (operation: Operation) =>
         operation.setContext({
