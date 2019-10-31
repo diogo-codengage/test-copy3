@@ -34,9 +34,12 @@ const FLXLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
     const FooterProps = useMemo(
         () => ({
             ...defaultFooterProps,
+            HelpButton: {
+                onClick: () => history.push('/inicio/central-ajuda')
+            },
             darkMode
         }),
-        [darkMode]
+        [darkMode, history]
     )
 
     return (

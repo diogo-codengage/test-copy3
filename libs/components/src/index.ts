@@ -86,6 +86,7 @@ import { SANPage } from 'Components/Templates/Page'
 import { SANProfile } from 'Components/Page/Profile'
 import { SANError404 } from 'Components/Page/Error404'
 import { SANError500 } from 'Components/Page/Error500'
+import { SANHelpCenter } from 'Components/Page/HelpCenter'
 import { SANChangePassword } from 'Components/Page/ChangePassword'
 import { SANSupport } from 'Components/Organisms/Support'
 import {
@@ -198,5 +199,6 @@ export {
     SANError500,
     SANGenericError,
     SANErrorBoundary,
-    SANCardSpecialty
+    SANCardSpecialty,
+    SANHelpCenter
 }

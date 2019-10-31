@@ -74,6 +74,8 @@ export default {
             management: 'Gerenciamento',
             myData: 'Meus dados',
             changePassword: 'Trocar minha senha',
+            help: 'Ajuda',
+            helpCenter: 'Central de ajuda',
             otherLinks: 'Outros links',
             termsOfUse: 'Termos de Uso',
             privacyPolicy: 'Política de Privacidade',

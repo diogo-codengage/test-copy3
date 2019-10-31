@@ -35,13 +35,10 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
     const fetchMe = async () => {
         try {
             const {
-                data: { me },
-                errors
+                data: { me }
             } = await client.query({ query: GET_ME })
 
-            if (!!errors) {
-                setMe(me)
-            }
+            setMe(me)
         } catch {
             logout({ callback: onLogout })
         }
@@ -53,7 +50,7 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
         if (!!cognitoUser) {
             cognitoUser.getSession((err: any, session: CognitoUserSession) => {
                 if (session.isValid()) {
-                    fetchMe()
+                    // fetchMe()
                 } else {
                     logout({ callback: onLogout })
                 }

@@ -10,6 +10,7 @@ import RMLayoutProvider from 'Pages/Private/Layout/Context'
 import RMLayout from 'Pages/Private/Layout'
 
 const RMHome = React.lazy(() => import('Pages/Private/Home'))
+const RMHelpCenter = React.lazy(() => import('Pages/Private/HelpCenter'))
 
 const RMPrivatePages: React.FC<RouteComponentProps> = ({
     history,
@@ -29,6 +30,10 @@ const RMPrivatePages: React.FC<RouteComponentProps> = ({
                     <Suspense fallback={<RMSplashLoader size='flexible' />}>
                         <Switch>
                             <Route path={`${url}/curso`} component={RMHome} />
+                            <Route
+                                path={`${url}/central-ajuda`}
+                                component={RMHelpCenter}
+                            />
                             <Route
                                 path={[`${url}/`, `${url}`]}
                                 render={() => <Redirect to={`${url}/curso`} />}

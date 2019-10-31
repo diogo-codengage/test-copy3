@@ -1,16 +1,17 @@
 import React from 'react'
 
 import { useTranslation } from 'react-i18next'
+import { withRouter, RouteComponentProps } from 'react-router'
 
 import {
     SANLayoutFooter,
-    ISANLayoutFooterProps,
     SANSpace,
     SANFlexbox,
     SANTypography,
     SANButton,
     SANBox
 } from '@sanar/components'
+import { ISANLayoutFooterProps } from '@sanar/components/dist/Components/Organisms/Layout'
 
 import logoFooter from 'Assets/images/brand/logo-grey.svg'
 
@@ -47,15 +48,17 @@ export const defaultFooterProps: ISANLayoutFooterProps = {
     phone: '0800 327-0035',
     email: 'atendimento@editorasanar.com.br',
     copyright: <Copyright />,
-    attendance: 'Atendimento de Seg. a Sex. das 09h às 18h',
-    HelpButton: {
-        onClick: () => console.log('HelpButton')
-    }
+    attendance: 'Atendimento de Seg. a Sex. das 09h às 18h'
 }
 
-const RMFooter = props => {
+interface IProps extends RouteComponentProps, Partial<ISANLayoutFooterProps> {}
+
+const RMFooter = ({ history, ...props }: IProps) => {
     const customProps: ISANLayoutFooterProps = {
         ...defaultFooterProps,
+        HelpButton: {
+            onClick: () => history.push('/inicio/central-ajuda')
+        },
         ...props
     }
     return (
@@ -65,4 +68,4 @@ const RMFooter = props => {
     )
 }
 
-export default RMFooter
+export default withRouter(RMFooter)

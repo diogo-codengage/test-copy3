@@ -76,6 +76,18 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     title={t('mainMenu.account.changePassword')}
                 />
             </SANNavigationList>
+
+            <SANTypography variant='overline' px='md' color='white.5'>
+                {t('mainMenu.account.help')}
+            </SANTypography>
+            <SANNavigationList>
+                <SANNavigationListItem
+                    data-testid='flix-menu-navigation__my-account__help-center'
+                    title={t('mainMenu.account.helpCenter')}
+                    icon={<SANEvaIcon name='lock-outline' color='default' />}
+                    to='/inicio/central-ajuda'
+                />
+            </SANNavigationList>
             <SANDivider mx='md' my='lg' bg='white.1' />
 
             <SANTypography variant='overline' px='md' color='white.5'>
@@ -83,16 +95,16 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
             </SANTypography>
             <SANNavigationList>
                 <SANNavigationListItem
-                    dataTestid='flix_menu_my-account__go_to--terms-of-use'
+                    data-testid='flix_menu_my-account__go_to--terms-of-use'
                     title={t('mainMenu.account.termsOfUse')}
                 />
                 <SANNavigationListItem
-                    dataTestid='flix_menu_my-account__go_to--privacy-policy'
+                    data-testid='flix_menu_my-account__go_to--privacy-policy'
                     title={t('mainMenu.account.privacyPolicy')}
                 />
                 <SANNavigationListItem
                     onClick={() => setVisibleLogout(true)}
-                    dataTestid='flix_menu_my-account__go_to--leave-account'
+                    data-testid='flix_menu_my-account__go_to--leave-account'
                     title={t('mainMenu.account.signOut')}
                 />
             </SANNavigationList>

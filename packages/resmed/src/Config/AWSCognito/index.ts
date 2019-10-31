@@ -37,13 +37,14 @@ const getAccessToken = () => {
     const cognitoUser = getCognitoUser()
 
     if (!!cognitoUser) {
-        cognitoUser.getSession((err: any, session: CognitoUserSession) => {
-            if (session.isValid()) {
-                console.log(session.getIdToken().getJwtToken())
-                return session.getIdToken().getJwtToken()
+        return cognitoUser.getSession(
+            (err: any, session: CognitoUserSession) => {
+                if (session.isValid()) {
+                    return session.getIdToken().getJwtToken()
+                }
+                cognitoUser.refreshSession(session.getRefreshToken(), () => {})
             }
-            cognitoUser.refreshSession(session.getRefreshToken(), () => {})
-        })
+        )
     }
 }
 

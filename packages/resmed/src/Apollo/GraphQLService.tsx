@@ -30,7 +30,7 @@ const onError = ({
 const client = new ApolloClient({
     uri: process.env.REACT_APP_URL_API,
     onError,
-    request: async (operation: Operation) =>
+    request: (operation: Operation) =>
         operation.setContext({
             headers: {
                 Authorization: getAccessToken()
