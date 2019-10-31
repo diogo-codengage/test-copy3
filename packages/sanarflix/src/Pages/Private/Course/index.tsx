@@ -34,6 +34,7 @@ import {
     ICourseCounters
 } from 'Apollo/Course/Queries/course'
 
+import FLXSearch from 'Components/Search'
 import { events } from 'Config/Segment'
 
 import Themes from './Themes'
@@ -187,6 +188,7 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
                     <SANBox displayFlex flexDirection='column' flex='1'>
                         <SANHeader
                             onBack={() => history.goBack()}
+                            extra={<FLXSearch />}
                             SessionTitleProps={{
                                 title: course.name
                             }}

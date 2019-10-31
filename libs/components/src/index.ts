@@ -89,6 +89,10 @@ import { SANError500 } from 'Components/Page/Error500'
 import { SANChangePassword } from 'Components/Page/ChangePassword'
 import { SANSupport } from 'Components/Organisms/Support'
 import {
+    SANSearchResultList,
+    SANSearchResultItem
+} from 'Components/Organisms/SearchResult'
+import {
     SANSnackbarProvider,
     useSnackbarContext
 } from 'Components/Molecules/Snackbar'
@@ -183,6 +187,8 @@ export {
     SANSnackbarProvider,
     useSnackbarContext,
     SANSupport,
+    SANSearchResultList,
+    SANSearchResultItem,
     SANInputMask,
     SANTooltip,
     SANInputPassword,

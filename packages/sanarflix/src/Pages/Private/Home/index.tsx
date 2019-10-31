@@ -7,6 +7,7 @@ import { SANRow, SANCol, SANLayoutContainer, SANBox } from '@sanar/components'
 
 import FLXViewedCourses from './ViewedCourses'
 import FLXAddedContents from './AddedContents'
+import FLXHomeSearch from './Search'
 
 import FLXBanner from 'Components/Banner'
 import { events } from 'Config/Segment'
@@ -30,6 +31,7 @@ const FLXHome = ({ history }: RouteComponentProps) => {
 
     return (
         <SANBox bg='grey-solid.1' flex='1'>
+            <FLXHomeSearch />
             <SANLayoutContainer pt={8}>
                 <SANRow gutter={16}>
                     <SANCol xs={24} md={12}>
