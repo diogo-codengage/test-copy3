@@ -26,7 +26,7 @@ interface IOwner {
 }
 
 interface IPicture {
-    small: {
+    original: {
         url: string
     }
 }
@@ -68,7 +68,7 @@ export const GET_GLOBAL_SEARCH = gql`
                 type
                 isNew
                 image: cover_pictures {
-                    small {
+                    original {
                         url
                     }
                 }

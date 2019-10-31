@@ -120,7 +120,7 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
                             globalSearch && !!globalSearch.data.length
                                 ? globalSearch.data.map(e => ({
                                       ...e,
-                                      image: e.image && e.image.small.url
+                                      image: e.image && e.image.original.url
                                   }))
                                 : []
                         return (

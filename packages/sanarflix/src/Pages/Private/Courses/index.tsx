@@ -13,6 +13,7 @@ import {
 
 import { GET_TOPICS, ITopics, ITopic } from 'Apollo/Courses/Queries/topics'
 
+import FLXSearch from 'Components/Search'
 import { events } from 'Config/Segment'
 
 import FLXCoursesList from './List'
@@ -82,6 +83,7 @@ const FLXCourses: React.FC<RouteComponentProps> = ({ history }) => {
             <SANBox displayFlex flexDirection='column' flex='1'>
                 <SANHeader
                     onBack={() => history.goBack()}
+                    extra={<FLXSearch />}
                     SessionTitleProps={{
                         title: t('courses.title'),
                         subtitle: t('courses.subtitle')
