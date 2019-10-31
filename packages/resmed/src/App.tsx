@@ -23,7 +23,7 @@ const RMApp: React.FC<RouteComponentProps> = ({ history, location }) => {
     const { me, setMe } = useAuthContext()
     const [loading, setLoading] = useState(true)
 
-    const path = useMemo(() => (!!me ? '/portal/inicio' : '/auth/entrar'), [me])
+    const path = useMemo(() => (!!me ? '/inicio' : '/auth/entrar'), [me])
 
     useEffect(() => {
         const cognitoUser = getCognitoUser()
@@ -34,7 +34,7 @@ const RMApp: React.FC<RouteComponentProps> = ({ history, location }) => {
                     setMe(undefined)
                 } else {
                     const { pathname } = location
-                    pathname.includes('auth') && history.push('/portal/inicio')
+                    pathname.includes('auth') && history.push('/inicio')
                 }
                 setLoading(false)
             })
@@ -54,7 +54,7 @@ const RMApp: React.FC<RouteComponentProps> = ({ history, location }) => {
             <SANScrollTop>
                 <Switch>
                     <Route path='/auth' component={RMAuth} />
-                    <RMPrivateRoute path='/portal' component={RMPrivatePages} />
+                    <RMPrivateRoute path='/inicio' component={RMPrivatePages} />
                     <Route render={() => <Redirect to={path} />} />
                 </Switch>
             </SANScrollTop>

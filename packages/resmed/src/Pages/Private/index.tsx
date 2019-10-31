@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps, Switch, Route, Redirect } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import { SANErrorBoundary } from '@sanar/components'
@@ -9,11 +9,17 @@ import RMSplashLoader from 'Components/SplashLoader'
 import RMLayoutProvider from 'Pages/Private/Layout/Context'
 import RMLayout from 'Pages/Private/Layout'
 
-const RMPrivatePages: React.FC<RouteComponentProps> = ({ history }) => {
+const RMHome = React.lazy(() => import('Pages/Private/Home'))
+const RMHelpCenter = React.lazy(() => import('Pages/Private/HelpCenter'))
+
+const RMPrivatePages: React.FC<RouteComponentProps> = ({
+    history,
+    match: { url }
+}) => {
     const { t } = useTranslation('resmed')
 
     const reload = () => {
-        history.push('/portal/inicio')
+        history.push('/inicio')
         window.location.reload()
     }
 
@@ -22,7 +28,17 @@ const RMPrivatePages: React.FC<RouteComponentProps> = ({ history }) => {
             <RMLayoutProvider>
                 <RMLayout>
                     <Suspense fallback={<RMSplashLoader size='flexible' />}>
-                        INICIO
+                        <Switch>
+                            <Route path={`${url}/curso`} component={RMHome} />
+                            <Route
+                                path={`${url}/central-ajuda`}
+                                component={RMHelpCenter}
+                            />
+                            <Route
+                                path={[`${url}/`, `${url}`]}
+                                render={() => <Redirect to={`${url}/curso`} />}
+                            />
+                        </Switch>
                     </Suspense>
                 </RMLayout>
             </RMLayoutProvider>

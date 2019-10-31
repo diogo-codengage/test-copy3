@@ -23,7 +23,7 @@ const FLXLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
             logo,
             ref: menuRef,
             title: currentMenuTitle,
-            onHome: () => history.push('/portal/inicio'),
+            onHome: () => history.push('/inicio'),
             context: menuContext,
             theme: darkMode ? 'dark' : 'primary',
             showContinueBar: false
@@ -34,9 +34,12 @@ const FLXLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
     const FooterProps = useMemo(
         () => ({
             ...defaultFooterProps,
+            HelpButton: {
+                onClick: () => history.push('/inicio/central-ajuda')
+            },
             darkMode
         }),
-        [darkMode]
+        [darkMode, history]
     )
 
     return (

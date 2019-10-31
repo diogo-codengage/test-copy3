@@ -74,6 +74,8 @@ export default {
             management: 'Gerenciamento',
             myData: 'Meus dados',
             changePassword: 'Trocar minha senha',
+            help: 'Ajuda',
+            helpCenter: 'Central de ajuda',
             otherLinks: 'Outros links',
             termsOfUse: 'Termos de Uso',
             privacyPolicy: 'Política de Privacidade',
@@ -83,5 +85,13 @@ export default {
     logout: {
         message: 'Tem certeza que deseja sair da conta agora?',
         signOut: 'Sair da Conta'
+    },
+    home: {
+        general: {
+            title: 'Visão Geral'
+        },
+        about: {
+            title: 'Sobre o Curso'
+        }
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { theme, ifProp } from 'styled-tools'
-import { space } from 'styled-system'
+import { space, SpaceProps } from 'styled-system'
 import { useTranslation } from 'react-i18next'
 
 import { SANLayoutContainer } from '.'
@@ -87,7 +87,7 @@ const ContactInfo: React.FC<{
     )
 }
 
-export type ISANLayoutFooterProps = {
+export interface ISANLayoutFooterProps extends SpaceProps {
     logo: string
     copyright?: React.ReactNode
     phone?: string

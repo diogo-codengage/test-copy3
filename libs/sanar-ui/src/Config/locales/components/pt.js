@@ -184,5 +184,29 @@ export default {
         access: 'Acessar',
         you: 'Você',
         others: 'Outros'
+    },
+    helpCenter: {
+        header: {
+            title: 'Central de Ajuda',
+            subtitle:
+                'Encontre aqui respostas para as principais dúvidas sobre a plataforma',
+            placeholder: 'Como podemos ajudar?'
+        },
+        platform: {
+            title: 'Sobre a plataforma',
+            subtitle: 'Perguntas sobre o acesso e o funcionamento da plataforma'
+        },
+        courses: {
+            title: 'Sobre o curso e as aulas',
+            subtitle: 'Perguntas relacionadas ao curso e às aulas'
+        },
+        cancellation: {
+            title: 'Sobre cancelamento',
+            subtitle: 'Perguntas sobre cancelamentos de cursos'
+        },
+        others: {
+            title: 'Outros tipos de perguntas',
+            subtitle: 'Perguntas sobre temas gerais e problemas técnicos'
+        }
     }
 }
