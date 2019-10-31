@@ -33,13 +33,14 @@ const getCognitoUser = () => {
 }
 
 // The primary method for verifying/starting a CoginotID session
-const verifySession = () => {
+const getAccessToken = () => {
     const cognitoUser = getCognitoUser()
 
     if (!!cognitoUser) {
         cognitoUser.getSession((err: any, session: CognitoUserSession) => {
-            if (err) {
-                return
+            if (session.isValid()) {
+                console.log(session.getIdToken().getJwtToken())
+                return session.getIdToken().getJwtToken()
             }
             cognitoUser.refreshSession(session.getRefreshToken(), () => {})
         })
@@ -247,7 +248,7 @@ const resetPassword = ({
 export {
     getUserPool,
     getUserAttributes,
-    verifySession,
+    getAccessToken,
     getCognitoUser,
     logout,
     login,

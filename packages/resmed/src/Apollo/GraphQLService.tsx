@@ -3,6 +3,8 @@ import ApolloClient, { Operation } from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { ErrorResponse } from 'apollo-link-error'
 
+import { getAccessToken } from 'Config/AWSCognito'
+
 const onError = ({
     graphQLErrors,
     forward,
@@ -11,9 +13,9 @@ const onError = ({
 }: ErrorResponse) => {
     if (graphQLErrors) {
         graphQLErrors.forEach(error => {
-            if (error.message.includes('AUTH_REQUIRED')) {
+            if (error.message.statusCode === 401) {
                 localStorage.clear()
-                window.location.hash = '/#/auth'
+                window.location.hash = '/#/auth/entrar'
             }
         })
         return forward(operation)
@@ -21,7 +23,7 @@ const onError = ({
 
     if (networkError) {
         console.error('[Network error]: %o', networkError)
-        window.location.hash = '/#/portal/erro'
+        window.location.hash = '/#/inicio/erro'
     }
 }
 
@@ -31,7 +33,7 @@ const client = new ApolloClient({
     request: async (operation: Operation) =>
         operation.setContext({
             headers: {
-                Authorization: ''
+                Authorization: getAccessToken()
             }
         })
 } as any)

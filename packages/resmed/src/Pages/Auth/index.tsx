@@ -34,6 +34,11 @@ const RMAuth: React.FC<RouteComponentProps> = ({ match: { url } }) => {
                     })
                 }
             })
+        } else {
+            setSession({
+                loading: false,
+                isValid: false
+            })
         }
         return () => {
             client.cache.reset()
