@@ -50,13 +50,13 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
         resourceId: resource,
         resourceType: type,
         course,
-        theme
+        themeId
     }) => {
         const content = {
             resource,
             type,
             course,
-            theme
+            themeId
         }
         if (type.toLocaleLowerCase() === 'course') {
             const link = `/portal/curso/${resource}`
@@ -66,7 +66,7 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
             })
             history.push(`/portal/curso/${resource}`)
         } else {
-            const link = `/portal/sala-aula/${course.id}/${theme.id}/${resources[type]}/${resource}`
+            const link = `/portal/sala-aula/${course.id}/${themeId}/${resources[type]}/${resource}`
             window.analytics.track(events['Search Result Clicked'].event, {
                 link,
                 content

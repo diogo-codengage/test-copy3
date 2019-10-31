@@ -44,7 +44,7 @@ export interface IItem {
     timeInSeconds?: number
     image?: string
     course?: IOwner
-    theme?: IOwner
+    themeId?: string
     totalThemes?: number
     type: IType
     isNew?: boolean

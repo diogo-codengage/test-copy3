@@ -39,8 +39,8 @@ export interface ISearch {
     timeInSeconds: number
     type: IType
     isNew: boolean
+    themeId: number
     course?: IOwner
-    theme?: IOwner
     image?: IPicture
     professorName?: string
     totalThemes?: number
@@ -54,8 +54,8 @@ export interface IGlobalSearch {
 }
 
 export const GET_GLOBAL_SEARCH = gql`
-    query GlobalSearch($value: String!, $limit: Int, $skip: Int, $type: Type) {
-        globalSearch(value: $value, limit: $limit, skip: $skip, type: $type) {
+    query GlobalSearch($value: String!, $limit: Int, $skip: Int) {
+        globalSearch(value: $value, limit: $limit, skip: $skip) {
             count
             data {
                 resourceTitle: resource_title
@@ -72,10 +72,7 @@ export const GET_GLOBAL_SEARCH = gql`
                         url
                     }
                 }
-                theme {
-                    id
-                    name
-                }
+                themeId: theme_id
                 course {
                     id
                     name
