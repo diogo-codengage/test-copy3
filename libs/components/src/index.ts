@@ -98,8 +98,10 @@ import {
     useSnackbarContext
 } from 'Components/Molecules/Snackbar'
 import { SANCardSpecialty } from 'Components/Molecules/CardSpecialty'
+import { SANCommonBadge } from 'Components/Atoms/CommonBadge'
 
 export {
+    SANCommonBadge,
     SANProgress,
     SANButton,
     SANButtonGroup,
