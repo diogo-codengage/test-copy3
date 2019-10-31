@@ -1,10 +1,15 @@
 import gql from 'graphql-tag'
 
+interface IPicture {
+    original: {
+        url: string
+    }
+}
 export interface ICourse {
     id: string
     name: string
-    cover_picture_url: string
     progress_percentage: number
+    cover_pictures: IPicture
 }
 
 export interface ICourses {
@@ -28,8 +33,12 @@ export const GET_COURSES = gql`
             data {
                 id
                 name
-                cover_picture_url
                 progress_percentage
+                cover_pictures {
+                    original {
+                        url
+                    }
+                }
             }
             count
         }

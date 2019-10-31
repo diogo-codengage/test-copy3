@@ -9,6 +9,7 @@ import ESButton from '../../Atoms/Button'
 const ESAuthTemplate = ({
     className,
     description,
+    title,
     form,
     image,
     marketing = {},
@@ -26,6 +27,14 @@ const ESAuthTemplate = ({
                         )}
 
                         <div className='es-auth-template__input-data__content'>
+                            {title && (
+                                <ESTypography
+                                    level={4}
+                                    className='es-auth-template__input-data__content--title'
+                                >
+                                    {title}
+                                </ESTypography>
+                            )}
                             {description && (
                                 <ESTypography
                                     variant='subtitle1'
@@ -63,8 +72,10 @@ const ESAuthTemplate = ({
                             href={marketing.link}
                             color='white'
                             bold
+                            size='small'
                             variant='outlined'
                             target='_blank'
+                            uppercase
                         >
                             {marketing.linkDescription}
                         </ESButton>
@@ -78,6 +89,7 @@ const ESAuthTemplate = ({
 ESAuthTemplate.propTypes = {
     className: PropTypes.string,
     description: PropTypes.string,
+    title: PropTypes.string,
     form: PropTypes.node.isRequired,
     image: PropTypes.string,
     terms: PropTypes.node,

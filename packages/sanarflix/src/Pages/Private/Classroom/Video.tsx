@@ -55,13 +55,17 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
     const playerRef = useRef<any>()
     const { handleBookmark, handleProgress } = useClassroomContext()
     const { onOpenMenu, navigations } = useLayoutContext()
-    const [videoError, seVideoError] = useState()
-    const [videoReady, seVideoReady] = useState()
+    const [videoError, setVideoError] = useState()
+    const [videoReady, setVideoReady] = useState()
     const [willStart, setWillStart] = useState(true)
 
-    const handleVideoReady = () => seVideoReady(true)
+    const handleVideoReady = () => {
+        setVideoReady(true)
+    }
 
-    const handleVideoError = () => seVideoError(true)
+    const handleVideoError = () => {
+        setVideoError(true)
+    }
 
     const handleRating = async ({ value, resourceId }) => {
         try {
@@ -77,9 +81,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                     rating: { value, type: 'numeric' }
                 }
             })
-        } catch (err) {
-            console.error(err)
-        }
+        } catch {}
     }
 
     const handlePlay = () => {
@@ -118,7 +120,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
     }, [])
 
     const onProgress = percentage => {
-        if (!videoError) {
+        if (!videoError && videoReady) {
             const timeInSeconds =
                 playerRef && playerRef.current
                     ? playerRef.current.position()

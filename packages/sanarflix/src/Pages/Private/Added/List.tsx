@@ -31,7 +31,8 @@ const updateAddedContents = (prev: any, { fetchMoreResult }) => {
 const resources = {
     Document: 'documento',
     Video: 'video',
-    Question: 'quiz'
+    Question: 'questoes',
+    Quiz: 'questoes'
 }
 
 const FLXAddedList = ({ history }: RouterProps) => {
@@ -55,6 +56,11 @@ const FLXAddedList = ({ history }: RouterProps) => {
     }
 
     const onNavigate = (item: ILastAddedContent) => {
+        console.log(
+            `/portal/sala-aula/${item.theme.course.id}/${item.theme.id}/${
+                resources[item.resource_type]
+            }/${item.resource_id}`
+        )
         history.push(
             `/portal/sala-aula/${item.theme.course.id}/${item.theme.id}/${
                 resources[item.resource_type]

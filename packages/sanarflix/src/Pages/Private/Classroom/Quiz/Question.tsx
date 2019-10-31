@@ -57,12 +57,16 @@ const FLXClassRoomQuizQuestion = ({
         stopwatchRef,
         setStats,
         questionsMap,
-        setQuestionsMap
+        setQuestionsMap,
+        pauseStopwatch,
+        startStopwatch
     } = useClassroomQuizContext()
     const { handleBookmark, handleProgress } = useClassroomContext()
     const [visible, setVisible] = useState(false)
     const [loading, setLoading] = useState(false)
     const [responses, setResponses] = useState<any[]>([])
+
+    const courseId = window.location.hash.split('/')[3]
 
     const goToNext = () => {
         !!stopwatchRef.current &&
@@ -70,6 +74,7 @@ const FLXClassRoomQuizQuestion = ({
         questions[index + 1]
             ? history.push(`./${questions[index + 1].id}`)
             : history.push('./finalizado')
+        startStopwatch()
     }
 
     const handleJump = () => {
@@ -83,11 +88,14 @@ const FLXClassRoomQuizQuestion = ({
     const handleNext = () => goToNext()
 
     const handleConfirm = async alternativeId => {
+        pauseStopwatch()
         setLoading(true)
         handleProgress({
-            resource: { id: questionId, type: 'Question' },
-            percentage: ((index + 1) * 100) / questions.length,
-            courseId: ''
+            resource: { id: window.location.hash.split('/')[6], type: 'Quiz' },
+            percentage: parseInt(
+                (((index + 1) * 100) / questions.length).toString()
+            ),
+            courseId
         })
 
         try {

@@ -6,6 +6,14 @@ export const CREATE_PROGRESS = gql`
             progress {
                 percentage
             }
+            theme {
+                id
+                progress_percentage
+            }
+            course {
+                id
+                progress_percentage
+            }
         }
     }
 `

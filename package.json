@@ -91,7 +91,11 @@
         "@sanar/components:build": "yarn workspace @sanar/components build",
         "@sanar/components:start:dev": "yarn workspace @sanar/components start:dev",
         "@sanar/components:start:dev:storybook": "yarn workspace @sanar/components start:dev:storybook",
-        "@sanar/utils:build": "yarn workspace @sanar/utils build"
+        "@sanar/utils:build": "yarn workspace @sanar/utils build",
+        "resmed:start": "yarn workspace resmed start",
+        "resmed:build:development": "yarn workspace resmed build:development",
+        "resmed:build:staging": "yarn workspace resmed build:staging",
+        "resmed:build:production": "yarn workspace resmed build:production"
     },
     "husky": {
         "hooks": {

@@ -33,6 +33,12 @@ export const defaultColors = {
 
     // brand
     primary: '#255ad0',
+    'primary-1': '#d6fff4',
+    'primary-2': '#9ef0da',
+    'primary-3': '#4bcca9',
+    'primary-4': '#099e76',
+    'primary-5': '#066b50',
+
     secondary: '#edc26d',
 
     // actions

@@ -176,5 +176,13 @@ export default {
             keyWithCount: '{{count}} tema',
             keyWithCount_plural: '{{count}} temas'
         }
+    },
+    footer: {
+        helpButton: 'Precisa de ajuda?'
+    },
+    cardSpecialty: {
+        access: 'Acessar',
+        you: 'Você',
+        others: 'Outros'
     }
 }

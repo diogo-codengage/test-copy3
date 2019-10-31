@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { useQuery } from '@apollo/react-hooks'
 import { useTranslation } from 'react-i18next'
+import styled from 'styled-components'
 
 import {
     SANForm,
@@ -18,17 +19,84 @@ import {
     SANTextArea,
     SANSlider,
     useSnackbarContext,
-    SANDivider
+    SANDivider,
+    SANTypography
 } from '@sanar/components'
+import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
 import { GET_CANCEL_REASONS } from 'Apollo/SignmentManagement/Query/cancel-reasons'
 import signInByEmail from 'Pages/Auth/SignIn/signIn'
 import { useAuthContext } from 'Hooks/auth'
 import { graduatePeriod } from './staticData'
 
+import rmLogo from 'Assets/images/brand/rm.svg'
+import rmLogoVertical from 'Assets/images/brand/rm-vertical.svg'
+
 interface IProps {
     onSubmit?: any
     destiny?: 'pause' | 'cancel'
+}
+
+const RMLink = styled(SANBox)`
+    color: #53d4b8;
+    font-weight: bold;
+
+    &:hover {
+        color: #099e76;
+    }
+`
+
+const RMCard = () => {
+    const { width } = useWindowSize()
+    const { t } = useTranslation('sanarflix')
+
+    return (
+        <SANBox
+            mt='2'
+            mb='6'
+            border='1px solid'
+            borderColor='#53D4B8'
+            borderRadius={1}
+            display={{ lg: 'flex' }}
+        >
+            <SANBox
+                bg='#53D4B8'
+                p={{ xs: '2', lg: '4' }}
+                display='flex'
+                justifyContent='center'
+            >
+                <SANBox
+                    as='img'
+                    src={width < 992 ? rmLogo : rmLogoVertical}
+                    alt='rm-logo'
+                />
+            </SANBox>
+            <SANBox
+                px='4'
+                py={{ _: 2, lg: 0 }}
+                display='flex'
+                alignItems='center'
+                justifyContent='center'
+            >
+                <SANTypography>
+                    <SANBox
+                        as='span'
+                        dangerouslySetInnerHTML={{
+                            __html: t('sigmentManagement.selectCancelReasonRM')
+                        }}
+                    />
+                    <RMLink
+                        ml='2'
+                        as='a'
+                        href='https://www.sanarmed.com/residenciamedica/'
+                        target='_blanck'
+                    >
+                        {t('global.knowMore')}
+                    </RMLink>
+                </SANTypography>
+            </SANBox>
+        </SANBox>
+    )
 }
 
 const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
@@ -37,6 +105,9 @@ const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
         const createSnackbar = useSnackbarContext()
         const { me } = useAuthContext()
         const [loading, setLoading] = useState(false)
+        const [cancelCause, setCancelCause] = useState()
+
+        const onChangeCancelCause = value => setCancelCause(value)
 
         const onSubmit = async e => {
             e.preventDefault()
@@ -230,7 +301,7 @@ const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
                         <>
                             <SANFormItem
                                 name='cause'
-                                mb={3}
+                                mb={cancelCause && 3}
                                 label={t(
                                     'sigmentManagement.selectCancelReasonLabel'
                                 )}
@@ -245,6 +316,7 @@ const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
                                 ]}
                             >
                                 <SANSelect
+                                    onChange={onChangeCancelCause}
                                     size='large'
                                     placeholder={t(
                                         'sigmentManagement.selectCancelReason'
@@ -261,26 +333,32 @@ const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
                                         ))}
                                 </SANSelect>
                             </SANFormItem>
-                            <SANFormItem
-                                name='causeObservation'
-                                rules={[
-                                    {
-                                        required: true,
-                                        whitespace: true,
-                                        message: t(
-                                            'sanarui:formValidateMessages.required'
-                                        )
-                                    }
-                                ]}
-                            >
-                                <SANTextArea
-                                    size='large'
-                                    rows='3'
-                                    placeholder={t(
-                                        'sigmentManagement.causeObservation'
-                                    )}
-                                />
-                            </SANFormItem>
+                            {cancelCause ? (
+                                cancelCause === 'residencePreparation' ? (
+                                    <RMCard />
+                                ) : (
+                                    <SANFormItem
+                                        name='causeObservation'
+                                        rules={[
+                                            {
+                                                required: true,
+                                                whitespace: true,
+                                                message: t(
+                                                    'sanarui:formValidateMessages.required'
+                                                )
+                                            }
+                                        ]}
+                                    >
+                                        <SANTextArea
+                                            size='large'
+                                            rows='3'
+                                            placeholder={t(
+                                                'sigmentManagement.causeObservation'
+                                            )}
+                                        />
+                                    </SANFormItem>
+                                )
+                            ) : null}
                         </>
                     ) : (
                         <span />

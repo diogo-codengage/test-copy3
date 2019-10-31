@@ -1,34 +1,81 @@
 import React, { useState, useEffect } from 'react'
-import { Route, Redirect } from 'react-router-dom'
-import { getInstance } from 'Config/AWSCognito'
+import {
+    Route,
+    Redirect,
+    withRouter,
+    RouteComponentProps
+} from 'react-router-dom'
+import { useApolloClient } from '@apollo/react-hooks'
 
-type FLXPrivateRouteProps = {
+import { useAuthContext } from 'Hooks/auth'
+import { getInstance } from 'Config/AWSCognito'
+import { GET_ME } from 'Apollo/User/Queries/me'
+
+interface FLXPrivateRouteProps extends RouteComponentProps {
     component: React.ElementType
     path: string
 }
 
 const FLXPrivateRoute: React.FC<FLXPrivateRouteProps> = ({
     component: Component,
+    history,
     ...rest
 }) => {
+    const client = useApolloClient()
+    const { setMe } = useAuthContext()
     const [logged, setLogged] = useState(true)
 
+    const logout = () => {
+        const config = getInstance()
+        const user = config.userPool.getCurrentUser()
+        if (!!user) {
+            user.signOut()
+            setMe(undefined)
+            history.push('/auth/signin')
+        }
+    }
+
+    const fetchMe = async () => {
+        try {
+            const {
+                data: { me },
+                errors
+            } = await client.query({ query: GET_ME })
+
+            if (!!errors) {
+                throw new Error()
+            } else {
+                setMe(me)
+            }
+        } catch {
+            logout()
+        }
+    }
+
     useEffect(() => {
-        getInstance().user.getSession((err, result) => {
-            if (!result) {
+        getInstance().user.getSession((_, result) => {
+            if (!!result) {
+                fetchMe()
+            } else {
+                logout()
                 setLogged(false)
             }
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
         <Route
             {...rest}
             render={props =>
-                logged ? <Component {...props} /> : <Redirect to='/auth' />
+                logged ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect to='/auth/signin' />
+                )
             }
         />
     )
 }
 
-export default FLXPrivateRoute
+export default withRouter(FLXPrivateRoute)

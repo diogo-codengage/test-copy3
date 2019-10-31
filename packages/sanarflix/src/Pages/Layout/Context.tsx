@@ -112,7 +112,7 @@ const FLXLayoutProvider = withRouter(({ history, children }) => {
         defaultNavigations
     )
     const [menuState, setMenuState] = useState(false)
-    const [context, setContext] = useState(false)
+    const [context, setContext] = useState('general')
     const [lastAccessed, setLastAccessed] = useState()
 
     const [footerProps, setFooterProps] = useState({})
@@ -131,10 +131,6 @@ const FLXLayoutProvider = withRouter(({ history, children }) => {
     }
 
     const handleClassroomBack = () => {
-        dispatch({
-            type: 'changeMenuTab',
-            payload: initialState
-        })
         history.push(`/portal/curso/${window.location.hash.split('/')[3]}`)
     }
 
@@ -161,7 +157,11 @@ const FLXLayoutProvider = withRouter(({ history, children }) => {
             case 0:
                 dispatch({
                     type: 'changeMenuTab',
-                    payload: initialState
+                    payload: {
+                        ...initialState,
+                        darkMode: false,
+                        menuContext: 'general'
+                    }
                 })
                 break
             case 1:

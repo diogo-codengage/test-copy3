@@ -63,18 +63,14 @@
                 }
             }
         }
-
-        // .es-main-menu__sidebar-left {
-        //     background: red !important;
-        // }
     }
 
     &__content {
         z-index: 1000;
         background-color: inherit;
-        width: 304px;
         height: ~'calc(100% + 8px)';
         overflow: hidden;
+        width: 304px;
         transition: transform 0.3s ease-in-out;
 
         // Sempre que não houver espaço deixará "scrollavel", mesmo em desktop.
@@ -208,13 +204,6 @@
         background-color: @grey-solid-9;
         & .es-typography__heading--h5 {
             color: @white-9;
-        }
-    }
-
-    @media (min-width: 1365px) {
-        &__content {
-            position: fixed;
-            left: 56px;
         }
     }
 }

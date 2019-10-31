@@ -34,8 +34,6 @@ import {
     ICourseCounters
 } from 'Apollo/Course/Queries/course'
 
-import FLXSearch from 'Components/Search'
-
 import { events } from 'Config/Segment'
 
 import Themes from './Themes'
@@ -101,8 +99,7 @@ const getCardProps = (counters: ICourseCounters) => {
                     makeCardProps({
                         counters,
                         image: classSvg,
-                        item,
-                        suffix: 'h'
+                        item
                     })
                 )
                 break
@@ -148,7 +145,7 @@ const Cards = ({ counters }: { counters: ICourseCounters }) => {
                 slidesToScroll={1}
                 initialSlide={0}
                 arrows
-                infinite
+                infinite={false}
                 dots={false}
                 draggable
                 lazyLoad
@@ -190,7 +187,6 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
                     <SANBox displayFlex flexDirection='column' flex='1'>
                         <SANHeader
                             onBack={() => history.goBack()}
-                            extra={<FLXSearch />}
                             SessionTitleProps={{
                                 title: course.name
                             }}

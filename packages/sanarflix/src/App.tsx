@@ -1,33 +1,62 @@
-import React, { Suspense } from 'react'
-import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import React, { Suspense, useMemo, useEffect, useState } from 'react'
+import {
+    Switch,
+    Route,
+    Redirect,
+    withRouter,
+    RouteComponentProps
+} from 'react-router-dom'
 
 import { SANScrollTop } from '@sanar/components'
 
 import FLXPrivateRoute from './Pages/Private/PrivateRoute'
+import FLXSplashLoader from './Components/SplashLoader'
 
 import './App.less'
-import FLXSplashLoader from './Components/SplashLoader'
+
+import { useAuthContext } from 'Hooks/auth'
+import { getInstance } from 'Config/AWSCognito'
 
 const FLXAuth = React.lazy(() => import('./Pages/Auth'))
 const FLXPrivatePages = React.lazy(() => import('./Pages/Private'))
 
-const App: React.FC = () => {
+const App: React.FC<RouteComponentProps> = ({ history, location }) => {
+    const { me, setMe } = useAuthContext()
+    const [loading, setLoading] = useState(true)
+
+    const path = useMemo(() => (!!me ? '/portal/inicio' : '/auth/signin'), [me])
+
+    useEffect(() => {
+        getInstance().user.getSession((_, result) => {
+            if (!result) {
+                setMe(undefined)
+            } else {
+                const { pathname } = location
+                pathname.includes('auth') && history.push('/portal/inicio')
+            }
+            setLoading(false)
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    if (loading) {
+        return <FLXSplashLoader />
+    }
+
     return (
         <Suspense fallback={<FLXSplashLoader />}>
-            <Router>
-                <SANScrollTop>
-                    <Switch>
-                        <Route path='/auth' component={FLXAuth} />
-                        <FLXPrivateRoute
-                            path='/portal'
-                            component={FLXPrivatePages}
-                        />
-                        <Route render={() => <Redirect to='/auth' />} />
-                    </Switch>
-                </SANScrollTop>
-            </Router>
+            <SANScrollTop>
+                <Switch>
+                    <Route path='/auth' component={FLXAuth} />
+                    <FLXPrivateRoute
+                        path='/portal'
+                        component={FLXPrivatePages}
+                    />
+                    <Route render={() => <Redirect to={path} />} />
+                </Switch>
+            </SANScrollTop>
         </Suspense>
     )
 }
 
-export default App
+export default withRouter(App)

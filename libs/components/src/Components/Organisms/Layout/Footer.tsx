@@ -2,6 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { theme, ifProp } from 'styled-tools'
 import { space } from 'styled-system'
+import { useTranslation } from 'react-i18next'
 
 import { SANLayoutContainer } from '.'
 import { SANFlexbox } from '../../Atoms/Flexbox'
@@ -11,7 +12,7 @@ import { SANSpace } from '../../Atoms/Space'
 import facebook from '../../../Assets/images/social/facebook.svg'
 import instagram from '../../../Assets/images/social/instagram.svg'
 import youtube from '../../../Assets/images/social/youtube.svg'
-import { SANButton } from '../../Atoms/Button'
+import { SANButton, ISANButtonProps } from '../../Atoms/Button'
 import { SANBox } from '../../Atoms/Box'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
 
@@ -26,6 +27,7 @@ const SANLayoutFooterStyled = styled.footer`
 `
 
 const Infos = styled.div`
+    white-space: nowrap;
     padding: ${theme('space.xxl')} 0;
     border-top: 1px solid
         ${ifProp('darkMode', theme('colors.white.2'), theme('colors.grey.2'))};
@@ -95,6 +97,8 @@ export type ISANLayoutFooterProps = {
     instagram?: string
     youtube?: string
     darkMode?: boolean
+    attendance?: string
+    HelpButton?: ISANButtonProps
 }
 
 const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
@@ -107,8 +111,12 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
     youtube: youtubeProp,
     copyright,
     darkMode,
+    HelpButton,
+    attendance,
     ...props
 }) => {
+    const { t } = useTranslation('components')
+
     return (
         <SANLayoutFooterStyled {...{ darkMode, ...props }}>
             <Infos {...{ darkMode }}>
@@ -130,10 +138,10 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
                             flexDirection={{ _: 'column', lg: 'row' }}
                         >
                             <SANSpace mb={{ xs: 4, md: 0 }} mr={{ lg: 48 }}>
-                                <img src={logo} alt='sanarflix-logo-footer' />
+                                <SANBox as='img' src={logo} alt='logo-footer' />
                             </SANSpace>
                             <SANBox
-                                displayFlex
+                                display='flex'
                                 mt={{ _: 4, lg: 0 }}
                                 alignItems='center'
                                 flexDirection={{
@@ -141,6 +149,20 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
                                     md: 'row'
                                 }}
                             >
+                                {HelpButton && (
+                                    <SANButton
+                                        size='xsmall'
+                                        uppercase
+                                        bold
+                                        color={darkMode ? 'light' : 'default'}
+                                        variant='outlined'
+                                        mb={{ md: '0', _: 'xs' }}
+                                        mr={{ md: 'sm', _: '0' }}
+                                        {...HelpButton}
+                                    >
+                                        {t('footer.helpButton')}
+                                    </SANButton>
+                                )}
                                 {phoneProp && (
                                     <ContactInfo
                                         info={phoneProp}
@@ -164,6 +186,11 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
                                 )}
                             </SANBox>
                         </SANBox>
+                        {!!attendance && (
+                            <SANTypography fontSize='sm'>
+                                {attendance}
+                            </SANTypography>
+                        )}
                         <Social
                             alignItems='center'
                             justifyContent='center'
@@ -174,10 +201,13 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
                                     href={facebookProp}
                                     target='_blank'
                                     size='small'
-                                    alt='facebook'
                                     variant='text'
                                 >
-                                    <img src={facebook} />
+                                    <SANBox
+                                        as='img'
+                                        src={facebook}
+                                        alt='facebook'
+                                    />
                                 </SANButton>
                             )}
                             {instagramProp && (
@@ -185,10 +215,13 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
                                     href={instagramProp}
                                     target='_blank'
                                     size='small'
-                                    alt='instagram'
                                     variant='text'
                                 >
-                                    <img src={instagram} />
+                                    <SANBox
+                                        as='img'
+                                        src={instagram}
+                                        alt='instagram'
+                                    />
                                 </SANButton>
                             )}
                             {youtubeProp && (
@@ -196,10 +229,13 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
                                     href={youtubeProp}
                                     target='_blank'
                                     size='small'
-                                    alt='youtube'
                                     variant='text'
                                 >
-                                    <img src={youtube} />
+                                    <SANBox
+                                        as='img'
+                                        src={youtube}
+                                        alt='youtube'
+                                    />
                                 </SANButton>
                             )}
                         </Social>

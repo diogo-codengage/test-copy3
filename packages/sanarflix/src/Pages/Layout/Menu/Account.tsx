@@ -29,7 +29,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
     const client = useApolloClient()
     const { t } = useTranslation('sanarflix')
     const snackbar = useSnackbarContext()
-    const { me } = useAuthContext()
+    const { me, setMe } = useAuthContext()
     const { onCloseMenu, setMenuTab } = useLayoutContext()
     const [visibleLogout, setVisibleLogout] = useState(false)
     const [visibleSupport, setVisibleSupport] = useState(false)
@@ -39,7 +39,8 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
         const user = config.userPool.getCurrentUser()
         if (!!user) {
             user.signOut()
-            history.push('/')
+            setMe(undefined)
+            history.push('/auth/signin')
         }
     }
 

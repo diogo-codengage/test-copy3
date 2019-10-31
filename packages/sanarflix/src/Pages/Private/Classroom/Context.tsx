@@ -22,6 +22,7 @@ interface IDataProgress {
             | 'Video'
             | 'Document'
             | 'Download'
+            | 'Quiz'
     }
 }
 

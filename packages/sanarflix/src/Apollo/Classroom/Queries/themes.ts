@@ -35,7 +35,6 @@ export const GET_THEMES = gql`
                 course {
                     id
                     name
-                    knowledge_area
                     progress_percentage
                 }
             }

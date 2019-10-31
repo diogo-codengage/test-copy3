@@ -92,7 +92,7 @@ export const GET_MODULE = gql`
                                     images {
                                         data {
                                             id
-                                            sized_images {
+                                            sizedImages {
                                                 id
                                                 small {
                                                     id

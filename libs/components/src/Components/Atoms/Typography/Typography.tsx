@@ -6,6 +6,9 @@ import {
     border,
     color,
     typography,
+    position,
+    layout,
+    PositionProps,
     SpaceProps,
     ColorProps,
     LayoutProps,
@@ -17,14 +20,15 @@ import {
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import { SANStyled, SANElement } from '../../../Theme/createTheme'
 
-type ISANTypographyProps = PropTypes.InferProps<
+export type ISANTypographyProps = PropTypes.InferProps<
     typeof ESTypography['propTypes']
 > &
     SpaceProps &
     LayoutProps &
     FlexboxProps &
     ColorProps &
-    TypographyProps
+    TypographyProps &
+    PositionProps
 
 const SANTypography: SANElement<ISANTypographyProps> = SANStyled(ESTypography)`
     &&& {
@@ -33,7 +37,9 @@ const SANTypography: SANElement<ISANTypographyProps> = SANStyled(ESTypography)`
             flexbox,
             border,
             color,
-            typography
+            typography,
+            position,
+            layout
         )}
     }
 `

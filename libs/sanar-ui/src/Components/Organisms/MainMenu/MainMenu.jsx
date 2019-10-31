@@ -13,8 +13,6 @@ import ESButton from '../../Atoms/Button'
 import MainMenuContentHeader from './MainMenuContentHeader'
 import ESCardContinueCourse from '../../Atoms/CardContinueCourse/CardContinueCourse'
 
-const breakpoint = 1365
-
 const SideButton = ({ name, ...props }) => {
     const { theme } = useMainMenuContext()
     return (
@@ -53,7 +51,6 @@ const ESMainMenu = forwardRef(
             logo,
             onHome,
             context: contextProp,
-            onOpenOrClose,
             continueCourseProps,
             onToggle
         },
@@ -65,10 +62,8 @@ const ESMainMenu = forwardRef(
             setTheme,
             toggle,
             setToggle,
-            staticToolbar,
             showContinueBar,
             setShowContinueBar,
-            width,
             context,
             setContext
         } = useMainMenuContext()
@@ -97,21 +92,8 @@ const ESMainMenu = forwardRef(
             close: !toggle
         })
 
-        useEffect(() => {
-            setContext(contextProp)
-            handleOpenOrClose(false)
-        }, [contextProp])
-
-        useEffect(() => {
-            setTheme(themeProp)
-        }, [themeProp])
-
-        useEffect(() => {
-            setShowContinueBar(showContinueBarProp)
-        }, [showContinueBarProp])
-
         const initialClick = e => {
-            if (width <= breakpoint || context === 'classroom') {
+            if (context === 'classroom') {
                 handleOpenOrClose()
             } else {
                 handleOpenOrClose(true)
@@ -140,17 +122,22 @@ const ESMainMenu = forwardRef(
         }
 
         const handleOpenOrClose = (action = !toggle) => {
-            if (width >= breakpoint && context != 'classroom') {
-                setToggle(true)
-                return
-            }
             setToggle(action)
             !!onToggle && onToggle(action)
         }
 
         useEffect(() => {
-            onOpenOrClose(toggle)
-        }, [toggle])
+            setContext(contextProp)
+            handleOpenOrClose(false)
+        }, [contextProp])
+
+        useEffect(() => {
+            setTheme(themeProp)
+        }, [themeProp])
+
+        useEffect(() => {
+            setShowContinueBar(showContinueBarProp)
+        }, [showContinueBarProp])
 
         useImperativeHandle(ref, () => ({
             setToggle: handleOpenOrClose,
@@ -160,10 +147,7 @@ const ESMainMenu = forwardRef(
         return (
             <RemoveScroll
                 className={classesWrapper}
-                enabled={
-                    (toggle && width <= breakpoint) ||
-                    (toggle && context === 'classroom')
-                }
+                enabled={toggle && context === 'classroom'}
             >
                 <div className={classes}>
                     <div className={classesContent}>
@@ -213,12 +197,10 @@ const ESMainMenu = forwardRef(
                             )}
                         </>
                     )}
-                    {(staticToolbar || context === 'classroom') && (
-                        <div
-                            onClick={() => handleOpenOrClose(false)}
-                            className='backdrop'
-                        />
-                    )}
+                    <div
+                        onClick={() => handleOpenOrClose(false)}
+                        className='backdrop'
+                    />
                 </div>
             </RemoveScroll>
         )

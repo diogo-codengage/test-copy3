@@ -73,7 +73,7 @@ const Subtitle = () => {
         </>
     )
 }
-
+// 383
 const FLXCancelPage = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
     const {
