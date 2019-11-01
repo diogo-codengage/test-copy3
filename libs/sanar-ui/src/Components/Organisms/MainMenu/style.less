@@ -145,14 +145,6 @@
             height: 100%;
             padding: @padding-md 0;
             position: fixed;
-
-            &--actions {
-                @media (min-width: 1365px) {
-                    button {
-                        cursor: default;
-                    }
-                }
-            }
         }
 
         &-bottom {
@@ -167,6 +159,10 @@
         &-left--actions {
             & > .es-button {
                 margin-bottom: @margin-md;
+
+                &:hover {
+                    background-color: @white-2;
+                }
             }
         }
     }

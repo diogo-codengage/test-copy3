@@ -8,7 +8,7 @@ const RMSendPasswordRecovery = React.lazy(() =>
 const RMPasswordRecoverySent = React.lazy(() =>
     import('./PasswordRecoverySent')
 )
-const FLXResetPassword = React.lazy(() => import('./ResetPassword'))
+const RMResetPassword = React.lazy(() => import('./ResetPassword'))
 
 const RMPasswordRecoveryAlignment = styled.div`
     min-height: 100vh;
@@ -24,7 +24,7 @@ const RMPasswordRecovery: React.FC<RouteComponentProps> = ({
     <RMPasswordRecoveryAlignment>
         <Switch>
             <Route path={`${url}/sucesso`} component={RMPasswordRecoverySent} />
-            <Route path={`${url}/nova`} component={FLXResetPassword} />
+            <Route path={`${url}/nova`} component={RMResetPassword} />
             <Route
                 path={[`${url}/`, `${url}`]}
                 component={RMSendPasswordRecovery}
