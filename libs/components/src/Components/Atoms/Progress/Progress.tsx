@@ -1,7 +1,6 @@
 import React from 'react'
 
 import styled from 'styled-components'
-import { theme } from 'styled-tools'
 
 import { SANTypography, ISANTypographyProps } from '../Typography'
 import { SANBox } from '../Box'
@@ -11,6 +10,7 @@ export interface ISANProgressProps {
     showInfo?: boolean
     InfoProps?: ISANTypographyProps
     color?: any
+    backdrop?: any
 }
 
 const Wrapper = styled.div`
@@ -26,8 +26,7 @@ const Progress = styled(SANBox)`
     position: absolute;
 `
 
-const Background = styled.div`
-    background-color: ${theme('colors.white.3')};
+const Background = styled(SANBox)`
     border-radius: 3px;
     height: 6px;
     width: 100%;
@@ -38,7 +37,8 @@ const SANProgress = ({
     percent,
     showInfo,
     InfoProps,
-    color
+    color,
+    backdrop
 }: ISANProgressProps) => (
     <SANBox display='flex' alignItems='center' width='100%'>
         <Wrapper>
@@ -46,7 +46,7 @@ const SANProgress = ({
                 style={{ width: `${percent}%` }}
                 bg={color || 'primary'}
             />
-            <Background />
+            <Background bg={backdrop || 'white.3'} />
         </Wrapper>
         {showInfo && (
             <SANTypography
