@@ -38,9 +38,9 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
         event.preventDefault()
         setLoading(true)
 
-        try {
-            form.validateFields(async (err, { password }) => {
-                if (!err) {
+        form.validateFields(async (err, { password }) => {
+            if (!err) {
+                try {
                     const verificationCode = params.get('codigo') || ''
                     const email = params.get('email') || ''
 
@@ -50,17 +50,17 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
                         email
                     })
                     history.push('/auth/entrar')
+                } catch (error) {
+                    if (error.message) {
+                        history.push('/auth/recuperar-senha')
+                        createSnackbar({
+                            message: error.message,
+                            theme: 'error'
+                        })
+                    }
                 }
-            })
-        } catch (error) {
-            if (error.message) {
-                history.push('/auth/recuperar-senha')
-                createSnackbar({
-                    message: error.message,
-                    theme: 'error'
-                })
             }
-        }
+        })
 
         setLoading(false)
     }
