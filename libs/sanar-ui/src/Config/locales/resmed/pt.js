@@ -87,7 +87,9 @@ export default {
         signOut: 'Sair da Conta'
     },
     home: {
-        completeness: 'Completude do curso',
+        header: {
+            completeness: 'Completude do curso'
+        },
         general: {
             title: 'Visão Geral',
             subheader: {
