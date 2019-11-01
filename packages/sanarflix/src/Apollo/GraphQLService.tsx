@@ -10,10 +10,9 @@ setInterval(async () => {
     const cognitoUser = config.userPool.getCurrentUser()
     if (cognitoUser) {
         cognitoUser.getSession((_, session) => {
-            cognitoUser.refreshSession(
-                session.getRefreshToken(),
-                (_, s: CognitoUserSession) => {}
-            )
+            if (!session.isValid()) {
+                cognitoUser.refreshSession(session.getRefreshToken(), () => {})
+            }
         })
     }
 }, /* 10 minutes */ 10 * 60 * 1000)
