@@ -23,7 +23,11 @@ const RMGeneral = () => {
 
     return (
         <>
-            <SANBox bg='grey-solid.1' py={{ xs: '8', _: 'xl' }}>
+            <SANBox
+                bg='grey.0'
+                pt={{ xs: '8', _: 'xl' }}
+                pb={{ xs: 'xl', _: '0' }}
+            >
                 <SANLayoutContainer>
                     <SANSessionTitle
                         title={t('home.general.subheader.title')}
