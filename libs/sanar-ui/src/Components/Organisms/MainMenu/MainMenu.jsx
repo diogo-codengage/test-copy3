@@ -96,7 +96,7 @@ const ESMainMenu = forwardRef(
             if (context === 'classroom') {
                 handleOpenOrClose()
             } else {
-                handleOpenOrClose(true)
+                handleOpenOrClose(!toggle)
             }
 
             onInitialClick && onInitialClick(e)

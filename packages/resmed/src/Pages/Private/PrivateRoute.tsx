@@ -68,7 +68,7 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
                 logged ? (
                     <Component {...props} />
                 ) : (
-                    <Redirect to='/auth/signin' />
+                    <Redirect to='/auth/entrar' />
                 )
             }
         />

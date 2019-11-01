@@ -2,7 +2,6 @@ import React, { Suspense, useEffect, useState } from 'react'
 import { Switch, RouteComponentProps, Route, Redirect } from 'react-router-dom'
 import { useApolloClient } from '@apollo/react-hooks'
 
-import FLXSplashLoader from 'Components/SplashLoader'
 import RMSplashLoader from 'Components/SplashLoader'
 
 import { getCognitoUser } from 'Config/AWSCognito'
@@ -55,7 +54,7 @@ const RMAuth: React.FC<RouteComponentProps> = ({ match: { url } }) => {
     }
 
     return (
-        <Suspense fallback={<FLXSplashLoader />}>
+        <Suspense fallback={<RMSplashLoader />}>
             <Switch>
                 <Route path={`${url}/entrar`} component={RMLogin} />
                 <Route
@@ -63,7 +62,8 @@ const RMAuth: React.FC<RouteComponentProps> = ({ match: { url } }) => {
                     component={RMPasswordRecovery}
                 />
                 <Route
-                    path={`${url}/`}
+                    exact
+                    path={[`${url}/`, `${url}`]}
                     render={() => <Redirect to={`${url}/entrar`} />}
                 />
             </Switch>

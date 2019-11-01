@@ -40,12 +40,14 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
 
         try {
             form.validateFields(async (err, { password }) => {
-                const verificationCode = params.get('codigo') || ''
-
                 if (!err) {
+                    const verificationCode = params.get('codigo') || ''
+                    const email = params.get('email') || ''
+
                     await resetPassword({
                         verificationCode,
-                        newPassword: password
+                        newPassword: password,
+                        email
                     })
                     history.push('/auth/entrar')
                 }

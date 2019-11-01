@@ -27,19 +27,18 @@ const RMApp: React.FC<RouteComponentProps> = ({ history, location }) => {
 
     useEffect(() => {
         const cognitoUser = getCognitoUser()
+        const { pathname } = location
 
         if (!!cognitoUser) {
             cognitoUser.getSession((err: any, session: CognitoUserSession) => {
                 if (!session) {
                     setMe(undefined)
                 } else {
-                    const { pathname } = location
-                    pathname.includes('auth') && history.push('/inicio')
+                    pathname.includes('auth/entrar') && history.push('/inicio')
                 }
                 setLoading(false)
             })
         } else {
-            history.push('/auth/entrar')
             setLoading(false)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

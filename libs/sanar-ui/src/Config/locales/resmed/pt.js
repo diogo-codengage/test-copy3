@@ -88,7 +88,16 @@ export default {
     },
     home: {
         general: {
-            title: 'Visão Geral'
+            title: 'Visão Geral',
+            subheader: {
+                title: 'Especialidades',
+                subtitle: 'Escolha qual especialidade quer estudar hoje'
+            },
+            card: {
+                title: 'App Residência Médica',
+                subtitle:
+                    'Baixe o App com mais de 100.000 questões de provas para continuar treinando após o estudo. Baixe já no seu dispositivo:'
+            }
         },
         about: {
             title: 'Sobre o Curso'

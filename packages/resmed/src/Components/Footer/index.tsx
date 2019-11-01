@@ -68,4 +68,4 @@ const RMFooter = ({ history, ...props }: IProps) => {
     )
 }
 
-export default withRouter(RMFooter)
+export default withRouter<IProps>(RMFooter)
