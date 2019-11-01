@@ -1,10 +1,10 @@
 import gql from 'graphql-tag'
 
 export const ANSWER_MUTATION = gql`
-    mutation AnswerQuestion($alternativeIds: String, $questionId: String!) {
+    mutation AnswerQuestion($alternativeId: String!, $questionId: String!) {
         questionAnswer(
             input: {
-                alternative_ids: [$alternativeIds]
+                alternative_ids: [$alternativeId]
                 question_id: $questionId
             }
         ) {
