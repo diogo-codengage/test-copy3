@@ -46,8 +46,8 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
         window.analytics.track(events['Content Searched'].event, {
             term: valueTrim
         })
-        setValue(valueTrim)
-        onSearch(valueTrim)
+        setValue(value)
+        onSearch(value)
     }
 
     const seeMore = () =>
