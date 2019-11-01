@@ -22,7 +22,8 @@ import {
     flowchart,
     mentalmap,
     article,
-    document
+    document,
+    blocked
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -205,6 +206,9 @@ export const createTheme = ({
             article,
             document,
             question
+        },
+        cardSubSpecialty: {
+            blocked
         },
         typeIcons: {
             primary: {
