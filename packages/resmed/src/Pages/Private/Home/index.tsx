@@ -45,6 +45,7 @@ const Header = () => {
                         <SANTypography
                             fontSize={{ md: 'xxl', _: 'lg' }}
                             fontWeight='bold'
+                            color='black'
                             mb={{ md: '0', _: 'md' }}
                         >
                             Extensivo Sanar Residência Médica
