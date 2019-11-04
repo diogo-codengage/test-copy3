@@ -46,19 +46,14 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
     const params: any = new URLSearchParams(location.search)
 
-    const goToResource = ({
-        resourceId: resource,
-        resourceType: type,
-        course,
-        themeId
-    }) => {
+    const goToResource = ({ resourceId: resource, type, course, themeId }) => {
         const content = {
             resource,
             type,
             course,
             themeId
         }
-        if (type.toLocaleLowerCase() === 'course') {
+        if (type.toLowerCase() === 'course') {
             const link = `/portal/curso/${resource}`
             window.analytics.track(events['Search Result Clicked'].event, {
                 link,
