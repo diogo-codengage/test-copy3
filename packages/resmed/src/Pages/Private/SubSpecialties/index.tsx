@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -10,27 +10,15 @@ import {
     SANTypography,
     SANCardSubSpecialty,
     SANRow,
-    SANCol
+    SANCol,
+    SANQuery
 } from '@sanar/components'
 
+import {
+    GET_SUBSPECIALTIES,
+    ISubspecialties
+} from 'Apollo/User/Queries/subspecialties'
 import RMModalThemes from 'Components/ModalThemes'
-
-const arr = [
-    {
-        index: 1
-    },
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    {
-        blocked: true
-    }
-]
 
 const themes = [
     {
@@ -162,6 +150,54 @@ const Progress = ({ percent }) => {
     )
 }
 
+const RMSubspecialties = withRouter<RouteComponentProps>(
+    ({ history }: RouteComponentProps) => {
+        const renderSubspecialty = useCallback(
+            subspecialty => (
+                <SANCol
+                    key={subspecialty.id}
+                    xs={24}
+                    sm={12}
+                    md={12}
+                    lg={8}
+                    mb='xl'
+                >
+                    <SANCardSubSpecialty
+                        blocked={false}
+                        title={subspecialty.name}
+                        progress={{ me: 60, others: 45 }}
+                        continue={{
+                            title: 'Nome da aula exemplo',
+                            index: 3
+                        }}
+                        onClickRight={console.log}
+                        onClickLeft={console.log}
+                    />
+                </SANCol>
+            ),
+            []
+        )
+
+        return (
+            <SANQuery
+                query={GET_SUBSPECIALTIES}
+                options={{ variables: {} }}
+                loaderProps={{ minHeight: '250px', flex: true }}
+            >
+                {({
+                    data: { subspecialties }
+                }: {
+                    data: { subspecialties: ISubspecialties[] }
+                }) => (
+                    <SANRow gutter={24}>
+                        {subspecialties.map(renderSubspecialty)}
+                    </SANRow>
+                )}
+            </SANQuery>
+        )
+    }
+)
+
 const RMSubSpecialties = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
     const [open, setOpen] = useState(false)
@@ -205,23 +241,7 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
                         {t('subspecialties.subheader.title')}
                     </SANTypography>
                 </SANBox>
-                <SANRow gutter={24}>
-                    {arr.map((e: any, i) => (
-                        <SANCol key={i} xs={24} sm={12} md={8} lg={6} mb='xl'>
-                            <SANCardSubSpecialty
-                                blocked={!!e && !!e.blocked}
-                                title='Cirurgia'
-                                progress={{ me: 60, others: 45 }}
-                                continue={{
-                                    title: 'Nome da aula exemplo',
-                                    index: e.index || 3
-                                }}
-                                onClickRight={() => setOpen(true)}
-                                onClickLeft={console.log}
-                            />
-                        </SANCol>
-                    ))}
-                </SANRow>
+                <RMSubspecialties />
             </SANPage>
         </>
     )

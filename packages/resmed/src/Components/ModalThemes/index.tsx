@@ -82,7 +82,9 @@ interface IRMModalThemesProps extends ISANModalProps {
     onContinue: () => void
 }
 
-const renderTheme = (theme, index) => <Item {...theme} index={index + 1} />
+const renderTheme = (theme, index) => (
+    <Item {...theme} index={index + 1} key={index} />
+)
 
 const RMModalThemes = ({
     onContinue,
