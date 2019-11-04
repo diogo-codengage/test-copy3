@@ -208,5 +208,14 @@ export default {
             title: 'Outros tipos de perguntas',
             subtitle: 'Perguntas sobre temas gerais e problemas técnicos'
         }
+    },
+    cardSubSpecialty: {
+        you: 'Você',
+        others: 'Outros',
+        startWith: 'Comerçar por:',
+        start: 'Comerçar',
+        continue: 'Continuar',
+        seeClasses: 'Ver aulas',
+        comingSoon: 'Em breve!'
     }
 }

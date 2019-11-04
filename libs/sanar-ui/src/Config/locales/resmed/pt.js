@@ -37,7 +37,8 @@ export default {
         sendResetPassword: {
             title: 'Troque sua senha',
             subtitle: 'Cadastre uma nova senha preenchendo os campos abaixo:',
-            confirmPassword: 'Confirme sua senha'
+            confirmPassword: 'Confirme sua senha',
+            success: 'Senha redefinida com sucesso!'
         },
         createNewPassword: {
             title: 'Crie uma nova senha',
@@ -87,6 +88,9 @@ export default {
         signOut: 'Sair da Conta'
     },
     home: {
+        header: {
+            completeness: 'Completude do curso'
+        },
         general: {
             title: 'Visão Geral',
             subheader: {
@@ -96,11 +100,22 @@ export default {
             card: {
                 title: 'App Residência Médica',
                 subtitle:
-                    'Baixe o App com mais de 100.000 questões de provas para continuar treinando após o estudo. Baixe já no seu dispositivo:'
+                    'Baixe o App com mais de 100.000 questões de provas para continuar treinando após o estudo.'
             }
         },
         about: {
             title: 'Sobre o Curso'
         }
+    },
+    subspecialties: {
+        header: {
+            completeness: 'Completude'
+        },
+        subheader: {
+            title: 'Áreas de Interesse'
+        }
+    },
+    modalThemes: {
+        continue: 'Continuar de onde parei'
     }
 }

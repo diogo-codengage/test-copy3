@@ -21,6 +21,8 @@ import flowchart from './images/card-course-module-thumbs/flowchart.png'
 import mentalmap from './images/card-course-module-thumbs/mentalmap.png'
 import article from './images/card-course-module-thumbs/article.png'
 
+import blocked from './images/sub-specialty/blocked.svg'
+
 export {
     typeIconPrimaryBook,
     typeIconPrimaryFile,
@@ -39,5 +41,6 @@ export {
     flowchart,
     mentalmap,
     article,
-    document
+    document,
+    blocked
 }

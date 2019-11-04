@@ -29,7 +29,7 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
     location,
     form
 }) => {
-    const { t } = useTranslation('sanarflix')
+    const { t } = useTranslation('resmed')
     const createSnackbar = useSnackbarContext()
     const [loading, setLoading] = useState(false)
     const params = new URLSearchParams(location.search)
@@ -38,9 +38,9 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
         event.preventDefault()
         setLoading(true)
 
-        try {
-            form.validateFields(async (err, { password }) => {
-                if (!err) {
+        form.validateFields(async (err, { password }) => {
+            if (!err) {
+                try {
                     const verificationCode = params.get('codigo') || ''
                     const email = params.get('email') || ''
 
@@ -49,18 +49,22 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
                         newPassword: password,
                         email
                     })
+                    createSnackbar({
+                        message: t('auth.sendResetPassword.success'),
+                        theme: 'success'
+                    })
                     history.push('/auth/entrar')
+                } catch (error) {
+                    if (error.message) {
+                        history.push('/auth/recuperar-senha')
+                        createSnackbar({
+                            message: error.message,
+                            theme: 'error'
+                        })
+                    }
                 }
-            })
-        } catch (error) {
-            if (error.message) {
-                history.push('/auth/recuperar-senha')
-                createSnackbar({
-                    message: error.message,
-                    theme: 'error'
-                })
             }
-        }
+        })
 
         setLoading(false)
     }

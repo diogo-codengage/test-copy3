@@ -36,6 +36,7 @@ const TitleCol = styled(SANCol)`
 `
 
 const Header = () => {
+    const { t } = useTranslation('resmed')
     return (
         <SANBox borderBottom='1px solid' borderColor='grey.0'>
             <SANLayoutContainer py={{ md: '8', _: 'md' }}>
@@ -44,6 +45,7 @@ const Header = () => {
                         <SANTypography
                             fontSize={{ md: 'xxl', _: 'lg' }}
                             fontWeight='bold'
+                            color='black'
                             mb={{ md: '0', _: 'md' }}
                         >
                             Extensivo Sanar Residência Médica
@@ -62,15 +64,19 @@ const Header = () => {
                                     fontWeight='bold'
                                     mr='sm'
                                 >
-                                    Completude do curso
+                                    {t('home.header.completeness')}
                                 </SANTypography>
                                 <SANCommonBadge
-                                    count={100}
+                                    count={45}
                                     suffix='%'
                                     status='warning'
                                 />
                             </SANBox>
-                            <SANProgress percent={100} color='secondary' />
+                            <SANProgress
+                                percent={45}
+                                color='secondary'
+                                backdrop='grey.1'
+                            />
                         </SANBox>
                     </SANCol>
                 </SANRow>

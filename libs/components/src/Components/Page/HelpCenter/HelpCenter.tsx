@@ -46,7 +46,9 @@ const SANHelpCenter = ({
     const renderItem = (item, index) => (
         <SANCollapsePanel
             key={item.title}
-            header={item.title}
+            header={
+                <SANTypography fontWeight='bold'>{item.title}</SANTypography>
+            }
             customKey={`${index}`}
         >
             <SANTypography>

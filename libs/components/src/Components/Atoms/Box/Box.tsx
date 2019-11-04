@@ -42,7 +42,7 @@ export interface ISANBoxProps
         TypographyProps,
         ShadowProps {
     displayFlex?: boolean
-    as?: 'img'
+    as?: keyof JSX.IntrinsicElements | React.ComponentType<any>
     src?: string
     alt?: string
 }

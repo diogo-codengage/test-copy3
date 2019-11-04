@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { useTranslation } from 'react-i18next'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
     SANLayoutContainer,
@@ -18,13 +19,13 @@ import googlePlaySvg from 'Assets/images/app-logos/google-play.svg'
 
 const arr = [0, 1, 2, 3, 4]
 
-const RMGeneral = () => {
+const RMGeneral = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
 
     return (
         <>
             <SANBox
-                bg='grey.0'
+                bg='grey-solid.1'
                 pt={{ xs: '8', _: 'xl' }}
                 pb={{ xs: 'xl', _: '0' }}
             >
@@ -47,7 +48,11 @@ const RMGeneral = () => {
                                     image='https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg'
                                     title='Cirurgia'
                                     progress={{ me: 60, others: 45 }}
-                                    onClick={console.log}
+                                    onClick={() =>
+                                        history.push(
+                                            '/inicio/subespecialidades'
+                                        )
+                                    }
                                 />
                             </SANCol>
                         ))}
@@ -92,10 +97,18 @@ const RMGeneral = () => {
                                 variant='outlined'
                                 color='black'
                                 mr='xl'
+                                href='https://apps.apple.com/br/app/sanar-residência-médica/id1375384328'
+                                target='_blank'
                             >
                                 <SANBox as='img' src={appleSvg} />
                             </SANButton>
-                            <SANButton block variant='outlined' color='black'>
+                            <SANButton
+                                block
+                                variant='outlined'
+                                color='black'
+                                href='https://play.google.com/store/apps/details?id=br.com.editorasanar.residencia&hl=pt_BR'
+                                target='_blank'
+                            >
                                 <SANBox as='img' src={googlePlaySvg} />
                             </SANButton>
                         </SANBox>
@@ -106,4 +119,4 @@ const RMGeneral = () => {
     )
 }
 
-export default RMGeneral
+export default withRouter<RouteComponentProps>(RMGeneral)
