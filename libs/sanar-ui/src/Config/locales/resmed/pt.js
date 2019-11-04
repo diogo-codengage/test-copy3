@@ -117,5 +117,8 @@ export default {
     },
     modalThemes: {
         continue: 'Continuar de onde parei'
+    },
+    main: {
+        errorLoadSubscription: 'Ocorreu um erro ao carregar sua matrícula'
     }
 }
