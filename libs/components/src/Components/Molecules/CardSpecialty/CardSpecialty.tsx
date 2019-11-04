@@ -34,7 +34,6 @@ const SANCardSpecialtyStyled = styled(SANBox)<IStyled>`
 
     &:before {
         content: '';
-        /* opacity: 0.65; */
         border-radius: ${theme('radii.base')};
         position: absolute;
         left: 0;
@@ -47,6 +46,10 @@ const SANCardSpecialtyStyled = styled(SANBox)<IStyled>`
             ${theme('colors.grey.4')}
         );
     }
+`
+
+const TitleStyled = styled(SANTypography)`
+    white-space: nowrap;
 `
 
 const TitleProgress = props => (
@@ -80,7 +83,10 @@ const SANCardSpecialty = ({
             <SANTypography
                 fontSize={{ xs: 'xxl', _: 'lg' }}
                 fontWeight='bold'
+                textAlign='center'
                 color='white.10'
+                ellipsis
+                width='calc(100% - 1px)'
                 zIndex={1}
             >
                 {title}

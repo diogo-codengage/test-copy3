@@ -76,6 +76,9 @@ interface ITheme {
 
 interface IRMModalThemesProps extends ISANModalProps {
     themes: ITheme[]
+    visible: boolean
+    title: string
+    onCancel: () => void
     onContinue: () => void
 }
 

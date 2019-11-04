@@ -39,7 +39,7 @@ const RMPrivatePages: React.FC<RouteComponentProps> = ({
                                     component={RMHome}
                                 />
                                 <Route
-                                    path={`${url}/subespecialidades`}
+                                    path={`${url}/subespecialidades/:id`}
                                     component={RMSubSpecialties}
                                 />
                                 <Route

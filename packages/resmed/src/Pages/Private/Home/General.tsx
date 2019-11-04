@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo, useCallback } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -10,16 +10,75 @@ import {
     SANCardSpecialty,
     SANRow,
     SANCol,
-    SANTypography
+    SANTypography,
+    SANQuery
 } from '@sanar/components'
 import { SANButton } from '@sanar/components/dist/Components/Atoms/Button'
+
+import { GET_SPECIALTIES, ISpecialties } from 'Apollo/User/Queries/specialties'
+import { useAuthContext } from 'Hooks/auth'
 
 import appleSvg from 'Assets/images/app-logos/apple.svg'
 import googlePlaySvg from 'Assets/images/app-logos/google-play.svg'
 
-const arr = [0, 1, 2, 3, 4]
+const RMSpecialties = withRouter<RouteComponentProps>(
+    ({ history }: RouteComponentProps) => {
+        const { subscription } = useAuthContext()
 
-const RMGeneral = ({ history }: RouteComponentProps) => {
+        const courseId = useMemo(
+            () =>
+                !!subscription &&
+                !!subscription.activeCourse &&
+                subscription.activeCourse.id,
+            [subscription]
+        )
+
+        const goTo = (specialtyId: string) => {
+            history.push(`/inicio/subespecialidades/${specialtyId}`)
+        }
+
+        const renderSpecialty = useCallback(
+            specialty => (
+                <SANCol
+                    key={specialty.id}
+                    xs={24}
+                    sm={12}
+                    md={12}
+                    lg={8}
+                    mb='xl'
+                >
+                    <SANCardSpecialty
+                        image={specialty.image}
+                        title={specialty.name}
+                        progress={{ me: 60, others: 45 }}
+                        onClick={() => goTo(specialty.id)}
+                    />
+                </SANCol>
+            ),
+            []
+        )
+
+        return (
+            <SANQuery
+                query={GET_SPECIALTIES}
+                options={{ variables: { courseId }, skip: !courseId }}
+                loaderProps={{ minHeight: '100%', flex: true }}
+            >
+                {({
+                    data: { specialties }
+                }: {
+                    data: { specialties: ISpecialties[] }
+                }) => (
+                    <SANRow gutter={24}>
+                        {specialties.map(renderSpecialty)}
+                    </SANRow>
+                )}
+            </SANQuery>
+        )
+    }
+)
+
+const RMGeneral = () => {
     const { t } = useTranslation('resmed')
 
     return (
@@ -28,35 +87,14 @@ const RMGeneral = ({ history }: RouteComponentProps) => {
                 bg='grey-solid.1'
                 pt={{ xs: '8', _: 'xl' }}
                 pb={{ xs: 'xl', _: '0' }}
+                minHeigth='430px'
             >
                 <SANLayoutContainer>
                     <SANSessionTitle
                         title={t('home.general.subheader.title')}
                         subtitle={t('home.general.subheader.subtitle')}
                     />
-                    <SANRow gutter={24}>
-                        {arr.map(e => (
-                            <SANCol
-                                key={e}
-                                xs={24}
-                                sm={12}
-                                md={12}
-                                lg={8}
-                                mb='xl'
-                            >
-                                <SANCardSpecialty
-                                    image='https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg'
-                                    title='Cirurgia'
-                                    progress={{ me: 60, others: 45 }}
-                                    onClick={() =>
-                                        history.push(
-                                            '/inicio/subespecialidades'
-                                        )
-                                    }
-                                />
-                            </SANCol>
-                        ))}
-                    </SANRow>
+                    <RMSpecialties />
                 </SANLayoutContainer>
             </SANBox>
             <SANBox mt={8} mb={9}>
