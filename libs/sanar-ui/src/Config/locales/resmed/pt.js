@@ -113,5 +113,8 @@ export default {
         subheader: {
             title: 'Áreas de Interesse'
         }
+    },
+    modalThemes: {
+        continue: 'Continuar de onde parei'
     }
 }

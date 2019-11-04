@@ -25,7 +25,7 @@ const RMGeneral = ({ history }: RouteComponentProps) => {
     return (
         <>
             <SANBox
-                bg='grey.0'
+                bg='grey-solid.1'
                 pt={{ xs: '8', _: 'xl' }}
                 pb={{ xs: 'xl', _: '0' }}
             >

@@ -87,7 +87,8 @@ const Blocked = () => {
         () => ({
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            zIndex: 3
         }),
         []
     )
