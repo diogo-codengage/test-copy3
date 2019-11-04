@@ -5,6 +5,8 @@ import {
     ISANSessionTitleProps
 } from 'Components/Atoms/SessionTitle'
 import { SANTypography } from 'Components/Atoms/Typography'
+import { SANProgress } from 'Components/Atoms/Progress'
+import { SANBrandHeader } from 'Components/Atoms/BrandHeader'
 import { SANBanner, ISANBannerProps } from 'Components/Molecules/Banner'
 import { SANCardCourseModule } from 'Components/Molecules/CardCourseModule'
 import { SANCarousel } from 'Components/Molecules/Carousel'
@@ -13,6 +15,7 @@ import { SANHeader } from 'Components/Molecules/Header'
 import {
     SANLayoutContainer,
     SANLayout,
+    SANLayoutFooter,
     ISANLayoutFooterProps
 } from 'Components/Organisms/Layout'
 import {
@@ -83,20 +86,31 @@ import { SANPage } from 'Components/Templates/Page'
 import { SANProfile } from 'Components/Page/Profile'
 import { SANError404 } from 'Components/Page/Error404'
 import { SANError500 } from 'Components/Page/Error500'
+import { SANHelpCenter } from 'Components/Page/HelpCenter'
 import { SANChangePassword } from 'Components/Page/ChangePassword'
 import { SANSupport } from 'Components/Organisms/Support'
+import {
+    SANSearchResultList,
+    SANSearchResultItem
+} from 'Components/Organisms/SearchResult'
 import {
     SANSnackbarProvider,
     useSnackbarContext
 } from 'Components/Molecules/Snackbar'
+import { SANCardSpecialty } from 'Components/Molecules/CardSpecialty'
+import { SANCardSubSpecialty } from 'Components/Molecules/CardSubSpecialty'
+import { SANCommonBadge } from 'Components/Atoms/CommonBadge'
 
 export {
+    SANCommonBadge,
+    SANProgress,
     SANButton,
     SANButtonGroup,
     SANEvaIcon,
     SANSessionTitle,
     ISANSessionTitleProps,
     SANTypography,
+    SANBrandHeader,
     SANBanner,
     ISANBannerProps,
     SANCardCourseModule,
@@ -106,6 +120,7 @@ export {
     SANHeader,
     SANLayoutContainer,
     SANLayout,
+    SANLayoutFooter,
     ISANLayoutFooterProps,
     SANMainMenu,
     SANLeftOff,
@@ -176,6 +191,8 @@ export {
     SANSnackbarProvider,
     useSnackbarContext,
     SANSupport,
+    SANSearchResultList,
+    SANSearchResultItem,
     SANInputMask,
     SANTooltip,
     SANInputPassword,
@@ -184,5 +201,8 @@ export {
     SANError404,
     SANError500,
     SANGenericError,
-    SANErrorBoundary
+    SANErrorBoundary,
+    SANCardSpecialty,
+    SANCardSubSpecialty,
+    SANHelpCenter
 }

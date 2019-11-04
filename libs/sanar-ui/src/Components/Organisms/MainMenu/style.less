@@ -63,18 +63,14 @@
                 }
             }
         }
-
-        // .es-main-menu__sidebar-left {
-        //     background: red !important;
-        // }
     }
 
     &__content {
         z-index: 1000;
         background-color: inherit;
-        width: 304px;
         height: ~'calc(100% + 8px)';
         overflow: hidden;
+        width: 304px;
         transition: transform 0.3s ease-in-out;
 
         // Sempre que não houver espaço deixará "scrollavel", mesmo em desktop.
@@ -149,14 +145,6 @@
             height: 100%;
             padding: @padding-md 0;
             position: fixed;
-
-            &--actions {
-                @media (min-width: 1365px) {
-                    button {
-                        cursor: default;
-                    }
-                }
-            }
         }
 
         &-bottom {
@@ -171,6 +159,10 @@
         &-left--actions {
             & > .es-button {
                 margin-bottom: @margin-md;
+
+                &:hover {
+                    background-color: @white-2;
+                }
             }
         }
     }
@@ -208,13 +200,6 @@
         background-color: @grey-solid-9;
         & .es-typography__heading--h5 {
             color: @white-9;
-        }
-    }
-
-    @media (min-width: 1365px) {
-        &__content {
-            position: fixed;
-            left: 56px;
         }
     }
 }

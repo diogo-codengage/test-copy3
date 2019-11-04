@@ -11,6 +11,7 @@ import {
     typeIconPrimaryMentalchart,
     typeIconPrimaryQuestion,
     typeIconPrimaryVideo,
+    typeIconPrimaryCourse,
     logoLight,
     logoDark,
     changePassword,
@@ -21,7 +22,8 @@ import {
     flowchart,
     mentalmap,
     article,
-    document
+    document,
+    blocked
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -32,6 +34,12 @@ export const defaultColors = {
 
     // brand
     primary: '#255ad0',
+    'primary-1': '#d6fff4',
+    'primary-2': '#9ef0da',
+    'primary-3': '#4bcca9',
+    'primary-4': '#099e76',
+    'primary-5': '#066b50',
+
     secondary: '#edc26d',
 
     // actions
@@ -174,42 +182,48 @@ const defaultZIndices: any = []
 defaultZIndices.sidebar = 1200
 defaultZIndices.modal = 1300
 
-export const createTheme = ({
-    name = 'default',
-    assets = {
-        logo: logoAssets,
-        icons: {
-            logo: {
-                light: logoLight,
-                dark: logoDark
-            },
-            auth: {
-                changePassword
-            },
-            errors: {
-                error404,
-                error500,
-                errorGeneric
-            }
+const assetsDefault = {
+    logo: logoAssets,
+    icons: {
+        logo: {
+            light: logoLight,
+            dark: logoDark
         },
-        cardCourseModuleThumbs: {
-            flowchart,
-            mentalmap,
-            article,
-            document,
-            question
+        auth: {
+            changePassword
         },
-        typeIcons: {
-            primary: {
-                book: typeIconPrimaryBook,
-                file: typeIconPrimaryFile,
-                flowchart: typeIconPrimaryFlowchart,
-                mentalmap: typeIconPrimaryMentalchart,
-                question: typeIconPrimaryQuestion,
-                video: typeIconPrimaryVideo
-            }
+        errors: {
+            error404,
+            error500,
+            errorGeneric
         }
     },
+    cardCourseModuleThumbs: {
+        flowchart,
+        mentalmap,
+        article,
+        document,
+        question
+    },
+    cardSubSpecialty: {
+        blocked
+    },
+    typeIcons: {
+        primary: {
+            book: typeIconPrimaryBook,
+            file: typeIconPrimaryFile,
+            flowchart: typeIconPrimaryFlowchart,
+            mentalmap: typeIconPrimaryMentalchart,
+            question: typeIconPrimaryQuestion,
+            video: typeIconPrimaryVideo,
+            course: typeIconPrimaryCourse
+        }
+    }
+}
+
+export const createTheme = ({
+    name = 'default',
+    assets,
     colors = {},
     breakpoints = defaultBreakpoints,
     borderRadius = defaultBorderRadius,
@@ -279,7 +293,11 @@ export const createTheme = ({
         name,
 
         // theme assets
-        assets,
+        assets: {
+            ...assetsDefault,
+            ...assets,
+            icons: { ...assetsDefault.icons, ...assets.icons }
+        },
 
         // colors
         colors,

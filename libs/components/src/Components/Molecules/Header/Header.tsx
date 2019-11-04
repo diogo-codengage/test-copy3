@@ -9,7 +9,7 @@ import {
     SANSessionTitle,
     ISANSessionTitleProps
 } from '../../Atoms/SessionTitle'
-import { SANRow, SANCol } from '../Grid'
+import { SANRow, SANCol, ISANColProps } from '../Grid'
 import { SANLayoutContainer } from '../../Organisms/Layout'
 
 const SANButtonBack = styled(SANButton)``
@@ -53,12 +53,14 @@ const SANHeaderStyled = styled.div`
 
 export interface ISANHeaderProps {
     SessionTitleProps?: ISANSessionTitleProps
+    ExtraProps?: ISANColProps
     onBack?: () => void
     extra?: React.ReactNode
 }
 
 const SANHeader: React.FC<ISANHeaderProps> = ({
     SessionTitleProps,
+    ExtraProps,
     onBack,
     extra
 }) => {
@@ -93,7 +95,13 @@ const SANHeader: React.FC<ISANHeaderProps> = ({
                         />
                     </SANCol>
                     {!!extra && (
-                        <SANCol mt={{ sm: 0, _: 'md' }} xs={24} sm={12} md={10}>
+                        <SANCol
+                            mt={{ sm: 0, _: 'md' }}
+                            xs={24}
+                            sm={12}
+                            md={10}
+                            {...ExtraProps}
+                        >
                             {extra}
                         </SANCol>
                     )}

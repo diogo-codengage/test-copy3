@@ -164,5 +164,58 @@ export default {
     },
     genericError: {
         message: 'Ocorreu um erro. Tente novamente mais tarde.'
+    },
+    searchResult: {
+        new: 'NOVO!',
+        popular: 'POPULAR!',
+        pages: {
+            keyWithCount: '{{count}} página',
+            keyWithCount_plural: '{{count}} páginas'
+        },
+        themes: {
+            keyWithCount: '{{count}} tema',
+            keyWithCount_plural: '{{count}} temas'
+        }
+    },
+    footer: {
+        helpButton: 'Precisa de ajuda?'
+    },
+    cardSpecialty: {
+        access: 'Acessar',
+        you: 'Você',
+        others: 'Outros'
+    },
+    helpCenter: {
+        header: {
+            title: 'Central de Ajuda',
+            subtitle:
+                'Encontre aqui respostas para as principais dúvidas sobre a plataforma',
+            placeholder: 'Como podemos ajudar?'
+        },
+        platform: {
+            title: 'Sobre a plataforma',
+            subtitle: 'Perguntas sobre o acesso e o funcionamento da plataforma'
+        },
+        courses: {
+            title: 'Sobre o curso e as aulas',
+            subtitle: 'Perguntas relacionadas ao curso e às aulas'
+        },
+        cancellation: {
+            title: 'Sobre cancelamento',
+            subtitle: 'Perguntas sobre cancelamentos de cursos'
+        },
+        others: {
+            title: 'Outros tipos de perguntas',
+            subtitle: 'Perguntas sobre temas gerais e problemas técnicos'
+        }
+    },
+    cardSubSpecialty: {
+        you: 'Você',
+        others: 'Outros',
+        startWith: 'Comerçar por:',
+        start: 'Comerçar',
+        continue: 'Continuar',
+        seeClasses: 'Ver aulas',
+        comingSoon: 'Em breve!'
     }
 }

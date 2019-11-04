@@ -33,25 +33,28 @@ const getCognitoUser = () => {
 }
 
 // The primary method for verifying/starting a CoginotID session
-const verifySession = () => {
+const getAccessToken = () => {
     const cognitoUser = getCognitoUser()
 
     if (!!cognitoUser) {
-        cognitoUser.getSession((err: any, session: CognitoUserSession) => {
-            if (err) {
-                return
+        return cognitoUser.getSession(
+            (err: any, session: CognitoUserSession) => {
+                if (session.isValid()) {
+                    return session.getIdToken().getJwtToken()
+                }
+                cognitoUser.refreshSession(session.getRefreshToken(), () => {})
             }
-            cognitoUser.refreshSession(session.getRefreshToken(), () => {})
-        })
+        )
     }
 }
 
-const logout = () => {
+const logout = ({ callback }: { callback?: Function }) => {
     const cognitoUser = getCognitoUser()
     if (!cognitoUser) {
         return
     }
     cognitoUser.signOut()
+    !!callback && callback()
 }
 
 const login = (email: string, password: string) => {
@@ -147,11 +150,11 @@ const changePassword = ({
     )
 }
 
-const forgotPassword = () => {
-    const cognitoUser = getCognitoUser()
-    if (!cognitoUser) {
-        return
-    }
+const forgotPassword = (email: string) => {
+    const cognitoUser = new CognitoUser({
+        Username: email,
+        Pool: getUserPool()
+    })
 
     return new Promise((resolve, reject) => {
         cognitoUser.forgotPassword({
@@ -194,15 +197,17 @@ const forgotPassword = () => {
 
 const resetPassword = ({
     verificationCode,
-    newPassword
+    newPassword,
+    email
 }: {
     verificationCode: string
     newPassword: string
+    email: string
 }) => {
-    const cognitoUser = getCognitoUser()
-    if (!cognitoUser) {
-        return
-    }
+    const cognitoUser = new CognitoUser({
+        Username: email,
+        Pool: getUserPool()
+    })
 
     return new Promise((resolve, reject) => {
         cognitoUser.confirmPassword(verificationCode, newPassword, {
@@ -246,7 +251,7 @@ const resetPassword = ({
 export {
     getUserPool,
     getUserAttributes,
-    verifySession,
+    getAccessToken,
     getCognitoUser,
     logout,
     login,

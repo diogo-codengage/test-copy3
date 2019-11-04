@@ -3,7 +3,9 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useApolloClient } from '@apollo/react-hooks'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
+
 import { SANSearch } from '@sanar/components'
+import { useThrottle } from '@sanar/utils/dist/Hooks/useThrottle'
 
 import { events } from 'Config/Segment'
 
@@ -22,14 +24,17 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
 
     const onSearch = async search => {
         if (!search || search.length < 4) return
+        window.analytics.track(events['Content Searched'].event, {
+            term: search
+        })
         try {
             const {
-                data: { globalSearchAux }
+                data: { globalSearch }
             } = await client.query({
                 query: GET_GLOBAL_SEARCH_SUGGEST,
                 variables: { limit: 5, value: search }
             })
-            const data = globalSearchAux.data.map(item => ({
+            const data = globalSearch.data.map(item => ({
                 ...item,
                 onClick: () =>
                     history.push(`/portal/busca?pesquisa=${item.title}`)
@@ -38,16 +43,13 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
         } catch {}
     }
 
-    const onChange = value => {
-        const valueTrim = value.trim()
-        if (!valueTrim.length) {
+    const onChange = e => {
+        const value = e.target.value
+        if (!value.trim()) {
             setItems([])
         }
-        window.analytics.track(events['Content Searched'].event, {
-            term: valueTrim
-        })
-        setValue(valueTrim)
-        onSearch(valueTrim)
+        setValue(value)
+        debounceOnSearch(value)
     }
 
     const seeMore = () =>
@@ -55,13 +57,15 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
         value.length > 3 &&
         history.push(`/portal/busca?pesquisa=${value}`)
 
+    const debounceOnSearch = useThrottle(onSearch, 500)
+
     return (
         <SANSearch
             InputProps={{
                 placeholder: t('global.search'),
                 size,
                 value,
-                onChange: e => onChange(e.target.value)
+                onChange
             }}
             seeMore={seeMore}
             onEnter={seeMore}

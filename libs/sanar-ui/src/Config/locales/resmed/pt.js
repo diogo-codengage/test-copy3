@@ -1,12 +1,19 @@
 export default {
     global: {
         termsOfUse: 'Termos de Uso',
-        privacyPolicy: 'Política de Privacidade'
+        privacyPolicy: 'Política de Privacidade',
+        send: 'Enviar',
+        copyright: 'Todos os direitos reservados',
+        about: 'Sobre o SanarFlix',
+        backStart: 'Voltar ao início',
+        leave: 'Sair',
+        back: 'Voltar'
     },
     auth: {
         accessAccount: 'Acessar conta',
+        hello: 'Olá, futuro residente!',
         signInDescription:
-            'Sua conta é seu portal de acesso a cursos e todas as ferramentas necessárias para impulsionar a sua carreira',
+            'Seja bem-vindo(a) à plataforma de estudos da Sanar Residência Médica. Aqui você terá acesso à todos os conteúdos e informações para se preparar para a prova de Residência. Bons estudos!',
         keepMeLoggedIn: 'Manter logado',
         forgotPassword: 'Esqueci minha senha',
         login: 'Entrar',
@@ -30,7 +37,8 @@ export default {
         sendResetPassword: {
             title: 'Troque sua senha',
             subtitle: 'Cadastre uma nova senha preenchendo os campos abaixo:',
-            confirmPassword: 'Confirme sua senha'
+            confirmPassword: 'Confirme sua senha',
+            success: 'Senha redefinida com sucesso!'
         },
         createNewPassword: {
             title: 'Crie uma nova senha',
@@ -50,5 +58,67 @@ export default {
             onEnter: 'Ao entrar na plataforma, você concorda com nossos',
             us: 'e nossa'
         }
+    },
+    mainMenu: {
+        back: 'Voltar ao menu principal',
+        initial: {
+            title: 'Menu',
+            begin: 'Início',
+            practiceArea: 'Área de Prática',
+            performance: 'Desempenho',
+            lives: 'Lives',
+            schedule: 'Cronograma',
+            account: 'Minha conta'
+        },
+        account: {
+            title: 'Minha Conta',
+            management: 'Gerenciamento',
+            myData: 'Meus dados',
+            changePassword: 'Trocar minha senha',
+            help: 'Ajuda',
+            helpCenter: 'Central de ajuda',
+            otherLinks: 'Outros links',
+            termsOfUse: 'Termos de Uso',
+            privacyPolicy: 'Política de Privacidade',
+            signOut: 'Sair da conta'
+        }
+    },
+    logout: {
+        message: 'Tem certeza que deseja sair da conta agora?',
+        signOut: 'Sair da Conta'
+    },
+    home: {
+        header: {
+            completeness: 'Completude do curso'
+        },
+        general: {
+            title: 'Visão Geral',
+            subheader: {
+                title: 'Especialidades',
+                subtitle: 'Escolha qual especialidade quer estudar hoje'
+            },
+            card: {
+                title: 'App Residência Médica',
+                subtitle:
+                    'Baixe o App com mais de 100.000 questões de provas para continuar treinando após o estudo.'
+            }
+        },
+        about: {
+            title: 'Sobre o Curso'
+        }
+    },
+    subspecialties: {
+        header: {
+            completeness: 'Completude'
+        },
+        subheader: {
+            title: 'Áreas de Interesse'
+        }
+    },
+    modalThemes: {
+        continue: 'Continuar de onde parei'
+    },
+    main: {
+        errorLoadSubscription: 'Ocorreu um erro ao carregar sua matrícula'
     }
 }

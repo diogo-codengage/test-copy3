@@ -18,7 +18,10 @@ const ESAvatarMenu = ({ className, title, subtitle, loading, src }) => {
                 <>
                     <Avatar src={src} size='large' className='mr-sm' />
                     <span>
-                        <ESTypography className='mb-xs' level={6}>
+                        <ESTypography
+                            className={subtitle ? 'mb-xs' : undefined}
+                            level={6}
+                        >
                             {title}
                         </ESTypography>
                         {subtitle && (
