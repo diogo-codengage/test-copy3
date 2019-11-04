@@ -8,6 +8,7 @@ import React, {
     useReducer
 } from 'react'
 
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useApolloClient } from '@apollo/react-hooks'
 
@@ -156,7 +157,10 @@ const reducer: React.Reducer<IState, IAction> = (state, action) => {
     }
 }
 
-const FLXQuestionsProvider: React.FC = ({ children }) => {
+const FLXQuestionsProvider: React.FC<RouteComponentProps> = ({
+    children,
+    location: { pathname }
+}) => {
     const { t } = useTranslation('sanarflix')
     const client = useApolloClient()
     const snackbar = useSnackbarContext()
@@ -251,7 +255,9 @@ const FLXQuestionsProvider: React.FC = ({ children }) => {
     }, [state.currentIndex, state.questions])
 
     useEffect(() => {
-        fetchQuestions(true)
+        console.log('1')
+        const paths = pathname.split('/')
+        paths[paths.length - 1] === 'pratica' && fetchQuestions(true)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.filter])
 
@@ -277,4 +283,4 @@ const FLXQuestionsProvider: React.FC = ({ children }) => {
     return <Context.Provider value={value}>{children}</Context.Provider>
 }
 
-export default FLXQuestionsProvider
+export default withRouter<RouteComponentProps>(FLXQuestionsProvider)

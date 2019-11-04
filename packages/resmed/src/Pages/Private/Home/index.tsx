@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
@@ -15,6 +15,8 @@ import {
     SANRow,
     SANCol
 } from '@sanar/components'
+
+import { useAuthContext } from 'Hooks/auth'
 
 import RMGeneral from './General'
 
@@ -37,6 +39,12 @@ const TitleCol = styled(SANCol)`
 
 const Header = () => {
     const { t } = useTranslation('resmed')
+    const { subscription } = useAuthContext()
+
+    const course = useMemo(() => !!subscription && subscription.activeCourse, [
+        subscription
+    ])
+
     return (
         <SANBox borderBottom='1px solid' borderColor='grey.0'>
             <SANLayoutContainer py={{ md: '8', _: 'md' }}>
@@ -48,7 +56,7 @@ const Header = () => {
                             color='black'
                             mb={{ md: '0', _: 'md' }}
                         >
-                            Extensivo Sanar Residência Médica
+                            {!!course && course.name}
                         </SANTypography>
                     </TitleCol>
                     <SANCol xs={24} sm={24} md={7}>
@@ -67,13 +75,13 @@ const Header = () => {
                                     {t('home.header.completeness')}
                                 </SANTypography>
                                 <SANCommonBadge
-                                    count={45}
+                                    count={course.progress}
                                     suffix='%'
                                     status='warning'
                                 />
                             </SANBox>
                             <SANProgress
-                                percent={45}
+                                percent={course.progress}
                                 color='secondary'
                                 backdrop='grey.1'
                             />
