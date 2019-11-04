@@ -29,7 +29,7 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
     location,
     form
 }) => {
-    const { t } = useTranslation('sanarflix')
+    const { t } = useTranslation('resmed')
     const createSnackbar = useSnackbarContext()
     const [loading, setLoading] = useState(false)
     const params = new URLSearchParams(location.search)
@@ -48,6 +48,10 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
                         verificationCode,
                         newPassword: password,
                         email
+                    })
+                    createSnackbar({
+                        message: t('auth.sendResetPassword.success'),
+                        theme: 'success'
                     })
                     history.push('/auth/entrar')
                 } catch (error) {
