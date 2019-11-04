@@ -76,6 +76,7 @@ interface ITheme {
 
 interface IRMModalThemesProps extends ISANModalProps {
     themes: ITheme[]
+    onContinue: () => void
 }
 
 const renderTheme = (theme, index) => <Item {...theme} index={index + 1} />
