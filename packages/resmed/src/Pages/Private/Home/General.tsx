@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback } from 'react'
 
+import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
@@ -37,8 +38,8 @@ const RMSpecialties = withRouter<RouteComponentProps>(
             history.push(`/inicio/subespecialidades/${specialtyId}`)
         }
 
-        const renderSpecialty = useCallback(
-            specialty => (
+        const renderSpecialty = useCallback(specialty => {
+            return (
                 <SANCol
                     key={specialty.id}
                     xs={24}
@@ -54,15 +55,15 @@ const RMSpecialties = withRouter<RouteComponentProps>(
                         onClick={() => goTo(specialty.id)}
                     />
                 </SANCol>
-            ),
-            []
-        )
+            )
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [])
 
         return (
             <SANQuery
                 query={GET_SPECIALTIES}
                 options={{ variables: { courseId }, skip: !courseId }}
-                loaderProps={{ minHeight: '100%', flex: true }}
+                loaderProps={{ minHeight: '250px', flex: true }}
             >
                 {({
                     data: { specialties }
@@ -78,16 +79,19 @@ const RMSpecialties = withRouter<RouteComponentProps>(
     }
 )
 
+const SpecialtiesStyled = styled(SANBox)`
+    min-height: 429px;
+`
+
 const RMGeneral = () => {
     const { t } = useTranslation('resmed')
 
     return (
         <>
-            <SANBox
+            <SpecialtiesStyled
                 bg='grey-solid.1'
                 pt={{ xs: '8', _: 'xl' }}
                 pb={{ xs: 'xl', _: '0' }}
-                minHeigth='430px'
             >
                 <SANLayoutContainer>
                     <SANSessionTitle
@@ -96,7 +100,7 @@ const RMGeneral = () => {
                     />
                     <RMSpecialties />
                 </SANLayoutContainer>
-            </SANBox>
+            </SpecialtiesStyled>
             <SANBox mt={8} mb={9}>
                 <SANLayoutContainer>
                     <SANBox

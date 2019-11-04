@@ -293,7 +293,11 @@ export const createTheme = ({
         name,
 
         // theme assets
-        assets: { ...assetsDefault, ...assets },
+        assets: {
+            ...assetsDefault,
+            ...assets,
+            icons: { ...assetsDefault.icons, ...assets.icons }
+        },
 
         // colors
         colors,
