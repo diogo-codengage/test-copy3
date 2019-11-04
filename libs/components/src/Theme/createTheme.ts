@@ -182,46 +182,48 @@ const defaultZIndices: any = []
 defaultZIndices.sidebar = 1200
 defaultZIndices.modal = 1300
 
-export const createTheme = ({
-    name = 'default',
-    assets = {
-        logo: logoAssets,
-        icons: {
-            logo: {
-                light: logoLight,
-                dark: logoDark
-            },
-            auth: {
-                changePassword
-            },
-            errors: {
-                error404,
-                error500,
-                errorGeneric
-            }
+const assetsDefault = {
+    logo: logoAssets,
+    icons: {
+        logo: {
+            light: logoLight,
+            dark: logoDark
         },
-        cardCourseModuleThumbs: {
-            flowchart,
-            mentalmap,
-            article,
-            document,
-            question
+        auth: {
+            changePassword
         },
-        cardSubSpecialty: {
-            blocked
-        },
-        typeIcons: {
-            primary: {
-                book: typeIconPrimaryBook,
-                file: typeIconPrimaryFile,
-                flowchart: typeIconPrimaryFlowchart,
-                mentalmap: typeIconPrimaryMentalchart,
-                question: typeIconPrimaryQuestion,
-                video: typeIconPrimaryVideo,
-                course: typeIconPrimaryCourse
-            }
+        errors: {
+            error404,
+            error500,
+            errorGeneric
         }
     },
+    cardCourseModuleThumbs: {
+        flowchart,
+        mentalmap,
+        article,
+        document,
+        question
+    },
+    cardSubSpecialty: {
+        blocked
+    },
+    typeIcons: {
+        primary: {
+            book: typeIconPrimaryBook,
+            file: typeIconPrimaryFile,
+            flowchart: typeIconPrimaryFlowchart,
+            mentalmap: typeIconPrimaryMentalchart,
+            question: typeIconPrimaryQuestion,
+            video: typeIconPrimaryVideo,
+            course: typeIconPrimaryCourse
+        }
+    }
+}
+
+export const createTheme = ({
+    name = 'default',
+    assets,
     colors = {},
     breakpoints = defaultBreakpoints,
     borderRadius = defaultBorderRadius,
@@ -291,7 +293,7 @@ export const createTheme = ({
         name,
 
         // theme assets
-        assets,
+        assets: { ...assetsDefault, ...assets },
 
         // colors
         colors,

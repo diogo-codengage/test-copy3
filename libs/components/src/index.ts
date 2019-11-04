@@ -98,6 +98,7 @@ import {
     useSnackbarContext
 } from 'Components/Molecules/Snackbar'
 import { SANCardSpecialty } from 'Components/Molecules/CardSpecialty'
+import { SANCardSubSpecialty } from 'Components/Molecules/CardSubSpecialty'
 import { SANCommonBadge } from 'Components/Atoms/CommonBadge'
 
 export {
@@ -202,5 +203,6 @@ export {
     SANGenericError,
     SANErrorBoundary,
     SANCardSpecialty,
+    SANCardSubSpecialty,
     SANHelpCenter
 }

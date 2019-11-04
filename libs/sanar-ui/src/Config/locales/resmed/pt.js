@@ -105,5 +105,13 @@ export default {
         about: {
             title: 'Sobre o Curso'
         }
+    },
+    subspecialties: {
+        header: {
+            completeness: 'Completude'
+        },
+        subheader: {
+            title: 'Áreas de Interesse'
+        }
     }
 }

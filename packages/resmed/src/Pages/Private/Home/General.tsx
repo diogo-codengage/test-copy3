@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { useTranslation } from 'react-i18next'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
     SANLayoutContainer,
@@ -18,7 +19,7 @@ import googlePlaySvg from 'Assets/images/app-logos/google-play.svg'
 
 const arr = [0, 1, 2, 3, 4]
 
-const RMGeneral = () => {
+const RMGeneral = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
 
     return (
@@ -47,7 +48,11 @@ const RMGeneral = () => {
                                     image='https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg'
                                     title='Cirurgia'
                                     progress={{ me: 60, others: 45 }}
-                                    onClick={console.log}
+                                    onClick={() =>
+                                        history.push(
+                                            '/inicio/subespecialidades'
+                                        )
+                                    }
                                 />
                             </SANCol>
                         ))}
@@ -114,4 +119,4 @@ const RMGeneral = () => {
     )
 }
 
-export default RMGeneral
+export default withRouter<RouteComponentProps>(RMGeneral)

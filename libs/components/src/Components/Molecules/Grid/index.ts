@@ -1,2 +1,2 @@
-export { default as SANRow } from './Row'
-export { default as SANCol } from './Col'
+export { default as SANRow, ISANRowProps } from './Row'
+export { default as SANCol, ISANColProps } from './Col'
