@@ -92,10 +92,18 @@ const RMGeneral = () => {
                                 variant='outlined'
                                 color='black'
                                 mr='xl'
+                                href='https://apps.apple.com/br/app/sanar-residência-médica/id1375384328'
+                                target='_blank'
                             >
                                 <SANBox as='img' src={appleSvg} />
                             </SANButton>
-                            <SANButton block variant='outlined' color='black'>
+                            <SANButton
+                                block
+                                variant='outlined'
+                                color='black'
+                                href='https://play.google.com/store/apps/details?id=br.com.editorasanar.residencia&hl=pt_BR'
+                                target='_blank'
+                            >
                                 <SANBox as='img' src={googlePlaySvg} />
                             </SANButton>
                         </SANBox>
