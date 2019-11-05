@@ -3,7 +3,7 @@ import { ThemeContext } from 'styled-components'
 
 import { SANThemeCreateTheme, SANThemeProvider } from '@sanar/components'
 
-import { logoLight, logoDark, error500 } from 'Assets'
+import { logoLight, logoDark, error500, errorGeneric } from 'Assets'
 
 type RMThemeContextProviderProps = {}
 
@@ -23,7 +23,8 @@ const theme = {
                 dark: logoDark
             },
             errors: {
-                error500
+                error500,
+                errorGeneric
             }
         }
     }

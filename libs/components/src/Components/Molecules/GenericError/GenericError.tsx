@@ -26,7 +26,12 @@ const SANGenericError = ({
     const { t } = useTranslation('components')
 
     return (
-        <SANBox display='flex' flexDirection='column' {...props}>
+        <SANBox
+            display='flex'
+            flexDirection='column'
+            justifyContent='center'
+            {...props}
+        >
             <SANBox as='img' src={errorGeneric} mb='lg' />
             <SANTypography
                 variant='body1'

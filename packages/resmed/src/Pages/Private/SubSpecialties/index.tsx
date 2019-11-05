@@ -150,8 +150,14 @@ const Progress = ({ percent }) => {
     )
 }
 
-const RMSubspecialties = withRouter<RouteComponentProps>(
-    ({ history }: RouteComponentProps) => {
+interface IRouteProps {
+    specialtyId: string
+}
+
+const RMSubspecialties = withRouter<RouteComponentProps<IRouteProps>>(
+    ({ match: { params } }: RouteComponentProps<IRouteProps>) => {
+        const { t } = useTranslation('resmed')
+
         const renderSubspecialty = useCallback(
             subspecialty => (
                 <SANCol
@@ -181,17 +187,39 @@ const RMSubspecialties = withRouter<RouteComponentProps>(
         return (
             <SANQuery
                 query={GET_SUBSPECIALTIES}
-                options={{ variables: {} }}
+                options={{
+                    variables: { parentId: params.specialtyId },
+                    skip: !params.specialtyId
+                }}
                 loaderProps={{ minHeight: '250px', flex: true }}
+                errorProps={{ flex: 1 }}
             >
                 {({
                     data: { subspecialties }
                 }: {
                     data: { subspecialties: ISubspecialties[] }
                 }) => (
-                    <SANRow gutter={24}>
-                        {subspecialties.map(renderSubspecialty)}
-                    </SANRow>
+                    <>
+                        <SANBox
+                            display='flex'
+                            alignItems='center'
+                            mb={{ xs: 'xxl', _: 'md' }}
+                        >
+                            <SANTypography
+                                fontSize='xl'
+                                fontWeight='bold'
+                                mr='xs'
+                            >
+                                10
+                            </SANTypography>
+                            <SANTypography fontSize='xl'>
+                                {t('subspecialties.subheader.title')}
+                            </SANTypography>
+                        </SANBox>
+                        <SANRow gutter={24}>
+                            {subspecialties.map(renderSubspecialty)}
+                        </SANRow>
+                    </>
                 )}
             </SANQuery>
         )
@@ -199,7 +227,6 @@ const RMSubspecialties = withRouter<RouteComponentProps>(
 )
 
 const RMSubSpecialties = ({ history }: RouteComponentProps) => {
-    const { t } = useTranslation('resmed')
     const [open, setOpen] = useState(false)
 
     return (
@@ -213,10 +240,16 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
             />
             <SANPage
                 hasContainer
+                ContainerProps={{
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}
                 BoxProps={{
                     bg: 'grey-solid.1',
-                    flex: '1',
-                    py: { xs: '8', _: 'xl' }
+                    py: { xs: '8', _: 'xl' },
+                    display: 'flex',
+                    flexDirection: 'column'
                 }}
                 HeaderProps={{
                     onBack: () => history.push('/inicio/curso'),
@@ -229,18 +262,6 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
                     extra: <Progress percent={45} />
                 }}
             >
-                <SANBox
-                    display='flex'
-                    alignItems='center'
-                    mb={{ xs: 'xxl', _: 'md' }}
-                >
-                    <SANTypography fontSize='xl' fontWeight='bold' mr='xs'>
-                        10
-                    </SANTypography>
-                    <SANTypography fontSize='xl'>
-                        {t('subspecialties.subheader.title')}
-                    </SANTypography>
-                </SANBox>
                 <RMSubspecialties />
             </SANPage>
         </>
