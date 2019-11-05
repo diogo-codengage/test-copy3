@@ -120,5 +120,10 @@ export default {
     },
     main: {
         errorLoadSubscription: 'Ocorreu um erro ao carregar sua matrícula'
+    },
+    changePassword: {
+        feedback: {
+            success: 'A sua senha foi atualizada com sucesso!'
+        }
     }
 }

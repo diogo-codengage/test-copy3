@@ -16,16 +16,16 @@ import { RMGlobalStyle } from './Styles'
 const RMApp: React.FC = () => (
     <RMGraphQLProvider>
         <BrowserRouter>
-            <SANSnackbarProvider>
-                <RMAuthProvider>
-                    <RMThemeProvider>
+            <RMThemeProvider>
+                <SANSnackbarProvider>
+                    <RMAuthProvider>
                         <>
                             <RMGlobalStyle />
                             <App />
                         </>
-                    </RMThemeProvider>
-                </RMAuthProvider>
-            </SANSnackbarProvider>
+                    </RMAuthProvider>
+                </SANSnackbarProvider>
+            </RMThemeProvider>
         </BrowserRouter>
     </RMGraphQLProvider>
 )

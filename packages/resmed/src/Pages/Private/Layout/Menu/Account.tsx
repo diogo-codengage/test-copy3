@@ -54,8 +54,8 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                 </SANButton>
                 <SANAvatarMenu
                     loading={!me}
-                    src={me.profilePicture}
-                    title={me.name}
+                    src={!!me && me.profilePicture}
+                    title={!!me && me.name}
                 />
             </SANBox>
             <SANTypography variant='overline' px='md' pt='xl' color='white.5'>
@@ -63,20 +63,21 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
             </SANTypography>
             <SANNavigationList>
                 <SANNavigationListItem
-                    to='/incio/minha-conta/meus-dados'
+                    to='/inicio/minha-conta/meus-dados'
                     icon={<SANEvaIcon name='folder-outline' color='default' />}
                     onClick={onCloseMenu}
                     dataTestid='flix_menu_my-account__go_to--profile'
                     title={t('mainMenu.account.myData')}
                 />
                 <SANNavigationListItem
-                    to='/incio/minha-conta/alterar-senha'
+                    to='/inicio/minha-conta/alterar-senha'
                     icon={<SANEvaIcon name='lock-outline' color='default' />}
                     onClick={onCloseMenu}
                     dataTestid='flix_menu_my-account__go_to--change-password'
                     title={t('mainMenu.account.changePassword')}
                 />
             </SANNavigationList>
+            <SANDivider mx='md' my='lg' bg='white.1' />
 
             <SANTypography variant='overline' px='md' color='white.5'>
                 {t('mainMenu.account.help')}

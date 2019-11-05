@@ -27,7 +27,7 @@ const SANPage: React.FC<ISANPageProps> = ({
             ) : (
                 children
             ),
-        [hasContainer, children]
+        [hasContainer, children, ContainerProps]
     )
 
     return (
