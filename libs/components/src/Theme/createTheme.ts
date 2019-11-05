@@ -296,7 +296,10 @@ export const createTheme = ({
         assets: {
             ...assetsDefault,
             ...assets,
-            icons: { ...assetsDefault.icons, ...assets.icons }
+            icons: {
+                ...assetsDefault.icons,
+                ...(!!assets && assets.icons && assets.icons)
+            }
         },
 
         // colors
