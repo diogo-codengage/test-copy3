@@ -6,6 +6,12 @@ interface ICourse {
     description: string
     status: 'active' | 'inactive'
     progress: number
+    infos: IInfo[]
+}
+
+interface IInfo {
+    title: string
+    body: string
 }
 export interface ISubscription {
     id: string
@@ -22,9 +28,9 @@ export const GET_SUBSCRIPTION = gql`
                 description
                 status
                 progress
-                specialties {
-                    id
-                    name
+                infos {
+                    title
+                    body
                 }
             }
         }
