@@ -29,7 +29,6 @@ const SANDivider = SANStyled.hr<ISANDividerProps>`
         theme(`colors.${props.bg}`) ||
         theme('colors.grey.2')};
 
-    width: 100%;
     height: 1px;
     border: 0;
 `
