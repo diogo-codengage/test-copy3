@@ -115,7 +115,7 @@ const FLXSendPasswordRecoveryPage: React.FC<IProps> = ({ form, history }) => {
                     </SANForm>
                 }
             />
-            <RMFooter mt='xxl' />
+            <RMFooter {...{ mt: 'xxl' }} />
         </>
     )
 }

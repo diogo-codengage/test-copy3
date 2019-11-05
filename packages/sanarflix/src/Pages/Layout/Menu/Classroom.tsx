@@ -85,7 +85,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
             id: state.theme.id,
             courseId
         },
-        skip: !state.theme.id
+        skip: !state.theme.id || !courseId
     })
 
     const configureThemeContentsIcon = (resourceType, type) => {

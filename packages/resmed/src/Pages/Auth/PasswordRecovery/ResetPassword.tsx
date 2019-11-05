@@ -173,7 +173,7 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
                     </ESForm>
                 }
             />
-            <RMFooter mt='xxl' />
+            <RMFooter {...{ mt: 'xxl' }} />
         </>
     )
 }

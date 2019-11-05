@@ -52,7 +52,7 @@ const FLXPasswordRecoverySent: React.FC<RouteComponentProps> = ({
                     </>
                 }
             />
-            <RMFooter mt='xxl' />
+            <RMFooter {...{ mt: 'xxl' }} />
         </>
     )
 }

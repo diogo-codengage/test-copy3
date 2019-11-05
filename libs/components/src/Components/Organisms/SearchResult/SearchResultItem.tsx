@@ -161,16 +161,22 @@ const SANSearchResultItem = (props: ISANSearchResultItemProps) => {
     const getCouters = (item: IItem) => {
         switch (item.type) {
             case 'course':
-                return t('searchResult.themes.keyWithCount', {
+                return `• ${t('searchResult.themes.keyWithCount', {
                     count: item.totalThemes
-                })
+                })}`
             case 'lesson':
-                return formatSecondsToMin(item.timeInSeconds)
+                return (
+                    !!item.timeInSeconds &&
+                    `• ${formatSecondsToMin(item.timeInSeconds)}`
+                )
             case 'resume':
             case 'article':
-                return t('searchResult.pages.keyWithCount', {
-                    count: item.totalPages
-                })
+                return (
+                    !!item.totalPages &&
+                    `• ${t('searchResult.pages.keyWithCount', {
+                        count: item.totalPages
+                    })}`
+                )
             default:
                 return ''
         }
@@ -276,7 +282,7 @@ const SANSearchResultItem = (props: ISANSearchResultItemProps) => {
                                         fontSize={{ sm: 'md', _: 'sm' }}
                                         color='grey.6'
                                     >
-                                        • {getCouters(item)}
+                                        {getCouters(item)}
                                     </SANTypography>
                                 )}
                                 {item.professorName && item.type === 'lesson' && (
