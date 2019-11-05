@@ -15,7 +15,7 @@ const FLXCourses = React.lazy(() => import('./Courses'))
 const FLXCourse = React.lazy(() => import('./Course'))
 const FLXClassroom = React.lazy(() => import('./Classroom'))
 const FLXQuestionsDatabase = React.lazy(() => import('./QuestionsDatabase'))
-// const FLXAccount = React.lazy(() => import('./Account'))
+const FLXAccount = React.lazy(() => import('./Account'))
 const FLXAddedPage = React.lazy(() => import('./Added'))
 const FLXSearchPage = React.lazy(() => import('./Search'))
 const FLXError500 = React.lazy(() => import('Components/Error500'))
@@ -68,10 +68,10 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
                                 path={`${url}/busca`}
                                 component={FLXSearchPage}
                             />
-                            {/* <Route
+                            <Route
                                 path={`${url}/minha-conta`}
                                 component={FLXAccount}
-                            /> */}
+                            />
                             <Route
                                 path={`${url}/erro`}
                                 component={FLXError500}

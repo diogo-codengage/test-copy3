@@ -6,30 +6,22 @@ import { CognitoUserSession } from 'amazon-cognito-identity-js'
 
 const config = getInstance()
 
-setInterval(async () => {
-    const cognitoUser = config.userPool.getCurrentUser()
-    if (cognitoUser) {
-        cognitoUser.getSession((_, session) => {
-            if (!session.isValid()) {
-                cognitoUser.refreshSession(session.getRefreshToken(), () => {})
-            }
-        })
-    }
-}, /* 10 minutes */ 10 * 60 * 1000)
-
-const getValidSession = cognitoUser => {
-    return cognitoUser.getSession((_, session: CognitoUserSession) => {
-        if (session.isValid()) return session
-    })
-}
-
 const getAccessToken = async () => {
     const cognitoUser = config.userPool.getCurrentUser()
 
     if (!!cognitoUser) {
-        const session = getValidSession(cognitoUser)
-
-        return session.getIdToken().getJwtToken()
+        return cognitoUser.getSession((_, session: CognitoUserSession) => {
+            if (session.isValid()) {
+                return session.getIdToken().getJwtToken()
+            } else {
+                return cognitoUser.refreshSession(
+                    session.getRefreshToken(),
+                    (_, session: CognitoUserSession) => {
+                        return session.getIdToken().getJwtToken()
+                    }
+                )
+            }
+        })
     }
 }
 

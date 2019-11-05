@@ -23,6 +23,7 @@ import FLXModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 
 import { useAuthContext } from 'Hooks/auth'
 import { events } from 'Config/Segment'
+import { getInstance } from 'Config/AWSCognito'
 
 const Notice = ({ action }) => {
     const { t } = useTranslation('sanarflix')
@@ -73,11 +74,12 @@ const Subtitle = () => {
         </>
     )
 }
-// 383
+
 const FLXCancelPage = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
     const {
-        me: { plan }
+        me: { plan },
+        setMe
     } = useAuthContext()
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
@@ -99,6 +101,16 @@ const FLXCancelPage = ({ history }: RouteComponentProps) => {
                 message: t('sanarui:error.default'),
                 theme: 'error'
             })
+        }
+    }
+
+    const signOut = () => {
+        const config = getInstance()
+        const user = config.userPool.getCurrentUser()
+        if (!!user) {
+            user.signOut()
+            setMe(undefined)
+            history.push('/auth/signin')
         }
     }
 
@@ -188,7 +200,7 @@ const FLXCancelPage = ({ history }: RouteComponentProps) => {
                     >
                         <SANButton
                             size='small'
-                            onClick={() => history.push('/portal/inicio')}
+                            onClick={signOut}
                             color='primary'
                             variant='solid'
                             bold
