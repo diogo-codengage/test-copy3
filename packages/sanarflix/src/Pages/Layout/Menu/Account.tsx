@@ -116,13 +116,13 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                 {t('mainMenu.account.management')}
             </SANTypography>
             <SANNavigationList>
-                <SANNavigationListItem
+                {/* <SANNavigationListItem
                     to='/portal/minha-conta/meus-dados'
                     icon={<SANEvaIcon name='folder-outline' color='default' />}
                     onClick={onCloseMenu}
                     dataTestid='flix_menu_my-account__go_to--profile'
                     title={t('mainMenu.account.myData')}
-                />
+                /> */}
                 <SANNavigationListItem
                     to='/portal/minha-conta/alterar-senha'
                     icon={<SANEvaIcon name='lock-outline' color='default' />}
