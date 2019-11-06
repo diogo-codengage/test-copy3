@@ -20,7 +20,7 @@ import {
     GET_SUBSPECIALTIES,
     ISubspecialty
 } from 'Apollo/Subspecialties/Queries/subspecialties'
-import { GET_LESSONS, ILesson } from 'Apollo/Subspecialties/Queries/lessons'
+import { GET_LESSONS } from 'Apollo/Subspecialties/Queries/lessons'
 
 import RMModalThemes from 'Components/ModalThemes'
 
@@ -76,12 +76,12 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                             title: 'Nome da aula exemplo',
                             index: 3
                         }}
-                        onClickRight={() => onSeeLessons(subspecialty.id)}
+                        onClickRight={() => onSeeLessons(subspecialty)}
                         onClickLeft={console.log}
                     />
                 </SANCol>
             ),
-            []
+            [onSeeLessons]
         )
 
         return (
@@ -130,19 +130,27 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
-    const [open, setOpen] = useState(false)
+    const [current, setCurrent] = useState({
+        open: false,
+        subspecialty: {
+            name: ''
+        }
+    })
     const [loading, setLoading] = useState(false)
     const [lessons, setLessons] = useState([])
 
-    const onSeeLessons = async subspecialtyId => {
+    const onSeeLessons = async subspecialty => {
         setLoading(true)
-        setOpen(true)
+        setCurrent({
+            open: true,
+            subspecialty
+        })
         try {
             const {
                 data: { lessons }
             } = await client.query({
                 query: GET_LESSONS,
-                variables: { parentId: subspecialtyId }
+                variables: { parentId: subspecialty.id }
             })
 
             setLessons(lessons)
@@ -158,9 +166,9 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
     return (
         <>
             <RMModalThemes
-                visible={open}
-                title='Clínica Médica'
-                onCancel={() => setOpen(false)}
+                visible={current.open}
+                title={current.subspecialty.name}
+                onCancel={() => setCurrent(old => ({ ...old, open: false }))}
                 onContinue={console.log}
                 themes={lessons}
                 loading={loading}
