@@ -16,7 +16,7 @@ import {
 } from '@sanar/components'
 import { SANButton } from '@sanar/components/dist/Components/Atoms/Button'
 
-import { GET_SPECIALTIES, ISpecialties } from 'Apollo/User/Queries/specialties'
+import { GET_SPECIALTIES, ISpecialties } from 'Apollo/Home/Queries/specialties'
 import { useAuthContext } from 'Hooks/auth'
 
 import appleSvg from 'Assets/images/app-logos/apple.svg'
@@ -24,15 +24,11 @@ import googlePlaySvg from 'Assets/images/app-logos/google-play.svg'
 
 const RMSpecialties = withRouter<RouteComponentProps>(
     ({ history }: RouteComponentProps) => {
-        const { subscription } = useAuthContext()
+        const { activeCourse } = useAuthContext()
 
-        const courseId = useMemo(
-            () =>
-                !!subscription &&
-                !!subscription.activeCourse &&
-                subscription.activeCourse.id,
-            [subscription]
-        )
+        const courseId = useMemo(() => !!activeCourse && activeCourse.id, [
+            activeCourse
+        ])
 
         const goTo = (specialtyId: string) => {
             history.push(`/inicio/subespecialidades/${specialtyId}`)

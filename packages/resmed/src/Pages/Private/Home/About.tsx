@@ -40,16 +40,11 @@ const SANCollapselStyle = styled(SANCollapse)`
 
 const RMAbout = () => {
     const { t } = useTranslation('resmed')
-    const { subscription } = useAuthContext()
+    const { activeCourse } = useAuthContext()
 
-    const infos = useMemo(
-        () =>
-            (!!subscription &&
-                !!subscription.activeCourse &&
-                subscription.activeCourse.infos) ||
-            [],
-        [subscription]
-    )
+    const infos = useMemo(() => (!!activeCourse && activeCourse.infos) || [], [
+        activeCourse
+    ])
 
     const renderInfo = useCallback(
         (info, index) => (

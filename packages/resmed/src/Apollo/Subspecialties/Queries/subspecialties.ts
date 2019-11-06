@@ -4,21 +4,17 @@ interface IProgress {
     all: number
     me: number
 }
-export interface ISubspecialties {
+export interface ISubspecialty {
     id: string
     name: string
     progress: IProgress
 }
 
 export const GET_SUBSPECIALTIES = gql`
-    query SubSpecialty($parentId: ID!) {
-        subSpecialty(where: { parentId: $parentId }) {
+    query SubSpecialties($parentId: ID!) {
+        subSpecialties(where: { parentId: $parentId }) {
             id
             name
-            progress {
-                all
-                me
-            }
         }
     }
 `

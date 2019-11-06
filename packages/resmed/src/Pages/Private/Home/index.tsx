@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
@@ -40,11 +40,7 @@ const TitleCol = styled(SANCol)`
 
 const Header = () => {
     const { t } = useTranslation('resmed')
-    const { subscription } = useAuthContext()
-
-    const course = useMemo(() => !!subscription && subscription.activeCourse, [
-        subscription
-    ])
+    const { activeCourse } = useAuthContext()
 
     return (
         <SANBox borderBottom='1px solid' borderColor='grey.0'>
@@ -57,7 +53,7 @@ const Header = () => {
                             color='black'
                             mb={{ md: '0', _: 'md' }}
                         >
-                            {!!course && course.name}
+                            {activeCourse.name}
                         </SANTypography>
                     </TitleCol>
                     <SANCol xs={24} sm={24} md={7}>
@@ -76,13 +72,13 @@ const Header = () => {
                                     {t('home.header.completeness')}
                                 </SANTypography>
                                 <SANCommonBadge
-                                    count={course.progress}
+                                    count={activeCourse.progress}
                                     suffix='%'
                                     status='warning'
                                 />
                             </SANBox>
                             <SANProgress
-                                percent={course.progress}
+                                percent={activeCourse.progress}
                                 color='secondary'
                                 backdrop='grey.1'
                             />
