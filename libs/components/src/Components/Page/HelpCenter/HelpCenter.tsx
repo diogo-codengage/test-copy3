@@ -38,10 +38,10 @@ const SANHelpCenter = ({
             setPrevTextLen(text.length)
         } else {
             setData({
-                plataforma: questionFilter(data.plataforma, text),
-                cursos: questionFilter(data.cursos, text),
-                cancelamento: questionFilter(data.cancelamento, text),
-                outros: questionFilter(data.outros, text)
+                plataforma: questionFilter(dataProp.plataforma, text),
+                cursos: questionFilter(dataProp.cursos, text),
+                cancelamento: questionFilter(dataProp.cancelamento, text),
+                outros: questionFilter(dataProp.outros, text)
             })
             setPrevTextLen(text.length)
         }
