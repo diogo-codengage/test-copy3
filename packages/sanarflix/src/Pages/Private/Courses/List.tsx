@@ -60,6 +60,7 @@ const renderCourse = history => (course: ICourse) => (
 
 const updateCacheCourses = (prev, { fetchMoreResult }) => {
     if (!fetchMoreResult) return prev
+
     return Object.assign({}, prev, {
         courses: {
             ...prev.courses,
@@ -88,9 +89,7 @@ const FLXCoursesList: React.FC<RouteComponentProps & { id?: string }> = ({
                         ...(completenessFilter !== 'all' && {
                             completeness: completenessFilter
                         })
-                    },
-                    fetchPolicy: 'cache-and-network',
-                    notifyOnNetworkStatusChange: false
+                    }
                 }}
                 errorProps={{
                     flex: true,
