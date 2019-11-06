@@ -58,14 +58,14 @@ export interface ISANSearchResultItemProps {
 }
 
 const bordersFirst = `
-    &:first-child {
+    &:first-of-type {
         border-top-left-radius: ${theme('radii.base')};
         border-top-right-radius: ${theme('radii.base')};
     }
 `
 
 const bordersLast = `
-    &:last-child {
+    &:last-of-type {
         border-bottom-left-radius: ${theme('radii.base')};
         border-bottom-right-radius: ${theme('radii.base')};
     }
@@ -76,12 +76,19 @@ const WrapperStyled = styled(SANBox)`
         cursor: pointer;
         transition: background 0.3s ease-out;
 
-        &:last-child ${SANDivider} {
-            visibility: hidden;
+        &:last-of-type {
             border-bottom-left-radius: ${theme('radii.base')};
             border-bottom-right-radius: ${theme('radii.base')};
+
+            & ${SANDivider} {
+                visibility: hidden;
+                color: red;
+            }
         }
-        ${bordersFirst}
+        &:first-of-type {
+            border-top-left-radius: 4px;
+            border-top-right-radius: ${theme('radii.base')};
+        }
 
         &:hover {
             background-color: ${theme('colors.grey.1')};
@@ -270,7 +277,7 @@ const SANSearchResultItem = (props: ISANSearchResultItemProps) => {
                                     src={getIcon(item.type)}
                                 />
                                 <SANTypography
-                                    fontSize={{ sm: 'md', _: 'sm' }}
+                                    fontSize='sm'
                                     fontWeight='bold'
                                     color='grey.6'
                                     mr='xs'
@@ -278,16 +285,13 @@ const SANSearchResultItem = (props: ISANSearchResultItemProps) => {
                                     {types[item.type]}
                                 </SANTypography>
                                 {!dontInfo.includes(item.type) && (
-                                    <SANTypography
-                                        fontSize={{ sm: 'md', _: 'sm' }}
-                                        color='grey.6'
-                                    >
+                                    <SANTypography fontSize='sm' color='grey.6'>
                                         {getCouters(item)}
                                     </SANTypography>
                                 )}
                                 {item.professorName && item.type === 'lesson' && (
                                     <SANTypography
-                                        fontSize={{ sm: 'md', _: 'sm' }}
+                                        fontSize='sm'
                                         color='grey.6'
                                         ml='xs'
                                     >
