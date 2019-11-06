@@ -9,6 +9,7 @@ import { SANTypography } from '../../Atoms/Typography'
 import { SANSessionTitle } from '../../Atoms/SessionTitle'
 import { SANPage } from '../../Templates/Page'
 
+import { normalize } from '@sanar/utils/dist/Normalize';
 import dataHelper from './data'
 
 export interface ISANHelpCenterProps {
@@ -22,10 +23,19 @@ const SANHelpCenter = ({
 }: ISANHelpCenterProps) => {
     const { t } = useTranslation('components')
     const [data, setData] = useState(dataProp)
+    const [prevTextLen, setPrevTextLen] = useState(0)
 
     const getSearchData = text => {
         if (!text.trim()) {
             setData(dataProp)
+        } else if (prevTextLen > text.trim().length) {
+            setData({
+                plataforma: questionFilter(dataProp.plataforma, text),
+                cursos: questionFilter(dataProp.cursos, text),
+                cancelamento: questionFilter(dataProp.cancelamento, text),
+                outros: questionFilter(dataProp.outros, text)
+            })
+            setPrevTextLen(text.length);
         } else {
             setData({
                 plataforma: questionFilter(data.plataforma, text),
@@ -33,6 +43,7 @@ const SANHelpCenter = ({
                 cancelamento: questionFilter(data.cancelamento, text),
                 outros: questionFilter(data.outros, text)
             })
+            setPrevTextLen(text.length);
         }
     }
 
@@ -40,7 +51,7 @@ const SANHelpCenter = ({
         questionType.filter(function(item) {
             return Object.values(item)
                 .map(value => String(value))
-                .find(value => value.toLowerCase().includes(data.toLowerCase()))
+                .find(value => normalize(value.toLowerCase()).includes(normalize(data.toLowerCase())))
         })
 
     const renderItem = (item, index) => (
