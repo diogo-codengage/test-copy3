@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 
 import { useApolloClient } from '@apollo/react-hooks'
 
@@ -11,6 +11,8 @@ import ESAuthTemplate from 'sanar-ui/dist/Components/Templates/Auth'
 import ESBrandHeader from 'sanar-ui/dist/Components/Atoms/BrandHeader'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
+
+import FLXSplashLoader from 'Components/SplashLoader'
 import FLXModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 
 import logo from 'Assets/images/brand/logo.svg'
@@ -26,6 +28,10 @@ const FLXSignIn: React.FC<any> = ({ history }) => {
     const [keepMeLoggedIn, setKeepMeLoggedIn] = useState(false)
     const [showModalTerms, setShowModalTerms] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
+    const [session, setSession] = useState({
+        isValid: false,
+        loading: true
+    })
 
     const marketing = {
         title: t('auth.marketing.title'),
@@ -80,8 +86,21 @@ const FLXSignIn: React.FC<any> = ({ history }) => {
         if (!!cognitoUser) {
             cognitoUser.getSession(async (_, session) => {
                 if (session.isValid()) {
-                    history.push('/portal/inicio')
+                    setSession({
+                        loading: false,
+                        isValid: true
+                    })
+                } else {
+                    setSession({
+                        loading: false,
+                        isValid: false
+                    })
                 }
+            })
+        } else {
+            setSession({
+                loading: false,
+                isValid: false
             })
         }
         return () => {
@@ -96,6 +115,14 @@ const FLXSignIn: React.FC<any> = ({ history }) => {
             events['Page Viewed'].data
         )
     }, [])
+
+    if (session.loading) {
+        return <FLXSplashLoader />
+    }
+
+    if (!session.loading && session.isValid) {
+        return <Redirect to='/portal/inicio' />
+    }
 
     return (
         <>
