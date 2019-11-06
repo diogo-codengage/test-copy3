@@ -118,34 +118,40 @@ const changePassword = ({
     }
 
     return new Promise((resolve, reject) =>
-        cognitoUser.changePassword(oldPassword, newPassword, function(
-            err: any,
-            result
-        ) {
-            if (err) {
-                switch (err) {
-                    case 'LimitExceededException':
-                        return reject({
-                            code: err.code,
-                            message: i18n.t(
-                                'sanarui:authMessages.limitExceededException'
-                            )
-                        })
-                    case 'UserNotFoundException':
-                        return reject({
-                            code: err.code,
-                            message: i18n.t(
-                                'sanarui:authMessages.userNotFoundException'
-                            )
-                        })
-                    default:
-                        return reject({
-                            code: err.code,
-                            message: i18n.t('sanarui:authMessages.generic')
-                        })
-                }
+        cognitoUser.getSession((_, session: CognitoUserSession) => {
+            if (session.isValid()) {
+                cognitoUser.changePassword(oldPassword, newPassword, function(
+                    err: any,
+                    result
+                ) {
+                    if (err) {
+                        switch (err) {
+                            case 'LimitExceededException':
+                                return reject({
+                                    code: err.code,
+                                    message: i18n.t(
+                                        'sanarui:authMessages.limitExceededException'
+                                    )
+                                })
+                            case 'UserNotFoundException':
+                                return reject({
+                                    code: err.code,
+                                    message: i18n.t(
+                                        'sanarui:authMessages.userNotFoundException'
+                                    )
+                                })
+                            default:
+                                return reject({
+                                    code: err.code,
+                                    message: i18n.t(
+                                        'sanarui:authMessages.generic'
+                                    )
+                                })
+                        }
+                    }
+                    resolve(result)
+                })
             }
-            resolve(result)
         })
     )
 }

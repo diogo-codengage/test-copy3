@@ -167,27 +167,31 @@ const SANChangePassword = ({ form, onSubmit, onForgot }) => {
                                     )}
                                 />
                             </SANFormItem>
-                            <SANButton
-                                htmlType='submit'
-                                uppercase
-                                block
-                                bold
-                                variant='solid'
-                                color='primary'
-                                mb='md'
-                            >
-                                {t('changePassword.confirm')}
-                            </SANButton>
-                            <SANButton
-                                uppercase
-                                block
-                                bold
-                                variant='text'
-                                color='primary'
-                                onClick={onForgot}
-                            >
-                                {t('changePassword.forgot')}
-                            </SANButton>
+                            <SANFormItem>
+                                <SANButton
+                                    htmlType='submit'
+                                    uppercase
+                                    block
+                                    bold
+                                    variant='solid'
+                                    color='primary'
+                                    mb='md'
+                                >
+                                    {t('changePassword.confirm')}
+                                </SANButton>
+                            </SANFormItem>
+                            {!!onForgot && (
+                                <SANButton
+                                    uppercase
+                                    block
+                                    bold
+                                    variant='text'
+                                    color='primary'
+                                    onClick={onForgot}
+                                >
+                                    {t('changePassword.forgot')}
+                                </SANButton>
+                            )}
                         </SANForm>
                     </SANSpin>
                 </SANBox>

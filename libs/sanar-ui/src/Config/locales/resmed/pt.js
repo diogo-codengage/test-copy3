@@ -104,7 +104,15 @@ export default {
             }
         },
         about: {
-            title: 'Sobre o Curso'
+            title: 'Sobre o Curso',
+            texts: {
+                title: 'Olá. Bem-vindo ao Residência Médica!',
+                subtitle: 'Que legal ter você conosco',
+                paragraph1:
+                    'Essa aqui é a nossa plataforma de estudos. Aliás, nossa não, sua! Ela foi feita especialmente para os nossos alunos.',
+                paragraph2:
+                    'Fizemos este passo a passo de como funciona o nosso curso, e por isso é muito importante que você leia até o final. É fundamental que você leia até o final. Sério, leia até o final!'
+            }
         }
     },
     subspecialties: {
@@ -113,12 +121,19 @@ export default {
         },
         subheader: {
             title: 'Áreas de Interesse'
-        }
+        },
+        errorLoadLessons: 'Ocorreu um erro ao carregar suas aulas'
     },
     modalThemes: {
-        continue: 'Continuar de onde parei'
+        continue: 'Continuar de onde parei',
+        blocked: 'Disponível em breve!'
     },
     main: {
-        errorLoadSubscription: 'Ocorreu um erro ao carregar sua matrícula'
+        errorLoadActiveCourse: 'Ocorreu um erro ao carregar seu curso ativo'
+    },
+    changePassword: {
+        feedback: {
+            success: 'A sua senha foi atualizada com sucesso!'
+        }
     }
 }

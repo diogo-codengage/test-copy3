@@ -11,7 +11,8 @@ import {
     SANModalFooter,
     SANBox,
     SANEvaIcon,
-    SANScroll
+    SANScroll,
+    SANSpin
 } from '@sanar/components'
 
 import { ISANModalProps } from '@sanar/components/dist/Components/Molecules/Modal'
@@ -36,37 +37,43 @@ const ItemStyled = styled(SANBox)<{ blocked?: boolean }>`
     )}
 `
 
-const Item = ({ index, name, completed, blocked }) => (
-    <ItemStyled
-        py='md'
-        px='lg'
-        display='flex'
-        alignItems='center'
-        justifyContent='space-between'
-        blocked={blocked}
-    >
-        <SANBox display='flex' alignItems='center'>
-            <SANTypography
-                color={!blocked && 'primary'}
-                fontSize='xs'
-                fontWeight='bold'
-                mr='xs'
-            >
-                {index}
-            </SANTypography>
-            <SANTypography fontSize='md'>{name}</SANTypography>
-        </SANBox>
-        {completed ? (
-            <SANEvaIcon
-                name='checkmark-circle-2'
-                color='primary'
-                size='large'
-            />
-        ) : (
-            <SANEvaIcon name='arrow-ios-forward-outline' size='large' />
-        )}
-    </ItemStyled>
-)
+const Item = ({ index, name, completed, blocked }) => {
+    const { t } = useTranslation('resmed')
+
+    return (
+        <ItemStyled
+            py='md'
+            px='lg'
+            display='flex'
+            alignItems='center'
+            justifyContent='space-between'
+            blocked={blocked}
+        >
+            <SANBox display='flex' alignItems='center'>
+                <SANTypography
+                    color={!blocked && 'primary'}
+                    fontSize='xs'
+                    fontWeight='bold'
+                    mr='xs'
+                >
+                    {index}
+                </SANTypography>
+                <SANTypography fontSize='md'>
+                    {blocked ? t('modalThemes.blocked') : name}
+                </SANTypography>
+            </SANBox>
+            {completed ? (
+                <SANEvaIcon
+                    name='checkmark-circle-2'
+                    color='primary'
+                    size='large'
+                />
+            ) : (
+                <SANEvaIcon name='arrow-ios-forward-outline' size='large' />
+            )}
+        </ItemStyled>
+    )
+}
 
 interface ITheme {
     name: string
@@ -77,6 +84,7 @@ interface ITheme {
 interface IRMModalThemesProps extends ISANModalProps {
     themes: ITheme[]
     visible: boolean
+    loading: boolean
     title: string
     onCancel: () => void
     onContinue: () => void
@@ -89,6 +97,7 @@ const renderTheme = (theme, index) => (
 const RMModalThemes = ({
     onContinue,
     themes,
+    loading,
     ...props
 }: IRMModalThemesProps) => {
     const { t } = useTranslation('resmed')
@@ -100,27 +109,29 @@ const RMModalThemes = ({
             style={{ overflow: 'hidden' }}
             {...props}
         >
-            <SANBox margin='-24px' mb='lg' py='sm' height={427}>
-                <SANScroll>{themes.map(renderTheme)}</SANScroll>
-            </SANBox>
-            <SANModalFooter
-                justifyContent='center'
-                borderTop='1px solid'
-                borderColor='grey.2'
-                margin='-24px'
-                padding='sm'
-            >
-                <SANButton
-                    size='small'
-                    variant='text'
-                    color='primary'
-                    uppercase
-                    bold
-                    onClick={onContinue}
+            <SANSpin spinning={loading}>
+                <SANBox margin='-24px' mb='lg' py='sm' height={427}>
+                    <SANScroll>{themes.map(renderTheme)}</SANScroll>
+                </SANBox>
+                <SANModalFooter
+                    justifyContent='center'
+                    borderTop='1px solid'
+                    borderColor='grey.2'
+                    margin='-24px'
+                    padding='sm'
                 >
-                    {t('modalThemes.continue')}
-                </SANButton>
-            </SANModalFooter>
+                    <SANButton
+                        size='small'
+                        variant='text'
+                        color='primary'
+                        uppercase
+                        bold
+                        onClick={onContinue}
+                    >
+                        {t('modalThemes.continue')}
+                    </SANButton>
+                </SANModalFooter>
+            </SANSpin>
         </SANModal>
     )
 }
