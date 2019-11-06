@@ -46,7 +46,13 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
     const params: any = new URLSearchParams(location.search)
 
-    const goToResource = ({ resourceId: resource, type, course, themeId }) => {
+    const goToResource = ({
+        resourceId: resource,
+        type,
+        resourceType,
+        course,
+        themeId
+    }) => {
         const content = {
             resource,
             type,
@@ -61,7 +67,7 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
             })
             history.push(`/portal/curso/${resource}`)
         } else {
-            const link = `/portal/sala-aula/${course.id}/${themeId}/${resources[type]}/${resource}`
+            const link = `/portal/sala-aula/${course.id}/${themeId}/${resources[resourceType]}/${resource}`
             window.analytics.track(events['Search Result Clicked'].event, {
                 link,
                 content
@@ -87,7 +93,8 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
             <SANHeader
                 onBack={() => history.goBack()}
                 SessionTitleProps={{
-                    title: 'Resultado da busca'
+                    title: t('searchResult.title'),
+                    subtitle: t('searchResult.subtitle')
                 }}
                 extra={
                     <FLXSearch initialValue={params.get('pesquisa') || ''} />

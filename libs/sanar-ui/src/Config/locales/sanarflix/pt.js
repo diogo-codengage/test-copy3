@@ -308,6 +308,10 @@ export default {
         subtitle:
             'Nós temos milhares de conteúdos de medicina que se encaixam no seu perfil. O que você quer aprender hoje?'
     },
+    searchResult: {
+        title: 'Resultado da busca',
+        subtitle: 'Acesse a todos os resultados ou faça uma nova busca'
+    },
     sigmentManagement: {
         email: 'Escreva aqui o seu e-mail pessoal',
         nameLabel: 'Nome completo',
