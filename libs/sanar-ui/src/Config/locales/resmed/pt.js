@@ -121,13 +121,15 @@ export default {
         },
         subheader: {
             title: 'Áreas de Interesse'
-        }
+        },
+        errorLoadLessons: 'Ocorreu um erro ao carregar suas aulas'
     },
     modalThemes: {
-        continue: 'Continuar de onde parei'
+        continue: 'Continuar de onde parei',
+        blocked: 'Disponível em breve!'
     },
     main: {
-        errorLoadSubscription: 'Ocorreu um erro ao carregar sua matrícula'
+        errorLoadActiveCourse: 'Ocorreu um erro ao carregar seu curso ativo'
     },
     changePassword: {
         feedback: {

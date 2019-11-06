@@ -36,37 +36,43 @@ const ItemStyled = styled(SANBox)<{ blocked?: boolean }>`
     )}
 `
 
-const Item = ({ index, name, completed, blocked }) => (
-    <ItemStyled
-        py='md'
-        px='lg'
-        display='flex'
-        alignItems='center'
-        justifyContent='space-between'
-        blocked={blocked}
-    >
-        <SANBox display='flex' alignItems='center'>
-            <SANTypography
-                color={!blocked && 'primary'}
-                fontSize='xs'
-                fontWeight='bold'
-                mr='xs'
-            >
-                {index}
-            </SANTypography>
-            <SANTypography fontSize='md'>{name}</SANTypography>
-        </SANBox>
-        {completed ? (
-            <SANEvaIcon
-                name='checkmark-circle-2'
-                color='primary'
-                size='large'
-            />
-        ) : (
-            <SANEvaIcon name='arrow-ios-forward-outline' size='large' />
-        )}
-    </ItemStyled>
-)
+const Item = ({ index, name, completed, blocked }) => {
+    const { t } = useTranslation('resmed')
+
+    return (
+        <ItemStyled
+            py='md'
+            px='lg'
+            display='flex'
+            alignItems='center'
+            justifyContent='space-between'
+            blocked={blocked}
+        >
+            <SANBox display='flex' alignItems='center'>
+                <SANTypography
+                    color={!blocked && 'primary'}
+                    fontSize='xs'
+                    fontWeight='bold'
+                    mr='xs'
+                >
+                    {index}
+                </SANTypography>
+                <SANTypography fontSize='md'>
+                    {blocked ? t('modalThemes.blocked') : name}
+                </SANTypography>
+            </SANBox>
+            {completed ? (
+                <SANEvaIcon
+                    name='checkmark-circle-2'
+                    color='primary'
+                    size='large'
+                />
+            ) : (
+                <SANEvaIcon name='arrow-ios-forward-outline' size='large' />
+            )}
+        </ItemStyled>
+    )
+}
 
 interface ITheme {
     name: string

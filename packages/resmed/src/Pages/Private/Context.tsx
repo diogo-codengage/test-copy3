@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { useSnackbarContext } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
-import { GET_SUBSCRIPTION } from 'Apollo/User/Queries/subscription'
+import { GET_ACTIVE_COURSE } from 'Apollo/User/Queries/active-course'
 
 interface RMMainContext {
     getCurrentEnrollment: () => void
@@ -21,18 +21,18 @@ const RMMainProvider: React.FC<RouteComponentProps> = ({ children }) => {
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
     const { t } = useTranslation('resmed')
-    const { setSubscription } = useAuthContext()
+    const { setActiveCourse } = useAuthContext()
 
     const getCurrentEnrollment = async () => {
         try {
             const {
-                data: { subscription }
-            } = await client.query({ query: GET_SUBSCRIPTION })
+                data: { activeCourse }
+            } = await client.query({ query: GET_ACTIVE_COURSE })
 
-            setSubscription(subscription)
+            setActiveCourse(activeCourse)
         } catch (error) {
             createSnackbar({
-                message: t('main.errorLoadSubscription'),
+                message: t('main.errorLoadActiveCourse'),
                 theme: 'error'
             })
         }
