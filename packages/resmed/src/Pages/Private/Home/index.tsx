@@ -19,6 +19,7 @@ import {
 import { useAuthContext } from 'Hooks/auth'
 
 import RMGeneral from './General'
+import RMAbout from './About'
 
 const TitleCol = styled(SANCol)`
     ${theme('mediaQueries.up.md')} {
@@ -124,7 +125,7 @@ const RMHome = () => {
                     }
                     key='2'
                 >
-                    sobre
+                    <RMAbout />
                 </SANTabPane>
             </SANTabs>
         </SANBox>
