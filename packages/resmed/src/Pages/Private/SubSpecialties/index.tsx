@@ -131,9 +131,12 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
     const [open, setOpen] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [lessons, setLessons] = useState([])
 
     const onSeeLessons = async subspecialtyId => {
+        setLoading(true)
+        setOpen(true)
         try {
             const {
                 data: { lessons }
@@ -149,7 +152,7 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
                 theme: 'error'
             })
         }
-        setOpen(true)
+        setLoading(false)
     }
 
     return (
@@ -160,6 +163,7 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
                 onCancel={() => setOpen(false)}
                 onContinue={console.log}
                 themes={lessons}
+                loading={loading}
             />
             <SANPage
                 hasContainer
