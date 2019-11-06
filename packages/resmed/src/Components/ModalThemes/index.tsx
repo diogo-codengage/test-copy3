@@ -11,7 +11,8 @@ import {
     SANModalFooter,
     SANBox,
     SANEvaIcon,
-    SANScroll
+    SANScroll,
+    SANSpin
 } from '@sanar/components'
 
 import { ISANModalProps } from '@sanar/components/dist/Components/Molecules/Modal'
@@ -83,6 +84,7 @@ interface ITheme {
 interface IRMModalThemesProps extends ISANModalProps {
     themes: ITheme[]
     visible: boolean
+    loading: boolean
     title: string
     onCancel: () => void
     onContinue: () => void
@@ -95,6 +97,7 @@ const renderTheme = (theme, index) => (
 const RMModalThemes = ({
     onContinue,
     themes,
+    loading,
     ...props
 }: IRMModalThemesProps) => {
     const { t } = useTranslation('resmed')
@@ -106,27 +109,29 @@ const RMModalThemes = ({
             style={{ overflow: 'hidden' }}
             {...props}
         >
-            <SANBox margin='-24px' mb='lg' py='sm' height={427}>
-                <SANScroll>{themes.map(renderTheme)}</SANScroll>
-            </SANBox>
-            <SANModalFooter
-                justifyContent='center'
-                borderTop='1px solid'
-                borderColor='grey.2'
-                margin='-24px'
-                padding='sm'
-            >
-                <SANButton
-                    size='small'
-                    variant='text'
-                    color='primary'
-                    uppercase
-                    bold
-                    onClick={onContinue}
+            <SANSpin spinning={loading}>
+                <SANBox margin='-24px' mb='lg' py='sm' height={427}>
+                    <SANScroll>{themes.map(renderTheme)}</SANScroll>
+                </SANBox>
+                <SANModalFooter
+                    justifyContent='center'
+                    borderTop='1px solid'
+                    borderColor='grey.2'
+                    margin='-24px'
+                    padding='sm'
                 >
-                    {t('modalThemes.continue')}
-                </SANButton>
-            </SANModalFooter>
+                    <SANButton
+                        size='small'
+                        variant='text'
+                        color='primary'
+                        uppercase
+                        bold
+                        onClick={onContinue}
+                    >
+                        {t('modalThemes.continue')}
+                    </SANButton>
+                </SANModalFooter>
+            </SANSpin>
         </SANModal>
     )
 }
