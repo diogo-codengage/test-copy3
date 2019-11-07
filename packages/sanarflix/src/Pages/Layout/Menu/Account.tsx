@@ -106,10 +106,10 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     loading={!me}
                     src={me && me.profile_picture}
                     title={me && me.name}
-                    subtitle={
-                        me &&
-                        t(`mainMenu.account.plan.${me.plan.payment_frequency}`)
-                    }
+                    // subtitle={
+                    //     me &&
+                    //     t(`mainMenu.account.plan.${me.plan.payment_frequency}`)
+                    // }
                 />
             </SANBox>
             <SANTypography variant='overline' px='md' pt='xl' color='white.5'>
