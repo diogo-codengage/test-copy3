@@ -51,9 +51,7 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
     const [modalVisible, setModalVisible] = useState(false)
     const client = useApolloClient()
-    const {
-        me: { plan }
-    } = useAuthContext()
+
     const createSnackbar = useSnackbarContext()
 
     const onSubmit = async values => {
@@ -73,13 +71,6 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
             })
         }
     }
-
-    useEffect(() => {
-        if (plan.payment_frequency !== 'month') {
-            history.push('/portal/minha-conta/cancelar-assinatura')
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     useEffect(() => {
         window.analytics.page(

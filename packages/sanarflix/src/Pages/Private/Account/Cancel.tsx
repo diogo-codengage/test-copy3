@@ -77,7 +77,7 @@ const Subtitle = () => {
 
 const FLXCancelPage = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
-    const { me, setMe } = useAuthContext()
+    const { setMe } = useAuthContext()
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
     const [modalVisible, setModalVisible] = useState(false)
@@ -129,39 +129,35 @@ const FLXCancelPage = ({ history }: RouteComponentProps) => {
                     }
                 }}
             >
-                {!!me && me.plan.payment_frequency === 'month' && (
-                    <SANBox backgroundColor='grey-solid.1' py={{ _: 3, lg: 7 }}>
-                        <SANLayoutContainer>
-                            <SANSessionTitle
-                                mt={6}
-                                mb={6}
-                                title={t(
-                                    'sigmentManagement.cancelPage.doYouWant'
-                                )}
-                                subtitle={<Subtitle />}
-                                extra={
-                                    <SANButton
-                                        px={8}
-                                        uppercase
-                                        bold
-                                        blockOnlyMobile
-                                        onClick={() =>
-                                            history.push(
-                                                '/portal/minha-conta/pause-assinatura'
-                                            )
-                                        }
-                                        variant='solid'
-                                        color='primary'
-                                    >
-                                        {t(
-                                            'sigmentManagement.cancelPage.doYouWantExtra'
-                                        )}
-                                    </SANButton>
-                                }
-                            />
-                        </SANLayoutContainer>
-                    </SANBox>
-                )}
+                <SANBox backgroundColor='grey-solid.1' py={{ _: 3, lg: 7 }}>
+                    <SANLayoutContainer>
+                        <SANSessionTitle
+                            mt={6}
+                            mb={6}
+                            title={t('sigmentManagement.cancelPage.doYouWant')}
+                            subtitle={<Subtitle />}
+                            extra={
+                                <SANButton
+                                    px={8}
+                                    uppercase
+                                    bold
+                                    blockOnlyMobile
+                                    onClick={() =>
+                                        history.push(
+                                            '/portal/minha-conta/pause-assinatura'
+                                        )
+                                    }
+                                    variant='solid'
+                                    color='primary'
+                                >
+                                    {t(
+                                        'sigmentManagement.cancelPage.doYouWantExtra'
+                                    )}
+                                </SANButton>
+                            }
+                        />
+                    </SANLayoutContainer>
+                </SANBox>
                 <SANLayoutContainer>
                     <SANBox mt={6} display={{ _: 'block', lg: 'none' }}>
                         <Notice action={() => setShowModalTerms(true)} />
