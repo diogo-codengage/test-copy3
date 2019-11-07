@@ -26,7 +26,7 @@ import { events } from 'Config/Segment'
 const resources = {
     Document: 'documento',
     Video: 'video',
-    Question: 'quiz'
+    Question: 'questoes'
 }
 
 const updateGlobalSearchCache = (prev: any, { fetchMoreResult }) => {
