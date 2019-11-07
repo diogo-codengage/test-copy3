@@ -77,10 +77,7 @@ const Subtitle = () => {
 
 const FLXCancelPage = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
-    const {
-        me: { plan },
-        setMe
-    } = useAuthContext()
+    const { me, setMe } = useAuthContext()
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
     const [modalVisible, setModalVisible] = useState(false)
@@ -132,7 +129,7 @@ const FLXCancelPage = ({ history }: RouteComponentProps) => {
                     }
                 }}
             >
-                {plan.payment_frequency === 'month' && (
+                {!!me && me.plan.payment_frequency === 'month' && (
                     <SANBox backgroundColor='grey-solid.1' py={{ _: 3, lg: 7 }}>
                         <SANLayoutContainer>
                             <SANSessionTitle

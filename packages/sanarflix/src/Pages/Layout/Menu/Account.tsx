@@ -137,7 +137,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                 {t('mainMenu.account.signature')}
             </SANTypography>
             <SANNavigationList>
-                <SANNavigationListItem
+                {/* <SANNavigationListItem
                     to='/portal/minha-conta/formas-pagamento'
                     icon={
                         <SANEvaIcon
@@ -148,7 +148,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     onClick={onCloseMenu}
                     dataTestid='flix_menu_my-account__go_to--payment-methods'
                     title={t('mainMenu.account.paymentMethods')}
-                />
+                /> */}
                 <SANNavigationListItem
                     to='/portal/minha-conta/cancelar-assinatura'
                     icon={
