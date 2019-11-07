@@ -7,7 +7,7 @@
         "react-lines-ellipsis": "^0.14.1"
     },
     "scripts": {
-        "start": "env-cmd -f ./environments/.env.staging react-app-rewired start",
+        "start": "env-cmd -f ./environments/.env.production react-app-rewired start",
         "build:development": "env-cmd -f ./environments/.env.staging react-app-rewired build",
         "build:staging": "env-cmd -f ./environments/.env.staging react-app-rewired build",
         "build:production": "env-cmd -f ./environments/.env.production react-app-rewired build",
