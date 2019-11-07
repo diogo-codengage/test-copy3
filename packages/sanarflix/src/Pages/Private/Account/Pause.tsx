@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import {
     SANPage,
     SANBox,
     SANSessionTitle,
     SANRow,
     SANCol,
-    SANTypography,
-    useSnackbarContext,
-    SANModal,
-    SANButton
+    SANTypography
+    // useSnackbarContext,
+    // SANModal,
+    // SANButton
 } from '@sanar/components'
 
 import {
-    FLXCancelOrPauseForm,
+    // FLXCancelOrPauseForm,
     FLXCancelOrPauseFormSubtitle
 } from 'Components/CancelOrPauseForm'
-import { useApolloClient } from '@apollo/react-hooks'
-import { PAUSE_SUBSCRIPTION } from 'Apollo/SignmentManagement/Mutations/pause'
+// import { useApolloClient } from '@apollo/react-hooks'
+// import { PAUSE_SUBSCRIPTION } from 'Apollo/SignmentManagement/Mutations/pause'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router'
 
-import { useAuthContext } from 'Hooks/auth'
+// import { useAuthContext } from 'Hooks/auth'
 import { events } from 'Config/Segment'
 
 const Notice = () => {
@@ -49,28 +49,28 @@ const Notice = () => {
 
 const FLXPausePage = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
-    const [modalVisible, setModalVisible] = useState(false)
-    const client = useApolloClient()
+    // const [modalVisible, setModalVisible] = useState(false)
+    // const client = useApolloClient()
 
-    const createSnackbar = useSnackbarContext()
+    // const createSnackbar = useSnackbarContext()
 
-    const onSubmit = async values => {
-        try {
-            await client.mutate({
-                mutation: PAUSE_SUBSCRIPTION,
-                variables: {
-                    input: values
-                }
-            })
+    // const onSubmit = async values => {
+    //     try {
+    //         await client.mutate({
+    //             mutation: PAUSE_SUBSCRIPTION,
+    //             variables: {
+    //                 input: values
+    //             }
+    //         })
 
-            setModalVisible(true)
-        } catch (e) {
-            createSnackbar({
-                message: t('sanarui:error.default'),
-                theme: 'error'
-            })
-        }
-    }
+    //         setModalVisible(true)
+    //     } catch (e) {
+    //         createSnackbar({
+    //             message: t('sanarui:error.default'),
+    //             theme: 'error'
+    //         })
+    //     }
+    // }
 
     useEffect(() => {
         window.analytics.page(
@@ -101,17 +101,26 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
                 />
                 <SANRow gutter={24}>
                     <SANCol lg={16}>
-                        <FLXCancelOrPauseForm
+                        {/* <FLXCancelOrPauseForm
                             onSubmit={onSubmit}
                             destiny='pause'
-                        />
+                        /> */}
+                        <iframe
+                            src='https://docs.google.com/forms/d/e/1FAIpQLSdAHv-DK4yJ6qetKFOsHJqUhruZ52DCX-IGzIMq_1WPOWoF6g/viewform?embedded=true'
+                            width='100%'
+                            height='947'
+                            frameBorder='0'
+                            title='Form'
+                        >
+                            Carregando…
+                        </iframe>
                     </SANCol>
                     <SANCol xs={0} lg={8}>
                         <Notice />
                     </SANCol>
                 </SANRow>
             </SANPage>
-            <SANModal
+            {/* <SANModal
                 visible={modalVisible}
                 centered
                 closable={false}
@@ -144,7 +153,7 @@ const FLXPausePage = ({ history }: RouteComponentProps) => {
                 <SANTypography variant='subtitle1' color='grey.7'>
                     {t('sigmentManagement.pausePage.modal.description2')}
                 </SANTypography>
-            </SANModal>
+            </SANModal> */}
         </>
     )
 }
