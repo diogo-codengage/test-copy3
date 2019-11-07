@@ -3,9 +3,9 @@ import { Route, Switch, Redirect, RouteComponentProps } from 'react-router-dom'
 import { useLayoutContext } from 'Pages/Layout/Context'
 
 // const SANMyData = React.lazy(() => import('./MyData'))
+// const SANPayment = React.lazy(() => import('./Payment'))
 const SANPausePage = React.lazy(() => import('./Pause'))
 const SANCancelPage = React.lazy(() => import('./Cancel'))
-const SANPayment = React.lazy(() => import('./Payment'))
 const SANChangePassword = React.lazy(() => import('./ChangePassword'))
 
 const FLXAccount = ({ match: { url } }: RouteComponentProps) => {
@@ -24,14 +24,14 @@ const FLXAccount = ({ match: { url } }: RouteComponentProps) => {
                 path={`${url}/cancelar-assinatura`}
                 component={SANCancelPage}
             />
-            <Route path={`${url}/formas-pagamento`} component={SANPayment} />
+            {/* <Route path={`${url}/formas-pagamento`} component={SANPayment} /> */}
             <Route
                 path={`${url}/alterar-senha`}
                 component={SANChangePassword}
             />
             <Route
                 path={[`${url}`, `${url}/`]}
-                render={() => <Redirect to={`${url}/meus-dados`} />}
+                render={() => <Redirect to={`${url}/alterar-senha`} />}
             />
         </Switch>
     )
