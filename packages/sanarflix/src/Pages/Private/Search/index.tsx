@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
@@ -34,6 +34,7 @@ const updateGlobalSearchCache = (prev: any, { fetchMoreResult }) => {
     return Object.assign({}, prev, {
         globalSearch: {
             ...prev.globalSearch,
+            count: fetchMoreResult.globalSearch.count,
             data: [
                 ...prev.globalSearch.data,
                 ...fetchMoreResult.globalSearch.data
@@ -44,6 +45,7 @@ const updateGlobalSearchCache = (prev: any, { fetchMoreResult }) => {
 
 const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
+    const [currentCount, setCurrentCount] = useState(0)
     const params: any = new URLSearchParams(location.search)
 
     const goToResource = ({
@@ -75,6 +77,9 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
             history.push(link)
         }
     }
+
+    const handleCompleted = ({ globalSearch }) =>
+        setCurrentCount(globalSearch.count)
 
     useEffect(() => {
         window.analytics.page(
@@ -108,7 +113,8 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
                         variables: {
                             value: params.get('pesquisa'),
                             limit: 20
-                        }
+                        },
+                        onCompleted: handleCompleted
                     }}
                 >
                     {({
@@ -133,8 +139,7 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
                                         variant='caption2'
                                         strong
                                     >
-                                        {(globalSearch && globalSearch.count) ||
-                                            0}{' '}
+                                        {(globalSearch && currentCount) || 0}{' '}
                                     </SANTypography>
                                     <SANTypography
                                         component='span'

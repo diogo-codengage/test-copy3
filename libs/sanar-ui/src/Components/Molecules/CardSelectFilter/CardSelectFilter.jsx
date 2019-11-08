@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import useOnClickOutside from '../../../Hooks/useOnClickOutside'
 
 import ESInput from '../../Atoms/Input'
+import ESSpin from '../../Atoms/Spin'
 import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESSkeleton from '../../Atoms/Skeleton'
 import ESDropdown from '../../Atoms/Dropdown'
@@ -34,7 +35,8 @@ const ESCardSelectFilter = ({
     labelSelecteds,
     onChange,
     value = [],
-    disabled
+    disabled,
+    loading
 }) => {
     const dropdownRef = useRef()
     const menuRef = useRef()
@@ -127,64 +129,70 @@ const ESCardSelectFilter = ({
     )
 
     return (
-        <ESCard className={classes}>
-            <div className='es-card-select-filter__content'>
-                <ESDropdown
-                    trigger={['click']}
-                    overlayClassName='es-card-select-filter__overlay'
-                    visible={open}
-                    getPopupContainer={() => dropdownRef && dropdownRef.current}
-                    overlay={
-                        <ESCardSelectFilterMenu
-                            ref={menuRef}
-                            {...{
-                                items,
-                                value,
-                                handleSelectAll,
-                                handleClear,
-                                handleClose,
-                                handleChange,
-                                search,
-                                width:
-                                    dropdownRef.current &&
-                                    dropdownRef.current.offsetWidth
-                            }}
-                        />
-                    }
-                >
-                    <span style={{ width: '100%' }} ref={dropdownRef}>
-                        <ESInput
-                            disabled={disabled}
-                            onFocus={onFocus}
-                            placeholder={makePlaceholder}
-                            prefix={open && <ESEvaIcon name='search-outline' />}
-                            suffix={suffixIcon}
-                            onChange={handleSearch}
-                            value={search}
-                        />
-                    </span>
-                </ESDropdown>
-                <img
-                    src={image}
-                    className='es-card-select-filter__content--img'
-                    onLoad={() => setLoadImage(false)}
-                    style={{ display: loadImage ? 'none' : 'block' }}
-                />
-                <ESSkeleton
-                    className='mt-md mb-xs'
-                    loading={loadImage}
-                    avatar={{ size: 168 }}
-                    paragraph={false}
-                    title={false}
-                />
-            </div>
-            <div className={classesFooter}>
-                <ESEvaIcon name='checkmark-circle-2' />
-                <ESTypography variant='body1' strong>
-                    {filterName}
-                </ESTypography>
-            </div>
-        </ESCard>
+        <ESSpin spinning={loading}>
+            <ESCard className={classes}>
+                <div className='es-card-select-filter__content'>
+                    <ESDropdown
+                        trigger={['click']}
+                        overlayClassName='es-card-select-filter__overlay'
+                        visible={open}
+                        getPopupContainer={() =>
+                            dropdownRef && dropdownRef.current
+                        }
+                        overlay={
+                            <ESCardSelectFilterMenu
+                                ref={menuRef}
+                                {...{
+                                    items,
+                                    value,
+                                    handleSelectAll,
+                                    handleClear,
+                                    handleClose,
+                                    handleChange,
+                                    search,
+                                    width:
+                                        dropdownRef.current &&
+                                        dropdownRef.current.offsetWidth
+                                }}
+                            />
+                        }
+                    >
+                        <span style={{ width: '100%' }} ref={dropdownRef}>
+                            <ESInput
+                                disabled={disabled}
+                                onFocus={onFocus}
+                                placeholder={makePlaceholder}
+                                prefix={
+                                    open && <ESEvaIcon name='search-outline' />
+                                }
+                                suffix={suffixIcon}
+                                onChange={handleSearch}
+                                value={search}
+                            />
+                        </span>
+                    </ESDropdown>
+                    <img
+                        src={image}
+                        className='es-card-select-filter__content--img'
+                        onLoad={() => setLoadImage(false)}
+                        style={{ display: loadImage ? 'none' : 'block' }}
+                    />
+                    <ESSkeleton
+                        className='mt-md mb-xs'
+                        loading={loadImage}
+                        avatar={{ size: 168 }}
+                        paragraph={false}
+                        title={false}
+                    />
+                </div>
+                <div className={classesFooter}>
+                    <ESEvaIcon name='checkmark-circle-2' />
+                    <ESTypography variant='body1' strong>
+                        {filterName}
+                    </ESTypography>
+                </div>
+            </ESCard>
+        </ESSpin>
     )
 }
 
@@ -212,7 +220,8 @@ ESCardSelectFilter.propTypes = {
         })
     ),
     labelSelecteds: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    loading: PropTypes.bool
 }
 ESCardSelectFilter.defaultProps = {}
 
