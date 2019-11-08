@@ -223,6 +223,8 @@ ESCardSelectFilter.propTypes = {
     disabled: PropTypes.bool,
     loading: PropTypes.bool
 }
-ESCardSelectFilter.defaultProps = {}
+ESCardSelectFilter.defaultProps = {
+    loading: false
+}
 
 export default ESCardSelectFilter
