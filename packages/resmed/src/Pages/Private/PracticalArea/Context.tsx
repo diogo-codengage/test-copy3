@@ -40,15 +40,7 @@ interface IStats {
     time: string
 }
 
-interface IValue {
-    value: string
-    label: string
-}
-
-interface IFilter {
-    selectedCourses: IValue[]
-    selectedThemes: IValue[]
-}
+interface IFilter {}
 
 export const initialStats = {
     correct: 0,
@@ -74,6 +66,7 @@ type IAction =
     | {
           type: 'reset'
       }
+    | { type: 'empty' }
     | { type: 'loading' }
     | { type: 'loaded' }
     | { type: 'stats'; stats: Partial<IStats> }
@@ -84,10 +77,7 @@ type IAction =
     | { type: 'filter'; filter: IFilter }
 
 const initialState = {
-    filter: {
-        selectedCourses: [],
-        selectedThemes: []
-    },
+    filter: {},
     currentIndex: 0,
     stats: initialStats,
     skip: 0,
@@ -100,6 +90,12 @@ const reducer: React.Reducer<IState, IAction> = (state, action) => {
     switch (action.type) {
         case 'reset':
             return initialState
+        case 'empty':
+            return {
+                ...initialState,
+                filter: state.filter,
+                currentIndex: 0
+            }
         case 'loading':
             return {
                 ...state,
@@ -214,9 +210,6 @@ const RMPracticalProvider: React.FC<RouteComponentProps> = ({
 
     const fetchQuestions = async (load = false) => {
         load && dispatch({ type: 'loading' })
-        const { selectedCourses, selectedThemes } = state.filter
-        const courseIds = !!selectedCourses.length && selectedCourses.map(getId)
-        const levelIds = !!selectedThemes.length && selectedThemes.map(getId)
         try {
             const {
                 data: { questions }
@@ -224,8 +217,6 @@ const RMPracticalProvider: React.FC<RouteComponentProps> = ({
                 query: GET_QUESTIONS,
                 fetchPolicy: 'network-only',
                 variables: {
-                    ...(!!courseIds && { courseIds }),
-                    ...(!!levelIds && { levelIds }),
                     limit: 20,
                     skip: state.skip
                 }
@@ -238,7 +229,7 @@ const RMPracticalProvider: React.FC<RouteComponentProps> = ({
         } catch (error) {
             dispatch({ type: 'error', error })
             snackbar({
-                message: t('questionsDatabase.question.failLoadQuestions'),
+                message: t('practicalArea.question.failLoadQuestions'),
                 theme: 'error'
             })
         }

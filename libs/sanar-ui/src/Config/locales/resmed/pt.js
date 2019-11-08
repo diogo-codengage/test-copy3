@@ -7,7 +7,9 @@ export default {
         about: 'Sobre o SanarFlix',
         backStart: 'Voltar ao início',
         leave: 'Sair',
-        back: 'Voltar'
+        back: 'Voltar',
+        yes: 'Sim',
+        no: 'Não'
     },
     auth: {
         accessAccount: 'Acessar conta',
@@ -189,6 +191,38 @@ export default {
                 onlyHasImages: 'Com imagem',
                 onlyComments: 'Apenas comentadas'
             }
+        },
+        finished: {
+            title: 'Resultado',
+            subtitle: 'Verifique como você se saiu nessa sessão de prática',
+            button: 'Área de prática'
+        },
+        question: {
+            filters: 'Filtros',
+            seeFilters: 'Ver filtros',
+            corrects: 'Corretas',
+            wrong: 'Erradas',
+            skipped: 'Puladas',
+            continue: 'Continuar',
+            failReplyQuestion: 'Ocorreu um erro ao responder questão.',
+            failLoadQuestions: 'Ocorreu um erro ao carregar questões.',
+            empty:
+                'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos',
+            endPractice: {
+                button: 'Encerrar prática',
+                modal: {
+                    title: 'Ops! Nenhuma questão foi respondida.',
+                    subtitle:
+                        'Que tal aprimorar seus conhecimentos reiniciando a prática?',
+                    close: 'Encerrar',
+                    restart: 'Reiniciar prática'
+                }
+            },
+            exit: {
+                title: 'Ops! Você está saindo da prática.',
+                subtitle: 'Deseja realmente encerrar a prática?'
+            },
+            title: 'Questão'
         }
     }
 }

@@ -8,7 +8,8 @@ import {
     withSANForm,
     SANForm,
     SANButton,
-    SANSessionTitle
+    SANSessionTitle,
+    SANFormItem
 } from '@sanar/components'
 
 import RMFilterSelects from './Selects'
@@ -50,51 +51,54 @@ const RMFilter = ({ form, history }) => {
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 dispatch({ type: 'filter', filter: values })
-                history.push('/inicio/area-pratica/pratica')
+                history.push('/inicio/area-pratica/perguntas')
             }
         })
     }
 
     return (
-        <SANPage
-            hasContainer
-            BoxProps={{
-                bg: 'grey-solid.1',
-                py: { xs: '8', _: 'xl' },
-                display: 'flex',
-                flexDirection: 'column'
-            }}
-            HeaderProps={{
-                onBack: () => history.push('/inicio/curso'),
-                SessionTitleProps: {
-                    title: t('practicalArea.filter.header.title'),
-                    subtitle: t('practicalArea.filter.header.subtitle')
-                },
-                ExtraProps: {
-                    md: 7
-                },
-                extra: (
-                    <SANButton
-                        variant='solid'
-                        color='primary'
-                        size='small'
-                        uppercase
-                        blockOnlyMobile
-                    >
-                        {t('practicalArea.filter.header.start')}
-                    </SANButton>
-                )
-            }}
-        >
-            <SANForm form={form} onSubmit={handleSubmit}>
+        <SANForm form={form} onSubmit={handleSubmit}>
+            <SANPage
+                hasContainer
+                BoxProps={{
+                    bg: 'grey-solid.1',
+                    py: { xs: '8', _: 'xl' },
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}
+                HeaderProps={{
+                    onBack: () => history.push('/inicio/curso'),
+                    SessionTitleProps: {
+                        title: t('practicalArea.filter.header.title'),
+                        subtitle: t('practicalArea.filter.header.subtitle')
+                    },
+                    ExtraProps: {
+                        md: 7
+                    },
+                    extra: (
+                        <SANFormItem>
+                            <SANButton
+                                variant='solid'
+                                color='primary'
+                                size='small'
+                                uppercase
+                                htmlType='submit'
+                                blockOnlyMobile
+                            >
+                                {t('practicalArea.filter.header.start')}
+                            </SANButton>
+                        </SANFormItem>
+                    )
+                }}
+            >
                 <SANSessionTitle
                     title={t('practicalArea.filter.subheader.title')}
                     subtitle={t('practicalArea.filter.subheader.subtitle')}
                 />
                 <RMFilterSelects />
                 <RMFilterAdvanced />
-            </SANForm>
-        </SANPage>
+            </SANPage>
+        </SANForm>
     )
 }
 

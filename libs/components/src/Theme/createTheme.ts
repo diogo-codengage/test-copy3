@@ -23,7 +23,8 @@ import {
     mentalmap,
     article,
     document,
-    blocked
+    blocked,
+    empty
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -218,7 +219,8 @@ const assetsDefault = {
             video: typeIconPrimaryVideo,
             course: typeIconPrimaryCourse
         }
-    }
+    },
+    empty
 }
 
 export const createTheme = ({
