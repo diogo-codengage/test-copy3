@@ -89,6 +89,7 @@ const FLXHome = ({ history }: RouteComponentProps) => {
                         image: indicate,
                         mobile: indicateMobile,
                         ButtonProps: {
+                            disabled: true,
                             children: t(`${intl}.indicate.action`),
                             'data-testid': 'banner-questions-indicate'
                         }

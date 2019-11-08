@@ -193,7 +193,7 @@ export default {
                 title: 'Indique e Ganhe',
                 subtitle:
                     'Indique o SanarFlix para os seus amigos. A cada indicação válida você ganha R$20!',
-                action: 'Saiba mais'
+                action: 'Em breve'
             }
         }
     },
