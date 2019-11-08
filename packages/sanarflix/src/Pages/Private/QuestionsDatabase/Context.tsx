@@ -255,7 +255,6 @@ const FLXQuestionsProvider: React.FC<RouteComponentProps> = ({
     }, [state.currentIndex, state.questions])
 
     useEffect(() => {
-        console.log('1')
         const paths = pathname.split('/')
         paths[paths.length - 1] === 'pratica' && fetchQuestions(true)
         // eslint-disable-next-line react-hooks/exhaustive-deps
