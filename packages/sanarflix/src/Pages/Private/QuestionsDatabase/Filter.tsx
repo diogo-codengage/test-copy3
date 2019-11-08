@@ -63,15 +63,21 @@ export const FLXSelectsFilter = ({
     const client = useApolloClient()
     const [courses, setCouses] = useState<ICourse[]>([])
     const [themes, setThemes] = useState<ITheme[]>([])
+    const [loading, setLoading] = useState({
+        courses: false,
+        themes: false
+    })
 
     useEffect(() => {
         const fetchCourses = async () => {
+            setLoading(old => ({ ...old, courses: true }))
             try {
                 const { data }: { data: ICourses } = await client.query({
                     query: GET_COURSES
                 })
                 setCouses(data.courses.data || [])
             } catch {}
+            setLoading(old => ({ ...old, courses: false }))
         }
         fetchCourses()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,6 +86,7 @@ export const FLXSelectsFilter = ({
     useEffect(() => {
         if (!!selectedCourses.length) {
             const fetchThemes = async () => {
+                setLoading(old => ({ ...old, themes: true }))
                 try {
                     const { data }: { data: IThemes } = await client.query({
                         query: GET_THEMES,
@@ -91,6 +98,7 @@ export const FLXSelectsFilter = ({
                     })
                     setThemes(data.themes.data || [])
                 } catch {}
+                setLoading(old => ({ ...old, themes: false }))
             }
             fetchThemes()
         } else {
@@ -111,6 +119,7 @@ export const FLXSelectsFilter = ({
             )}
             <SANCol sm={24} md={12} mb='xl'>
                 <SANCardSelectFilterStyled
+                    loading={loading.courses}
                     labelSelecteds={t(
                         'questionsDatabase.filter.course.labelSelecteds'
                     )}
@@ -126,6 +135,7 @@ export const FLXSelectsFilter = ({
             </SANCol>
             <SANCol sm={24} md={12} mb='xl'>
                 <SANCardSelectFilterStyled
+                    loading={loading.themes}
                     labelSelecteds={t(
                         'questionsDatabase.filter.theme.labelSelecteds'
                     )}
