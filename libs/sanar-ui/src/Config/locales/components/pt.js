@@ -212,8 +212,9 @@ export default {
     cardSubSpecialty: {
         you: 'Você',
         others: 'Outros',
-        startWith: 'Comerçar por:',
-        start: 'Comerçar',
+        startWith: 'Começar por:',
+        continueWith: 'Onde você parou:',
+        start: 'Começar',
         continue: 'Continuar',
         seeClasses: 'Ver aulas',
         comingSoon: 'Em breve!'

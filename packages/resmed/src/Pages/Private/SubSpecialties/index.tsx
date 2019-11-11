@@ -64,8 +64,9 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                     key={subspecialty.id}
                     xs={24}
                     sm={12}
-                    md={12}
+                    md={8}
                     lg={8}
+                    xl={6}
                     mb='xl'
                 >
                     <SANCardSubSpecialty

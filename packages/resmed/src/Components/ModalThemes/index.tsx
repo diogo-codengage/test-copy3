@@ -51,7 +51,7 @@ const Item = ({ index, name, completed, blocked }) => {
         >
             <SANBox display='flex' alignItems='center'>
                 <SANTypography
-                    color={!blocked && 'primary'}
+                    color={completed ? 'primary' : 'grey.5'}
                     fontSize='xs'
                     fontWeight='bold'
                     mr='xs'
