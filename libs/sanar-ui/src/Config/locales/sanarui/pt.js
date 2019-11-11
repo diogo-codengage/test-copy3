@@ -115,7 +115,15 @@ export default {
         limitExceededException:
             'Você excedeu o límite de tentativas. Tente novamente mais tarde.',
         passwordWasReseted: 'Senha alterada com sucesso!',
-        noEnrollment: 'Não há matrículas para o usuário informado.'
+        noEnrollment: 'Não há matrículas para o usuário informado.',
+        changePassword: {
+            limitExceededException:
+                'Você excedeu o límite de tentativas. Tente novamente mais tarde.',
+            userNotFoundException:
+                'Desculpe, não encontramos nenhuma conta associada ao e-mail inserido. Por favor tente novamente.',
+            notAuthorizedException:
+                'Desculpe, a senha fornecida está incorreta. Verifique seus dados e tente novamente!'
+        }
     },
     practiceCompleted: {
         title: 'Prática finalizada',

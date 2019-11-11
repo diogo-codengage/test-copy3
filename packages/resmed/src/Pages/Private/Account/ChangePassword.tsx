@@ -24,6 +24,7 @@ const RMChangePassword = ({ history }: RouteComponentProps) => {
                 message: t('changePassword.feedback.success'),
                 theme: 'success'
             })
+            history.push('/inicio/curso')
         } catch (err) {
             createSnackbar({
                 message: err.message,
@@ -32,7 +33,6 @@ const RMChangePassword = ({ history }: RouteComponentProps) => {
         }
 
         setSubmitting(false)
-        history.push('/inicio/curso')
     }
 
     return <SANChangePassword onSubmit={handleSubmit} />

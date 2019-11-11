@@ -125,19 +125,26 @@ const changePassword = ({
                     result
                 ) {
                     if (err) {
-                        switch (err) {
+                        switch (err.code) {
                             case 'LimitExceededException':
                                 return reject({
                                     code: err.code,
                                     message: i18n.t(
-                                        'sanarui:authMessages.limitExceededException'
+                                        'sanarui:authMessages.changePassword.limitExceededException'
                                     )
                                 })
                             case 'UserNotFoundException':
                                 return reject({
                                     code: err.code,
                                     message: i18n.t(
-                                        'sanarui:authMessages.userNotFoundException'
+                                        'sanarui:authMessages.changePassword.userNotFoundException'
+                                    )
+                                })
+                            case 'NotAuthorizedException':
+                                return reject({
+                                    code: err.code,
+                                    message: i18n.t(
+                                        'sanarui:authMessages.changePassword.notAuthorizedException'
                                     )
                                 })
                             default:
@@ -167,32 +174,32 @@ const forgotPassword = (email: string) => {
             onSuccess: () => {
                 resolve()
             },
-            onFailure: (error: any) => {
-                switch (error.code) {
+            onFailure: (err: any) => {
+                switch (err.code) {
                     case 'LimitExceededException':
                         return reject({
-                            code: error.code,
+                            code: err.code,
                             message: i18n.t(
                                 'sanarui:authMessages.limitExceededException'
                             )
                         })
                     case 'UserNotFoundException':
                         return reject({
-                            code: error.code,
+                            code: err.code,
                             message: i18n.t(
                                 'sanarui:authMessages.userNotFoundException'
                             )
                         })
                     case 'InvalidParameterException':
                         return reject({
-                            code: error.code,
+                            code: err.code,
                             message: i18n.t(
                                 'sanarui:authMessages.invalidParameterException'
                             )
                         })
                     default:
                         return reject({
-                            code: error.code,
+                            code: err.code,
                             message: i18n.t('sanarui:authMessages.generic')
                         })
                 }
