@@ -217,5 +217,18 @@ export default {
         continue: 'Continuar',
         seeClasses: 'Ver aulas',
         comingSoon: 'Em breve!'
+    },
+    lessonResult: {
+        titleSuccess: 'Você foi muito bem!',
+        titleError: 'Você não foi tão bem',
+        performance: {
+            youRight: 'Você acertou',
+            of: 'de',
+            questions: 'questões.',
+            resultSuccess: 'Mandou bem!',
+            resultError: 'Não desanime!',
+            pratice: 'Que tal praticarmos mais um pouco?'
+        },
+        goToPratice: 'IR PARA A ÁREA DE PRÁTICA'
     }
 }

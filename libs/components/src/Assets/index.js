@@ -20,6 +20,8 @@ import question from './images/card-course-module-thumbs/question.png'
 import flowchart from './images/card-course-module-thumbs/flowchart.png'
 import mentalmap from './images/card-course-module-thumbs/mentalmap.png'
 import article from './images/card-course-module-thumbs/article.png'
+import lessonResultSuccess from './images/lessonResult/ninja-positivo.png'
+import lessonResultError from './images/lessonResult/ninja-negativo.png'
 
 import blocked from './images/sub-specialty/blocked.svg'
 
@@ -42,5 +44,7 @@ export {
     mentalmap,
     article,
     document,
+    lessonResultSuccess,
+    lessonResultError,
     blocked
 }
