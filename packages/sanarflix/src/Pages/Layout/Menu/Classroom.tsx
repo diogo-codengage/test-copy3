@@ -275,7 +275,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     knowledgeArea: t('global.course'),
                     name: state.currentCourse.name,
                     progress: Math.round(
-                        data && data.theme
+                        data && data.theme && data.theme.course
                             ? data.theme.course.progress_percentage
                             : 0
                     )
