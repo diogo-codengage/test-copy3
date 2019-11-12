@@ -7,19 +7,26 @@ const changePassword = cognitoUser => ({ oldPassword, newPassword }) =>
             result
         ) {
             if (err) {
-                switch (err) {
+                switch (err.code) {
                     case 'LimitExceededException':
                         return reject({
                             code: err.code,
                             message: i18n.t(
-                                'sanarui:authMessages.limitExceededException'
+                                'sanarui:authMessages.changePassword.limitExceededException'
                             )
                         })
                     case 'UserNotFoundException':
                         return reject({
                             code: err.code,
                             message: i18n.t(
-                                'sanarui:authMessages.userNotFoundException'
+                                'sanarui:authMessages.changePassword.userNotFoundException'
+                            )
+                        })
+                    case 'NotAuthorizedException':
+                        return reject({
+                            code: err.code,
+                            message: i18n.t(
+                                'sanarui:authMessages.changePassword.notAuthorizedException'
                             )
                         })
                     default:

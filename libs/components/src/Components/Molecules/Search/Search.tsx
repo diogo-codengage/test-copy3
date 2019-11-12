@@ -151,7 +151,8 @@ export interface ISANSearchProps {
 }
 
 const boldString = (text: string, search: string) => {
-    const pattern = `(\\s|\\b)(${search})(\\s|\\b)`
+    const scape = search.replace(/\\/gi, '\\\\').replace(/\)/gi, '\\)')
+    const pattern = `(\\s|\\b)(${scape})(\\s|\\b)`
     const regexp = new RegExp(pattern, 'ig')
     const replaceMask = `$1<strong>$2</strong>$3`
 
