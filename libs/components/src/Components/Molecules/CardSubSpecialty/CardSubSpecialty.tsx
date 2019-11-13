@@ -186,6 +186,7 @@ const SANCardSubSpecialty = ({
                         borderRadius='base'
                         bg='grey-solid.6'
                         width='36px'
+                        minWidth='36px'
                         height='36px'
                         display='flex'
                         alignItems='center'
