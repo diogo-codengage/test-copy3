@@ -3,6 +3,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { theme, ifProp } from 'styled-tools'
 import { useTranslation } from 'react-i18next'
+import { withRouter, RouteComponentProps } from 'react-router'
 
 import {
     SANButton,
@@ -16,6 +17,7 @@ import {
 } from '@sanar/components'
 
 import { ISANModalProps } from '@sanar/components/dist/Components/Molecules/Modal'
+import { ILastAccessed } from 'Apollo/Subspecialties/Queries/lessons'
 
 const ItemStyled = styled(SANBox)<{ blocked?: boolean }>`
     &:nth-child(even) {
@@ -37,7 +39,7 @@ const ItemStyled = styled(SANBox)<{ blocked?: boolean }>`
     )}
 `
 
-const Item = ({ index, name, completed, blocked }) => {
+const Item = ({ index, name, completed, status, onClick }) => {
     const { t } = useTranslation('resmed')
 
     return (
@@ -47,7 +49,8 @@ const Item = ({ index, name, completed, blocked }) => {
             display='flex'
             alignItems='center'
             justifyContent='space-between'
-            blocked={blocked}
+            blocked={status !== 'active'}
+            onClick={status === 'active' && onClick}
         >
             <SANBox display='flex' alignItems='center'>
                 <SANTypography
@@ -59,7 +62,7 @@ const Item = ({ index, name, completed, blocked }) => {
                     {index}
                 </SANTypography>
                 <SANTypography fontSize='md'>
-                    {blocked ? t('modalThemes.blocked') : name}
+                    {status !== 'active' ? t('modalThemes.blocked') : name}
                 </SANTypography>
             </SANBox>
             {completed ? (
@@ -78,10 +81,10 @@ const Item = ({ index, name, completed, blocked }) => {
 interface ITheme {
     name: string
     completed?: boolean
-    blocked?: boolean
+    status?: string
 }
 
-interface IRMModalThemesProps extends ISANModalProps {
+interface IRMModalThemesProps extends ISANModalProps, RouteComponentProps {
     themes: ITheme[]
     visible: boolean
     loading: boolean
@@ -90,17 +93,41 @@ interface IRMModalThemesProps extends ISANModalProps {
     onContinue: () => void
 }
 
-const renderTheme = (theme, index) => (
-    <Item {...theme} index={index + 1} key={index} />
-)
+const renderTheme = (theme, index, onClick) => {
+    return (
+        <Item
+            {...theme}
+            index={index + 1}
+            key={index}
+            onClick={() => onClick(theme.lastAccessed)}
+        />
+    )
+}
 
 const RMModalThemes = ({
     onContinue,
     themes,
     loading,
+    history,
     ...props
 }: IRMModalThemesProps) => {
     const { t } = useTranslation('resmed')
+
+    const onClickItem = (lastAccessed: ILastAccessed) => {
+        const {
+            specialtyId,
+            subSpecialtyId,
+            lessonId,
+            collectionId,
+            resource
+        } = lastAccessed
+
+        history.push(
+            `/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                resource.id
+            }`
+        )
+    }
 
     return (
         <SANModal
@@ -111,7 +138,11 @@ const RMModalThemes = ({
         >
             <SANSpin spinning={loading}>
                 <SANBox margin='-24px' mb='lg' py='sm' height={427}>
-                    <SANScroll>{themes.map(renderTheme)}</SANScroll>
+                    <SANScroll>
+                        {themes.map((theme, index) =>
+                            renderTheme(theme, index, onClickItem)
+                        )}
+                    </SANScroll>
                 </SANBox>
                 <SANModalFooter
                     justifyContent='center'
@@ -136,4 +167,4 @@ const RMModalThemes = ({
     )
 }
 
-export default RMModalThemes
+export default withRouter(RMModalThemes)
