@@ -4,17 +4,57 @@ interface IProgress {
     all: number
     me: number
 }
-export interface ISubspecialty {
+
+interface ILastAccessedResource {
+    id: string
+    type: 'Quiz' | 'Video'
+    index: number
+    title: string
+}
+
+export interface ILastAccessed {
+    specialtyId: string
+    subSpecialtyId?: string
+    lessonId: string
+    collectionId: string
+    resource: ILastAccessedResource
+}
+
+export interface ISubspecialtyItems {
     id: string
     name: string
     progress: IProgress
+    lastAccessed: ILastAccessed
+}
+export interface ISubspecialty {
+    totalCount: number
+    items: ISubspecialtyItems[]
 }
 
 export const GET_SUBSPECIALTIES = gql`
     query SubSpecialties($parentId: ID!) {
         subSpecialties(where: { parentId: $parentId }) {
-            id
-            name
+            totalCount
+            items {
+                id
+                name
+                progress {
+                    me
+                    all
+                }
+                lastAccessed {
+                    specialtyId
+                    subSpecialtyId
+                    lessonId
+                    collectionId
+                    resource {
+                        id
+                        index
+                        type
+                        title
+                    }
+                }
+            }
         }
     }
 `
