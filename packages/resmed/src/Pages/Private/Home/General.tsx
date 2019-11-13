@@ -16,7 +16,11 @@ import {
 } from '@sanar/components'
 import { SANButton } from '@sanar/components/dist/Components/Atoms/Button'
 
-import { GET_SPECIALTIES, ISpecialties } from 'Apollo/Home/Queries/specialties'
+import {
+    GET_SPECIALTIES,
+    ISpecialties,
+    ILastAccessed
+} from 'Apollo/Home/Queries/specialties'
 import { useAuthContext } from 'Hooks/auth'
 
 import appleSvg from 'Assets/images/app-logos/apple.svg'
@@ -30,11 +34,39 @@ const RMSpecialties = withRouter<RouteComponentProps>(
             activeCourse
         ])
 
-        const goTo = (specialtyId: string) => {
+        const goToSubspecialties = (specialtyId: string) => {
             history.push(`/inicio/subespecialidades/${specialtyId}`)
         }
 
-        const renderSpecialty = useCallback(specialty => {
+        const goToClassroom = ({
+            specialtyId,
+            subSpecialtyId,
+            lessonId,
+            collectionId,
+            resource
+        }: ILastAccessed) => {
+            // TODO: When implements classroom route, use this:
+            // history.push(
+            //     `/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+            //         resource.id
+            //     }`
+            // )
+            console.log(
+                `/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                    resource.id
+                }`
+            )
+        }
+
+        const renderContent = (specialty: ISpecialties) => {
+            if (specialty.hasSubSpecialties) {
+                goToSubspecialties(specialty.id)
+            } else {
+                goToClassroom(specialty.lastAccessed)
+            }
+        }
+
+        const renderSpecialty = useCallback((specialty: ISpecialties) => {
             return (
                 <SANCol
                     key={specialty.id}
@@ -47,8 +79,11 @@ const RMSpecialties = withRouter<RouteComponentProps>(
                     <SANCardSpecialty
                         image={specialty.image}
                         title={specialty.name}
-                        progress={{ me: 60, others: 45 }}
-                        onClick={() => goTo(specialty.id)}
+                        progress={{
+                            me: specialty.progress.me,
+                            others: specialty.progress.all
+                        }}
+                        onClick={() => renderContent(specialty)}
                     />
                 </SANCol>
             )
