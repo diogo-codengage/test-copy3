@@ -18,7 +18,9 @@ import {
 
 import {
     GET_SUBSPECIALTIES,
-    ISubspecialty
+    ISubspecialty,
+    ISubspecialtyItems,
+    ILastAccessed
 } from 'Apollo/Subspecialties/Queries/subspecialties'
 import { GET_LESSONS } from 'Apollo/Subspecialties/Queries/lessons'
 
@@ -51,15 +53,35 @@ interface IRouteProps {
 }
 
 interface IRMSubspecialtiesProps extends RouteComponentProps<IRouteProps> {
-    onSeeLessons: (subspecialtyId: string) => void
+    onSeeLessons: (subspecialtyId: any) => void
 }
 
 const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
-    ({ match: { params }, onSeeLessons }: IRMSubspecialtiesProps) => {
+    ({ match: { params }, history, onSeeLessons }: IRMSubspecialtiesProps) => {
         const { t } = useTranslation('resmed')
 
+        const onStart = ({
+            specialtyId,
+            subSpecialtyId,
+            lessonId,
+            collectionId,
+            resource
+        }: ILastAccessed) => {
+            // TODO: When implements classroom route, use this:
+            // history.push(
+            //     `/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+            //         resource.id
+            //     }`
+            // )
+            console.log(
+                `/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                    resource.id
+                }`
+            )
+        }
+
         const renderSubspecialty = useCallback(
-            subspecialty => (
+            (subspecialty: ISubspecialtyItems) => (
                 <SANCol
                     key={subspecialty.id}
                     xs={24}
@@ -72,13 +94,16 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                     <SANCardSubSpecialty
                         blocked={false}
                         title={subspecialty.name}
-                        progress={{ me: 60, others: 45 }}
+                        progress={{
+                            me: subspecialty.progress.me,
+                            others: subspecialty.progress.all
+                        }}
                         continue={{
-                            title: 'Nome da aula exemplo',
-                            index: 3
+                            title: subspecialty.lastAccessed.resource.title,
+                            index: subspecialty.lastAccessed.resource.index
                         }}
                         onClickRight={() => onSeeLessons(subspecialty)}
-                        onClickLeft={console.log}
+                        onClickLeft={() => onStart(subspecialty.lastAccessed)}
                     />
                 </SANCol>
             ),
@@ -96,9 +121,11 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                 errorProps={{ flex: 1 }}
             >
                 {({
-                    data: { subSpecialties }
+                    data: {
+                        subSpecialties: { items, totalCount }
+                    }
                 }: {
-                    data: { subSpecialties: ISubspecialty[] }
+                    data: { subSpecialties: ISubspecialty }
                 }) => (
                     <>
                         <SANBox
@@ -111,14 +138,14 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                                 fontWeight='bold'
                                 mr='xs'
                             >
-                                10
+                                {totalCount}
                             </SANTypography>
                             <SANTypography fontSize='xl'>
                                 {t('subspecialties.subheader.title')}
                             </SANTypography>
                         </SANBox>
                         <SANRow gutter={24}>
-                            {subSpecialties.map(renderSubspecialty)}
+                            {items.map(renderSubspecialty)}
                         </SANRow>
                     </>
                 )}
