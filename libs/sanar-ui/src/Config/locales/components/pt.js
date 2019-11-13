@@ -217,5 +217,8 @@ export default {
         continue: 'Continuar',
         seeClasses: 'Ver aulas',
         comingSoon: 'Em breve!'
+    },
+    collection: {
+        part: 'Parte'
     }
 }
