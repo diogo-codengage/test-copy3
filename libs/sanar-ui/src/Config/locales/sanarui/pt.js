@@ -122,7 +122,7 @@ export default {
             userNotFoundException:
                 'Desculpe, não encontramos nenhuma conta associada ao e-mail inserido. Por favor tente novamente.',
             notAuthorizedException:
-                'Desculpe, a senha fornecida está incorreta. Verifique seus dados e tente novamente!'
+                'Desculpe, a senha atual está incorreta. Verifique os dados e tente novamente!'
         }
     },
     practiceCompleted: {
