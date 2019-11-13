@@ -94,7 +94,7 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                     mb='xl'
                 >
                     <SANCardSubSpecialty
-                        blocked={false}
+                        blocked={subspecialty.status === 'construction'}
                         title={subspecialty.name}
                         progress={{
                             me: subspecialty.progress.me,
