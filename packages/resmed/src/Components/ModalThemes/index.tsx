@@ -3,6 +3,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { theme, ifProp } from 'styled-tools'
 import { useTranslation } from 'react-i18next'
+import { withRouter, RouteComponentProps } from 'react-router'
 
 import {
     SANButton,
@@ -16,7 +17,6 @@ import {
 } from '@sanar/components'
 
 import { ISANModalProps } from '@sanar/components/dist/Components/Molecules/Modal'
-import { withRouter, RouteComponentProps } from 'react-router'
 import { ILastAccessed } from 'Apollo/Subspecialties/Queries/lessons'
 
 const ItemStyled = styled(SANBox)<{ blocked?: boolean }>`

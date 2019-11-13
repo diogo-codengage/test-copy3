@@ -24,9 +24,9 @@ import {
     ILastAccessed
 } from 'Apollo/Subspecialties/Queries/subspecialties'
 import { GET_LESSONS, ILesson } from 'Apollo/Subspecialties/Queries/lessons'
+import { GET_SPECIALTY } from 'Apollo/Subspecialties/Queries/specialty'
 
 import RMModalThemes from 'Components/ModalThemes'
-import { GET_SPECIALTY } from 'Apollo/Subspecialties/Queries/specialty'
 
 const Progress = ({
     percent,
