@@ -23,6 +23,7 @@ export interface ILastAccessed {
 export interface ISubspecialtyItems {
     id: string
     name: string
+    status: 'active' | 'inactive' | 'construction'
     progress: IProgress
     lastAccessed: ILastAccessed
 }
@@ -38,6 +39,7 @@ export const GET_SUBSPECIALTIES = gql`
             items {
                 id
                 name
+                status
                 progress {
                     me
                     all
