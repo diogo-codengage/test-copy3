@@ -90,6 +90,15 @@ const FLXLayoutProvider: React.FC<RouteComponentProps> = ({ children }) => {
                     menuTitle: t('mainMenu.account.title')
                 })
                 break
+            case 2:
+                setMenuState({
+                    ...defaultMenuState,
+                    indexMenu: index,
+                    menuTitle: 'Sala de aula',
+                    darkMode: true,
+                    menuContext: 'classroom'
+                })
+                break
             default:
                 setMenuState(defaultMenuState)
         }

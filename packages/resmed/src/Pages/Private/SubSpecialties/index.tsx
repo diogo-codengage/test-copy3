@@ -67,14 +67,8 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
             collectionId,
             resource
         }: ILastAccessed) => {
-            // TODO: When implements classroom route, use this:
-            // history.push(
-            //     `/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-            //         resource.id
-            //     }`
-            // )
-            console.log(
-                `/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+            history.push(
+                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
                     resource.id
                 }`
             )
