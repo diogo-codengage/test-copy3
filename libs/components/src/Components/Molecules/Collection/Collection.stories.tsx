@@ -68,7 +68,7 @@ storiesOf('Molecules.Collection', module).add(
     () => (
         <SANCollection
             items={items}
-            vertical={boolean('Vertical', true)}
+            vertical={boolean('Vertical', false)}
             onChange={console.log}
             value={text('Value', '3')}
         />

@@ -14,7 +14,7 @@ export const responsiveHorizontal = [
             slidesToShow: 4,
             arrows: false,
             swipeToSlide: true,
-            infinite: false
+            infinite: true
         }
     },
     {

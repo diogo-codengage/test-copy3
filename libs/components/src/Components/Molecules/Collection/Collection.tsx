@@ -37,7 +37,7 @@ const PrevArrow = ({ onClick, className }: any) => (
 )
 
 const ButtonArrowStyled = styled(SANButton)`
-    && {
+    &&& {
         background-color: ${theme('colors.white.10')};
         color: ${theme('colors.grey.6')};
         z-index: 1;
@@ -48,20 +48,17 @@ const ButtonArrowStyled = styled(SANButton)`
 
         &.slick-prev {
             left: -20px;
-
-            &:focus:not(.slick-disabled),
-            &:hover:not(.slick-disabled) {
-                color: ${theme('colors.grey.6')};
-                background-color: ${theme('colors.white.6')};
-            }
         }
         &.slick-next {
             right: -20px;
+        }
 
+        &.slick-prev,
+        &.slick-next {
             &:focus:not(.slick-disabled),
             &:hover:not(.slick-disabled) {
-                color: ${theme('colors.grey.6')};
-                background-color: ${theme('colors.white.6')};
+                color: ${theme('colors.grey.6')} !important;
+                background-color: ${theme('colors.white.6')} !important;
             }
         }
     }
@@ -106,19 +103,20 @@ const IconComleted = styled(SANEvaIcon)`
 
 const SliderStyled = styled(Slider)`
     && {
-        & .slick-active:first-child ${SANCollectionItemStyled} {
-            border-top-left-radius: ${theme('radii.base')};
-            border-bottom-left-radius: ${theme('radii.base')};
-        }
-        & .slick-active:last-child ${SANCollectionItemStyled} {
-            border-top-right-radius: ${theme('radii.base')};
-            border-bottom-right-radius: ${theme('radii.base')};
-        }
-
         ${ifProp(
             'vertical',
             css`
                 width: 204px;
+            `,
+            css`
+                & .slick-active:first-child ${SANCollectionItemStyled} {
+                    border-top-left-radius: ${theme('radii.base')};
+                    border-bottom-left-radius: ${theme('radii.base')};
+                }
+                & .slick-active:nth-child(5) ${SANCollectionItemStyled} {
+                    border-top-right-radius: ${theme('radii.base')};
+                    border-bottom-right-radius: ${theme('radii.base')};
+                }
             `
         )}
     }
