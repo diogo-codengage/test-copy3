@@ -46,7 +46,6 @@
     "@types/react-slick": "^0.23.4",
     "@types/react-tooltip": "^3.9.3",
     "@types/react-transition-group": "^4.2.2",
-    "add": "^2.0.6",
     "date-fns": "^2.5.1",
     "react-compound-slider": "^2.3.0",
     "react-focus-lock": "^2.1.0",
