@@ -200,7 +200,7 @@ const SANCardSubSpecialty = ({
                             {continueProp.index}
                         </SANTypography>
                     </SANBox>
-                    <SANBox maxWidth='calc(100% - 44px)'>
+                    <SANBox width='calc(100% - 44px)'>
                         <SANTypography
                             fontSize='xs'
                             color='grey.5'
@@ -210,7 +210,7 @@ const SANCardSubSpecialty = ({
                                 ? t('cardSubSpecialty.startWith')
                                 : t('cardSubSpecialty.continueWith')}
                         </SANTypography>
-                        <SANTypography color='grey.7' ellipsis maxWidth='100%'>
+                        <SANTypography color='grey.7' ellipsis>
                             {continueProp.title}
                         </SANTypography>
                     </SANBox>
