@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useApolloClient } from '@apollo/react-hooks'
+import { useApolloClient, useQuery } from '@apollo/react-hooks'
 
 import {
     SANBox,
@@ -13,7 +13,8 @@ import {
     SANRow,
     SANCol,
     SANQuery,
-    useSnackbarContext
+    useSnackbarContext,
+    SANIcon
 } from '@sanar/components'
 
 import {
@@ -25,8 +26,15 @@ import {
 import { GET_LESSONS } from 'Apollo/Subspecialties/Queries/lessons'
 
 import RMModalThemes from 'Components/ModalThemes'
+import { GET_SPECIALTY } from 'Apollo/Subspecialties/Queries/specialty'
 
-const Progress = ({ percent }) => {
+const Progress = ({
+    percent,
+    loading
+}: {
+    percent: number
+    loading?: boolean
+}) => {
     const { t } = useTranslation('resmed')
     return (
         <SANBox>
@@ -40,7 +48,7 @@ const Progress = ({ percent }) => {
                     {t('subspecialties.header.completeness')}
                 </SANTypography>
                 <SANTypography fontSize='sm' fontWeight='bold'>
-                    {percent}%
+                    {loading ? <SANIcon type='loading' /> : <>{percent}%</>}
                 </SANTypography>
             </SANBox>
             <SANProgress percent={percent} backdrop='grey.1' />
@@ -148,7 +156,10 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
     }
 )
 
-const RMSubSpecialties = ({ history }: RouteComponentProps) => {
+const RMSubSpecialties = ({
+    history,
+    match: { params }
+}: RouteComponentProps<IRouteProps>) => {
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
@@ -160,6 +171,15 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
     })
     const [loading, setLoading] = useState(false)
     const [lessons, setLessons] = useState([])
+
+    const {
+        data: { specialty },
+        loading: loadingSpecialty
+    } = useQuery<any, any>(GET_SPECIALTY, {
+        variables: {
+            id: params.specialtyId
+        }
+    })
 
     const onSeeLessons = async subspecialty => {
         setLoading(true)
@@ -211,12 +231,21 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
                 HeaderProps={{
                     onBack: () => history.push('/inicio/curso'),
                     SessionTitleProps: {
-                        title: 'Clínica Médica'
+                        title: !loadingSpecialty ? (
+                            specialty.name
+                        ) : (
+                            <SANIcon type='loading' />
+                        )
                     },
                     ExtraProps: {
                         md: 7
                     },
-                    extra: <Progress percent={45} />
+                    extra: (
+                        <Progress
+                            loading={loadingSpecialty}
+                            percent={!loadingSpecialty && specialty.progress.me}
+                        />
+                    )
                 }}
             >
                 <RMSubspecialties onSeeLessons={onSeeLessons} />
@@ -225,4 +254,4 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
     )
 }
 
-export default withRouter<RouteComponentProps>(RMSubSpecialties)
+export default withRouter<RouteComponentProps<IRouteProps>>(RMSubSpecialties)
