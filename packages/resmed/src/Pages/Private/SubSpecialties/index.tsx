@@ -23,10 +23,10 @@ import {
     ISubspecialtyItems,
     ILastAccessed
 } from 'Apollo/Subspecialties/Queries/subspecialties'
-import { GET_LESSONS } from 'Apollo/Subspecialties/Queries/lessons'
+import { GET_LESSONS, ILesson } from 'Apollo/Subspecialties/Queries/lessons'
+import { GET_SPECIALTY } from 'Apollo/Subspecialties/Queries/specialty'
 
 import RMModalThemes from 'Components/ModalThemes'
-import { GET_SPECIALTY } from 'Apollo/Subspecialties/Queries/specialty'
 
 const Progress = ({
     percent,
@@ -170,7 +170,7 @@ const RMSubSpecialties = ({
         }
     })
     const [loading, setLoading] = useState(false)
-    const [lessons, setLessons] = useState([])
+    const [lessons, setLessons] = useState<ILesson[]>([])
 
     const {
         data: { specialty },
