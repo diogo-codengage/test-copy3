@@ -123,7 +123,7 @@ const RMModalThemes = ({
         } = lastAccessed
 
         history.push(
-            `/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
                 resource.id
             }`
         )
