@@ -83,7 +83,9 @@ ISANLessonResultProps) => {
             </SANRow>
             <SANRow
                 width={[1]}
-                p={{ _: 'xl' }}
+                py={{ _: 'xl' }}
+                px={{ _: 'md' }}
+                pt={{ md: 'xxl'}}
                 type='flex'
                 justify='center'
                 align='middle'
