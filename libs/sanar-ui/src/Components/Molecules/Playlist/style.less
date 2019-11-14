@@ -1,7 +1,7 @@
 .es-playlist {
     &__description-skeleton {
         margin-top: @margin-lg;
-        padding: 0 @padding-md
+        padding: 0 @padding-md;
     }
 
     &__current-info {
@@ -49,7 +49,7 @@
 
             & .anticon,
             & .icon {
-                padding: 0 @padding-xs;
+                padding-left: @padding-xs;
             }
 
             & .index {
@@ -65,6 +65,7 @@
             }
             & .description {
                 color: @white-6;
+                padding-left: @padding-xs;
                 &--time {
                     width: ~'calc(100% - 95px)';
                 }
@@ -78,21 +79,26 @@
 
             &--finish {
                 & .anticon svg path {
-                    fill: @secondary-color
+                    fill: @secondary-color;
                 }
-                .icon, .anticon, .es-icon {
+                & .no-type {
+                    color: @secondary-color;
+                }
+                .icon,
+                .anticon,
+                .es-icon {
                     color: @secondary-color !important;
                 }
             }
 
             &--current {
                 & .anticon svg path {
-                    fill: @white
+                    fill: @white;
                 }
 
                 & .icon,
                 & .anticon,
-                &  .es-icon,
+                & .es-icon,
                 & .es-typography {
                     color: @white !important;
                 }

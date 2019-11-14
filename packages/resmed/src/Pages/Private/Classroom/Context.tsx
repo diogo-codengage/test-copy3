@@ -13,6 +13,7 @@ const RMClassroomProvider: React.FC = ({ children }) => {
     useEffect(() => {
         setMenuTab(2)
         return () => {
+            console.log('exit classroom')
             setMenuTab(0)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
