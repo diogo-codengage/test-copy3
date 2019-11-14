@@ -64,11 +64,9 @@ const RMSpecialties = withRouter<RouteComponentProps>(
             return (
                 <SANCol
                     key={specialty.id}
-                    xs={24}
-                    sm={12}
-                    md={12}
-                    lg={8}
                     mb='xl'
+                    flex='1 0 25% !important'
+                    minWidth='300px !important'
                 >
                     <SANCardSpecialty
                         image={specialty.images.large}
@@ -95,7 +93,7 @@ const RMSpecialties = withRouter<RouteComponentProps>(
                 }: {
                     data: { specialties: ISpecialties[] }
                 }) => (
-                    <SANRow gutter={24}>
+                    <SANRow gutter={24} type='flex' flexWrap='wrap'>
                         {specialties.map(renderSpecialty)}
                     </SANRow>
                 )}
