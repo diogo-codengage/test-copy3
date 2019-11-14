@@ -256,15 +256,15 @@ const SANLessonResult = ({
                                     }
                                     borderRadius='50%'
                                 >
-                                    <SANBox
-                                        as='span'
+                                    <SANTypography
                                         fontSize={{ _: 'sm' }}
                                         my={{ _: 'auto' }}
                                         fontWeight='bold'
                                         color='white.10'
+                                        py='3px'
                                     >
                                         {question.number}
-                                    </SANBox>
+                                    </SANTypography>
                                 </SANBox>
                                 <SANQuizTitleRow>
                                     <SANTypography
