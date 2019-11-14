@@ -109,6 +109,7 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                     />
                 </SANCol>
             ),
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             [onSeeLessons]
         )
 
