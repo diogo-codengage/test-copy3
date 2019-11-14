@@ -1,6 +1,5 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { text } from '@storybook/addon-knobs'
 import SANLessonResult from './LessonResult'
 
 const questions = [
@@ -12,25 +11,29 @@ const questions = [
     },
     {
         number: '2',
-        title: 'Sed scelerisque nulla eu lectus placerat dapibus. In sodales diam diam, eu sodales magna aliquet a.',
+        title:
+            'Sed scelerisque nulla eu lectus placerat dapibus. In sodales diam diam, eu sodales magna aliquet a.',
         correctsQuizzes: 4,
         totalQuizzes: 5
     },
     {
         number: '3',
-        title: 'Phasellus nec purus at nunc gravida pretium. Morbi dictum at augue ultricies malesuada.',
+        title:
+            'Phasellus nec purus at nunc gravida pretium. Morbi dictum at augue ultricies malesuada.',
         correctsQuizzes: 1,
         totalQuizzes: 5
     },
     {
         number: '4',
-        title: 'Sed scelerisque arcu fermentum, semper turpis a, interdum justo. Donec tristique arcu dui, eu viverra neque pretium sit amet.',
+        title:
+            'Sed scelerisque arcu fermentum, semper turpis a, interdum justo. Donec tristique arcu dui, eu viverra neque pretium sit amet.',
         correctsQuizzes: 4,
         totalQuizzes: 5
     },
     {
         number: '5',
-        title: 'Interdum justo. Donec tristique arcu dui, eu viverra neque pretium sit amet.',
+        title:
+            'Interdum justo. Donec tristique arcu dui, eu viverra neque pretium sit amet.',
         correctsQuizzes: 4,
         totalQuizzes: 5
     }
@@ -42,8 +45,5 @@ function goPractice() {
 }
 
 storiesOf('Molecules.LessonResult', module).add('Simple', () => (
-    <SANLessonResult
-        onGoPractice={() => goPractice()}
-        questions={questions}
-        />
+    <SANLessonResult onGoPractice={() => goPractice()} questions={questions} />
 ))

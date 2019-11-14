@@ -1,15 +1,11 @@
 import React from 'react'
 
-import { theme } from 'styled-tools'
-
 import { useThemeContext } from '@sanar/utils/dist/Hooks'
 import { useTranslation } from 'react-i18next'
 import { SANStyled } from '../../../Theme'
-import { SANButton, ISANButtonProps } from '../../Atoms/Button'
-import { SANEvaIcon } from '../../Atoms/EvaIcon'
+import { SANButton } from '../../Atoms/Button'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANBox } from '../../Atoms/Box'
-import { SANDivider } from '../../Atoms/Divider'
 import { SANRow, SANCol } from '../Grid'
 
 export interface ISANLessonResultProps {
