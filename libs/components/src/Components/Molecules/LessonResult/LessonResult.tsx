@@ -22,15 +22,26 @@ export interface ISANLessonResultProps {
     }>
 }
 
-const SANQuizTitleRow = SANStyled(SANRow)`
+const SANQuizBox = SANStyled(SANRow)`
     &&& {
-        max-width: calc(100% - 40px);
-        flex: 1;
-        display: flex;
+        flex-direction: column-reverse;
+        max-width: calc(100% - 32px);
 
-    }
-    & > div: {
-        max-width: calc(100% - 40px);
+        ${theme('mediaQueries.up.sm')} {
+            display: flex;
+            flex: 1;
+            flex-direction: row;
+            justify-content: space-between;
+
+            & > div {
+                align-self: center;
+            }
+            & > div:first-child {
+                flex: 1;
+                max-width: calc(100% - 140px);
+                line-height: 1.40;
+            }
+        }
     }
 `
 const SANResultTitle = SANStyled(SANRow)`
@@ -167,7 +178,7 @@ const SANLessonResult = ({
                             {t('lessonResult.performance.youRight')}
                             <SANBox
                                 as='span'
-                                fontSize={{ _: 'md' }}
+                                fontSize={{ _: 'md', md: 'xl' }}
                                 color={resultTheme}
                                 fontWeight='bold'
                             >
@@ -237,66 +248,53 @@ const SANLessonResult = ({
                     >
                         <SANCol
                             width={{
-                                _: 'calc(100% - 122px)',
-                                md: 'calc(100% - 130px)'
+                                _: '32px',
+                                md: '40px'
                             }}
+                            height='100%'
+                            align='middle'
                         >
-                            <SANRow type='flex' alignItems='center'>
-                                <SANBox
-                                    textAlign='center'
-                                    width='24px'
-                                    height='24px'
-                                    mr={{ _: 'xs', md: 'md' }}
-                                    bg={
-                                        getResultOfQuiz(
-                                            question.percentToCorrect,
-                                            question.totalQuizzes,
-                                            question.correctsQuizzes
-                                        ).color
-                                    }
-                                    borderRadius='50%'
+                            <SANBox
+                                textAlign='center'
+                                width='24px'
+                                height='24px'
+                                mr={{ _: 'xs', md: 'md' }}
+                                bg={
+                                    getResultOfQuiz(
+                                        question.percentToCorrect,
+                                        question.totalQuizzes,
+                                        question.correctsQuizzes
+                                    ).color
+                                }
+                                borderRadius='50%'
+                            >
+                                <SANTypography
+                                    fontSize={{ _: 'sm' }}
+                                    my={{ _: 'auto' }}
+                                    fontWeight='bold'
+                                    color='white.10'
+                                    py='3px'
                                 >
-                                    <SANTypography
-                                        fontSize={{ _: 'sm' }}
-                                        my={{ _: 'auto' }}
-                                        fontWeight='bold'
-                                        color='white.10'
-                                        py='3px'
-                                    >
-                                        {question.number}
-                                    </SANTypography>
-                                </SANBox>
-                                <SANQuizTitleRow>
-                                    <SANTypography
-                                        fontSize={{ _: 'lg' }}
-                                        fontWeight='bold'
-                                        color='white.5'
-                                        textAlign='left'
-                                        ellipsis='1'
-                                    >
-                                        {/* teste */}
-                                        {question.title}
-                                    </SANTypography>
-                                    <SANBox
-                                        as='span'
-                                        fontSize={{ _: 'lg' }}
-                                        fontWeight='bold'
-                                        color='white.5'
-                                        textAlign='left'
-                                    >
-                                        &nbsp;
-                                        {`(${question.correctsQuizzes}/${question.totalQuizzes})`}
-                                    </SANBox>
-                                </SANQuizTitleRow>
-                            </SANRow>
+                                    {question.number}
+                                </SANTypography>
+                            </SANBox>
                         </SANCol>
-                        <SANCol>
+                        <SANQuizBox>
                             <SANTypography
-                                flex='initial'
                                 fontSize={{ _: 'lg' }}
-                                ml={{ _: 'xs', md: 'md' }}
                                 fontWeight='bold'
-                                textAlign='right'
+                                color='white.5'
+                                textAlign='left'
+                            >
+                                {`${question.title} (${question.correctsQuizzes}/${question.totalQuizzes})`}
+                            </SANTypography>
+                            <SANTypography
+                                fontSize={{ _: 'lg' }}
+                                ml={{ md: 'md' }}
+                                mb={{ _: 'xxs', sm: '0px' }}
+                                fontWeight='bold'
+                                textAlign={{ _: 'left', md: 'right' }}
+                                align='middle'
                                 color={
                                     getResultOfQuiz(
                                         question.percentToCorrect,
@@ -313,7 +311,7 @@ const SANLessonResult = ({
                                     ).resultText
                                 }
                             </SANTypography>
-                        </SANCol>
+                        </SANQuizBox>
                     </SANRow>
                 ))}
             </SANResultQuizzes>
