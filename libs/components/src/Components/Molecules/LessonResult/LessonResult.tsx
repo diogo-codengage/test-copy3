@@ -160,7 +160,7 @@ const SANLessonResult = ({
                     <SANBox displayFlex mb={{ _: 'sm' }}>
                         <SANBox
                             as='span'
-                            fontSize={{ _: 'md' }}
+                            fontSize={{ _: 'md', md: 'xl' }}
                             color='grey.9'
                             width={[1]}
                         >
