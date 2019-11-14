@@ -76,27 +76,34 @@ const SANClassroomMenu: React.FC<IProps> = ({
                         </SANBox>
                     </SANBox>
                     <SANDivider mt={5} mb={5} backgroundColor='grey.4' />
-                    <SANBox
-                        displayFlex
-                        alignItems='center'
-                        justifyContent='space-between'
-                        color='white.10'
-                        mb={2}
-                    >
-                        <SANTypography transform='uppercase' variant='caption'>
-                            {t('global.theme')}
-                        </SANTypography>
-                        <SANTypography color='white.5' variant='caption'>
-                            {currentThemeIndex} / {totalThemes}
-                        </SANTypography>
-                    </SANBox>
-                    <SANDisciplineDropdown
-                        onSelect={DisciplineDropdownProps.onSelect}
-                        activeItem={DisciplineDropdownProps.activeItem}
-                        items={DisciplineDropdownProps.items}
-                        loading={DisciplineDropdownProps.loading}
-                        progress={DisciplineDropdownProps.progress}
-                    />
+                    {!!currentThemeIndex && totalThemes && (
+                        <SANBox
+                            displayFlex
+                            alignItems='center'
+                            justifyContent='space-between'
+                            color='white.10'
+                            mb={2}
+                        >
+                            <SANTypography
+                                transform='uppercase'
+                                variant='caption'
+                            >
+                                {t('global.theme')}
+                            </SANTypography>
+                            <SANTypography color='white.5' variant='caption'>
+                                {currentThemeIndex} / {totalThemes}
+                            </SANTypography>
+                        </SANBox>
+                    )}
+                    {!!DisciplineDropdownProps && (
+                        <SANDisciplineDropdown
+                            onSelect={DisciplineDropdownProps.onSelect}
+                            activeItem={DisciplineDropdownProps.activeItem}
+                            items={DisciplineDropdownProps.items}
+                            loading={DisciplineDropdownProps.loading}
+                            progress={DisciplineDropdownProps.progress}
+                        />
+                    )}
                 </SANBox>
                 <SANPlaylist
                     loading={PlaylistProps.loading}

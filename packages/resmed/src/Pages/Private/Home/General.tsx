@@ -40,13 +40,12 @@ const RMSpecialties = withRouter<RouteComponentProps>(
 
         const goToClassroom = ({
             specialtyId,
-            subSpecialtyId,
             lessonId,
             collectionId,
             resource
         }: ILastAccessed) => {
             history.push(
-                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                `/inicio/sala-aula/${specialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
                     resource.id
                 }`
             )

@@ -29,6 +29,10 @@ const SANCollapsePanelStyle = styled(SANCollapsePanel)`
                 right: ${theme('space.xl')};
             }
         }
+
+        &.ant-collapse-item-active > .ant-collapse-header {
+            background-color: ${theme('colors.grey.0')};
+        }
     }
 `
 

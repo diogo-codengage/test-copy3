@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom'
 
+import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import RMClassroomProvider from './Context'
 
 const renderResourceContent = type => {
@@ -36,9 +37,16 @@ const Wrapper = styled.div`
 const FLXClassroom: React.FC<RouteComponentProps<IParams>> = ({
     match: { params }
 }) => {
-    console.log('FLXClassroom')
+    const { onOpenMenu, setParams } = useLayoutContext()
+
+    useEffect(() => {
+        setParams(params)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <RMClassroomProvider>
+            <button onClick={onOpenMenu}>MENU</button>
             <Wrapper>{renderResourceContent(params.type)}</Wrapper>
         </RMClassroomProvider>
     )

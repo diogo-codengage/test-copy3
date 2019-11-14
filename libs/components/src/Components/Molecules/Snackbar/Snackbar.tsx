@@ -10,7 +10,7 @@ const SnackbarStyled = styled.div`
     margin: 20px 0;
     align-items: center;
     padding: ${theme('space.sm')};
-    background: ${theme('color.white.10')};
+    background: ${theme('colors.white.10')};
     border-radius: ${theme('radii.base')};
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 `

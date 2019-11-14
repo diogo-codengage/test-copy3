@@ -59,7 +59,7 @@ const ESPlaylist = ({
                 <div className='es-playlist__current-info'>
                     <div className='es-playlist__current-info__index'>
                         <ESTypography level={6}>
-                            {current.index + 1}
+                            {currentIndex + 1}
                         </ESTypography>
                     </div>
                     <div className='es-playlist__current-info__description'>
@@ -71,7 +71,10 @@ const ESPlaylist = ({
                             variant='subtitle1'
                             className='description'
                         >
-                            {current[current.resource_type.toLowerCase()].title}
+                            {current.hasType
+                                ? current[current.resource_type.toLowerCase()]
+                                      .title
+                                : current.title}
                         </ESTypography>
                     </div>
                 </div>
