@@ -13,40 +13,62 @@ import { SANDivider } from '../../Atoms/Divider'
 import { SANRow, SANCol } from '../Grid'
 
 export interface ISANLessonResultProps {
-    totalQuestions: number
-    correctsQuestions: number
-    percentToCorrect: number
+    percentToCorrect?: number
     onGoPractice?: () => {}
     questions: Array<{
-        number: string,
-        title: string,
-        percentToCorrect: number,
-        correctsQuizzes: number,
+        number: string
+        title: string
+        percentToCorrect?: number
+        correctsQuizzes: number
         totalQuizzes: number
     }>
 }
 
+const SANQuizTitleRow = SANStyled(SANRow)`
+    &&& {
+        max-width: calc(100% - 40px);
+        flex: 1;
+        display: flex;
+
+    }
+    & > div: {
+        max-width: calc(100% - 40px);
+    }
+`
+
 const SANLessonResult = ({
-    totalQuestions,
-    correctsQuestions,
     percentToCorrect,
     questions,
     onGoPractice
-}: 
-ISANLessonResultProps) => {
+}: ISANLessonResultProps) => {
+    let title: string,
+        ninja: string,
+        resultTheme: string,
+        resultPerformance: string
+
+    const { t } = useTranslation('components')
+
     const {
         assets: {
             lessonResult: { success: ninjaSuccess, error: ninjaError }
         }
     } = useThemeContext()
 
-    const { t } = useTranslation('components')
-    const type = ((correctsQuestions * 100) / totalQuestions) >= (percentToCorrect || 80) ? 'success' : 'error'
+    const totalQuestions = questions.length
+    let correctsQuestions = 0
+    questions.forEach(({ correctsQuizzes, totalQuizzes, percentToCorrect }) => {
+        if (
+            (correctsQuizzes * 100) / totalQuizzes >=
+            (percentToCorrect || 80)
+        ) {
+            correctsQuestions += 1
+        }
+    })
+    const type =
+        (correctsQuestions * 100) / totalQuestions >= (percentToCorrect || 80)
+            ? 'success'
+            : 'error'
 
-    let title: string,
-        ninja: string,
-        resultTheme: string,
-        resultPerformance: string
     if (type === 'success') {
         resultTheme = 'success'
         title = t('lessonResult.titleSuccess')
@@ -57,6 +79,25 @@ ISANLessonResultProps) => {
         title = t('lessonResult.titleError')
         ninja = ninjaError
         resultPerformance = t('lessonResult.performance.resultError')
+    }
+
+    const getResultOfQuiz = (
+        pctToCorrect: number,
+        total: number,
+        corrects: number
+    ) => {
+        if ((corrects * 100) / total >= (pctToCorrect || 80)) {
+            return {
+                color: 'success',
+                resultTextColor: 'white.10',
+                resultText: t('lessonResult.questions.resultSuccess')
+            }
+        }
+        return {
+            color: 'error',
+            resultTextColor: 'error',
+            resultText: t('lessonResult.questions.resultError')
+        }
     }
 
     return (
@@ -83,16 +124,21 @@ ISANLessonResultProps) => {
             </SANRow>
             <SANRow
                 width={[1]}
-                p={{ _: 'xl' }}
+                py={{ _: 'xl' }}
+                px={{ _: 'md', md: 'xl' }}
                 type='flex'
                 justify='center'
                 align='middle'
                 bg='white.10'
             >
-                <SANCol>
-                    <SANBox as='img' src={ninja} height='300px' />
+                <SANCol
+                    width={{ _: 1, xs: '292.90px' }}
+                    height={{ xs: '300px' }}
+                >
+                    <SANBox as='img' src={ninja} width={[1]} height='auto' />
                 </SANCol>
                 <SANCol
+                    maxWidth='100%'
                     ml={{ _: 8 }}
                     mr={{ md: '0', _: 8 }}
                     justify='center'
@@ -138,14 +184,14 @@ ISANLessonResultProps) => {
                     <SANRow>
                         <SANCol>
                             <SANButton
+                                onClick={onGoPractice}
                                 size='medium'
                                 uppercase
                                 color='primary-4'
                                 variant='solid'
-                                px={'xxl'}
                             >
                                 <SANTypography
-                                    fontSize={{ _: 'lg' }}
+                                    fontSize={{ _: 'md', md: 'lg' }}
                                     fontWeight='bold'
                                     color='white.10'
                                 >
@@ -156,72 +202,108 @@ ISANLessonResultProps) => {
                     </SANRow>
                 </SANCol>
             </SANRow>
-            {/* <SANCol {...grid}>
-                <SANBox
-                    displayFlex
-                    justifyContent={{ sm: 'flex-start', _: 'space-between' }}
-                    mb={{ md: '0', _: 'md' }}
-                >
-                    <SANBox order={{ sm: 1, _: 2 }}>
-                        <SANButtonMenu
-                            onClick={onOpenMenu}
-                            circle
-                            variant='text'
-                            mr={{ sm: 'xl', _: '0' }}
-                        >
-                            <SANEvaIcon name='menu-outline' size='large' />
-                        </SANButtonMenu>
-                    </SANBox>
-                    <SANBox order={{ sm: 2, _: 1 }}>
-                        <SANTypography
-                            fontSize={{ xs: 'xl', _: 'lg' }}
-                            fontWeight='bold'
-                            color='white.10'
-                        >
-                            {title}
-                        </SANTypography>
-                        <SANTypography fontSize='md' color='gold.0'>
-                            {subtitle}
-                        </SANTypography>
-                    </SANBox>
-                </SANBox>
-            </SANCol>
-            {actions && (
-                <SANCol xs={24} md={12} xl={8}>
+            <SANRow
+                width={[1]}
+                py={{ _: 'xs' }}
+                px={{ _: 'md', md: 'xxl' }}
+                type='flex'
+                align='middle'
+                bg='grey-solid.8'
+            >
+                {questions.map((question, index) => (
                     <SANRow
+                        width={[1]}
                         type='flex'
-                        justifyContent={{ xs: 'flex-end', _: 'space-between' }}
-                        gutter={24}
+                        py='xl'
+                        justify='space-between'
+                        align='middle'
+                        borderBottom={
+                            index === questions.length - 1 ? '0' : '1px solid'
+                        }
+                        borderColor='white.2'
                     >
                         <SANCol
-                            xs={24}
-                            sm={24}
-                            md={0}
-                            order={3}
-                            mt='md'
-                            mb='xs'
+                            width={{
+                                _: 'calc(100% - 122px)',
+                                md: 'calc(100% - 130px)'
+                            }}
                         >
-                            <SANDivider />
+                            <SANRow type='flex' alignItems='center'>
+                                <SANBox
+                                    textAlign='center'
+                                    width='24px'
+                                    height='24px'
+                                    mr={{ _: 'xs', md: 'md' }}
+                                    bg={
+                                        getResultOfQuiz(
+                                            question.percentToCorrect,
+                                            question.totalQuizzes,
+                                            question.correctsQuizzes
+                                        ).color
+                                    }
+                                    borderRadius='50%'
+                                >
+                                    <SANBox
+                                        as='span'
+                                        fontSize={{ _: 'sm' }}
+                                        my={{ _: 'auto' }}
+                                        fontWeight='bold'
+                                        color='white.10'
+                                    >
+                                        {question.number}
+                                    </SANBox>
+                                </SANBox>
+                                <SANQuizTitleRow>
+                                    <SANTypography
+                                        fontSize={{ _: 'lg' }}
+                                        fontWeight='bold'
+                                        color='white.5'
+                                        textAlign='left'
+                                        ellipsis='1'
+                                    >
+                                        {/* teste */}
+                                        {question.title}
+                                    </SANTypography>
+                                    <SANBox
+                                        as='span'
+                                        fontSize={{ _: 'lg' }}
+                                        fontWeight='bold'
+                                        color='white.5'
+                                        textAlign='left'
+                                    >
+                                        &nbsp;
+                                        {`(${question.correctsQuizzes}/${question.totalQuizzes})`}
+                                    </SANBox>
+                                </SANQuizTitleRow>
+                            </SANRow>
                         </SANCol>
-                        {!!ButtonBookmarkProps && (
-                            <SANCol
-                                xs={24}
-                                sm={24}
-                                md={8}
-                                order={{ _: 3, md: 1 }}
+                        <SANCol>
+                            <SANTypography
+                                flex='initial'
+                                fontSize={{ _: 'lg' }}
+                                ml={{ _: 'xs', md: 'md' }}
+                                fontWeight='bold'
+                                textAlign='right'
+                                color={
+                                    getResultOfQuiz(
+                                        question.percentToCorrect,
+                                        question.totalQuizzes,
+                                        question.correctsQuizzes
+                                    ).resultTextColor
+                                }
                             >
-                                <SANButton {...mergeButtonBookmarkProps} />
-                            </SANCol>
-                        )}
-                        <SANCol xs={12} sm={12} md={8} order={{ _: 1, md: 3 }}>
-                            <SANButton {...mergeButtonPreviousProps} />
-                        </SANCol>
-                        <SANCol xs={12} sm={12} md={8} order={{ _: 1, md: 4 }}>
-                            <SANButton {...mergeButtonNextProps} />
+                                {
+                                    getResultOfQuiz(
+                                        question.percentToCorrect,
+                                        question.totalQuizzes,
+                                        question.correctsQuizzes
+                                    ).resultText
+                                }
+                            </SANTypography>
                         </SANCol>
                     </SANRow>
-                </SANCol>
-            )} */}
+                ))}
+            </SANRow>
         </SANBox>
     )
 }
