@@ -70,7 +70,7 @@ const RMSpecialties = withRouter<RouteComponentProps>(
                     mb='xl'
                 >
                     <SANCardSpecialty
-                        image={specialty.image}
+                        image={specialty.images.large}
                         title={specialty.name}
                         progress={{
                             me: specialty.progress.me,

@@ -5,6 +5,13 @@ interface IProgress {
     me: number
 }
 
+export interface ImageSizes {
+    small?: string
+    medium?: string
+    large?: string
+    original?: string
+}
+
 interface ILastAccessedResource {
     id: string
     type: 'Quiz' | 'Video'
@@ -25,7 +32,7 @@ export interface ISpecialties {
     name: string
     progress: IProgress
     hasSubSpecialties: boolean
-    image: string
+    images: ImageSizes
     lastAccessed: ILastAccessed
 }
 
@@ -35,7 +42,9 @@ export const GET_SPECIALTIES = gql`
             id
             name
             hasSubSpecialties
-            image
+            images {
+                large
+            }
             lastAccessed {
                 specialtyId
                 subSpecialtyId
