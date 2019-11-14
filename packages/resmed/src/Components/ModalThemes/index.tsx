@@ -46,22 +46,25 @@ const Item = ({ index, name, completed, status, onClick }) => {
         <ItemStyled
             py='md'
             px='lg'
+            pr='sm'
             display='flex'
             alignItems='center'
             justifyContent='space-between'
             blocked={status !== 'active'}
             onClick={status === 'active' && onClick}
+            mr='xs'
         >
             <SANBox display='flex' alignItems='center'>
                 <SANTypography
                     color={completed ? 'primary' : 'grey.5'}
                     fontSize='xs'
                     fontWeight='bold'
+                    lineHeight='1'
                     mr='xs'
                 >
                     {index}
                 </SANTypography>
-                <SANTypography fontSize='md'>
+                <SANTypography fontSize='md' lineHeight='1'>
                     {status !== 'active' ? t('modalThemes.blocked') : name}
                 </SANTypography>
             </SANBox>

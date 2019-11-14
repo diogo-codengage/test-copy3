@@ -181,6 +181,11 @@ const RMSubSpecialties = ({
         }
     })
 
+    const onCancel = () => {
+        setCurrent(old => ({ ...old, open: false }))
+        setLessons([])
+    }
+
     const onSeeLessons = async subspecialty => {
         setLoading(true)
         setCurrent({
@@ -210,7 +215,7 @@ const RMSubSpecialties = ({
             <RMModalThemes
                 visible={current.open}
                 title={current.subspecialty.name}
-                onCancel={() => setCurrent(old => ({ ...old, open: false }))}
+                onCancel={onCancel}
                 onContinue={console.log}
                 themes={lessons}
                 loading={loading}
