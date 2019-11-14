@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { theme } from 'styled-tools'
+
 import { useThemeContext } from '@sanar/utils/dist/Hooks'
 import { useTranslation } from 'react-i18next'
 import { SANStyled } from '../../../Theme'
@@ -29,6 +31,20 @@ const SANQuizTitleRow = SANStyled(SANRow)`
     }
     & > div: {
         max-width: calc(100% - 40px);
+    }
+`
+const SANResultTitle = SANStyled(SANRow)`
+    &&& {
+        border-top-left-radius: ${theme('radii.base')};
+        border-top-right-radius: ${theme('radii.base')};
+
+    }
+`
+const SANResultQuizzes = SANStyled(SANRow)`
+    &&& {
+        border-bottom-left-radius: ${theme('radii.base')};
+        border-bottom-right-radius: ${theme('radii.base')};
+
     }
 `
 
@@ -101,8 +117,9 @@ const SANLessonResult = ({
             justifyContent={{ sm: 'flex-start', _: 'space-between' }}
             mb={{ md: '0', _: 'md' }}
             width={[1]}
+            borderRadius='base'
         >
-            <SANRow
+            <SANResultTitle
                 width={[1]}
                 p={{ _: 'lg' }}
                 type='flex'
@@ -117,7 +134,7 @@ const SANLessonResult = ({
                 >
                     {title}
                 </SANTypography>
-            </SANRow>
+            </SANResultTitle>
             <SANRow
                 width={[1]}
                 py={{ _: 'xl' }}
@@ -198,7 +215,7 @@ const SANLessonResult = ({
                     </SANRow>
                 </SANCol>
             </SANRow>
-            <SANRow
+            <SANResultQuizzes
                 width={[1]}
                 py={{ _: 'xs' }}
                 px={{ _: 'md', md: 'xxl' }}
@@ -299,7 +316,7 @@ const SANLessonResult = ({
                         </SANCol>
                     </SANRow>
                 ))}
-            </SANRow>
+            </SANResultQuizzes>
         </SANBox>
     )
 }
