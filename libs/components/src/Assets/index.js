@@ -23,6 +23,8 @@ import article from './images/card-course-module-thumbs/article.png'
 
 import blocked from './images/sub-specialty/blocked.svg'
 
+import suggested_schedule from './images/card-schedule/suggested.png'
+
 export {
     typeIconPrimaryBook,
     typeIconPrimaryFile,
@@ -42,5 +44,6 @@ export {
     mentalmap,
     article,
     document,
-    blocked
+    blocked,
+    suggested_schedule
 }
