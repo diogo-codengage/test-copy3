@@ -229,6 +229,8 @@ export default {
             resultError: 'Não desanime!',
             pratice: 'Que tal praticarmos mais um pouco?'
         },
-        goToPratice: 'IR PARA A ÁREA DE PRÁTICA'
+        goToPratice: 'Ir para a área de prática',
+        itemSuccess: 'Mandou bem',
+        itemError: 'Precisa estudar'
     }
 }

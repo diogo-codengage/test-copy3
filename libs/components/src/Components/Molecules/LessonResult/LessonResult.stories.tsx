@@ -1,38 +1,34 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { text } from '@storybook/addon-knobs'
+import { number } from '@storybook/addon-knobs'
+
 import SANLessonResult from './LessonResult'
 
 const questions = [
     {
-        number: '1',
-        title: '1',
-        percentToCorrect: 80,
-        correctsQuizzes: 3,
-        totalQuizzes: 5
+        title: 'Titulo Titulo Titulo Titulo Titulo Titulo Titulo Titulo',
+        corrects: 8,
+        total: 10
     },
     {
-        number: '2',
-        title: '2',
-        percentToCorrect: 80,
-        correctsQuizzes: 3,
-        totalQuizzes: 5
+        title: 'Collection 02',
+        corrects: 8,
+        total: 10
     },
     {
-        number: '3',
-        title: '3',
-        percentToCorrect: 80,
-        correctsQuizzes: 1,
-        totalQuizzes: 5
+        title: 'Collection 03',
+        corrects: number('Corrects', 7),
+        total: 10
     }
 ]
 
-storiesOf('Molecules.LessonResult', module).add('Simple', () => (
-    <SANLessonResult
-        totalQuestions={5}
-        correctsQuestions={3}
-        percentToCorrect={80}
-        onGoPractice={() => false}
-        questions={questions}
-        />
-))
+storiesOf('Molecules.LessonResult', module).add(
+    'Simple',
+    () => <SANLessonResult onGoPractice={console.log} questions={questions} />,
+    {
+        style: {
+            background: '#242938',
+            padding: 0
+        }
+    }
+)
