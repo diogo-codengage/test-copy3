@@ -31,7 +31,7 @@ const SANCardSchedule = ({
 }: ISANCardScheduleProps) => {
     const {
         assets: {
-            cardSchedule: { suggested_schedule: suggested }
+            cardSchedule: { suggestedSchedule }
         }
     } = useThemeContext()
 
@@ -49,7 +49,7 @@ const SANCardSchedule = ({
         >
             <SANBox
                 as='img'
-                src={image ? image : suggested}
+                src={image ? image : suggestedSchedule}
                 my={{ _: 0, sm: 'lg' }}
             />
             <SANButtonRow

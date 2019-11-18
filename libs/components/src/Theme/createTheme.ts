@@ -24,7 +24,12 @@ import {
     article,
     document,
     blocked,
-    suggested_schedule
+    suggestedSchedule,
+    awfulEmoji,
+    badEmoji,
+    regularEmoji,
+    goodEmoji,
+    awesomeEmoji
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -172,6 +177,7 @@ defaultSpace.md = defaultSpace[4]
 defaultSpace.lg = defaultSpace[5]
 defaultSpace.xl = defaultSpace[6]
 defaultSpace.xxl = defaultSpace[7]
+defaultSpace.xxxl = defaultSpace[8]
 
 const defaultShadows = [
     'none',
@@ -221,7 +227,14 @@ const assetsDefault = {
         }
     },
     cardSchedule: {
-        suggested_schedule
+        suggestedSchedule
+    },
+    feedbackEmojis: {
+        awful: awfulEmoji,
+        bad: badEmoji,
+        regular: regularEmoji,
+        good: goodEmoji,
+        awesome: awesomeEmoji
     }
 }
 
