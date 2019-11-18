@@ -231,6 +231,21 @@ export default {
         next: 'Próximo',
         send: 'Enviar'
     },
+    lessonResult: {
+        titleSuccess: 'Você foi muito bem!',
+        titleError: 'Você não foi tão bem',
+        performance: {
+            youRight: 'Você acertou',
+            of: 'de',
+            questions: 'questões.',
+            resultSuccess: 'Mandou bem!',
+            resultError: 'Não desanime!',
+            pratice: 'Que tal praticarmos mais um pouco?'
+        },
+        goToPratice: 'Ir para a área de prática',
+        itemSuccess: 'Mandou bem',
+        itemError: 'Precisa estudar'
+    },
     collection: {
         part: 'Parte'
     }
