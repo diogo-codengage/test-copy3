@@ -83,6 +83,9 @@ export default {
             termsOfUse: 'Termos de Uso',
             privacyPolicy: 'Política de Privacidade',
             signOut: 'Sair da conta'
+        },
+        classroom: {
+            specialty: 'Nome da especialidade'
         }
     },
     logout: {

@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useApolloClient } from '@apollo/react-hooks'
+import { useApolloClient, useQuery } from '@apollo/react-hooks'
 
 import {
     SANBox,
@@ -13,18 +13,28 @@ import {
     SANRow,
     SANCol,
     SANQuery,
-    useSnackbarContext
+    useSnackbarContext,
+    SANIcon
 } from '@sanar/components'
 
 import {
     GET_SUBSPECIALTIES,
-    ISubspecialty
+    ISubspecialty,
+    ISubspecialtyItems,
+    ILastAccessed
 } from 'Apollo/Subspecialties/Queries/subspecialties'
-import { GET_LESSONS } from 'Apollo/Subspecialties/Queries/lessons'
+import { GET_LESSONS, ILesson } from 'Apollo/Subspecialties/Queries/lessons'
+import { GET_SPECIALTY } from 'Apollo/Subspecialties/Queries/specialty'
 
 import RMModalThemes from 'Components/ModalThemes'
 
-const Progress = ({ percent }) => {
+const Progress = ({
+    percent,
+    loading
+}: {
+    percent: number
+    loading?: boolean
+}) => {
     const { t } = useTranslation('resmed')
     return (
         <SANBox>
@@ -38,7 +48,7 @@ const Progress = ({ percent }) => {
                     {t('subspecialties.header.completeness')}
                 </SANTypography>
                 <SANTypography fontSize='sm' fontWeight='bold'>
-                    {percent}%
+                    {loading ? <SANIcon type='loading' /> : <>{percent}%</>}
                 </SANTypography>
             </SANBox>
             <SANProgress percent={percent} backdrop='grey.1' />
@@ -51,36 +61,55 @@ interface IRouteProps {
 }
 
 interface IRMSubspecialtiesProps extends RouteComponentProps<IRouteProps> {
-    onSeeLessons: (subspecialtyId: string) => void
+    onSeeLessons: (subspecialtyId: any) => void
 }
 
 const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
-    ({ match: { params }, onSeeLessons }: IRMSubspecialtiesProps) => {
+    ({ match: { params }, history, onSeeLessons }: IRMSubspecialtiesProps) => {
         const { t } = useTranslation('resmed')
 
+        const onStart = ({
+            specialtyId,
+            subSpecialtyId,
+            lessonId,
+            collectionId,
+            resource
+        }: ILastAccessed) => {
+            history.push(
+                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                    resource.id
+                }`
+            )
+        }
+
         const renderSubspecialty = useCallback(
-            subspecialty => (
+            (subspecialty: ISubspecialtyItems) => (
                 <SANCol
                     key={subspecialty.id}
                     xs={24}
                     sm={12}
-                    md={12}
+                    md={8}
                     lg={8}
+                    xl={6}
                     mb='xl'
                 >
                     <SANCardSubSpecialty
-                        blocked={false}
+                        blocked={subspecialty.status === 'construction'}
                         title={subspecialty.name}
-                        progress={{ me: 60, others: 45 }}
+                        progress={{
+                            me: subspecialty.progress.me,
+                            others: subspecialty.progress.all
+                        }}
                         continue={{
-                            title: 'Nome da aula exemplo',
-                            index: 3
+                            title: subspecialty.lastAccessed.resource.title,
+                            index: subspecialty.lastAccessed.resource.index
                         }}
                         onClickRight={() => onSeeLessons(subspecialty)}
-                        onClickLeft={console.log}
+                        onClickLeft={() => onStart(subspecialty.lastAccessed)}
                     />
                 </SANCol>
             ),
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             [onSeeLessons]
         )
 
@@ -95,9 +124,11 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                 errorProps={{ flex: 1 }}
             >
                 {({
-                    data: { subSpecialties }
+                    data: {
+                        subSpecialties: { items, totalCount }
+                    }
                 }: {
-                    data: { subSpecialties: ISubspecialty[] }
+                    data: { subSpecialties: ISubspecialty }
                 }) => (
                     <>
                         <SANBox
@@ -110,14 +141,14 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                                 fontWeight='bold'
                                 mr='xs'
                             >
-                                10
+                                {totalCount}
                             </SANTypography>
                             <SANTypography fontSize='xl'>
                                 {t('subspecialties.subheader.title')}
                             </SANTypography>
                         </SANBox>
                         <SANRow gutter={24}>
-                            {subSpecialties.map(renderSubspecialty)}
+                            {items.map(renderSubspecialty)}
                         </SANRow>
                     </>
                 )}
@@ -126,7 +157,10 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
     }
 )
 
-const RMSubSpecialties = ({ history }: RouteComponentProps) => {
+const RMSubSpecialties = ({
+    history,
+    match: { params }
+}: RouteComponentProps<IRouteProps>) => {
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
@@ -137,7 +171,21 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
         }
     })
     const [loading, setLoading] = useState(false)
-    const [lessons, setLessons] = useState([])
+    const [lessons, setLessons] = useState<ILesson[]>([])
+
+    const {
+        data: { specialty },
+        loading: loadingSpecialty
+    } = useQuery<any, any>(GET_SPECIALTY, {
+        variables: {
+            id: params.specialtyId
+        }
+    })
+
+    const onCancel = () => {
+        setCurrent(old => ({ ...old, open: false }))
+        setLessons([])
+    }
 
     const onSeeLessons = async subspecialty => {
         setLoading(true)
@@ -168,7 +216,7 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
             <RMModalThemes
                 visible={current.open}
                 title={current.subspecialty.name}
-                onCancel={() => setCurrent(old => ({ ...old, open: false }))}
+                onCancel={onCancel}
                 onContinue={console.log}
                 themes={lessons}
                 loading={loading}
@@ -189,12 +237,21 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
                 HeaderProps={{
                     onBack: () => history.push('/inicio/curso'),
                     SessionTitleProps: {
-                        title: 'Clínica Médica'
+                        title: !loadingSpecialty ? (
+                            specialty.name
+                        ) : (
+                            <SANIcon type='loading' />
+                        )
                     },
                     ExtraProps: {
                         md: 7
                     },
-                    extra: <Progress percent={45} />
+                    extra: (
+                        <Progress
+                            loading={loadingSpecialty}
+                            percent={!loadingSpecialty && specialty.progress.me}
+                        />
+                    )
                 }}
             >
                 <RMSubspecialties onSeeLessons={onSeeLessons} />
@@ -203,4 +260,4 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
     )
 }
 
-export default withRouter<RouteComponentProps>(RMSubSpecialties)
+export default withRouter<RouteComponentProps<IRouteProps>>(RMSubSpecialties)

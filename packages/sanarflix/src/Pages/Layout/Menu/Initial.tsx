@@ -15,7 +15,6 @@ import {
 import { useLayoutContext } from '../Context'
 import { IType, ILastAccessed } from 'Apollo/Menu/Queries/last-accessed'
 
-// Images
 import questionImage from 'Assets/images/course-items/question.svg'
 import mentalmapImage from 'Assets/images/course-items/mental-map.svg'
 import flowchartImage from 'Assets/images/course-items/flow.svg'
@@ -32,7 +31,7 @@ const configureThumbnail = (type: IType, resourceType, image) => {
     switch (resourceType) {
         case 'Video':
             return image
-        case 'Question':
+        case 'Quiz':
             return questionImage
         case 'Document':
             switch (type) {

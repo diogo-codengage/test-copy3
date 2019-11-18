@@ -154,7 +154,7 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
                                         size='xsmall'
                                         uppercase
                                         bold
-                                        color={darkMode ? 'light' : 'default'}
+                                        color={darkMode ? 'white' : 'default'}
                                         variant='outlined'
                                         mb={{ md: '0', _: 'xs' }}
                                         mr={{ md: 'sm', _: '0' }}
@@ -187,7 +187,10 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
                             </SANBox>
                         </SANBox>
                         {!!attendance && (
-                            <SANTypography fontSize='sm'>
+                            <SANTypography
+                                fontSize='sm'
+                                color={darkMode ? 'white.6' : 'grey.6'}
+                            >
                                 {attendance}
                             </SANTypography>
                         )}

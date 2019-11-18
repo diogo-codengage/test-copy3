@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -14,9 +14,10 @@ const icons = {
 }
 
 const ESPlaylistItem = ({ className, index, item, current, onClick }) => {
-    const { title, progress, durationInSeconds } = item[
-        item.resource_type.toLowerCase()
-    ]
+    const { title, progress, durationInSeconds } = useMemo(
+        () => (item.hasType ? item[item.resource_type.toLowerCase()] : item),
+        [item]
+    )
     const classes = classNames(
         'es-playlist-list__item',
         {
@@ -27,23 +28,33 @@ const ESPlaylistItem = ({ className, index, item, current, onClick }) => {
         className
     )
 
+    const icon = useMemo(() => {
+        if (item.hasType) {
+            return item.icon ? (
+                item.icon
+            ) : (
+                <ESEvaIcon
+                    size='large'
+                    name={icons[item.resource_type] || 'play-circle-outline'}
+                    className='icon'
+                />
+            )
+        }
+        return null
+    }, [item])
+
     return (
         <div className={classes} onClick={() => onClick(item)}>
             <div className='d-flex align-items-center w-100'>
-                <ESTypography variant='overline' className='index'>
+                <ESTypography
+                    variant='overline'
+                    className={classNames('index', {
+                        'no-type': !item.hasType
+                    })}
+                >
                     {index + 1}
                 </ESTypography>
-                {item.icon ? (
-                    item.icon
-                ) : (
-                    <ESEvaIcon
-                        size='large'
-                        name={
-                            icons[item.resource_type] || 'play-circle-outline'
-                        }
-                        className='icon'
-                    />
-                )}
+                {icon}
                 <ESTypography
                     ellipsis
                     variant='subtitle2'
@@ -71,6 +82,8 @@ ESPlaylistItem.propTypes = {
     time: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
     current: PropTypes.bool
 }
-ESPlaylistItem.defaultProps = {}
+ESPlaylistItem.defaultProps = {
+    hasType: true
+}
 
 export default ESPlaylistItem

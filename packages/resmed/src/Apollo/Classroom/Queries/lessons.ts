@@ -7,6 +7,17 @@ interface ILastAccessedResource {
     title: string
 }
 
+interface ISpecialty {
+    id: string
+    name: string
+}
+
+interface ISubSpecialty {
+    id: string
+    name: string
+    specialty: ISpecialty
+}
+
 export interface ILastAccessed {
     specialtyId: string
     subSpecialtyId?: string
@@ -17,17 +28,29 @@ export interface ILastAccessed {
 
 export interface ILesson {
     id: string
-    name: string
-    status: 'active' | 'inactive' | 'construction'
+    title: string
     lastAccessed: ILastAccessed
+    subSpecialty: ISubSpecialty
+}
+
+export interface ILessons {
+    lessons: ILesson[]
 }
 
 export const GET_LESSONS = gql`
     query Lessons($parentId: ID!) {
-        lessons(where: { parentId: $parentId }) {
+        lessons(where: { parentId: $parentId, status: [active] }) {
             id
-            name
+            title: name
             status
+            subSpecialty {
+                id
+                name
+                specialty {
+                    id
+                    name
+                }
+            }
             lastAccessed {
                 specialtyId
                 subSpecialtyId

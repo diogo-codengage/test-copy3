@@ -12,18 +12,7 @@ const createAcronym = (index, percent) => {
     if (percent) {
         return percent
     } else {
-        switch (index) {
-            case 0:
-                return 'A'
-            case 1:
-                return 'B'
-            case 2:
-                return 'C'
-            case 3:
-                return 'D'
-            case 4:
-                return 'E'
-        }
+        return String.fromCharCode(65 + index);
     }
 }
 

@@ -19,7 +19,7 @@ const ButtonAbout = props => (
     <SANButton bold size='xsmall' color={'primary'} variant='text' {...props} />
 )
 
-const Copyright = () => {
+const Copyright = ({ darkMode }) => {
     const { t } = useTranslation('resmed')
     return (
         <SANSpace p={24}>
@@ -27,35 +27,40 @@ const Copyright = () => {
                 flexWrap='wrap'
                 alignItems='center'
                 justifyContent='center'
-                color={'grey.5'}
+                color={darkMode ? 'white.6' : 'grey.5'}
             >
                 <SANTypography
-                    color={'grey.5'}
+                    color={darkMode ? 'white.5' : 'grey.5'}
                     textAlign='center'
                     variant='caption'
                 >
                     Copyright © Residência Médica. {t('global.copyright')}.
                 </SANTypography>
-                <ButtonAbout>{t('global.termsOfUse')}</ButtonAbout> |{' '}
-                <ButtonAbout>{t('global.privacyPolicy')}</ButtonAbout>
+                <ButtonAbout darkMode={darkMode}>
+                    {t('global.termsOfUse')}
+                </ButtonAbout>{' '}
+                |{' '}
+                <ButtonAbout darkMode={darkMode}>
+                    {t('global.privacyPolicy')}
+                </ButtonAbout>
             </SANFlexbox>
         </SANSpace>
     )
 }
 
-export const defaultFooterProps: ISANLayoutFooterProps = {
+export const defaultFooterProps = (darkMode = false) => ({
     logo: logoFooter,
     phone: '0800 327-0035',
     email: 'atendimento@editorasanar.com.br',
-    copyright: <Copyright />,
+    copyright: <Copyright darkMode={darkMode} />,
     attendance: 'Atendimento de Seg. a Sex. das 09h às 18h'
-}
+})
 
 interface IProps extends RouteComponentProps, Partial<ISANLayoutFooterProps> {}
 
 const RMFooter = ({ history, ...props }: IProps) => {
     const customProps: ISANLayoutFooterProps = {
-        ...defaultFooterProps,
+        ...defaultFooterProps(),
         HelpButton: {
             onClick: () => history.push('/inicio/central-ajuda')
         },

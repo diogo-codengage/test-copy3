@@ -87,6 +87,7 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     data-testid='flix-menu-navigation__my-account__help-center'
                     title={t('mainMenu.account.helpCenter')}
                     icon={<SANEvaIcon name='lock-outline' color='default' />}
+                    onClick={onCloseMenu}
                     to='/inicio/central-ajuda'
                 />
             </SANNavigationList>
