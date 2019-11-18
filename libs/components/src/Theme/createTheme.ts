@@ -23,6 +23,8 @@ import {
     mentalmap,
     article,
     document,
+    lessonResultSuccess,
+    lessonResultError,
     blocked
 } from 'Assets'
 
@@ -171,6 +173,7 @@ defaultSpace.md = defaultSpace[4]
 defaultSpace.lg = defaultSpace[5]
 defaultSpace.xl = defaultSpace[6]
 defaultSpace.xxl = defaultSpace[7]
+defaultSpace.xxxl = defaultSpace[8]
 
 const defaultShadows = [
     'none',
@@ -218,6 +221,10 @@ const assetsDefault = {
             video: typeIconPrimaryVideo,
             course: typeIconPrimaryCourse
         }
+    },
+    lessonResult: {
+        success: lessonResultSuccess,
+        error: lessonResultError
     }
 }
 
