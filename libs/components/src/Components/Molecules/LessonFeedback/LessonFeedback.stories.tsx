@@ -2,14 +2,12 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import SANLessonFeedback from './LessonFeedback'
 
-const onSend = value => {
+const onSend = (value, { setSubmitting }) => {
     console.log('onSend:', value)
-    return false
+    setTimeout(() => setSubmitting(false), 2000)
 }
-const onNext = () => {
-    console.log('onNext:')
-    return false
-}
+const onNext = () => console.log('onNext:')
+
 storiesOf('Molecules.LessonFeedback', module).add('Simple', () => (
-    <SANLessonFeedback  onSend={(rt) => onSend(rt)} onNext={() => onNext()}/>
+    <SANLessonFeedback onSend={onSend} onNext={onNext} />
 ))

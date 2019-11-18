@@ -219,7 +219,7 @@ export default {
         seeClasses: 'Ver aulas',
         comingSoon: 'Em breve!'
     },
-    LessonFeedback: {
+    lessonFeedback: {
         title: 'O que você achou da aula?',
         subtitle:
             'Envie-nos um feedback para que possamos avaliar a sua experiência.',
