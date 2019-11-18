@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 
 import { theme } from 'styled-tools'
 import styled from 'styled-components'
@@ -17,8 +17,7 @@ import {
     SANCollapse,
     SANCollapsePanel,
     SANEvaIcon,
-    SANTypography,
-    SANSpin
+    SANTypography
 } from '@sanar/components'
 
 import useOnClickOutside from 'sanar-ui/dist/Hooks/useOnClickOutside'
@@ -107,6 +106,15 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
         setOpenCalendar
     ])
 
+    const renderInstitution = useCallback(
+        intitution => (
+            <SANSelectOption value={intitution.value} key={intitution.value}>
+                {intitution.label}
+            </SANSelectOption>
+        ),
+        [intitutions]
+    )
+
     return (
         <SANCollapse
             accordion={true}
@@ -124,111 +132,102 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
                 showArrow={false}
                 key='1'
             >
-                {' '}
-                <SANSpin spinning={loading.categories}>
-                    <SANBox
-                        mx={{ lg: 9, _: '0' }}
-                        mt={{ lg: 'xxl', _: 'lg' }}
-                        mb={{ lg: 'xxl', _: 'lg' }}
-                    >
-                        <SANRow gutter={24}>
-                            <SANCol xs={24} sm={12}>
+                <SANBox
+                    mx={{ lg: 9, _: '0' }}
+                    mt={{ lg: 'xxl', _: 'lg' }}
+                    mb={{ lg: 'xxl', _: 'lg' }}
+                >
+                    <SANRow gutter={24}>
+                        <SANCol xs={24} sm={12}>
+                            <SANFormItem
+                                name='institution'
+                                label={t(
+                                    'practicalArea.filter.advanced.institution.title'
+                                )}
+                            >
+                                <SANSelect
+                                    loading={loading.intitutions}
+                                    placeholder={t(
+                                        'practicalArea.filter.advanced.institution.placeholder'
+                                    )}
+                                    showArrow
+                                    size='large'
+                                >
+                                    {intitutions.map(renderInstitution)}
+                                </SANSelect>
+                            </SANFormItem>
+                        </SANCol>
+                        <SANCol xs={24} sm={12}>
+                            <span ref={itemPickerRef}>
                                 <SANFormItem
-                                    name='institution'
+                                    name='year'
                                     label={t(
-                                        'practicalArea.filter.advanced.institution.title'
+                                        'practicalArea.filter.advanced.year.title'
                                     )}
+                                    trigger={'onPanelChange'}
                                 >
-                                    <SANSelect
+                                    <SANDatePicker
                                         placeholder={t(
-                                            'practicalArea.filter.advanced.institution.placeholder'
+                                            'practicalArea.filter.advanced.year.placeholder'
                                         )}
-                                        showArrow
+                                        mode='year'
                                         size='large'
-                                    >
-                                        {intitutions.map(intitution => (
-                                            <SANSelectOption
-                                                value={intitution.value}
-                                                key={intitution.value}
-                                            >
-                                                {intitution.label}
-                                            </SANSelectOption>
-                                        ))}
-                                    </SANSelect>
+                                        open={openCalendar}
+                                        format='YYYY'
+                                        onOpenChange={() =>
+                                            setOpenCalendar(true)
+                                        }
+                                        onPanelChange={() =>
+                                            setOpenCalendar(false)
+                                        }
+                                    />
                                 </SANFormItem>
-                            </SANCol>
-                            <SANCol xs={24} sm={12}>
-                                <span ref={itemPickerRef}>
-                                    <SANFormItem
-                                        name='year'
-                                        label={t(
-                                            'practicalArea.filter.advanced.year.title'
-                                        )}
-                                        trigger={'onPanelChange'}
-                                    >
-                                        <SANDatePicker
-                                            placeholder={t(
-                                                'practicalArea.filter.advanced.year.placeholder'
-                                            )}
-                                            mode='year'
-                                            size='large'
-                                            open={openCalendar}
-                                            format='YYYY'
-                                            onOpenChange={() =>
-                                                setOpenCalendar(true)
-                                            }
-                                            onPanelChange={() =>
-                                                setOpenCalendar(false)
-                                            }
-                                        />
-                                    </SANFormItem>
-                                </span>
-                            </SANCol>
-                            <SANCol xs={24} sm={12}>
-                                <SANFormItem
-                                    name='state'
-                                    label={t(
-                                        'practicalArea.filter.advanced.state.title'
+                            </span>
+                        </SANCol>
+                        <SANCol xs={24} sm={12}>
+                            <SANFormItem
+                                name='state'
+                                label={t(
+                                    'practicalArea.filter.advanced.state.title'
+                                )}
+                            >
+                                <SANSelect
+                                    placeholder={t(
+                                        'practicalArea.filter.advanced.state.placeholder'
                                     )}
+                                    showArrow
+                                    size='large'
                                 >
-                                    <SANSelect
-                                        placeholder={t(
-                                            'practicalArea.filter.advanced.state.placeholder'
-                                        )}
-                                        showArrow
-                                        size='large'
-                                    >
-                                        <SANSelectOption value='jack'>
-                                            Jack
-                                        </SANSelectOption>
-                                    </SANSelect>
-                                </SANFormItem>
-                            </SANCol>
-                            <SANCol xs={24} sm={6}>
-                                <SwitchStyled
-                                    name='onlyHasImages'
-                                    label={t(
-                                        'practicalArea.filter.advanced.onlyHasImages'
-                                    )}
-                                    valuePropName='checked'
-                                >
-                                    <SANSwitch />
-                                </SwitchStyled>
-                            </SANCol>
-                            <SANCol xs={24} sm={6}>
-                                <SwitchStyled
-                                    name='onlyComments'
-                                    label={t(
-                                        'practicalArea.filter.advanced.onlyComments'
-                                    )}
-                                    valuePropName='checked'
-                                >
-                                    <SANSwitch />
-                                </SwitchStyled>
-                            </SANCol>
-                        </SANRow>
-                    </SANBox>
-                </SANSpin>
+                                    <SANSelectOption value='jack'>
+                                        Jack
+                                    </SANSelectOption>
+                                </SANSelect>
+                            </SANFormItem>
+                        </SANCol>
+                        <SANCol xs={24} sm={6}>
+                            <SwitchStyled
+                                name='onlyHasImages'
+                                label={t(
+                                    'practicalArea.filter.advanced.onlyHasImages'
+                                )}
+                                valuePropName='checked'
+                            >
+                                <SANSwitch />
+                            </SwitchStyled>
+                        </SANCol>
+                        <SANCol xs={24} sm={6}>
+                            <SwitchStyled
+                                name='onlyComments'
+                                label={t(
+                                    'practicalArea.filter.advanced.onlyComments'
+                                )}
+                                valuePropName='checked'
+                            >
+                                <SANSwitch />
+                            </SwitchStyled>
+                        </SANCol>
+                    </SANRow>
+                </SANBox>
             </SANCollapsePanel>
         </SANCollapse>
     )

@@ -9,7 +9,8 @@ import {
     SANForm,
     SANButton,
     SANSessionTitle,
-    SANFormItem
+    SANFormItem,
+    SANBox
 } from '@sanar/components'
 
 import RMFilterSelects from './Selects'
@@ -70,25 +71,23 @@ const RMFilter = ({ form, history }) => {
                     onBack: () => history.push('/inicio/curso'),
                     SessionTitleProps: {
                         title: t('practicalArea.filter.header.title'),
-                        subtitle: t('practicalArea.filter.header.subtitle')
-                    },
-                    ExtraProps: {
-                        md: 7
-                    },
-                    extra: (
-                        <SANFormItem>
-                            <SANButton
-                                variant='solid'
-                                color='primary'
-                                size='small'
-                                uppercase
-                                htmlType='submit'
-                                blockOnlyMobile
-                            >
-                                {t('practicalArea.filter.header.start')}
-                            </SANButton>
-                        </SANFormItem>
-                    )
+                        subtitle: t('practicalArea.filter.header.subtitle'),
+                        extra: (
+                            <SANFormItem>
+                                <SANButton
+                                    variant='solid'
+                                    color='primary'
+                                    size='small'
+                                    uppercase
+                                    htmlType='submit'
+                                    blockOnlyMobile
+                                    bold
+                                >
+                                    {t('practicalArea.filter.header.start')}
+                                </SANButton>
+                            </SANFormItem>
+                        )
+                    }
                 }}
             >
                 <SANSessionTitle
@@ -102,9 +101,6 @@ const RMFilter = ({ form, history }) => {
     )
 }
 
-const enhance = compose(
-    withSANForm,
-    withRouter
-)
+const enhance = compose(withSANForm, withRouter)
 
 export default enhance(RMFilter)

@@ -7,13 +7,13 @@ import {
     SANRow,
     SANFormItem,
     SANCardSelectFilter,
-    SANQuery
 } from '@sanar/components'
 import { useApolloClient } from '@apollo/react-hooks'
 
 import specialtySvg from 'Assets/images/practical-area/specialty.svg'
 import subspecialtySvg from 'Assets/images/practical-area/subspecialty.svg'
 import themeSvg from 'Assets/images/practical-area/theme.svg'
+import categorySvg from 'Assets/images/practical-area/category.svg'
 
 import { GET_CATEGORIES } from 'Apollo/PracticalArea/Queries/categories'
 import { GET_SPECIALTIES } from 'Apollo/PracticalArea/Queries/specialties'
@@ -55,7 +55,7 @@ const Categories = () => {
                     'practicalArea.filter.selecteds.category.choose'
                 )}
                 filterName={t('practicalArea.filter.selecteds.category.title')}
-                image={specialtySvg}
+                image={categorySvg}
                 items={data.items}
                 loading={data.loading}
             />

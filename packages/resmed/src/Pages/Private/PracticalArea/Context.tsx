@@ -56,7 +56,6 @@ interface IState {
     filter: IFilter
     currentIndex: number
     stats: IStats
-    skip: number
     questions: any[]
     loading: boolean
     bookmarked: boolean
@@ -80,7 +79,6 @@ const initialState = {
     filter: {},
     currentIndex: 0,
     stats: initialStats,
-    skip: 0,
     questions: [],
     loading: false,
     bookmarked: false
@@ -111,7 +109,6 @@ const reducer: React.Reducer<IState, IAction> = (state, action) => {
                 ...state,
                 error: false,
                 loading: false,
-                skip: state.skip + action.questions.length,
                 questions: [...state.questions, ...action.questions],
                 stats: {
                     ...state.stats,
@@ -137,8 +134,7 @@ const reducer: React.Reducer<IState, IAction> = (state, action) => {
         case 'filter':
             return {
                 ...state,
-                filter: action.filter,
-                skip: 0
+                filter: action.filter
             }
         case 'stats':
             return {
@@ -217,14 +213,13 @@ const RMPracticalProvider: React.FC<RouteComponentProps> = ({
                 query: GET_QUESTIONS,
                 fetchPolicy: 'network-only',
                 variables: {
-                    limit: 20,
-                    skip: state.skip
+                    limit: 20
                 }
             })
             dispatch({
                 type: 'success',
-                questions: questions.data,
-                count: questions.count
+                questions: questions.items,
+                count: questions.totalCount
             })
         } catch (error) {
             dispatch({ type: 'error', error })
@@ -253,7 +248,10 @@ const RMPracticalProvider: React.FC<RouteComponentProps> = ({
 
     useEffect(() => {
         const index = state.currentIndex + 1
-        if (index === state.skip || index === state.skip - 3) {
+        if (
+            index === state.questions.length ||
+            index === state.questions.length - 3
+        ) {
             fetchQuestions()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

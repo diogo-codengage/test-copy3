@@ -1,25 +1,16 @@
 import gql from 'graphql-tag'
 
-const isRandom = /true/i.test(process.env.REACT_APP_RANDOM_QUESTIONS || 'true')
-
 export const GET_QUESTIONS = gql`
-    query Questions(
-        $courseIds: [ID]
-        $levelIds: [ID]
-        $limit: Int
-    ) {
-        questions(
-            courseIds: $courseIds
-            levelIds: $levelIds
-            limit: $limit
-            random: ${isRandom}
-        ) {
-            count
-            data {
+    query Questions($limit: Float!) {
+        questions(limit: $limit) {
+            totalCount
+            limit
+            skip
+            items {
                 id
                 statement
                 year
-                institution: instituition {
+                institution {
                     id
                     name
                 }
@@ -29,7 +20,6 @@ export const GET_QUESTIONS = gql`
                         text
                     }
                 }
-                bookmarked
                 images {
                     data {
                         id

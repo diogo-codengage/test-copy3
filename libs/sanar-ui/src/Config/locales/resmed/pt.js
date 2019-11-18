@@ -156,7 +156,7 @@ export default {
                 category: {
                     selecteds: 'Categorias',
                     choose: 'Escolher categorias',
-                    title: 'Categoria'
+                    title: 'Categoria de Prova'
                 },
                 specialty: {
                     selecteds: 'Especialidades',
