@@ -219,6 +219,18 @@ export default {
         seeClasses: 'Ver aulas',
         comingSoon: 'Em breve!'
     },
+    lessonFeedback: {
+        title: 'O que você achou da aula?',
+        subtitle:
+            'Envie-nos um feedback para que possamos avaliar a sua experiência.',
+        awful: 'Péssima',
+        bad: 'Ruim',
+        regular: 'Regular',
+        good: 'Boa',
+        awesome: 'Incrível',
+        next: 'Próximo',
+        send: 'Enviar'
+    },
     lessonResult: {
         titleSuccess: 'Você foi muito bem!',
         titleError: 'Você não foi tão bem',
