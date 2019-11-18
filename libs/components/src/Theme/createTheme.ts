@@ -23,9 +23,13 @@ import {
     mentalmap,
     article,
     document,
-    lessonResultSuccess,
-    lessonResultError,
-    blocked
+    blocked,
+    awfulEmoji,
+    badEmoji,
+    regularEmoji,
+    goodEmoji,
+    awesomeEmoji
+
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -222,9 +226,12 @@ const assetsDefault = {
             course: typeIconPrimaryCourse
         }
     },
-    lessonResult: {
-        success: lessonResultSuccess,
-        error: lessonResultError
+    feedbackEmojis: {
+            awful: awfulEmoji,
+            bad: badEmoji,
+            regular: regularEmoji,
+            good: goodEmoji,
+            awesome: awesomeEmoji
     }
 }
 

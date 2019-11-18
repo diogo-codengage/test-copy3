@@ -218,21 +218,16 @@ export default {
         seeClasses: 'Ver aulas',
         comingSoon: 'Em breve!'
     },
-    lessonResult: {
-        titleSuccess: 'Você foi muito bem!',
-        titleError: 'Você não foi tão bem',
-        performance: {
-            youRight: 'Você acertou',
-            of: 'de',
-            questions: 'questões.',
-            resultSuccess: 'Mandou bem!',
-            resultError: 'Não desanime!',
-            pratice: 'Que tal praticarmos mais um pouco?'
-        },
-        goToPratice: 'IR PARA A ÁREA DE PRÁTICA',
-        questions: {
-            resultSuccess: 'Mandou bem',
-            resultError: 'Precisa estudar'
-        }
+    LessonFeedback: {
+        title: 'O que você achou da aula?',
+        subtitle:
+            'Envie-nos um feedback para que possamos avaliar a sua experiência.',
+        awful: 'Péssima',
+        bad: 'Ruim',
+        regular: 'Regular',
+        good: 'Boa',
+        awesome: 'Incrível',
+        next: 'Próximo',
+        send: 'Enviar'
     }
 }

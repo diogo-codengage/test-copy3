@@ -25,6 +25,13 @@ import lessonResultError from './images/lessonResult/ninja-negativo.png'
 
 import blocked from './images/sub-specialty/blocked.svg'
 
+
+import awfulEmoji from './images/class-feedback/awful.svg'
+import badEmoji from './images/class-feedback/bad.svg'
+import regularEmoji from './images/class-feedback/regular.svg'
+import goodEmoji from './images/class-feedback/good.svg'
+import awesomeEmoji from './images/class-feedback/awesome.svg'
+
 export {
     typeIconPrimaryBook,
     typeIconPrimaryFile,
@@ -44,7 +51,10 @@ export {
     mentalmap,
     article,
     document,
-    lessonResultSuccess,
-    lessonResultError,
-    blocked
+    blocked,
+    awfulEmoji,
+    badEmoji,
+    regularEmoji,
+    goodEmoji,
+    awesomeEmoji    
 }
