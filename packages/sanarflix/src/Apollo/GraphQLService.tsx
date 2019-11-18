@@ -30,7 +30,7 @@ const onError = ({ graphQLErrors, forward, operation, networkError }) => {
         graphQLErrors.forEach(error => {
             if (error.message.includes('AUTH_REQUIRED')) {
                 localStorage.clear()
-                window.location.hash = '/#/auth'
+                window.location.hash = '/auth'
             }
         })
         return forward(operation)
@@ -38,7 +38,7 @@ const onError = ({ graphQLErrors, forward, operation, networkError }) => {
 
     if (networkError) {
         console.error('[Network error]: %o', networkError)
-        window.location.hash = '/#/portal/erro'
+        window.location.hash = '/portal/erro'
     }
 }
 

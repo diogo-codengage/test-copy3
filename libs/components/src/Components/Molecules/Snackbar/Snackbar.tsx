@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+
 import styled from 'styled-components'
-import { useCallback } from 'react'
+import { theme } from 'styled-tools'
+
 import { SANEvaIcon } from 'Components/Atoms/EvaIcon'
 
-const Styled = styled.div`
+const SnackbarStyled = styled.div`
     display: flex;
     margin: 20px 0;
     align-items: center;
-    padding: 12px 12px;
-    background: #fff;
-    border-radius: 4px;
-    -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: ${theme('space.sm')};
+    background: ${theme('colors.white.10')};
+    border-radius: ${theme('radii.base')};
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 `
 
@@ -35,7 +36,7 @@ const SANSnackbar = ({ message, theme }) => {
         [theme]
     )
     return (
-        <Styled>
+        <SnackbarStyled>
             {iconInfo(theme).icon && (
                 <SANEvaIcon
                     mr={2}
@@ -44,7 +45,7 @@ const SANSnackbar = ({ message, theme }) => {
                 />
             )}
             {message}
-        </Styled>
+        </SnackbarStyled>
     )
 }
 

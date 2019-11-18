@@ -180,6 +180,7 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
             query={GET_COURSE}
             options={{ variables: { id } }}
             loaderProps={{ minHeight: '100%', flex: true }}
+            errorProps={{ flex: 1 }}
         >
             {({ data }: { data: ICourses }) => {
                 const course = data.courses.data[0]

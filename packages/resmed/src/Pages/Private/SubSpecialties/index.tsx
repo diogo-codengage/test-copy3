@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useApolloClient, useQuery } from '@apollo/react-hooks'
 
 import {
     SANBox,
@@ -11,124 +12,29 @@ import {
     SANCardSubSpecialty,
     SANRow,
     SANCol,
-    SANQuery
+    SANQuery,
+    useSnackbarContext,
+    SANIcon
 } from '@sanar/components'
 
 import {
     GET_SUBSPECIALTIES,
-    ISubspecialties
-} from 'Apollo/User/Queries/subspecialties'
+    ISubspecialty,
+    ISubspecialtyItems,
+    ILastAccessed
+} from 'Apollo/Subspecialties/Queries/subspecialties'
+import { GET_LESSONS, ILesson } from 'Apollo/Subspecialties/Queries/lessons'
+import { GET_SPECIALTY } from 'Apollo/Subspecialties/Queries/specialty'
+
 import RMModalThemes from 'Components/ModalThemes'
 
-const themes = [
-    {
-        name: 'Nome da aula',
-        completed: true,
-        blocked: false
-    },
-    {
-        name: 'Nome da aula',
-        completed: true,
-        blocked: false
-    },
-    {
-        name: 'Nome da aula',
-        completed: true,
-        blocked: false
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: false
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: false
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    },
-    {
-        name: 'Nome da aula',
-        completed: false,
-        blocked: true
-    }
-]
-
-const Progress = ({ percent }) => {
+const Progress = ({
+    percent,
+    loading
+}: {
+    percent: number
+    loading?: boolean
+}) => {
     const { t } = useTranslation('resmed')
     return (
         <SANBox>
@@ -142,7 +48,7 @@ const Progress = ({ percent }) => {
                     {t('subspecialties.header.completeness')}
                 </SANTypography>
                 <SANTypography fontSize='sm' fontWeight='bold'>
-                    {percent}%
+                    {loading ? <SANIcon type='loading' /> : <>{percent}%</>}
                 </SANTypography>
             </SANBox>
             <SANProgress percent={percent} backdrop='grey.1' />
@@ -154,34 +60,57 @@ interface IRouteProps {
     specialtyId: string
 }
 
-const RMSubspecialties = withRouter<RouteComponentProps<IRouteProps>>(
-    ({ match: { params } }: RouteComponentProps<IRouteProps>) => {
+interface IRMSubspecialtiesProps extends RouteComponentProps<IRouteProps> {
+    onSeeLessons: (subspecialtyId: any) => void
+}
+
+const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
+    ({ match: { params }, history, onSeeLessons }: IRMSubspecialtiesProps) => {
         const { t } = useTranslation('resmed')
 
+        const onStart = ({
+            specialtyId,
+            subSpecialtyId,
+            lessonId,
+            collectionId,
+            resource
+        }: ILastAccessed) => {
+            history.push(
+                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                    resource.id
+                }`
+            )
+        }
+
         const renderSubspecialty = useCallback(
-            subspecialty => (
+            (subspecialty: ISubspecialtyItems) => (
                 <SANCol
                     key={subspecialty.id}
                     xs={24}
                     sm={12}
-                    md={12}
+                    md={8}
                     lg={8}
+                    xl={6}
                     mb='xl'
                 >
                     <SANCardSubSpecialty
-                        blocked={false}
+                        blocked={subspecialty.status === 'construction'}
                         title={subspecialty.name}
-                        progress={{ me: 60, others: 45 }}
-                        continue={{
-                            title: 'Nome da aula exemplo',
-                            index: 3
+                        progress={{
+                            me: subspecialty.progress.me,
+                            others: subspecialty.progress.all
                         }}
-                        onClickRight={console.log}
-                        onClickLeft={console.log}
+                        continue={{
+                            title: subspecialty.lastAccessed.resource.title,
+                            index: subspecialty.lastAccessed.resource.index
+                        }}
+                        onClickRight={() => onSeeLessons(subspecialty)}
+                        onClickLeft={() => onStart(subspecialty.lastAccessed)}
                     />
                 </SANCol>
             ),
-            []
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            [onSeeLessons]
         )
 
         return (
@@ -195,9 +124,11 @@ const RMSubspecialties = withRouter<RouteComponentProps<IRouteProps>>(
                 errorProps={{ flex: 1 }}
             >
                 {({
-                    data: { subspecialties }
+                    data: {
+                        subSpecialties: { items, totalCount }
+                    }
                 }: {
-                    data: { subspecialties: ISubspecialties[] }
+                    data: { subSpecialties: ISubspecialty }
                 }) => (
                     <>
                         <SANBox
@@ -210,14 +141,14 @@ const RMSubspecialties = withRouter<RouteComponentProps<IRouteProps>>(
                                 fontWeight='bold'
                                 mr='xs'
                             >
-                                10
+                                {totalCount}
                             </SANTypography>
                             <SANTypography fontSize='xl'>
                                 {t('subspecialties.subheader.title')}
                             </SANTypography>
                         </SANBox>
                         <SANRow gutter={24}>
-                            {subspecialties.map(renderSubspecialty)}
+                            {items.map(renderSubspecialty)}
                         </SANRow>
                     </>
                 )}
@@ -226,17 +157,69 @@ const RMSubspecialties = withRouter<RouteComponentProps<IRouteProps>>(
     }
 )
 
-const RMSubSpecialties = ({ history }: RouteComponentProps) => {
-    const [open, setOpen] = useState(false)
+const RMSubSpecialties = ({
+    history,
+    match: { params }
+}: RouteComponentProps<IRouteProps>) => {
+    const { t } = useTranslation('resmed')
+    const client = useApolloClient()
+    const createSnackbar = useSnackbarContext()
+    const [current, setCurrent] = useState({
+        open: false,
+        subspecialty: {
+            name: ''
+        }
+    })
+    const [loading, setLoading] = useState(false)
+    const [lessons, setLessons] = useState<ILesson[]>([])
+
+    const {
+        data: { specialty },
+        loading: loadingSpecialty
+    } = useQuery<any, any>(GET_SPECIALTY, {
+        variables: {
+            id: params.specialtyId
+        }
+    })
+
+    const onCancel = () => {
+        setCurrent(old => ({ ...old, open: false }))
+        setLessons([])
+    }
+
+    const onSeeLessons = async subspecialty => {
+        setLoading(true)
+        setCurrent({
+            open: true,
+            subspecialty
+        })
+        try {
+            const {
+                data: { lessons }
+            } = await client.query({
+                query: GET_LESSONS,
+                variables: { parentId: subspecialty.id }
+            })
+
+            setLessons(lessons)
+        } catch (error) {
+            createSnackbar({
+                message: t('subspecialties.errorLoadLessons'),
+                theme: 'error'
+            })
+        }
+        setLoading(false)
+    }
 
     return (
         <>
             <RMModalThemes
-                visible={open}
-                title='Clínica Médica'
-                onCancel={() => setOpen(false)}
+                visible={current.open}
+                title={current.subspecialty.name}
+                onCancel={onCancel}
                 onContinue={console.log}
-                themes={themes}
+                themes={lessons}
+                loading={loading}
             />
             <SANPage
                 hasContainer
@@ -254,18 +237,27 @@ const RMSubSpecialties = ({ history }: RouteComponentProps) => {
                 HeaderProps={{
                     onBack: () => history.push('/inicio/curso'),
                     SessionTitleProps: {
-                        title: 'Clínica Médica'
+                        title: !loadingSpecialty ? (
+                            specialty.name
+                        ) : (
+                            <SANIcon type='loading' />
+                        )
                     },
                     ExtraProps: {
                         md: 7
                     },
-                    extra: <Progress percent={45} />
+                    extra: (
+                        <Progress
+                            loading={loadingSpecialty}
+                            percent={!loadingSpecialty && specialty.progress.me}
+                        />
+                    )
                 }}
             >
-                <RMSubspecialties />
+                <RMSubspecialties onSeeLessons={onSeeLessons} />
             </SANPage>
         </>
     )
 }
 
-export default withRouter<RouteComponentProps>(RMSubSpecialties)
+export default withRouter<RouteComponentProps<IRouteProps>>(RMSubSpecialties)

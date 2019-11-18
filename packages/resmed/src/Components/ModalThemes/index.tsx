@@ -3,6 +3,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { theme, ifProp } from 'styled-tools'
 import { useTranslation } from 'react-i18next'
+import { withRouter, RouteComponentProps } from 'react-router'
 
 import {
     SANButton,
@@ -11,10 +12,12 @@ import {
     SANModalFooter,
     SANBox,
     SANEvaIcon,
-    SANScroll
+    SANScroll,
+    SANSpin
 } from '@sanar/components'
 
 import { ISANModalProps } from '@sanar/components/dist/Components/Molecules/Modal'
+import { ILastAccessed } from 'Apollo/Subspecialties/Queries/lessons'
 
 const ItemStyled = styled(SANBox)<{ blocked?: boolean }>`
     &:nth-child(even) {
@@ -36,62 +39,98 @@ const ItemStyled = styled(SANBox)<{ blocked?: boolean }>`
     )}
 `
 
-const Item = ({ index, name, completed, blocked }) => (
-    <ItemStyled
-        py='md'
-        px='lg'
-        display='flex'
-        alignItems='center'
-        justifyContent='space-between'
-        blocked={blocked}
-    >
-        <SANBox display='flex' alignItems='center'>
-            <SANTypography
-                color={!blocked && 'primary'}
-                fontSize='xs'
-                fontWeight='bold'
-                mr='xs'
-            >
-                {index}
-            </SANTypography>
-            <SANTypography fontSize='md'>{name}</SANTypography>
-        </SANBox>
-        {completed ? (
-            <SANEvaIcon
-                name='checkmark-circle-2'
-                color='primary'
-                size='large'
-            />
-        ) : (
-            <SANEvaIcon name='arrow-ios-forward-outline' size='large' />
-        )}
-    </ItemStyled>
-)
+const Item = ({ index, name, completed, status, onClick }) => {
+    const { t } = useTranslation('resmed')
+
+    return (
+        <ItemStyled
+            py='md'
+            px='lg'
+            pr='sm'
+            display='flex'
+            alignItems='center'
+            justifyContent='space-between'
+            blocked={status !== 'active'}
+            onClick={status === 'active' && onClick}
+            mr='xs'
+        >
+            <SANBox display='flex' alignItems='center'>
+                <SANTypography
+                    color={completed ? 'primary' : 'grey.5'}
+                    fontSize='xs'
+                    fontWeight='bold'
+                    lineHeight='1'
+                    mr='xs'
+                >
+                    {index}
+                </SANTypography>
+                <SANTypography fontSize='md' lineHeight='1'>
+                    {status !== 'active' ? t('modalThemes.blocked') : name}
+                </SANTypography>
+            </SANBox>
+            {completed ? (
+                <SANEvaIcon
+                    name='checkmark-circle-2'
+                    color='primary'
+                    size='large'
+                />
+            ) : (
+                <SANEvaIcon name='arrow-ios-forward-outline' size='large' />
+            )}
+        </ItemStyled>
+    )
+}
 
 interface ITheme {
     name: string
     completed?: boolean
-    blocked?: boolean
+    status?: string
 }
 
-interface IRMModalThemesProps extends ISANModalProps {
+interface IRMModalThemesProps extends ISANModalProps, RouteComponentProps {
     themes: ITheme[]
     visible: boolean
+    loading: boolean
     title: string
     onCancel: () => void
     onContinue: () => void
 }
 
-const renderTheme = (theme, index) => (
-    <Item {...theme} index={index + 1} key={index} />
-)
+const renderTheme = (theme, index, onClick) => {
+    return (
+        <Item
+            {...theme}
+            index={index + 1}
+            key={index}
+            onClick={() => onClick(theme.lastAccessed)}
+        />
+    )
+}
 
 const RMModalThemes = ({
     onContinue,
     themes,
+    loading,
+    history,
     ...props
 }: IRMModalThemesProps) => {
     const { t } = useTranslation('resmed')
+
+    const onClickItem = (lastAccessed: ILastAccessed) => {
+        const {
+            specialtyId,
+            subSpecialtyId,
+            lessonId,
+            collectionId,
+            resource
+        } = lastAccessed
+
+        history.push(
+            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                resource.id
+            }`
+        )
+    }
 
     return (
         <SANModal
@@ -100,29 +139,35 @@ const RMModalThemes = ({
             style={{ overflow: 'hidden' }}
             {...props}
         >
-            <SANBox margin='-24px' mb='lg' py='sm' height={427}>
-                <SANScroll>{themes.map(renderTheme)}</SANScroll>
-            </SANBox>
-            <SANModalFooter
-                justifyContent='center'
-                borderTop='1px solid'
-                borderColor='grey.2'
-                margin='-24px'
-                padding='sm'
-            >
-                <SANButton
-                    size='small'
-                    variant='text'
-                    color='primary'
-                    uppercase
-                    bold
-                    onClick={onContinue}
+            <SANSpin spinning={loading}>
+                <SANBox margin='-24px' mb='lg' py='sm' height={427}>
+                    <SANScroll>
+                        {themes.map((theme, index) =>
+                            renderTheme(theme, index, onClickItem)
+                        )}
+                    </SANScroll>
+                </SANBox>
+                <SANModalFooter
+                    justifyContent='center'
+                    borderTop='1px solid'
+                    borderColor='grey.2'
+                    margin='-24px'
+                    padding='sm'
                 >
-                    {t('modalThemes.continue')}
-                </SANButton>
-            </SANModalFooter>
+                    <SANButton
+                        size='small'
+                        variant='text'
+                        color='primary'
+                        uppercase
+                        bold
+                        onClick={onContinue}
+                    >
+                        {t('modalThemes.continue')}
+                    </SANButton>
+                </SANModalFooter>
+            </SANSpin>
         </SANModal>
     )
 }
 
-export default RMModalThemes
+export default withRouter(RMModalThemes)

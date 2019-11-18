@@ -106,10 +106,10 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     loading={!me}
                     src={me && me.profile_picture}
                     title={me && me.name}
-                    subtitle={
-                        me &&
-                        t(`mainMenu.account.plan.${me.plan.payment_frequency}`)
-                    }
+                    // subtitle={
+                    //     me &&
+                    //     t(`mainMenu.account.plan.${me.plan.payment_frequency}`)
+                    // }
                 />
             </SANBox>
             <SANTypography variant='overline' px='md' pt='xl' color='white.5'>
@@ -137,7 +137,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                 {t('mainMenu.account.signature')}
             </SANTypography>
             <SANNavigationList>
-                <SANNavigationListItem
+                {/* <SANNavigationListItem
                     to='/portal/minha-conta/formas-pagamento'
                     icon={
                         <SANEvaIcon
@@ -148,7 +148,7 @@ const FLXMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     onClick={onCloseMenu}
                     dataTestid='flix_menu_my-account__go_to--payment-methods'
                     title={t('mainMenu.account.paymentMethods')}
-                />
+                /> */}
                 <SANNavigationListItem
                     to='/portal/minha-conta/cancelar-assinatura'
                     icon={
