@@ -1,6 +1,5 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { number } from '@storybook/addon-knobs'
 
 import SANLessonResult from './LessonResult'
 
@@ -17,7 +16,7 @@ const questions = [
     },
     {
         title: 'Collection 03',
-        corrects: number('Corrects', 7),
+        corrects: 7,
         total: 10
     }
 ]

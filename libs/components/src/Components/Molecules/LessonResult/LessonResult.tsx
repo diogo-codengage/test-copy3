@@ -151,25 +151,6 @@ const SANLessonResult = ({
         [questions]
     )
 
-    const getResultOfQuiz = (
-        pctToCorrect: number,
-        total: number,
-        corrects: number
-    ) => {
-        if ((corrects * 100) / total >= (pctToCorrect || 80)) {
-            return {
-                color: 'success',
-                resultTextColor: 'white.10',
-                resultText: t('lessonResult.questions.resultSuccess')
-            }
-        }
-        return {
-            color: 'error',
-            resultTextColor: 'error',
-            resultText: t('lessonResult.questions.resultError')
-        }
-    }
-
     return (
         <SANBox borderRadius='base'>
             <SANBox
