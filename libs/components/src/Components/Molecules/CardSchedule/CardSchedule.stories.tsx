@@ -15,6 +15,6 @@ storiesOf('Molecules.CardSchedule', module).add('Simple', () => (
         title='Cronograma Sugerido'
         subtitle='Cronograma criado pelos nossos professores'
         buttonTitle='ACESSAR'
-        buttonPress={() => onButtonPress}
+        buttonPress={() => onButtonPress()}
     />
 ))

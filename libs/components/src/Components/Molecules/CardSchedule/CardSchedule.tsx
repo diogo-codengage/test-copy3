@@ -15,7 +15,7 @@ export interface ISANCardScheduleProps {
     title: string
     subtitle: string
     buttonTitle: string
-    buttonPress(): () => {}
+    buttonPress: () => {}
 }
 
 const SANImageRow = SANStyled(SANRow)`
@@ -30,7 +30,6 @@ const SANButtonRow = SANStyled(SANRow)`
         border-bottom-left-radius: ${theme('radii.base')};
         border-bottom-right-radius: ${theme('radii.base')};
         background-color: ${theme('colors.primary-2')}33;
-
     }
 `
 
@@ -88,18 +87,19 @@ const SANCardSchedule = ({
                 >
                     {subtitle}
                 </SANTypography>
-                <SANRow mx='auto' width='176px'>
+                <SANRow>
                     <SANButton
-                        href={buttonPress}
+                        onClick={buttonPress}
                         size='small'
                         uppercase
                         color='primary-4'
                         variant='outlined'
+                        mx='auto'
                     >
                         <SANTypography
                             fontSize='md'
                             fontWeight='bold'
-                            color='primary.4'
+                            color='primary-4'
                         >
                             {buttonTitle}
                         </SANTypography>
