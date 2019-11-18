@@ -23,7 +23,8 @@ import {
     mentalmap,
     article,
     document,
-    blocked
+    blocked,
+    default_thumbnail
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -218,6 +219,9 @@ const assetsDefault = {
             video: typeIconPrimaryVideo,
             course: typeIconPrimaryCourse
         }
+    },
+    cardLives: {
+        default_thumbnail
     }
 }
 
@@ -345,7 +349,7 @@ export const createTheme = ({
 
 type Theme = {
     name: string
-    colors: (typeof defaultColors) | any
+    colors: typeof defaultColors | any
     breakpoints: typeof defaultBreakpoints
     borderRadius: typeof defaultBorderRadius
     fonts: typeof defaultFonts

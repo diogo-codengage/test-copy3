@@ -23,6 +23,8 @@ import article from './images/card-course-module-thumbs/article.png'
 
 import blocked from './images/sub-specialty/blocked.svg'
 
+import default_thumbnail from './images/card-lives/default_thumbnail.png'
+
 export {
     typeIconPrimaryBook,
     typeIconPrimaryFile,
@@ -42,5 +44,6 @@ export {
     mentalmap,
     article,
     document,
-    blocked
+    blocked,
+    default_thumbnail
 }
