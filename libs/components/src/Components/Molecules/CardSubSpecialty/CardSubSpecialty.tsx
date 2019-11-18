@@ -138,6 +138,8 @@ const SANCardSubSpecialty = ({
             borderRadius='base'
             bg='white.10'
             position='relative'
+            border='0.5px solid'
+            borderColor='grey.2'
         >
             {blocked && <Blocked />}
             <SANBox
@@ -146,7 +148,7 @@ const SANCardSubSpecialty = ({
                 justifyContent='space-between'
                 p='md'
             >
-                <SANTypography fontWeight='bold' fontSize='lg'>
+                <SANTypography fontWeight='bold' fontSize='lg' ellipsis>
                     {title}
                 </SANTypography>
 
@@ -172,7 +174,7 @@ const SANCardSubSpecialty = ({
                         />
                     </SANBox>
                 </SANBox>
-                <SANDivider bg='grey.2' mt='xl' mb='md' />
+                <SANDivider bg='grey.2' mt='xl' mb='md' width='100%' />
 
                 <ContinueStyled
                     display='flex'
@@ -184,6 +186,7 @@ const SANCardSubSpecialty = ({
                         borderRadius='base'
                         bg='grey-solid.6'
                         width='36px'
+                        minWidth='36px'
                         height='36px'
                         display='flex'
                         alignItems='center'
@@ -197,15 +200,17 @@ const SANCardSubSpecialty = ({
                             {continueProp.index}
                         </SANTypography>
                     </SANBox>
-                    <SANBox>
+                    <SANBox width='calc(100% - 44px)'>
                         <SANTypography
                             fontSize='xs'
                             color='grey.5'
                             transform='uppercase'
                         >
-                            {t('cardSubSpecialty.startWith')}
+                            {continueProp.index === 1
+                                ? t('cardSubSpecialty.startWith')
+                                : t('cardSubSpecialty.continueWith')}
                         </SANTypography>
-                        <SANTypography color='grey.7'>
+                        <SANTypography color='grey.7' ellipsis>
                             {continueProp.title}
                         </SANTypography>
                     </SANBox>

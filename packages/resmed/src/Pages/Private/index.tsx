@@ -16,6 +16,7 @@ const RMSubSpecialties = React.lazy(() =>
 )
 const RMHelpCenter = React.lazy(() => import('Pages/Private/HelpCenter'))
 const RMAccount = React.lazy(() => import('Pages/Private/Account'))
+const RMClassroom = React.lazy(() => import('Pages/Private/Classroom'))
 
 const RMPrivatePages: React.FC<RouteComponentProps> = ({
     history,
@@ -50,6 +51,13 @@ const RMPrivatePages: React.FC<RouteComponentProps> = ({
                                 <Route
                                     path={`${url}/minha-conta`}
                                     component={RMAccount}
+                                />
+                                <Route
+                                    path={[
+                                        `${url}/sala-aula/:specialtyId/:subspecialtyId/:lessonId/:collectionId/:type/:contentId`,
+                                        `${url}/sala-aula/:specialtyId/:lessonId/:collectionId/:type/:contentId`
+                                    ]}
+                                    component={RMClassroom}
                                 />
                                 <Route
                                     path={[`${url}/`, `${url}`]}

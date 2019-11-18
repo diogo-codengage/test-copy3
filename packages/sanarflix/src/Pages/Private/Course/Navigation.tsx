@@ -23,7 +23,7 @@ import { useApolloClient } from '@apollo/react-hooks'
 const resources = {
     Document: 'documento',
     Video: 'video',
-    Question: 'questao'
+    Quiz: 'questoes'
 }
 
 const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
@@ -40,9 +40,7 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
 
     const redirectTo = (themeId, resourceType, resourceId) =>
         history.push(
-            `/portal/sala-aula/${courseId}/${themeId}/${
-                resources[resourceType]
-            }/${resourceId}`
+            `/portal/sala-aula/${courseId}/${themeId}/${resources[resourceType]}/${resourceId}`
         )
 
     useEffect(() => {

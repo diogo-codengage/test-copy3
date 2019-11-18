@@ -55,8 +55,8 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
     const playerRef = useRef<any>()
     const { handleBookmark, handleProgress } = useClassroomContext()
     const { onOpenMenu, navigations } = useLayoutContext()
-    const [videoError, setVideoError] = useState()
-    const [videoReady, setVideoReady] = useState()
+    const [videoError, setVideoError] = useState(false)
+    const [videoReady, setVideoReady] = useState(false)
     const [willStart, setWillStart] = useState(true)
 
     const handleVideoReady = () => {
@@ -219,12 +219,12 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                 onPlay={handlePlay}
                                 onPause={handlePause}
                                 onOneHundredPercent={onComplete}
+                                onThreeSeconds={() => debounceProgress(1)}
                                 onTwentyFivePercent={() => debounceProgress(25)}
                                 onFiftyPercent={() => debounceProgress(50)}
                                 onSeventyFivePercent={() =>
                                     debounceProgress(75)
                                 }
-                                onFirstFrame={() => debounceProgress(1)}
                                 onPlaybackRateChanged={
                                     handlePlaybackRateChanged
                                 }

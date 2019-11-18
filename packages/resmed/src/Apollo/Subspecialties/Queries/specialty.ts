@@ -2,21 +2,20 @@ import gql from 'graphql-tag'
 
 interface IProgress {
     all: number
-    me: number
 }
-export interface ISubspecialties {
+
+export interface ISpecialty {
     id: string
     name: string
     progress: IProgress
 }
 
-export const GET_SUBSPECIALTIES = gql`
-    query SubSpecialty($parentId: ID!) {
-        subSpecialty(where: { parentId: $parentId }) {
+export const GET_SPECIALTY = gql`
+    query Specialties($id: ID!) {
+        specialty(where: { id: $id }) {
             id
             name
             progress {
-                all
                 me
             }
         }

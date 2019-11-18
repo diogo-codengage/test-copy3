@@ -193,7 +193,7 @@ export default {
                 title: 'Indique e Ganhe',
                 subtitle:
                     'Indique o SanarFlix para os seus amigos. A cada indicação válida você ganha R$20!',
-                action: 'Saiba mais'
+                action: 'Em breve'
             }
         }
     },
@@ -307,6 +307,10 @@ export default {
         title: 'Olá, {{name}}. Bem-vindo ao SanarFlix!',
         subtitle:
             'Nós temos milhares de conteúdos de medicina que se encaixam no seu perfil. O que você quer aprender hoje?'
+    },
+    searchResult: {
+        title: 'Resultado da busca',
+        subtitle: 'Acesse a todos os resultados ou faça uma nova busca'
     },
     sigmentManagement: {
         email: 'Escreva aqui o seu e-mail pessoal',

@@ -47,6 +47,7 @@ import { SANQuestion } from 'Components/Molecules/Question'
 import { SANCardSelectFilter } from 'Components/Molecules/CardSelectFilter'
 import { SANSearch } from 'Components/Molecules/Search'
 import { SANModal, SANModalFooter } from 'Components/Molecules/Modal'
+import { SANCollapse, SANCollapsePanel } from 'Components/Atoms/Collapse'
 import {
     SANCollapseTheme,
     SANCollapseThemePanel,
@@ -204,5 +205,7 @@ export {
     SANErrorBoundary,
     SANCardSpecialty,
     SANCardSubSpecialty,
-    SANHelpCenter
+    SANHelpCenter,
+    SANCollapse,
+    SANCollapsePanel
 }

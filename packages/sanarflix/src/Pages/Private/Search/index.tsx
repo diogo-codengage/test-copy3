@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
@@ -26,7 +26,7 @@ import { events } from 'Config/Segment'
 const resources = {
     Document: 'documento',
     Video: 'video',
-    Question: 'quiz'
+    Question: 'questoes'
 }
 
 const updateGlobalSearchCache = (prev: any, { fetchMoreResult }) => {
@@ -34,6 +34,7 @@ const updateGlobalSearchCache = (prev: any, { fetchMoreResult }) => {
     return Object.assign({}, prev, {
         globalSearch: {
             ...prev.globalSearch,
+            count: fetchMoreResult.globalSearch.count,
             data: [
                 ...prev.globalSearch.data,
                 ...fetchMoreResult.globalSearch.data
@@ -44,9 +45,16 @@ const updateGlobalSearchCache = (prev: any, { fetchMoreResult }) => {
 
 const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
     const { t } = useTranslation('sanarflix')
+    const [currentCount, setCurrentCount] = useState(0)
     const params: any = new URLSearchParams(location.search)
 
-    const goToResource = ({ resourceId: resource, type, course, themeId }) => {
+    const goToResource = ({
+        resourceId: resource,
+        type,
+        resourceType,
+        course,
+        themeId
+    }) => {
         const content = {
             resource,
             type,
@@ -54,14 +62,14 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
             themeId
         }
         if (type.toLowerCase() === 'course') {
-            const link = `/portal/curso/${resource}`
+            const link = `/portal/curso/${course.id}`
             window.analytics.track(events['Search Result Clicked'].event, {
                 link,
                 content
             })
-            history.push(`/portal/curso/${resource}`)
+            history.push(link)
         } else {
-            const link = `/portal/sala-aula/${course.id}/${themeId}/${resources[type]}/${resource}`
+            const link = `/portal/sala-aula/${course.id}/${themeId}/${resources[resourceType]}/${resource}`
             window.analytics.track(events['Search Result Clicked'].event, {
                 link,
                 content
@@ -69,6 +77,9 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
             history.push(link)
         }
     }
+
+    const handleCompleted = ({ globalSearch }) =>
+        setCurrentCount(globalSearch.count)
 
     useEffect(() => {
         window.analytics.page(
@@ -87,7 +98,8 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
             <SANHeader
                 onBack={() => history.goBack()}
                 SessionTitleProps={{
-                    title: 'Resultado da busca'
+                    title: t('searchResult.title'),
+                    subtitle: t('searchResult.subtitle')
                 }}
                 extra={
                     <FLXSearch initialValue={params.get('pesquisa') || ''} />
@@ -101,7 +113,8 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
                         variables: {
                             value: params.get('pesquisa'),
                             limit: 20
-                        }
+                        },
+                        onCompleted: handleCompleted
                     }}
                 >
                     {({
@@ -126,8 +139,7 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
                                         variant='caption2'
                                         strong
                                     >
-                                        {(globalSearch && globalSearch.count) ||
-                                            0}{' '}
+                                        {(globalSearch && currentCount) || 0}{' '}
                                     </SANTypography>
                                     <SANTypography
                                         component='span'
