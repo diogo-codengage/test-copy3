@@ -29,7 +29,14 @@ const SANButtonRow = SANStyled(SANRow)`
     &&& {
         border-bottom-left-radius: ${theme('radii.base')};
         border-bottom-right-radius: ${theme('radii.base')};
+        background-color: ${theme('colors.primary-2')}33;
 
+    }
+`
+
+const SANCardBox = SANStyled(SANBox)`
+    &&& {
+        box-shadow: 0px 1px 2px ${theme('colors.grey.2')};
     }
 `
 
@@ -47,11 +54,14 @@ const SANCardSchedule = ({
     } = useThemeContext()
 
     return (
-        <SANBox
+        <SANCardBox
             width={{ _: 1, sm: '488px' }}
             m={{ _: 'md', sm: '0px' }}
             bg='white.10'
             borderRadius='base'
+            borderWidth='0.5px'
+            borderStyle='solid'
+            borderColor='grey.2'
         >
             <SANImageRow width={[1]}>
                 <SANBox
@@ -60,12 +70,7 @@ const SANCardSchedule = ({
                     my={{ _: 0, sm: 'lg' }}
                 />
             </SANImageRow>
-            <SANButtonRow
-                pt={{ _: 'md', sm: 'xl' }}
-                pb='xl'
-                width={[1]}
-                bg='primary-2'
-            >
+            <SANButtonRow pt={{ _: 'md', sm: 'xl' }} pb='xl' width={[1]}>
                 <SANTypography
                     textAlign='center'
                     fontSize='xl'
@@ -101,7 +106,7 @@ const SANCardSchedule = ({
                     </SANButton>
                 </SANRow>
             </SANButtonRow>
-        </SANBox>
+        </SANCardBox>
     )
 }
 
