@@ -3,48 +3,31 @@ import React from 'react'
 import { theme } from 'styled-tools'
 
 import { useThemeContext } from '@sanar/utils/dist/Hooks'
-// import { useTranslation } from 'react-i18next'
+
 import { SANStyled } from '../../../Theme'
-import { SANButton } from '../../Atoms/Button'
+import { SANButton, ISANButtonProps } from '../../Atoms/Button'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANBox } from '../../Atoms/Box'
-import { SANRow, SANCol } from '../Grid'
 
 export interface ISANCardScheduleProps {
-    imgUrl?: string
+    image?: string
     title: string
     subtitle: string
-    buttonTitle: string
-    buttonPress: () => {}
+    ButtonProps: ISANButtonProps
 }
 
-const SANImageRow = SANStyled(SANRow)`
+const SANButtonRow = SANStyled(SANBox)`
     &&& {
-        border-top-left-radius: ${theme('radii.base')};
-        border-top-right-radius: ${theme('radii.base')};
-        text-align: center;
-    }
-`
-const SANButtonRow = SANStyled(SANRow)`
-    &&& {
-        border-bottom-left-radius: ${theme('radii.base')};
-        border-bottom-right-radius: ${theme('radii.base')};
         background-color: ${theme('colors.primary-2')}33;
-    }
-`
-
-const SANCardBox = SANStyled(SANBox)`
-    &&& {
-        box-shadow: 0px 1px 2px ${theme('colors.grey.2')};
+        border-top: 1px solid ${theme('colors.grey.2')};
     }
 `
 
 const SANCardSchedule = ({
-    imgUrl,
+    image,
     title,
     subtitle,
-    buttonTitle,
-    buttonPress
+    ButtonProps
 }: ISANCardScheduleProps) => {
     const {
         assets: {
@@ -53,23 +36,32 @@ const SANCardSchedule = ({
     } = useThemeContext()
 
     return (
-        <SANCardBox
-            width={{ _: 1, sm: '488px' }}
-            m={{ _: 'md', sm: '0px' }}
+        <SANBox
+            boxShadow='1'
             bg='white.10'
             borderRadius='base'
-            borderWidth='0.5px'
-            borderStyle='solid'
+            border='1px solid'
             borderColor='grey.2'
+            display='flex'
+            flexDirection='column'
+            justifyContent='center'
+            alignItems='center'
         >
-            <SANImageRow width={[1]}>
-                <SANBox
-                    as='img'
-                    src={imgUrl ? imgUrl : suggested}
-                    my={{ _: 0, sm: 'lg' }}
-                />
-            </SANImageRow>
-            <SANButtonRow pt={{ _: 'md', sm: 'xl' }} pb='xl' width={[1]}>
+            <SANBox
+                as='img'
+                src={image ? image : suggested}
+                my={{ _: 0, sm: 'lg' }}
+            />
+            <SANButtonRow
+                pt={{ _: 'md', sm: 'xl' }}
+                pb='xl'
+                px='xl'
+                display='flex'
+                flexDirection='column'
+                justifyContent='center'
+                alignItems='center'
+                width={1}
+            >
                 <SANTypography
                     textAlign='center'
                     fontSize='xl'
@@ -87,26 +79,20 @@ const SANCardSchedule = ({
                 >
                     {subtitle}
                 </SANTypography>
-                <SANRow>
+                <SANBox width='176px'>
                     <SANButton
-                        onClick={buttonPress}
                         size='small'
                         uppercase
-                        color='primary-4'
                         variant='outlined'
+                        color='primary'
                         mx='auto'
-                    >
-                        <SANTypography
-                            fontSize='md'
-                            fontWeight='bold'
-                            color='primary-4'
-                        >
-                            {buttonTitle}
-                        </SANTypography>
-                    </SANButton>
-                </SANRow>
+                        block
+                        bold
+                        {...ButtonProps}
+                    />
+                </SANBox>
             </SANButtonRow>
-        </SANCardBox>
+        </SANBox>
     )
 }
 
