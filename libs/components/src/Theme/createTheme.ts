@@ -22,6 +22,8 @@ import {
     flowchart,
     mentalmap,
     article,
+    lessonResultSuccess,
+    lessonResultError,
     document,
     blocked,
     suggestedSchedule,
@@ -225,6 +227,10 @@ const assetsDefault = {
             video: typeIconPrimaryVideo,
             course: typeIconPrimaryCourse
         }
+    },
+    lessonResult: {
+        success: lessonResultSuccess,
+        error: lessonResultError
     },
     cardSchedule: {
         suggestedSchedule
