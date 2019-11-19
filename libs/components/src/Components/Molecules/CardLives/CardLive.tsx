@@ -25,9 +25,22 @@ const SANCardBox = SANStyled(SANBox)`
     }
 `
 
+const SANImageBox = SANStyled(SANBox)`
+    &&& {
+        overflow: hidden;
+        object-fit: cover;
+    }
+`
+
 const SANDescriptionBox = SANStyled(SANTypography)`
     &&& {
         line-height: 1.35;
+    }
+`
+
+const SANTitleBox = SANStyled(SANTypography)`
+    &&& {
+        line-height: 1.40;
     }
 `
 
@@ -47,14 +60,20 @@ const SANCardLive = ({
 
     const SANImageRow = SANStyled(SANRow)`
         &&& {
-            border-top-left-radius: ${theme('radii.base')};
-            border-top-right-radius: ${
-                type === 'grid' ? theme('radii.base') : '0px'
-            };
-            border-bottom-left-radius: ${
-                type === 'grid' ? '0px' : theme('radii.base')
-            };
-            border-bottom-right-radius: 0px;
+            max-height: ${type === 'grid' ? '100%' : 'calc(100% - 1px)'};
+            margin-top: ${type === 'grid' ? '0' : '1px'};
+            max-width: ${type === 'grid' ? 'calc(100% - 1px)' : '100%'};
+
+            img {
+                border-top-left-radius: ${theme('radii.base')};
+                border-top-right-radius: ${
+                    type === 'grid' ? theme('radii.base') : '0px'
+                };
+                border-bottom-left-radius: ${
+                    type === 'grid' ? '0px' : theme('radii.base')
+                };
+                border-bottom-right-radius: 0px;
+            }
         }
     `
     const SANDescriptionRow = SANStyled(SANRow)`
@@ -72,6 +91,7 @@ const SANCardLive = ({
     return (
         <SANCardBox
             width={{ _: 1, sm: `${type === 'grid' ? '232px' : 1}` }}
+            height={{ _: '120px', sm: `${type === 'grid' ? 'auto' : '120px'}` }}
             display={`${type === 'grid' ? 'block' : 'inline-flex'}`}
             bg='white.10'
             borderRadius='base'
@@ -88,13 +108,13 @@ const SANCardLive = ({
                     _: '120px',
                     sm: `${type === 'grid' ? '131px' : '120px'}`
                 }}
-                bg='grey-solid.9'
             >
-                {/* <SANBox
+                <SANImageBox
                     as='img'
                     src={imgUrl ? imgUrl : default_thumbnail}
                     height='100%'
-                /> */}
+                    width='100%'
+                />
             </SANImageRow>
             <SANDescriptionRow
                 width={{
@@ -105,19 +125,27 @@ const SANCardLive = ({
                 mx={{ _: 'md', sm: `${type === 'grid' ? 'md' : 'xl'}` }}
                 textAlign='left'
             >
-                <SANTypography
+                <SANTitleBox
                     fontSize='md'
                     fontWeight='bold'
                     color='grey.6'
                     mb='xs'
-                    ellipsis={{ _: `${type === 'grid' ? false : '1'}` }}
+                    ellipsis={{ rows: `${type === 'grid' ? 2 : 1}` }}
                 >
                     {title}
-                </SANTypography>
-                <SANTypography fontSize='sm' color='grey.4' mb={{ _: 'md' }}>
+                </SANTitleBox>
+                <SANDescriptionBox
+                    fontSize='sm'
+                    color='grey.4'
+                    mb={{ _: 'sm' }}
+                >
                     {date}
-                </SANTypography>
-                <SANDescriptionBox fontSize='sm' color='grey.5' ellipsis='2'>
+                </SANDescriptionBox>
+                <SANDescriptionBox
+                    fontSize='sm'
+                    color='grey.5'
+                    ellipsis={{ rows: 2 }}
+                >
                     {description}
                 </SANDescriptionBox>
             </SANDescriptionRow>
