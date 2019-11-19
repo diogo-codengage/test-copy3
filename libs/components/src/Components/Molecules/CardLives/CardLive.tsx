@@ -1,162 +1,132 @@
 import React from 'react'
 
-import { theme } from 'styled-tools'
+import { theme, ifProp } from 'styled-tools'
+import { css } from 'styled-components'
 
 import { useThemeContext } from '@sanar/utils/dist/Hooks'
-// import { useTranslation } from 'react-i18next'
 import { SANStyled } from '../../../Theme'
-import { SANButton } from '../../Atoms/Button'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANBox } from '../../Atoms/Box'
-import { SANRow, SANCol } from '../Grid'
 
 export interface ISANCardLiveProps {
-    imgUrl?: string
-    type?: string
+    image?: string
+    hasList?: boolean
     title: string
     date: string
     description: string
-    livePress: () => {}
+    onClick: () => void
 }
 
-const SANCardBox = SANStyled(SANBox)`
+const SANImageBox = SANStyled(SANBox)<{ hasList: boolean }>`
     &&& {
-        box-shadow: 0px 1px 2px ${theme('colors.grey.2')};
-    }
-`
+        max-height: 100%;
+        max-width: 100%;
 
-const SANImageBox = SANStyled(SANBox)`
-    &&& {
-        overflow: hidden;
-        object-fit: cover;
-    }
-`
+        img {
+            overflow: hidden;
+            object-fit: cover;
 
-const SANDescriptionBox = SANStyled(SANTypography)`
-    &&& {
-        line-height: 1.35;
-    }
-`
+            border-top-left-radius: ${theme('radii.base')};
+            border-bottom-right-radius: 0px;            
+            ${ifProp(
+                'hasList',
+                css`
+                    border-top-right-radius: 0;
+                    border-bottom-left-radius: ${theme('radii.base')};
+                `,
+                css`
+                    border-top-right-radius: ${theme('radii.base')};
+                    border-bottom-left-radius: 0;
+                `
+            )}
+        }
 
-const SANTitleBox = SANStyled(SANTypography)`
-    &&& {
-        line-height: 1.40;
+        :hover {
+            cursor: pointer;
+            opacity: 0.5;
+        }
+        transition: opacity 1s;
     }
 `
 
 const SANCardLive = ({
-    imgUrl,
-    type,
+    image,
+    hasList = true,
     title,
     date,
     description,
-    livePress
+    onClick
 }: ISANCardLiveProps) => {
     const {
         assets: {
-            cardLives: { default_thumbnail }
+            cardLives: { defaultThumbnail }
         }
     } = useThemeContext()
 
-    const SANImageRow = SANStyled(SANRow)`
-        &&& {
-            max-height: ${type === 'grid' ? '100%' : 'calc(100% - 1px)'};
-            margin-top: ${type === 'grid' ? '0' : '1px'};
-            max-width: ${type === 'grid' ? 'calc(100% - 1px)' : '100%'};
-
-            img {
-                border-top-left-radius: ${theme('radii.base')};
-                border-top-right-radius: ${
-                    type === 'grid' ? theme('radii.base') : '0px'
-                };
-                border-bottom-left-radius: ${
-                    type === 'grid' ? '0px' : theme('radii.base')
-                };
-                border-bottom-right-radius: 0px;
-            }
-
-            :hover {
-                cursor: pointer;
-                opacity: 0.5;
-            }
-            transition: opacity 1s;
-        }
-    `
-    const SANDescriptionRow = SANStyled(SANRow)`
-        &&& {
-            border-top-left-radius: 0px;
-            border-top-right-radius: ${
-                type === 'grid' ? '0px' : theme('radii.base')
-            };
-            border-bottom-left-radius: ${
-                type === 'grid' ? theme('radii.base') : '0px'
-            };
-            border-bottom-right-radius: ${theme('radii.base')};
-        }
-    `
     return (
-        <SANCardBox
-            width={{ _: 1, sm: `${type === 'grid' ? '232px' : 1}` }}
-            height={{ _: '120px', sm: `${type === 'grid' ? 'auto' : '120px'}` }}
-            display={`${type === 'grid' ? 'block' : 'inline-flex'}`}
+        <SANBox
+            boxShadow={1}
+            width={{ _: '100%', sm: hasList ? '100%' : 'auto' }}
+            height={{ _: '120px', sm: hasList ? '120px' : 'auto' }}
+            display={hasList ? 'inline-flex' : 'block'}
             bg='white.10'
             borderRadius='base'
-            borderWidth='0.5px'
-            borderStyle='solid'
+            border='1px solid'
             borderColor='grey.2'
         >
-            <SANImageRow
-                onClick={livePress}
-                width={{
-                    _: '120px',
-                    sm: `${type === 'grid' ? '232px' : '210px'}`
-                }}
+            <SANImageBox
+                hasList={hasList}
+                onClick={onClick}
+                width={{ _: '120px', sm: 'auto' }}
                 height={{
                     _: '120px',
-                    sm: `${type === 'grid' ? '131px' : '120px'}`
+                    sm: hasList ? '120px' : '131px'
                 }}
             >
-                <SANImageBox
+                <SANBox
                     as='img'
-                    src={imgUrl ? imgUrl : default_thumbnail}
+                    src={image ? image : defaultThumbnail}
                     height='100%'
                     width='100%'
                 />
-            </SANImageRow>
-            <SANDescriptionRow
+            </SANImageBox>
+            <SANBox
                 width={{
                     _: 'calc(100% - 144px)',
-                    sm: `${type === 'grid' ? 'auto' : 'calc(100% - 258px)'}`
+                    sm: hasList ? 'calc(100% - 258px)' : 'auto'
                 }}
                 py='md'
-                mx={{ _: 'md', sm: `${type === 'grid' ? 'md' : 'xl'}` }}
+                mx={{ _: 'md', sm: hasList ? 'xl' : 'md' }}
                 textAlign='left'
             >
-                <SANTitleBox
+                <SANTypography
                     fontSize='md'
                     fontWeight='bold'
                     color='grey.6'
                     mb='xs'
-                    ellipsis={{ rows: `${type === 'grid' ? 2 : 1}` }}
+                    ellipsis={{ rows: hasList ? 1 : 2 }}
+                    lineHeight='1.40'
                 >
                     {title}
-                </SANTitleBox>
-                <SANDescriptionBox
+                </SANTypography>
+                <SANTypography
                     fontSize='sm'
                     color='grey.4'
                     mb={{ _: 'sm' }}
+                    lineHeight='1.35'
                 >
                     {date}
-                </SANDescriptionBox>
-                <SANDescriptionBox
+                </SANTypography>
+                <SANTypography
                     fontSize='sm'
                     color='grey.5'
                     ellipsis={{ rows: 2 }}
+                    lineHeight='1.35'
                 >
                     {description}
-                </SANDescriptionBox>
-            </SANDescriptionRow>
-        </SANCardBox>
+                </SANTypography>
+            </SANBox>
+        </SANBox>
     )
 }
 

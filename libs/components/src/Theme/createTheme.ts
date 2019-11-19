@@ -24,7 +24,7 @@ import {
     article,
     document,
     blocked,
-    default_thumbnail
+    defaultThumbnail
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -221,7 +221,7 @@ const assetsDefault = {
         }
     },
     cardLives: {
-        default_thumbnail
+        defaultThumbnail
     }
 }
 
