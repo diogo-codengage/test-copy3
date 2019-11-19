@@ -25,6 +25,7 @@ import lessonResultError from './images/lessonResult/ninja-negativo.png'
 
 import blocked from './images/sub-specialty/blocked.svg'
 
+import suggestedSchedule from './images/card-schedule/suggested.png'
 
 import awfulEmoji from './images/class-feedback/awful.svg'
 import badEmoji from './images/class-feedback/bad.svg'
@@ -52,9 +53,10 @@ export {
     article,
     document,
     blocked,
+    suggestedSchedule,
     awfulEmoji,
     badEmoji,
     regularEmoji,
     goodEmoji,
-    awesomeEmoji    
+    awesomeEmoji
 }

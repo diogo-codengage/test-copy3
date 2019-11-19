@@ -24,12 +24,12 @@ import {
     article,
     document,
     blocked,
+    suggestedSchedule,
     awfulEmoji,
     badEmoji,
     regularEmoji,
     goodEmoji,
     awesomeEmoji
-
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -226,12 +226,15 @@ const assetsDefault = {
             course: typeIconPrimaryCourse
         }
     },
+    cardSchedule: {
+        suggestedSchedule
+    },
     feedbackEmojis: {
-            awful: awfulEmoji,
-            bad: badEmoji,
-            regular: regularEmoji,
-            good: goodEmoji,
-            awesome: awesomeEmoji
+        awful: awfulEmoji,
+        bad: badEmoji,
+        regular: regularEmoji,
+        good: goodEmoji,
+        awesome: awesomeEmoji
     }
 }
 
@@ -359,7 +362,7 @@ export const createTheme = ({
 
 type Theme = {
     name: string
-    colors: (typeof defaultColors) | any
+    colors: typeof defaultColors | any
     breakpoints: typeof defaultBreakpoints
     borderRadius: typeof defaultBorderRadius
     fonts: typeof defaultFonts
