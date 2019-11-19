@@ -74,6 +74,12 @@ const SANCardLive = ({
                 };
                 border-bottom-right-radius: 0px;
             }
+
+            :hover {
+                cursor: pointer;
+                opacity: 0.5;
+            }
+            transition: opacity 1s;
         }
     `
     const SANDescriptionRow = SANStyled(SANRow)`
@@ -100,6 +106,7 @@ const SANCardLive = ({
             borderColor='grey.2'
         >
             <SANImageRow
+                onClick={livePress}
                 width={{
                     _: '120px',
                     sm: `${type === 'grid' ? '232px' : '210px'}`
