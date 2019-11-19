@@ -1,5 +1,9 @@
 import React from 'react'
 
+<<<<<<< HEAD
+=======
+import { useThemeContext } from '@sanar/utils/dist/Hooks'
+>>>>>>> d7b8d299176e4d3e12d51b4ff0579e792894be16
 import { theme, switchProp } from 'styled-tools'
 import { css } from 'styled-components'
 import { SANStyled } from '../../../Theme'
