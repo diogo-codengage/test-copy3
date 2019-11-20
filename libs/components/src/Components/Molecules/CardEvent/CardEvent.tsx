@@ -18,13 +18,13 @@ const SANCardBox = SANStyled(SANBox)<{ type: string }>`
   &&& {
     ${switchProp('type', {
         lesson: css`
-            border-color: ${theme('colors.blue.0')};
+            border-color: ${theme('colors.blue.2')};
         `,
         live: css`
-            border-color: ${theme('colors.gold.0')};
+            border-color: ${theme('colors.yellow.2')};
         `,
         courseActivity: css`
-            border-color: ${theme('colors.burgundy.0')};
+            border-color: ${theme('colors.burgundy.1')};
         `
     })}
   }
