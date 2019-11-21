@@ -43,15 +43,13 @@ const FLXTermsFrame = ({ tosRequired }) => {
                     justifyContent='center'
                 >
                     <SANCheckbox
-                        fontSize='md'
-                        color='grey.6'
                         checked={checked}
                         onChange={e => setChecked(e.target.checked)}
                     >
-                        {t('termsAndPrivacy.termAccept')}
+                        <SANBox as='span' fontSize='md' color='grey.6'>
+                            {t('termsAndPrivacy.termAccept')}
+                        </SANBox>
                     </SANCheckbox>
-                    {/* <SANTypography ml='sm' fontSize='md' color='grey.6'>                        
-                    </SANTypography> */}
                     <SANBox ml={{ _: '0', sm: 'xl' }} mt={{ _: 'md', sm: '0' }}>
                         <SANButton
                             disabled={!checked}
