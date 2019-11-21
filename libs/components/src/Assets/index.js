@@ -20,8 +20,18 @@ import question from './images/card-course-module-thumbs/question.png'
 import flowchart from './images/card-course-module-thumbs/flowchart.png'
 import mentalmap from './images/card-course-module-thumbs/mentalmap.png'
 import article from './images/card-course-module-thumbs/article.png'
+import lessonResultSuccess from './images/lessonResult/ninja-positivo.png'
+import lessonResultError from './images/lessonResult/ninja-negativo.png'
 
 import blocked from './images/sub-specialty/blocked.svg'
+
+import suggestedSchedule from './images/card-schedule/suggested.png'
+
+import awfulEmoji from './images/class-feedback/awful.svg'
+import badEmoji from './images/class-feedback/bad.svg'
+import regularEmoji from './images/class-feedback/regular.svg'
+import goodEmoji from './images/class-feedback/good.svg'
+import awesomeEmoji from './images/class-feedback/awesome.svg'
 
 export {
     typeIconPrimaryBook,
@@ -42,5 +52,11 @@ export {
     mentalmap,
     article,
     document,
-    blocked
+    blocked,
+    suggestedSchedule,
+    awfulEmoji,
+    badEmoji,
+    regularEmoji,
+    goodEmoji,
+    awesomeEmoji
 }

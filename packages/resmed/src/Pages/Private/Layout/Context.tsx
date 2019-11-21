@@ -3,18 +3,20 @@ import React, { useContext, useState, createContext, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router'
 
+import { SANClassroomMenuHeader } from '@sanar/components'
+
 type IMenuContext = 'general' | 'classroom'
 
 interface IMenuState {
     indexMenu: number
-    menuTitle: string
+    menuTitle: string | React.ReactNode
     darkMode?: boolean
     menuContext?: IMenuContext
 }
 
-type IFLXLayoutProviderValue = {
+type IRMLayoutProviderValue = {
     currentMenuIndex: number
-    currentMenuTitle: string
+    currentMenuTitle: string | React.ReactNode
     setMenuTab: (index: number) => void
     onCloseMenu: () => void
     onOpenMenu: () => void
@@ -23,15 +25,26 @@ type IFLXLayoutProviderValue = {
     menuContext?: IMenuContext
     navigations: INagivations
     setNavigations: React.Dispatch<React.SetStateAction<INagivations>>
+    params: IParams
+    setParams: React.Dispatch<React.SetStateAction<IParams>>
 }
 
-const defaultNavigations = {
+const defaultNavigations: INagivations = {
     next: {},
     previous: {}
 }
 
-const Context = createContext<IFLXLayoutProviderValue>(
-    ({} as {}) as IFLXLayoutProviderValue
+const defaultParams: IParams = {
+    specialtyId: '',
+    subspecialtyId: '',
+    lessonId: '',
+    collectionId: '',
+    type: 'video',
+    contentId: ''
+}
+
+const Context = createContext<IRMLayoutProviderValue>(
+    {} as IRMLayoutProviderValue
 )
 export const useLayoutContext = () => useContext(Context)
 
@@ -46,6 +59,15 @@ interface INagivations {
     previous: IAction
 }
 
+interface IParams {
+    specialtyId: string
+    subspecialtyId: string
+    lessonId: string
+    collectionId: string
+    type: 'video' | 'quiz'
+    contentId: string
+}
+
 const hasClassroom = window.location.href.split('/').includes('sala-aula')
 
 const defaultMenuState: IMenuState = {
@@ -55,8 +77,12 @@ const defaultMenuState: IMenuState = {
     menuContext: hasClassroom ? 'classroom' : 'general'
 }
 
-const FLXLayoutProvider: React.FC<RouteComponentProps> = ({ children }) => {
+const RMLayoutProvider: React.FC<RouteComponentProps> = ({
+    children,
+    history
+}) => {
     const { t } = useTranslation('resmed')
+    const [params, setParams] = useState<IParams>(defaultParams)
     const [menuState, setMenuState] = useState<IMenuState>({
         ...defaultMenuState,
         menuTitle: t('mainMenu.initial.title')
@@ -90,6 +116,20 @@ const FLXLayoutProvider: React.FC<RouteComponentProps> = ({ children }) => {
                     menuTitle: t('mainMenu.account.title')
                 })
                 break
+            case 2:
+                setMenuState({
+                    ...defaultMenuState,
+                    indexMenu: index,
+                    menuTitle: (
+                        <SANClassroomMenuHeader
+                            onBack={() => history.push(`/portal/curso`)}
+                            onClose={onCloseMenu}
+                        />
+                    ),
+                    darkMode: true,
+                    menuContext: 'classroom'
+                })
+                break
             default:
                 setMenuState(defaultMenuState)
         }
@@ -105,10 +145,12 @@ const FLXLayoutProvider: React.FC<RouteComponentProps> = ({ children }) => {
         onCloseMenu,
         onOpenMenu,
         navigations,
-        setNavigations
+        setNavigations,
+        params,
+        setParams
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>
 }
 
-export default withRouter(FLXLayoutProvider)
+export default withRouter(RMLayoutProvider)

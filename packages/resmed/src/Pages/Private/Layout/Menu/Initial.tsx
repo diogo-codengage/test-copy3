@@ -17,7 +17,7 @@ const RMMenuInitial: React.FC = () => {
     return (
         <SANNavigationList>
             <SANNavigationListItem
-                to='/inicio/inicio'
+                to='/inicio/curso'
                 icon={<SANEvaIcon name='home-outline' color='default' />}
                 onClick={onCloseMenu}
                 dataTestid='rm-menu__go-to--home'
