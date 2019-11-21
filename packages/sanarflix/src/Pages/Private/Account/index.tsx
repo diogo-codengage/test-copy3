@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Route, Switch, Redirect, RouteComponentProps } from 'react-router-dom'
 import { useLayoutContext } from 'Pages/Layout/Context'
 
-// const SANMyData = React.lazy(() => import('./MyData'))
+const SANMyData = React.lazy(() => import('./MyData'))
 // const SANPayment = React.lazy(() => import('./Payment'))
 const SANPausePage = React.lazy(() => import('./Pause'))
 const SANCancelPage = React.lazy(() => import('./Cancel'))
@@ -18,7 +18,7 @@ const FLXAccount = ({ match: { url } }: RouteComponentProps) => {
 
     return (
         <Switch>
-            {/* <Route path={`${url}/meus-dados`} component={SANMyData} /> */}
+             <Route path={`${url}/meus-dados`} component={SANMyData} />
             <Route path={`${url}/pause-assinatura`} component={SANPausePage} />
             <Route
                 path={`${url}/cancelar-assinatura`}
