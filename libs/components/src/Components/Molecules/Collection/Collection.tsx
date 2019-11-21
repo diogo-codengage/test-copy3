@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, useState, useRef } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled, { css } from 'styled-components'
@@ -103,10 +103,16 @@ const IconComleted = styled(SANEvaIcon)`
 
 const SliderStyled = styled(Slider)`
     && {
+        &.slick-vertical .slick-slide {
+            border: none;
+        }
+
         ${ifProp(
             'vertical',
             css`
-                width: 204px;
+                width: 192px;
+                max-height: 100vh;
+                overflow: hidden;
             `,
             css`
                 & .slick-active:first-child ${SANCollectionItemStyled} {
@@ -136,9 +142,23 @@ export interface ISANCollectionProps {
     value?: string
 }
 
-const SANCollectionItem = ({ item, index, onChange, value }: any) => {
+const SANCollectionItem = ({
+    item,
+    index,
+    onChange,
+    value,
+    isDragging
+}: any) => {
     const { t } = useTranslation('components')
     const { name, image, id, completed } = item
+
+    const handleChange = e => {
+        if (isDragging) {
+            e.preventDefault()
+            return
+        }
+        onChange(item)
+    }
 
     return (
         <SANCollectionItemStyled
@@ -146,7 +166,7 @@ const SANCollectionItem = ({ item, index, onChange, value }: any) => {
             p='md'
             pb={value === id ? 'sm' : 'md'}
             current={value === id}
-            onClick={() => onChange(item)}
+            onClick={handleChange}
         >
             <SANTypography fontSize='sm' color='white.10'>
                 {t('collection.part')} {index}
@@ -155,7 +175,7 @@ const SANCollectionItem = ({ item, index, onChange, value }: any) => {
                 <ImageStyled
                     as='img'
                     src={image}
-                    my='xs'
+                    my='xxs'
                     borderRadius='base'
                     width='100%'
                 />
@@ -181,9 +201,13 @@ const SANCollection: React.FC<ISANCollectionProps> = ({
     onChange,
     value
 }) => {
+    const [isDragging, setIsDragging] = useState(false)
+    const sliderRef = useRef<any>()
+
     const renderItem = useCallback(
         (item, index) => (
             <SANCollectionItem
+                isDragging={isDragging}
                 onChange={onChange}
                 value={value}
                 item={item}
@@ -191,13 +215,15 @@ const SANCollection: React.FC<ISANCollectionProps> = ({
                 key={index}
             />
         ),
-        [value]
+        [value, isDragging]
     )
 
     const settings = useMemo(
         () => ({
             dots: false,
             infinite: false,
+            beforeChange: () => setIsDragging(true),
+            afterChange: () => setIsDragging(false),
             slidesToScroll: 1,
             nextArrow: <NextArrow />,
             prevArrow: <PrevArrow />,
@@ -215,7 +241,7 @@ const SANCollection: React.FC<ISANCollectionProps> = ({
     ])
 
     return (
-        <SliderStyled key={key} {...settings}>
+        <SliderStyled ref={sliderRef} key={key} {...settings}>
             {items.map(renderItem)}
         </SliderStyled>
     )

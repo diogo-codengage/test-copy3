@@ -227,15 +227,17 @@ const ESJwPlayer = forwardRef(
                                     {t('jwplayer.bookmark')}
                                 </ESButton>
                             )}
-                            <div>
-                                <ESTypography
-                                    variant='subtitle2'
-                                    className='mr-xs ml-xs'
-                                >
-                                    {t('jwplayer.rateClass')}:
-                                </ESTypography>
-                                <ESRate {...rate} />
-                            </div>
+                            {!!rate && (
+                                <div>
+                                    <ESTypography
+                                        variant='subtitle2'
+                                        className='mr-xs ml-xs'
+                                    >
+                                        {t('jwplayer.rateClass')}:
+                                    </ESTypography>
+                                    <ESRate {...rate} />
+                                </div>
+                            )}
                         </div>
                     </div>
                 )}

@@ -7,12 +7,15 @@ import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import RMClassroomProvider from './Context'
 
+const RMClassroomVideo = React.lazy(() => import('./Video'))
+const RMClassroomQuiz = React.lazy(() => import('./Quiz'))
+
 const renderResourceContent = type => {
     switch (type) {
         case 'video':
-            return <p>Video</p>
+            return <RMClassroomVideo />
         case 'quiz':
-            return <p>questoes</p>
+            return <RMClassroomQuiz />
         default:
             return <Redirect to='/portal/curso' />
     }
@@ -37,16 +40,15 @@ const Wrapper = styled.div`
 const FLXClassroom: React.FC<RouteComponentProps<IParams>> = ({
     match: { params }
 }) => {
-    const { onOpenMenu, setParams } = useLayoutContext()
+    const { setParams } = useLayoutContext()
 
     useEffect(() => {
         setParams(params)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [params])
 
     return (
         <RMClassroomProvider>
-            <button onClick={onOpenMenu}>MENU</button>
             <Wrapper>{renderResourceContent(params.type)}</Wrapper>
         </RMClassroomProvider>
     )
