@@ -138,5 +138,10 @@ export default {
         feedback: {
             success: 'A sua senha foi atualizada com sucesso!'
         }
+    },
+    termsAndPrivacy: {
+        termAccept: 'Li e concordo com os Termos de Uso',
+        privacyAccept: 'Li e concordo com as Políticas de privacidade',
+        button: 'avançar'
     }
 }
