@@ -13,7 +13,7 @@ import {
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
 import { createDebounce } from '@sanar/utils/dist/Debounce'
 
-import SANCollection from 'Components/Collection'
+import RMCollection from 'Components/Collection'
 import { GET_VIDEO, IVideoQuery } from 'Apollo/Classroom/Queries/video'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomContext } from './Context'
@@ -31,6 +31,7 @@ const Header = styled.div`
 const RMClassroomVideo = ({ history }: RouteComponentProps) => {
     const { width } = useWindowSize()
     const playerRef = useRef<any>()
+    const collectionRef = useRef<any>()
     const { handleProgress } = useClassroomContext()
     const { params, onOpenMenu } = useLayoutContext()
     const [videoError, setVideoError] = useState(false)
@@ -54,7 +55,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
         )
 
     const onProgress = (percentage, resourceId) => {
-        if (!videoError && videoReady) {
+        if (!videoError) {
             const timeInSeconds =
                 playerRef && playerRef.current
                     ? playerRef.current.position()
@@ -65,6 +66,24 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                 percentage,
                 resourceId
             })
+
+            if (percentage === 100) {
+                const current = collectionRef.current.getCurrent()
+                if (!!current.content.quiz) {
+                    history.push(
+                        `../../${current.id}/quiz/${current.content.quiz.id}`
+                    )
+                } else {
+                    const next = collectionRef.current.getNext()
+                    if (!!next) {
+                        history.push(
+                            `../../${next.id}/video/${next.content.video.id}`
+                        )
+                    } else {
+                        history.push(`../../avaliacao`)
+                    }
+                }
+            }
         }
     }
 
@@ -150,11 +169,12 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                                     }
                                 />
                             </SANBox>
-                            <SANCollection
+                            <RMCollection
                                 parentId={params.lessonId}
                                 value={params.collectionId}
                                 vertical={width > 884}
                                 onChange={onChangeCollection}
+                                ref={collectionRef}
                             />
                         </SANBox>
                     </SANBox>

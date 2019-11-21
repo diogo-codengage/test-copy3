@@ -1,5 +1,7 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useRef } from 'react'
 
+import styled from 'styled-components'
+import { theme } from 'styled-tools'
 import { useApolloClient } from '@apollo/react-hooks'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -10,19 +12,35 @@ import {
     SANBox,
     SANTypography,
     SANQuestion,
-    SANQuestionMap
+    SANQuestionMap,
+    SANButton,
+    SANEvaIcon
 } from '@sanar/components'
 
+import RMCollection from 'Components/Collection'
 import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
-
+import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomQuizContext } from './Context'
-import { useClassroomContext } from '../Context'
+
+const SANColFloat = styled(SANCol)`
+    && {
+        ${theme('mediaQueries.down.md')} {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: ${theme('space.sm')};
+            box-shadow: 0 -1px 2px ${theme('colors.grey.4')};
+            z-index: 1;
+        }
+    }
+`
 
 interface IParams {
     questionId: string
 }
 
-const RMClassRoomQuizQuestion = ({
+const RMClassroomQuizQuestion = ({
     history,
     match: {
         params: { questionId }
@@ -30,19 +48,30 @@ const RMClassRoomQuizQuestion = ({
 }: RouteComponentProps<IParams>) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
+    const collectionRef = useRef<any>()
     const {
         questions,
         questionsMap,
         setQuestionsMap
     } = useClassroomQuizContext()
+    const { params: paramsLayout } = useLayoutContext()
     const [visible, setVisible] = useState(false)
     const [loading, setLoading] = useState(false)
     const [responses, setResponses] = useState<any[]>([])
 
     const goToNext = () => {
-        questions[index + 1]
-            ? history.push(`./${questions[index + 1].id}`)
-            : history.push('./finalizado')
+        if (questions[index + 1]) {
+            history.push(`./${questions[index + 1].id}`)
+        } else {
+            const next = collectionRef.current.getNext()
+            if (!!next) {
+                history.push(
+                    `../../../${next.id}/video/${next.content.video.id}`
+                )
+            } else {
+                history.push(`../../../avaliacao`)
+            }
+        }
     }
 
     const handleJump = () => goToNext()
@@ -55,10 +84,9 @@ const RMClassRoomQuizQuestion = ({
         try {
             const {
                 data: {
-                    questionAnswer: {
-                        answer: {
-                            question: { comments, alternatives, id }
-                        }
+                    answerQuestion: {
+                        question: { comment, alternatives, id },
+                        stats
                     }
                 }
             } = await client.mutate({
@@ -70,15 +98,13 @@ const RMClassRoomQuizQuestion = ({
             })
 
             const correct = alternatives.data.find(
-                alternative => alternative.correct
+                alternative => alternative.isCorrect
             )
             setResponses(oldResponses => [
                 ...oldResponses,
                 {
-                    comment:
-                        comments.data && comments.data.length
-                            ? comments.data[0]
-                            : null,
+                    stats,
+                    comment,
                     answer: correct.id,
                     questionId: id
                 }
@@ -91,6 +117,11 @@ const RMClassRoomQuizQuestion = ({
     }
 
     const toggleVisible = () => setVisible(oldVisible => !oldVisible)
+
+    const onChangeCollection = collection =>
+        history.push(
+            `../../../${collection.id}/video/${collection.content.video.id}`
+        )
 
     const index = useMemo(
         () => questions.findIndex(question => question.id === questionId),
@@ -114,15 +145,30 @@ const RMClassRoomQuizQuestion = ({
                         </SANTypography>
                     </SANBox>
                 </SANCol>
-                <SANCol xs={24} sm={8}>
-                    <SANQuestionMap
-                        items={questionsMap}
-                        current={index}
-                        mock
-                        onCancel={toggleVisible}
-                        visible={visible}
-                    />
-                </SANCol>
+                <SANColFloat md={8} bg='grey-solid.8'>
+                    <SANBox
+                        display='flex'
+                        alignItems='center'
+                        justifyContent='flex-end'
+                    >
+                        <SANQuestionMap
+                            items={questionsMap}
+                            current={index}
+                            mock
+                            onCancel={toggleVisible}
+                            visible={visible}
+                        />
+                        <SANButton
+                            size='small'
+                            variant='outlined'
+                            color='light'
+                            onClick={toggleVisible}
+                        >
+                            <SANEvaIcon name='map-outline' mr='xs' />
+                            {t('classroom.quiz.questionMap')}
+                        </SANButton>
+                    </SANBox>
+                </SANColFloat>
             </SANRow>
 
             <SANBox mt={{ sm: '8', _: 'sm' }}>
@@ -137,8 +183,17 @@ const RMClassRoomQuizQuestion = ({
                     onNext={handleNext}
                 />
             </SANBox>
+            <SANBox mt='xl'>
+                <RMCollection
+                    parentId={paramsLayout.lessonId}
+                    value={paramsLayout.collectionId}
+                    vertical={false}
+                    onChange={onChangeCollection}
+                    ref={collectionRef}
+                />
+            </SANBox>
         </>
     )
 }
 
-export default withRouter(RMClassRoomQuizQuestion)
+export default withRouter(RMClassroomQuizQuestion)

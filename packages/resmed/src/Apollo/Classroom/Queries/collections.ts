@@ -43,6 +43,10 @@ export const GET_COLLECTIONS = gql`
                     image
                     progress
                 }
+                quiz {
+                    id
+                    title
+                }
             }
         }
     }

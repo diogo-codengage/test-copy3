@@ -1,75 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, {
+    useEffect,
+    useState,
+    useImperativeHandle,
+    forwardRef
+} from 'react'
 
 import { useApolloClient } from '@apollo/react-hooks'
 
 import { SANCollection } from '@sanar/components'
-import { ISANCollectionProps } from '@sanar/components/dist/Components/Molecules/Collection'
 
 import {
     GET_COLLECTIONS,
     ICollectionsQuery
 } from 'Apollo/Classroom/Queries/collections'
 
-const items = [
-    {
-        name: 'Nome da aula exemplo ellipsis',
-        image:
-            'https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg',
-        completed: true,
-        id: '1'
-    },
-    {
-        name: 'Nome da aula exemplo',
-        image:
-            'https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg',
-        completed: false,
-        id: '2'
-    },
-    {
-        name: 'Nome da aula exemplo',
-        image:
-            'https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg',
-        completed: false,
-        id: '3'
-    },
-    {
-        name: 'Nome da aula exemplo',
-        image:
-            'https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg',
-        completed: false,
-        id: '4'
-    },
-    {
-        name: 'Nome da aula exemplo',
-        image:
-            'https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg',
-        completed: false,
-        id: '5'
-    },
-    {
-        name: 'Nome da aula exemplo',
-        image:
-            'https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg',
-        completed: false,
-        id: '6'
-    },
-    {
-        name: 'Nome da aula exemplo',
-        image:
-            'https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg',
-        completed: false,
-        id: '7'
-    },
-    {
-        name: 'Nome da aula exemplo',
-        image:
-            'https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg',
-        completed: false,
-        id: '8'
-    }
-]
-
-const RMCollection = ({ parentId, value, vertical = true, onChange }) => {
+const RMCollection = ({ parentId, value, vertical = true, onChange }, ref) => {
     const client = useApolloClient()
     const [collections, setCollections] = useState<any>([])
 
@@ -94,6 +39,22 @@ const RMCollection = ({ parentId, value, vertical = true, onChange }) => {
         fetchCollections()
     }, [parentId])
 
+    const getIndex = () =>
+        collections.findIndex(collection => collection.id === value)
+
+    useImperativeHandle(ref, () => ({
+        getCurrent: () =>
+            collections.find(collection => collection.id === value),
+        getNext: () => {
+            const index = getIndex()
+            return collections[index + 1]
+        },
+        getPrevious: () => {
+            const index = getIndex()
+            return collections[index - 1]
+        }
+    }))
+
     return (
         <SANCollection
             items={collections}
@@ -104,4 +65,4 @@ const RMCollection = ({ parentId, value, vertical = true, onChange }) => {
     )
 }
 
-export default RMCollection
+export default forwardRef(RMCollection)

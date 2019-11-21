@@ -9,6 +9,8 @@ import RMClassroomProvider from './Context'
 
 const RMClassroomVideo = React.lazy(() => import('./Video'))
 const RMClassroomQuiz = React.lazy(() => import('./Quiz'))
+const RMClassroomRating = React.lazy(() => import('./Rating'))
+const RMClassroomFeedback = React.lazy(() => import('./Feedback'))
 
 const renderResourceContent = type => {
     switch (type) {
@@ -16,6 +18,10 @@ const renderResourceContent = type => {
             return <RMClassroomVideo />
         case 'quiz':
             return <RMClassroomQuiz />
+        case 'avaliacao':
+            return <RMClassroomRating />
+        case 'feedback':
+            return <RMClassroomFeedback />
         default:
             return <Redirect to='/portal/curso' />
     }
@@ -27,6 +33,7 @@ interface IParams {
     lessonId: string
     collectionId: string
     type: 'video' | 'quiz'
+    status: 'avaliacao' | 'feedback'
     contentId: string
 }
 
@@ -49,7 +56,9 @@ const FLXClassroom: React.FC<RouteComponentProps<IParams>> = ({
 
     return (
         <RMClassroomProvider>
-            <Wrapper>{renderResourceContent(params.type)}</Wrapper>
+            <Wrapper>
+                {renderResourceContent(params.type || params.status)}
+            </Wrapper>
         </RMClassroomProvider>
     )
 }

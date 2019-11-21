@@ -138,5 +138,11 @@ export default {
         feedback: {
             success: 'A sua senha foi atualizada com sucesso!'
         }
+    },
+    classroom: {
+        quiz: {
+            question: 'Questão',
+            questionMap: 'Mapa de questões'
+        }
     }
 }

@@ -155,7 +155,8 @@ const SANCollectionItem = ({
     const handleChange = e => {
         if (isDragging) {
             e.preventDefault()
-            return
+            e.stopPropagation()
+            // return
         }
         onChange(item)
     }

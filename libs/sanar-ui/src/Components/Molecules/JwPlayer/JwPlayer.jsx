@@ -244,22 +244,26 @@ const ESJwPlayer = forwardRef(
 
                 {isReady && (
                     <>
-                        <ESEvaIcon
-                            name='skip-back'
-                            className={classNames('previous-center', {
-                                idle: state === 'idle',
-                                paused: state === 'paused'
-                            })}
-                            onClick={onPrevious}
-                        />
-                        <ESEvaIcon
-                            name='skip-forward'
-                            className={classNames('next-center', {
-                                idle: state === 'idle',
-                                paused: state === 'paused'
-                            })}
-                            onClick={onNext}
-                        />
+                        {!!onPrevious && (
+                            <ESEvaIcon
+                                name='skip-back'
+                                className={classNames('previous-center', {
+                                    idle: state === 'idle',
+                                    paused: state === 'paused'
+                                })}
+                                onClick={onPrevious}
+                            />
+                        )}
+                        {!!onNext && (
+                            <ESEvaIcon
+                                name='skip-forward'
+                                className={classNames('next-center', {
+                                    idle: state === 'idle',
+                                    paused: state === 'paused'
+                                })}
+                                onClick={onNext}
+                            />
+                        )}
                     </>
                 )}
                 <ReactJWPlayer

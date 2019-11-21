@@ -40,7 +40,8 @@ const defaultParams: IParams = {
     lessonId: '',
     collectionId: '',
     type: 'video',
-    contentId: ''
+    contentId: '',
+    status: 'avaliacao'
 }
 
 const Context = createContext<IRMLayoutProviderValue>(
@@ -65,6 +66,7 @@ interface IParams {
     lessonId: string
     collectionId: string
     type: 'video' | 'quiz'
+    status: 'avaliacao' | 'feedback'
     contentId: string
 }
 
