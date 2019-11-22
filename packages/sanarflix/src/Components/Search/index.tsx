@@ -9,7 +9,7 @@ import { useThrottle } from '@sanar/utils/dist/Hooks/useThrottle'
 
 import { events } from 'Config/Segment'
 
-import { GET_GLOBAL_SEARCH_SUGGEST } from 'Apollo/Search/Queries/global-search-suggest'
+import { GET_GLOBAL_SEARCH_SUGGESTIONS } from 'Apollo/Search/Queries/suggestions'
 
 interface IProps extends RouteComponentProps {
     size?: 'large' | 'medium' | 'small'
@@ -31,7 +31,7 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
             const {
                 data: { globalSearch }
             } = await client.query({
-                query: GET_GLOBAL_SEARCH_SUGGEST,
+                query: GET_GLOBAL_SEARCH_SUGGESTIONS,
                 variables: { value: search }
             })
             const data = globalSearch.data.map(item => ({
