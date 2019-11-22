@@ -6,6 +6,7 @@ import ESModal from '../../Atoms/Modal'
 import ESTabs, { ESTabPane } from '../../Atoms/Tabs'
 import ESBrandHeader from '../../Atoms/BrandHeader'
 import useWindowSize from '../../../Hooks/useWindowSize'
+import { SANSpin } from '@sanar/components'
 
 import defaultLogo from '../../../assets/images/logo/full-logo.svg'
 
@@ -17,7 +18,8 @@ const ESModalTabs = ({
     content,
     activeKey = null,
     defaultActiveKey,
-    imageHeader
+    imageHeader,
+    loading = false
 }) => {
     const classes = classNames('es-modal-tabs', className)
     const [tabPosition, setTabPosition] = useState('top')
@@ -52,20 +54,22 @@ const ESModalTabs = ({
             className={classes}
             width={width > 1023 ? '75vw' : 'auto'}
         >
-            <div className='es-modal-tabs__content'>
-                <ESBrandHeader
-                    logo={imageHeader}
-                    size={width > 1023 ? 'large' : 'small'}
-                />
-                <ESTabs
-                    activeKey={tabActiveKey.toString()}
-                    tabPosition={tabPosition}
-                    defaultActiveKey={defaultActiveKey.toString()}
-                    onTabClick={e => setTabActiveKey(e)}
-                >
-                    {content.map(renderItem)}
-                </ESTabs>
-            </div>
+            <SANSpin flex spinning={loading} minHeight='100%'>
+                <div className='es-modal-tabs__content'>
+                    <ESBrandHeader
+                        logo={imageHeader}
+                        size={width > 1023 ? 'large' : 'small'}
+                    />
+                    <ESTabs
+                        activeKey={tabActiveKey.toString()}
+                        tabPosition={tabPosition}
+                        defaultActiveKey={defaultActiveKey.toString()}
+                        onTabClick={setTabActiveKey}
+                    >
+                        {content.map(renderItem)}
+                    </ESTabs>
+                </div>
+            </SANSpin>
         </ESModal>
     )
 }
