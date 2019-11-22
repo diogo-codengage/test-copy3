@@ -52,7 +52,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                 onSubmit(
                     {
                         ...values,
-                        period: values.period.toString()
+                        period: values.period ? values.period.toString() : null
                     },
                     { setSubmitting }
                 )
