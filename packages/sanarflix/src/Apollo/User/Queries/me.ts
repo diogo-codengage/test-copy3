@@ -51,7 +51,7 @@ export const GET_ME = gql`
             profile_picture
             status
             cpf
-            phone_number
+            phone_number: phone
             college
             period
             address {

@@ -24,7 +24,7 @@ export const EDIT_USER_MUTATION = gql`
             email
             profile_picture
             cpf
-            phone_number
+            phone_number: phone
             college
             period
             address {

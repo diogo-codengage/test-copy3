@@ -55,7 +55,9 @@ const RMPrivatePages: React.FC<RouteComponentProps> = ({
                                 <Route
                                     path={[
                                         `${url}/sala-aula/:specialtyId/:subspecialtyId/:lessonId/:collectionId/:type/:contentId`,
-                                        `${url}/sala-aula/:specialtyId/:lessonId/:collectionId/:type/:contentId`
+                                        `${url}/sala-aula/:specialtyId/:subspecialtyId/:lessonId/:status`,
+                                        `${url}/sala-aula/:specialtyId/:lessonId/:collectionId/:type/:contentId`,
+                                        `${url}/sala-aula/:specialtyId/:lessonId/:status`
                                     ]}
                                     component={RMClassroom}
                                 />

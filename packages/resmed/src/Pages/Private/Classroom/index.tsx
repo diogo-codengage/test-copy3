@@ -7,12 +7,21 @@ import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import RMClassroomProvider from './Context'
 
+const RMClassroomVideo = React.lazy(() => import('./Video'))
+const RMClassroomQuiz = React.lazy(() => import('./Quiz'))
+const RMClassroomRating = React.lazy(() => import('./Rating'))
+const RMClassroomFeedback = React.lazy(() => import('./Feedback'))
+
 const renderResourceContent = type => {
     switch (type) {
         case 'video':
-            return <p>Video</p>
+            return <RMClassroomVideo />
         case 'quiz':
-            return <p>questoes</p>
+            return <RMClassroomQuiz />
+        case 'avaliacao':
+            return <RMClassroomRating />
+        case 'feedback':
+            return <RMClassroomFeedback />
         default:
             return <Redirect to='/portal/curso' />
     }
@@ -24,6 +33,7 @@ interface IParams {
     lessonId: string
     collectionId: string
     type: 'video' | 'quiz'
+    status: 'avaliacao' | 'feedback'
     contentId: string
 }
 
@@ -34,22 +44,23 @@ const Wrapper = styled.div`
     flex-direction: column;
 `
 
-const FLXClassroom: React.FC<RouteComponentProps<IParams>> = ({
+const RMClassroom: React.FC<RouteComponentProps<IParams>> = ({
     match: { params }
 }) => {
-    const { onOpenMenu, setParams } = useLayoutContext()
+    const { setParams } = useLayoutContext()
 
     useEffect(() => {
         setParams(params)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [params])
 
     return (
         <RMClassroomProvider>
-            <button onClick={onOpenMenu}>MENU</button>
-            <Wrapper>{renderResourceContent(params.type)}</Wrapper>
+            <Wrapper>
+                {renderResourceContent(params.type || params.status)}
+            </Wrapper>
         </RMClassroomProvider>
     )
 }
 
-export default withRouter(FLXClassroom)
+export default withRouter(RMClassroom)
