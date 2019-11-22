@@ -12,10 +12,12 @@ import {
 
 import { CREATE_RATING } from 'Apollo/Classroom/Mutations/create-rating'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
+import { useClassroomContext } from './Context'
 
 const RMClassroomRating = ({ history }: RouteComponentProps) => {
     const client = useApolloClient()
     const { params, onOpenMenu } = useLayoutContext()
+    const { lesson } = useClassroomContext()
 
     const handleRating = async (value, { setSubmitting }) => {
         try {
@@ -36,8 +38,8 @@ const RMClassroomRating = ({ history }: RouteComponentProps) => {
     return (
         <SANBox flex='1'>
             <SANClassroomHeader
-                title={'quiz.title'}
-                subtitle={'uiz.specialty.name'}
+                title={lesson.title}
+                subtitle={lesson.subSpecialty.specialty.name}
                 onOpenMenu={onOpenMenu}
             />
             <SANLayoutContainer py='8'>

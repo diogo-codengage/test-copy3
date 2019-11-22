@@ -9,11 +9,46 @@ import { SANButton } from '../../Atoms/Button'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANBox } from '../../Atoms/Box'
 import { SANSpin } from '../../Atoms/Spin'
+import { SANSkeleton } from '../../Atoms/Skeleton'
 import { SANRow, SANCol } from '../Grid'
 
 const SANBoxStyled = styled(SANBox)`
     overflow: hidden;
 `
+
+const arrLoading = new Array(5).fill(1)
+
+const renderSkeleton = (_, index) => (
+    <Skeleton key={index} showBorder={index < arrLoading.length - 1} />
+)
+
+const SANSkeletonStyled = styled(SANSkeleton)`
+    && {
+        display: flex;
+        align-items: center;
+        & .ant-skeleton-header {
+            padding-bottom: 0;
+        }
+    }
+`
+
+const Skeleton = ({ showBorder }) => (
+    <SANBox bg='grey.5' pt='lg' px={{ xs: 'xxl', _: 'md' }}>
+        <SANBox
+            display='flex'
+            borderBottom={showBorder && '1px solid'}
+            borderColor='white.1'
+            pb='lg'
+        >
+            <SANSkeletonStyled
+                paragraph={false}
+                dark
+                active
+                avatar={{ size: 24, shape: 'circle' }}
+            />
+        </SANBox>
+    </SANBox>
+)
 
 interface IQuestion {
     title: string
@@ -242,7 +277,9 @@ const SANLessonResult = ({
                         </SANCol>
                     </SANRow>
                 </SANBox>
-                {questions.map(renderCollection)}
+                {loading
+                    ? arrLoading.map(renderSkeleton)
+                    : questions.map(renderCollection)}
             </SANBoxStyled>
         </SANSpin>
     )

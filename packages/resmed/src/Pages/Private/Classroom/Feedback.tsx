@@ -15,12 +15,14 @@ import {
     IlessonPerformanceQuery
 } from 'Apollo/Classroom/Queries/lessons-performance'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
+import { useClassroomContext } from './Context'
 
 const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
     const client = useApolloClient()
     const { params, onOpenMenu } = useLayoutContext()
     const [loading, setLoading] = useState(true)
     const [questions, setQuestions] = useState<any>([])
+    const { lesson } = useClassroomContext()
 
     useEffect(() => {
         const fetchResult = async () => {
@@ -46,8 +48,8 @@ const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
     return (
         <SANBox flex='1'>
             <SANClassroomHeader
-                title={'quiz.title'}
-                subtitle={'uiz.specialty.name'}
+                title={lesson.title}
+                subtitle={lesson.subSpecialty.specialty.name}
                 onOpenMenu={onOpenMenu}
             />
             <SANLayoutContainer py='8'>
