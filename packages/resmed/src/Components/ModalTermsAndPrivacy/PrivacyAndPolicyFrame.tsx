@@ -3,6 +3,17 @@ import React, { useState } from 'react'
 import { SANSpin, SANButton, SANBox, SANCheckbox } from '@sanar/components'
 import { useTranslation } from 'react-i18next'
 
+import styled from 'styled-components'
+
+const SANIframeBox = styled(SANBox)`
+    height: calc(100% - 230px);
+    @media (min-width: 576px) {
+        height: calc(100% - 195px);
+    }
+    @media (min-width: 1024px) {
+        flex: 1;
+    }
+`
 const RMPrivacyAndPolicyFrame = ({ onAccept }) => {
     const { t } = useTranslation('resmed')
     const [loading, setLoading] = useState(true)
@@ -12,26 +23,15 @@ const RMPrivacyAndPolicyFrame = ({ onAccept }) => {
         setLoading(false)
     }
     return (
-        <>
+        <SANBox display='flex' flexDirection='column' height='100%'>
             <SANSpin flex spinning={loading} minHeight='100%' />
-            <SANBox
-                width='100%'
-                height={
-                    onAccept
-                        ? {
-                              _: 'calc(100% - 230px)',
-                              sm: 'calc(100% - 195px)',
-                              lg: 'calc(100% - 63px)'
-                          }
-                        : '100%'
-                }
-            >
+            <SANIframeBox width='100%'>
                 <iframe
                     title='privacy-and-policy-frame'
                     onLoad={manipuleLoading}
                     src='https://docs.google.com/document/d/e/2PACX-1vTX6EgYlGttEFq459aSW6pUZBa1CSzo0zZnLKDYqexGphW76OG_jWEz4pZf6-MSu9qWBGDvBp9wGbGt/pub?embedded=true'
                 />
-            </SANBox>
+            </SANIframeBox>
             {onAccept && (
                 <SANBox
                     flexDirection={{ _: 'column', sm: 'row' }}
@@ -64,7 +64,7 @@ const RMPrivacyAndPolicyFrame = ({ onAccept }) => {
                     </SANBox>
                 </SANBox>
             )}
-        </>
+        </SANBox>
     )
 }
 
