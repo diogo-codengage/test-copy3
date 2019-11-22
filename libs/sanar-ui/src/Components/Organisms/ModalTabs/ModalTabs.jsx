@@ -31,6 +31,7 @@ const ESModalTabs = ({
     }, [width])
 
     useEffect(() => {
+        // console.log('useE')
         setTabActiveKey(activeKey)
     }, [activeKey])
 
@@ -54,6 +55,7 @@ const ESModalTabs = ({
             className={classes}
             width={width > 1023 ? '75vw' : 'auto'}
         >
+            {/* {console.log('tabActive', tabActiveKey, activeKey)} */}
             <SANSpin flex spinning={loading} minHeight='100%'>
                 <div className='es-modal-tabs__content'>
                     <ESBrandHeader

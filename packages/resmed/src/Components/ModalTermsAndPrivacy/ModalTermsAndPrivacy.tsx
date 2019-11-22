@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SANModalTabs } from '@sanar/components'
 import RMPrivacyAndPolicyFrame from './PrivacyAndPolicyFrame'
 import RMTermsFrame from './TermsFrame'
 import { useTranslation } from 'react-i18next'
+import { useApolloClient } from '@apollo/react-hooks'
+import { useAuthContext } from 'Hooks/auth'
+import { IMe } from 'Apollo/User/Queries/me'
+import { ACCEPT_TERMS_USE_MUTATION } from 'Apollo/User/Mutations/accept-terms-use'
 
 import logo from 'Assets/images/brand/logo.svg'
 
@@ -12,14 +16,43 @@ const SANModalTermsAndPrivacy = ({
     ...props
 }) => {
     const { t } = useTranslation('resmed')
+    const client = useApolloClient()
+    const { setMe, me } = useAuthContext()
     const [activeKey, setActiveKey] = useState(defaultActiveKey)
     const [signed, setSigned] = useState<number[]>([])
+    const [loading, setLoading] = useState(false)
+
+    const handleAccept = async () => {
+        setLoading(true)
+        try {
+            const {
+                data: {
+                    acceptTermsUse
+                    // acceptTermsUse: { subscriptions }
+                }
+            } = await client.mutate<IMe>({
+                mutation: ACCEPT_TERMS_USE_MUTATION
+            })
+            setMe(acceptTermsUse)
+            // setMe({
+            //     ...me,
+            //     hasSigned: !!subscriptions.find(sb => sb.contract === 'signed')
+            // })
+        } catch (error) {
+            console.error(error)
+        }
+        setLoading(false)
+    }
+
+    useEffect(() => {
+        if (signed.includes(0) && signed.includes(1)) {
+            handleAccept()
+        }
+    }, [signed])
 
     const handleActiveKey = key => {
-        let aux = signed
-        aux.push(key)
-        setSigned(aux)
-        key === 0 ? setActiveKey(1) : setActiveKey(0)
+        setSigned(old => [...old, key])
+        setActiveKey(key)
     }
     const modalContent = [
         {
@@ -56,6 +89,7 @@ const SANModalTermsAndPrivacy = ({
             closable={false}
             defaultActiveKey={defaultActiveKey}
             content={modalContent}
+            loading={loading}
             {...props}
         />
     )

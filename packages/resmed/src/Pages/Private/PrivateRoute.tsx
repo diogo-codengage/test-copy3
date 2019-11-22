@@ -26,7 +26,7 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
     ...rest
 }) => {
     const client = useApolloClient()
-    const { setMe } = useAuthContext()
+    const { setMe, me } = useAuthContext()
     const [logged, setLogged] = useState(true)
 
     const onLogout = () => {
@@ -63,11 +63,22 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    if (!!me && !me.hasActiveSubscription) {
+        return (
+            <RMModalTermsAndPrivacy
+                tosRequired
+                visible
+                defaultActiveKey={0}
+                scrolling
+            />
+        )
+    }
+
     return (
         <Route
             {...rest}
             render={props =>
-                logged ? (
+                logged && !!me && me.hasActiveSubscription ? (
                     <Component {...props} />
                 ) : (
                     <Redirect to='/auth/entrar' />
