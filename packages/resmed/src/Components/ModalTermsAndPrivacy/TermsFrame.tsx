@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { SANSpin, SANButton, SANBox, SANCheckbox } from '@sanar/components'
 import { useTranslation } from 'react-i18next'
 
-const FLXTermsFrame = ({ tosRequired }) => {
+const FLXTermsFrame = ({ tosRequired, onClick }) => {
     const { t } = useTranslation('resmed')
     const [loading, setLoading] = useState(true)
     const [checked, setChecked] = useState(false)
@@ -52,6 +52,7 @@ const FLXTermsFrame = ({ tosRequired }) => {
                     </SANCheckbox>
                     <SANBox ml={{ _: '0', sm: 'xl' }} mt={{ _: 'md', sm: '0' }}>
                         <SANButton
+                            onClick={onClick}
                             disabled={!checked}
                             variant='solid'
                             size='medium'

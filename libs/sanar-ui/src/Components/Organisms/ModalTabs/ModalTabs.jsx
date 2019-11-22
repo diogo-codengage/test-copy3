@@ -13,17 +13,24 @@ const ESModalTabs = ({
     className,
     visible,
     onCancel,
+    closable = true,
     content,
+    activeKey = null,
     defaultActiveKey,
     imageHeader
 }) => {
     const classes = classNames('es-modal-tabs', className)
     const [tabPosition, setTabPosition] = useState('top')
+    const [tabActiveKey, setTabActiveKey] = useState(activeKey)
     const { width } = useWindowSize()
 
     useEffect(() => {
         setTabPosition(width > 1023 ? 'left' : 'top')
     }, [width])
+
+    useEffect(() => {
+        setTabActiveKey(activeKey)
+    }, [activeKey])
 
     const renderItem = useCallback(
         (item, index) => {
@@ -40,7 +47,7 @@ const ESModalTabs = ({
         <ESModal
             visible={visible}
             onCancel={onCancel}
-            closable
+            closable={closable}
             maskClosable
             className={classes}
             width={width > 1023 ? '75vw' : 'auto'}
@@ -51,8 +58,10 @@ const ESModalTabs = ({
                     size={width > 1023 ? 'large' : 'small'}
                 />
                 <ESTabs
+                    activeKey={tabActiveKey.toString()}
                     tabPosition={tabPosition}
                     defaultActiveKey={defaultActiveKey.toString()}
+                    onTabClick={e => setTabActiveKey(e)}
                 >
                     {content.map(renderItem)}
                 </ESTabs>
