@@ -268,7 +268,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
 
     return (
         <SANClassroomMenu
-            currentThemeIndex={state.theme && state.theme.index}
+            currentThemeIndex={(state.theme && state.theme.index) + 1}
             totalThemes={state.totalThemes}
             course={{
                 ...(state.currentCourse && {
