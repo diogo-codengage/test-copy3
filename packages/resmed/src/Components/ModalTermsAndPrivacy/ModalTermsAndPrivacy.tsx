@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ESModalTabs from 'sanar-ui/dist/Components/Organisms/ModalTabs'
+import { SANModalTabs } from '@sanar/components'
 import SANPrivacyAndPolicyFrame from './PrivacyAndPolicyFrame'
 import SANTermsFrame from './TermsFrame'
 import { useTranslation } from 'react-i18next'
@@ -43,7 +43,7 @@ const SANModalTermsAndPrivacy = ({
     ]
 
     return (
-        <ESModalTabs
+        <SANModalTabs
             imageHeader={logo}
             key={defaultActiveKey}
             activeKey={activeKey}
