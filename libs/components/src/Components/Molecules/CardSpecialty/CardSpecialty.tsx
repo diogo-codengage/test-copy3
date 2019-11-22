@@ -85,8 +85,9 @@ const SANCardSpecialty = ({
                 fontWeight='bold'
                 textAlign='center'
                 color='white.10'
-                ellipsis
+                ellipsis={{ rows: 2 }}
                 width='calc(100% - 1px)'
+                height='72px'
                 zIndex={1}
             >
                 {title}
