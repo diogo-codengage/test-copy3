@@ -32,7 +32,7 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
                 data: { globalSearch }
             } = await client.query({
                 query: GET_GLOBAL_SEARCH_SUGGEST,
-                variables: { limit: 5, value: search }
+                variables: { value: search }
             })
             const data = globalSearch.data.map(item => ({
                 ...item,
