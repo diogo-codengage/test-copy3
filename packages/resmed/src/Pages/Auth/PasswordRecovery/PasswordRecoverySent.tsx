@@ -12,7 +12,7 @@ import RMFooter from 'Components/Footer'
 import logo from 'Assets/images/brand/logo.svg'
 import image from 'Assets/images/forgot-password/mail.png'
 
-const FLXPasswordRecoverySent: React.FC<RouteComponentProps> = ({
+const RMPasswordRecoverySent: React.FC<RouteComponentProps> = ({
     location,
     history
 }) => {
@@ -57,4 +57,4 @@ const FLXPasswordRecoverySent: React.FC<RouteComponentProps> = ({
     )
 }
 
-export default withRouter(FLXPasswordRecoverySent)
+export default withRouter(RMPasswordRecoverySent)

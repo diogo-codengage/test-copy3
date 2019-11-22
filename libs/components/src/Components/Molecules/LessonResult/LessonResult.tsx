@@ -1,5 +1,7 @@
 import React, { useMemo, useCallback } from 'react'
 
+import styled from 'styled-components'
+
 import { useThemeContext } from '@sanar/utils/dist/Hooks'
 
 import { useTranslation } from 'react-i18next'
@@ -8,6 +10,10 @@ import { SANTypography } from '../../Atoms/Typography'
 import { SANBox } from '../../Atoms/Box'
 import { SANSpin } from '../../Atoms/Spin'
 import { SANRow, SANCol } from '../Grid'
+
+const SANBoxStyled = styled(SANBox)`
+    overflow: hidden;
+`
 
 interface IQuestion {
     title: string
@@ -156,7 +162,7 @@ const SANLessonResult = ({
 
     return (
         <SANSpin spinning={loading} dark flex>
-            <SANBox borderRadius='base' overflow='hidden'>
+            <SANBoxStyled borderRadius='base'>
                 <SANBox
                     p='xl'
                     display='flex'
@@ -237,7 +243,7 @@ const SANLessonResult = ({
                     </SANRow>
                 </SANBox>
                 {questions.map(renderCollection)}
-            </SANBox>
+            </SANBoxStyled>
         </SANSpin>
     )
 }

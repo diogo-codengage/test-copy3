@@ -7,7 +7,7 @@ import React, {
 
 import { useApolloClient } from '@apollo/react-hooks'
 
-import { SANCollection } from '@sanar/components'
+import { SANCollection, SANBox } from '@sanar/components'
 
 import {
     GET_COLLECTIONS,
@@ -16,10 +16,12 @@ import {
 
 const RMCollection = ({ parentId, value, vertical = true, onChange }, ref) => {
     const client = useApolloClient()
+    const [loading, setLoading] = useState(false)
     const [collections, setCollections] = useState<any>([])
 
     useEffect(() => {
         const fetchCollections = async () => {
+            setLoading(true)
             try {
                 const {
                     data: { collections }
@@ -35,8 +37,10 @@ const RMCollection = ({ parentId, value, vertical = true, onChange }, ref) => {
                     }))
                 )
             } catch {}
+            setLoading(false)
         }
         fetchCollections()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [parentId])
 
     const getIndex = () =>
@@ -56,12 +60,15 @@ const RMCollection = ({ parentId, value, vertical = true, onChange }, ref) => {
     }))
 
     return (
-        <SANCollection
-            items={collections}
-            vertical={vertical}
-            onChange={onChange}
-            value={value}
-        />
+        <SANBox height={vertical && '100vh'}>
+            <SANCollection
+                items={collections}
+                vertical={vertical}
+                onChange={onChange}
+                value={value}
+                loading={loading}
+            />
+        </SANBox>
     )
 }
 

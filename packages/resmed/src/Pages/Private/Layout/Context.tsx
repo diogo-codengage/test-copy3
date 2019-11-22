@@ -27,6 +27,8 @@ type IRMLayoutProviderValue = {
     setNavigations: React.Dispatch<React.SetStateAction<INagivations>>
     params: IParams
     setParams: React.Dispatch<React.SetStateAction<IParams>>
+    footerProps: Object
+    setFooterProps: React.Dispatch<React.SetStateAction<Object>>
 }
 
 const defaultNavigations: INagivations = {
@@ -70,7 +72,7 @@ interface IParams {
     contentId: string
 }
 
-const hasClassroom = window.location.href.split('/').includes('sala-aula')
+const hasClassroom = window.location.href.includes('sala-aula')
 
 const defaultMenuState: IMenuState = {
     indexMenu: 0,
@@ -84,6 +86,7 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
     history
 }) => {
     const { t } = useTranslation('resmed')
+    const [footerProps, setFooterProps] = useState({})
     const [params, setParams] = useState<IParams>(defaultParams)
     const [menuState, setMenuState] = useState<IMenuState>({
         ...defaultMenuState,
@@ -92,7 +95,7 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
     const [navigations, setNavigations] = useState<INagivations>(
         defaultNavigations
     )
-    const menuRef: any = useRef()
+    const menuRef = useRef<any>()
 
     const onCloseMenu = () => {
         menuRef && menuRef.current && menuRef.current.setToggle(false)
@@ -102,29 +105,34 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
         menuRef && menuRef.current && menuRef.current.setToggle(true)
     }
 
+    const handleBackClassroom = () => {
+        history.push(`/portal/curso`)
+    }
+
     const setMenuTab = index => {
         switch (index) {
             case 0:
                 setMenuState({
-                    ...defaultMenuState,
+                    indexMenu: index,
+                    menuTitle: t('mainMenu.initial.title'),
                     darkMode: false,
                     menuContext: 'general'
                 })
                 break
             case 1:
                 setMenuState({
-                    ...defaultMenuState,
                     indexMenu: index,
-                    menuTitle: t('mainMenu.account.title')
+                    menuTitle: t('mainMenu.account.title'),
+                    darkMode: false,
+                    menuContext: 'general'
                 })
                 break
             case 2:
                 setMenuState({
-                    ...defaultMenuState,
                     indexMenu: index,
                     menuTitle: (
                         <SANClassroomMenuHeader
-                            onBack={() => history.push(`/portal/curso`)}
+                            onBack={handleBackClassroom}
                             onClose={onCloseMenu}
                         />
                     ),
@@ -149,7 +157,9 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
         navigations,
         setNavigations,
         params,
-        setParams
+        setParams,
+        footerProps,
+        setFooterProps
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

@@ -39,19 +39,9 @@ export const responsiveHorizontal = [
 
 export const responsiveVertical = [
     {
-        breakpoint: 999999999,
+        breakpoint: 9999,
         settings: {
-            slidesToShow: 5,
-            arrows: false,
-            swipeToSlide: true,
-            verticalSwiping: true,
-            infinite: false
-        }
-    },
-    {
-        breakpoint: 1919,
-        settings: {
-            slidesToShow: 4,
+            slidesToShow: 6,
             arrows: false,
             swipeToSlide: true,
             verticalSwiping: true,

@@ -5,8 +5,7 @@ import {
     withRouter,
     RouteComponentProps,
     Route,
-    Switch,
-    Redirect
+    Switch
 } from 'react-router-dom'
 
 import {

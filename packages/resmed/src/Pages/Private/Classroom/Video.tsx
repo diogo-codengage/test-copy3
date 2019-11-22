@@ -69,12 +69,14 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
 
             if (percentage === 100) {
                 const current = collectionRef.current.getCurrent()
+                // if have quiz on this clicker go to quiz
                 if (!!current.content.quiz) {
                     history.push(
                         `../../${current.id}/quiz/${current.content.quiz.id}`
                     )
                 } else {
                     const next = collectionRef.current.getNext()
+                    // if have next clicker go to next
                     if (!!next) {
                         history.push(
                             `../../${next.id}/video/${next.content.video.id}`

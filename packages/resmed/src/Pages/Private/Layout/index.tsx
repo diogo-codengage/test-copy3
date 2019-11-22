@@ -9,12 +9,13 @@ import { defaultFooterProps } from 'Components/Footer'
 
 import logo from 'Assets/images/brand/logo-menu.svg'
 
-const FLXLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
+const RMLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
     const {
         menuRef,
         currentMenuTitle,
         darkMode,
-        menuContext
+        menuContext,
+        footerProps
     } = useLayoutContext()
 
     const MenuProps = useMemo(
@@ -37,9 +38,10 @@ const FLXLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
             HelpButton: {
                 onClick: () => history.push('/inicio/central-ajuda')
             },
-            darkMode
+            darkMode,
+            ...footerProps
         }),
-        [darkMode, history]
+        [darkMode, history, footerProps]
     )
 
     return (
@@ -54,4 +56,4 @@ const FLXLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
     )
 }
 
-export default withRouter(FLXLayout)
+export default withRouter(RMLayout)

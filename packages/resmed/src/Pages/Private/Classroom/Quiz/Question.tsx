@@ -16,6 +16,7 @@ import {
     SANButton,
     SANEvaIcon
 } from '@sanar/components'
+import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
 import RMCollection from 'Components/Collection'
 import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
@@ -48,6 +49,7 @@ const RMClassroomQuizQuestion = ({
 }: RouteComponentProps<IParams>) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
+    const { width } = useWindowSize()
     const collectionRef = useRef<any>()
     const {
         questions,
@@ -60,15 +62,18 @@ const RMClassroomQuizQuestion = ({
     const [responses, setResponses] = useState<any[]>([])
 
     const goToNext = () => {
+        // if have next question on quiz go to next
         if (questions[index + 1]) {
             history.push(`./${questions[index + 1].id}`)
         } else {
             const next = collectionRef.current.getNext()
+            // if have next clicker go to next
             if (!!next) {
                 history.push(
                     `../../../${next.id}/video/${next.content.video.id}`
                 )
             } else {
+                // if dont have next clicker go to rating
                 history.push(`../../../avaliacao`)
             }
         }
@@ -149,7 +154,7 @@ const RMClassroomQuizQuestion = ({
                     <SANBox
                         display='flex'
                         alignItems='center'
-                        justifyContent='flex-end'
+                        justifyContent={{ md: 'flex-end', _: 'center' }}
                     >
                         <SANQuestionMap
                             items={questionsMap}
@@ -183,7 +188,7 @@ const RMClassroomQuizQuestion = ({
                     onNext={handleNext}
                 />
             </SANBox>
-            <SANBox mt='xl'>
+            <SANBox mt='xl' px={width > 884 && 20}>
                 <RMCollection
                     parentId={paramsLayout.lessonId}
                     value={paramsLayout.collectionId}

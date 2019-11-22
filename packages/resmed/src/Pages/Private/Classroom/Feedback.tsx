@@ -38,6 +38,7 @@ const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
             setLoading(false)
         }
         fetchResult()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleGoPractice = () => history.push('/inicio/area-pratica')

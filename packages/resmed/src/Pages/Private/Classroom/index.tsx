@@ -44,7 +44,7 @@ const Wrapper = styled.div`
     flex-direction: column;
 `
 
-const FLXClassroom: React.FC<RouteComponentProps<IParams>> = ({
+const RMClassroom: React.FC<RouteComponentProps<IParams>> = ({
     match: { params }
 }) => {
     const { setParams } = useLayoutContext()
@@ -63,4 +63,4 @@ const FLXClassroom: React.FC<RouteComponentProps<IParams>> = ({
     )
 }
 
-export default withRouter(FLXClassroom)
+export default withRouter(RMClassroom)

@@ -22,12 +22,11 @@ const RMClassroomProvider: React.FC = ({ children }) => {
     const client = useApolloClient()
     const { setMenuTab } = useLayoutContext()
 
-    const handleProgress = async (data: IDataProgress) => {
+    const handleProgress = async (data: IDataProgress) =>
         await client.mutate({
             mutation: CREATE_PROGRESS,
             variables: data
         })
-    }
 
     useEffect(() => {
         setMenuTab(2)
