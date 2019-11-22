@@ -13,6 +13,8 @@ import { GET_ME } from 'Apollo/User/Queries/me'
 import { useAuthContext } from 'Hooks/auth'
 import { logout, getCognitoUser } from 'Config/AWSCognito'
 
+import RMModalTermsAndPrivacy from '../../Components/ModalTermsAndPrivacy'
+
 interface RMPrivateRouteProps extends RouteComponentProps {
     component: React.ElementType
     path: string

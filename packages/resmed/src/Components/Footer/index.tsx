@@ -13,7 +13,7 @@ import {
 } from '@sanar/components'
 import { ISANLayoutFooterProps } from '@sanar/components/dist/Components/Organisms/Layout'
 
-import SANModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
+import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 
 import logoFooter from 'Assets/images/brand/logo-grey.svg'
 
@@ -62,7 +62,7 @@ const Copyright = ({ darkMode }) => {
                 </SANFlexbox>
             </SANSpace>
 
-            <SANModalTermsAndPrivacy
+            <RMModalTermsAndPrivacy
                 onCancel={() => setShowModalTerms(false)}
                 visible={showModalTerms}
                 defaultActiveKey={activeKey}
