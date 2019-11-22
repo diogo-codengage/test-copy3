@@ -28,6 +28,8 @@ import mentalMap from 'Assets/images/course-items/mental-map.svg'
 import questionSvg from 'Assets/images/course-items/question.svg'
 import resumeSvg from 'Assets/images/course-items/resume.svg'
 
+import { useLastLocation } from 'react-router-last-location'
+
 import {
     GET_COURSE,
     ICourses,
@@ -167,7 +169,12 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
 }) => {
     const { t } = useTranslation('sanarflix')
     const [showDescription, setShowDescription] = useState(false)
+    let pathname: string
 
+    const lastLocation = useLastLocation()
+    if (lastLocation) {
+        pathname = lastLocation.pathname.split('/')[2]
+    }
     useEffect(() => {
         window.analytics.page(
             events['Page Viewed'].event,
@@ -188,7 +195,11 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
                 return (
                     <SANBox displayFlex flexDirection='column' flex='1'>
                         <SANHeader
-                            onBack={() => history.goBack()}
+                            onBack={() =>
+                                pathname === 'sala-aula'
+                                    ? history.push('/portal/inicio')
+                                    : history.goBack()
+                            }
                             extra={<FLXSearch />}
                             SessionTitleProps={{
                                 title: course.name
