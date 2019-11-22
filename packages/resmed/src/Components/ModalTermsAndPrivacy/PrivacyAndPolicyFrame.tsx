@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { SANSpin, SANButton, SANBox, SANCheckbox } from '@sanar/components'
 import { useTranslation } from 'react-i18next'
 
-const FLXPrivacyAndPolicyFrame = ({ tosRequired, onClick }) => {
+const RMPrivacyAndPolicyFrame = ({ onAccept }) => {
     const { t } = useTranslation('resmed')
     const [loading, setLoading] = useState(true)
     const [checked, setChecked] = useState(false)
@@ -17,7 +17,7 @@ const FLXPrivacyAndPolicyFrame = ({ tosRequired, onClick }) => {
             <SANBox
                 width='100%'
                 height={
-                    tosRequired
+                    onAccept
                         ? {
                               _: 'calc(100% - 230px)',
                               sm: 'calc(100% - 195px)',
@@ -32,7 +32,7 @@ const FLXPrivacyAndPolicyFrame = ({ tosRequired, onClick }) => {
                     src='https://docs.google.com/document/d/e/2PACX-1vTX6EgYlGttEFq459aSW6pUZBa1CSzo0zZnLKDYqexGphW76OG_jWEz4pZf6-MSu9qWBGDvBp9wGbGt/pub?embedded=true'
                 />
             </SANBox>
-            {tosRequired && (
+            {onAccept && (
                 <SANBox
                     flexDirection={{ _: 'column', sm: 'row' }}
                     display='inline-flex'
@@ -52,7 +52,7 @@ const FLXPrivacyAndPolicyFrame = ({ tosRequired, onClick }) => {
                     </SANCheckbox>
                     <SANBox ml={{ _: '0', sm: 'xl' }} mt={{ _: 'md', sm: '0' }}>
                         <SANButton
-                            onClick={onClick}
+                            onClick={onAccept}
                             disabled={!checked}
                             variant='solid'
                             size='medium'
@@ -68,4 +68,4 @@ const FLXPrivacyAndPolicyFrame = ({ tosRequired, onClick }) => {
     )
 }
 
-export default FLXPrivacyAndPolicyFrame
+export default RMPrivacyAndPolicyFrame

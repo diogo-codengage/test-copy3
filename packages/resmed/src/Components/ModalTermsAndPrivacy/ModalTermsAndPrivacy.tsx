@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { SANModalTabs } from '@sanar/components'
-import SANPrivacyAndPolicyFrame from './PrivacyAndPolicyFrame'
-import SANTermsFrame from './TermsFrame'
+import RMPrivacyAndPolicyFrame from './PrivacyAndPolicyFrame'
+import RMTermsFrame from './TermsFrame'
 import { useTranslation } from 'react-i18next'
 
 import logo from 'Assets/images/brand/logo.svg'
@@ -25,18 +25,24 @@ const SANModalTermsAndPrivacy = ({
         {
             title: t('global.termsOfUse'),
             content: (
-                <SANTermsFrame
-                    tosRequired={tosRequired && !signed.includes(0) === true}
-                    onClick={() => handleActiveKey(0)}
+                <RMTermsFrame
+                    onAccept={
+                        !signed.includes(1) &&
+                        tosRequired &&
+                        (() => handleActiveKey(1))
+                    }
                 />
             )
         },
         {
             title: t('global.privacyPolicy'),
             content: (
-                <SANPrivacyAndPolicyFrame
-                    tosRequired={tosRequired && !signed.includes(1) === true}
-                    onClick={() => handleActiveKey(1)}
+                <RMPrivacyAndPolicyFrame
+                    onAccept={
+                        !signed.includes(0) &&
+                        tosRequired &&
+                        (() => handleActiveKey(0))
+                    }
                 />
             )
         }
