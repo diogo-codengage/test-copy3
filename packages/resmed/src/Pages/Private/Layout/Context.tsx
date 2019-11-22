@@ -85,11 +85,14 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
     children,
     history
 }) => {
+    const hasClassroom = window.location.href.includes('sala-aula')
     const { t } = useTranslation('resmed')
     const [footerProps, setFooterProps] = useState({})
     const [params, setParams] = useState<IParams>(defaultParams)
     const [menuState, setMenuState] = useState<IMenuState>({
         ...defaultMenuState,
+        darkMode: hasClassroom,
+        menuContext: hasClassroom ? 'classroom' : 'general',
         menuTitle: t('mainMenu.initial.title')
     })
     const [navigations, setNavigations] = useState<INagivations>(
