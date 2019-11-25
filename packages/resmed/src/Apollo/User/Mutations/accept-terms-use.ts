@@ -1,14 +1,8 @@
 import gql from 'graphql-tag'
 
-export interface IMe {
-    id: string
-    name: string
-    profilePicture: string
-}
-
-export const GET_ME = gql`
-    {
-        me {
+export const ACCEPT_TERMS_USE_MUTATION = gql`
+    mutation AcceptTermsUse {
+        acceptTermsUse {
             id
             name
             profilePicture
