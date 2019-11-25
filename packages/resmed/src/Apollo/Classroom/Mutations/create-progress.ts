@@ -36,24 +36,30 @@ export const CREATE_PROGRESS = gql`
             }
         ) {
             course {
+                id
                 progress
             }
             specialty {
+                id
                 ${lastAccessed}
                 ${progress}
             }
             subSpecialty {
+                id
                 ${progress}
                 ${lastAccessed}
             }
             lesson {
+                id
                 ${lastAccessed}
             }
             collection {
+                id
                 content {
                     video {
                         id
                         progress
+                        timeInSeconds
                     }
                 }  
             }
