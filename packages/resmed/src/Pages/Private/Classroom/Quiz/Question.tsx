@@ -1,0 +1,204 @@
+import React, { useState, useMemo, useRef } from 'react'
+
+import styled from 'styled-components'
+import { theme } from 'styled-tools'
+import { useApolloClient } from '@apollo/react-hooks'
+import { useTranslation } from 'react-i18next'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
+
+import {
+    SANRow,
+    SANCol,
+    SANBox,
+    SANTypography,
+    SANQuestion,
+    SANQuestionMap,
+    SANButton,
+    SANEvaIcon
+} from '@sanar/components'
+import { useWindowSize } from '@sanar/utils/dist/Hooks'
+
+import RMCollection from 'Components/Collection'
+import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
+import { useLayoutContext } from 'Pages/Private/Layout/Context'
+import { useClassroomQuizContext } from './Context'
+
+const SANColFloat = styled(SANCol)`
+    && {
+        ${theme('mediaQueries.down.md')} {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: ${theme('space.sm')};
+            box-shadow: 0 -1px 2px ${theme('colors.grey.4')};
+            z-index: 1;
+        }
+    }
+`
+
+interface IParams {
+    questionId: string
+}
+
+const RMClassroomQuizQuestion = ({
+    history,
+    match: {
+        params: { questionId }
+    }
+}: RouteComponentProps<IParams>) => {
+    const client = useApolloClient()
+    const { t } = useTranslation('resmed')
+    const { width } = useWindowSize()
+    const collectionRef = useRef<any>()
+    const {
+        questions,
+        questionsMap,
+        setQuestionsMap
+    } = useClassroomQuizContext()
+    const { params: paramsLayout } = useLayoutContext()
+    const [visible, setVisible] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [responses, setResponses] = useState<any[]>([])
+
+    const goToNext = () => {
+        // if have next question on quiz go to next
+        if (questions[index + 1]) {
+            history.push(`./${questions[index + 1].id}`)
+        } else {
+            const next = collectionRef.current.getNext()
+            // if have next clicker go to next
+            if (!!next) {
+                history.push(
+                    `../../../${next.id}/video/${next.content.video.id}`
+                )
+            } else {
+                // if dont have next clicker go to rating
+                history.push(`../../../avaliacao`)
+            }
+        }
+    }
+
+    const handleJump = () => goToNext()
+
+    const handleNext = () => goToNext()
+
+    const handleConfirm = async alternativeId => {
+        setLoading(true)
+
+        try {
+            const {
+                data: {
+                    answerQuestion: {
+                        question: { comment, alternatives, id },
+                        stats
+                    }
+                }
+            } = await client.mutate({
+                mutation: ANSWER_MUTATION,
+                variables: {
+                    questionId: questions[index].id,
+                    alternativeId
+                }
+            })
+
+            const correct = alternatives.data.find(
+                alternative => alternative.isCorrect
+            )
+            setResponses(oldResponses => [
+                ...oldResponses,
+                {
+                    stats,
+                    comment,
+                    answer: correct.id,
+                    questionId: id
+                }
+            ])
+            setQuestionsMap(oldMap =>
+                oldMap.map(e => (e.id === id ? { ...e, status: true } : e))
+            )
+        } catch (e) {}
+        setLoading(false)
+    }
+
+    const toggleVisible = () => setVisible(oldVisible => !oldVisible)
+
+    const onChangeCollection = collection =>
+        history.push(
+            `../../../${collection.id}/video/${collection.content.video.id}`
+        )
+
+    const index = useMemo(
+        () => questions.findIndex(question => question.id === questionId),
+        [questionId, questions]
+    )
+
+    return (
+        <>
+            <SANRow type='flex' align='middle' justifyContent='space-between'>
+                <SANCol xs={24} sm={8}>
+                    <SANBox
+                        display='flex'
+                        alignItems='center'
+                        mb={{ sm: '0', _: 'md' }}
+                    >
+                        <SANTypography color='white.10' level={4} mr='xs'>
+                            {t('classroom.quiz.question')} {index + 1}
+                        </SANTypography>
+                        <SANTypography color='white.5' vairnat='subtitle1'>
+                            / {questions.length}
+                        </SANTypography>
+                    </SANBox>
+                </SANCol>
+                <SANColFloat md={8} bg='grey-solid.8'>
+                    <SANBox
+                        display='flex'
+                        alignItems='center'
+                        justifyContent={{ md: 'flex-end', _: 'center' }}
+                    >
+                        <SANQuestionMap
+                            items={questionsMap}
+                            current={index}
+                            mock
+                            onCancel={toggleVisible}
+                            visible={visible}
+                        />
+                        <SANButton
+                            size='small'
+                            variant='outlined'
+                            color='light'
+                            onClick={toggleVisible}
+                        >
+                            <SANEvaIcon name='map-outline' mr='xs' />
+                            {t('classroom.quiz.questionMap')}
+                        </SANButton>
+                    </SANBox>
+                </SANColFloat>
+            </SANRow>
+
+            <SANBox mt={{ sm: '8', _: 'sm' }}>
+                <SANQuestion
+                    question={questions[index]}
+                    {...responses.find(
+                        res => res.questionId === questions[index].id
+                    )}
+                    loading={loading}
+                    onConfirm={handleConfirm}
+                    onJump={handleJump}
+                    onNext={handleNext}
+                />
+            </SANBox>
+            <SANBox mt='xl' px={width > 884 && 20}>
+                <RMCollection
+                    parentId={paramsLayout.lessonId}
+                    value={paramsLayout.collectionId}
+                    vertical={false}
+                    onChange={onChangeCollection}
+                    ref={collectionRef}
+                />
+            </SANBox>
+        </>
+    )
+}
+
+export default withRouter(RMClassroomQuizQuestion)

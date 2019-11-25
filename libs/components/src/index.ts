@@ -101,6 +101,10 @@ import {
 import { SANCardSpecialty } from 'Components/Molecules/CardSpecialty'
 import { SANCardSubSpecialty } from 'Components/Molecules/CardSubSpecialty'
 import { SANCommonBadge } from 'Components/Atoms/CommonBadge'
+import { SANCardSchedule } from 'Components/Molecules/CardSchedule'
+import { SANLessonFeedback } from 'Components/Molecules/LessonFeedback'
+import { SANCollection } from 'Components/Molecules/Collection'
+import { SANLessonResult } from 'Components/Molecules/LessonResult'
 
 export {
     SANCommonBadge,
@@ -207,5 +211,9 @@ export {
     SANCardSubSpecialty,
     SANHelpCenter,
     SANCollapse,
-    SANCollapsePanel
+    SANCollapsePanel,
+    SANCardSchedule,
+    SANLessonFeedback,
+    SANCollection,
+    SANLessonResult
 }

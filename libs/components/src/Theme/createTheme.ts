@@ -24,7 +24,15 @@ import {
     article,
     document,
     blocked,
-    defaultThumbnail
+    defaultThumbnail,
+    suggestedSchedule,
+    awfulEmoji,
+    badEmoji,
+    regularEmoji,
+    goodEmoji,
+    awesomeEmoji,
+    lessonResultError,
+    lessonResultSuccess
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -172,6 +180,7 @@ defaultSpace.md = defaultSpace[4]
 defaultSpace.lg = defaultSpace[5]
 defaultSpace.xl = defaultSpace[6]
 defaultSpace.xxl = defaultSpace[7]
+defaultSpace.xxxl = defaultSpace[8]
 
 const defaultShadows = [
     'none',
@@ -222,6 +231,20 @@ const assetsDefault = {
     },
     cardLives: {
         defaultThumbnail
+    },
+    cardSchedule: {
+        suggestedSchedule
+    },
+    feedbackEmojis: {
+        awful: awfulEmoji,
+        bad: badEmoji,
+        regular: regularEmoji,
+        good: goodEmoji,
+        awesome: awesomeEmoji
+    },
+    lessonResult: {
+        error: lessonResultError,
+        success: lessonResultSuccess
     }
 }
 
