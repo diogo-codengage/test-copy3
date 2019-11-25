@@ -3,6 +3,8 @@ import React, { Suspense } from 'react'
 import { Route, Switch, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
+import { LastLocationProvider } from 'react-router-last-location'
+
 import { SANErrorBoundary } from '@sanar/components'
 
 import FLXLayout from 'Pages/Layout'
@@ -36,51 +38,55 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
 
     return (
         <SANErrorBoundary onClick={reload} text={t('global.backStart')}>
-            <FLXLayoutProvider>
-                <FLXLayout>
-                    <Suspense fallback={<FLXSplashLoader size='flexible' />}>
-                        <Switch>
-                            <FLXActiveAccountRoute
-                                path={`${url}/inicio`}
-                                component={FLXHome}
-                            />
-                            <FLXActiveAccountRoute
-                                path={`${url}/cursos`}
-                                component={FLXCourses}
-                            />
-                            <FLXActiveAccountRoute
-                                path={`${url}/curso/:id`}
-                                component={FLXCourse}
-                            />
-                            <FLXActiveAccountRoute
-                                path={`${url}/sala-aula/:courseId/:themeId/:type/:resourceId`}
-                                component={FLXClassroom}
-                            />
-                            <FLXActiveAccountRoute
-                                path={`${url}/banco-questoes`}
-                                component={FLXQuestionsDatabase}
-                            />
-                            <FLXActiveAccountRoute
-                                path={`${url}/adicionados`}
-                                component={FLXAddedPage}
-                            />
-                            <FLXActiveAccountRoute
-                                path={`${url}/busca`}
-                                component={FLXSearchPage}
-                            />
-                            <Route
-                                path={`${url}/minha-conta`}
-                                component={FLXAccount}
-                            />
-                            <Route
-                                path={`${url}/erro`}
-                                component={FLXError500}
-                            />
-                            <Route component={FLXError404} />
-                        </Switch>
-                    </Suspense>
-                </FLXLayout>
-            </FLXLayoutProvider>
+            <LastLocationProvider>
+                <FLXLayoutProvider>
+                    <FLXLayout>
+                        <Suspense
+                            fallback={<FLXSplashLoader size='flexible' />}
+                        >
+                            <Switch>
+                                <FLXActiveAccountRoute
+                                    path={`${url}/inicio`}
+                                    component={FLXHome}
+                                />
+                                <FLXActiveAccountRoute
+                                    path={`${url}/cursos`}
+                                    component={FLXCourses}
+                                />
+                                <FLXActiveAccountRoute
+                                    path={`${url}/curso/:id`}
+                                    component={FLXCourse}
+                                />
+                                <FLXActiveAccountRoute
+                                    path={`${url}/sala-aula/:courseId/:themeId/:type/:resourceId`}
+                                    component={FLXClassroom}
+                                />
+                                <FLXActiveAccountRoute
+                                    path={`${url}/banco-questoes`}
+                                    component={FLXQuestionsDatabase}
+                                />
+                                <FLXActiveAccountRoute
+                                    path={`${url}/adicionados`}
+                                    component={FLXAddedPage}
+                                />
+                                <FLXActiveAccountRoute
+                                    path={`${url}/busca`}
+                                    component={FLXSearchPage}
+                                />
+                                <Route
+                                    path={`${url}/minha-conta`}
+                                    component={FLXAccount}
+                                />
+                                <Route
+                                    path={`${url}/erro`}
+                                    component={FLXError500}
+                                />
+                                <Route component={FLXError404} />
+                            </Switch>
+                        </Suspense>
+                    </FLXLayout>
+                </FLXLayoutProvider>
+            </LastLocationProvider>
         </SANErrorBoundary>
     )
 }

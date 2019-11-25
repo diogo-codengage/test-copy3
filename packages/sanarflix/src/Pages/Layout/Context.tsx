@@ -14,6 +14,8 @@ import { withRouter } from 'react-router'
 import { useApolloClient } from '@apollo/react-hooks'
 import { GET_LAST_ACCESSED } from 'Apollo/Menu/Queries/last-accessed'
 
+import { useLastLocation } from 'react-router-last-location'
+
 type IMenuContext = 'general' | 'classroom'
 
 interface IInitialState {
@@ -106,6 +108,7 @@ interface INagivations {
 }
 
 const FLXLayoutProvider = withRouter(({ history, children }) => {
+    const lastLocation = useLastLocation()
     const { t } = useTranslation('sanarflix')
     const [state, dispatch] = useReducer(reducer, initialState)
     const [navigations, setNavigations] = useState<INagivations>(
@@ -131,7 +134,11 @@ const FLXLayoutProvider = withRouter(({ history, children }) => {
     }
 
     const handleClassroomBack = () => {
-        history.push(`/portal/curso/${window.location.hash.split('/')[3]}`)
+        if (lastLocation) {
+            history.goBack()
+        } else {
+            history.push(`/portal/curso/${window.location.hash.split('/')[3]}`)
+        }
     }
 
     const loadLastAcessed = async () => {

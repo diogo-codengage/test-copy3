@@ -26,7 +26,7 @@ interface IProps extends RouteComponentProps {
     form: any
 }
 
-const FLXSendPasswordRecoveryPage: React.FC<IProps> = ({ form, history }) => {
+const RMSendPasswordRecoveryPage: React.FC<IProps> = ({ form, history }) => {
     const { t } = useTranslation('resmed')
     const createSnackbar = useSnackbarContext()
     const [loading, setLoading] = useState(false)
@@ -120,9 +120,6 @@ const FLXSendPasswordRecoveryPage: React.FC<IProps> = ({ form, history }) => {
     )
 }
 
-const enhance = compose(
-    withRouter,
-    withSANForm
-)
+const enhance = compose(withRouter, withSANForm)
 
-export default enhance(FLXSendPasswordRecoveryPage)
+export default enhance(RMSendPasswordRecoveryPage)

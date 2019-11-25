@@ -31,7 +31,9 @@ import {
     badEmoji,
     regularEmoji,
     goodEmoji,
-    awesomeEmoji
+    awesomeEmoji,
+    lessonResultError,
+    lessonResultSuccess
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -241,6 +243,10 @@ const assetsDefault = {
         regular: regularEmoji,
         good: goodEmoji,
         awesome: awesomeEmoji
+    },
+    lessonResult: {
+        error: lessonResultError,
+        success: lessonResultSuccess
     }
 }
 
