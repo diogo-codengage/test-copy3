@@ -14,11 +14,11 @@ type RMAuthContextValues = {
     setActiveCourse: React.Dispatch<React.SetStateAction<ICourse>>
 }
 
-const FLXAuthContext = createContext<RMAuthContextValues>(
+const RMAuthContext = createContext<RMAuthContextValues>(
     {} as RMAuthContextValues
 )
 
-export const useAuthContext = () => useContext(FLXAuthContext)
+export const useAuthContext = () => useContext(RMAuthContext)
 
 const initialCourse: ICourse = {
     id: '',
@@ -39,8 +39,8 @@ export const RMAuthProvider: React.FC = ({ children }) => {
     }
 
     return (
-        <FLXAuthContext.Provider value={value}>
+        <RMAuthContext.Provider value={value}>
             {children}
-        </FLXAuthContext.Provider>
+        </RMAuthContext.Provider>
     )
 }

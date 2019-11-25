@@ -105,6 +105,8 @@ import { SANCardSchedule } from 'Components/Molecules/CardSchedule'
 import { SANLessonFeedback } from 'Components/Molecules/LessonFeedback'
 import { SANCheckbox } from 'Components/Atoms/Checkbox'
 import { SANModalTabs } from 'Components/Organisms/ModalTabs'
+import { SANCollection } from 'Components/Molecules/Collection'
+import { SANLessonResult } from 'Components/Molecules/LessonResult'
 
 export {
     SANCommonBadge,
@@ -215,5 +217,7 @@ export {
     SANCardSchedule,
     SANLessonFeedback,
     SANCheckbox,
-    SANModalTabs
+    SANModalTabs,
+    SANCollection,
+    SANLessonResult
 }

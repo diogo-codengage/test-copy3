@@ -29,12 +29,12 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
         })
         try {
             const {
-                data: { globalSearch }
+                data: { suggestions }
             } = await client.query({
                 query: GET_GLOBAL_SEARCH_SUGGESTIONS,
                 variables: { value: search }
             })
-            const data = globalSearch.data.map(item => ({
+            const data = suggestions.data.map(item => ({
                 ...item,
                 onClick: () =>
                     history.push(`/portal/busca?pesquisa=${item.title}`)

@@ -143,5 +143,11 @@ export default {
         termAccept: 'Li e concordo com os Termos de Uso',
         privacyAccept: 'Li e concordo com as Políticas de privacidade',
         button: 'avançar'
+    },
+    classroom: {
+        quiz: {
+            question: 'Questão',
+            questionMap: 'Mapa de questões'
+        }
     }
 }

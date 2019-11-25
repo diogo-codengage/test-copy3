@@ -1,12 +1,54 @@
 import React, { useMemo, useCallback } from 'react'
 
+import styled from 'styled-components'
+
 import { useThemeContext } from '@sanar/utils/dist/Hooks'
 
 import { useTranslation } from 'react-i18next'
 import { SANButton } from '../../Atoms/Button'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANBox } from '../../Atoms/Box'
+import { SANSpin } from '../../Atoms/Spin'
+import { SANSkeleton } from '../../Atoms/Skeleton'
 import { SANRow, SANCol } from '../Grid'
+
+const SANBoxStyled = styled(SANBox)`
+    overflow: hidden;
+`
+
+const arrLoading = new Array(5).fill(1)
+
+const renderSkeleton = (_, index) => (
+    <Skeleton key={index} showBorder={index < arrLoading.length - 1} />
+)
+
+const SANSkeletonStyled = styled(SANSkeleton)`
+    && {
+        display: flex;
+        align-items: center;
+        & .ant-skeleton-header {
+            padding-bottom: 0;
+        }
+    }
+`
+
+const Skeleton = ({ showBorder }) => (
+    <SANBox bg='grey.5' pt='lg' px={{ xs: 'xxl', _: 'md' }}>
+        <SANBox
+            display='flex'
+            borderBottom={showBorder && '1px solid'}
+            borderColor='white.1'
+            pb='lg'
+        >
+            <SANSkeletonStyled
+                paragraph={false}
+                dark
+                active
+                avatar={{ size: 24, shape: 'circle' }}
+            />
+        </SANBox>
+    </SANBox>
+)
 
 interface IQuestion {
     title: string
@@ -19,6 +61,7 @@ export interface ISANLessonResultProps {
     percentToCorrect?: number
     onGoPractice: () => void
     questions: IQuestion[]
+    loading?: boolean
 }
 
 const sumCorrects = (prev, acc) => prev + acc.corrects
@@ -30,7 +73,8 @@ const hasSuccessColletion = question =>
 const SANLessonResult = ({
     percentToCorrect = 80,
     questions,
-    onGoPractice
+    onGoPractice,
+    loading = false
 }: ISANLessonResultProps) => {
     const { t } = useTranslation('components')
     const {
@@ -152,88 +196,92 @@ const SANLessonResult = ({
     )
 
     return (
-        <SANBox borderRadius='base'>
-            <SANBox
-                p='xl'
-                display='flex'
-                justifyContent='center'
-                alignItems='center'
-                bg={props.theme}
-            >
-                <SANTypography
-                    fontSize='xxl'
-                    fontWeight='bold'
-                    color='white.10'
+        <SANSpin spinning={loading} dark flex>
+            <SANBoxStyled borderRadius='base'>
+                <SANBox
+                    p='xl'
+                    display='flex'
+                    justifyContent='center'
+                    alignItems='center'
+                    bg={props.theme}
                 >
-                    {props.title}
-                </SANTypography>
-            </SANBox>
-            <SANBox px='xl'>
-                <SANRow
-                    py='xxl'
-                    px='md'
-                    type='flex'
-                    justify='center'
-                    align='middle'
-                    bg='white.10'
-                    gutter={48}
-                >
-                    <SANCol>
-                        <SANBox as='img' src={props.image} height='300px' />
-                    </SANCol>
-                    <SANCol>
-                        <SANBox
-                            display='flex'
-                            flexDirection='column'
-                            mb={{ xs: 'md', _: 'sm' }}
-                        >
-                            <SANTypography
-                                as='span'
-                                fontSize={{ xs: 'xl', _: 'md' }}
-                                color='grey.9'
-                                textAlign='center'
+                    <SANTypography
+                        fontSize='xxl'
+                        fontWeight='bold'
+                        color='white.10'
+                    >
+                        {props.title}
+                    </SANTypography>
+                </SANBox>
+                <SANBox px='xl'>
+                    <SANRow
+                        py='xxl'
+                        px='md'
+                        type='flex'
+                        justify='center'
+                        align='middle'
+                        bg='white.10'
+                        gutter={48}
+                    >
+                        <SANCol>
+                            <SANBox as='img' src={props.image} height='300px' />
+                        </SANCol>
+                        <SANCol>
+                            <SANBox
+                                display='flex'
+                                flexDirection='column'
+                                mb={{ xs: 'md', _: 'sm' }}
                             >
-                                {t('lessonResult.performance.youRight')}
-                                <SANBox
+                                <SANTypography
                                     as='span'
-                                    color={props.theme}
-                                    fontWeight='bold'
+                                    fontSize={{ xs: 'xl', _: 'md' }}
+                                    color='grey.9'
+                                    textAlign='center'
                                 >
-                                    {` ${props.corrects} ${t(
-                                        'lessonResult.performance.of'
-                                    )} ${props.total} `}
-                                </SANBox>
-                                {t('lessonResult.performance.questions')}
-                            </SANTypography>
-                        </SANBox>
-                        <SANBox display='flex' mb={{ xs: 'xl', _: 'md' }}>
-                            <SANTypography
-                                as='span'
-                                fontSize='md'
-                                color='grey.6'
-                                textAlign='center'
-                            >
-                                {props.resultPerformance}{' '}
-                                <SANTypography as='span' fontWeight='bold'>
-                                    {t('lessonResult.performance.pratice')}
+                                    {t('lessonResult.performance.youRight')}
+                                    <SANBox
+                                        as='span'
+                                        color={props.theme}
+                                        fontWeight='bold'
+                                    >
+                                        {` ${props.corrects} ${t(
+                                            'lessonResult.performance.of'
+                                        )} ${props.total} `}
+                                    </SANBox>
+                                    {t('lessonResult.performance.questions')}
                                 </SANTypography>
-                            </SANTypography>
-                        </SANBox>
-                        <SANButton
-                            size='medium'
-                            uppercase
-                            block
-                            bold
-                            variant='solid'
-                            onClick={onGoPractice}
-                        >
-                            {t('lessonResult.goToPratice')}
-                        </SANButton>
-                    </SANCol>
-                </SANRow>
-            </SANBox>
-            {questions.map(renderCollection)}
-        </SANBox>
+                            </SANBox>
+                            <SANBox display='flex' mb={{ xs: 'xl', _: 'md' }}>
+                                <SANTypography
+                                    as='span'
+                                    fontSize='md'
+                                    color='grey.6'
+                                    textAlign='center'
+                                >
+                                    {props.resultPerformance}{' '}
+                                    <SANTypography as='span' fontWeight='bold'>
+                                        {t('lessonResult.performance.pratice')}
+                                    </SANTypography>
+                                </SANTypography>
+                            </SANBox>
+                            <SANButton
+                                size='medium'
+                                uppercase
+                                block
+                                bold
+                                variant='solid'
+                                onClick={onGoPractice}
+                            >
+                                {t('lessonResult.goToPratice')}
+                            </SANButton>
+                        </SANCol>
+                    </SANRow>
+                </SANBox>
+                {loading
+                    ? arrLoading.map(renderSkeleton)
+                    : questions.map(renderCollection)}
+            </SANBoxStyled>
+        </SANSpin>
     )
 }
 
