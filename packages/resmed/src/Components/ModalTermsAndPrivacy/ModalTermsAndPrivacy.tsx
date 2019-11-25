@@ -17,7 +17,7 @@ const SANModalTermsAndPrivacy = ({
 }) => {
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
-    const { setMe, me } = useAuthContext()
+    const { setMe } = useAuthContext()
     const [activeKey, setActiveKey] = useState(defaultActiveKey)
     const [signed, setSigned] = useState<number[]>([])
     const [loading, setLoading] = useState(false)
@@ -26,18 +26,11 @@ const SANModalTermsAndPrivacy = ({
         setLoading(true)
         try {
             const {
-                data: {
-                    acceptTermsUse
-                    // acceptTermsUse: { subscriptions }
-                }
+                data: { acceptTermsUse }
             } = await client.mutate<IMe>({
                 mutation: ACCEPT_TERMS_USE_MUTATION
             })
             setMe(acceptTermsUse)
-            // setMe({
-            //     ...me,
-            //     hasSigned: !!subscriptions.find(sb => sb.contract === 'signed')
-            // })
         } catch (error) {
             console.error(error)
         }
@@ -48,7 +41,12 @@ const SANModalTermsAndPrivacy = ({
         if (signed.includes(0) && signed.includes(1)) {
             handleAccept()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [signed])
+
+    const onTabChange = key => {
+        setActiveKey(key)
+    }
 
     const handleActiveKey = key => {
         setSigned(old => [...old, key])
@@ -90,6 +88,7 @@ const SANModalTermsAndPrivacy = ({
             defaultActiveKey={defaultActiveKey}
             content={modalContent}
             loading={loading}
+            onTabChange={onTabChange}
             {...props}
         />
     )

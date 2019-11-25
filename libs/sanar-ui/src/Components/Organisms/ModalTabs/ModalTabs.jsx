@@ -17,6 +17,7 @@ const ESModalTabs = ({
     closable = true,
     content,
     activeKey = null,
+    onTabChange = null,
     defaultActiveKey,
     imageHeader,
     loading = false
@@ -31,7 +32,6 @@ const ESModalTabs = ({
     }, [width])
 
     useEffect(() => {
-        // console.log('useE')
         setTabActiveKey(activeKey)
     }, [activeKey])
 
@@ -55,7 +55,6 @@ const ESModalTabs = ({
             className={classes}
             width={width > 1023 ? '75vw' : 'auto'}
         >
-            {/* {console.log('tabActive', tabActiveKey, activeKey)} */}
             <SANSpin flex spinning={loading} minHeight='100%'>
                 <div className='es-modal-tabs__content'>
                     <ESBrandHeader
@@ -66,7 +65,9 @@ const ESModalTabs = ({
                         activeKey={tabActiveKey.toString()}
                         tabPosition={tabPosition}
                         defaultActiveKey={defaultActiveKey.toString()}
-                        onTabClick={setTabActiveKey}
+                        onTabClick={e => (
+                            setTabActiveKey(e), onTabChange && onTabChange(e)
+                        )}
                     >
                         {content.map(renderItem)}
                     </ESTabs>
