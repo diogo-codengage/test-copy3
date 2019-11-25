@@ -22,7 +22,6 @@ export const EDIT_USER_MUTATION = gql`
             id
             name
             email
-            profile_picture
             cpf
             phone_number: phone
             college

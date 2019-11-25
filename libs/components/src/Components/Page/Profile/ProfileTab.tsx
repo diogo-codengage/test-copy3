@@ -52,7 +52,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                 onSubmit(
                     {
                         ...values,
-                        period: values.period.toString()
+                        period: values.period ? values.period.toString() : null
                     },
                     { setSubmitting }
                 )
@@ -145,50 +145,50 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                         />
                                     </SANFormItem>
                                     <SANRow gutter={24}>
-                                        <SANCol xs={15}>
-                                            <SANFormItem
-                                                name='college'
-                                                label={t(
-                                                    'profile.tab1.college'
-                                                )}
-                                                mb='md'
-                                                initialValue={
-                                                    user.college || undefined
-                                                }
-                                            >
-                                                <SANInput
-                                                    data-testid='flix_profile_tab-personal--input-university'
-                                                    placeholder={t(
-                                                        'profile.tab1.college'
-                                                    )}
-                                                    size='large'
-                                                />
-                                            </SANFormItem>
-                                        </SANCol>
-                                        <SANCol xs={9}>
-                                            <SANFormItem
-                                                name='period'
-                                                label={t(
-                                                    'profile.tab1.semester.label'
-                                                )}
-                                                mb='md'
-                                                initialValue={
-                                                    user.period || undefined
-                                                }
-                                            >
-                                                <SANSelect
-                                                    data-testid='flix_profile_tab-personal--select-period'
-                                                    placeholder={t(
-                                                        'profile.tab1.semester.placeholder'
-                                                    )}
-                                                    size='large'
-                                                >
-                                                    {semesters.map(
-                                                        renderSemester
-                                                    )}
-                                                </SANSelect>
-                                            </SANFormItem>
-                                        </SANCol>
+                                        {/*<SANCol xs={15}>*/}
+                                        {/*    <SANFormItem*/}
+                                        {/*        name='college'*/}
+                                        {/*        label={t(*/}
+                                        {/*            'profile.tab1.college'*/}
+                                        {/*        )}*/}
+                                        {/*        mb='md'*/}
+                                        {/*        initialValue={*/}
+                                        {/*            user.college || undefined*/}
+                                        {/*        }*/}
+                                        {/*    >*/}
+                                        {/*        <SANInput*/}
+                                        {/*            data-testid='flix_profile_tab-personal--input-university'*/}
+                                        {/*            placeholder={t(*/}
+                                        {/*                'profile.tab1.college'*/}
+                                        {/*            )}*/}
+                                        {/*            size='large'*/}
+                                        {/*        />*/}
+                                        {/*    </SANFormItem>*/}
+                                        {/*</SANCol>*/}
+                                        {/*<SANCol xs={9}>*/}
+                                        {/*    <SANFormItem*/}
+                                        {/*        name='period'*/}
+                                        {/*        label={t(*/}
+                                        {/*            'profile.tab1.semester.label'*/}
+                                        {/*        )}*/}
+                                        {/*        mb='md'*/}
+                                        {/*        initialValue={*/}
+                                        {/*            user.period || undefined*/}
+                                        {/*        }*/}
+                                        {/*    >*/}
+                                        {/*        <SANSelect*/}
+                                        {/*            data-testid='flix_profile_tab-personal--select-period'*/}
+                                        {/*            placeholder={t(*/}
+                                        {/*                'profile.tab1.semester.placeholder'*/}
+                                        {/*            )}*/}
+                                        {/*            size='large'*/}
+                                        {/*        >*/}
+                                        {/*            {semesters.map(*/}
+                                        {/*                renderSemester*/}
+                                        {/*            )}*/}
+                                        {/*        </SANSelect>*/}
+                                        {/*    </SANFormItem>*/}
+                                        {/*</SANCol>*/}
                                     </SANRow>
                                 </SANBox>
                                 <SANDivider mb='xl' bg='grey.1' />
