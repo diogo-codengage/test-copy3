@@ -6,7 +6,7 @@ import ESModal from '../../Atoms/Modal'
 import ESTabs, { ESTabPane } from '../../Atoms/Tabs'
 import ESBrandHeader from '../../Atoms/BrandHeader'
 import useWindowSize from '../../../Hooks/useWindowSize'
-import { SANSpin } from '@sanar/components'
+import ESSpin from '../../Atoms/Spin'
 
 import defaultLogo from '../../../assets/images/logo/full-logo.svg'
 
@@ -55,7 +55,7 @@ const ESModalTabs = ({
             className={classes}
             width={width > 1023 ? '75vw' : 'auto'}
         >
-            <SANSpin flex spinning={loading} minHeight='100%'>
+            <ESSpin flex spinning={loading} minHeight='100%'>
                 <div className='es-modal-tabs__content'>
                     <ESBrandHeader
                         logo={imageHeader}
@@ -72,7 +72,7 @@ const ESModalTabs = ({
                         {content.map(renderItem)}
                     </ESTabs>
                 </div>
-            </SANSpin>
+            </ESSpin>
         </ESModal>
     )
 }

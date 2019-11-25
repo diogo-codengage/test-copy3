@@ -1,3 +1,3 @@
 export { default } from './ModalTermsAndPrivacy'
-export { default as FLXPrivacyAndPolicyFrame } from './PrivacyAndPolicyFrame'
-export { default as FLXTermsFrame } from './TermsFrame'
+export { default as RMPrivacyAndPolicyFrame } from './PrivacyAndPolicyFrame'
+export { default as RMTermsFrame } from './TermsFrame'
