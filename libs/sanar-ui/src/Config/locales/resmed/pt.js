@@ -57,6 +57,13 @@ export default {
         footer: {
             onEnter: 'Ao entrar na plataforma, você concorda com nossos',
             us: 'e nossa'
+        },
+        newPasswordChallenge: {
+            title: 'Crie sua senha',
+            subtitle:
+                'Agora é pra valer! cadastre uma nova senha preenchendo os campos abaixo:',
+            submit: 'Criar',
+            success: 'Senha criada com sucesso!'
         }
     },
     mainMenu: {

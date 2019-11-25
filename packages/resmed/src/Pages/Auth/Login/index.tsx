@@ -21,7 +21,13 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
     const [keepMeLoggedIn, setKeepMeLoggedIn] = useState(false)
 
-    const action = () => history.push('/inicio')
+    const action = response => {
+        if (response.newPasswordRequired) {
+            history.push('/auth/nova-senha')
+        } else {
+            history.push('/inicio')
+        }
+    }
 
     const onKeepMeLoggedIn = () => {
         setKeepMeLoggedIn(old => !old)
