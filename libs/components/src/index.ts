@@ -103,6 +103,12 @@ import {
 import { SANCardSpecialty } from 'Components/Molecules/CardSpecialty'
 import { SANCardSubSpecialty } from 'Components/Molecules/CardSubSpecialty'
 import { SANCommonBadge } from 'Components/Atoms/CommonBadge'
+import { SANCardSchedule } from 'Components/Molecules/CardSchedule'
+import { SANLessonFeedback } from 'Components/Molecules/LessonFeedback'
+import { SANCheckbox } from 'Components/Atoms/Checkbox'
+import { SANModalTabs } from 'Components/Organisms/ModalTabs'
+import { SANCollection } from 'Components/Molecules/Collection'
+import { SANLessonResult } from 'Components/Molecules/LessonResult'
 
 export {
     SANCommonBadge,
@@ -211,5 +217,11 @@ export {
     SANCollapse,
     SANCollapsePanel,
     SANSwitch,
-    SANDatePicker
+    SANDatePicker,
+    SANCardSchedule,
+    SANLessonFeedback,
+    SANCheckbox,
+    SANModalTabs,
+    SANCollection,
+    SANLessonResult
 }

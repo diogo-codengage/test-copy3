@@ -192,12 +192,26 @@ const SANClassroomHeader = ({
                                 <SANButton {...mergeButtonBookmarkProps} />
                             </SANCol>
                         )}
-                        <SANCol xs={12} sm={12} md={8} order={{ _: 1, md: 3 }}>
-                            <SANButton {...mergeButtonPreviousProps} />
-                        </SANCol>
-                        <SANCol xs={12} sm={12} md={8} order={{ _: 1, md: 4 }}>
-                            <SANButton {...mergeButtonNextProps} />
-                        </SANCol>
+                        {!!ButtonPreviousProps && (
+                            <SANCol
+                                xs={12}
+                                sm={12}
+                                md={8}
+                                order={{ _: 1, md: 3 }}
+                            >
+                                <SANButton {...mergeButtonPreviousProps} />
+                            </SANCol>
+                        )}
+                        {!!ButtonNextProps && (
+                            <SANCol
+                                xs={12}
+                                sm={12}
+                                md={8}
+                                order={{ _: 1, md: 4 }}
+                            >
+                                <SANButton {...mergeButtonNextProps} />
+                            </SANCol>
+                        )}
                     </SANRow>
                 </SANCol>
             )}

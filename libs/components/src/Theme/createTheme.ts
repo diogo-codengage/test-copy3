@@ -24,7 +24,15 @@ import {
     article,
     document,
     blocked,
-    empty
+    empty,
+    suggestedSchedule,
+    awfulEmoji,
+    badEmoji,
+    regularEmoji,
+    goodEmoji,
+    awesomeEmoji,
+    lessonResultError,
+    lessonResultSuccess
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -172,6 +180,7 @@ defaultSpace.md = defaultSpace[4]
 defaultSpace.lg = defaultSpace[5]
 defaultSpace.xl = defaultSpace[6]
 defaultSpace.xxl = defaultSpace[7]
+defaultSpace.xxxl = defaultSpace[8]
 
 const defaultShadows = [
     'none',
@@ -220,7 +229,21 @@ const assetsDefault = {
             course: typeIconPrimaryCourse
         }
     },
-    empty
+    empty,
+    cardSchedule: {
+        suggestedSchedule
+    },
+    feedbackEmojis: {
+        awful: awfulEmoji,
+        bad: badEmoji,
+        regular: regularEmoji,
+        good: goodEmoji,
+        awesome: awesomeEmoji
+    },
+    lessonResult: {
+        error: lessonResultError,
+        success: lessonResultSuccess
+    }
 }
 
 export const createTheme = ({
@@ -347,7 +370,7 @@ export const createTheme = ({
 
 type Theme = {
     name: string
-    colors: (typeof defaultColors) | any
+    colors: typeof defaultColors | any
     breakpoints: typeof defaultBreakpoints
     borderRadius: typeof defaultBorderRadius
     fonts: typeof defaultFonts

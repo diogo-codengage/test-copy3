@@ -24,11 +24,7 @@ interface IProps extends RouteComponentProps {
     form: any
 }
 
-const FLXResetPasswordPage: React.FC<IProps> = ({
-    history,
-    location,
-    form
-}) => {
+const RMResetPasswordPage: React.FC<IProps> = ({ history, location, form }) => {
     const { t } = useTranslation('resmed')
     const createSnackbar = useSnackbarContext()
     const [loading, setLoading] = useState(false)
@@ -178,9 +174,6 @@ const FLXResetPasswordPage: React.FC<IProps> = ({
     )
 }
 
-const enhance = compose(
-    withRouter,
-    withESForm
-)
+const enhance = compose(withRouter, withESForm)
 
-export default enhance(FLXResetPasswordPage)
+export default enhance(RMResetPasswordPage)

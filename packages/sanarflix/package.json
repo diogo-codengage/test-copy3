@@ -4,7 +4,8 @@
     "private": true,
     "dependencies": {
         "amazon-cognito-identity-js": "^3.0.15",
-        "react-lines-ellipsis": "^0.14.1"
+        "react-lines-ellipsis": "^0.14.1",
+        "react-router-last-location": "^2.0.1"
     },
     "scripts": {
         "start": "env-cmd -f ./environments/.env.production react-app-rewired start",

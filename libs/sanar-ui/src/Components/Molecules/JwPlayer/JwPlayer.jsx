@@ -227,37 +227,43 @@ const ESJwPlayer = forwardRef(
                                     {t('jwplayer.bookmark')}
                                 </ESButton>
                             )}
-                            <div>
-                                <ESTypography
-                                    variant='subtitle2'
-                                    className='mr-xs ml-xs'
-                                >
-                                    {t('jwplayer.rateClass')}:
-                                </ESTypography>
-                                <ESRate {...rate} />
-                            </div>
+                            {!!rate && (
+                                <div>
+                                    <ESTypography
+                                        variant='subtitle2'
+                                        className='mr-xs ml-xs'
+                                    >
+                                        {t('jwplayer.rateClass')}:
+                                    </ESTypography>
+                                    <ESRate {...rate} />
+                                </div>
+                            )}
                         </div>
                     </div>
                 )}
 
                 {isReady && (
                     <>
-                        <ESEvaIcon
-                            name='skip-back'
-                            className={classNames('previous-center', {
-                                idle: state === 'idle',
-                                paused: state === 'paused'
-                            })}
-                            onClick={onPrevious}
-                        />
-                        <ESEvaIcon
-                            name='skip-forward'
-                            className={classNames('next-center', {
-                                idle: state === 'idle',
-                                paused: state === 'paused'
-                            })}
-                            onClick={onNext}
-                        />
+                        {!!onPrevious && (
+                            <ESEvaIcon
+                                name='skip-back'
+                                className={classNames('previous-center', {
+                                    idle: state === 'idle',
+                                    paused: state === 'paused'
+                                })}
+                                onClick={onPrevious}
+                            />
+                        )}
+                        {!!onNext && (
+                            <ESEvaIcon
+                                name='skip-forward'
+                                className={classNames('next-center', {
+                                    idle: state === 'idle',
+                                    paused: state === 'paused'
+                                })}
+                                onClick={onNext}
+                            />
+                        )}
                     </>
                 )}
                 <ReactJWPlayer
