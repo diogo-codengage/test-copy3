@@ -18,12 +18,13 @@ import RMSubheader from './Subheader'
 import RMEmpty from './Empty'
 import { useQuestionsContext } from '../Context'
 
-const getCorrect = alternative => alternative.correct
+const getCorrect = alternative => alternative.isCorrect
 
 const initialResponse = {
     comment: null,
     answer: null,
-    questionId: null
+    questionId: null,
+    stats: []
 }
 
 const FLXPractice = ({ history }: RouteComponentProps) => {
@@ -44,10 +45,9 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
         try {
             const {
                 data: {
-                    questionAnswer: {
-                        answer: {
-                            question: { comments, alternatives, id: questionId }
-                        }
+                    answerQuestion: {
+                        question: { comment, alternatives, id: questionId },
+                        stats
                     }
                 }
             } = await client.mutate({
@@ -76,15 +76,14 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
             }
 
             setResponse({
-                comment:
-                    comments.data && comments.data.length
-                        ? comments.data[0]
-                        : null,
+                comment,
                 answer: correct.id,
-                questionId
+                questionId,
+                stats
             })
             dispatch({ type: 'loaded' })
         } catch (error) {
+            console.log({ error })
             dispatch({
                 type: 'error',
                 error

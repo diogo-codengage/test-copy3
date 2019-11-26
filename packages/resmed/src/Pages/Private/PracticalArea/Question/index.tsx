@@ -20,6 +20,14 @@ import { useQuestionsContext } from '../Context'
 import RMPractice from './Practice'
 import RMFilter from './Filter'
 
+const SANStopwatchStyled = styled(SANStopwatch)`
+    && {
+        &:not(.es-stopwatch--stopped) {
+            background-color: ${theme('colors.primary-1')};
+        }
+    }
+`
+
 const FinishWithoutQuestions = ({ onClose, onRestart, ...props }) => {
     const { t } = useTranslation('resmed')
     return (
@@ -193,7 +201,7 @@ const RMQuestion = ({ match: { url }, history }) => {
                                 _: 'space-between'
                             }}
                         >
-                            <SANStopwatch ref={stopwatchRef} />
+                            <SANStopwatchStyled ref={stopwatchRef} />
                             <SANButton
                                 size='small'
                                 variant='outlined'

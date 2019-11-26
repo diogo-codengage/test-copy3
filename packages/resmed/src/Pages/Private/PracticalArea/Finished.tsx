@@ -21,7 +21,7 @@ import { useQuestionsContext } from './Context'
 const SANPracticeCompletedStyled = SANStyled(SANPracticeCompleted)`
     && {
         &:before {
-            background: ${theme('colors.primary-10')};
+            background: ${theme('colors.primary-1')};
         }
     }
 `
@@ -76,15 +76,16 @@ const FLXClassRoomQuizFinished = ({ history }: RouteComponentProps) => {
                             variant='solid'
                             color='primary'
                             onClick={() =>
-                                history.push('/portal/banco-questoes/filtro')
+                                history.push('/inicio/area-pratica/filtro')
                             }
                         >
-                            {t('questionsDatabase.finished.questionsDatabase')}
+                            {t('practicalArea.finished.button')}
                         </SANButton>
                     </SANBox>
                 ),
                 SessionTitleProps: {
-                    title: t('questionsDatabase.finished.title')
+                    title: t('practicalArea.finished.title'),
+                    subtitle: t('practicalArea.finished.subtitle')
                 }
             }}
         >

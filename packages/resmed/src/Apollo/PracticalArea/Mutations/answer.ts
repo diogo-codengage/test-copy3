@@ -3,25 +3,29 @@ import gql from 'graphql-tag'
 export const ANSWER_MUTATION = gql`
     mutation AnswerQuestion($alternativeId: ID!, $questionId: ID!) {
         answerQuestion(
-            data: {
-                alternative_ids: [$alternativeId]
-                question_id: $questionId
-            }
+            data: { alternativesIds: [$alternativeId], questionId: $questionId }
         ) {
-            id
-            alternatives {
+            question {
                 id
-                isCorrect
-                percentageFromTotalAnswers
-            }
-            comments {
-                id
-                text
-                user {
-                    id
-                    name
-                    profilePicture
+                alternatives {
+                    data {
+                        id
+                        isCorrect
+                    }
                 }
+                comment {
+                    text
+                    time: createdAt
+                    user {
+                        id
+                        name
+                        profilePicture
+                    }
+                }
+            }
+            stats {
+                id
+                percent
             }
         }
     }
