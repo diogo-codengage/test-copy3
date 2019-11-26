@@ -51,6 +51,7 @@ const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
                 title={lesson.title}
                 subtitle={lesson.subSpecialty.specialty.name}
                 onOpenMenu={onOpenMenu}
+                actions={false}
             />
             <SANLayoutContainer py='8'>
                 <SANLessonResult

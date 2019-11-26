@@ -108,7 +108,8 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
             query={GET_VIDEO}
             options={{
                 variables: { id: params.contentId },
-                fetchPolicy: 'network-only'
+                fetchPolicy: 'network-only',
+                skip: !params.contentId
             }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
             errorProps={{ dark: true }}

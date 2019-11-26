@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 `
 
 const Progress = styled(SANBox)`
-    border-radius: 3px;
+    border-radius: 100vh;
     height: 6px;
     z-index: 1;
     position: absolute;
