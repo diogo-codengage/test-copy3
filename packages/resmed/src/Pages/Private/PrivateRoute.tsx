@@ -78,7 +78,7 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
         <Route
             {...rest}
             render={props =>
-                logged && !!me && me.hasActiveSubscription ? (
+                logged ? (
                     <Component {...props} />
                 ) : (
                     <Redirect to='/auth/entrar' />

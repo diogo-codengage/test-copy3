@@ -62,7 +62,7 @@ const ESModalTabs = ({
                         size={width > 1023 ? 'large' : 'small'}
                     />
                     <ESTabs
-                        activeKey={tabActiveKey.toString()}
+                        activeKey={tabActiveKey?tabActiveKey.toString():''}
                         tabPosition={tabPosition}
                         defaultActiveKey={defaultActiveKey.toString()}
                         onTabClick={e => (
