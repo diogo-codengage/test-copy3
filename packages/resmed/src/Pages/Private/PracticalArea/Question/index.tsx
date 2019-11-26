@@ -129,7 +129,7 @@ const RMQuestion = ({ match: { url }, history }) => {
                     type: 'stats',
                     stats: { time: stopwatchRef.current.time() }
                 })
-            history.push('/portal/area-pratica/finalizado')
+            history.push('/inicio/area-pratica/finalizado')
         }
     }
 
