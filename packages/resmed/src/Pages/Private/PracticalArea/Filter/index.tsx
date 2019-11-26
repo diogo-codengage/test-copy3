@@ -9,8 +9,7 @@ import {
     SANForm,
     SANButton,
     SANSessionTitle,
-    SANFormItem,
-    SANBox
+    SANFormItem
 } from '@sanar/components'
 
 import RMFilterSelects from './Selects'

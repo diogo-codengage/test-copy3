@@ -1,21 +1,31 @@
 import React, { useEffect } from 'react'
 
+import { compose } from 'ramda'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
-import { SANButton } from '@sanar/components'
+import { SANButton, withSANForm, SANForm, SANFormItem } from '@sanar/components'
 
 import RMSubheader from './Subheader'
 import RMFilterSelects from '../Filter/Selects'
 import RMFilterAdvanced from '../Filter/Advanced'
 import { useQuestionsContext } from '../Context'
 
-const FLXFilter = ({ history }: RouteComponentProps) => {
+interface IProps extends RouteComponentProps {
+    form: any
+}
+
+const RMFilter = ({ history, form }: IProps) => {
     const { t } = useTranslation('resmed')
     const { startStopwatch, pauseStopwatch } = useQuestionsContext()
 
-    const handleStart = () => {
-        history.push('./pratica')
+    const handleSubmit = e => {
+        e.preventDefault()
+        form.validateFieldsAndScroll((err, values) => {
+            if (!err) {
+                history.push('./pratica')
+            }
+        })
     }
 
     useEffect(() => {
@@ -25,23 +35,27 @@ const FLXFilter = ({ history }: RouteComponentProps) => {
     }, [])
 
     return (
-        <>
+        <SANForm form={form} onSubmit={handleSubmit}>
             <RMSubheader>
-                <SANButton
-                    size='small'
-                    variant='solid'
-                    color='primary'
-                    bold
-                    uppercase
-                    onClick={handleStart}
-                >
-                    {t('practicalArea.question.continue')}
-                </SANButton>
+                <SANFormItem m='0'>
+                    <SANButton
+                        size='small'
+                        variant='solid'
+                        color='primary'
+                        bold
+                        uppercase
+                        htmlType='submit'
+                    >
+                        {t('practicalArea.question.continue')}
+                    </SANButton>
+                </SANFormItem>
             </RMSubheader>
             <RMFilterSelects />
             <RMFilterAdvanced />
-        </>
+        </SANForm>
     )
 }
 
-export default withRouter(FLXFilter)
+const enhance = compose(withSANForm, withRouter)
+
+export default enhance(RMFilter)
