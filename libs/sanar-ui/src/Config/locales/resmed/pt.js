@@ -7,7 +7,9 @@ export default {
         about: 'Sobre o SanarFlix',
         backStart: 'Voltar ao início',
         leave: 'Sair',
-        back: 'Voltar'
+        back: 'Voltar',
+        yes: 'Sim',
+        no: 'Não'
     },
     auth: {
         accessAccount: 'Acessar conta',
@@ -144,6 +146,93 @@ export default {
     changePassword: {
         feedback: {
             success: 'A sua senha foi atualizada com sucesso!'
+        }
+    },
+    practicalArea: {
+        filter: {
+            header: {
+                title: 'Área de Prática',
+                subtitle: 'Hora de praticar tudo o que você aprendeu no curso',
+                start: 'Iniciar prática'
+            },
+            subheader: {
+                title: 'Hora de praticar',
+                subtitle: 'Para começar, escolha os filtros que deseja abaixo'
+            },
+            selecteds: {
+                category: {
+                    selecteds: 'Categorias',
+                    choose: 'Escolher categorias',
+                    title: 'Categoria de Prova'
+                },
+                specialty: {
+                    selecteds: 'Especialidades',
+                    choose: 'Escolher especialidades',
+                    title: 'Especialidade'
+                },
+                subspecialty: {
+                    selecteds: 'Subespecialidades',
+                    choose: 'Escolher subespecialidades',
+                    title: 'Subespecialidade'
+                },
+                theme: {
+                    selecteds: 'Temas',
+                    choose: 'Escolher temas',
+                    title: 'Tema'
+                }
+            },
+            advanced: {
+                title: {
+                    open: 'Ocultar filtros avançados',
+                    close: 'Ver filtros avançados'
+                },
+                institution: {
+                    title: 'Instituição',
+                    placeholder: 'Escolher a instituição de ensino'
+                },
+                year: {
+                    title: 'Ano',
+                    placeholder: 'Escolher o ano'
+                },
+                state: {
+                    title: 'Estado',
+                    placeholder: 'Escolher o estado'
+                },
+                onlyHasImages: 'Com imagem',
+                onlyComments: 'Apenas comentadas'
+            }
+        },
+        finished: {
+            title: 'Resultado',
+            subtitle: 'Verifique como você se saiu nessa sessão de prática',
+            button: 'Área de prática'
+        },
+        question: {
+            filters: 'Filtros',
+            seeFilters: 'Ver filtros',
+            corrects: 'Corretas',
+            wrong: 'Erradas',
+            skipped: 'Puladas',
+            continue: 'Continuar',
+            failReplyQuestion: 'Ocorreu um erro ao responder questão.',
+            failLoadQuestions: 'Ocorreu um erro ao carregar questões.',
+            empty:
+                'Ops, não foram encontradas questões com os filtros atuais. Clique em "Ver Filtros" e tente novamente utilizando novos',
+            endPractice: {
+                button: 'Encerrar prática',
+                modal: {
+                    title: 'Ops! Nenhuma questão foi respondida.',
+                    subtitle:
+                        'Que tal aprimorar seus conhecimentos reiniciando a prática?',
+                    close: 'Encerrar',
+                    restart: 'Reiniciar prática'
+                }
+            },
+            exit: {
+                title: 'Ops! Você está saindo da prática.',
+                subtitle: 'Deseja realmente encerrar a prática?'
+            },
+            title: 'Questão'
         }
     },
     termsAndPrivacy: {

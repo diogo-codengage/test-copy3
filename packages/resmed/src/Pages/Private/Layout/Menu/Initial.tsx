@@ -24,7 +24,7 @@ const RMMenuInitial: React.FC = () => {
                 title={t('mainMenu.initial.begin')}
             />
             <SANNavigationListItem
-                to='/inicio/banco-questoes/filtro'
+                to='/inicio/area-pratica/filtro'
                 icon={<SANEvaIcon name='edit-outline' color='default' />}
                 onClick={onCloseMenu}
                 dataTestid='rm-menu__go-to--practiceArea'
