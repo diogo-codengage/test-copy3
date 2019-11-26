@@ -110,9 +110,6 @@ const SANCollectionItemStyled = styled(SANBox)<{ current: boolean }>`
             & ${SANTypography}, & ${ImageStyled} {
                 opacity: 0.4;
             }
-        `,
-        css`
-            border-bottom: 4px solid ${theme('colors.warning')};
         `
     )};
 `
@@ -194,34 +191,37 @@ const SANCollectionItem = ({
     return (
         <SANCollectionItemStyled
             bg='grey.9'
-            p='md'
-            pb={value === id ? 'sm' : 'md'}
             current={value === id}
             onClick={handleChange}
         >
-            <SANTypography fontSize='sm' color='white.10'>
-                {t('collection.part')} {index}
-            </SANTypography>
-            <SANBox position='relative'>
-                <ImageStyled
-                    as='img'
-                    src={image}
-                    my='xxs'
-                    borderRadius='base'
-                    width='100%'
-                />
-                {completed && value !== id && (
-                    <IconComleted name='checkmark-circle-2' />
-                )}
+            <SANBox p='md'>
+                <SANTypography fontSize='sm' color='white.10'>
+                    {t('collection.part')} {index}
+                </SANTypography>
+                <SANBox position='relative'>
+                    <ImageStyled
+                        as='img'
+                        src={image}
+                        my='xxs'
+                        borderRadius='base'
+                        width='100%'
+                    />
+                    {completed && value !== id && (
+                        <IconComleted name='checkmark-circle-2' />
+                    )}
+                </SANBox>
+                <SANTypography
+                    fontSize='md'
+                    fontWeight='bold'
+                    ellipsis
+                    color='white.10'
+                >
+                    {name}
+                </SANTypography>
             </SANBox>
-            <SANTypography
-                fontSize='md'
-                fontWeight='bold'
-                ellipsis
-                color='white.10'
-            >
-                {name}
-            </SANTypography>
+            {value === id && (
+                <SANBox bg='warning' height='4px' borderRadius='base' />
+            )}
         </SANCollectionItemStyled>
     )
 }
