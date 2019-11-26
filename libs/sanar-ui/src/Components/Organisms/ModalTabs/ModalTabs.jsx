@@ -16,7 +16,7 @@ const ESModalTabs = ({
     onCancel,
     closable = true,
     content,
-    activeKey = null,
+    activeKey = '0',
     onTabChange = null,
     defaultActiveKey,
     imageHeader,
