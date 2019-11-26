@@ -45,6 +45,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
     const getStartTime = time => {
         if (videoReady && playerRef && playerRef.current) {
             playerRef.current.seek(time)
+            playerRef.current.pause()
             setWillStart(false)
         }
     }
@@ -70,7 +71,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
             if (percentage === 100) {
                 const current = collectionRef.current.getCurrent()
                 // if have quiz on this clicker go to quiz
-                if (!!current.content.quiz) {
+                if (!!current && !!current.content.quiz) {
                     history.push(
                         `../../${current.id}/quiz/${current.content.quiz.id}`
                     )
@@ -121,13 +122,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                     getStartTime(video.timeInSeconds)
 
                 return (
-                    <SANBox
-                        display='flex'
-                        flexDirection='column'
-                        flex='1'
-                        bg='grey-solid.8'
-                        position='relative'
-                    >
+                    <SANBox bg='grey-solid.8' position='relative'>
                         <Header>
                             <SANClassroomHeader
                                 title={video.title}

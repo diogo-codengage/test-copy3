@@ -96,8 +96,6 @@ const ButtonArrowStyled = styled(SANButton)`
 const ImageStyled = styled(SANBox)``
 
 const SANCollectionItemStyled = styled(SANBox)<{ current: boolean }>`
-    cursor: pointer;
-
     &:hover {
         ${SANTypography}, ${ImageStyled} {
             opacity: 0.6;
@@ -183,7 +181,7 @@ const SANCollectionItem = ({
         if (isDragging) {
             e.preventDefault()
             e.stopPropagation()
-            // return
+            return
         }
         onChange(item)
     }
@@ -192,13 +190,17 @@ const SANCollectionItem = ({
         <SANCollectionItemStyled
             bg='grey.9'
             current={value === id}
-            onClick={handleChange}
+            position='relative'
         >
             <SANBox p='md'>
                 <SANTypography fontSize='sm' color='white.10'>
                     {t('collection.part')} {index}
                 </SANTypography>
-                <SANBox position='relative'>
+                <SANBox
+                    position='relative'
+                    onClick={handleChange}
+                    style={{ cursor: 'pointer' }}
+                >
                     <ImageStyled
                         as='img'
                         src={image}
@@ -215,12 +217,21 @@ const SANCollectionItem = ({
                     fontWeight='bold'
                     ellipsis
                     color='white.10'
+                    onClick={handleChange}
+                    style={{ cursor: 'pointer' }}
                 >
                     {name}
                 </SANTypography>
             </SANBox>
             {value === id && (
-                <SANBox bg='warning' height='4px' borderRadius='base' />
+                <SANBox
+                    bg='warning'
+                    height='4px'
+                    borderRadius='base'
+                    position='absolute'
+                    bottom='0'
+                    width='100%'
+                />
             )}
         </SANCollectionItemStyled>
     )
@@ -252,6 +263,10 @@ const SANCollection: React.FC<ISANCollectionProps> = ({
 
     const settings = useMemo(
         () => ({
+            focusOnSelect: true,
+            swipe: true,
+            swipeToSlide: true,
+            draggable: true,
             dots: false,
             infinite: false,
             beforeChange: () => setIsDragging(true),
