@@ -96,8 +96,6 @@ const ButtonArrowStyled = styled(SANButton)`
 const ImageStyled = styled(SANBox)``
 
 const SANCollectionItemStyled = styled(SANBox)<{ current: boolean }>`
-    cursor: pointer;
-
     &:hover {
         ${SANTypography}, ${ImageStyled} {
             opacity: 0.6;
@@ -110,9 +108,6 @@ const SANCollectionItemStyled = styled(SANBox)<{ current: boolean }>`
             & ${SANTypography}, & ${ImageStyled} {
                 opacity: 0.4;
             }
-        `,
-        css`
-            border-bottom: 4px solid ${theme('colors.warning')};
         `
     )};
 `
@@ -186,7 +181,7 @@ const SANCollectionItem = ({
         if (isDragging) {
             e.preventDefault()
             e.stopPropagation()
-            // return
+            return
         }
         onChange(item)
     }
@@ -194,34 +189,50 @@ const SANCollectionItem = ({
     return (
         <SANCollectionItemStyled
             bg='grey.9'
-            p='md'
-            pb={value === id ? 'sm' : 'md'}
             current={value === id}
-            onClick={handleChange}
+            position='relative'
         >
-            <SANTypography fontSize='sm' color='white.10'>
-                {t('collection.part')} {index}
-            </SANTypography>
-            <SANBox position='relative'>
-                <ImageStyled
-                    as='img'
-                    src={image}
-                    my='xxs'
+            <SANBox p='md'>
+                <SANTypography fontSize='sm' color='white.10'>
+                    {t('collection.part')} {index}
+                </SANTypography>
+                <SANBox
+                    position='relative'
+                    onClick={handleChange}
+                    style={{ cursor: 'pointer' }}
+                >
+                    <ImageStyled
+                        as='img'
+                        src={image}
+                        my='xxs'
+                        borderRadius='base'
+                        width='100%'
+                    />
+                    {completed && value !== id && (
+                        <IconComleted name='checkmark-circle-2' />
+                    )}
+                </SANBox>
+                <SANTypography
+                    fontSize='md'
+                    fontWeight='bold'
+                    ellipsis
+                    color='white.10'
+                    onClick={handleChange}
+                    style={{ cursor: 'pointer' }}
+                >
+                    {name}
+                </SANTypography>
+            </SANBox>
+            {value === id && (
+                <SANBox
+                    bg='warning'
+                    height='4px'
                     borderRadius='base'
+                    position='absolute'
+                    bottom='0'
                     width='100%'
                 />
-                {completed && value !== id && (
-                    <IconComleted name='checkmark-circle-2' />
-                )}
-            </SANBox>
-            <SANTypography
-                fontSize='md'
-                fontWeight='bold'
-                ellipsis
-                color='white.10'
-            >
-                {name}
-            </SANTypography>
+            )}
         </SANCollectionItemStyled>
     )
 }
@@ -252,6 +263,10 @@ const SANCollection: React.FC<ISANCollectionProps> = ({
 
     const settings = useMemo(
         () => ({
+            focusOnSelect: true,
+            swipe: true,
+            swipeToSlide: true,
+            draggable: true,
             dots: false,
             infinite: false,
             beforeChange: () => setIsDragging(true),

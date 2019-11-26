@@ -115,7 +115,9 @@ const ESJwPlayer = forwardRef(
             ...playerRef,
             ...(player && {
                 position: () => player.getPosition(),
-                seek: seconds => player.seek(seconds)
+                seek: seconds => player.seek(seconds),
+                play: () => player.play(),
+                pause: () => player.pause()
             })
         }))
 

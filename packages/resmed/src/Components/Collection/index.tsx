@@ -7,7 +7,7 @@ import React, {
 
 import { useApolloClient } from '@apollo/react-hooks'
 
-import { SANCollection, SANBox } from '@sanar/components'
+import { SANCollection } from '@sanar/components'
 
 import {
     GET_COLLECTIONS,
@@ -60,15 +60,13 @@ const RMCollection = ({ parentId, value, vertical = true, onChange }, ref) => {
     }))
 
     return (
-        <SANBox height={vertical && '100vh'}>
-            <SANCollection
-                items={collections}
-                vertical={vertical}
-                onChange={onChange}
-                value={value}
-                loading={loading}
-            />
-        </SANBox>
+        <SANCollection
+            items={collections}
+            vertical={vertical}
+            onChange={onChange}
+            value={value}
+            loading={loading}
+        />
     )
 }
 

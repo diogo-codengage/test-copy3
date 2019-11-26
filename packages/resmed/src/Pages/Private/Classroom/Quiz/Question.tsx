@@ -178,6 +178,7 @@ const RMClassroomQuizQuestion = ({
 
             <SANBox mt={{ sm: '8', _: 'sm' }}>
                 <SANQuestion
+                    full
                     question={questions[index]}
                     {...responses.find(
                         res => res.questionId === questions[index].id

@@ -41,6 +41,7 @@ const RMClassroomRating = ({ history }: RouteComponentProps) => {
                 title={lesson.title}
                 subtitle={lesson.subSpecialty.specialty.name}
                 onOpenMenu={onOpenMenu}
+                actions={false}
             />
             <SANLayoutContainer py='8'>
                 <SANLessonFeedback onSend={handleRating} onNext={handleNext} />

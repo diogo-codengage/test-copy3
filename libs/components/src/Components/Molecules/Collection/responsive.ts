@@ -4,7 +4,6 @@ export const responsiveHorizontal = [
         settings: {
             slidesToShow: 5,
             arrows: true,
-            swipeToSlide: true,
             infinite: false
         }
     },
@@ -13,7 +12,6 @@ export const responsiveHorizontal = [
         settings: {
             slidesToShow: 4,
             arrows: false,
-            swipeToSlide: true,
             infinite: true
         }
     },
@@ -22,7 +20,6 @@ export const responsiveHorizontal = [
         settings: {
             slidesToShow: 3,
             arrows: false,
-            swipeToSlide: true,
             infinite: true
         }
     },
@@ -31,7 +28,6 @@ export const responsiveHorizontal = [
         settings: {
             slidesToShow: 2,
             arrows: false,
-            swipeToSlide: true,
             infinite: true
         }
     }
@@ -41,11 +37,10 @@ export const responsiveVertical = [
     {
         breakpoint: 9999,
         settings: {
-            slidesToShow: 6,
+            slidesToShow: 5,
             arrows: false,
-            swipeToSlide: true,
             verticalSwiping: true,
-            infinite: false
+            infinite: true
         }
     }
 ]
