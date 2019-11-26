@@ -84,21 +84,21 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
     })
     const [intitutions, setIntitutions] = useState<IInstitution[]>([])
 
-    const fetchIntitutions = async () => {
-        setLoading(old => ({ ...old, intitutions: true }))
-        try {
-            const {
-                data: { institutions }
-            } = await client.query<IInstitutionsQuery>({
-                query: GET_INSTITUTIONS
-            })
-            setIntitutions(institutions)
-        } catch {}
-        setLoading(old => ({ ...old, intitutions: false }))
-    }
-
     useEffect(() => {
+        const fetchIntitutions = async () => {
+            setLoading(old => ({ ...old, intitutions: true }))
+            try {
+                const {
+                    data: { institutions }
+                } = await client.query<IInstitutionsQuery>({
+                    query: GET_INSTITUTIONS
+                })
+                setIntitutions(institutions)
+            } catch {}
+            setLoading(old => ({ ...old, intitutions: false }))
+        }
         fetchIntitutions()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useOnClickOutside([itemPickerRef], () => setOpenCalendar(false), [
@@ -112,7 +112,7 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
                 {intitution.label}
             </SANSelectOption>
         ),
-        [intitutions]
+        []
     )
 
     return (

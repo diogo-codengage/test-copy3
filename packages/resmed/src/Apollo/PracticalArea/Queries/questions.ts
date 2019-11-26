@@ -29,7 +29,7 @@ interface IImage {
     }
 }
 
-interface IQuestion {
+export interface IQuestion {
     id: string
     statement: string
     year: string
@@ -40,11 +40,15 @@ interface IQuestion {
     images: IImage
 }
 
-export interface IQuizQuery {
+export interface IQuestions {
     totalCount: number
     limit: number
     skip: number
-    items: IQuestion
+    items: IQuestion[]
+}
+
+export interface IQuestionsQuery {
+    questions: IQuestions
 }
 
 export const GET_QUESTIONS = gql`

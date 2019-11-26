@@ -73,6 +73,7 @@ const Categories = () => {
             }
         }
         fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -128,6 +129,7 @@ const Specialties = () => {
             }
         }
         !!activeCourse && fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeCourse])
 
     return (
@@ -179,6 +181,7 @@ const Subspecialties = () => {
             }
         }
         fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -230,6 +233,7 @@ const Lessons = () => {
             }
         }
         fetchData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

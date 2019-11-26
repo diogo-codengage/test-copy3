@@ -14,7 +14,10 @@ import { useApolloClient } from '@apollo/react-hooks'
 
 import { useSnackbarContext } from '@sanar/components'
 
-import { GET_QUESTIONS } from 'Apollo/PracticalArea/Queries/questions'
+import {
+    GET_QUESTIONS,
+    IQuestionsQuery
+} from 'Apollo/PracticalArea/Queries/questions'
 import { reducer, initialStats, IAction, IState } from './reducer'
 
 interface IRMPracticalProviderValue {
@@ -102,7 +105,7 @@ const RMPracticalProvider: React.FC<RouteComponentProps> = ({
         try {
             const {
                 data: { questions }
-            } = await client.query({
+            } = await client.query<IQuestionsQuery>({
                 query: GET_QUESTIONS,
                 fetchPolicy: 'network-only',
                 variables: {

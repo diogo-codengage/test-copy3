@@ -1,3 +1,5 @@
+import { IQuestion } from 'Apollo/PracticalArea/Queries/questions'
+
 export type IAction =
     | {
           type: 'reset'
@@ -6,7 +8,7 @@ export type IAction =
     | { type: 'loading' }
     | { type: 'loaded' }
     | { type: 'stats'; stats: Partial<IStats> }
-    | { type: 'success'; questions: any[]; count: number }
+    | { type: 'success'; questions: IQuestion[]; count: number }
     | { type: 'next' }
     | { type: 'error'; error: any }
     | { type: 'bookmark'; bookmarked: boolean }
@@ -16,7 +18,7 @@ export interface IState {
     filter: IFilter
     currentIndex: number
     stats: IStats
-    questions: any[]
+    questions: IQuestion[]
     loading: boolean
     bookmarked: boolean
 }

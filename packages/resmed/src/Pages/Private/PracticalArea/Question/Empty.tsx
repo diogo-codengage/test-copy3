@@ -25,9 +25,7 @@ const RMEmpty = ({ history }: RouteComponentProps) => {
             }
         >
             <SANButton
-                onClick={() =>
-                    history.push('/portal/area-pratica/perguntas/filtro')
-                }
+                onClick={() => history.push('./filtro')}
                 uppercase
                 variant='solid'
                 mt='xl'
