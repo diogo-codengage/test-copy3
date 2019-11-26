@@ -83,6 +83,7 @@ const SANCardSpecialty = ({
             <SANTypography
                 fontSize={{ xs: 'xxl', _: 'lg' }}
                 fontWeight='bold'
+                lineHeight='1'
                 textAlign='center'
                 color='white.10'
                 ellipsis={{ rows: 2 }}
