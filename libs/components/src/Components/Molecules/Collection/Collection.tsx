@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState, useRef } from 'react'
+import React, { useCallback, useMemo, useState, useRef, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled, { css } from 'styled-components'
@@ -183,7 +183,7 @@ const SANCollectionItem = ({
             e.stopPropagation()
             return
         }
-        onChange(item)
+        onChange(item, index)
     }
 
     return (
@@ -261,6 +261,11 @@ const SANCollection: React.FC<ISANCollectionProps> = ({
         [value, isDragging]
     )
 
+    const index = useMemo(() => items.findIndex(item => item.id === value), [
+        items,
+        value
+    ])
+
     const settings = useMemo(
         () => ({
             focusOnSelect: true,
@@ -286,6 +291,12 @@ const SANCollection: React.FC<ISANCollectionProps> = ({
     const key = useMemo(() => `san-collection-${new Date().getTime()}`, [
         vertical
     ])
+
+    useEffect(() => {
+        if (!!sliderRef && !!sliderRef.current && index > 0) {
+            sliderRef.current.slickGoTo(index)
+        }
+    }, [index])
 
     return (
         <SliderStyled ref={sliderRef} key={key} {...settings}>
