@@ -9,7 +9,7 @@ import {
     SANForm,
     SANButton,
     SANSessionTitle,
-    SANFormItem
+    SANBox
 } from '@sanar/components'
 
 import RMFilterSelects from './Selects'
@@ -67,7 +67,7 @@ const RMFilter = ({ form, history }) => {
                 hasContainer
                 BoxProps={{
                     bg: 'grey-solid.1',
-                    py: { xs: '8', _: 'xl' },
+                    py: { xs: '8', _: 'lg' },
                     display: 'flex',
                     flexDirection: 'column'
                 }}
@@ -77,19 +77,19 @@ const RMFilter = ({ form, history }) => {
                         title: t('practicalArea.filter.header.title'),
                         subtitle: t('practicalArea.filter.header.subtitle'),
                         extra: (
-                            <SANFormItem>
+                            <SANBox display='flex' flex='1'>
                                 <SANButton
                                     variant='solid'
                                     color='primary'
                                     size='small'
                                     uppercase
                                     htmlType='submit'
-                                    blockOnlyMobile
                                     bold
+                                    block
                                 >
                                     {t('practicalArea.filter.header.start')}
                                 </SANButton>
-                            </SANFormItem>
+                            </SANBox>
                         )
                     }
                 }}

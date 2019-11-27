@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -11,12 +11,14 @@ import {
     SANQuestion,
     useSnackbarContext
 } from '@sanar/components'
+import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
 import { ANSWER_MUTATION } from 'Apollo/PracticalArea/Mutations/answer'
 
 import RMSubheader from './Subheader'
 import RMEmpty from './Empty'
 import { useQuestionsContext } from '../Context'
+import { Performace } from './Subheader'
 
 const getCorrect = alternative => alternative.isCorrect
 
@@ -30,6 +32,7 @@ const initialResponse = {
 const FLXPractice = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
+    const { width } = useWindowSize()
     const snackbar = useSnackbarContext()
     const {
         startStopwatch,
@@ -118,6 +121,8 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    const isFull = useMemo(() => width <= 992, [width])
+
     if (!state.questions.length && !state.loading) {
         pauseStopwatch()
         return <RMEmpty />
@@ -126,12 +131,16 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
     return (
         <>
             <RMSubheader>
-                <SANBox display='flex' alignItems='center'>
+                <SANBox
+                    display='flex'
+                    alignItems='center'
+                    justifyContent='flex-end'
+                    px={{ lg: '0', _: 'md' }}
+                >
                     <SANButton
                         size='small'
                         variant='text'
                         bold
-                        ml='xl'
                         onClick={() => history.push('./filtro')}
                     >
                         <SANEvaIcon
@@ -144,6 +153,7 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
                 </SANBox>
             </RMSubheader>
             <SANQuestion
+                full={isFull}
                 question={state.questions[state.currentIndex]}
                 onConfirm={handleConfirm}
                 onJump={handleJump}
@@ -151,6 +161,12 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
                 loading={state.loading}
                 labelMonitor={t('global.expert')}
                 {...response}
+            />
+            <Performace
+                display={{ _: 'flex', lg: 'none' }}
+                justifyContent='space-around'
+                mt='lg'
+                vertical
             />
         </>
     )

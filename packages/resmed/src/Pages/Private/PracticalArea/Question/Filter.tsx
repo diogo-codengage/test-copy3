@@ -10,6 +10,7 @@ import RMSubheader from './Subheader'
 import RMFilterSelects from '../Filter/Selects'
 import RMFilterAdvanced from '../Filter/Advanced'
 import { useQuestionsContext } from '../Context'
+import { Performace } from './Subheader'
 
 interface IProps extends RouteComponentProps {
     form: any
@@ -45,6 +46,7 @@ const RMFilter = ({ history, form }: IProps) => {
                         bold
                         uppercase
                         htmlType='submit'
+                        blockOnlyMobile
                     >
                         {t('practicalArea.question.continue')}
                     </SANButton>
@@ -52,6 +54,12 @@ const RMFilter = ({ history, form }: IProps) => {
             </RMSubheader>
             <RMFilterSelects />
             <RMFilterAdvanced />
+            <Performace
+                display={{ _: 'flex', lg: 'none' }}
+                justifyContent='space-around'
+                mt='lg'
+                vertical
+            />
         </SANForm>
     )
 }
