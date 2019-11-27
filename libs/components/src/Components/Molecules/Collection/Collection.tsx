@@ -177,14 +177,7 @@ const SANCollectionItem = ({
     const { t } = useTranslation('components')
     const { name, image, id, completed } = item
 
-    const handleChange = e => {
-        if (isDragging) {
-            e.preventDefault()
-            e.stopPropagation()
-            return
-        }
-        onChange(item, index)
-    }
+    const handleChange = () => onChange(item, index)
 
     return (
         <SANCollectionItemStyled
