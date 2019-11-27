@@ -135,7 +135,7 @@ const RMQuestion = ({ match: { url }, history }) => {
 
     const onClose = () => {
         reset()
-        history.push('/portal/area-pratica/filtro')
+        history.push('/inicio/area-pratica/filtro')
     }
 
     const onRestart = () => {
@@ -144,7 +144,7 @@ const RMQuestion = ({ match: { url }, history }) => {
     }
 
     const onConfirm = () => {
-        history.push('/portal/area-pratica/finalizado')
+        history.push('/inicio/area-pratica/finalizado')
         setVisibleExit(false)
     }
 
