@@ -6,6 +6,7 @@ import ESModal from '../../Atoms/Modal'
 import ESTabs, { ESTabPane } from '../../Atoms/Tabs'
 import ESBrandHeader from '../../Atoms/BrandHeader'
 import useWindowSize from '../../../Hooks/useWindowSize'
+import ESSpin from '../../Atoms/Spin'
 
 import defaultLogo from '../../../assets/images/logo/full-logo.svg'
 
@@ -13,17 +14,26 @@ const ESModalTabs = ({
     className,
     visible,
     onCancel,
+    closable = true,
     content,
+    activeKey = '0',
+    onTabChange = null,
     defaultActiveKey,
-    imageHeader
+    imageHeader,
+    loading = false
 }) => {
     const classes = classNames('es-modal-tabs', className)
     const [tabPosition, setTabPosition] = useState('top')
+    const [tabActiveKey, setTabActiveKey] = useState(activeKey)
     const { width } = useWindowSize()
 
     useEffect(() => {
         setTabPosition(width > 1023 ? 'left' : 'top')
     }, [width])
+
+    useEffect(() => {
+        setTabActiveKey(activeKey)
+    }, [activeKey])
 
     const renderItem = useCallback(
         (item, index) => {
@@ -40,23 +50,29 @@ const ESModalTabs = ({
         <ESModal
             visible={visible}
             onCancel={onCancel}
-            closable
+            closable={closable}
             maskClosable
             className={classes}
             width={width > 1023 ? '75vw' : 'auto'}
         >
-            <div className='es-modal-tabs__content'>
-                <ESBrandHeader
-                    logo={imageHeader}
-                    size={width > 1023 ? 'large' : 'small'}
-                />
-                <ESTabs
-                    tabPosition={tabPosition}
-                    defaultActiveKey={defaultActiveKey.toString()}
-                >
-                    {content.map(renderItem)}
-                </ESTabs>
-            </div>
+            <ESSpin flex spinning={loading} minHeight='100%'>
+                <div className='es-modal-tabs__content'>
+                    <ESBrandHeader
+                        logo={imageHeader}
+                        size={width > 1023 ? 'large' : 'small'}
+                    />
+                    <ESTabs
+                        activeKey={tabActiveKey.toString()}
+                        tabPosition={tabPosition}
+                        defaultActiveKey={defaultActiveKey.toString()}
+                        onTabClick={e => (
+                            setTabActiveKey(e), onTabChange && onTabChange(e)
+                        )}
+                    >
+                        {content.map(renderItem)}
+                    </ESTabs>
+                </div>
+            </ESSpin>
         </ESModal>
     )
 }

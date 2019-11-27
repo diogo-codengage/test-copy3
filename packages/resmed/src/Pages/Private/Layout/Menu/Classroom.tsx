@@ -3,8 +3,6 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { useApolloClient } from '@apollo/react-hooks'
 import { withRouter, RouteComponentProps } from 'react-router'
 
-import { useTranslation } from 'react-i18next'
-
 import { SANClassroomMenu } from '@sanar/components'
 import { useTryToCrash } from '@sanar/utils/dist/Hooks'
 
@@ -14,7 +12,6 @@ import { useAuthContext } from 'Hooks/auth'
 import { useLayoutContext } from '../Context'
 
 const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
-    const { t } = useTranslation('resmed')
     const client = useApolloClient()
     const { activeCourse } = useAuthContext()
     const setCrash = useTryToCrash()
@@ -81,8 +78,8 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     return (
         <SANClassroomMenu
             course={{
-                knowledgeArea: t('mainMenu.classroom.specialty'),
-                name: specialtyName,
+                knowledgeArea: specialtyName,
+                name: activeCourse.name,
                 progress: activeCourse.progress
             }}
             PlaylistProps={{

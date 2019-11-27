@@ -24,6 +24,7 @@ import {
     article,
     document,
     blocked,
+    empty,
     suggestedSchedule,
     awfulEmoji,
     badEmoji,
@@ -228,6 +229,7 @@ const assetsDefault = {
             course: typeIconPrimaryCourse
         }
     },
+    empty,
     cardSchedule: {
         suggestedSchedule
     },

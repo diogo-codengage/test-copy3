@@ -115,7 +115,17 @@ const RMClassroomQuizQuestion = ({
                 }
             ])
             setQuestionsMap(oldMap =>
-                oldMap.map(e => (e.id === id ? { ...e, status: true } : e))
+                oldMap.map(e =>
+                    e.id === id
+                        ? {
+                              ...e,
+                              status:
+                                  correct.id === alternativeId
+                                      ? 'correct'
+                                      : 'wrong'
+                          }
+                        : e
+                )
             )
         } catch (e) {}
         setLoading(false)
@@ -133,6 +143,8 @@ const RMClassroomQuizQuestion = ({
         [questionId, questions]
     )
 
+    const isFull = useMemo(() => width <= 992, [width])
+
     return (
         <>
             <SANRow type='flex' align='middle' justifyContent='space-between'>
@@ -141,6 +153,7 @@ const RMClassroomQuizQuestion = ({
                         display='flex'
                         alignItems='center'
                         mb={{ sm: '0', _: 'md' }}
+                        px={{ lg: '0', _: 'md' }}
                     >
                         <SANTypography color='white.10' level={4} mr='xs'>
                             {t('classroom.quiz.question')} {index + 1}
@@ -159,7 +172,6 @@ const RMClassroomQuizQuestion = ({
                         <SANQuestionMap
                             items={questionsMap}
                             current={index}
-                            mock
                             onCancel={toggleVisible}
                             visible={visible}
                         />
@@ -178,6 +190,7 @@ const RMClassroomQuizQuestion = ({
 
             <SANBox mt={{ sm: '8', _: 'sm' }}>
                 <SANQuestion
+                    full={isFull}
                     question={questions[index]}
                     {...responses.find(
                         res => res.questionId === questions[index].id
@@ -186,9 +199,10 @@ const RMClassroomQuizQuestion = ({
                     onConfirm={handleConfirm}
                     onJump={handleJump}
                     onNext={handleNext}
+                    labelMonitor={t('global.expert')}
                 />
             </SANBox>
-            <SANBox mt='xl' px={width > 884 && 20}>
+            <SANBox mt={{ lg: 'xl', _: '0' }} px={width > 884 && 18}>
                 <RMCollection
                     parentId={paramsLayout.lessonId}
                     value={paramsLayout.collectionId}
