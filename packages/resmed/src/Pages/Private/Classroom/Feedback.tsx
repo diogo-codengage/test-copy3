@@ -51,7 +51,7 @@ const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const handleGoPractice = () => history.push('/inicio/area-pratica')
+    const handleGoPractice = () => history.push('/inicio/area-pratica/filtro')
 
     return (
         <SANBox flex='1'>

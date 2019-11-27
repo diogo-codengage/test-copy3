@@ -82,20 +82,28 @@ const getCognitoUser = () => {
     return pool.getCurrentUser()
 }
 
+const getStorageEmail = (): string => {
+    const emailKey =
+        Object.keys(localStorage).find(
+            item => item.indexOf('LastAuthUser') > -1
+        ) || ''
+    return localStorage.getItem(emailKey) || ''
+}
+
 // The primary method for verifying/starting a CoginotID session
 const getAccessToken = () => {
-    const cognitoUser = getCognitoUser()
+    const user = new CognitoUser({
+        Username: getStorageEmail(),
+        Pool: getUserPool()
+    })
 
-    if (!!cognitoUser) {
-        return cognitoUser.getSession(
-            (err: any, session: CognitoUserSession) => {
-                if (session.isValid()) {
-                    return session.getIdToken().getJwtToken()
-                }
-                cognitoUser.refreshSession(session.getRefreshToken(), () => {})
-            }
-        )
-    }
+    return new Promise((resolve, reject) => {
+        user.getSession((err, session: CognitoUserSession) => {
+            if (err) reject(err)
+            const jwtToken = session.getIdToken().getJwtToken()
+            resolve(jwtToken)
+        })
+    })
 }
 
 const logout = ({ callback }: { callback?: Function }) => {

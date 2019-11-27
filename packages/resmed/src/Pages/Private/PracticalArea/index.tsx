@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch, RouteComponentProps } from 'react-router-dom'
+import { Route, Switch, RouteComponentProps, Redirect } from 'react-router-dom'
 
 import RMPracticalProvider from './Context'
 
@@ -13,6 +13,10 @@ const RMPracticalArea = ({ match: { url } }: RouteComponentProps) => (
             <Route path={`${url}/filtro`} component={RMFilter} />
             <Route path={`${url}/perguntas`} component={RMQuestion} />
             <Route path={`${url}/finalizado`} component={RMFinished} />
+            <Route
+                path={[`${url}/`, `${url}`]}
+                render={() => <Redirect to={`${url}/filtro`} />}
+            />
         </Switch>
     </RMPracticalProvider>
 )
