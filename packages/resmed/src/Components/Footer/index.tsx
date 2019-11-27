@@ -30,6 +30,7 @@ const Copyright = ({ darkMode }) => {
         setActiveKey(defaultKey)
         setShowModalTerms(true)
     }
+
     return (
         <>
             <SANSpace p={24}>

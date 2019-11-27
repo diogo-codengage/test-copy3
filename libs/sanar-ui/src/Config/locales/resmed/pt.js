@@ -9,7 +9,8 @@ export default {
         leave: 'Sair',
         back: 'Voltar',
         yes: 'Sim',
-        no: 'Não'
+        no: 'Não',
+        expert: 'Especialista'
     },
     auth: {
         accessAccount: 'Acessar conta',

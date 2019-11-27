@@ -167,7 +167,19 @@ const RMSubSpecialties = ({
     const [current, setCurrent] = useState({
         open: false,
         subspecialty: {
-            name: ''
+            name: '',
+            lastAccessed: {
+                specialtyId: '',
+                subSpecialtyId: '',
+                lessonId: '',
+                collectionId: '',
+                resource: {
+                    id: '',
+                    type: 'Video',
+                    index: '',
+                    title: ''
+                }
+            }
         }
     })
     const [loading, setLoading] = useState(false)
@@ -211,13 +223,27 @@ const RMSubSpecialties = ({
         setLoading(false)
     }
 
+    const onStart = ({
+        specialtyId,
+        subSpecialtyId,
+        lessonId,
+        collectionId,
+        resource
+    }) => {
+        history.push(
+            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                resource.id
+            }`
+        )
+    }
+
     return (
         <>
             <RMModalThemes
                 visible={current.open}
                 title={current.subspecialty.name}
                 onCancel={onCancel}
-                onContinue={console.log}
+                onContinue={() => onStart(current.subspecialty.lastAccessed)}
                 themes={lessons}
                 loading={loading}
             />
