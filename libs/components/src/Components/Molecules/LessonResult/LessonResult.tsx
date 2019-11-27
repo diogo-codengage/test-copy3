@@ -111,7 +111,7 @@ const SANLessonResult = ({
     const renderCollection = useCallback(
         (question, index) => (
             <SANBox
-                bg='grey.5'
+                bg={{ lg: 'grey.5', _: 'grey-solid.8' }}
                 key={index}
                 display='flex'
                 flexDirection='column'
@@ -197,7 +197,7 @@ const SANLessonResult = ({
 
     return (
         <SANSpin spinning={loading} dark flex>
-            <SANBoxStyled borderRadius='base'>
+            <SANBoxStyled borderRadius={{ lg: 'base', _: '0px' }}>
                 <SANBox
                     p='xl'
                     display='flex'

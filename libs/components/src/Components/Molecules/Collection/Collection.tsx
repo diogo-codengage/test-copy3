@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState, useRef } from 'react'
+import React, { useCallback, useMemo, useState, useRef, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled, { css } from 'styled-components'
@@ -139,11 +139,11 @@ const SliderStyled = styled(Slider)`
                 overflow: hidden;
             `,
             css`
-                & .slick-active:first-child ${SANCollectionItemStyled} {
+                & .slick-current ${SANCollectionItemStyled} {
                     border-top-left-radius: ${theme('radii.base')};
                     border-bottom-left-radius: ${theme('radii.base')};
                 }
-                & .slick-active:nth-child(5) ${SANCollectionItemStyled} {
+                & .slick-cloned ${SANCollectionItemStyled} {
                     border-top-right-radius: ${theme('radii.base')};
                     border-bottom-right-radius: ${theme('radii.base')};
                 }
@@ -183,7 +183,7 @@ const SANCollectionItem = ({
             e.stopPropagation()
             return
         }
-        onChange(item)
+        onChange(item, index)
     }
 
     return (
@@ -261,6 +261,11 @@ const SANCollection: React.FC<ISANCollectionProps> = ({
         [value, isDragging]
     )
 
+    const index = useMemo(() => items.findIndex(item => item.id === value), [
+        items,
+        value
+    ])
+
     const settings = useMemo(
         () => ({
             focusOnSelect: true,
@@ -268,7 +273,7 @@ const SANCollection: React.FC<ISANCollectionProps> = ({
             swipeToSlide: true,
             draggable: true,
             dots: false,
-            infinite: false,
+            infinite: items.length >= 5,
             beforeChange: () => setIsDragging(true),
             afterChange: () => setIsDragging(false),
             slidesToScroll: 1,
@@ -280,12 +285,18 @@ const SANCollection: React.FC<ISANCollectionProps> = ({
             vertical,
             responsive: vertical ? responsiveVertical : responsiveHorizontal
         }),
-        [vertical]
+        [vertical, items]
     )
 
     const key = useMemo(() => `san-collection-${new Date().getTime()}`, [
         vertical
     ])
+
+    useEffect(() => {
+        if (!!sliderRef && !!sliderRef.current && index > 0) {
+            sliderRef.current.slickGoTo(index)
+        }
+    }, [index])
 
     return (
         <SliderStyled ref={sliderRef} key={key} {...settings}>

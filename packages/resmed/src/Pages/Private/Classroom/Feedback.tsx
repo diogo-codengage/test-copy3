@@ -9,20 +9,28 @@ import {
     SANLayoutContainer,
     SANLessonResult
 } from '@sanar/components'
+import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
 import {
     GET_LESSON_PERFORMANCE,
     IlessonPerformanceQuery
 } from 'Apollo/Classroom/Queries/lessons-performance'
+import RMCollection from 'Components/Collection'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomContext } from './Context'
 
 const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
     const client = useApolloClient()
+    const { width } = useWindowSize()
     const { params, onOpenMenu } = useLayoutContext()
     const [loading, setLoading] = useState(true)
     const [questions, setQuestions] = useState<any>([])
     const { lesson } = useClassroomContext()
+
+    const onChangeCollection = collection =>
+        history.push(
+            `../../../${collection.id}/video/${collection.content.video.id}`
+        )
 
     useEffect(() => {
         const fetchResult = async () => {
@@ -53,12 +61,25 @@ const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
                 onOpenMenu={onOpenMenu}
                 actions={false}
             />
-            <SANLayoutContainer py='8'>
+            <SANLayoutContainer
+                pb='8'
+                pt={{ lg: '8', _: '0' }}
+                px={{ lg: 'md', _: '0' }}
+            >
                 <SANLessonResult
                     onGoPractice={handleGoPractice}
                     questions={questions}
                     loading={loading}
                 />
+
+                <SANBox mt={{ lg: 'xl', _: '0' }} px={width > 884 && 18}>
+                    <RMCollection
+                        parentId={params.lessonId}
+                        value={params.collectionId}
+                        vertical={false}
+                        onChange={onChangeCollection}
+                    />
+                </SANBox>
             </SANLayoutContainer>
         </SANBox>
     )

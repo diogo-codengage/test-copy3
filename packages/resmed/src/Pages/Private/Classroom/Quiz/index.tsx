@@ -53,7 +53,11 @@ const RMClassRoomQuiz = (props: RouteComponentProps) => {
                         onOpenMenu={onOpenMenu}
                         actions={false}
                     />
-                    <SANLayoutContainer py='8'>
+                    <SANLayoutContainer
+                        pb='8'
+                        pt={{ xs: '8', _: 'xl' }}
+                        px={{ lg: 'md', _: '0' }}
+                    >
                         <Switch>
                             <Route
                                 exact
