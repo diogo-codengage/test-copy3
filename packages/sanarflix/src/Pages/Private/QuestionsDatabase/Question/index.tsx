@@ -169,8 +169,11 @@ const FLXQuestion = ({ match: { url }, history }) => {
     }, [totalAnsweredQuestions, state.stats])
 
     useEffect(() => {
-        if(state.stats.total != 0 && state.currentIndex >= state.stats.total) {
-            validatePractice();
+        if (
+            state.stats.total !== 0 &&
+            state.currentIndex >= state.stats.total
+        ) {
+            validatePractice()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.currentIndex, state.stats])
@@ -225,7 +228,9 @@ const FLXQuestion = ({ match: { url }, history }) => {
                             <SANBox display='flex' alignItems='center'>
                                 <SANTypography level={4} mr='xs'>
                                     {t('questionsDatabase.question.title')}{' '}
-                                    {state.currentIndex >= state.stats.total? state.stats.total : state.currentIndex + 1}
+                                    {state.currentIndex >= state.stats.total
+                                        ? state.stats.total
+                                        : state.currentIndex + 1}
                                 </SANTypography>
                                 <SANTypography variant='body1' color='grey.5'>
                                     {state.stats.total > 999
