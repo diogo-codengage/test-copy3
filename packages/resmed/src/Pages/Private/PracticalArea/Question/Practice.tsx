@@ -83,7 +83,6 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
             })
             dispatch({ type: 'loaded' })
         } catch (error) {
-            console.log({ error })
             dispatch({
                 type: 'error',
                 error
