@@ -16,7 +16,7 @@ const Indicator = ({ text, percent, status = 'normal' }: IIndicator) => (
     <SANBox display='flex' alignItems='center' mr='xl'>
         <SANTypography variant='body2' mr='md'>{`${text}:`}</SANTypography>
         <SANCircleProgress
-            percent={percent}
+            percent={Math.round(percent)}
             showInfo={true}
             status={status}
             strokeLinecap='square'
