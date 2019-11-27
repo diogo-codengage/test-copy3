@@ -70,6 +70,7 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
             <RMModalTermsAndPrivacy
                 tosRequired
                 visible
+                closable={false}
                 defaultActiveKey={0}
                 scrolling
             />

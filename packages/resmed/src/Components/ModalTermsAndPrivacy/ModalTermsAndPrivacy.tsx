@@ -15,6 +15,7 @@ import logo from 'Assets/images/brand/logo.svg'
 const SANModalTermsAndPrivacy = ({
     defaultActiveKey,
     tosRequired = false,
+    closable = true,
     ...props
 }) => {
     const { t } = useTranslation('resmed')
@@ -24,6 +25,10 @@ const SANModalTermsAndPrivacy = ({
     const [activeKey, setActiveKey] = useState(defaultActiveKey)
     const [signed, setSigned] = useState<number[]>([])
     const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        setActiveKey(defaultActiveKey)
+    }, [defaultActiveKey])
 
     const handleAccept = async () => {
         setLoading(true)
@@ -90,7 +95,7 @@ const SANModalTermsAndPrivacy = ({
             imageHeader={logo}
             key={defaultActiveKey}
             activeKey={activeKey}
-            closable={false}
+            closable={closable}
             defaultActiveKey={defaultActiveKey}
             content={modalContent}
             loading={loading}
