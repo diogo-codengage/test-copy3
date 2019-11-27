@@ -115,7 +115,17 @@ const RMClassroomQuizQuestion = ({
                 }
             ])
             setQuestionsMap(oldMap =>
-                oldMap.map(e => (e.id === id ? { ...e, status: true } : e))
+                oldMap.map(e =>
+                    e.id === id
+                        ? {
+                              ...e,
+                              status:
+                                  correct.id === alternativeId
+                                      ? 'correct'
+                                      : 'wrong'
+                          }
+                        : e
+                )
             )
         } catch (e) {}
         setLoading(false)
@@ -162,7 +172,6 @@ const RMClassroomQuizQuestion = ({
                         <SANQuestionMap
                             items={questionsMap}
                             current={index}
-                            mock
                             onCancel={toggleVisible}
                             visible={visible}
                         />
@@ -190,6 +199,7 @@ const RMClassroomQuizQuestion = ({
                     onConfirm={handleConfirm}
                     onJump={handleJump}
                     onNext={handleNext}
+                    labelMonitor={t('global.expert')}
                 />
             </SANBox>
             <SANBox mt={{ lg: 'xl', _: '0' }} px={width > 884 && 18}>

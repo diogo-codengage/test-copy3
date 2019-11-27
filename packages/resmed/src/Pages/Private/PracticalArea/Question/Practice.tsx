@@ -83,7 +83,6 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
             })
             dispatch({ type: 'loaded' })
         } catch (error) {
-            console.log({ error })
             dispatch({
                 type: 'error',
                 error
@@ -150,6 +149,7 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
                 onJump={handleJump}
                 onNext={handleNext}
                 loading={state.loading}
+                labelMonitor={t('global.expert')}
                 {...response}
             />
         </>

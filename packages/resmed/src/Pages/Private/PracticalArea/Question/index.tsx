@@ -219,7 +219,9 @@ const RMQuestion = ({ match: { url }, history }) => {
                             <SANBox display='flex' alignItems='center'>
                                 <SANTypography level={4} mr='xs'>
                                     {t('practicalArea.question.title')}{' '}
-                                    {state.currentIndex + 1}
+                                    {state.stats.total > 0
+                                        ? state.currentIndex + 1
+                                        : 0}
                                 </SANTypography>
                                 <SANTypography variant='body1' color='grey.5'>
                                     {state.stats.total > 999

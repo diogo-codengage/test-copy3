@@ -30,7 +30,7 @@ const RMMainProvider: React.FC<RouteComponentProps> = ({ children }) => {
             } = await client.query({ query: GET_ACTIVE_COURSE })
 
             setActiveCourse(activeCourse)
-        } catch (error) {
+        } catch {
             createSnackbar({
                 message: t('main.errorLoadActiveCourse'),
                 theme: 'error'
