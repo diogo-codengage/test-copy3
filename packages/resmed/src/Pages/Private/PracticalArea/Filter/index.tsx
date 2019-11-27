@@ -51,7 +51,7 @@ const RMFilter = ({ form, history }) => {
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 dispatch({ type: 'filter', filter: values })
-                history.push('/inicio/area-pratica/perguntas')
+                history.push('/inicio/area-pratica/perguntas/pratica')
             }
         })
     }

@@ -28,7 +28,6 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
     const client = useApolloClient()
     const { setMe, me } = useAuthContext()
     const [logged, setLogged] = useState(true)
-    const [loaded, setLoaded] = useState(false)
 
     const onLogout = () => {
         setMe(undefined)
@@ -42,7 +41,6 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
             } = await client.query({ query: GET_ME })
 
             setMe(me)
-            setLoaded(true)
         } catch {
             logout({ callback: onLogout })
         }
@@ -80,13 +78,11 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
         <Route
             {...rest}
             render={props =>
-                loaded ? (
-                    logged ? (
-                        <Component {...props} />
-                    ) : (
-                        <Redirect to='/auth/entrar' />
-                    )
-                ) : null
+                logged ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect to='/auth/entrar' />
+                )
             }
         />
     )
