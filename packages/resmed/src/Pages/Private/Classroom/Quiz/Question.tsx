@@ -199,6 +199,7 @@ const RMClassroomQuizQuestion = ({
                     onConfirm={handleConfirm}
                     onJump={handleJump}
                     onNext={handleNext}
+                    labelMonitor={t('global.expert')}
                 />
             </SANBox>
             <SANBox mt={{ lg: 'xl', _: '0' }} px={width > 884 && 18}>
