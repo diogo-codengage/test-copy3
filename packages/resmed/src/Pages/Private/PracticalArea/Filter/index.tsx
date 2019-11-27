@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { compose } from 'ramda'
 import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -44,7 +44,7 @@ export const makeFilter = (values, userId) => {
 
 const RMFilter = ({ form, history }) => {
     const { t } = useTranslation('resmed')
-    const { dispatch } = useQuestionsContext()
+    const { dispatch, reset } = useQuestionsContext()
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -55,6 +55,11 @@ const RMFilter = ({ form, history }) => {
             }
         })
     }
+
+    useEffect(() => {
+        reset()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <SANForm form={form} onSubmit={handleSubmit}>
