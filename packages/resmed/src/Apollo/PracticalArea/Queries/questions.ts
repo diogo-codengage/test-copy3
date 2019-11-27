@@ -24,7 +24,6 @@ interface ISizes {
 interface IImage {
     id: string
     data: {
-        id: string
         sized_images: ISizes
     }
 }
@@ -72,7 +71,6 @@ export const GET_QUESTIONS = gql`
                     }
                 }
                 images {
-                    id
                     data {
                         id
                         sized_images: sizedImages {
