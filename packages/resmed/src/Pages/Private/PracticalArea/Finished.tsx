@@ -72,6 +72,7 @@ const FLXClassRoomQuizFinished = ({ history }: RouteComponentProps) => {
                         <SANButton
                             uppercase
                             bold
+                            blockOnlyMobile
                             size='small'
                             variant='solid'
                             color='primary'
