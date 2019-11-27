@@ -273,7 +273,7 @@ const SANCollection: React.FC<ISANCollectionProps> = ({
             swipeToSlide: true,
             draggable: true,
             dots: false,
-            infinite: true,
+            infinite: items.length >= 5,
             beforeChange: () => setIsDragging(true),
             afterChange: () => setIsDragging(false),
             slidesToScroll: 1,
@@ -285,7 +285,7 @@ const SANCollection: React.FC<ISANCollectionProps> = ({
             vertical,
             responsive: vertical ? responsiveVertical : responsiveHorizontal
         }),
-        [vertical]
+        [vertical, items]
     )
 
     const key = useMemo(() => `san-collection-${new Date().getTime()}`, [
