@@ -139,11 +139,11 @@ const SliderStyled = styled(Slider)`
                 overflow: hidden;
             `,
             css`
-                & .slick-active:first-child ${SANCollectionItemStyled} {
+                & .slick-current ${SANCollectionItemStyled} {
                     border-top-left-radius: ${theme('radii.base')};
                     border-bottom-left-radius: ${theme('radii.base')};
                 }
-                & .slick-active:nth-child(5) ${SANCollectionItemStyled} {
+                & .slick-cloned ${SANCollectionItemStyled} {
                     border-top-right-radius: ${theme('radii.base')};
                     border-bottom-right-radius: ${theme('radii.base')};
                 }
@@ -273,7 +273,7 @@ const SANCollection: React.FC<ISANCollectionProps> = ({
             swipeToSlide: true,
             draggable: true,
             dots: false,
-            infinite: false,
+            infinite: true,
             beforeChange: () => setIsDragging(true),
             afterChange: () => setIsDragging(false),
             slidesToScroll: 1,
