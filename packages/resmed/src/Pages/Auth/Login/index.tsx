@@ -97,7 +97,10 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
             />
 
             <RMModalTermsAndPrivacy
-                onCancel={() => setShowModalTerms(false)}
+                onCancel={() => {
+                    setShowModalTerms(false)
+                    setActiveKey(0)
+                }}
                 visible={showModalTerms}
                 defaultActiveKey={activeKey}
                 scrolling
