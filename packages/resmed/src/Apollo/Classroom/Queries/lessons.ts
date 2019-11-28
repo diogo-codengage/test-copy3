@@ -25,7 +25,7 @@ export interface ILastAccessed {
     specialtyId: string
     subSpecialtyId?: string
     collectionId: string
-    lesson: ILesson
+    lesson: ILessonLastAccessed
     resource: ILastAccessedResource
 }
 

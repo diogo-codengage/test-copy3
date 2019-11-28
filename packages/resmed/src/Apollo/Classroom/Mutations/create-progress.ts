@@ -4,11 +4,13 @@ const lastAccessed = `
     lastAccessed {
         specialtyId
         subSpecialtyId
-        lessonId
         collectionId
-        resource {
+        lesson {
             id
             index
+        }
+        resource {
+            id
             type
             title
         }
