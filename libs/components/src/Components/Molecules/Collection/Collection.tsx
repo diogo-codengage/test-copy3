@@ -117,7 +117,7 @@ const IconComleted = styled(SANEvaIcon) < { completed: boolean }>`
         position: absolute;
         top: calc(50% - 24px);
         left: calc(50% - 24px);
-        color: ${ifProp('completed', theme('colors.grey.7'), theme('colors.white.10'))};
+        color: ${ifProp('completed', theme('colors.white.5'), theme('colors.white.10'))};
 
         & svg {
             font-size: ${theme('fontSizes.7')};
