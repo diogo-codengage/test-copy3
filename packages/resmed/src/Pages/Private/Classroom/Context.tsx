@@ -16,9 +16,10 @@ interface IRMClassroomProviderValue {
 }
 
 interface IDataProgress {
-    timeInSeconds: number
+    timeInSeconds?: number
     percentage: number
     resourceId: string
+    resourceType: 'Video' | 'Quiz'
 }
 
 const Context = createContext<IRMClassroomProviderValue>({} as any)

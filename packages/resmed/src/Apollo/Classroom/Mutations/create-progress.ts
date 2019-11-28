@@ -26,13 +26,15 @@ export const CREATE_PROGRESS = gql`
     mutation CreateProgress(
         $resourceId: ID!
         $percentage: Int!
-        $timeInSeconds: Int!
+        $timeInSeconds: Int
+        $resourceType: ResourceType
     ) {
         createCourseProgress(
             data: {
                 resourceId: $resourceId
                 percentage: $percentage
                 timeInSeconds: $timeInSeconds
+                resourceType: $resourceType
             }
         ) {
             course {

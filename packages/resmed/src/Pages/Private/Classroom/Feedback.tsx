@@ -28,9 +28,7 @@ const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
     const { lesson } = useClassroomContext()
 
     const onChangeCollection = collection =>
-        history.push(
-            `../../../${collection.id}/video/${collection.content.video.id}`
-        )
+        history.push(`./${collection.id}/video/${collection.content.video.id}`)
 
     useEffect(() => {
         const fetchResult = async () => {

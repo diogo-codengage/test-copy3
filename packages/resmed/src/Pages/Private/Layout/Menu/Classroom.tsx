@@ -15,10 +15,17 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     const client = useApolloClient()
     const { activeCourse } = useAuthContext()
     const setCrash = useTryToCrash()
-    const { params } = useLayoutContext()
+    const { params, onCloseMenu } = useLayoutContext()
     const [currentResource, setCurrentResource] = useState(0)
     const [loading, setLoading] = useState(false)
     const [lessons, setLessons] = useState<any[]>([])
+
+    const setIndex = (id, arr) => {
+        if (!!arr && !!arr.length) {
+            const index = arr.findIndex(e => e.id === id)
+            index !== currentResource && setCurrentResource(index)
+        }
+    }
 
     const goToLesson = item => {
         const {
@@ -29,13 +36,13 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
             resource
         } = item.lastAccessed
 
-        const index = lessons.findIndex(lesson => lesson.id === item.id)
-        index !== currentResource && setCurrentResource(index)
+        setIndex(item.id, lessons)
         history.push(
             `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-                resource.id
+            resource.id
             }`
         )
+        onCloseMenu()
     }
 
     useEffect(() => {
@@ -65,6 +72,11 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
         fetchLessons()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params])
+
+    useEffect(() => {
+        setIndex(params.lessonId, lessons)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [params.lessonId, lessons])
 
     const specialtyName = useMemo(() => {
         if (!!lessons.length) {

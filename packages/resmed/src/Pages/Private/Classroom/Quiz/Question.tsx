@@ -22,6 +22,7 @@ import RMCollection from 'Components/Collection'
 import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomQuizContext } from './Context'
+import { useClassroomContext } from '../Context'
 
 const SANColFloat = styled(SANCol)`
     && {
@@ -56,6 +57,7 @@ const RMClassroomQuizQuestion = ({
         questionsMap,
         setQuestionsMap
     } = useClassroomQuizContext()
+    const { handleProgress } = useClassroomContext()
     const { params: paramsLayout } = useLayoutContext()
     const [visible, setVisible] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -85,6 +87,14 @@ const RMClassroomQuizQuestion = ({
 
     const handleConfirm = async alternativeId => {
         setLoading(true)
+        handleProgress({
+            resourceId: paramsLayout.contentId,
+            resourceType: 'Quiz',
+            percentage: parseInt(
+                (((index + 1) * 100) / questions.length).toString(),
+                10
+            )
+        })
 
         try {
             const {

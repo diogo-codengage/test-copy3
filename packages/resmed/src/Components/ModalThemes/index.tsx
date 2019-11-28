@@ -19,24 +19,24 @@ import {
 import { ISANModalProps } from '@sanar/components/dist/Components/Molecules/Modal'
 import { ILastAccessed } from 'Apollo/Subspecialties/Queries/lessons'
 
-const ItemStyled = styled(SANBox)<{ blocked?: boolean }>`
+const ItemStyled = styled(SANBox) <{ blocked?: boolean }>`
     &:nth-child(even) {
         background-color: ${theme('colors.grey-solid.1')};
     }
 
     ${ifProp(
-        'blocked',
-        css`
+    'blocked',
+    css`
             opacity: 0.5;
             cursor: not-allowed;
         `,
-        css`
+    css`
             &:hover {
                 background-color: ${theme('colors.grey-solid.2')};
             }
             cursor: pointer;
         `
-    )}
+)}
 `
 
 const Item = ({ index, name, completed, status, onClick }) => {
@@ -75,8 +75,8 @@ const Item = ({ index, name, completed, status, onClick }) => {
                     size='large'
                 />
             ) : (
-                <SANEvaIcon name='arrow-ios-forward-outline' size='large' />
-            )}
+                    <SANEvaIcon name='arrow-ios-forward-outline' size='large' />
+                )}
         </ItemStyled>
     )
 }
@@ -120,14 +120,14 @@ const RMModalThemes = ({
         const {
             specialtyId,
             subSpecialtyId,
-            lessonId,
+            lesson,
             collectionId,
             resource
         } = lastAccessed
 
         history.push(
-            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-                resource.id
+            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+            resource.id
             }`
         )
     }
