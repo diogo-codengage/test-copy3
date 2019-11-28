@@ -15,7 +15,7 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     const client = useApolloClient()
     const { activeCourse } = useAuthContext()
     const setCrash = useTryToCrash()
-    const { params } = useLayoutContext()
+    const { params, onCloseMenu } = useLayoutContext()
     const [currentResource, setCurrentResource] = useState(0)
     const [loading, setLoading] = useState(false)
     const [lessons, setLessons] = useState<any[]>([])
@@ -36,6 +36,7 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 resource.id
             }`
         )
+        onCloseMenu()
     }
 
     useEffect(() => {
