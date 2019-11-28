@@ -68,6 +68,7 @@ const SANModalTermsAndPrivacy = ({
             title: t('global.termsOfUse'),
             content: (
                 <RMTermsFrame
+                    tosRequired={tosRequired}
                     onAccept={
                         !signed.includes(1) &&
                         tosRequired &&
@@ -80,6 +81,7 @@ const SANModalTermsAndPrivacy = ({
             title: t('global.privacyPolicy'),
             content: (
                 <RMPrivacyAndPolicyFrame
+                    tosRequired={tosRequired}
                     onAccept={
                         !signed.includes(0) &&
                         tosRequired &&
