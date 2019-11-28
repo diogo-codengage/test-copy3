@@ -84,7 +84,9 @@
                 width: 100vw !important;
             }
             .ant-tabs {
-                height: 100vh;
+                height: ~'calc(100vh - 48px)';
+                display: flex;
+                flex-flow: column;
             }
         }
     }
