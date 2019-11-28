@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { compose } from 'ramda'
 import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -9,7 +9,7 @@ import {
     SANForm,
     SANButton,
     SANSessionTitle,
-    SANFormItem
+    SANBox
 } from '@sanar/components'
 
 import RMFilterSelects from './Selects'
@@ -44,17 +44,22 @@ export const makeFilter = (values, userId) => {
 
 const RMFilter = ({ form, history }) => {
     const { t } = useTranslation('resmed')
-    const { dispatch } = useQuestionsContext()
+    const { dispatch, reset } = useQuestionsContext()
 
     const handleSubmit = e => {
         e.preventDefault()
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 dispatch({ type: 'filter', filter: values })
-                history.push('/inicio/area-pratica/perguntas')
+                history.push('/inicio/area-pratica/perguntas/pratica')
             }
         })
     }
+
+    useEffect(() => {
+        reset()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <SANForm form={form} onSubmit={handleSubmit}>
@@ -62,7 +67,7 @@ const RMFilter = ({ form, history }) => {
                 hasContainer
                 BoxProps={{
                     bg: 'grey-solid.1',
-                    py: { xs: '8', _: 'xl' },
+                    py: { xs: '8', _: 'lg' },
                     display: 'flex',
                     flexDirection: 'column'
                 }}
@@ -72,19 +77,19 @@ const RMFilter = ({ form, history }) => {
                         title: t('practicalArea.filter.header.title'),
                         subtitle: t('practicalArea.filter.header.subtitle'),
                         extra: (
-                            <SANFormItem>
+                            <SANBox display='flex' flex='1'>
                                 <SANButton
                                     variant='solid'
                                     color='primary'
                                     size='small'
                                     uppercase
                                     htmlType='submit'
-                                    blockOnlyMobile
                                     bold
+                                    block
                                 >
                                     {t('practicalArea.filter.header.start')}
                                 </SANButton>
-                            </SANFormItem>
+                            </SANBox>
                         )
                     }
                 }}

@@ -14,6 +14,7 @@ import { useAuthContext } from 'Hooks/auth'
 import { logout, getCognitoUser } from 'Config/AWSCognito'
 
 import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
+import RMSplashLoader from 'Components/SplashLoader'
 
 interface RMPrivateRouteProps extends RouteComponentProps {
     component: React.ElementType
@@ -28,7 +29,7 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
     const client = useApolloClient()
     const { setMe, me } = useAuthContext()
     const [logged, setLogged] = useState(true)
-    const [loaded, setLoaded] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const onLogout = () => {
         setMe(undefined)
@@ -36,16 +37,17 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
     }
 
     const fetchMe = async () => {
+        setLoading(true)
         try {
             const {
                 data: { me }
             } = await client.query({ query: GET_ME })
 
             setMe(me)
-            setLoaded(true)
         } catch {
             logout({ callback: onLogout })
         }
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -65,6 +67,8 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    if (loading) return <RMSplashLoader />
+
     if (!!me && !me.hasActiveSubscription) {
         return (
             <RMModalTermsAndPrivacy
@@ -81,13 +85,11 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
         <Route
             {...rest}
             render={props =>
-                loaded ? (
-                    logged ? (
-                        <Component {...props} />
-                    ) : (
-                        <Redirect to='/auth/entrar' />
-                    )
-                ) : null
+                logged ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect to='/auth/entrar' />
+                )
             }
         />
     )

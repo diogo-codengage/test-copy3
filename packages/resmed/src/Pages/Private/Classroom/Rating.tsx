@@ -43,7 +43,11 @@ const RMClassroomRating = ({ history }: RouteComponentProps) => {
                 onOpenMenu={onOpenMenu}
                 actions={false}
             />
-            <SANLayoutContainer py='8'>
+            <SANLayoutContainer
+                pb='8'
+                pt={{ lg: '8', _: '0' }}
+                px={{ lg: 'md', _: '0' }}
+            >
                 <SANLessonFeedback onSend={handleRating} onNext={handleNext} />
             </SANLayoutContainer>
         </SANBox>

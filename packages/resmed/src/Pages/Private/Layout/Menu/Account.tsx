@@ -72,13 +72,6 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
             </SANTypography>
             <SANNavigationList>
                 <SANNavigationListItem
-                    to='/inicio/minha-conta/meus-dados'
-                    icon={<SANEvaIcon name='folder-outline' color='default' />}
-                    onClick={onCloseMenu}
-                    dataTestid='flix_menu_my-account__go_to--profile'
-                    title={t('mainMenu.account.myData')}
-                />
-                <SANNavigationListItem
                     to='/inicio/minha-conta/alterar-senha'
                     icon={<SANEvaIcon name='lock-outline' color='default' />}
                     onClick={onCloseMenu}

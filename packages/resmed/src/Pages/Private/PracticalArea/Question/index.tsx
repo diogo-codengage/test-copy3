@@ -104,7 +104,7 @@ const GetOutPractice = ({ onConfirm, ...props }) => {
     )
 }
 
-const RMQuestion = ({ match: { url }, history }) => {
+const RMQuestion = ({ match: { url }, history, location }) => {
     const { t } = useTranslation('resmed')
     const {
         stopwatchRef,
@@ -135,7 +135,7 @@ const RMQuestion = ({ match: { url }, history }) => {
 
     const onClose = () => {
         reset()
-        history.push('/portal/area-pratica/filtro')
+        history.push('/inicio/area-pratica/filtro')
     }
 
     const onRestart = () => {
@@ -144,7 +144,7 @@ const RMQuestion = ({ match: { url }, history }) => {
     }
 
     const onConfirm = () => {
-        history.push('/portal/area-pratica/finalizado')
+        history.push('/inicio/area-pratica/finalizado')
         setVisibleExit(false)
     }
 
@@ -186,10 +186,13 @@ const RMQuestion = ({ match: { url }, history }) => {
                 BoxProps={{
                     bg: 'grey-solid.1',
                     flex: '1',
-                    py: '8'
+                    py: { sm: '8', _: 'xxl' }
                 }}
                 ContainerProps={{
-                    height: '100%'
+                    height: '100%',
+                    px: location.pathname.includes('/pratica')
+                        ? { lg: 'md', _: '0' }
+                        : 'md'
                 }}
                 HeaderProps={{
                     extra: (
@@ -219,7 +222,9 @@ const RMQuestion = ({ match: { url }, history }) => {
                             <SANBox display='flex' alignItems='center'>
                                 <SANTypography level={4} mr='xs'>
                                     {t('practicalArea.question.title')}{' '}
-                                    {state.currentIndex + 1}
+                                    {state.stats.total > 0
+                                        ? state.currentIndex + 1
+                                        : 0}
                                 </SANTypography>
                                 <SANTypography variant='body1' color='grey.5'>
                                     {state.stats.total > 999
