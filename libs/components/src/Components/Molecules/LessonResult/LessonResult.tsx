@@ -196,8 +196,8 @@ const SANLessonResult = ({
     )
 
     return (
-        <SANSpin spinning={loading} dark flex>
-            <SANBoxStyled borderRadius={{ lg: 'base', _: '0px' }}>
+        <SANBoxStyled borderRadius={{ lg: 'base', _: '0px' }}>
+            <SANSpin spinning={loading} dark flex>
                 <SANBox
                     p='xl'
                     display='flex'
@@ -277,11 +277,11 @@ const SANLessonResult = ({
                         </SANCol>
                     </SANRow>
                 </SANBox>
-                {loading
-                    ? arrLoading.map(renderSkeleton)
-                    : questions.map(renderCollection)}
-            </SANBoxStyled>
-        </SANSpin>
+            </SANSpin>
+            {loading
+                ? arrLoading.map(renderSkeleton)
+                : questions.map(renderCollection)}
+        </SANBoxStyled>
     )
 }
 

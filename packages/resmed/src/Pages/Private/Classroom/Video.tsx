@@ -65,7 +65,8 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
             handleProgress({
                 timeInSeconds: parseInt(timeInSeconds, 10),
                 percentage,
-                resourceId
+                resourceId,
+                resourceType: 'Video'
             })
 
             if (percentage === 100) {

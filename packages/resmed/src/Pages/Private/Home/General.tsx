@@ -40,13 +40,13 @@ const RMSpecialties = withRouter<RouteComponentProps>(
 
         const goToClassroom = ({
             specialtyId,
-            lessonId,
+            lesson,
             collectionId,
             resource
         }: ILastAccessed) => {
             history.push(
-                `/inicio/sala-aula/${specialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-                    resource.id
+                `/inicio/sala-aula/${specialtyId}/${lesson.id}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                resource.id
                 }`
             )
         }
@@ -92,10 +92,10 @@ const RMSpecialties = withRouter<RouteComponentProps>(
                 }: {
                     data: { specialties: ISpecialties[] }
                 }) => (
-                    <SANRow gutter={24} type='flex' flexWrap='wrap'>
-                        {specialties.map(renderSpecialty)}
-                    </SANRow>
-                )}
+                        <SANRow gutter={24} type='flex' flexWrap='wrap'>
+                            {specialties.map(renderSpecialty)}
+                        </SANRow>
+                    )}
             </SANQuery>
         )
     }

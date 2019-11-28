@@ -95,7 +95,7 @@ const ButtonArrowStyled = styled(SANButton)`
 
 const ImageStyled = styled(SANBox)``
 
-const SANCollectionItemStyled = styled(SANBox)<{ current: boolean }>`
+const SANCollectionItemStyled = styled(SANBox) <{ current: boolean }>`
     &:hover {
         ${SANTypography}, ${ImageStyled} {
             opacity: 0.6;
@@ -103,21 +103,21 @@ const SANCollectionItemStyled = styled(SANBox)<{ current: boolean }>`
     }
 
     ${ifNotProp(
-        'current',
-        css`
+    'current',
+    css`
             & ${SANTypography}, & ${ImageStyled} {
                 opacity: 0.4;
             }
         `
-    )};
+)};
 `
 
-const IconComleted = styled(SANEvaIcon)`
+const IconComleted = styled(SANEvaIcon) < { completed: boolean }>`
     && {
         position: absolute;
         top: calc(50% - 24px);
         left: calc(50% - 24px);
-        color: ${theme('colors.white.10')};
+        color: ${ifProp('completed', theme('colors.grey.7'), theme('colors.white.10'))};
 
         & svg {
             font-size: ${theme('fontSizes.7')};
@@ -132,13 +132,13 @@ const SliderStyled = styled(Slider)`
         }
 
         ${ifProp(
-            'vertical',
-            css`
+    'vertical',
+    css`
                 width: 192px;
                 max-height: 100vh;
                 overflow: hidden;
             `,
-            css`
+    css`
                 & .slick-current ${SANCollectionItemStyled} {
                     border-top-left-radius: ${theme('radii.base')};
                     border-bottom-left-radius: ${theme('radii.base')};
@@ -148,7 +148,7 @@ const SliderStyled = styled(Slider)`
                     border-bottom-right-radius: ${theme('radii.base')};
                 }
             `
-        )}
+)}
     }
 `
 
@@ -171,8 +171,7 @@ const SANCollectionItem = ({
     item,
     index,
     onChange,
-    value,
-    isDragging
+    value
 }: any) => {
     const { t } = useTranslation('components')
     const { name, image, id, completed } = item
@@ -201,8 +200,8 @@ const SANCollectionItem = ({
                         borderRadius='base'
                         width='100%'
                     />
-                    {completed && value !== id && (
-                        <IconComleted name='checkmark-circle-2' />
+                    {completed && (
+                        <IconComleted name='checkmark-circle-2' completed={completed && value === id} />
                     )}
                 </SANBox>
                 <SANTypography

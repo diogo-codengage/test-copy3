@@ -116,6 +116,15 @@ const RMQuestion = ({ match: { url }, history, location }) => {
     const [visibleFinish, setVisibleFinish] = useState(false)
     const [visibleExit, setVisibleExit] = useState(false)
 
+    const onFinished = () => {
+        !!stopwatchRef.current &&
+            dispatch({
+                type: 'stats',
+                stats: { time: stopwatchRef.current.time() }
+            })
+        history.push('/inicio/area-pratica/finalizado')
+    }
+
     const validatePractice = () => {
         if (
             totalAnsweredQuestions === 0 ||
@@ -124,12 +133,7 @@ const RMQuestion = ({ match: { url }, history, location }) => {
             setVisibleFinish(true)
             return
         } else {
-            !!stopwatchRef.current &&
-                dispatch({
-                    type: 'stats',
-                    stats: { time: stopwatchRef.current.time() }
-                })
-            history.push('/inicio/area-pratica/finalizado')
+            onFinished()
         }
     }
 
@@ -144,7 +148,7 @@ const RMQuestion = ({ match: { url }, history, location }) => {
     }
 
     const onConfirm = () => {
-        history.push('/inicio/area-pratica/finalizado')
+        onFinished()
         setVisibleExit(false)
     }
 
