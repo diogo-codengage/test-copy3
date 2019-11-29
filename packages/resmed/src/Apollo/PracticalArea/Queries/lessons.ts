@@ -11,7 +11,7 @@ export interface ILessonsQuery {
 
 export const GET_LESSONS = gql`
     query Lessons {
-        lessons {
+        lessons(where: { status: active }) {
             value: id
             label: name
         }

@@ -63,7 +63,7 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     lessons.map(lesson => ({
                         ...lesson,
                         hasType: false,
-                        completed: false
+                        completed: lesson.completed
                     }))
                 )
             } catch {

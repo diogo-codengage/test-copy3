@@ -25,6 +25,7 @@ export const GET_LESSON = gql`
         lesson(where: { id: $id }) {
             id
             title: name
+            completed
             subSpecialty {
                 id
                 specialty {
