@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
@@ -17,6 +17,7 @@ import {
 } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
+import { useLayoutContext } from 'Pages/Private/Context'
 
 import RMGeneral from './General'
 import RMAbout from './About'
@@ -92,6 +93,12 @@ const Header = () => {
 
 const RMHome = () => {
     const { t } = useTranslation('resmed')
+    const { handleTrack } = useLayoutContext()
+
+    useEffect(() => {
+        handleTrack('Course Homepage viewed')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <SANBox flex='1' display='flex' flexDirection='column'>
