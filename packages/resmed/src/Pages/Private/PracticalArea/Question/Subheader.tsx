@@ -77,7 +77,7 @@ const RMSubheader: React.FC = ({ children }) => (
         flexDirection={{ _: 'column-reverse', lg: 'row' }}
         alignItems={{ lg: 'center' }}
         justifyContent='space-between'
-        mb='7'
+        mb={{ lg: '7', _: 'md' }}
     >
         <Performace />
         {children}
