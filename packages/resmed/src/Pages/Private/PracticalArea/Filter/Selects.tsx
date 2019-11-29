@@ -58,6 +58,10 @@ const Categories = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setData(old => ({
+                    ...old,
+                    loading: true
+                }))
                 const {
                     data: { questionCategories }
                 } = await client.query<ICategoriesQuery>({
@@ -111,13 +115,14 @@ const Specialties = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setData(old => ({
+                    ...old,
+                    loading: true
+                }))
                 const {
                     data: { specialties }
                 } = await client.query<IISpecialtiesQuery>({
-                    query: GET_SPECIALTIES,
-                    variables: {
-                        courseId: activeCourse.id
-                    }
+                    query: GET_SPECIALTIES
                 })
                 setData(old => ({
                     ...old,
@@ -166,6 +171,10 @@ const Subspecialties = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setData(old => ({
+                    ...old,
+                    loading: true
+                }))
                 const {
                     data: { subSpecialties }
                 } = await client.query<ISubspecialtiesQuery>({
@@ -174,7 +183,7 @@ const Subspecialties = () => {
                 setData(old => ({
                     ...old,
                     loading: false,
-                    items: subSpecialties
+                    items: subSpecialties.items
                 }))
             } catch {
                 setData({ loading: false, error: false, items: [] })
@@ -220,6 +229,10 @@ const Lessons = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setData(old => ({
+                    ...old,
+                    loading: true
+                }))
                 const {
                     data: { lessons }
                 } = await client.query<ILessonsQuery>({ query: GET_LESSONS })
