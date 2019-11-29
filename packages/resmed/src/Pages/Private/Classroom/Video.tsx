@@ -74,7 +74,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                 // if have quiz on this clicker go to quiz
                 if (!!current && !!current.content.quiz) {
                     history.push(
-                        `../../${current.id}/quiz/${current.content.quiz.id}`
+                        `../../${current.id}/quiz/${current.content.quiz.id}/${current.content.quiz.questions[0].id}`
                     )
                 } else {
                     const next = collectionRef.current.getNext()

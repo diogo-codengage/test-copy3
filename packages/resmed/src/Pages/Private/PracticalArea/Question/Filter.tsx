@@ -11,19 +11,19 @@ import RMFilterSelects from '../Filter/Selects'
 import RMFilterAdvanced from '../Filter/Advanced'
 import { useQuestionsContext } from '../Context'
 import { Performace } from './Subheader'
-
 interface IProps extends RouteComponentProps {
     form: any
 }
 
 const RMFilter = ({ history, form }: IProps) => {
     const { t } = useTranslation('resmed')
-    const { startStopwatch, pauseStopwatch } = useQuestionsContext()
+    const { startStopwatch, pauseStopwatch, dispatch } = useQuestionsContext()
 
     const handleSubmit = e => {
         e.preventDefault()
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
+                dispatch({ type: 'filter', filter: values })
                 history.push('./pratica')
             }
         })

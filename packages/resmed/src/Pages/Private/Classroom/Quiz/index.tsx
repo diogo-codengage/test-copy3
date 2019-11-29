@@ -24,23 +24,20 @@ import RMClassRoomQuizQuestion from './Question'
 
 const RMClassRoomQuiz = (props: RouteComponentProps) => {
     const {
-        match: { url },
-        history
+        match: { url }
     } = props
     const { onOpenMenu, params } = useLayoutContext()
     const { setQuestions } = useClassroomQuizContext()
 
-    const setQuestionContext = ({ quiz }) => {
-        history.push(`${url}/${quiz.questions[0].id}`)
-        setQuestions(quiz.questions)
-    }
+    const setQuestionContext = ({ quiz }) => setQuestions(quiz.questions)
 
     return (
         <SANQuery
             query={GET_QUIZ}
             options={{
                 variables: { id: params.contentId },
-                onCompleted: setQuestionContext
+                onCompleted: setQuestionContext,
+                skip: !params.contentId || params.type !== 'quiz'
             }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
             errorProps={{ dark: true }}

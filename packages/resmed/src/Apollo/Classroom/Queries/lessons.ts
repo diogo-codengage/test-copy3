@@ -32,6 +32,7 @@ export interface ILastAccessed {
 export interface ILesson {
     id: string
     title: string
+    completed: boolean
     lastAccessed: ILastAccessed
     subSpecialty: ISubSpecialty
 }
@@ -46,6 +47,7 @@ export const GET_LESSONS = gql`
             id
             title: name
             status
+            completed
             subSpecialty {
                 id
                 name

@@ -190,7 +190,7 @@ const RMQuestion = ({ match: { url }, history, location }) => {
                 BoxProps={{
                     bg: 'grey-solid.1',
                     flex: '1',
-                    py: { sm: '8', _: 'xxl' }
+                    py: { sm: '8', _: 'md' }
                 }}
                 ContainerProps={{
                     height: '100%',

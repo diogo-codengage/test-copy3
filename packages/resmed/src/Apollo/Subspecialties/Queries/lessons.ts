@@ -31,6 +31,7 @@ export const GET_LESSONS = gql`
             id
             name
             status
+            completed
             lastAccessed {
                 specialtyId
                 subSpecialtyId

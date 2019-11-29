@@ -190,6 +190,7 @@ const RMClassroomQuizQuestion = ({
                             variant='outlined'
                             color='light'
                             onClick={toggleVisible}
+                            mr={{ lg: '0', _: 'md' }}
                         >
                             <SANEvaIcon name='map-outline' mr='xs' />
                             {t('classroom.quiz.questionMap')}
