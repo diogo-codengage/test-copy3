@@ -49,7 +49,7 @@ const RMMainProvider: React.FC<RouteComponentProps> = ({ children }) => {
             ...attrs
         }
 
-        segmentTrack(client, event, data)
+        segmentTrack(event, data)
     }
 
     useEffect(() => {
