@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { compose } from 'ramda'
+import { useApolloClient } from '@apollo/react-hooks'
 
 import {
     useSnackbarContext,
@@ -22,14 +23,30 @@ import searching from 'Assets/images/forgot-password/searching.png'
 import RMFooter from 'Components/Footer'
 import { forgotPassword } from 'Config/AWSCognito'
 
+import { segmentTrack } from 'Config/Segment/track'
+
 interface IProps extends RouteComponentProps {
     form: any
 }
 
 const RMSendPasswordRecoveryPage: React.FC<IProps> = ({ form, history }) => {
+    const client = useApolloClient()
     const { t } = useTranslation('resmed')
     const createSnackbar = useSnackbarContext()
     const [loading, setLoading] = useState(false)
+
+    const handleTrack = async email => {
+        // User ID, Plataform ID, Date, Time, Device
+        // const datetime = new Date()
+        const data = {
+            'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
+            email
+            // Date: `${datetime.getDate()}/${datetime.getMonth() + 1}/${datetime.getFullYear()}`,
+            // Time: `${datetime.getHours()}:${datetime.getMinutes()}:${datetime.getSeconds()}`,
+            // Device: null
+        }
+        segmentTrack(client, 'Password recovered', data)
+    }
 
     const onSubmit = async e => {
         e.preventDefault()
@@ -37,6 +54,7 @@ const RMSendPasswordRecoveryPage: React.FC<IProps> = ({ form, history }) => {
 
         try {
             const { email } = await form.validateFields()
+            handleTrack(email)
             await forgotPassword(email)
 
             history.push({
