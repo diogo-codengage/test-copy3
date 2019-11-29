@@ -7,6 +7,8 @@ import RMSplashLoader from 'Components/SplashLoader'
 import { getCognitoUser } from 'Config/AWSCognito'
 
 import { segmentTrack } from 'Config/Segment/track'
+import { IEvents, IOptions } from 'Config/Segment'
+import { GET_ME } from 'Apollo/User/Queries/me'
 
 const RMLogin = React.lazy(() => import('./Login'))
 const RMPasswordRecovery = React.lazy(() => import('./PasswordRecovery'))
@@ -19,16 +21,23 @@ const RMAuth: React.FC<RouteComponentProps> = ({ match: { url } }) => {
         loading: true
     })
 
-    const handleTrack = async () => {
-        // User ID, Plataform ID, Date, Time, Device
-        // const datetime = new Date()
-        const data = {
-            'Plataform ID': process.env.REACT_APP_PLATFORM_ID
-            // Date: `${datetime.getDate()}/${datetime.getMonth() + 1}/${datetime.getFullYear()}`,
-            // Time: `${datetime.getHours()}:${datetime.getMinutes()}:${datetime.getSeconds()}`,
-            // Device: null
+    const handleTrack = async (event: IEvents, attrs?: IOptions) => {
+        const {
+            data: {
+                me: { id: userId }
+            },
+            errors
+        } = await client.query({ query: GET_ME })
+        if (!!errors) {
+            // console.log('segmentTrack with ERROR:', errors)
+            throw new Error()
         }
-        segmentTrack(client, 'Session started', data)
+        const data = {
+            'User ID': userId,
+            'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
+            ...attrs
+        }
+        segmentTrack(event, data)
     }
 
     useEffect(() => {
@@ -37,7 +46,7 @@ const RMAuth: React.FC<RouteComponentProps> = ({ match: { url } }) => {
         if (!!cognitoUser) {
             cognitoUser.getSession((_, session) => {
                 if (session.isValid()) {
-                    handleTrack()
+                    handleTrack('Session started', undefined)
                     setSession({
                         loading: false,
                         isValid: true
