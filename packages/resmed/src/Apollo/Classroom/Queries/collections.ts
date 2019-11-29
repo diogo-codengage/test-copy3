@@ -46,6 +46,9 @@ export const GET_COLLECTIONS = gql`
                 quiz {
                     id
                     title
+                    questions {
+                        id
+                    }
                 }
             }
         }

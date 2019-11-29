@@ -1,4 +1,5 @@
 import { IQuestion } from 'Apollo/PracticalArea/Queries/questions'
+import { IState as ICountryState } from 'Apollo/PracticalArea/Queries/states'
 
 export type IAction =
     | {
@@ -15,7 +16,7 @@ export type IAction =
     | { type: 'filter'; filter: IFilter }
 
 export interface IState {
-    filter: IFilter
+    filter?: IFilter
     currentIndex: number
     stats: IStats
     questions: IQuestion[]
@@ -23,7 +24,22 @@ export interface IState {
     bookmarked: boolean
 }
 
-interface IFilter {}
+interface IOwner {
+    label: string
+    value: string
+}
+
+interface IFilter {
+    categories?: IOwner[]
+    specialties?: IOwner[]
+    subspecialties?: IOwner[]
+    lessons?: IOwner[]
+    institution?: IOwner
+    year?: any
+    state?: ICountryState
+    onlyHasImages?: boolean
+    onlyComments?: boolean
+}
 
 interface IStats {
     correct: number
