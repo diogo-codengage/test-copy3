@@ -27,6 +27,11 @@ import {
     IInstitution,
     IInstitutionsQuery
 } from 'Apollo/PracticalArea/Queries/institutions'
+import {
+    GET_STATES,
+    IStatesQuery,
+    IState
+} from 'Apollo/PracticalArea/Queries/states'
 
 const Title: React.FC = props => (
     <SANBox
@@ -80,9 +85,11 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
         categories: false,
         specialties: false,
         subspecialties: false,
-        themes: false
+        themes: false,
+        states: false
     })
     const [intitutions, setIntitutions] = useState<IInstitution[]>([])
+    const [states, setStates] = useState<IState[]>([])
 
     useEffect(() => {
         const fetchIntitutions = async () => {
@@ -101,6 +108,23 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    useEffect(() => {
+        const fetchStates = async () => {
+            setLoading(old => ({ ...old, states: true }))
+            try {
+                const {
+                    data: { states }
+                } = await client.query<IStatesQuery>({
+                    query: GET_STATES
+                })
+                setStates(states)
+            } catch {}
+            setLoading(old => ({ ...old, states: false }))
+        }
+        fetchStates()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     useOnClickOutside([itemPickerRef], () => setOpenCalendar(false), [
         itemPickerRef,
         setOpenCalendar
@@ -110,6 +134,15 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
         intitution => (
             <SANSelectOption value={intitution.value} key={intitution.value}>
                 {intitution.label}
+            </SANSelectOption>
+        ),
+        []
+    )
+
+    const renderState = useCallback(
+        state => (
+            <SANSelectOption value={state} key={state}>
+                {state}
             </SANSelectOption>
         ),
         []
@@ -192,15 +225,14 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
                                 )}
                             >
                                 <SANSelect
+                                    loading={loading.intitutions}
                                     placeholder={t(
                                         'practicalArea.filter.advanced.state.placeholder'
                                     )}
                                     showArrow
                                     size='large'
                                 >
-                                    <SANSelectOption value='jack'>
-                                        Jack
-                                    </SANSelectOption>
+                                    {states.map(renderState)}
                                 </SANSelect>
                             </SANFormItem>
                         </SANCol>
