@@ -38,8 +38,10 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
 
         setIndex(item.id, lessons)
         history.push(
-            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-            resource.id
+            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${
+                lesson.id
+            }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                resource.id
             }`
         )
         onCloseMenu()
@@ -61,7 +63,7 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     lessons.map(lesson => ({
                         ...lesson,
                         hasType: false,
-                        completed: false
+                        completed: lesson.completed
                     }))
                 )
             } catch {
