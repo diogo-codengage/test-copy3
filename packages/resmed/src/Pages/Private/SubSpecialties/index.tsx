@@ -67,6 +67,11 @@ interface IRMSubspecialtiesProps extends RouteComponentProps<IRouteProps> {
 
 const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
     ({ match: { params }, history, onSeeLessons }: IRMSubspecialtiesProps) => {
+        const { handleTrack } = useLayoutContext()
+
+        handleTrack('Specialty viewed', {
+            'Specialty ID': params.specialtyId
+        })
         const { t } = useTranslation('resmed')
 
         const onStart = ({
@@ -238,7 +243,7 @@ const RMSubSpecialties = ({
     }) => {
         history.push(
             `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-            resource.id
+                resource.id
             }`
         )
     }
