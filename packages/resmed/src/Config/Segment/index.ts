@@ -55,6 +55,7 @@ export interface IOptions {
     Correct?: boolean
     'Filter ID'?: 'Question'
     'Specialty ID'?: string
+    'Subspecialty ID'?: string
     'Tag ID'?: string
     'Institution ID'?: string
     'State ID'?: string

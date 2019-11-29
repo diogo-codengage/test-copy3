@@ -3,6 +3,7 @@ import React, { useState, useCallback } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useApolloClient, useQuery } from '@apollo/react-hooks'
+import { useLayoutContext } from 'Pages/Private/Context'
 
 import {
     SANBox,
@@ -161,6 +162,7 @@ const RMSubSpecialties = ({
     history,
     match: { params }
 }: RouteComponentProps<IRouteProps>) => {
+    const { handleTrack } = useLayoutContext()
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
@@ -200,6 +202,10 @@ const RMSubSpecialties = ({
     }
 
     const onSeeLessons = async subspecialty => {
+        handleTrack('Subspecialty viewed', {
+            'Specialty ID': params.specialtyId,
+            'Subspecialty ID': subspecialty.id
+        })
         setLoading(true)
         setCurrent({
             open: true,
@@ -266,8 +272,8 @@ const RMSubSpecialties = ({
                         title: !loadingSpecialty ? (
                             specialty.name
                         ) : (
-                                <SANIcon type='loading' />
-                            )
+                            <SANIcon type='loading' />
+                        )
                     },
                     ExtraProps: {
                         md: 7
