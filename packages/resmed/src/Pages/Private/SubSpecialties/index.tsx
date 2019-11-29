@@ -76,8 +76,10 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
             resource
         }: ILastAccessed) => {
             history.push(
-                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-                resource.id
+                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${
+                    lesson.id
+                }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                    resource.id
                 }`
             )
         }
@@ -130,28 +132,28 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                 }: {
                     data: { subSpecialties: ISubspecialty }
                 }) => (
-                        <>
-                            <SANBox
-                                display='flex'
-                                alignItems='center'
-                                mb={{ xs: 'xxl', _: 'md' }}
+                    <>
+                        <SANBox
+                            display='flex'
+                            alignItems='center'
+                            mb={{ xs: 'xxl', _: 'md' }}
+                        >
+                            <SANTypography
+                                fontSize='xl'
+                                fontWeight='bold'
+                                mr='xs'
                             >
-                                <SANTypography
-                                    fontSize='xl'
-                                    fontWeight='bold'
-                                    mr='xs'
-                                >
-                                    {totalCount}
-                                </SANTypography>
-                                <SANTypography fontSize='xl'>
-                                    {t('subspecialties.subheader.title')}
-                                </SANTypography>
-                            </SANBox>
-                            <SANRow gutter={24}>
-                                {items.map(renderSubspecialty)}
-                            </SANRow>
-                        </>
-                    )}
+                                {totalCount}
+                            </SANTypography>
+                            <SANTypography fontSize='xl'>
+                                {t('subspecialties.subheader.title')}
+                            </SANTypography>
+                        </SANBox>
+                        <SANRow gutter={24}>
+                            {items.map(renderSubspecialty)}
+                        </SANRow>
+                    </>
+                )}
             </SANQuery>
         )
     }
@@ -171,7 +173,9 @@ const RMSubSpecialties = ({
             lastAccessed: {
                 specialtyId: '',
                 subSpecialtyId: '',
-                lessonId: '',
+                lesson: {
+                    id: ''
+                },
                 collectionId: '',
                 resource: {
                     id: '',
@@ -226,13 +230,15 @@ const RMSubSpecialties = ({
     const onStart = ({
         specialtyId,
         subSpecialtyId,
-        lessonId,
+        lesson,
         collectionId,
         resource
     }) => {
         history.push(
-            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-            resource.id
+            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${
+                lesson.id
+            }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                resource.id
             }`
         )
     }
@@ -266,8 +272,8 @@ const RMSubSpecialties = ({
                         title: !loadingSpecialty ? (
                             specialty.name
                         ) : (
-                                <SANIcon type='loading' />
-                            )
+                            <SANIcon type='loading' />
+                        )
                     },
                     ExtraProps: {
                         md: 7
