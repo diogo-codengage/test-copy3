@@ -51,8 +51,28 @@ export interface IQuestionsQuery {
 }
 
 export const GET_QUESTIONS = gql`
-    query Questions($limit: Float!) {
-        questions(limit: $limit) {
+    query Questions(
+        $limit: Float!
+        $categoriesIds: [ID!]
+        $specialtiesIds: [ID!]
+        $subSpecialtiesIds: [ID!]
+        $institutionId: ID
+        $year: Int
+        $isCommentedByExpert: Boolean
+        $withImage: Boolean
+    ) {
+        questions(
+            limit: $limit
+            where: {
+                categoriesIds: $categoriesIds
+                specialtiesIds: $specialtiesIds
+                subSpecialtiesIds: $subSpecialtiesIds
+                institutionId: $institutionId
+                year: $year
+                isCommentedByExpert: $isCommentedByExpert
+                withImage: $withImage
+            }
+        ) {
             totalCount
             limit
             skip
