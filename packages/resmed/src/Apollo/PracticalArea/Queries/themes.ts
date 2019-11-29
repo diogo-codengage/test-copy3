@@ -12,12 +12,10 @@ export interface IThemes {
 }
 
 export const GET_THEMES = gql`
-    query Themes($courseIds: [ID]!) {
-        themes(courseIds: $courseIds) {
-            data {
-                value: id
-                label: name
-            }
+    query Themes {
+        themes {
+            value: id
+            label: name
         }
     }
 `
