@@ -8,7 +8,7 @@ export type IEvents =
     | 'Filter used'
     | 'Terms acepted'
     | 'Terms rejected'
-    | 'Terms Viewed'
+    | 'Terms viewed'
     | 'Course Homepage viewed'
     | 'Specialty viewed'
     | 'Subspecialty viewed'
@@ -124,14 +124,6 @@ export const events = {
     },
     'Terms acepted': {
         event: 'Terms acepted',
-        data: {
-            ProductType: 'ALL',
-            Product: 'Residência Médica',
-            Category: 'Terms'
-        }
-    },
-    'Terms rejected': {
-        event: 'Terms rejected',
         data: {
             ProductType: 'ALL',
             Product: 'Residência Médica',
