@@ -13,7 +13,7 @@ export interface ISubspecialtiesQuery {
 
 export const GET_SUBSPECIALTIES = gql`
     query SubSpecialties {
-        subSpecialties {
+        subSpecialties(where: { status: active }) {
             items {
                 value: id
                 label: name
