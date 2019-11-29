@@ -1,20 +1,85 @@
+export type IEvents =
+    | 'Login failed'
+    | 'Login success'
+    | 'Session started'
+    | 'Logout'
+    | 'Password recovered'
+    | 'Question answred'
+    | 'Filter used'
+    | 'Terms acepted'
+    | 'Terms rejected'
+    | 'Terms Viewed'
+    | 'Course Homepage viewed'
+    | 'Specialty viewed'
+    | 'Subspecialty viewed'
+    | 'Module clicked'
+    | 'Video started'
+    | 'Video resumed'
+    | 'Video paused'
+    | 'Video completed'
+    | 'Question answred'
+    | 'Área de Prática viewed'
+    | 'Informações do Curso Viewed'
+    | 'Voltar button clicked'
+    | 'Precisa de Ajuda button clicked'
+    | 'Continuar button clicked'
+    | 'Continuar de onde parei button clicked'
+    | 'Ver aulas button clicked'
+    | 'Video rated'
+    | 'Clicked'
+
+export interface IOptions {
+    ProductType?: 'ALL'
+    Product?: 'Residência Médica'
+    Category?:
+        | 'Login'
+        | 'Session'
+        | 'Logout'
+        | 'Recover Password'
+        | 'Question'
+        | 'Filter'
+        | 'Terms'
+        | 'Course'
+        | 'Specialty'
+        | 'Subspecialty'
+        | 'Module'
+        | 'Video'
+        | 'Quizz'
+        | 'Course Menu'
+        | 'Rating'
+        | 'App Banner'
+    'User ID'?: string
+    Email?: string
+    'Plataform ID'?: string
+    'Question ID'?: string
+    Correct?: boolean
+    'Filter ID'?: 'Question'
+    'Specialty ID'?: string
+    'Tag ID'?: string
+    'Institution ID'?: string
+    'State ID'?: string
+    'Commented by Expert'?: boolean
+    'Module ID'?: string
+    'Clicker ID'?: string
+    'Video ID'?: string
+    'OS Type'?: 'IOS' | 'ANDROID'
+}
+
 export const events = {
-    Login: {
-        'Login failed': {
-            event: 'Login failed',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Login'
-            }
-        },
-        'Login success': {
-            event: 'Login success',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Login'
-            }
+    'Login failed': {
+        event: 'Login failed',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Login'
+        }
+    },
+    'Login success': {
+        event: 'Login success',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Login'
         }
     },
     'Session started': {
@@ -57,30 +122,28 @@ export const events = {
             Category: 'Filter'
         }
     },
-    Terms: {
-        'Terms acepted': {
-            event: 'Terms acepted',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Terms'
-            }
-        },
-        'Terms rejected': {
-            event: 'Terms rejected',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Terms'
-            }
-        },
-        'Terms viewed': {
-            event: 'Terms viewed',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Terms'
-            }
+    'Terms acepted': {
+        event: 'Terms acepted',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Terms'
+        }
+    },
+    'Terms rejected': {
+        event: 'Terms rejected',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Terms'
+        }
+    },
+    'Terms viewed': {
+        event: 'Terms viewed',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Terms'
         }
     },
     'Course Homepage viewed': {
@@ -115,41 +178,39 @@ export const events = {
             Category: 'Module'
         }
     },
-    Video: {
-        'Video started': {
-            event: 'Video started',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Video'
-            }
-        },
-        'Video resumed': {
-            event: 'Video resumed',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Video'
-            }
-        },
-        'Video paused': {
-            event: 'Video paused',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Video'
-            }
-        },
-        'Video completed': {
-            event: 'Video completed',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Video'
-            }
+    'Video started': {
+        event: 'Video started',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Video'
         }
     },
-    Quiz: {
+    'Video resumed': {
+        event: 'Video resumed',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Video'
+        }
+    },
+    'Video paused': {
+        event: 'Video paused',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Video'
+        }
+    },
+    'Video completed': {
+        event: 'Video completed',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Video'
+        }
+    },
+    'Question answred quiz': {
         event: 'Question answred',
         data: {
             ProductType: 'ALL',
@@ -157,62 +218,60 @@ export const events = {
             Category: 'Quiz'
         }
     },
-    'Course Menu': {
-        'Área de Prática viewed': {
-            event: 'Área de Prática viewed',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Course Menu'
-            }
-        },
-        'Informações do Curso Viewed': {
-            event: 'Informações do Curso Viewed',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Course Menu'
-            }
-        },
-        'Voltar button clicked': {
-            event: 'Voltar button clicked',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Course Menu'
-            }
-        },
-        'Precisa de Ajuda button clicked': {
-            event: 'Precisa de Ajuda button clicked',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Course Menu'
-            }
-        },
-        'Continuar button clicked': {
-            event: 'Continuar button clicked',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Course Menu'
-            }
-        },
-        'Continuar de onde parei button clicked': {
-            event: 'Continuar de onde parei button clicked',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Course Menu'
-            }
-        },
-        'Ver aulas button clicked': {
-            event: 'Ver aulas button clicked',
-            data: {
-                ProductType: 'ALL',
-                Product: 'Residência Médica',
-                Category: 'Course Menu'
-            }
+    'Área de Prática viewed': {
+        event: 'Área de Prática viewed',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Course Menu'
+        }
+    },
+    'Informações do Curso Viewed': {
+        event: 'Informações do Curso Viewed',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Course Menu'
+        }
+    },
+    'Voltar button clicked': {
+        event: 'Voltar button clicked',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Course Menu'
+        }
+    },
+    'Precisa de Ajuda button clicked': {
+        event: 'Precisa de Ajuda button clicked',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Course Menu'
+        }
+    },
+    'Continuar button clicked': {
+        event: 'Continuar button clicked',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Course Menu'
+        }
+    },
+    'Continuar de onde parei button clicked': {
+        event: 'Continuar de onde parei button clicked',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Course Menu'
+        }
+    },
+    'Ver aulas button clicked': {
+        event: 'Ver aulas button clicked',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Course Menu'
         }
     },
     'Video rated': {
