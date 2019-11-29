@@ -10,8 +10,8 @@ export interface IISpecialtiesQuery {
 }
 
 export const GET_SPECIALTIES = gql`
-    query Specialties($courseId: ID) {
-        specialties(where: { courseId: $courseId }) {
+    query Specialties {
+        specialties {
             value: id
             label: name
         }

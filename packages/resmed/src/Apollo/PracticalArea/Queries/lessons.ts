@@ -10,8 +10,8 @@ export interface ILessonsQuery {
 }
 
 export const GET_LESSONS = gql`
-    query Lessons($parentId: ID!) {
-        lessons(where: { parentId: $parentId }) {
+    query Lessons {
+        lessons {
             value: id
             label: name
         }
