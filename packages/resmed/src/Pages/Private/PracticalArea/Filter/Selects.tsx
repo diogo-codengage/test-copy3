@@ -38,6 +38,8 @@ import {
 
 import { useAuthContext } from 'Hooks/auth'
 
+import { useQuestionsContext } from '../Context'
+
 interface ILoading {
     loading: boolean
     error: boolean
@@ -46,7 +48,7 @@ interface ICategoryState extends ILoading {
     items: ICategory[]
 }
 
-const Categories = () => {
+const Categories = ({ initialValue }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
     const [data, setData] = useState<ICategoryState>({
@@ -81,7 +83,11 @@ const Categories = () => {
     }, [])
 
     return (
-        <SANFormItem name='categories' mb={{ xs: 'xl', _: 'md' }}>
+        <SANFormItem
+            name='categories'
+            mb={{ xs: 'xl', _: 'md' }}
+            initialValue={initialValue}
+        >
             <SANCardSelectFilter
                 labelSelecteds={t(
                     'practicalArea.filter.selecteds.category.selecteds'
@@ -102,7 +108,7 @@ interface ISpecialtiyState extends ILoading {
     items: ISpecialty[]
 }
 
-const Specialties = () => {
+const Specialties = ({ initialValue }) => {
     const client = useApolloClient()
     const { activeCourse } = useAuthContext()
     const { t } = useTranslation('resmed')
@@ -138,7 +144,11 @@ const Specialties = () => {
     }, [activeCourse])
 
     return (
-        <SANFormItem name='specialties' mb={{ xs: 'xl', _: 'md' }}>
+        <SANFormItem
+            name='specialties'
+            mb={{ xs: 'xl', _: 'md' }}
+            initialValue={initialValue}
+        >
             <SANCardSelectFilter
                 labelSelecteds={t(
                     'practicalArea.filter.selecteds.specialty.selecteds'
@@ -159,7 +169,7 @@ interface ISubspecialtyState extends ILoading {
     items: ISubspecialty[]
 }
 
-const Subspecialties = () => {
+const Subspecialties = ({ initialValue }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
     const [data, setData] = useState<ISubspecialtyState>({
@@ -194,7 +204,11 @@ const Subspecialties = () => {
     }, [])
 
     return (
-        <SANFormItem name='subspecialties' mb={{ xs: 'xl', _: 'md' }}>
+        <SANFormItem
+            name='subspecialties'
+            mb={{ xs: 'xl', _: 'md' }}
+            initialValue={initialValue}
+        >
             <SANCardSelectFilter
                 labelSelecteds={t(
                     'practicalArea.filter.selecteds.subspecialty.selecteds'
@@ -217,7 +231,7 @@ interface ILessonState extends ILoading {
     items: ILesson[]
 }
 
-const Lessons = () => {
+const Lessons = ({ initialValue }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
     const [data, setData] = useState<ILessonState>({
@@ -250,7 +264,11 @@ const Lessons = () => {
     }, [])
 
     return (
-        <SANFormItem name='themes' mb={{ xs: 'xl', _: 'md' }}>
+        <SANFormItem
+            name='lessons'
+            mb={{ xs: 'xl', _: 'md' }}
+            initialValue={initialValue}
+        >
             <SANCardSelectFilter
                 labelSelecteds={t(
                     'practicalArea.filter.selecteds.theme.selecteds'
@@ -265,21 +283,29 @@ const Lessons = () => {
     )
 }
 
-const RMFilterSelects = () => (
-    <SANRow gutter={24}>
-        <SANCol xs={24} sm={24} md={12}>
-            <Categories />
-        </SANCol>
-        <SANCol xs={24} sm={24} md={12}>
-            <Specialties />
-        </SANCol>
-        <SANCol xs={24} sm={24} md={12}>
-            <Subspecialties />
-        </SANCol>
-        <SANCol xs={24} sm={24} md={12}>
-            <Lessons />
-        </SANCol>
-    </SANRow>
-)
+const RMFilterSelects = () => {
+    const {
+        state: { filter }
+    } = useQuestionsContext()
+
+    return (
+        <SANRow gutter={24}>
+            <SANCol xs={24} sm={24} md={12}>
+                <Categories initialValue={!!filter && filter.categories} />
+            </SANCol>
+            <SANCol xs={24} sm={24} md={12}>
+                <Specialties initialValue={!!filter && filter.specialties} />
+            </SANCol>
+            <SANCol xs={24} sm={24} md={12}>
+                <Subspecialties
+                    initialValue={!!filter && filter.subspecialties}
+                />
+            </SANCol>
+            <SANCol xs={24} sm={24} md={12}>
+                <Lessons initialValue={!!filter && filter.lessons} />
+            </SANCol>
+        </SANRow>
+    )
+}
 
 export default RMFilterSelects

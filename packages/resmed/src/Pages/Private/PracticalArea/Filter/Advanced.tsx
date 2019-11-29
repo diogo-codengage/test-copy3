@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 
 import { theme } from 'styled-tools'
 import styled from 'styled-components'
@@ -20,8 +20,6 @@ import {
     SANTypography
 } from '@sanar/components'
 
-import useOnClickOutside from 'sanar-ui/dist/Hooks/useOnClickOutside'
-
 import {
     GET_INSTITUTIONS,
     IInstitution,
@@ -32,6 +30,7 @@ import {
     IStatesQuery,
     IState
 } from 'Apollo/PracticalArea/Queries/states'
+import { useQuestionsContext } from '../Context'
 
 const Title: React.FC = props => (
     <SANBox
@@ -76,10 +75,11 @@ interface IRMFilterAdvancedProps {
 
 const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
     const client = useApolloClient()
-    const itemPickerRef = useRef<HTMLSpanElement>(null)
     const { t } = useTranslation('resmed')
+    const {
+        state: { filter }
+    } = useQuestionsContext()
     const [open, setOpen] = useState(false)
-    const [openCalendar, setOpenCalendar] = useState(false)
     const [loading, setLoading] = useState({
         intitutions: false,
         categories: false,
@@ -124,11 +124,6 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
         fetchStates()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    useOnClickOutside([itemPickerRef], () => setOpenCalendar(false), [
-        itemPickerRef,
-        setOpenCalendar
-    ])
 
     const renderInstitution = useCallback(
         intitution => (
@@ -177,13 +172,14 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
                                 label={t(
                                     'practicalArea.filter.advanced.institution.title'
                                 )}
+                                initialValue={!!filter && filter.institution}
                             >
                                 <SANSelect
                                     loading={loading.intitutions}
                                     placeholder={t(
                                         'practicalArea.filter.advanced.institution.placeholder'
                                     )}
-                                    showArrow
+                                    allowClear
                                     size='large'
                                 >
                                     {intitutions.map(renderInstitution)}
@@ -191,31 +187,23 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
                             </SANFormItem>
                         </SANCol>
                         <SANCol xs={24} sm={12}>
-                            <span ref={itemPickerRef}>
-                                <SANFormItem
-                                    name='year'
-                                    label={t(
-                                        'practicalArea.filter.advanced.year.title'
+                            <SANFormItem
+                                name='year'
+                                label={t(
+                                    'practicalArea.filter.advanced.year.title'
+                                )}
+                                trigger={'onPanelChange'}
+                                initialValue={!!filter && filter.year}
+                            >
+                                <SANDatePicker
+                                    placeholder={t(
+                                        'practicalArea.filter.advanced.year.placeholder'
                                     )}
-                                    trigger={'onPanelChange'}
-                                >
-                                    <SANDatePicker
-                                        placeholder={t(
-                                            'practicalArea.filter.advanced.year.placeholder'
-                                        )}
-                                        mode='year'
-                                        size='large'
-                                        open={openCalendar}
-                                        format='YYYY'
-                                        onOpenChange={() =>
-                                            setOpenCalendar(true)
-                                        }
-                                        onPanelChange={() =>
-                                            setOpenCalendar(false)
-                                        }
-                                    />
-                                </SANFormItem>
-                            </span>
+                                    mode='year'
+                                    size='large'
+                                    format='YYYY'
+                                />
+                            </SANFormItem>
                         </SANCol>
                         <SANCol xs={24} sm={12}>
                             <SANFormItem
@@ -223,13 +211,14 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
                                 label={t(
                                     'practicalArea.filter.advanced.state.title'
                                 )}
+                                initialValue={!!filter && filter.state}
                             >
                                 <SANSelect
                                     loading={loading.intitutions}
                                     placeholder={t(
                                         'practicalArea.filter.advanced.state.placeholder'
                                     )}
-                                    showArrow
+                                    allowClear
                                     size='large'
                                 >
                                     {states.map(renderState)}
@@ -238,6 +227,7 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
                         </SANCol>
                         <SANCol xs={24} sm={6}>
                             <SwitchStyled
+                                initialValue={!!filter && filter.onlyHasImages}
                                 name='onlyHasImages'
                                 label={t(
                                     'practicalArea.filter.advanced.onlyHasImages'
@@ -249,6 +239,7 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
                         </SANCol>
                         <SANCol xs={24} sm={6}>
                             <SwitchStyled
+                                initialValue={!!filter && filter.onlyComments}
                                 name='onlyComments'
                                 label={t(
                                     'practicalArea.filter.advanced.onlyComments'
