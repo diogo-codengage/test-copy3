@@ -104,6 +104,11 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                     xl={6}
                     mb='xl'
                 >
+                    {handleTrack('Subspecialty viewed', {
+                        'Specialty ID': subspecialty.lastAccessed.specialtyId,
+                        'Subspecialty ID':
+                            subspecialty.lastAccessed.subSpecialtyId
+                    })}
                     <SANCardSubSpecialty
                         blocked={subspecialty.status === 'construction'}
                         title={subspecialty.name}
@@ -232,10 +237,6 @@ const RMSubSpecialties = ({
     }
 
     const onSeeLessons = async subspecialty => {
-        handleTrack('Subspecialty viewed', {
-            'Specialty ID': params.specialtyId,
-            'Subspecialty ID': subspecialty.id
-        })
         setLoading(true)
         setCurrent({
             open: true,
