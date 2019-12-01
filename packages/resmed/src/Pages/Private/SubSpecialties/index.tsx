@@ -126,7 +126,17 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                                     subspecialty.lastAccessed.collectionId
                             })
                         }}
-                        onClickLeft={() => onStart(subspecialty.lastAccessed)}
+                        onClickLeft={() => {
+                            onStart(subspecialty.lastAccessed)
+                            handleTrack('Continuar button clicked', {
+                                'Specialty ID':
+                                    subspecialty.lastAccessed.specialtyId,
+                                'Subspecialty ID':
+                                    subspecialty.lastAccessed.subSpecialtyId,
+                                'Clicker ID':
+                                    subspecialty.lastAccessed.collectionId
+                            })
+                        }}
                     />
                 </SANCol>
             ),
