@@ -55,6 +55,7 @@ export const CREATE_PROGRESS = gql`
             }
             lesson {
                 id
+                completed
                 ${lastAccessed}
             }
             collection {

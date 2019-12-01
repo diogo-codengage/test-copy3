@@ -17,31 +17,6 @@ import RMFilterAdvanced from './Advanced'
 
 import { useQuestionsContext } from '../Context'
 
-const mapItem = item => item.value
-export const makeFilter = (values, userId) => {
-    if (!userId) {
-        throw Error('Argument userId is required in function makeFilter')
-    }
-    return {
-        ...(values.year && {
-            years: [Number(values.year.format('YYYY'))]
-        }),
-        ...(values.tags && { tagIds: values.tags.map(mapItem) }),
-        ...(values.levels && {
-            levelIds: values.levels.map(mapItem)
-        }),
-        ...(values.boards && {
-            boardIds: values.boards.map(mapItem)
-        }),
-        ...(values.exams && { examIds: values.exams.map(mapItem) }),
-        ...(values.isCommentedByExpert && {
-            isCommentedByExpert: values.isCommentedByExpert
-        }),
-        ...(values.progress === '2' && { notAnsweredByUser: userId }),
-        ...(values.progress === '3' && { answeredByUser: userId })
-    }
-}
-
 const RMFilter = ({ form, history }) => {
     const { t } = useTranslation('resmed')
     const { dispatch, reset } = useQuestionsContext()

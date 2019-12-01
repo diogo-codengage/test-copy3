@@ -208,7 +208,9 @@ const RMSubSpecialties = ({
             lastAccessed: {
                 specialtyId: '',
                 subSpecialtyId: '',
-                lessonId: '',
+                lesson: {
+                    id: ''
+                },
                 collectionId: '',
                 resource: {
                     id: '',
@@ -263,12 +265,14 @@ const RMSubSpecialties = ({
     const onStart = ({
         specialtyId,
         subSpecialtyId,
-        lessonId,
+        lesson,
         collectionId,
         resource
     }) => {
         history.push(
-            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${
+                lesson.id
+            }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
                 resource.id
             }`
         )

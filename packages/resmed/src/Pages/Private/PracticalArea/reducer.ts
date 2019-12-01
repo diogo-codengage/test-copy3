@@ -16,7 +16,7 @@ export type IAction =
     | { type: 'filter'; filter: IFilter }
 
 export interface IState {
-    filter?: IFilter
+    filter: IFilter
     currentIndex: number
     stats: IStats
     questions: IQuestion[]
@@ -29,7 +29,7 @@ interface IOwner {
     value: string
 }
 
-interface IFilter {
+export interface IFilter {
     categories?: IOwner[]
     specialties?: IOwner[]
     subspecialties?: IOwner[]

@@ -18,7 +18,7 @@ import {
     GET_QUESTIONS,
     IQuestionsQuery
 } from 'Apollo/PracticalArea/Queries/questions'
-import { reducer, initialStats, IAction, IState } from './reducer'
+import { reducer, initialStats, IAction, IState, IFilter } from './reducer'
 
 import { useLayoutContext } from 'Pages/Private/Context'
 
@@ -46,6 +46,25 @@ const initialState = {
     loading: false,
     bookmarked: false
 }
+
+const mapItem = item => item.value
+const getFilters = (filter: IFilter) => ({
+    ...(!!filter.categories && {
+        categoriesIds: filter.categories.map(mapItem)
+    }),
+    ...(!!filter.specialties && {
+        specialtiesIds: filter.specialties.map(mapItem)
+    }),
+    ...(!!filter.subspecialties && {
+        subSpecialtiesIds: filter.subspecialties.map(mapItem)
+    }),
+    ...(!!filter.institution && {
+        institutionId: filter.institution.value
+    }),
+    ...(!!filter.year && { year: filter.year }),
+    withImage: filter.onlyHasImages,
+    isCommentedByExpert: filter.onlyComments
+})
 
 const RMPracticalProvider: React.FC<RouteComponentProps> = ({
     children,
@@ -115,7 +134,8 @@ const RMPracticalProvider: React.FC<RouteComponentProps> = ({
                 query: GET_QUESTIONS,
                 fetchPolicy: 'network-only',
                 variables: {
-                    limit: 20
+                    limit: 20,
+                    ...getFilters(state.filter)
                 }
             })
             dispatch({
