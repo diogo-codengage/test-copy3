@@ -20,6 +20,8 @@ import {
 } from 'Apollo/PracticalArea/Queries/questions'
 import { reducer, initialStats, IAction, IState } from './reducer'
 
+import { useLayoutContext } from 'Pages/Private/Context'
+
 interface IRMPracticalProviderValue {
     stopwatchRef: any
     pauseStopwatch: () => void
@@ -57,7 +59,11 @@ const RMPracticalProvider: React.FC<RouteComponentProps> = ({
         reducer,
         initialState
     )
-
+    const { handleTrack } = useLayoutContext()
+    useEffect(() => {
+        handleTrack('Área de Prática viewed')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     const totalAnsweredQuestions = useMemo(
         () => state.stats.correct + state.stats.wrong + state.stats.skipped,
         [state.stats]
