@@ -279,7 +279,17 @@ const RMSubSpecialties = ({
                 visible={current.open}
                 title={current.subspecialty.name}
                 onCancel={onCancel}
-                onContinue={() => onStart(current.subspecialty.lastAccessed)}
+                onContinue={() => {
+                    onStart(current.subspecialty.lastAccessed)
+                    handleTrack('Continuar de onde parei button clicked', {
+                        'Specialty ID':
+                            current.subspecialty.lastAccessed.specialtyId,
+                        'Subspecialty ID':
+                            current.subspecialty.lastAccessed.subSpecialtyId,
+                        'Clicker ID':
+                            current.subspecialty.lastAccessed.collectionId
+                    })
+                }}
                 themes={lessons}
                 loading={loading}
             />
