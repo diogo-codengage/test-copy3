@@ -115,7 +115,17 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                             title: subspecialty.lastAccessed.resource.title,
                             index: subspecialty.lastAccessed.lesson.index
                         }}
-                        onClickRight={() => onSeeLessons(subspecialty)}
+                        onClickRight={() => {
+                            onSeeLessons(subspecialty)
+                            handleTrack('Ver aulas button clicked', {
+                                'Specialty ID':
+                                    subspecialty.lastAccessed.specialtyId,
+                                'Subspecialty ID':
+                                    subspecialty.lastAccessed.subSpecialtyId,
+                                'Clicker ID':
+                                    subspecialty.lastAccessed.collectionId
+                            })
+                        }}
                         onClickLeft={() => onStart(subspecialty.lastAccessed)}
                     />
                 </SANCol>
