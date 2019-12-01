@@ -46,6 +46,7 @@ const RMLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
             darkMode,
             ...footerProps
         }),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [darkMode, history, footerProps]
     )
 
