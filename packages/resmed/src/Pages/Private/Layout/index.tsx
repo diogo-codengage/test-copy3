@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { useLayoutContext } from './Context'
+import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
 
 import { SANLayout } from '@sanar/components'
 
@@ -17,6 +18,7 @@ const RMLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
         menuContext,
         footerProps
     } = useLayoutContext()
+    const { handleTrack } = useTrackContext()
 
     const MenuProps = useMemo(
         () => ({
@@ -36,7 +38,10 @@ const RMLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
         () => ({
             ...defaultFooterProps(darkMode),
             HelpButton: {
-                onClick: () => history.push('/inicio/central-ajuda')
+                onClick: () => {
+                    handleTrack('Precisa de Ajuda button clicked')
+                    history.push('/inicio/central-ajuda')
+                }
             },
             darkMode,
             ...footerProps
