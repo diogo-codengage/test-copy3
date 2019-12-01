@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -69,9 +69,12 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
     ({ match: { params }, history, onSeeLessons }: IRMSubspecialtiesProps) => {
         const { handleTrack } = useLayoutContext()
 
-        handleTrack('Specialty viewed', {
-            'Specialty ID': params.specialtyId
-        })
+        useEffect(() => {
+            handleTrack('Specialty viewed', {
+                'Specialty ID': params.specialtyId
+            })
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [])
         const { t } = useTranslation('resmed')
 
         const onStart = ({
@@ -82,8 +85,10 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
             resource
         }: ILastAccessed) => {
             history.push(
-                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-                resource.id
+                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${
+                    lesson.id
+                }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                    resource.id
                 }`
             )
         }
@@ -136,28 +141,28 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                 }: {
                     data: { subSpecialties: ISubspecialty }
                 }) => (
-                        <>
-                            <SANBox
-                                display='flex'
-                                alignItems='center'
-                                mb={{ xs: 'xxl', _: 'md' }}
+                    <>
+                        <SANBox
+                            display='flex'
+                            alignItems='center'
+                            mb={{ xs: 'xxl', _: 'md' }}
+                        >
+                            <SANTypography
+                                fontSize='xl'
+                                fontWeight='bold'
+                                mr='xs'
                             >
-                                <SANTypography
-                                    fontSize='xl'
-                                    fontWeight='bold'
-                                    mr='xs'
-                                >
-                                    {totalCount}
-                                </SANTypography>
-                                <SANTypography fontSize='xl'>
-                                    {t('subspecialties.subheader.title')}
-                                </SANTypography>
-                            </SANBox>
-                            <SANRow gutter={24}>
-                                {items.map(renderSubspecialty)}
-                            </SANRow>
-                        </>
-                    )}
+                                {totalCount}
+                            </SANTypography>
+                            <SANTypography fontSize='xl'>
+                                {t('subspecialties.subheader.title')}
+                            </SANTypography>
+                        </SANBox>
+                        <SANRow gutter={24}>
+                            {items.map(renderSubspecialty)}
+                        </SANRow>
+                    </>
+                )}
             </SANQuery>
         )
     }
