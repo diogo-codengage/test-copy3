@@ -64,6 +64,7 @@ export interface IOptions {
     'Clicker ID'?: string
     'Video ID'?: string
     'OS Type'?: 'IOS' | 'ANDROID'
+    'Rating'?: string
 }
 
 export const events = {
