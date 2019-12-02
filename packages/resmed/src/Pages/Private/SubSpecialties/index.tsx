@@ -127,6 +127,8 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                                     subspecialty.lastAccessed.specialtyId,
                                 'Subspecialty ID':
                                     subspecialty.lastAccessed.subSpecialtyId,
+                                'Lesson ID':
+                                    subspecialty.lastAccessed.lesson.id,
                                 'Clicker ID':
                                     subspecialty.lastAccessed.collectionId
                             })
@@ -138,6 +140,8 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                                     subspecialty.lastAccessed.specialtyId,
                                 'Subspecialty ID':
                                     subspecialty.lastAccessed.subSpecialtyId,
+                                'Lesson ID':
+                                    subspecialty.lastAccessed.lesson.id,
                                 'Clicker ID':
                                     subspecialty.lastAccessed.collectionId
                             })
@@ -291,6 +295,8 @@ const RMSubSpecialties = ({
                             current.subspecialty.lastAccessed.specialtyId,
                         'Subspecialty ID':
                             current.subspecialty.lastAccessed.subSpecialtyId,
+                        'Lesson ID':
+                            current.subspecialty.lastAccessed.lesson.id,
                         'Clicker ID':
                             current.subspecialty.lastAccessed.collectionId
                     })
