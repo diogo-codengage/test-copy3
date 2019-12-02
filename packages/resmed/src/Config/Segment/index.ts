@@ -12,7 +12,7 @@ export type IEvents =
     | 'Course Homepage viewed'
     | 'Specialty viewed'
     | 'Subspecialty viewed'
-    | 'Module clicked'
+    | 'Lesson clicked'
     | 'Video started'
     | 'Video resumed'
     | 'Video paused'
@@ -42,7 +42,7 @@ export interface IOptions {
     | 'Course'
     | 'Specialty'
     | 'Subspecialty'
-    | 'Module'
+    | 'Lesson'
     | 'Video'
     | 'Quizz'
     | 'Course Menu'
@@ -60,7 +60,7 @@ export interface IOptions {
     'Institution ID'?: string
     'State ID'?: string
     'Commented by Expert'?: boolean
-    'Module ID'?: string
+    'Lesson ID'?: string
     'Clicker ID'?: string
     'Video ID'?: string
     'OS Type'?: 'IOS' | 'ANDROID'
@@ -163,12 +163,12 @@ export const events = {
             Category: 'Subspecialty'
         }
     },
-    'Module clicked': {
-        event: 'Module clicked',
+    'Lesson clicked': {
+        event: 'Lesson clicked',
         data: {
             ProductType: 'ALL',
             Product: 'Residência Médica',
-            Category: 'Module'
+            Category: 'Lesson'
         }
     },
     'Video started': {
