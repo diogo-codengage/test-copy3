@@ -10,9 +10,9 @@ storiesOf('Molecules.CardSubSpecialty', module).add('Simple', () => (
         progress={{ me: 60, others: 45 }}
         continue={{
             title: text('Continue title', 'Nome da aula exemplo'),
-            index: 3
+            index: 3,
+            onClick: console.log
         }}
         onClick={console.log}
-        onContinue={console.log}
     />
 ))
