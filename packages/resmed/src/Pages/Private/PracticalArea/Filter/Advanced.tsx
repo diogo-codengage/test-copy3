@@ -168,6 +168,26 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
                     <SANRow gutter={24}>
                         <SANCol xs={24} sm={12}>
                             <SANFormItem
+                                name='state'
+                                label={t(
+                                    'practicalArea.filter.advanced.state.title'
+                                )}
+                                initialValue={!!filter && filter.state}
+                            >
+                                <SANSelect
+                                    loading={loading.intitutions}
+                                    placeholder={t(
+                                        'practicalArea.filter.advanced.state.placeholder'
+                                    )}
+                                    allowClear
+                                    size='large'
+                                >
+                                    {states.map(renderState)}
+                                </SANSelect>
+                            </SANFormItem>
+                        </SANCol>
+                        <SANCol xs={24} sm={12}>
+                            <SANFormItem
                                 name='institution'
                                 label={t(
                                     'practicalArea.filter.advanced.institution.title'
@@ -203,26 +223,6 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
                                     size='large'
                                     format='YYYY'
                                 />
-                            </SANFormItem>
-                        </SANCol>
-                        <SANCol xs={24} sm={12}>
-                            <SANFormItem
-                                name='state'
-                                label={t(
-                                    'practicalArea.filter.advanced.state.title'
-                                )}
-                                initialValue={!!filter && filter.state}
-                            >
-                                <SANSelect
-                                    loading={loading.intitutions}
-                                    placeholder={t(
-                                        'practicalArea.filter.advanced.state.placeholder'
-                                    )}
-                                    allowClear
-                                    size='large'
-                                >
-                                    {states.map(renderState)}
-                                </SANSelect>
                             </SANFormItem>
                         </SANCol>
                         <SANCol xs={24} sm={6}>
