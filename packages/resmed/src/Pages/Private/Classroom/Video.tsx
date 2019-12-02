@@ -14,7 +14,7 @@ import { useWindowSize } from '@sanar/utils/dist/Hooks'
 import { createDebounce } from '@sanar/utils/dist/Debounce'
 
 import RMCollection from 'Components/Collection'
-import { GET_VIDEO, IVideoQuery } from 'Apollo/Classroom/Queries/video'
+import { GET_VIDEO, IVideoQuery, IVideo } from 'Apollo/Classroom/Queries/video'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomContext } from './Context'
 
@@ -37,6 +37,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
     const [videoError, setVideoError] = useState(false)
     const [videoReady, setVideoReady] = useState(false)
     const [willStart, setWillStart] = useState(true)
+    const [video, setVideo] = useState<IVideo>()
 
     const handleVideoReady = () => setVideoReady(true)
 
@@ -55,8 +56,10 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
             `../../${collection.id}/video/${collection.content.video.id}`
         )
 
+    const onCompleted = ({ video }) => setVideo(video)
+
     const onProgress = (percentage, resourceId) => {
-        if (!videoError) {
+        if (!videoError && !!video && video.progress < 100) {
             const timeInSeconds =
                 playerRef && playerRef.current
                     ? playerRef.current.position()
@@ -111,7 +114,8 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
             options={{
                 variables: { id: params.contentId },
                 fetchPolicy: 'network-only',
-                skip: !params.contentId
+                skip: !params.contentId,
+                onCompleted: onCompleted
             }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
             errorProps={{ dark: true }}
@@ -120,6 +124,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                 willStart &&
                     video &&
                     video.timeInSeconds &&
+                    video.progress < 100 &&
                     getStartTime(video.timeInSeconds)
 
                 return (
