@@ -318,7 +318,10 @@ const RMSubSpecialties = ({
                     flexDirection: 'column'
                 }}
                 HeaderProps={{
-                    onBack: () => history.push('/inicio/curso'),
+                    onBack: () => {
+                        history.push('/inicio/curso')
+                        handleTrack('Voltar button clicked')
+                    },
                     SessionTitleProps: {
                         title: !loadingSpecialty ? (
                             specialty.name
