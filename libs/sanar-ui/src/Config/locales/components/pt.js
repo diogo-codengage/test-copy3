@@ -214,8 +214,6 @@ export default {
         others: 'Outros',
         startWith: 'Começar por:',
         continueWith: 'Onde você parou:',
-        start: 'Começar',
-        continue: 'Continuar',
         seeClasses: 'Ver aulas',
         comingSoon: 'Em breve!'
     },

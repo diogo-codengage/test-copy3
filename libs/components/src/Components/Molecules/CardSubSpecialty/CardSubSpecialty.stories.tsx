@@ -12,7 +12,7 @@ storiesOf('Molecules.CardSubSpecialty', module).add('Simple', () => (
             title: text('Continue title', 'Nome da aula exemplo'),
             index: 3
         }}
-        onClickRight={console.log}
-        onClickLeft={console.log}
+        onClick={console.log}
+        onContinue={console.log}
     />
 ))

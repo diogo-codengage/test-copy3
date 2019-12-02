@@ -104,10 +104,10 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                         }}
                         continue={{
                             title: subspecialty.lastAccessed.resource.title,
-                            index: subspecialty.lastAccessed.lesson.index
+                            index: subspecialty.lastAccessed.lesson.index,
+                            onClick: () => onStart(subspecialty.lastAccessed)
                         }}
-                        onClickRight={() => onSeeLessons(subspecialty)}
-                        onClickLeft={() => onStart(subspecialty.lastAccessed)}
+                        onClick={() => onSeeLessons(subspecialty)}
                     />
                 </SANCol>
             ),
