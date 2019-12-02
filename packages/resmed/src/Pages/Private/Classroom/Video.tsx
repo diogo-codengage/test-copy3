@@ -47,6 +47,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
         'User ID': me.id,
         'Specialty ID': params.specialtyId,
         'Subspecialty ID': params.subspecialtyId,
+        'Lesson ID': params.lessonId,
         'Clicker ID': params.collectionId,
         'Video ID': params.contentId
     }
