@@ -54,10 +54,6 @@ export const GET_QUIZ = gql`
         quiz(where: { id: $id }) {
             id
             title
-            specialty {
-                id
-                name
-            }
             questions {
                 id
                 statement
