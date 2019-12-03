@@ -25,7 +25,7 @@ const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
     const { params, onOpenMenu } = useLayoutContext()
     const [loading, setLoading] = useState(true)
     const [questions, setQuestions] = useState<any>([])
-    const { lesson } = useClassroomContext()
+    const { lesson, specialty } = useClassroomContext()
 
     const onChangeCollection = collection =>
         history.push(`./${collection.id}/video/${collection.content.video.id}`)
@@ -63,7 +63,7 @@ const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
         <SANBox flex='1'>
             <SANClassroomHeader
                 title={lesson.title}
-                subtitle={lesson.subSpecialty.specialty.name}
+                subtitle={specialty.title}
                 onOpenMenu={onOpenMenu}
                 actions={false}
                 plataform='resmed'

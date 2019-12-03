@@ -39,15 +39,9 @@ interface IQuestion {
     images: IImage
 }
 
-interface ISpecialty {
-    id: string
-    name: string
-}
-
 export interface IQuiz {
     id: string
     title: string
-    specialty: ISpecialty
     questions: IQuestion[]
 }
 

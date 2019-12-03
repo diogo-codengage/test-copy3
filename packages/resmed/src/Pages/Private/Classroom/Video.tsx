@@ -32,7 +32,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
     const { width } = useWindowSize()
     const playerRef = useRef<any>()
     const collectionRef = useRef<any>()
-    const { handleProgress } = useClassroomContext()
+    const { handleProgress, specialty } = useClassroomContext()
     const { params, onOpenMenu } = useLayoutContext()
     const [videoError, setVideoError] = useState(false)
     const [videoReady, setVideoReady] = useState(false)
@@ -132,7 +132,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                         <Header>
                             <SANClassroomHeader
                                 title={video.title}
-                                subtitle={video.specialty.name}
+                                subtitle={specialty.title}
                                 actions={false}
                                 onOpenMenu={onOpenMenu}
                                 plataform='resmed'
@@ -157,7 +157,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                                     licenseKey={process.env.REACT_APP_JWPLAYER}
                                     isMuted={false}
                                     title={video.title}
-                                    subtitle={video.specialty.name}
+                                    subtitle={specialty.title}
                                     onThreeSeconds={() =>
                                         debounceProgress(1, video.id)
                                     }

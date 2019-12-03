@@ -1,10 +1,4 @@
 import gql from 'graphql-tag'
-
-interface ISpecialty {
-    id: string
-    name: string
-}
-
 export interface IVideo {
     id: string
     title: string
@@ -12,7 +6,6 @@ export interface IVideo {
     image: string
     progress: number
     timeInSeconds: number
-    specialty: ISpecialty
 }
 
 export interface IVideoQuery {
@@ -28,10 +21,6 @@ export const GET_VIDEO = gql`
             image
             progress
             timeInSeconds
-            specialty {
-                id
-                name
-            }
         }
     }
 `
