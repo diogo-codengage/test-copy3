@@ -71,24 +71,24 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                 resourceId,
                 resourceType: 'Video'
             })
+        }
 
-            if (percentage === 100) {
-                const current = collectionRef.current.getCurrent()
-                // if have quiz on this clicker go to quiz
-                if (!!current && !!current.content.quiz) {
+        if (percentage === 100) {
+            const current = collectionRef.current.getCurrent()
+            // if have quiz on this clicker go to quiz
+            if (!!current && !!current.content.quiz) {
+                history.push(
+                    `../../${current.id}/quiz/${current.content.quiz.id}/${current.content.quiz.questions[0].id}`
+                )
+            } else {
+                const next = collectionRef.current.getNext()
+                // if have next clicker go to next
+                if (!!next) {
                     history.push(
-                        `../../${current.id}/quiz/${current.content.quiz.id}/${current.content.quiz.questions[0].id}`
+                        `../../${next.id}/video/${next.content.video.id}`
                     )
                 } else {
-                    const next = collectionRef.current.getNext()
-                    // if have next clicker go to next
-                    if (!!next) {
-                        history.push(
-                            `../../${next.id}/video/${next.content.video.id}`
-                        )
-                    } else {
-                        history.push(`../../avaliacao`)
-                    }
+                    history.push(`../../avaliacao`)
                 }
             }
         }

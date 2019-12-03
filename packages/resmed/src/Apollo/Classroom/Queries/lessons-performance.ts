@@ -1,24 +1,34 @@
 import gql from 'graphql-tag'
 
 export interface IlessonPerformance {
-    clickerName: string
-    totalQuestions: number
-    totalcorrect: number
+    id: string
+    title: string
+    total: number
+    corrects: number
+    quiz: {
+        id: string
+        questions: Array<{
+            id: string
+        }>
+    }
 }
 
 export interface IlessonPerformanceQuery {
-    lessonPerformance: {
-        items: IlessonPerformance
-    }
+    lessonPerformance: IlessonPerformance[]
 }
 
 export const GET_LESSON_PERFORMANCE = gql`
     query LessonPerformance($lessonId: ID!) {
         lessonPerformance(where: { lessonId: $lessonId }) {
-            items {
-                title: clickerName
-                total: totalQuestions
-                corrects: totalCorrect
+            id
+            title: clickerName
+            total: totalQuestions
+            corrects: totalCorrect
+            quiz {
+                id
+                questions {
+                    id
+                }
             }
         }
     }

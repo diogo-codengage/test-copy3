@@ -50,11 +50,18 @@ const Skeleton = ({ showBorder }) => (
     </SANBox>
 )
 
+interface IQuiz {
+    id: string
+    questions: Array<{ id: string }>
+}
+
 interface IQuestion {
+    id: string
     title: string
     percentToCorrect?: number
     corrects: number
     total: number
+    quiz: IQuiz
 }
 
 export interface ISANLessonResultProps {
@@ -62,6 +69,7 @@ export interface ISANLessonResultProps {
     onGoPractice: () => void
     questions: IQuestion[]
     loading?: boolean
+    onGoQuiz: (resp: IQuestion) => void
 }
 
 const sumCorrects = (prev, acc) => prev + acc.corrects
@@ -74,7 +82,8 @@ const SANLessonResult = ({
     percentToCorrect = 80,
     questions,
     onGoPractice,
-    loading = false
+    loading = false,
+    onGoQuiz
 }: ISANLessonResultProps) => {
     const { t } = useTranslation('components')
     const {
@@ -183,6 +192,15 @@ const SANLessonResult = ({
                                     ? 'white.10'
                                     : 'error'
                             }
+                            onClick={() =>
+                                !hasSuccessColletion(question) &&
+                                onGoQuiz(question)
+                            }
+                            style={{
+                                cursor: hasSuccessColletion(question)
+                                    ? 'default'
+                                    : 'pointer'
+                            }}
                         >
                             {hasSuccessColletion(question)
                                 ? t('lessonResult.itemSuccess')

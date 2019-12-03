@@ -41,15 +41,23 @@ const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
                         lessonId: params.lessonId
                     }
                 })
-                setQuestions(lessonPerformance.items)
+                setQuestions(lessonPerformance)
             } catch {}
             setLoading(false)
         }
-        fetchResult()
+        !!params.lessonId && fetchResult()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [params.lessonId])
 
     const handleGoPractice = () => history.push('/inicio/area-pratica/filtro')
+
+    const handleGoQuiz = collection => {
+        const {
+            id,
+            quiz: { questions, id: quizId }
+        } = collection
+        history.push(`./${id}/quiz/${quizId}/${questions[0].id}`)
+    }
 
     return (
         <SANBox flex='1'>
@@ -66,6 +74,7 @@ const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
             >
                 <SANLessonResult
                     onGoPractice={handleGoPractice}
+                    onGoQuiz={handleGoQuiz}
                     questions={questions}
                     loading={loading}
                 />

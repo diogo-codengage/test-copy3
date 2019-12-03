@@ -56,10 +56,16 @@ const getFilters = (filter: IFilter) => ({
     ...(!!filter.subspecialties && {
         subSpecialtiesIds: filter.subspecialties.map(mapItem)
     }),
+    ...(!!filter.lessons && {
+        lessonsIds: filter.lessons.map(mapItem)
+    }),
     ...(!!filter.institution && {
         institutionId: filter.institution.value
     }),
-    ...(!!filter.year && { year: filter.year }),
+    ...(!!filter.state && {
+        state: filter.state
+    }),
+    ...(!!filter.year && { year: Number(filter.year.format('YYYY')) }),
     withImage: filter.onlyHasImages,
     isCommentedByExpert: filter.onlyComments
 })
