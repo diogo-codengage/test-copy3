@@ -42,6 +42,7 @@ const RMClassroomRating = ({ history }: RouteComponentProps) => {
                 subtitle={lesson.subSpecialty.specialty.name}
                 onOpenMenu={onOpenMenu}
                 actions={false}
+                plataform='resmed'
             />
             <SANLayoutContainer
                 pb='8'

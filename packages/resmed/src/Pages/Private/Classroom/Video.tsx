@@ -135,11 +135,13 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                                 subtitle={video.specialty.name}
                                 actions={false}
                                 onOpenMenu={onOpenMenu}
+                                plataform='resmed'
                             />
                         </Header>
                         <SANBox display='flex' {...wrapper}>
                             <SANBox flex='1'>
                                 <SANJwPlayer
+                                    plataform='resmed'
                                     ref={playerRef}
                                     onReady={handleVideoReady}
                                     onError={handleVideoError}

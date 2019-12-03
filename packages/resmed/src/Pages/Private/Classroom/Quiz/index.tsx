@@ -53,6 +53,7 @@ const RMClassRoomQuiz = (props: RouteComponentProps) => {
                         subtitle={quiz.specialty.name}
                         onOpenMenu={onOpenMenu}
                         actions={false}
+                        plataform='resmed'
                     />
                     <SANLayoutContainer
                         pb='8'
