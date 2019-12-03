@@ -43,14 +43,18 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
     const [willStart, setWillStart] = useState(true)
     const { me } = useAuthContext()
 
-    const dataToTrack = {
-        'User ID': me.id,
-        'Specialty ID': params.specialtyId,
-        'Subspecialty ID': params.subspecialtyId,
-        'Lesson ID': params.lessonId,
-        'Clicker ID': params.collectionId,
-        'Video ID': params.contentId
-    }
+    const dataToTrack = useMemo(
+        () => ({
+            'User ID': me.id,
+            'Specialty ID': params.specialtyId,
+            'Subspecialty ID': params.subspecialtyId,
+            'Lesson ID': params.lessonId,
+            'Clicker ID': params.collectionId,
+            'Video ID': params.contentId
+        }),
+        [params, me]
+    )
+
     const handleVideoReady = () => {
         setVideoReady(true)
         handleTrack('Video started', dataToTrack)
@@ -102,7 +106,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                 // if have quiz on this clicker go to quiz
                 if (!!current && !!current.content.quiz) {
                     history.push(
-                        `../../${current.id}/quiz/${current.content.quiz.id}`
+                        `../../${current.id}/quiz/${current.content.quiz.id}/${current.content.quiz.questions[0].id}`
                     )
                 } else {
                     const next = collectionRef.current.getNext()

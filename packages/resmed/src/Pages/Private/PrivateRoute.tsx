@@ -13,6 +13,8 @@ import { GET_ME } from 'Apollo/User/Queries/me'
 import { useAuthContext } from 'Hooks/auth'
 import { logout, getCognitoUser } from 'Config/AWSCognito'
 
+import { segmentTrack } from 'Config/Segment/track'
+
 import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 import RMSplashLoader from 'Components/SplashLoader'
 
@@ -42,7 +44,7 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
             const {
                 data: { me }
             } = await client.query({ query: GET_ME })
-
+            segmentTrack('Session started')
             setMe(me)
         } catch {
             logout({ callback: onLogout })
