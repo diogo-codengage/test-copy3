@@ -18,8 +18,8 @@ import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
 const RMClassroomRating = ({ history }: RouteComponentProps) => {
     const client = useApolloClient()
     const { params, onOpenMenu } = useLayoutContext()
-    const { lesson } = useClassroomContext()
     const { handleTrack } = useTrackContext()
+    const { lesson, specialty } = useClassroomContext()
 
     const handleRating = async (value, { setSubmitting }) => {
         handleTrack('Video rated', {
@@ -48,9 +48,10 @@ const RMClassroomRating = ({ history }: RouteComponentProps) => {
         <SANBox flex='1'>
             <SANClassroomHeader
                 title={lesson.title}
-                subtitle={lesson.subSpecialty.specialty.name}
+                subtitle={specialty.title}
                 onOpenMenu={onOpenMenu}
                 actions={false}
+                plataform='resmed'
             />
             <SANLayoutContainer
                 pb='8'

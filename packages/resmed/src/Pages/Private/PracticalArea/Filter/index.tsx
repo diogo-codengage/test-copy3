@@ -13,7 +13,7 @@ import {
 } from '@sanar/components'
 
 import RMFilterSelects from './Selects'
-import RMFilterAdvanced from './Advanced'
+import RMFilterAdvanced, { OnlyComments } from './Advanced'
 
 import { useLayoutContext } from 'Pages/Private/Context'
 
@@ -78,6 +78,7 @@ const RMFilter = ({ form, history }) => {
                 <SANSessionTitle
                     title={t('practicalArea.filter.subheader.title')}
                     subtitle={t('practicalArea.filter.subheader.subtitle')}
+                    extra={<OnlyComments m='0' />}
                 />
                 <RMFilterSelects />
                 <RMFilterAdvanced />

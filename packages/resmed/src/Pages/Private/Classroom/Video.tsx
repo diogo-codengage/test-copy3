@@ -14,7 +14,7 @@ import { useWindowSize } from '@sanar/utils/dist/Hooks'
 import { createDebounce } from '@sanar/utils/dist/Debounce'
 
 import RMCollection from 'Components/Collection'
-import { GET_VIDEO, IVideoQuery } from 'Apollo/Classroom/Queries/video'
+import { GET_VIDEO, IVideoQuery, IVideo } from 'Apollo/Classroom/Queries/video'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
 import { useClassroomContext } from './Context'
@@ -35,12 +35,13 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
     const { width } = useWindowSize()
     const playerRef = useRef<any>()
     const collectionRef = useRef<any>()
-    const { handleProgress } = useClassroomContext()
+    const { handleProgress, specialty } = useClassroomContext()
     const { params, onOpenMenu } = useLayoutContext()
     const { handleTrack } = useTrackContext()
     const [videoError, setVideoError] = useState(false)
     const [videoReady, setVideoReady] = useState(false)
     const [willStart, setWillStart] = useState(true)
+    const [video, setVideo] = useState<IVideo>()
     const { me } = useAuthContext()
 
     const dataToTrack = useMemo(
@@ -87,8 +88,10 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
             `../../${collection.id}/video/${collection.content.video.id}`
         )
 
+    const onCompleted = ({ video }) => setVideo(video)
+
     const onProgress = (percentage, resourceId) => {
-        if (!videoError) {
+        if (!videoError && !!video && video.progress < 100) {
             const timeInSeconds =
                 playerRef && playerRef.current
                     ? playerRef.current.position()
@@ -100,24 +103,24 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                 resourceId,
                 resourceType: 'Video'
             })
+        }
 
-            if (percentage === 100) {
-                const current = collectionRef.current.getCurrent()
-                // if have quiz on this clicker go to quiz
-                if (!!current && !!current.content.quiz) {
+        if (percentage === 100) {
+            const current = collectionRef.current.getCurrent()
+            // if have quiz on this clicker go to quiz
+            if (!!current && !!current.content.quiz) {
+                history.push(
+                    `../../${current.id}/quiz/${current.content.quiz.id}/${current.content.quiz.questions[0].id}`
+                )
+            } else {
+                const next = collectionRef.current.getNext()
+                // if have next clicker go to next
+                if (!!next) {
                     history.push(
-                        `../../${current.id}/quiz/${current.content.quiz.id}/${current.content.quiz.questions[0].id}`
+                        `../../${next.id}/video/${next.content.video.id}`
                     )
                 } else {
-                    const next = collectionRef.current.getNext()
-                    // if have next clicker go to next
-                    if (!!next) {
-                        history.push(
-                            `../../${next.id}/video/${next.content.video.id}`
-                        )
-                    } else {
-                        history.push(`../../avaliacao`)
-                    }
+                    history.push(`../../avaliacao`)
                 }
             }
         }
@@ -143,7 +146,8 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
             options={{
                 variables: { id: params.contentId },
                 fetchPolicy: 'network-only',
-                skip: !params.contentId
+                skip: !params.contentId,
+                onCompleted: onCompleted
             }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
             errorProps={{ dark: true }}
@@ -152,6 +156,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                 willStart &&
                     video &&
                     video.timeInSeconds &&
+                    video.progress < 100 &&
                     getStartTime(video.timeInSeconds)
 
                 return (
@@ -159,14 +164,16 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                         <Header>
                             <SANClassroomHeader
                                 title={video.title}
-                                subtitle={video.specialty.name}
+                                subtitle={specialty.title}
                                 actions={false}
                                 onOpenMenu={onOpenMenu}
+                                plataform='resmed'
                             />
                         </Header>
                         <SANBox display='flex' {...wrapper}>
                             <SANBox flex='1'>
                                 <SANJwPlayer
+                                    plataform='resmed'
                                     ref={playerRef}
                                     onReady={handleVideoReady}
                                     onPlay={handlePlay}
@@ -184,7 +191,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                                     licenseKey={process.env.REACT_APP_JWPLAYER}
                                     isMuted={false}
                                     title={video.title}
-                                    subtitle={video.specialty.name}
+                                    subtitle={specialty.title}
                                     onThreeSeconds={() =>
                                         debounceProgress(1, video.id)
                                     }

@@ -59,14 +59,14 @@ const Item = ({ index, name, completed, status, onClick }) => {
             <SANBox display='flex' alignItems='center'>
                 <SANTypography
                     color={completed ? 'primary' : 'grey.5'}
-                    fontSize='xs'
+                    fontSize='md'
                     fontWeight='bold'
                     lineHeight='1'
                     mr='xs'
                 >
                     {index}
                 </SANTypography>
-                <SANTypography fontSize='md' lineHeight='1'>
+                <SANTypography fontSize='lg' lineHeight='1' mr='xs'>
                     {status !== 'active' ? t('modalThemes.blocked') : name}
                 </SANTypography>
             </SANBox>
@@ -74,7 +74,7 @@ const Item = ({ index, name, completed, status, onClick }) => {
                 <SANEvaIcon
                     name='checkmark-circle-2'
                     color='primary'
-                    size='large'
+                    size='xlarge'
                 />
             ) : (
                 <SANEvaIcon name='arrow-ios-forward-outline' size='large' />
@@ -152,7 +152,7 @@ const RMModalThemes = ({
             {...props}
         >
             <SANSpin spinning={loading}>
-                <SANBox margin='-24px' mb='lg' py='sm' height={427}>
+                <SANBox margin='-24px' mb='lg' py='sm' height={345}>
                     <SANScroll>
                         {themes.map((theme, index) =>
                             renderTheme(theme, index, onClickItem)

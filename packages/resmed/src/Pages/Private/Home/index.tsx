@@ -75,12 +75,12 @@ const Header = () => {
                                 <SANCommonBadge
                                     count={activeCourse.progress}
                                     suffix='%'
-                                    status='warning'
+                                    status='primary'
                                 />
                             </SANBox>
                             <SANProgress
                                 percent={activeCourse.progress}
-                                color='secondary'
+                                color='primary'
                                 backdrop='grey.1'
                             />
                         </SANBox>

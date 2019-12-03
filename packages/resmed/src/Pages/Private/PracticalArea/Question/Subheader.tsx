@@ -71,7 +71,10 @@ export const Performace = ({ vertical = false, ...props }) => {
     )
 }
 
-const RMSubheader: React.FC = ({ children }) => (
+const RMSubheader: React.FC<{ extra?: React.ReactNode }> = ({
+    children,
+    extra
+}) => (
     <SANBox
         display='flex'
         flexDirection={{ _: 'column-reverse', lg: 'row' }}
@@ -79,7 +82,11 @@ const RMSubheader: React.FC = ({ children }) => (
         justifyContent='space-between'
         mb={{ lg: '7', _: 'md' }}
     >
-        <Performace />
+        {!!extra ? (
+            <SANBox mt={{ lg: '0', _: 'md' }}>{extra}</SANBox>
+        ) : (
+            <Performace />
+        )}
         {children}
     </SANBox>
 )

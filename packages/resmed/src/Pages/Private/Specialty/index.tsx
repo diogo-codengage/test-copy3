@@ -68,14 +68,28 @@ interface IRMSubspecialtiesProps extends RouteComponentProps<IRouteProps> {
 const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
     ({ match: { params }, history, onSeeLessons }: IRMSubspecialtiesProps) => {
         const { handleTrack } = useLayoutContext()
+        const { t } = useTranslation('resmed')
+        const [subSpecialties, setSubSpecialties] = useState([])
 
         useEffect(() => {
             handleTrack('Specialty viewed', {
                 'Specialty ID': params.specialtyId
             })
             // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [])
-        const { t } = useTranslation('resmed')
+        }, [params.specialtyId])
+
+        useEffect(() => {
+            subSpecialties.forEach((subspecialty: ISubspecialtyItems) => {
+                handleTrack('Subspecialty viewed', {
+                    'Specialty ID': params.specialtyId,
+                    'Subspecialty ID': subspecialty.id
+                })
+            })
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [subSpecialties, params.specialtyId])
+
+        const onCompleted = ({ subSpecialties }) =>
+            setSubSpecialties(subSpecialties.items)
 
         const onStart = ({
             specialtyId,
@@ -104,11 +118,6 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                     xl={6}
                     mb='xl'
                 >
-                    {handleTrack('Subspecialty viewed', {
-                        'Specialty ID': subspecialty.lastAccessed.specialtyId,
-                        'Subspecialty ID':
-                            subspecialty.lastAccessed.subSpecialtyId
-                    })}
                     <SANCardSubSpecialty
                         blocked={subspecialty.status === 'construction'}
                         title={subspecialty.name}
@@ -118,24 +127,25 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                         }}
                         continue={{
                             title: subspecialty.lastAccessed.resource.title,
-                            index: subspecialty.lastAccessed.lesson.index
+                            index: subspecialty.lastAccessed.lesson.index,
+                            onClick: () => {
+                                onStart(subspecialty.lastAccessed)
+                                handleTrack('Continuar button clicked', {
+                                    'Specialty ID':
+                                        subspecialty.lastAccessed.specialtyId,
+                                    'Subspecialty ID':
+                                        subspecialty.lastAccessed
+                                            .subSpecialtyId,
+                                    'Lesson ID':
+                                        subspecialty.lastAccessed.lesson.id,
+                                    'Clicker ID':
+                                        subspecialty.lastAccessed.collectionId
+                                })
+                            }
                         }}
-                        onClickRight={() => {
+                        onClick={() => {
                             onSeeLessons(subspecialty)
                             handleTrack('Ver aulas button clicked', {
-                                'Specialty ID':
-                                    subspecialty.lastAccessed.specialtyId,
-                                'Subspecialty ID':
-                                    subspecialty.lastAccessed.subSpecialtyId,
-                                'Lesson ID':
-                                    subspecialty.lastAccessed.lesson.id,
-                                'Clicker ID':
-                                    subspecialty.lastAccessed.collectionId
-                            })
-                        }}
-                        onClickLeft={() => {
-                            onStart(subspecialty.lastAccessed)
-                            handleTrack('Continuar button clicked', {
                                 'Specialty ID':
                                     subspecialty.lastAccessed.specialtyId,
                                 'Subspecialty ID':
@@ -150,7 +160,7 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                 </SANCol>
             ),
             // eslint-disable-next-line react-hooks/exhaustive-deps
-            [onSeeLessons]
+            []
         )
 
         return (
@@ -158,7 +168,8 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                 query={GET_SUBSPECIALTIES}
                 options={{
                     variables: { parentId: params.specialtyId },
-                    skip: !params.specialtyId
+                    skip: !params.specialtyId,
+                    onCompleted: onCompleted
                 }}
                 loaderProps={{ minHeight: '250px', flex: true }}
                 errorProps={{ flex: 1 }}
@@ -197,7 +208,7 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
     }
 )
 
-const RMSubSpecialties = ({
+const RMSpecialty = ({
     history,
     match: { params }
 }: RouteComponentProps<IRouteProps>) => {
@@ -346,4 +357,4 @@ const RMSubSpecialties = ({
     )
 }
 
-export default withRouter<RouteComponentProps<IRouteProps>>(RMSubSpecialties)
+export default withRouter<RouteComponentProps<IRouteProps>>(RMSpecialty)

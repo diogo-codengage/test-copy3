@@ -19,6 +19,7 @@ import { GET_QUIZ, IQuizQuery } from 'Apollo/Classroom/Queries/quiz'
 
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 
+import { useClassroomContext } from '../Context'
 import { withClassroomProvider, useClassroomQuizContext } from './Context'
 import RMClassRoomQuizQuestion from './Question'
 
@@ -29,6 +30,7 @@ const RMClassRoomQuiz = (props: RouteComponentProps) => {
     } = props
     const { onOpenMenu, params } = useLayoutContext()
     const { setQuestions } = useClassroomQuizContext()
+    const { specialty } = useClassroomContext()
 
     const setQuestionContext = ({ quiz }) => {
         history.push(`${url}/${quiz.questions[0].id}`)
@@ -50,9 +52,10 @@ const RMClassRoomQuiz = (props: RouteComponentProps) => {
                 <SANBox flex='1'>
                     <SANClassroomHeader
                         title={quiz.title}
-                        subtitle={quiz.specialty.name}
+                        subtitle={specialty.title}
                         onOpenMenu={onOpenMenu}
                         actions={false}
+                        plataform='resmed'
                     />
                     <SANLayoutContainer
                         pb='8'
