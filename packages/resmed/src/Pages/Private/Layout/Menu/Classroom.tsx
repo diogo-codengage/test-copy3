@@ -67,7 +67,7 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                         extra: lesson.completed ? (
                             <SANEvaIcon
                                 name='checkmark-circle-2'
-                                color='primary'
+                                color='warning'
                             />
                         ) : (
                             <SANEvaIcon
