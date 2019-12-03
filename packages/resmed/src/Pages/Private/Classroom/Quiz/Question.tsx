@@ -61,6 +61,7 @@ const RMClassroomQuizQuestion = ({
     const { params: paramsLayout } = useLayoutContext()
     const [visible, setVisible] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [skipped, seSkipped] = useState(0)
     const [responses, setResponses] = useState<any[]>([])
 
     const goToNext = () => {
@@ -81,17 +82,21 @@ const RMClassroomQuizQuestion = ({
         }
     }
 
-    const handleJump = () => goToNext()
+    const handleJump = () => {
+        seSkipped(old => old + 1)
+        goToNext()
+    }
 
     const handleNext = () => goToNext()
 
     const handleConfirm = async alternativeId => {
         setLoading(true)
+        const current = index + 1 - skipped
         handleProgress({
             resourceId: paramsLayout.contentId,
             resourceType: 'Quiz',
             percentage: parseInt(
-                (((index + 1) * 100) / questions.length).toString(),
+                ((current * 100) / questions.length).toString(),
                 10
             )
         })
