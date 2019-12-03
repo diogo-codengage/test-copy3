@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { useApolloClient } from '@apollo/react-hooks'
 import { withRouter, RouteComponentProps } from 'react-router'
 
-import { SANClassroomMenu } from '@sanar/components'
+import { SANClassroomMenu, SANEvaIcon } from '@sanar/components'
 import { useTryToCrash } from '@sanar/utils/dist/Hooks'
 
 import { GET_LESSONS, ILessons } from 'Apollo/Classroom/Queries/lessons'
@@ -63,7 +63,18 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     lessons.map(lesson => ({
                         ...lesson,
                         hasType: false,
-                        completed: lesson.completed
+                        completed: lesson.completed,
+                        extra: lesson.completed ? (
+                            <SANEvaIcon
+                                name='checkmark-circle-2'
+                                color='primary'
+                            />
+                        ) : (
+                            <SANEvaIcon
+                                name='arrow-ios-forward-outline'
+                                color='light'
+                            />
+                        )
                     }))
                 )
             } catch {
