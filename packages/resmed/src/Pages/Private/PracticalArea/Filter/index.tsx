@@ -15,11 +15,14 @@ import {
 import RMFilterSelects from './Selects'
 import RMFilterAdvanced, { OnlyComments } from './Advanced'
 
+import { useLayoutContext } from 'Pages/Private/Context'
+
 import { useQuestionsContext } from '../Context'
 
 const RMFilter = ({ form, history }) => {
     const { t } = useTranslation('resmed')
     const { dispatch, reset } = useQuestionsContext()
+    const { handleTrack } = useLayoutContext()
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -47,7 +50,10 @@ const RMFilter = ({ form, history }) => {
                     flexDirection: 'column'
                 }}
                 HeaderProps={{
-                    onBack: () => history.push('/inicio/curso'),
+                    onBack: () => {
+                        history.push('/inicio/curso')
+                        handleTrack('Voltar button clicked')
+                    },
                     SessionTitleProps: {
                         title: t('practicalArea.filter.header.title'),
                         subtitle: t('practicalArea.filter.header.subtitle'),

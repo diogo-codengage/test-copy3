@@ -13,13 +13,22 @@ import {
 import { CREATE_RATING } from 'Apollo/Classroom/Mutations/create-rating'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomContext } from './Context'
+import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
 
 const RMClassroomRating = ({ history }: RouteComponentProps) => {
     const client = useApolloClient()
     const { params, onOpenMenu } = useLayoutContext()
+    const { handleTrack } = useTrackContext()
     const { lesson, specialty } = useClassroomContext()
 
     const handleRating = async (value, { setSubmitting }) => {
+        handleTrack('Video rated', {
+            'Specialty ID': params.specialtyId,
+            'Subspecialty ID': params.subspecialtyId,
+            'Lesson ID': params.lessonId,
+            'Clicker ID': params.collectionId,
+            Rating: value
+        })
         try {
             await client.mutate({
                 mutation: CREATE_RATING,

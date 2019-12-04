@@ -26,6 +26,8 @@ import { useAuthContext } from 'Hooks/auth'
 import appleSvg from 'Assets/images/app-logos/apple.svg'
 import googlePlaySvg from 'Assets/images/app-logos/google-play.svg'
 
+import { useLayoutContext } from 'Pages/Private/Context'
+
 const RMSpecialties = withRouter<RouteComponentProps>(
     ({ history }: RouteComponentProps) => {
         const { activeCourse } = useAuthContext()
@@ -45,8 +47,10 @@ const RMSpecialties = withRouter<RouteComponentProps>(
             resource
         }: ILastAccessed) => {
             history.push(
-                `/inicio/sala-aula/${specialtyId}/${lesson.id}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-                resource.id
+                `/inicio/sala-aula/${specialtyId}/${
+                    lesson.id
+                }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                    resource.id
                 }`
             )
         }
@@ -92,10 +96,10 @@ const RMSpecialties = withRouter<RouteComponentProps>(
                 }: {
                     data: { specialties: ISpecialties[] }
                 }) => (
-                        <SANRow gutter={24} type='flex' flexWrap='wrap'>
-                            {specialties.map(renderSpecialty)}
-                        </SANRow>
-                    )}
+                    <SANRow gutter={24} type='flex' flexWrap='wrap'>
+                        {specialties.map(renderSpecialty)}
+                    </SANRow>
+                )}
             </SANQuery>
         )
     }
@@ -107,6 +111,13 @@ const SpecialtiesStyled = styled(SANBox)`
 
 const RMGeneral = () => {
     const { t } = useTranslation('resmed')
+    const { handleTrack } = useLayoutContext()
+    const handleAppClicked = OS => {
+        handleTrack('App Banner Clicked', {
+            'OS Type': OS
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
 
     return (
         <>
@@ -157,6 +168,7 @@ const RMGeneral = () => {
                             width={{ xs: '284px', _: '100%' }}
                         >
                             <SANButton
+                                onClick={() => handleAppClicked('IOS')}
                                 block
                                 variant='outlined'
                                 color='black'
@@ -167,6 +179,7 @@ const RMGeneral = () => {
                                 <SANBox as='img' src={appleSvg} />
                             </SANButton>
                             <SANButton
+                                onClick={() => handleAppClicked('ANDROID')}
                                 block
                                 variant='outlined'
                                 color='black'

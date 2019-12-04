@@ -16,7 +16,10 @@ import { createDebounce } from '@sanar/utils/dist/Debounce'
 import RMCollection from 'Components/Collection'
 import { GET_VIDEO, IVideoQuery, IVideo } from 'Apollo/Classroom/Queries/video'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
+import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
 import { useClassroomContext } from './Context'
+
+import { useAuthContext } from 'Hooks/auth'
 
 const Header = styled.div`
     @media screen and (orientation: landscape) {
@@ -34,12 +37,41 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
     const collectionRef = useRef<any>()
     const { handleProgress, specialty } = useClassroomContext()
     const { params, onOpenMenu } = useLayoutContext()
+    const { handleTrack } = useTrackContext()
     const [videoError, setVideoError] = useState(false)
     const [videoReady, setVideoReady] = useState(false)
     const [willStart, setWillStart] = useState(true)
     const [video, setVideo] = useState<IVideo>()
+    const { me } = useAuthContext()
 
-    const handleVideoReady = () => setVideoReady(true)
+    const dataToTrack = useMemo(
+        () => ({
+            'User ID': me.id,
+            'Specialty ID': params.specialtyId,
+            'Subspecialty ID': params.subspecialtyId,
+            'Lesson ID': params.lessonId,
+            'Clicker ID': params.collectionId,
+            'Video ID': params.contentId
+        }),
+        [params, me]
+    )
+
+    const handleVideoReady = () => {
+        setVideoReady(true)
+        handleTrack('Video started', dataToTrack)
+    }
+
+    const handlePlay = () => {
+        handleTrack('Video resumed', dataToTrack)
+    }
+
+    const handlePause = () => {
+        handleTrack('Video paused', dataToTrack)
+    }
+
+    const handleComplete = () => {
+        handleTrack('Video completed', dataToTrack)
+    }
 
     const handleVideoError = () => setVideoError(true)
 
@@ -144,6 +176,8 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                                     plataform='resmed'
                                     ref={playerRef}
                                     onReady={handleVideoReady}
+                                    onPlay={handlePlay}
+                                    onPause={handlePause}
                                     onError={handleVideoError}
                                     onOpenMenu={onOpenMenu}
                                     playerId='playerId'
@@ -170,9 +204,10 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                                     onSeventyFivePercent={() =>
                                         debounceProgress(75, video.id)
                                     }
-                                    onOneHundredPercent={() =>
+                                    onOneHundredPercent={() => {
                                         debounceProgress(100, video.id)
-                                    }
+                                        handleComplete()
+                                    }}
                                 />
                             </SANBox>
                             <RMCollection

@@ -19,6 +19,8 @@ import {
 import { ISANModalProps } from '@sanar/components/dist/Components/Molecules/Modal'
 import { ILastAccessed } from 'Apollo/Subspecialties/Queries/lessons'
 
+import { useLayoutContext } from 'Pages/Private/Context'
+
 const ItemStyled = styled(SANBox)<{ blocked?: boolean }>`
     &:nth-child(even) {
         background-color: ${theme('colors.grey-solid.1')};
@@ -115,6 +117,7 @@ const RMModalThemes = ({
     ...props
 }: IRMModalThemesProps) => {
     const { t } = useTranslation('resmed')
+    const { handleTrack } = useLayoutContext()
 
     const onClickItem = (lastAccessed: ILastAccessed) => {
         const {
@@ -124,6 +127,13 @@ const RMModalThemes = ({
             collectionId,
             resource
         } = lastAccessed
+
+        handleTrack('Lesson clicked', {
+            'Specialty ID': specialtyId,
+            'Subspecialty ID': subSpecialtyId,
+            'Lesson ID': lesson.id,
+            'Clicker ID': collectionId
+        })
 
         history.push(
             `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${

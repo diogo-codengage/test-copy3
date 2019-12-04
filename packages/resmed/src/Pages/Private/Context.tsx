@@ -6,11 +6,14 @@ import { useTranslation } from 'react-i18next'
 
 import { useSnackbarContext } from '@sanar/components'
 
+import { segmentTrack } from 'Config/Segment/track'
+import { IEvents, IOptions } from 'Config/Segment'
 import { useAuthContext } from 'Hooks/auth'
 import { GET_ACTIVE_COURSE } from 'Apollo/User/Queries/active-course'
 
 interface RMMainContext {
     getCurrentEnrollment: () => void
+    handleTrack: (event: IEvents, attrs?: IOptions) => void
 }
 
 const Context = createContext<RMMainContext>({} as RMMainContext)
@@ -21,7 +24,7 @@ const RMMainProvider: React.FC<RouteComponentProps> = ({ children }) => {
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
     const { t } = useTranslation('resmed')
-    const { setActiveCourse } = useAuthContext()
+    const { setActiveCourse, me, activeCourse } = useAuthContext()
 
     const getCurrentEnrollment = async () => {
         try {
@@ -38,13 +41,25 @@ const RMMainProvider: React.FC<RouteComponentProps> = ({ children }) => {
         }
     }
 
+    const handleTrack = (event: IEvents, attrs?: IOptions) => {
+        const data = {
+            'User ID': me.id,
+            'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
+            'Course ID': activeCourse.id,
+            ...attrs
+        }
+
+        segmentTrack(event, data)
+    }
+
     useEffect(() => {
         getCurrentEnrollment()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const value = {
-        getCurrentEnrollment
+        getCurrentEnrollment,
+        handleTrack
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

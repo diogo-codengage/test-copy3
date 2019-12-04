@@ -5,6 +5,8 @@ import { withRouter, RouteComponentProps } from 'react-router'
 
 import { SANClassroomMenuHeader } from '@sanar/components'
 
+import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
+
 type IMenuContext = 'general' | 'classroom'
 
 interface IMenuState {
@@ -99,6 +101,7 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
         defaultNavigations
     )
     const menuRef = useRef<any>()
+    const { handleTrack } = useTrackContext()
 
     const onCloseMenu = () => {
         menuRef && menuRef.current && menuRef.current.setToggle(false)
@@ -109,6 +112,7 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
     }
 
     const handleBackClassroom = () => {
+        handleTrack('Voltar button clicked')
         history.push(`/portal/curso`)
     }
 
