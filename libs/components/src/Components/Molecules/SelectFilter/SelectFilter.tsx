@@ -4,17 +4,36 @@ import { useTranslation } from 'react-i18next'
 
 import useOnClickOutside from 'sanar-ui/dist/Hooks/useOnClickOutside'
 
+import { SANBox } from '../../Atoms/Box'
 import { SANInput } from '../../Atoms/Input'
 import { SANCheckbox } from '../../Atoms/Checkbox'
 import { SANButton } from '../../Atoms/Button'
 import { SANDivider } from '../../Atoms/Divider'
-import { SANSpin } from '../../Atoms/Spin'
-import { SANEvaIcon } from '../../Atoms/EvaIcon'
-import { SANSkeleton } from '../../Atoms/Skeleton'
 import { SANDropdown } from '../../Atoms/Dropdown'
-import { SANTypography } from '../../Atoms/Typography'
 import { Scrollbars } from 'react-custom-scrollbars'
-import { Empty } from 'antd'
+import { SANEmpty } from '../../Atoms/Empty'
+
+import styled from 'styled-components'
+import { theme } from 'styled-tools'
+
+const SANStyledInput = styled(SANInput)`
+    text-overflow: ellipsis;
+    background-color: ${theme('colors.white.10')};
+`
+const SANStyledCheckbox = styled(SANCheckbox)`
+    width: 100%;
+    cursor: pointer;
+    padding: 4px 12px;
+    white-space: nowrap;
+    margin: 0 !important;
+    span {
+        text-transform: capitalize;
+    }
+
+    :hover {
+        background-color: ${theme('colors.white.10')};
+    }
+`
 
 interface IItem {
     label: string
@@ -26,6 +45,7 @@ export interface ISANSelectFilterProps {
     items: IItem[]
     value: IItem[]
     onOpen: (visible: boolean) => void
+    onClose: () => void
     onChange: (list: IItem[], item: IItem) => void
     onSelectAll: (list: IItem[]) => void
     onClear: () => void
@@ -37,6 +57,7 @@ const SANSelectFilter = ({
     items,
     value = [],
     onOpen,
+    onClose,
     onChange,
     onSelectAll,
     onClear,
@@ -53,6 +74,11 @@ const SANSelectFilter = ({
     const handleOpen = visibility => {
         setOpen(visibility)
         onOpen && onOpen(visibility)
+    }
+
+    const handleClose = e => {
+        setOpen(false)
+        onClose && onClose(e)
     }
 
     const handleSelectAll = values => e => {
@@ -126,72 +152,101 @@ const SANSelectFilter = ({
     )
 
     const rows = filtered.map(item => (
-        <SANCheckbox
+        <SANStyledCheckbox
             key={item.id}
             onChange={onCheckboxChange(item)}
             checked={!!value.find(checkValue(item))}
-            className='es-card-select-filter__menu__items--item'
         >
             {item.label.toLowerCase()}
-        </SANCheckbox>
+        </SANStyledCheckbox>
     ))
 
     return (
         <SANDropdown
             trigger={['click']}
-            overlayClassName='es-card-select-filter__overlay'
             visible={open}
             getPopupContainer={() => dropdownRef && dropdownRef.current}
             overlay={
                 <div ref={menuRef}>
-                    <div className='es-card-select-filter__menu--buttons'>
-                        <SANButton
-                            onClick={handleSelectAll(filtered)}
-                            bold
-                            variant='text'
-                            size='xsmall'
-                            className='mr-sm'
-                        >
-                            {t('selectFilter.selectAll')}
-                        </SANButton>
-                        <SANButton
-                            onClick={handleClear}
-                            bold
-                            variant='text'
-                            size='xsmall'
-                            disabled={!value.length}
-                        >
-                            {t('selectFilter.clearSelect')}
-                        </SANButton>
-                    </div>
-                    <SANDivider />
-                    <Scrollbars
-                        autoHeight
-                        autoHeightMax={198}
-                        style={{
-                            width: dropdownRef.current
-                                ? dropdownRef.current.offsetWidth
-                                : 426,
-                            maxWidth: '100%'
-                        }}
+                    <SANBox
+                        mt='6px'
+                        bg='white.10'
+                        boxShadow='1'
+                        borderRadius='base'
+                        border='1px solid'
+                        borderColor='grey.2'
                     >
-                        <div className='es-card-select-filter__menu__items'>
-                            {rows.length ? (
-                                rows
-                            ) : (
-                                <Empty
-                                    className='mt-md'
-                                    description={t('selectFilter.noData')}
-                                    style={{ height: 174 }}
-                                />
-                            )}
-                        </div>
-                    </Scrollbars>
+                        <SANBox
+                            displayFlex
+                            alignItems='center'
+                            justifyContent='center'
+                            py='xxs'
+                        >
+                            <SANButton
+                                onClick={handleSelectAll(filtered)}
+                                bold
+                                variant='text'
+                                size='xsmall'
+                                className='mr-sm'
+                            >
+                                {t('selectFilter.selectAll')}
+                            </SANButton>
+                            <SANButton
+                                onClick={handleClear}
+                                bold
+                                variant='text'
+                                size='xsmall'
+                                disabled={!value.length}
+                            >
+                                {t('selectFilter.clearSelect')}
+                            </SANButton>
+                        </SANBox>
+                        <SANDivider
+                            my='0'
+                            mx='auto'
+                            width='calc(100% - 24px)'
+                            bg='grey.2'
+                        />
+                        <Scrollbars
+                            autoHeight
+                            autoHeightMax={198}
+                            style={{
+                                width: dropdownRef.current
+                                    ? dropdownRef.current.offsetWidth
+                                    : 426,
+                                maxWidth: '100%'
+                            }}
+                        >
+                            <SANBox py='xxs'>
+                                {rows.length ? rows : <SANEmpty />}
+                            </SANBox>
+                        </Scrollbars>
+                        <SANBox
+                            displayFlex
+                            alignItems='center'
+                            justifyContent='center'
+                            py='xxs'
+                            bg='grey-solid.1'
+                            borderTop='1px solid'
+                            borderColor='grey.2'
+                        >
+                            <SANButton
+                                onClick={handleClose}
+                                bold
+                                variant='text'
+                                size='small'
+                                className='mr-sm'
+                                color='primary'
+                            >
+                                {t('selectFilter.close')}
+                            </SANButton>
+                        </SANBox>
+                    </SANBox>
                 </div>
             }
         >
             <span style={{ width: '100%' }} ref={dropdownRef}>
-                <SANInput
+                <SANStyledInput
                     onFocus={onFocus}
                     placeholder={t('selectFilter.select')}
                     iconLeft='search-outline'

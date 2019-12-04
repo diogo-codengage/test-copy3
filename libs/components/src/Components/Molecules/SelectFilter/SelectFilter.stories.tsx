@@ -54,6 +54,9 @@ const SelectFilter = () => {
     const onOpen = visible => {
         console.log('onOpen', visible)
     }
+    const onClose = visible => {
+        console.log('onClose', visible)
+    }
     const onSelectAll = list => {
         console.log('onSelectAll', list)
     }
@@ -65,6 +68,7 @@ const SelectFilter = () => {
             items={items}
             value={selecteds}
             onOpen={onOpen}
+            onClose={onClose}
             onChange={onChange}
             onSelectAll={onSelectAll}
             onClear={onClear}

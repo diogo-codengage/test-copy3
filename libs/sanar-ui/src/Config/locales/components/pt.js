@@ -251,6 +251,6 @@ export default {
         select: 'Selecione',
         selectAll: 'Selecionar todos',
         clearSelect: 'Limpar seleção',
-        noData: 'Sem resultados para a busca'
+        close: 'Fechar'
     }
 }
