@@ -246,11 +246,5 @@ export default {
             question: 'Questão',
             questionMap: 'Mapa de questões'
         }
-    },
-    selectFilter: {
-        select: 'Selecione',
-        selectAll: 'Selecionar todos',
-        clearSelect: 'Limpar seleção',
-        noData: 'Sem resultados para a busca'
     }
 }
