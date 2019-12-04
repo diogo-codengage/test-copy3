@@ -40,52 +40,28 @@ const items = [
 ]
 const SelectFilter = () => {
     const [selecteds, setSelecteds] = useState([])
-    const [makedPlaceholder, setMakePlaceholder] = useState('')
 
-    const onChange = (list, item) => {
-        console.log('onChange', list, item)
+    const onChange = (list, event) => {
+        console.log('onChange', list, event)
+        setSelecteds(list)
     }
     const onClear = () => {
         console.log('onClear')
-        setSelecteds([])
-        setMakePlaceholder('')
     }
     const onDeselectItem = item => {
         console.log('onDeselectItem', item)
-        let aux = []
-        selecteds.forEach(vl => {
-            vl !== item && aux.push(vl)
-        })
-        setMakePlaceholder(
-            old =>
-                `${old
-                    .replace(`${item.label}, `, '')
-                    .replace(`, ${item.label}`, '')
-                    .replace(item.label, '')}`
-        )
-        console.log('aux', aux)
-        setSelecteds(aux)
     }
     const onOpen = visible => {
         console.log('onOpen', visible)
     }
     const onSelectAll = list => {
         console.log('onSelectAll', list)
-        setSelecteds(list)
-        let aux = ''
-        list.forEach((lt, index) => {
-            aux = index === 0 ? `${lt.label}` : `${aux}, ${lt.label}`
-        })
-        setMakePlaceholder(aux)
     }
     const onSelectItem = item => {
         console.log('onSelectItem', item)
-        setSelecteds(old => [...old, item])
-        setMakePlaceholder(old => `${old && `${old},`} ${item.label}`)
     }
     return (
         <SANSelectFilter
-            labelSelecteds={makedPlaceholder}
             items={items}
             value={selecteds}
             onOpen={onOpen}

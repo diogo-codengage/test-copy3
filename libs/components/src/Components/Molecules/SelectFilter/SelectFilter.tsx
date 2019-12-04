@@ -34,7 +34,6 @@ export interface ISANSelectFilterProps {
 }
 
 const SANSelectFilter = ({
-    labelSelecteds,
     items,
     value = [],
     onOpen,
@@ -46,29 +45,27 @@ const SANSelectFilter = ({
 }) => {
     const dropdownRef = useRef<any>()
     const menuRef = useRef()
-    const { t } = useTranslation('resmed')
+    const { t } = useTranslation('components')
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState()
+    const [labelSelecteds, setLabelSelecteds] = useState('')
 
     const handleOpen = visibility => {
         setOpen(visibility)
         onOpen && onOpen(visibility)
     }
 
-    // const handleClose = e => {
-    //     setOpen(false)
-    //     // onClose && onClose(e)
-    // }
-
     const handleSelectAll = values => e => {
         if (value.length === items.length) return
         onSelectAll && onSelectAll(values, e)
         onChange && onChange(values, e)
+        setLabelSelecteds(values.map(v => v.label).join(', '))
     }
 
     const handleClear = e => {
         onClear && onClear([], e)
         onChange && onChange([], e)
+        setLabelSelecteds('')
     }
 
     const handleSearch = e => {
@@ -83,6 +80,7 @@ const SANSelectFilter = ({
             target: { checked }
         } = e
         if (checked) {
+            setLabelSelecteds(old => `${old ? `${old}, ` : ''}${item.label}`)
             onSelectItem && onSelectItem(item)
             onChange && onChange([...value, item])
         } else {
@@ -91,6 +89,13 @@ const SANSelectFilter = ({
             )
             onDeselectItem && onDeselectItem(item)
             onChange && onChange(newItems)
+            setLabelSelecteds(
+                old =>
+                    `${old
+                        .replace(`${item.label}, `, '')
+                        .replace(`, ${item.label}`, '')
+                        .replace(item.label, '')}`
+            )
         }
     }
 
@@ -183,28 +188,13 @@ const SANSelectFilter = ({
                         </div>
                     </Scrollbars>
                 </div>
-                // <SANCardSelectFilterMenu
-                //     ref={menuRef}
-                //     {...{
-                //         items,
-                //         value,
-                //         handleSelectAll,
-                //         handleClear,
-                //         handleClose,
-                //         handleChange,
-                //         search,
-                //         width:
-                //             dropdownRef.current &&
-                //             dropdownRef.current.offsetWidth
-                //     }}
-                // />
             }
         >
             <span style={{ width: '100%' }} ref={dropdownRef}>
                 <SANInput
                     onFocus={onFocus}
                     placeholder={t('selectFilter.select')}
-                    // prefix={open && <SANEvaIcon name='search-outline' />}
+                    iconLeft='search-outline'
                     onChange={handleSearch}
                     value={open ? search : labelSelecteds}
                 />
