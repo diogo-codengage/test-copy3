@@ -258,6 +258,26 @@ export default {
         thisWeek: {
             title: 'Esta semana',
             subtitle: 'Confira as suas próximas atividades'
+        },
+        modal: {
+            lesson: {
+                title: 'Aula',
+                watch: 'Assistir aula',
+                watched: 'Aula assistida'
+            },
+            live: {
+                title: 'Live',
+                button: 'Assistir live'
+            },
+            suggestion: {
+                title: 'Sugestão do professor',
+                descriptionDisable:
+                    'Ao desabilitar essa opção, você poderá editar seu calendário movendo as aulas.',
+                descriptionEnable:
+                    'Ao habilitar essa opção, você perderá todas as alterações feitas no seu calendário.',
+                confirm: 'Confirmar',
+                back: 'Voltar'
+            }
         }
     }
 }

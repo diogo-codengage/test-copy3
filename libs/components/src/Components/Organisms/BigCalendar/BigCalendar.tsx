@@ -10,6 +10,8 @@ import { isPast, format, isEqual } from 'date-fns'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 
+import { useWindowSize } from '@sanar/utils/dist/Hooks'
+
 import '@fullcalendar/core/main.css'
 import '@fullcalendar/daygrid/main.css'
 
@@ -59,9 +61,11 @@ export interface ISANBigCalendarProps {
 
 const FullCalendarWrapper = styled.div`
     &&&& {
-        background-color: ${theme('colors.white.10')};
-        border-radius: ${theme('radii.base')};
-        box-shadow: ${theme('shadows.1')};
+        & .fc {
+            background-color: ${theme('colors.white.10')};
+            border-radius: ${theme('radii.base')};
+            box-shadow: ${theme('shadows.1')};
+        }
 
         & .fc-right button,
         & .fc-left button {
@@ -134,7 +138,7 @@ const FullCalendarWrapper = styled.div`
             margin: 1px 8px 0;
             & .fc-content {
                 overflow: hidden;
-                text-overflow: ellipsis;
+                text-overflow: ellipsis;;
             }
         }
 
@@ -209,6 +213,7 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = ({
 }) => {
     const theme = useThemeContext()
     const calendarRef = useRef<FullCalendar>()
+    const { width } = useWindowSize()
 
     const handleEventDrop = e => {
         const calendar = calendarRef.current.getApi()
@@ -281,6 +286,8 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = ({
     return (
         <FullCalendarWrapper>
             <FullCalendar
+                height={width < 768 && 650}
+                aspectRatio={1.7}
                 events={eventsMap}
                 ref={calendarRef}
                 locale={ptLocale}

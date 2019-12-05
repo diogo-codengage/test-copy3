@@ -110,7 +110,7 @@ import { SANModalTabs } from 'Components/Organisms/ModalTabs'
 import { SANCollection } from 'Components/Molecules/Collection'
 import { SANLessonResult } from 'Components/Molecules/LessonResult'
 import { SANBigCalendar } from 'Components/Organisms/BigCalendar'
-
+import { SANCardEvent } from 'Components/Molecules/CardEvent'
 
 export {
     SANCommonBadge,
@@ -226,5 +226,6 @@ export {
     SANModalTabs,
     SANCollection,
     SANLessonResult,
-    SANBigCalendar
+    SANBigCalendar,
+    SANCardEvent
 }

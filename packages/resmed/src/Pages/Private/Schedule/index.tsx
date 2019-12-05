@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import { format } from 'date-fns'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -8,7 +8,6 @@ import { theme } from 'styled-tools'
 
 import {
     SANPage,
-    SANCardSchedule,
     SANBigCalendar,
     SANButton,
     SANSwitch,
@@ -18,82 +17,270 @@ import {
     SANEvaIcon,
     SANBox,
     SANLayoutContainer,
-    SANSessionTitle
+    SANSessionTitle,
+    SANCardEvent
 } from '@sanar/components'
 
-const Suggestion = styled.div`
-    display: flex;
+import { RMModalSchedule, RMModalSuggestion } from './Modal'
+
+const events = [
+    {
+        id: '1',
+        title: 'Aulas vistas',
+        start: new Date(2019, 11, 2),
+        status: 'views',
+        extendedProps: {
+            description: 'lorem ipsum'
+        }
+    },
+    {
+        id: '2',
+        title: 'Provas e Inscrições',
+        start: new Date(2019, 11, 2),
+        status: 'exams'
+    },
+    {
+        id: '3',
+        title: 'Aulas vistas',
+        start: new Date(2019, 11, 5),
+        status: 'views',
+        startEditable: true
+    },
+    {
+        id: '4',
+        title: 'Provas e Inscrições',
+        start: new Date(2019, 11, 5),
+        status: 'exams',
+        startEditable: true
+    },
+    {
+        id: '5',
+        title: 'Aulas vistas',
+        start: new Date(2019, 11, 6),
+        status: 'views',
+        startEditable: true
+    },
+    {
+        id: '6',
+        title: 'Provas e Inscrições',
+        start: new Date(2019, 11, 6),
+        status: 'exams',
+        startEditable: true
+    },
+    {
+        id: '7',
+        title: 'Aulas vistas',
+        start: new Date(2019, 11, 6),
+        status: 'views',
+        startEditable: true
+    },
+    {
+        id: '8',
+        title: 'Provas e Inscrições',
+        start: new Date(2019, 11, 6),
+        status: 'exams',
+        startEditable: true
+    },
+    {
+        id: '9',
+        title: 'Provas e Inscrições',
+        start: new Date(2019, 11, 6),
+        status: 'exams',
+        startEditable: true
+    },
+    {
+        id: '10',
+        title: 'Provas e Inscrições',
+        start: new Date(2019, 11, 6),
+        status: 'exams',
+        startEditable: true
+    },
+    {
+        id: '11',
+        title: 'Aulas não vistas',
+        start: new Date(2019, 11, 4, 23, 59),
+        status: 'unseen',
+        startEditable: true
+    },
+    {
+        id: '11',
+        title: 'Aulas não vistas lorem ipsum',
+        start: new Date(2019, 11, 26),
+        status: 'unseen',
+        startEditable: true
+    },
+    {
+        id: '12',
+        title: 'Live',
+        start: new Date(2019, 11, 2),
+        status: 'live'
+    }
+]
+
+const SuggestionStyled = styled(SANBox)`
     align-items: center;
+    justify-content: space-between;
     border: 1px solid ${theme('colors.grey.1')};
     border-radius: ${theme('radii.base')};
     padding: ${theme('space.sm')} ${theme('space.lg')};
 `
 
+const Suggestion = ({ onChange, checked, ...props }) => {
+    const { t } = useTranslation('resmed')
+    return (
+        <SuggestionStyled {...props}>
+            <SANTypography fontWeight='bold' mr='lg'>
+                {t('schedule.suggestion')}
+            </SANTypography>
+            <SANSwitch onChange={onChange} checked={checked} />
+        </SuggestionStyled>
+    )
+}
+
+const boxProps = {
+    py: { md: '8', _: 'xl' },
+    display: 'flex',
+    flexDirection: 'column'
+}
+
 const RMSchedule = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
+    const [modalSchedule, setModalSchedule] = useState(false)
+    const [modalSuggestion, setModalSuggestion] = useState({
+        visible: false,
+        checked: false
+    })
 
-    const boxProps = {
-        py: { xs: '8', _: 'xl' },
-        display: 'flex',
-        flexDirection: 'column'
+    const handleEventClick = e => console.log({ e })
+
+    const handleChangeSuggestion = checked => {
+        setModalSuggestion({ checked, visible: true })
     }
 
     return (
-        <SANPage
-            HeaderProps={{
-                onBack: () => history.push('/inicio/curso'),
-                SessionTitleProps: {
-                    title: t('schedule.header.title'),
-                    subtitle: t('schedule.header.subtitle')
+        <>
+            <RMModalSuggestion
+                visible={modalSuggestion.visible}
+                checked={modalSuggestion.checked}
+                onCancel={() =>
+                    setModalSuggestion({ checked: false, visible: false })
                 }
-            }}
-        >
-            <SANBox bg='grey-solid.1' {...boxProps}>
-                <SANLayoutContainer>
-                    <SANBigCalendar events={[]} />
+                onConfirm={() =>
+                    setModalSuggestion({ checked: true, visible: false })
+                }
+            />
+            <SANPage
+                BoxProps={{
+                    p: '0'
+                }}
+                HeaderProps={{
+                    onBack: () => history.push('/inicio/curso'),
+                    SessionTitleProps: {
+                        title: t('schedule.header.title'),
+                        subtitle: t('schedule.header.subtitle')
+                    }
+                }}
+            >
+                <SANBox bg='grey-solid.1' {...boxProps}>
+                    <SANLayoutContainer>
+                        <Suggestion
+                            mb='md'
+                            display={{ md: 'none', _: 'flex' }}
+                            onChange={handleChangeSuggestion}
+                            checked={modalSuggestion.checked}
+                        />
+                        <SANBox mx={{ md: '0', _: '-16px' }}>
+                            <SANBigCalendar
+                                events={events}
+                                eventClick={handleEventClick}
+                            />
+                        </SANBox>
 
-                    <SANBox
-                        mt={{ xs: '8', _: 'lg' }}
-                        display='flex'
-                        alignItems='center'
-                        justifyContent='space-between'
-                    >
-                        <Suggestion>
-                            <SANTypography fontWeight='bold' mr='lg'>
-                                {t('schedule.suggestion')}
-                            </SANTypography>
-                            <SANSwitch />
-                        </Suggestion>
-                        <SANButton size='small' variant='outlined' bold>
-                            <SANEvaIcon name='download-outline' mr='xs' />
-                            {t('schedule.pdfDownload')}
-                        </SANButton>
-                    </SANBox>
-                </SANLayoutContainer>
-            </SANBox>
-            <SANBox {...boxProps}>
-                <SANLayoutContainer>
-                    <SANRow gutter={24}>
-                        <SANCol xs={24} sm={24} md={12}>
-                            <SANSessionTitle
-                                title={t('schedule.today')}
-                                subtitle={
-                                    <SANTypography transform='uppercase'>
-                                        {format(new Date(), 'DD/MM/YYYY')}
-                                    </SANTypography>
-                                }
+                        <SANBox
+                            mt={{ md: '8', _: 'lg' }}
+                            display='flex'
+                            alignItems='center'
+                            justifyContent='space-between'
+                        >
+                            <Suggestion
+                                display={{ md: 'flex', _: 'none' }}
+                                onChange={handleChangeSuggestion}
+                                checked={modalSuggestion.checked}
                             />
-                        </SANCol>
-                        <SANCol xs={24} sm={24} md={12}>
-                            <SANSessionTitle
-                                title={t('schedule.thisWeek.title')}
-                                subtitle={t('schedule.thisWeek.subtitle')}
-                            />
-                        </SANCol>
-                    </SANRow>
-                </SANLayoutContainer>
-            </SANBox>
-        </SANPage>
+                            <SANButton
+                                size='small'
+                                variant='outlined'
+                                bold
+                                blockOnlyMobile
+                            >
+                                <SANEvaIcon name='download-outline' mr='xs' />
+                                {t('schedule.pdfDownload')}
+                            </SANButton>
+                        </SANBox>
+                    </SANLayoutContainer>
+                </SANBox>
+                <SANBox {...boxProps}>
+                    <SANLayoutContainer>
+                        <SANRow gutter={24}>
+                            <SANCol xs={24} sm={24} md={12}>
+                                <SANSessionTitle
+                                    title={t('schedule.today')}
+                                    subtitle={
+                                        <SANTypography
+                                            transform='uppercase'
+                                            color='grey.5'
+                                        >
+                                            {format(new Date(), 'DD/MM/YYYY')}
+                                        </SANTypography>
+                                    }
+                                />
+                                <SANCardEvent
+                                    title='Inscrição para a prova tal'
+                                    date='12/06/2019, às 10h até 12/07/2019, às 18h'
+                                    type='exams'
+                                    mb='xs'
+                                />
+                                <SANCardEvent
+                                    title='Live de Correção da prova SUS-SP 2019'
+                                    date='14:00'
+                                    type='live'
+                                    mb='xs'
+                                />
+                                <SANCardEvent
+                                    title='Aula'
+                                    date='9:30 até 10:30'
+                                    type='views'
+                                    mb='xs'
+                                />
+                                <SANCardEvent
+                                    title='Aula'
+                                    date='9:30 até 10:30'
+                                    type='unseen'
+                                />
+                            </SANCol>
+                            <SANCol xs={24} sm={24} md={12}>
+                                <SANSessionTitle
+                                    title={t('schedule.thisWeek.title')}
+                                    subtitle={t('schedule.thisWeek.subtitle')}
+                                    mt={{ md: '0', _: 'xl' }}
+                                />
+                                <SANCardEvent
+                                    title='Aula'
+                                    date='9:30 até 10:30'
+                                    type='unseen'
+                                    mb='xs'
+                                />
+                                <SANCardEvent
+                                    title='Inscrição para a prova tal'
+                                    date='12/06/2019, às 10h até 12/07/2019, às 18h'
+                                    type='exams'
+                                />
+                            </SANCol>
+                        </SANRow>
+                    </SANLayoutContainer>
+                </SANBox>
+            </SANPage>
+        </>
     )
 }
 

@@ -1,79 +1,59 @@
 import React from 'react'
 
 import { theme, switchProp } from 'styled-tools'
-import { css } from 'styled-components'
-import { SANStyled } from '../../../Theme'
-import { SANTypography } from '../../Atoms/Typography'
-import { SANButton } from '../../Atoms/Button'
-import { SANBox } from '../../Atoms/Box'
-import { SANEvaIcon } from 'Components/Atoms/EvaIcon'
+import styled from 'styled-components'
 
-export interface ISANCardEventProps {
+import { SANTypography } from '../../Atoms/Typography'
+import { SANBox, ISANBoxProps } from '../../Atoms/Box'
+
+type IType = 'views' | 'unseen' | 'live' | 'exams'
+export interface ISANCardEventProps extends ISANBoxProps {
     title: string
     date: string
-    type: 'lesson' | 'live' | 'courseActivity'
-    onClick: () => void
+    type: IType
 }
-const SANCardBox = SANStyled(SANBox)<{ type: string }>`
-  &&& {
-    ${switchProp('type', {
-        lesson: css`
-            border-color: ${theme('colors.blue.2')};
-        `,
-        live: css`
-            border-color: ${theme('colors.yellow.2')};
-        `,
-        courseActivity: css`
-            border-color: ${theme('colors.burgundy.1')};
-        `
-    })}
-  }
+const SANCardBox = styled(SANBox)<{ type: IType }>`
+    &&& {
+        border-color: ${switchProp('type', {
+            views: theme('colors.primary-4'),
+            unseen: theme('colors.burgundy.1'),
+            live: theme('colors.grey.4'),
+            exams: theme('colors.blue.2')
+        })};
+    }
 `
 
-const SANCardEvent = ({ title, date, type, onClick }: ISANCardEventProps) => {
-    const actionIcon = type === 'lesson' ? 'edit-outline' : 'trash-outline'
-
-    return (
-        <SANCardBox
-            type={type}
-            boxShadow={1}
-            width='100%'
-            height='auto'
-            bg='white.10'
-            borderRadius='base'
-            border='2px solid'
-            py='sm'
-            px={{ _: 'sm', sm: 'md' }}
-            textAlign='left'
+const SANCardEvent = ({
+    title,
+    date,
+    type,
+    onClick,
+    ...props
+}: ISANCardEventProps) => (
+    <SANCardBox
+        type={type}
+        boxShadow={1}
+        width='100%'
+        bg='white.10'
+        borderRadius='base'
+        border='2px solid'
+        py='sm'
+        px={{ _: 'sm', sm: 'md' }}
+        {...props}
+    >
+        <SANTypography
+            fontSize='md'
+            fontWeight='bold'
+            color='grey.6'
+            mb='xxs'
+            ellipsis={{ rows: 1 }}
         >
-            <SANTypography
-                fontSize='md'
-                fontWeight='bold'
-                color='grey.6'
-                mb='xs'
-                ellipsis={{ rows: 1 }}
-            >
-                {title}
-            </SANTypography>
-            <SANBox
-                width='100%'
-                display='inline-flex'
-                justifyContent='space-between'
-            >
-                <SANTypography fontSize='sm' color='grey.4' lineHeight='1.35'>
-                    {date}
-                </SANTypography>
-                <SANButton
-                    onClick={onClick}
-                    circle
-                    variant='text'
-                    size='xsmall'
-                >
-                    <SANEvaIcon color='grey.4' name={actionIcon} />
-                </SANButton>
-            </SANBox>
-        </SANCardBox>
-    )
-}
+            {title}
+        </SANTypography>
+        <SANTypography fontSize='sm' color='grey.4' lineHeight='1.35'>
+            {date}
+        </SANTypography>
+    </SANCardBox>
+)
 
 export default SANCardEvent

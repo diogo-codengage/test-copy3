@@ -13,7 +13,7 @@ storiesOf('Organisms.Calendar', module).add(
                 events={events}
                 eventClick={console.log}
                 dateClick={console.log}
-                // eventDrop={console.log}
+                eventDrop={console.log}
             />
         </SANBox>
     ),
