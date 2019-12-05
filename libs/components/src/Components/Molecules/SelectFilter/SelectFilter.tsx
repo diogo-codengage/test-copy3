@@ -21,17 +21,19 @@ const SANStyledInput = styled(SANInput)`
     background-color: ${theme('colors.white.10')};
 `
 const SANStyledCheckbox = styled(SANCheckbox)`
-    width: 100%;
-    cursor: pointer;
-    padding: 4px 12px;
-    white-space: nowrap;
-    margin: 0 !important;
-    span {
-        text-transform: capitalize;
-    }
+    && {
+        width: 100%;
+        cursor: pointer;
+        padding: 4px 12px;
+        white-space: nowrap;
+        margin: 0 !important;
+        span {
+            text-transform: capitalize;
+        }
 
-    :hover {
-        background-color: ${theme('colors.white.10')};
+        :hover {
+            background-color: ${theme('colors.grey.0')};
+        }
     }
 `
 
