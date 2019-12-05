@@ -23,15 +23,34 @@ import {
 
 import { RMModalSchedule, RMModalSuggestion } from './Modal'
 
+const lesson = {
+    extendedProps: {
+        type: 'lesson',
+        completed: true,
+        title: 'Nome da aula',
+        subtitle: '15:00',
+        description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Proin fermentum leo vel orci porta non pulvinar. Hendrerit dolor magna eget est lorem ipsum dolor sit. Cum sociis natoque penatibus et magnis dis parturient montes nascetur. Gravida cum sociis natoque penatibus et magnis dis parturient montes. Natoque penatibus et magnis dis parturient montes nascetur. Platea dictumst vestibulum rhoncus est pellentesque. Convallis convallis tellus id interdum velit laoreet id. Nisl nisi scelerisque eu ultrices vitae. Ac turpis egestas integer eget. Id velit ut tortor pretium viverra suspendisse. Urna neque viverra justo nec ultrices.'
+    }
+}
+
+const live = {
+    extendedProps: {
+        type: 'live',
+        title: 'Live de Correção da prova SUS-SP 2019 - Parte 1',
+        subtitle: '15:00',
+        description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Proin fermentum leo vel orci porta non pulvinar. Hendrerit dolor magna eget est lorem ipsum dolor sit. Cum sociis natoque penatibus et magnis dis parturient montes nascetur. Gravida cum sociis natoque penatibus et magnis dis parturient montes. Natoque penatibus et magnis dis parturient montes nascetur. Platea dictumst vestibulum rhoncus est pellentesque. Convallis convallis tellus id interdum velit laoreet id. Nisl nisi scelerisque eu ultrices vitae. Ac turpis egestas integer eget. Id velit ut tortor pretium viverra suspendisse. Urna neque viverra justo nec ultrices.'
+    }
+}
+
 const events = [
     {
         id: '1',
         title: 'Aulas vistas',
         start: new Date(2019, 11, 2),
         status: 'views',
-        extendedProps: {
-            description: 'lorem ipsum'
-        }
+        ...lesson
     },
     {
         id: '2',
@@ -44,7 +63,8 @@ const events = [
         title: 'Aulas vistas',
         start: new Date(2019, 11, 5),
         status: 'views',
-        startEditable: true
+        startEditable: true,
+        ...lesson
     },
     {
         id: '4',
@@ -58,7 +78,8 @@ const events = [
         title: 'Aulas vistas',
         start: new Date(2019, 11, 6),
         status: 'views',
-        startEditable: true
+        startEditable: true,
+        ...lesson
     },
     {
         id: '6',
@@ -72,7 +93,8 @@ const events = [
         title: 'Aulas vistas',
         start: new Date(2019, 11, 6),
         status: 'views',
-        startEditable: true
+        startEditable: true,
+        ...lesson
     },
     {
         id: '8',
@@ -100,20 +122,23 @@ const events = [
         title: 'Aulas não vistas',
         start: new Date(2019, 11, 4, 23, 59),
         status: 'unseen',
-        startEditable: true
+        startEditable: true,
+        ...lesson
     },
     {
         id: '11',
         title: 'Aulas não vistas lorem ipsum',
         start: new Date(2019, 11, 26),
         status: 'unseen',
-        startEditable: true
+        startEditable: true,
+        ...lesson
     },
     {
         id: '12',
         title: 'Live',
         start: new Date(2019, 11, 2),
-        status: 'live'
+        status: 'live',
+        ...live
     }
 ]
 
@@ -145,13 +170,17 @@ const boxProps = {
 
 const RMSchedule = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
-    const [modalSchedule, setModalSchedule] = useState(false)
+    const [modalSchedule, setModalSchedule] = useState({
+        visible: false,
+        options: {}
+    })
     const [modalSuggestion, setModalSuggestion] = useState({
         visible: false,
         checked: false
     })
 
-    const handleEventClick = e => console.log({ e })
+    const handleEventClick = e =>
+        setModalSchedule({ visible: true, options: e.event.extendedProps })
 
     const handleChangeSuggestion = checked => {
         setModalSuggestion({ checked, visible: true })
@@ -159,6 +188,15 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
 
     return (
         <>
+            <RMModalSchedule
+                {...modalSchedule}
+                onCancel={() =>
+                    setModalSchedule({ options: {}, visible: false })
+                }
+                onClick={() =>
+                    setModalSchedule({ options: {}, visible: false })
+                }
+            />
             <RMModalSuggestion
                 visible={modalSuggestion.visible}
                 checked={modalSuggestion.checked}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -6,7 +6,9 @@ import {
     SANButton,
     SANTypography,
     SANModal,
-    SANModalFooter
+    SANModalFooter,
+    SANBox,
+    SANEvaIcon
 } from '@sanar/components'
 
 export const RMModalSuggestion = ({ onConfirm, checked, ...props }) => {
@@ -14,6 +16,7 @@ export const RMModalSuggestion = ({ onConfirm, checked, ...props }) => {
 
     return (
         <SANModal
+            width={436}
             title={t('schedule.modal.suggestion.title')}
             centered
             {...props}
@@ -52,31 +55,77 @@ export const RMModalSuggestion = ({ onConfirm, checked, ...props }) => {
     )
 }
 
-export const RMModalSchedule = ({
-    type,
-    title,
-    subtitle,
-    description,
-    ...props
-}) => {
+export const RMModalSchedule = ({ options, onClick, ...props }) => {
     const { t } = useTranslation('resmed')
 
+    const title = useMemo(() => {
+        switch (options.type) {
+            case 'lesson':
+                return t('schedule.modal.lesson.title')
+            case 'live':
+                return t('schedule.modal.live.title')
+            default:
+                return t('schedule.modal.lesson.title')
+        }
+    }, [options])
+
+    const button = useMemo(() => {
+        switch (options.type) {
+            case 'lesson':
+                return options.completed
+                    ? t('schedule.modal.lesson.watched')
+                    : t('schedule.modal.lesson.watch')
+            case 'live':
+                return t('schedule.modal.live.button')
+            default:
+                return options.completed
+                    ? t('schedule.modal.lesson.watched')
+                    : t('schedule.modal.lesson.watch')
+        }
+    }, [options])
+
     return (
-        <SANModal title={t('logout.signOut')} centered {...props}>
-            <SANTypography fontSize='lg' color='grey.7'>
-                {title}
-            </SANTypography>
-            <SANTypography fontSize='xs' color='grey.5'>
-                {subtitle}
-            </SANTypography>
-            <SANTypography fontSize='md' color='grey.6'>
-                {description}
-            </SANTypography>
-            <SANModalFooter>
-                <SANButton size='small' mr='md' variant='text' uppercase>
-                    {t('global.leave')}
+        <SANModal width={360} title={title} centered {...props}>
+            <SANBox>
+                <SANTypography fontSize='lg' color='grey.7'>
+                    {options.title}
+                </SANTypography>
+                <SANTypography fontSize='xs' color='grey.5' mt='xxs' mb='md'>
+                    {options.subtitle}
+                </SANTypography>
+                <SANTypography fontSize='md' color='grey.6'>
+                    {options.description}
+                </SANTypography>
+            </SANBox>
+            <SANBox
+                borderTop='1px solid'
+                borderColor='grey.1'
+                display='flex'
+                alignItems='center'
+                justifyContent='center'
+                p='md'
+                mt='xl'
+                mb='-24px'
+                mx='-24px'
+            >
+                <SANButton
+                    onClick={onClick}
+                    size='xsmall'
+                    variant='text'
+                    color='primary'
+                    uppercase
+                    bold
+                >
+                    {options.completed && (
+                        <SANEvaIcon
+                            name='checkmark-circle-2'
+                            mr='xs'
+                            size='large'
+                        />
+                    )}
+                    {button}
                 </SANButton>
-            </SANModalFooter>
+            </SANBox>
         </SANModal>
     )
 }
