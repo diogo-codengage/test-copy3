@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import useOnClickOutside from 'sanar-ui/dist/Hooks/useOnClickOutside'
 
 import { SANBox } from '../../Atoms/Box'
-import { SANInput } from '../../Atoms/Input'
+import { SANInput, ISANInputProps } from '../../Atoms/Input'
 import { SANCheckbox } from '../../Atoms/Checkbox'
 import { SANButton } from '../../Atoms/Button'
 import { SANDivider } from '../../Atoms/Divider'
@@ -51,6 +51,7 @@ export interface ISANSelectFilterProps {
     onClear: () => void
     onSelectItem: (item: IItem) => void
     onDeselectItem: (item: IItem) => void
+    InputProps?: ISANInputProps
 }
 
 const SANSelectFilter = ({
@@ -63,7 +64,8 @@ const SANSelectFilter = ({
     onSelectAll,
     onClear,
     onSelectItem,
-    onDeselectItem
+    onDeselectItem,
+    InputProps
 }) => {
     const dropdownRef = useRef<any>()
     const menuRef = useRef()
@@ -249,10 +251,13 @@ const SANSelectFilter = ({
             <span style={{ width: '100%' }} ref={dropdownRef}>
                 <SANStyledInput
                     onFocus={onFocus}
-                    placeholder={placeholder ? placeholder : t('selectFilter.select')}
+                    placeholder={
+                        placeholder ? placeholder : t('selectFilter.select')
+                    }
                     iconLeft='search-outline'
                     onChange={handleSearch}
                     value={open ? search : labelSelecteds}
+                    {...InputProps}
                 />
             </span>
         </SANDropdown>

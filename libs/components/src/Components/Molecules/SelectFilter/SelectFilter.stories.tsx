@@ -75,6 +75,7 @@ const SelectFilter = () => {
             onClear={onClear}
             onSelectItem={onSelectItem}
             onDeselectItem={onDeselectItem}
+            InputProps={{ size: 'large' }}
         />
     )
 }
