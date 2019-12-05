@@ -20,8 +20,14 @@ import {
     SANSessionTitle,
     SANCardEvent
 } from '@sanar/components'
+import { IEvent } from '@sanar/components/dist/Components/Organisms/BigCalendar'
 
-import { RMModalSchedule, RMModalSuggestion, RMModalMore } from './Modal'
+import {
+    RMModalSchedule,
+    RMModalSuggestion,
+    RMModalMore,
+    IOption
+} from './Modal'
 
 const lesson = {
     extendedProps: {
@@ -51,7 +57,7 @@ const exam = {
     }
 }
 
-const events = [
+const events: IEvent[] = [
     {
         id: '1',
         title: 'Aulas vistas',
@@ -190,7 +196,10 @@ const boxProps = {
 
 const RMSchedule = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
-    const [modalSchedule, setModalSchedule] = useState({
+    const [modalSchedule, setModalSchedule] = useState<{
+        visible: boolean
+        options: IOption | any
+    }>({
         visible: false,
         options: {}
     })
@@ -198,7 +207,10 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
         visible: false,
         checked: false
     })
-    const [modalMore, setModalMore] = useState({
+    const [modalMore, setModalMore] = useState<{
+        visible: boolean
+        options: IOption[] | []
+    }>({
         visible: false,
         options: []
     })
@@ -213,9 +225,8 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
     const handleEventClick = e =>
         setModalSchedule({ visible: true, options: e.event.extendedProps })
 
-    const handleChangeSuggestion = checked => {
+    const handleChangeSuggestion = checked =>
         setModalSuggestion({ checked, visible: true })
-    }
 
     return (
         <>
@@ -224,12 +235,13 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                 onCancel={() => setModalMore({ options: [], visible: false })}
             />
             <RMModalSchedule
-                {...modalSchedule}
+                visible={modalSchedule.visible}
+                options={modalSchedule.options}
                 onCancel={() =>
-                    setModalSchedule({ options: {}, visible: false })
+                    setModalSchedule({ visible: false, options: undefined })
                 }
                 onClick={() =>
-                    setModalSchedule({ options: {}, visible: false })
+                    setModalSchedule({ visible: false, options: undefined })
                 }
             />
             <RMModalSuggestion

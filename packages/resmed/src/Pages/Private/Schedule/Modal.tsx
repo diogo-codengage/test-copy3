@@ -13,8 +13,18 @@ import {
     SANEvaIcon,
     SANScroll
 } from '@sanar/components'
+import { ISANModalProps } from '@sanar/components/dist/Components/Molecules/Modal'
 
 type IStatus = 'viewed' | 'unseen' | 'live' | 'exams'
+type IType = 'lesson' | 'live' | 'exams'
+
+export interface IOption {
+    status: IStatus
+    type: IType
+    title: string
+    subtitle: string
+    description: string
+}
 
 const SANTypographyStyled = styled(SANTypography)<{ status: IStatus }>`
     && {
@@ -58,7 +68,11 @@ const Wrapper = styled(SANBox)<{ status: IStatus }>`
     }
 `
 
-export const RMModalMore = ({ options = [], ...props }) => {
+interface IRMModalMore extends ISANModalProps {
+    options: IOption[]
+}
+
+export const RMModalMore = ({ options = [], ...props }: IRMModalMore) => {
     const { t } = useTranslation('resmed')
 
     const renderItem = useCallback(
@@ -106,7 +120,16 @@ export const RMModalMore = ({ options = [], ...props }) => {
     )
 }
 
-export const RMModalSuggestion = ({ onConfirm, checked, ...props }) => {
+interface IRMModalSuggestion extends ISANModalProps {
+    onConfirm: () => void
+    checked: boolean
+}
+
+export const RMModalSuggestion = ({
+    onConfirm,
+    checked,
+    ...props
+}: IRMModalSuggestion) => {
     const { t } = useTranslation('resmed')
 
     return (
@@ -150,9 +173,18 @@ export const RMModalSuggestion = ({ onConfirm, checked, ...props }) => {
     )
 }
 
-const types = ['lesson', 'live']
+const types: IType[] = ['lesson', 'live']
 
-export const RMModalSchedule = ({ options, onClick, ...props }) => {
+interface IRMModalSchedule extends ISANModalProps {
+    onClick: () => void
+    options: IOption
+}
+
+export const RMModalSchedule = ({
+    options,
+    onClick,
+    ...props
+}: IRMModalSchedule) => {
     const { t } = useTranslation('resmed')
 
     const title = useMemo(() => {
@@ -217,7 +249,7 @@ export const RMModalSchedule = ({ options, onClick, ...props }) => {
                     uppercase
                     bold
                 >
-                    {options.completed && (
+                    {options.status === 'viewed' && (
                         <SANEvaIcon
                             name='checkmark-circle-2'
                             mr='xs'

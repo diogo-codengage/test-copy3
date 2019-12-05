@@ -12,6 +12,7 @@ export interface ISANCardEventProps extends ISANBoxProps {
     date: string
     type: IType
 }
+
 const SANCardBox = styled(SANBox)<{ type: IType }>`
     &&& {
         border-color: ${switchProp('type', {
