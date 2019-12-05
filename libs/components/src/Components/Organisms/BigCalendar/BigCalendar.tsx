@@ -90,6 +90,10 @@ const FullCalendarWrapper = styled.div`
         & .fc-toolbar {
             justify-content: center;
             margin: 0;
+            border: 1px solid ${theme('colors.grey.2')};
+            border-bottom: 0;
+            border-top-left-radius: ${theme('radii.base')};
+            border-top-right-radius: ${theme('radii.base')};
             & .fc-center {
                 padding: 0 ${theme('space.8')};
             }
