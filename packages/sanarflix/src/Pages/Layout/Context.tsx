@@ -134,11 +134,7 @@ const FLXLayoutProvider = withRouter(({ history, children }) => {
     }
 
     const handleClassroomBack = () => {
-        if (lastLocation) {
-            history.goBack()
-        } else {
             history.push(`/portal/curso/${window.location.hash.split('/')[3]}`)
-        }
     }
 
     const loadLastAcessed = async () => {

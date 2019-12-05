@@ -25,6 +25,7 @@ import lessonResultError from './images/lessonResult/ninja-negativo.png'
 
 import blocked from './images/sub-specialty/blocked.svg'
 
+import empty from './images/empty/empty.svg'
 import suggestedSchedule from './images/card-schedule/suggested.png'
 
 import awfulEmoji from './images/class-feedback/awful.svg'
@@ -55,6 +56,7 @@ export {
     lessonResultError,
     document,
     blocked,
+    empty,
     suggestedSchedule,
     awfulEmoji,
     badEmoji,

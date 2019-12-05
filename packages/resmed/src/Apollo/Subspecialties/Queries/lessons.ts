@@ -3,15 +3,18 @@ import gql from 'graphql-tag'
 interface ILastAccessedResource {
     id: string
     type: 'Quiz' | 'Video'
-    index: number
     title: string
 }
 
+interface ILessonLastAccessed {
+    id: string
+    index: number
+}
 export interface ILastAccessed {
     specialtyId: string
     subSpecialtyId?: string
-    lessonId: string
     collectionId: string
+    lesson: ILessonLastAccessed
     resource: ILastAccessedResource
 }
 
@@ -28,14 +31,17 @@ export const GET_LESSONS = gql`
             id
             name
             status
+            completed
             lastAccessed {
                 specialtyId
                 subSpecialtyId
-                lessonId
                 collectionId
-                resource {
+                lesson {
                     id
                     index
+                }
+                resource {
+                    id
                     type
                     title
                 }

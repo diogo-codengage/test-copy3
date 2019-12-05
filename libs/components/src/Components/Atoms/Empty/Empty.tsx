@@ -8,11 +8,11 @@ import { SANStyled } from '../../../Theme/createTheme'
 import { SANTypography } from '../Typography'
 import { SANBox, ISANBoxProps } from '../Box'
 
-import emptySvg from '../../../Assets/images/empty/empty.svg'
+import { useThemeContext } from '@sanar/utils/dist/Hooks'
 
 export interface ISANEmptyProps extends SpaceProps {
     title?: React.ReactNode
-    image?: React.ReactNode
+    image?: string
     children?: React.ReactNode
     BoxProps?: ISANBoxProps
     hasTitle?: boolean
@@ -36,6 +36,9 @@ const SANEmpty = ({
     children,
     ...props
 }: ISANEmptyProps) => {
+    const {
+        assets: { empty }
+    } = useThemeContext()
     const { t } = useTranslation('components')
     return (
         <SANBox
@@ -44,7 +47,7 @@ const SANEmpty = ({
             alignItems='center'
             {...props}
         >
-            {image ? image : <ImgStyled src={emptySvg} alt='' />}
+            <ImgStyled src={image || empty} alt='' />
             {hasTitle && (
                 <SANBox {...BoxProps}>
                     <SANTypography variant='subtitle2' strong>

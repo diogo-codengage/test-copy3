@@ -13,13 +13,22 @@ import {
 import { CREATE_RATING } from 'Apollo/Classroom/Mutations/create-rating'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomContext } from './Context'
+import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
 
 const RMClassroomRating = ({ history }: RouteComponentProps) => {
     const client = useApolloClient()
     const { params, onOpenMenu } = useLayoutContext()
-    const { lesson } = useClassroomContext()
+    const { handleTrack } = useTrackContext()
+    const { lesson, specialty } = useClassroomContext()
 
     const handleRating = async (value, { setSubmitting }) => {
+        handleTrack('Video rated', {
+            'Specialty ID': params.specialtyId,
+            'Subspecialty ID': params.subspecialtyId,
+            'Lesson ID': params.lessonId,
+            'Clicker ID': params.collectionId,
+            Rating: value
+        })
         try {
             await client.mutate({
                 mutation: CREATE_RATING,
@@ -39,10 +48,16 @@ const RMClassroomRating = ({ history }: RouteComponentProps) => {
         <SANBox flex='1'>
             <SANClassroomHeader
                 title={lesson.title}
-                subtitle={lesson.subSpecialty.specialty.name}
+                subtitle={specialty.title}
                 onOpenMenu={onOpenMenu}
+                actions={false}
+                plataform='resmed'
             />
-            <SANLayoutContainer py='8'>
+            <SANLayoutContainer
+                pb='8'
+                pt={{ lg: '8', _: '0' }}
+                px={{ lg: 'md', _: '0' }}
+            >
                 <SANLessonFeedback onSend={handleRating} onNext={handleNext} />
             </SANLayoutContainer>
         </SANBox>

@@ -8,6 +8,7 @@ import { getCognitoUser } from 'Config/AWSCognito'
 
 const RMLogin = React.lazy(() => import('./Login'))
 const RMPasswordRecovery = React.lazy(() => import('./PasswordRecovery'))
+const RMNewPassword = React.lazy(() => import('./NewPassword'))
 
 const RMAuth: React.FC<RouteComponentProps> = ({ match: { url } }) => {
     const client = useApolloClient()
@@ -57,6 +58,7 @@ const RMAuth: React.FC<RouteComponentProps> = ({ match: { url } }) => {
         <Suspense fallback={<RMSplashLoader />}>
             <Switch>
                 <Route path={`${url}/entrar`} component={RMLogin} />
+                <Route path={`${url}/nova-senha`} component={RMNewPassword} />
                 <Route
                     path={`${url}/recuperar-senha`}
                     component={RMPasswordRecovery}

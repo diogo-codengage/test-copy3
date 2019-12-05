@@ -22,10 +22,9 @@ import {
     flowchart,
     mentalmap,
     article,
-    lessonResultSuccess,
-    lessonResultError,
     document,
     blocked,
+    empty,
     suggestedSchedule,
     awfulEmoji,
     badEmoji,
@@ -234,6 +233,7 @@ const assetsDefault = {
         success: lessonResultSuccess,
         error: lessonResultError
     },
+    empty,
     cardSchedule: {
         suggestedSchedule
     },
@@ -243,10 +243,6 @@ const assetsDefault = {
         regular: regularEmoji,
         good: goodEmoji,
         awesome: awesomeEmoji
-    },
-    lessonResult: {
-        error: lessonResultError,
-        success: lessonResultSuccess
     }
 }
 

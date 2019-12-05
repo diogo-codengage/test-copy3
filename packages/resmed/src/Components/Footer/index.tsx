@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router'
@@ -13,6 +13,8 @@ import {
 } from '@sanar/components'
 import { ISANLayoutFooterProps } from '@sanar/components/dist/Components/Organisms/Layout'
 
+import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
+
 import logoFooter from 'Assets/images/brand/logo-grey.svg'
 
 const ButtonAbout = props => (
@@ -21,30 +23,56 @@ const ButtonAbout = props => (
 
 const Copyright = ({ darkMode }) => {
     const { t } = useTranslation('resmed')
+    const [showModalTerms, setShowModalTerms] = useState(false)
+    const [activeKey, setActiveKey] = useState(0)
+
+    const modalTermsOpen = defaultKey => {
+        setActiveKey(defaultKey)
+        setShowModalTerms(true)
+    }
+
     return (
-        <SANSpace p={24}>
-            <SANFlexbox
-                flexWrap='wrap'
-                alignItems='center'
-                justifyContent='center'
-                color={darkMode ? 'white.6' : 'grey.5'}
-            >
-                <SANTypography
-                    color={darkMode ? 'white.5' : 'grey.5'}
-                    textAlign='center'
-                    variant='caption'
+        <>
+            <SANSpace p={24}>
+                <SANFlexbox
+                    flexWrap='wrap'
+                    alignItems='center'
+                    justifyContent='center'
+                    color={darkMode ? 'white.6' : 'grey.5'}
                 >
-                    Copyright © Residência Médica. {t('global.copyright')}.
-                </SANTypography>
-                <ButtonAbout darkMode={darkMode}>
-                    {t('global.termsOfUse')}
-                </ButtonAbout>{' '}
-                |{' '}
-                <ButtonAbout darkMode={darkMode}>
-                    {t('global.privacyPolicy')}
-                </ButtonAbout>
-            </SANFlexbox>
-        </SANSpace>
+                    <SANTypography
+                        color={darkMode ? 'white.5' : 'grey.5'}
+                        textAlign='center'
+                        variant='caption'
+                    >
+                        Copyright © Residência Médica. {t('global.copyright')}.
+                    </SANTypography>
+                    <ButtonAbout
+                        darkMode={darkMode}
+                        onClick={() => modalTermsOpen('0')}
+                    >
+                        {t('global.termsOfUse')}
+                    </ButtonAbout>{' '}
+                    |{' '}
+                    <ButtonAbout
+                        darkMode={darkMode}
+                        onClick={() => modalTermsOpen('1')}
+                    >
+                        {t('global.privacyPolicy')}
+                    </ButtonAbout>
+                </SANFlexbox>
+            </SANSpace>
+
+            <RMModalTermsAndPrivacy
+                onCancel={() => {
+                    setShowModalTerms(false)
+                    setActiveKey(0)
+                }}
+                visible={showModalTerms}
+                defaultActiveKey={activeKey}
+                scrolling
+            />
+        </>
     )
 }
 

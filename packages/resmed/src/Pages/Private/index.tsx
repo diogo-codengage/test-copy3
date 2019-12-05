@@ -11,11 +11,10 @@ import RMMainProvider from 'Pages/Private/Context'
 import RMLayout from 'Pages/Private/Layout'
 
 const RMHome = React.lazy(() => import('Pages/Private/Home'))
-const RMSubSpecialties = React.lazy(() =>
-    import('Pages/Private/SubSpecialties')
-)
+const RMSpecialty = React.lazy(() => import('Pages/Private/Specialty'))
 const RMHelpCenter = React.lazy(() => import('Pages/Private/HelpCenter'))
 const RMAccount = React.lazy(() => import('Pages/Private/Account'))
+const RMPracticalArea = React.lazy(() => import('Pages/Private/PracticalArea'))
 const RMClassroom = React.lazy(() => import('Pages/Private/Classroom'))
 
 const RMPrivatePages: React.FC<RouteComponentProps> = ({
@@ -42,7 +41,7 @@ const RMPrivatePages: React.FC<RouteComponentProps> = ({
                                 />
                                 <Route
                                     path={`${url}/subespecialidades/:specialtyId`}
-                                    component={RMSubSpecialties}
+                                    component={RMSpecialty}
                                 />
                                 <Route
                                     path={`${url}/central-ajuda`}
@@ -53,10 +52,14 @@ const RMPrivatePages: React.FC<RouteComponentProps> = ({
                                     component={RMAccount}
                                 />
                                 <Route
+                                    path={`${url}/area-pratica`}
+                                    component={RMPracticalArea}
+                                />
+                                <Route
                                     path={[
                                         `${url}/sala-aula/:specialtyId/:subspecialtyId/:lessonId/:collectionId/:type/:contentId`,
-                                        `${url}/sala-aula/:specialtyId/:subspecialtyId/:lessonId/:status`,
                                         `${url}/sala-aula/:specialtyId/:lessonId/:collectionId/:type/:contentId`,
+                                        `${url}/sala-aula/:specialtyId/:subspecialtyId/:lessonId/:status`,
                                         `${url}/sala-aula/:specialtyId/:lessonId/:status`
                                     ]}
                                     component={RMClassroom}

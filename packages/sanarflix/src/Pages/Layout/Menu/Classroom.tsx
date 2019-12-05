@@ -123,6 +123,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
 
             const themeContentsIcons = (themeContents.data || []).map(item => ({
                 ...item,
+                hasType: true,
                 icon: (
                     <SANIcon
                         component={() =>

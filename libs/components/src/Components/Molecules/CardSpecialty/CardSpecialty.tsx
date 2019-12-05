@@ -42,7 +42,7 @@ const SANCardSpecialtyStyled = styled(SANBox)<IStyled>`
         bottom: 0;
         background: linear-gradient(
             0deg,
-            ${theme('colors.grey.7')},
+            ${theme('colors.grey.9')},
             ${theme('colors.grey.4')}
         );
     }
@@ -83,6 +83,7 @@ const SANCardSpecialty = ({
             <SANTypography
                 fontSize={{ xs: 'xxl', _: 'lg' }}
                 fontWeight='bold'
+                lineHeight='1'
                 textAlign='center'
                 color='white.10'
                 ellipsis={{ rows: 2 }}

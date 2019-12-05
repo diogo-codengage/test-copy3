@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState, useRef } from 'react'
+import React, { useCallback, useMemo, useState, useRef, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled, { css } from 'styled-components'
@@ -96,8 +96,6 @@ const ButtonArrowStyled = styled(SANButton)`
 const ImageStyled = styled(SANBox)``
 
 const SANCollectionItemStyled = styled(SANBox)<{ current: boolean }>`
-    cursor: pointer;
-
     &:hover {
         ${SANTypography}, ${ImageStyled} {
             opacity: 0.6;
@@ -110,19 +108,20 @@ const SANCollectionItemStyled = styled(SANBox)<{ current: boolean }>`
             & ${SANTypography}, & ${ImageStyled} {
                 opacity: 0.4;
             }
-        `,
-        css`
-            border-bottom: 4px solid ${theme('colors.warning')};
         `
     )};
 `
 
-const IconComleted = styled(SANEvaIcon)`
+const IconComleted = styled(SANEvaIcon)<{ completed: boolean }>`
     && {
         position: absolute;
         top: calc(50% - 24px);
         left: calc(50% - 24px);
-        color: ${theme('colors.white.10')};
+        color: ${ifProp(
+            'completed',
+            theme('colors.white.5'),
+            theme('colors.white.10')
+        )};
 
         & svg {
             font-size: ${theme('fontSizes.7')};
@@ -132,6 +131,12 @@ const IconComleted = styled(SANEvaIcon)`
 
 const SliderStyled = styled(Slider)`
     && {
+        ${ifProp(
+            'vertical',
+            css`
+                background-color: ${theme('colors.grey.9')};
+            `
+        )};
         &.slick-vertical .slick-slide {
             border: none;
         }
@@ -144,11 +149,11 @@ const SliderStyled = styled(Slider)`
                 overflow: hidden;
             `,
             css`
-                & .slick-active:first-child ${SANCollectionItemStyled} {
+                & .slick-current ${SANCollectionItemStyled} {
                     border-top-left-radius: ${theme('radii.base')};
                     border-bottom-left-radius: ${theme('radii.base')};
                 }
-                & .slick-active:nth-child(5) ${SANCollectionItemStyled} {
+                & .slick-cloned ${SANCollectionItemStyled} {
                     border-top-right-radius: ${theme('radii.base')};
                     border-bottom-right-radius: ${theme('radii.base')};
                 }
@@ -172,56 +177,62 @@ export interface ISANCollectionProps {
     loading?: boolean
 }
 
-const SANCollectionItem = ({
-    item,
-    index,
-    onChange,
-    value,
-    isDragging
-}: any) => {
+const SANCollectionItem = ({ item, index, onChange, value }: any) => {
     const { t } = useTranslation('components')
     const { name, image, id, completed } = item
 
-    const handleChange = e => {
-        if (isDragging) {
-            e.preventDefault()
-            e.stopPropagation()
-            // return
-        }
-        onChange(item)
-    }
+    const handleChange = () => onChange(item, index)
 
     return (
         <SANCollectionItemStyled
             bg='grey.9'
-            p='md'
-            pb={value === id ? 'sm' : 'md'}
             current={value === id}
-            onClick={handleChange}
+            position='relative'
         >
-            <SANTypography fontSize='sm' color='white.10'>
-                {t('collection.part')} {index}
-            </SANTypography>
-            <SANBox position='relative'>
-                <ImageStyled
-                    as='img'
-                    src={image}
-                    my='xxs'
+            <SANBox p='md'>
+                <SANTypography fontSize='sm' color='white.10'>
+                    {t('collection.part')} {index}
+                </SANTypography>
+                <SANBox
+                    position='relative'
+                    onClick={handleChange}
+                    style={{ cursor: 'pointer' }}
+                >
+                    <ImageStyled
+                        as='img'
+                        src={image}
+                        my='xxs'
+                        borderRadius='base'
+                        width='100%'
+                    />
+                    {completed && (
+                        <IconComleted
+                            name='checkmark-circle-2'
+                            completed={completed && value === id}
+                        />
+                    )}
+                </SANBox>
+                <SANTypography
+                    fontSize='md'
+                    fontWeight='bold'
+                    ellipsis
+                    color='white.10'
+                    onClick={handleChange}
+                    style={{ cursor: 'pointer' }}
+                >
+                    {name}
+                </SANTypography>
+            </SANBox>
+            {value === id && (
+                <SANBox
+                    bg='warning'
+                    height='4px'
                     borderRadius='base'
+                    position='absolute'
+                    bottom='0'
                     width='100%'
                 />
-                {completed && value !== id && (
-                    <IconComleted name='checkmark-circle-2' />
-                )}
-            </SANBox>
-            <SANTypography
-                fontSize='md'
-                fontWeight='bold'
-                ellipsis
-                color='white.10'
-            >
-                {name}
-            </SANTypography>
+            )}
         </SANCollectionItemStyled>
     )
 }
@@ -250,10 +261,19 @@ const SANCollection: React.FC<ISANCollectionProps> = ({
         [value, isDragging]
     )
 
+    const index = useMemo(() => items.findIndex(item => item.id === value), [
+        items,
+        value
+    ])
+
     const settings = useMemo(
         () => ({
+            focusOnSelect: true,
+            swipe: true,
+            swipeToSlide: true,
+            draggable: true,
             dots: false,
-            infinite: false,
+            infinite: items.length >= 5,
             beforeChange: () => setIsDragging(true),
             afterChange: () => setIsDragging(false),
             slidesToScroll: 1,
@@ -265,12 +285,18 @@ const SANCollection: React.FC<ISANCollectionProps> = ({
             vertical,
             responsive: vertical ? responsiveVertical : responsiveHorizontal
         }),
-        [vertical]
+        [vertical, items]
     )
 
     const key = useMemo(() => `san-collection-${new Date().getTime()}`, [
         vertical
     ])
+
+    useEffect(() => {
+        if (!!sliderRef && !!sliderRef.current && index > 0) {
+            sliderRef.current.slickGoTo(index)
+        }
+    }, [index])
 
     return (
         <SliderStyled ref={sliderRef} key={key} {...settings}>

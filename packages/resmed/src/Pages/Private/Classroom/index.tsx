@@ -7,10 +7,10 @@ import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import RMClassroomProvider from './Context'
 
-const RMClassroomVideo = React.lazy(() => import('./Video'))
-const RMClassroomQuiz = React.lazy(() => import('./Quiz'))
-const RMClassroomRating = React.lazy(() => import('./Rating'))
-const RMClassroomFeedback = React.lazy(() => import('./Feedback'))
+import RMClassroomVideo from './Video'
+import RMClassroomQuiz from './Quiz'
+import RMClassroomRating from './Rating'
+import RMClassroomFeedback from './Feedback'
 
 const renderResourceContent = type => {
     switch (type) {
