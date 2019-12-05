@@ -5,10 +5,8 @@ import FullCalendar from '@fullcalendar/react'
 import ptLocale from '@fullcalendar/core/locales/pt-br'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import rrulePlugin from '@fullcalendar/rrule'
 
 import { isPast, format, isEqual } from 'date-fns'
-import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 
@@ -78,6 +76,7 @@ const FullCalendarWrapper = styled.div`
             align-items: center;
             justify-content: center;
 
+            &:focus,
             &:hover {
                 background-color: ${theme('colors.grey.1')};
                 color: ${theme('colors.grey.8')};
@@ -123,7 +122,6 @@ const FullCalendarWrapper = styled.div`
             font-size: 0.7em;
             margin-left: 8px;
             margin-bottom: 4px;
-            margin-top: 4px
         }
 
         & .fc-event-container .fc-day-grid-event {
@@ -142,7 +140,7 @@ const FullCalendarWrapper = styled.div`
             font-weight: bold;
             float: right;
             color: ${theme('colors.grey.6')};
-            margin-top: 12px;
+            margin-top: 4px;
             margin-right: 10px;
         }
 
@@ -157,8 +155,8 @@ const FullCalendarWrapper = styled.div`
             &:before {
                 content: '${() => format(new Date(), 'd')}';
                 font-size: 0.7em;
-                width: 18px;
-                height: 18px;
+                width: 15px;
+                height: 15px;
                 border-radius: 9px;
                 background-color: ${theme('colors.primary')};
                 color: ${theme('colors.white.10')};
@@ -177,7 +175,7 @@ const FullCalendarWrapper = styled.div`
     }
 `
 
-const getFreeDays = ({ current = 2019 }) => {
+const getFreeDays = ({ current = new Date().getFullYear() }) => {
     let freeDays = []
     for (let year = current - 1; year <= current + 1; year++) {
         for (let month = 0; month <= 11; month++) {
@@ -235,7 +233,6 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = ({
             }
         }
 
-        console.log(e)
         !!eventDrop && eventDrop(e)
     }
 

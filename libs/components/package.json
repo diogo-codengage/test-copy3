@@ -45,7 +45,6 @@
     "@fullcalendar/daygrid": "^4.3.0",
     "@fullcalendar/interaction": "^4.3.0",
     "@fullcalendar/react": "^4.3.0",
-    "@fullcalendar/rrule": "^4.3.0",
     "@opuscapita/react-perfect-scrollbar": "^3.0.4",
     "@types/react-infinite-scroller": "^1.2.1",
     "@types/react-slick": "^0.23.4",
@@ -61,7 +60,6 @@
     "react-slick": "^0.25.2",
     "react-snackbar-alert": "^2.1.0",
     "react-tooltip": "^3.11.1",
-    "rrule": "^2.6.3",
     "slick-carousel": "^1.8.1"
   }
 }
