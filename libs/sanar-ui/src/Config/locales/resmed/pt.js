@@ -246,5 +246,18 @@ export default {
             question: 'Questão',
             questionMap: 'Mapa de questões'
         }
+    },
+    schedule: {
+        header: {
+            title: 'Cronograma',
+            subtitle: 'Use esse espaço para organizar os seus estudos'
+        },
+        suggestion: 'Sugestão do professor',
+        pdfDownload: 'Baixar em .pdf',
+        today: 'Hoje',
+        thisWeek: {
+            title: 'Esta semana',
+            subtitle: 'Confira as suas próximas atividades'
+        }
     }
 }

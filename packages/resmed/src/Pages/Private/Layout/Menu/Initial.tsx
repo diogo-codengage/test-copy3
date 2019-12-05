@@ -36,6 +36,13 @@ const RMMenuInitial: React.FC = () => {
                 dataTestid='rm-menu__go-to--account'
                 title={t('mainMenu.initial.account')}
             />
+            <SANNavigationListItem
+                to='/inicio/cronograma'
+                icon={<SANEvaIcon name='calendar-outline' color='default' />}
+                onClick={onCloseMenu}
+                dataTestid='rm-menu__go-to--schedule'
+                title={t('mainMenu.initial.schedule')}
+            />
         </SANNavigationList>
     )
 }

@@ -16,6 +16,7 @@ const RMHelpCenter = React.lazy(() => import('Pages/Private/HelpCenter'))
 const RMAccount = React.lazy(() => import('Pages/Private/Account'))
 const RMPracticalArea = React.lazy(() => import('Pages/Private/PracticalArea'))
 const RMClassroom = React.lazy(() => import('Pages/Private/Classroom'))
+const RMSchedule = React.lazy(() => import('Pages/Private/Schedule'))
 
 const RMPrivatePages: React.FC<RouteComponentProps> = ({
     history,
@@ -63,6 +64,10 @@ const RMPrivatePages: React.FC<RouteComponentProps> = ({
                                         `${url}/sala-aula/:specialtyId/:lessonId/:status`
                                     ]}
                                     component={RMClassroom}
+                                />
+                                <Route
+                                    path={`${url}/cronograma`}
+                                    component={RMSchedule}
                                 />
                                 <Route
                                     path={[`${url}/`, `${url}`]}
