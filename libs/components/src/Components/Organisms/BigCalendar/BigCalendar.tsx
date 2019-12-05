@@ -9,6 +9,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import { isPast, format, isEqual } from 'date-fns'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
+import { useTranslation } from 'react-i18next'
 
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
@@ -25,7 +26,7 @@ export interface IEvent {
     url?: string
     start?: Date
     end?: Date
-    status?: 'views' | 'unseen' | 'live' | 'exams'
+    status?: 'viewed' | 'unseen' | 'live' | 'exams'
     rendering?: 'background' | 'inverse-background'
     startEditable?: boolean
     extendedProps?: object
@@ -33,6 +34,16 @@ export interface IEvent {
 
 export interface ISANBigCalendarProps {
     events: IEvent[]
+    eventLimitClick?: (arg: {
+        date: Date
+        allDay: boolean
+        dayEl: HTMLElement
+        moreEl: HTMLElement
+        segs: any[]
+        hiddenSegs: any[]
+        jsEvent: MouseEvent
+        view: View
+    }) => void
     eventClick?: (arg: {
         el: HTMLElement
         event: EventApi
@@ -180,6 +191,35 @@ const FullCalendarWrapper = styled.div`
         & .fc-content-skeleton {
             bottom: 0;
         }
+
+        & .fc-popover {
+            /* top: calc(50% - 115px) !important; */
+            left: calc(50% - 150px) !important;
+
+            &:before {
+                content: '';
+                position: absolute;
+                background-color: rgba(0, 0, 0, 0.65);
+            }
+
+            &.fc-more-popover {
+                width: 300px;
+            }
+
+            & .fc-event-container {
+                 padding: ${theme('space.sm')};
+
+                 & .fc-day-grid-event {
+                     margin-bottom: ${theme('space.xs')};
+                 }
+            }
+
+            & .fc-header {
+                 padding: ${theme('space.sm')};
+                 font-size: ${theme('fontSizes.lg')};
+                 font-weight: bold;
+            }
+        }
     }
 `
 
@@ -211,6 +251,7 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = ({
     eventDrop,
     ...props
 }) => {
+    const { t } = useTranslation('components')
     const theme = useThemeContext()
     const calendarRef = useRef<FullCalendar>()
     const { width } = useWindowSize()
@@ -247,7 +288,7 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = ({
 
     const colors = useMemo(
         () => ({
-            views: {
+            viewed: {
                 color: theme.colors['primary-2'],
                 textColor: theme.colors['primary-5']
             },
@@ -299,6 +340,7 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = ({
                     center: 'title'
                 }}
                 eventLimit
+                eventLimitText={n => `${t('bigCalendar.more')} ${n}`}
                 eventDrop={handleEventDrop}
                 {...props}
             />

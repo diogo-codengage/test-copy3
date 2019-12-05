@@ -246,5 +246,8 @@ export default {
     },
     collection: {
         part: 'Parte'
+    },
+    bigCalendar: {
+        more: 'Mais'
     }
 }

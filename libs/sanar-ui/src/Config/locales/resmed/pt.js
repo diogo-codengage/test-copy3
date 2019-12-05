@@ -260,6 +260,7 @@ export default {
             subtitle: 'Confira as suas próximas atividades'
         },
         modal: {
+            day: 'Dia',
             lesson: {
                 title: 'Aula',
                 watch: 'Assistir aula',

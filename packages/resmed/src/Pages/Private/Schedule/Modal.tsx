@@ -1,6 +1,8 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useCallback } from 'react'
 
 import { useTranslation } from 'react-i18next'
+import styled from 'styled-components'
+import { theme, switchProp } from 'styled-tools'
 
 import {
     SANButton,
@@ -8,8 +10,101 @@ import {
     SANModal,
     SANModalFooter,
     SANBox,
-    SANEvaIcon
+    SANEvaIcon,
+    SANScroll
 } from '@sanar/components'
+
+type IStatus = 'viewed' | 'unseen' | 'live' | 'exams'
+
+const SANTypographyStyled = styled(SANTypography)<{ status: IStatus }>`
+    && {
+        &:before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background-color: ${switchProp('status', {
+                viewed: theme('colors.primary-4'),
+                unseen: theme('colors.burgundy.1'),
+                live: theme('colors.grey.4'),
+                exams: theme('colors.blue.2')
+            })};
+            border-radius: 3px;
+            position: absolute;
+            top: 8px;
+            left: 0;
+        }
+    }
+`
+
+const Wrapper = styled(SANBox)<{ status: IStatus }>`
+    && {
+        cursor: pointer;
+        &:hover {
+            background-color: ${switchProp('status', {
+                viewed: theme('colors.primary-2'),
+                unseen: theme('colors.burgundy.2'),
+                live: theme('colors.grey.0'),
+                exams: theme('colors.blue.0')
+            })};
+            &:first-child {
+                border-top-left-radius: ${theme('radii.base')};
+                border-top-right-radius: ${theme('radii.base')};
+            }
+            &:last-of-type {
+                border-bottom-left-radius: ${theme('radii.base')};
+                border-bottom-right-radius: ${theme('radii.base')};
+            }
+        }
+    }
+`
+
+export const RMModalMore = ({ options = [], ...props }) => {
+    const { t } = useTranslation('resmed')
+
+    const renderItem = useCallback(
+        (option, index) => (
+            <Wrapper
+                key={index}
+                borderBottom={index < options.length - 1 && '1px solid'}
+                borderColor='grey.1'
+                display='flex'
+                alignItems='center'
+                justifyContent='space-between'
+                p='sm'
+                status={option.status}
+            >
+                <SANBox pl='sm' position='relative' width='calc(100% - 20px)'>
+                    <SANTypographyStyled
+                        status={option.status}
+                        fontSize='lg'
+                        color='grey.7'
+                        ellipsis
+                    >
+                        {option.title}
+                    </SANTypographyStyled>
+                    <SANTypography fontSize='xs' color='grey.5' mt='xxs'>
+                        {option.subtitle}
+                    </SANTypography>
+                </SANBox>
+                <SANEvaIcon name='arrow-ios-forward-outline' />
+            </Wrapper>
+        ),
+        [options]
+    )
+
+    return (
+        <SANModal
+            width={360}
+            title={`${t('schedule.modal.day')} ${new Date().getDay()}`}
+            centered
+            {...props}
+        >
+            <SANBox height={350}>
+                <SANScroll>{options.map(renderItem)}</SANScroll>
+            </SANBox>
+        </SANModal>
+    )
+}
 
 export const RMModalSuggestion = ({ onConfirm, checked, ...props }) => {
     const { t } = useTranslation('resmed')
@@ -55,6 +150,8 @@ export const RMModalSuggestion = ({ onConfirm, checked, ...props }) => {
     )
 }
 
+const types = ['lesson', 'live']
+
 export const RMModalSchedule = ({ options, onClick, ...props }) => {
     const { t } = useTranslation('resmed')
 
@@ -67,22 +164,26 @@ export const RMModalSchedule = ({ options, onClick, ...props }) => {
             default:
                 return t('schedule.modal.lesson.title')
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [options])
 
     const button = useMemo(() => {
         switch (options.type) {
             case 'lesson':
-                return options.completed
+                return options.status === 'viewed'
                     ? t('schedule.modal.lesson.watched')
                     : t('schedule.modal.lesson.watch')
             case 'live':
                 return t('schedule.modal.live.button')
             default:
-                return options.completed
+                return options.status === 'viewed'
                     ? t('schedule.modal.lesson.watched')
                     : t('schedule.modal.lesson.watch')
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [options])
+
+    if (!types.includes(options.type)) return null
 
     return (
         <SANModal width={360} title={title} centered {...props}>

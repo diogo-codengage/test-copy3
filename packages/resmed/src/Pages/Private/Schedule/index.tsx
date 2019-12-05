@@ -21,12 +21,12 @@ import {
     SANCardEvent
 } from '@sanar/components'
 
-import { RMModalSchedule, RMModalSuggestion } from './Modal'
+import { RMModalSchedule, RMModalSuggestion, RMModalMore } from './Modal'
 
 const lesson = {
     extendedProps: {
         type: 'lesson',
-        completed: true,
+        status: 'viewed',
         title: 'Nome da aula',
         subtitle: '15:00',
         description:
@@ -44,25 +44,33 @@ const live = {
     }
 }
 
+const exam = {
+    extendedProps: {
+        type: 'exam',
+        title: 'Inscrição para a prova Lorem ipsum'
+    }
+}
+
 const events = [
     {
         id: '1',
         title: 'Aulas vistas',
         start: new Date(2019, 11, 2),
-        status: 'views',
+        status: 'viewed',
         ...lesson
     },
     {
         id: '2',
         title: 'Provas e Inscrições',
         start: new Date(2019, 11, 2),
-        status: 'exams'
+        status: 'exams',
+        ...exam
     },
     {
         id: '3',
         title: 'Aulas vistas',
         start: new Date(2019, 11, 5),
-        status: 'views',
+        status: 'viewed',
         startEditable: true,
         ...lesson
     },
@@ -71,13 +79,14 @@ const events = [
         title: 'Provas e Inscrições',
         start: new Date(2019, 11, 5),
         status: 'exams',
-        startEditable: true
+        startEditable: true,
+        ...exam
     },
     {
         id: '5',
         title: 'Aulas vistas',
         start: new Date(2019, 11, 6),
-        status: 'views',
+        status: 'viewed',
         startEditable: true,
         ...lesson
     },
@@ -86,13 +95,14 @@ const events = [
         title: 'Provas e Inscrições',
         start: new Date(2019, 11, 6),
         status: 'exams',
-        startEditable: true
+        startEditable: true,
+        ...exam
     },
     {
         id: '7',
         title: 'Aulas vistas',
         start: new Date(2019, 11, 6),
-        status: 'views',
+        status: 'viewed',
         startEditable: true,
         ...lesson
     },
@@ -101,21 +111,24 @@ const events = [
         title: 'Provas e Inscrições',
         start: new Date(2019, 11, 6),
         status: 'exams',
-        startEditable: true
+        startEditable: true,
+        ...exam
     },
     {
         id: '9',
         title: 'Provas e Inscrições',
         start: new Date(2019, 11, 6),
         status: 'exams',
-        startEditable: true
+        startEditable: true,
+        ...exam
     },
     {
         id: '10',
         title: 'Provas e Inscrições',
         start: new Date(2019, 11, 6),
         status: 'exams',
-        startEditable: true
+        startEditable: true,
+        ...exam
     },
     {
         id: '11',
@@ -137,6 +150,13 @@ const events = [
         id: '12',
         title: 'Live',
         start: new Date(2019, 11, 2),
+        status: 'live',
+        ...live
+    },
+    {
+        id: '13',
+        title: 'Live',
+        start: new Date(2019, 11, 6),
         status: 'live',
         ...live
     }
@@ -178,6 +198,17 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
         visible: false,
         checked: false
     })
+    const [modalMore, setModalMore] = useState({
+        visible: false,
+        options: []
+    })
+
+    const handleEventLimitClick = e => {
+        setModalMore({
+            visible: true,
+            options: e.segs.map(seg => seg.eventRange.def.extendedProps)
+        })
+    }
 
     const handleEventClick = e =>
         setModalSchedule({ visible: true, options: e.event.extendedProps })
@@ -188,6 +219,10 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
 
     return (
         <>
+            <RMModalMore
+                {...modalMore}
+                onCancel={() => setModalMore({ options: [], visible: false })}
+            />
             <RMModalSchedule
                 {...modalSchedule}
                 onCancel={() =>
@@ -231,6 +266,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                             <SANBigCalendar
                                 events={events}
                                 eventClick={handleEventClick}
+                                eventLimitClick={handleEventLimitClick}
                             />
                         </SANBox>
 

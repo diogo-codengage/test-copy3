@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANBox, ISANBoxProps } from '../../Atoms/Box'
 
-type IType = 'views' | 'unseen' | 'live' | 'exams'
+type IType = 'viewed' | 'unseen' | 'live' | 'exams'
 export interface ISANCardEventProps extends ISANBoxProps {
     title: string
     date: string
@@ -15,7 +15,7 @@ export interface ISANCardEventProps extends ISANBoxProps {
 const SANCardBox = styled(SANBox)<{ type: IType }>`
     &&& {
         border-color: ${switchProp('type', {
-            views: theme('colors.primary-4'),
+            viewed: theme('colors.primary-4'),
             unseen: theme('colors.burgundy.1'),
             live: theme('colors.grey.4'),
             exams: theme('colors.blue.2')
