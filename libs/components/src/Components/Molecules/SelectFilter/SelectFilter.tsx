@@ -41,7 +41,7 @@ interface IItem {
 }
 
 export interface ISANSelectFilterProps {
-    labelSelecteds: string
+    placeholder: string
     items: IItem[]
     value: IItem[]
     onOpen: (visible: boolean) => void
@@ -54,6 +54,7 @@ export interface ISANSelectFilterProps {
 }
 
 const SANSelectFilter = ({
+    placeholder,
     items,
     value = [],
     onOpen,
@@ -248,7 +249,7 @@ const SANSelectFilter = ({
             <span style={{ width: '100%' }} ref={dropdownRef}>
                 <SANStyledInput
                     onFocus={onFocus}
-                    placeholder={t('selectFilter.select')}
+                    placeholder={placeholder ? placeholder : t('selectFilter.select')}
                     iconLeft='search-outline'
                     onChange={handleSearch}
                     value={open ? search : labelSelecteds}

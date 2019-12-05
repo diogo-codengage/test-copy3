@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { storiesOf } from '@storybook/react'
-import { select, text, boolean } from '@storybook/addon-knobs'
+import { text } from '@storybook/addon-knobs'
 
 import SANSelectFilter from './SelectFilter'
 
@@ -65,6 +65,7 @@ const SelectFilter = () => {
     }
     return (
         <SANSelectFilter
+            placeholder={text('Placeholder to input search', 'Digite aqui')}
             items={items}
             value={selecteds}
             onOpen={onOpen}
