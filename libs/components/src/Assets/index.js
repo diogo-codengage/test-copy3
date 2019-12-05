@@ -52,6 +52,8 @@ export {
     flowchart,
     mentalmap,
     article,
+    lessonResultSuccess,
+    lessonResultError,
     document,
     blocked,
     empty,
