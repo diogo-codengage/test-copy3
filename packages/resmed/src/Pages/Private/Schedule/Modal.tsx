@@ -89,6 +89,7 @@ export const RMModalMore = ({ options = [], ...props }: IRMModalMore) => {
                 justifyContent='space-between'
                 p='sm'
                 status={option.status}
+                mr='sm'
             >
                 <SANBox pl='sm' position='relative' width='calc(100% - 20px)'>
                     <SANTypographyStyled
@@ -231,7 +232,7 @@ export const RMModalSchedule = ({
                 </SANTypography>
                 <SANBox height={80}>
                     <SANScroll>
-                        <SANTypography fontSize='md' color='grey.6'>
+                        <SANTypography fontSize='md' color='grey.6' pr='sm'>
                             {options.description}
                         </SANTypography>
                     </SANScroll>
