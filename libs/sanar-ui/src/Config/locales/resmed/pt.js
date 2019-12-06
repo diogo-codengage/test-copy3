@@ -249,11 +249,11 @@ export default {
     },
     userProfile: {
         title: 'Cadastro complementar',
-        createSubtitle: 'Preencha a ficha abaixo para continuar',
-        createSubmit: 'ENVIAR',
-        updateSubtitle: 'Confirme os dados abaixo para continuar',
-        updateSubmit: 'SALVAR',
-        updatePresentation: 'Olá futuro residente! Conta pra gente um pouco mais sobre você para traçarmos juntos uma trilha pra sua aprovação :)',
+        modalSubtitle: 'Preencha a ficha abaixo para continuar',
+        modalSubmit: 'ENVIAR',
+        pageSubtitle: 'Confirme os dados abaixo para continuar',
+        pageSubmit: 'SALVAR',
+        pagePresentation: 'Olá futuro residente! Conta pra gente um pouco mais sobre você para traçarmos juntos uma trilha pra sua aprovação :)',
         inputPlaceholder: 'Selecione',
         graduatedStep: {
             label: 'Etapa da formação',

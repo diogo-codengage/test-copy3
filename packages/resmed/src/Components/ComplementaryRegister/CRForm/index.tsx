@@ -65,6 +65,7 @@ interface IFormDataProps {
     testExperience?: string
     preparatoryCourseStatus?: string
     preparatoryCourseName?: string
+    modal?: boolean
 }
 interface IFormProps {
     form: any
@@ -233,7 +234,7 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
             )}
             <SANRow gutter={24}>
                 <SANCol>
-                    <SANFormItem name='createSubmit'>
+                    <SANFormItem name='submitButton'>
                         <SANButton
                             mt='md'
                             mx='auto'
@@ -244,7 +245,11 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
                             bold
                             onClick={false}
                         >
-                            {t('userProfile.createSubmit')}
+                            {t(
+                                `userProfile.${
+                                    data.modal ? 'modalSubmit' : 'pageSubmit'
+                                }`
+                            )}
                         </SANButton>
                     </SANFormItem>
                 </SANCol>
