@@ -48,6 +48,36 @@ const SANStyledRadioGroup = styled(SANRadioGroup)`
     }
 `
 
+const SANStyledRadio = styled(SANRadio)<{
+    second?: boolean
+}>`
+    &&& {
+        display: block;
+        ${ifProp(
+            'second',
+            css`
+                margin-top: 12px;
+                margin-bottom: 12px;
+            `,
+            css`
+                margin-top: 0;
+                margin-bottom: 0;
+            `
+        )}
+        ${theme('mediaQueries.up.xs')} {
+            display: inline-block;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    }
+`
+
+const SANSTyledButtonFormItem = styled(SANFormItem)`
+    &&& {
+        margin-bottom: 0;
+    }
+`
+
 interface IFormDataProps {
     graduatedStep?: string
     institutionIds?: [
@@ -174,9 +204,12 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
                             defaultValue={testExperiences[0]}
                         >
                             {testExperiences.map(item => (
-                                <SANRadio value={item}>
+                                <SANStyledRadio
+                                    second={item === testExperiences[1]}
+                                    value={item}
+                                >
                                     {t(`userProfile.testExperiences.${item}`)}
-                                </SANRadio>
+                                </SANStyledRadio>
                             ))}
                         </SANStyledRadioGroup>
                     </SANFormItem>
@@ -234,7 +267,7 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
             )}
             <SANRow gutter={24}>
                 <SANCol>
-                    <SANFormItem name='submitButton'>
+                    <SANSTyledButtonFormItem name='submitButton'>
                         <SANButton
                             mt='md'
                             mx='auto'
@@ -251,7 +284,7 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
                                 }`
                             )}
                         </SANButton>
-                    </SANFormItem>
+                    </SANSTyledButtonFormItem>
                 </SANCol>
             </SANRow>
         </SANForm>
