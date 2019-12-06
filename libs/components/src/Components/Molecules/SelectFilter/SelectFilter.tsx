@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -56,6 +56,8 @@ export interface ISANSelectFilterProps {
     InputProps?: ISANInputProps
 }
 
+const makeLabel = value => value.map(lt => lt.label).join(', ')
+
 const SANSelectFilter = ({
     placeholder,
     items,
@@ -90,7 +92,6 @@ const SANSelectFilter = ({
         if (value.length === items.length) return
         onSelectAll && onSelectAll(values, e)
         onChange && onChange(values, e)
-        setLabelSelecteds(values.map(v => v.label).join(', '))
     }
 
     const handleClear = e => {
@@ -111,7 +112,6 @@ const SANSelectFilter = ({
             target: { checked }
         } = e
         if (checked) {
-            setLabelSelecteds(old => `${old ? `${old}, ` : ''}${item.label}`)
             onSelectItem && onSelectItem(item)
             onChange && onChange([...value, item])
         } else {
@@ -120,17 +120,10 @@ const SANSelectFilter = ({
             )
             onDeselectItem && onDeselectItem(item)
             onChange && onChange(newItems)
-            setLabelSelecteds(
-                old =>
-                    `${old
-                        .replace(`${item.label}, `, '')
-                        .replace(`, ${item.label}`, '')
-                        .replace(item.label, '')}`
-            )
         }
     }
 
-    const onFocus = () => (handleOpen(true), setSearch(''))
+    const onFocus = () => handleOpen(true)
 
     const clickOutside = () => {
         setSearch('')
@@ -165,6 +158,13 @@ const SANSelectFilter = ({
             {item.label.toLowerCase()}
         </SANStyledCheckbox>
     ))
+
+    useEffect(() => {
+        if (!!value && !!value.length) {
+            const label = makeLabel(value)
+            setLabelSelecteds(label)
+        }
+    }, [value])
 
     return (
         <SANDropdown
