@@ -43,16 +43,16 @@ interface IItem {
 }
 
 export interface ISANSelectFilterProps {
-    placeholder: string
+    placeholder?: string
     items: IItem[]
-    value: IItem[]
-    onOpen: (visible: boolean) => void
-    onClose: () => void
+    value?: IItem[]
+    onOpen?: (visible: boolean) => void
+    onClose?: () => void
     onChange: (list: IItem[], item: IItem) => void
-    onSelectAll: (list: IItem[]) => void
-    onClear: () => void
-    onSelectItem: (item: IItem) => void
-    onDeselectItem: (item: IItem) => void
+    onSelectAll?: (list: IItem[]) => void
+    onClear?: () => void
+    onSelectItem?: (item: IItem) => void
+    onDeselectItem?: (item: IItem) => void
     InputProps?: ISANInputProps
 }
 
