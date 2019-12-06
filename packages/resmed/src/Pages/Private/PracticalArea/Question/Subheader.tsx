@@ -10,11 +10,26 @@ interface IIndicator {
     text: string
     percent: number
     status?: 'normal' | 'error' | 'success' | 'warning'
+    vertical?: boolean
 }
 
-const Indicator = ({ text, percent, status = 'normal' }: IIndicator) => (
-    <SANBox display='flex' alignItems='center' mr='xl'>
-        <SANTypography variant='body2' mr='md'>{`${text}:`}</SANTypography>
+const Indicator = ({
+    text,
+    percent,
+    status = 'normal',
+    vertical = false
+}: IIndicator) => (
+    <SANBox
+        display='flex'
+        alignItems='center'
+        mr={!vertical && 'xl'}
+        flexDirection={vertical ? 'column' : 'row'}
+    >
+        <SANTypography
+            variant='body2'
+            mr={!vertical && 'md'}
+            mb={vertical && 'sm'}
+        >{`${text}:`}</SANTypography>
         <SANCircleProgress
             percent={Math.round(percent)}
             showInfo={true}
@@ -26,37 +41,54 @@ const Indicator = ({ text, percent, status = 'normal' }: IIndicator) => (
     </SANBox>
 )
 
-const RMSubheader: React.FC = ({ children }) => {
+export const Performace = ({ vertical = false, ...props }) => {
     const { t } = useTranslation('resmed')
     const { calcPercent } = useQuestionsContext()
-
     return (
         <SANBox
-            display='flex'
-            flexDirection={{ _: 'column-reverse', lg: 'row' }}
-            alignItems={{ lg: 'center' }}
-            justifyContent='space-between'
-            mb='7'
+            display={{ _: 'none', lg: 'flex' }}
+            alignItems='center'
+            {...props}
         >
-            <SANBox display={{ _: 'none', lg: 'flex' }} alignItems='center'>
-                <Indicator
-                    text={t('practicalArea.question.corrects')}
-                    percent={calcPercent('correct')}
-                    status='success'
-                />
-                <Indicator
-                    text={t('practicalArea.question.wrong')}
-                    percent={calcPercent('wrong')}
-                    status='error'
-                />
-                <Indicator
-                    text={t('practicalArea.question.skipped')}
-                    percent={calcPercent('skipped')}
-                />
-            </SANBox>
-            {children}
+            <Indicator
+                text={t('practicalArea.question.corrects')}
+                percent={calcPercent('correct')}
+                status='success'
+                vertical={vertical}
+            />
+            <Indicator
+                text={t('practicalArea.question.wrong')}
+                percent={calcPercent('wrong')}
+                status='error'
+                vertical={vertical}
+            />
+            <Indicator
+                text={t('practicalArea.question.skipped')}
+                percent={calcPercent('skipped')}
+                vertical={vertical}
+            />
         </SANBox>
     )
 }
+
+const RMSubheader: React.FC<{ extra?: React.ReactNode }> = ({
+    children,
+    extra
+}) => (
+    <SANBox
+        display='flex'
+        flexDirection={{ _: 'column-reverse', lg: 'row' }}
+        alignItems={{ lg: 'center' }}
+        justifyContent='space-between'
+        mb={{ lg: '7', _: 'md' }}
+    >
+        {!!extra ? (
+            <SANBox mt={{ lg: '0', _: 'md' }}>{extra}</SANBox>
+        ) : (
+            <Performace />
+        )}
+        {children}
+    </SANBox>
+)
 
 export default RMSubheader

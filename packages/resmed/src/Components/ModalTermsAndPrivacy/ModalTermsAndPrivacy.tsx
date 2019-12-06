@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { SANModalTabs } from '@sanar/components'
-import RMPrivacyAndPolicyFrame from './PrivacyAndPolicyFrame'
-import RMTermsFrame from './TermsFrame'
+
 import { useTranslation } from 'react-i18next'
 import { useApolloClient } from '@apollo/react-hooks'
+
+import { useSnackbarContext, SANModalTabs } from '@sanar/components'
+
 import { useAuthContext } from 'Hooks/auth'
 import { IMe } from 'Apollo/User/Queries/me'
 import { ACCEPT_TERMS_USE_MUTATION } from 'Apollo/User/Mutations/accept-terms-use'
-
-import { useSnackbarContext } from '@sanar/components'
+import { useLayoutContext } from 'Pages/Private/Context'
 
 import logo from 'Assets/images/brand/logo.svg'
+
+import RMPrivacyAndPolicyFrame from './PrivacyAndPolicyFrame'
+import RMTermsFrame from './TermsFrame'
 
 const SANModalTermsAndPrivacy = ({
     defaultActiveKey,
@@ -21,6 +24,7 @@ const SANModalTermsAndPrivacy = ({
     const { t } = useTranslation('resmed')
     const createSnackbar = useSnackbarContext()
     const client = useApolloClient()
+    const { handleTrack } = useLayoutContext()
     const { setMe } = useAuthContext()
     const [activeKey, setActiveKey] = useState(defaultActiveKey)
     const [signed, setSigned] = useState<number[]>([])
@@ -33,6 +37,7 @@ const SANModalTermsAndPrivacy = ({
     const handleAccept = async () => {
         setLoading(true)
         try {
+            handleTrack('Terms acepted')
             const {
                 data: { acceptTermsUse }
             } = await client.mutate<IMe>({
@@ -68,6 +73,7 @@ const SANModalTermsAndPrivacy = ({
             title: t('global.termsOfUse'),
             content: (
                 <RMTermsFrame
+                    tosRequired={tosRequired}
                     onAccept={
                         !signed.includes(1) &&
                         tosRequired &&
@@ -80,6 +86,7 @@ const SANModalTermsAndPrivacy = ({
             title: t('global.privacyPolicy'),
             content: (
                 <RMPrivacyAndPolicyFrame
+                    tosRequired={tosRequired}
                     onAccept={
                         !signed.includes(0) &&
                         tosRequired &&

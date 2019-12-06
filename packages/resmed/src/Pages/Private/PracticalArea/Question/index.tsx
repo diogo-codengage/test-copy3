@@ -104,7 +104,7 @@ const GetOutPractice = ({ onConfirm, ...props }) => {
     )
 }
 
-const RMQuestion = ({ match: { url }, history }) => {
+const RMQuestion = ({ match: { url }, history, location }) => {
     const { t } = useTranslation('resmed')
     const {
         stopwatchRef,
@@ -116,6 +116,15 @@ const RMQuestion = ({ match: { url }, history }) => {
     const [visibleFinish, setVisibleFinish] = useState(false)
     const [visibleExit, setVisibleExit] = useState(false)
 
+    const onFinished = () => {
+        !!stopwatchRef.current &&
+            dispatch({
+                type: 'stats',
+                stats: { time: stopwatchRef.current.time() }
+            })
+        history.push('/inicio/area-pratica/finalizado')
+    }
+
     const validatePractice = () => {
         if (
             totalAnsweredQuestions === 0 ||
@@ -124,12 +133,7 @@ const RMQuestion = ({ match: { url }, history }) => {
             setVisibleFinish(true)
             return
         } else {
-            !!stopwatchRef.current &&
-                dispatch({
-                    type: 'stats',
-                    stats: { time: stopwatchRef.current.time() }
-                })
-            history.push('/inicio/area-pratica/finalizado')
+            onFinished()
         }
     }
 
@@ -144,7 +148,7 @@ const RMQuestion = ({ match: { url }, history }) => {
     }
 
     const onConfirm = () => {
-        history.push('/inicio/area-pratica/finalizado')
+        onFinished()
         setVisibleExit(false)
     }
 
@@ -186,10 +190,13 @@ const RMQuestion = ({ match: { url }, history }) => {
                 BoxProps={{
                     bg: 'grey-solid.1',
                     flex: '1',
-                    py: '8'
+                    py: { sm: '8', _: 'md' }
                 }}
                 ContainerProps={{
-                    height: '100%'
+                    height: '100%',
+                    px: location.pathname.includes('/pratica')
+                        ? { lg: 'md', _: '0' }
+                        : 'md'
                 }}
                 HeaderProps={{
                     extra: (

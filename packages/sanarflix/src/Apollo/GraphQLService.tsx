@@ -7,11 +7,16 @@ import { CognitoUserSession } from 'amazon-cognito-identity-js'
 const getAccessToken = async () => {
     const { user } = getInstance();
     return new Promise((resolve, reject) => {
-        user.getSession( (err, session: CognitoUserSession) => {
-            if(err) reject(err);
-            const jwtToken = session.getIdToken().getJwtToken();
-            resolve(jwtToken);
-        })
+        try {
+            user.getSession( (err, session: CognitoUserSession) => {
+                if(err) reject(err);
+                const jwtToken = session.getIdToken().getJwtToken();
+                resolve(jwtToken);
+            })
+        } catch (e) {
+            window.localStorage.clear();
+            reject(e);
+        }
     });
 }
 

@@ -22,6 +22,9 @@ import searching from 'Assets/images/forgot-password/searching.png'
 import RMFooter from 'Components/Footer'
 import { forgotPassword } from 'Config/AWSCognito'
 
+import { segmentTrack } from 'Config/Segment/track'
+import { IEvents, IOptions } from 'Config/Segment'
+
 interface IProps extends RouteComponentProps {
     form: any
 }
@@ -31,12 +34,21 @@ const RMSendPasswordRecoveryPage: React.FC<IProps> = ({ form, history }) => {
     const createSnackbar = useSnackbarContext()
     const [loading, setLoading] = useState(false)
 
+    const handleTrack = (event: IEvents, attrs?: IOptions) => {
+        const data = {
+            'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
+            ...attrs
+        }
+        segmentTrack(event, data)
+    }
+
     const onSubmit = async e => {
         e.preventDefault()
         setLoading(true)
 
         try {
             const { email } = await form.validateFields()
+            handleTrack('Password recovered', { Email: email })
             await forgotPassword(email)
 
             history.push({

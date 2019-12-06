@@ -112,12 +112,16 @@ const SANCollectionItemStyled = styled(SANBox)<{ current: boolean }>`
     )};
 `
 
-const IconComleted = styled(SANEvaIcon)`
+const IconComleted = styled(SANEvaIcon)<{ completed: boolean }>`
     && {
         position: absolute;
         top: calc(50% - 24px);
         left: calc(50% - 24px);
-        color: ${theme('colors.white.10')};
+        color: ${ifProp(
+            'completed',
+            theme('colors.white.5'),
+            theme('colors.white.10')
+        )};
 
         & svg {
             font-size: ${theme('fontSizes.7')};
@@ -127,6 +131,12 @@ const IconComleted = styled(SANEvaIcon)`
 
 const SliderStyled = styled(Slider)`
     && {
+        ${ifProp(
+            'vertical',
+            css`
+                background-color: ${theme('colors.grey.9')};
+            `
+        )};
         &.slick-vertical .slick-slide {
             border: none;
         }
@@ -167,13 +177,7 @@ export interface ISANCollectionProps {
     loading?: boolean
 }
 
-const SANCollectionItem = ({
-    item,
-    index,
-    onChange,
-    value,
-    isDragging
-}: any) => {
+const SANCollectionItem = ({ item, index, onChange, value }: any) => {
     const { t } = useTranslation('components')
     const { name, image, id, completed } = item
 
@@ -201,8 +205,11 @@ const SANCollectionItem = ({
                         borderRadius='base'
                         width='100%'
                     />
-                    {completed && value !== id && (
-                        <IconComleted name='checkmark-circle-2' />
+                    {completed && (
+                        <IconComleted
+                            name='checkmark-circle-2'
+                            completed={completed && value === id}
+                        />
                     )}
                 </SANBox>
                 <SANTypography

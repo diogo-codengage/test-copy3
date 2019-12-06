@@ -64,7 +64,10 @@ const Copyright = ({ darkMode }) => {
             </SANSpace>
 
             <RMModalTermsAndPrivacy
-                onCancel={() => setShowModalTerms(false)}
+                onCancel={() => {
+                    setShowModalTerms(false)
+                    setActiveKey(0)
+                }}
                 visible={showModalTerms}
                 defaultActiveKey={activeKey}
                 scrolling

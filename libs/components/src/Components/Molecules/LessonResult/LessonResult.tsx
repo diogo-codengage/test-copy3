@@ -50,11 +50,18 @@ const Skeleton = ({ showBorder }) => (
     </SANBox>
 )
 
+interface IQuiz {
+    id: string
+    questions: Array<{ id: string }>
+}
+
 interface IQuestion {
+    id: string
     title: string
     percentToCorrect?: number
     corrects: number
     total: number
+    quiz: IQuiz
 }
 
 export interface ISANLessonResultProps {
@@ -62,6 +69,7 @@ export interface ISANLessonResultProps {
     onGoPractice: () => void
     questions: IQuestion[]
     loading?: boolean
+    onGoQuiz: (resp: IQuestion) => void
 }
 
 const sumCorrects = (prev, acc) => prev + acc.corrects
@@ -74,7 +82,8 @@ const SANLessonResult = ({
     percentToCorrect = 80,
     questions,
     onGoPractice,
-    loading = false
+    loading = false,
+    onGoQuiz
 }: ISANLessonResultProps) => {
     const { t } = useTranslation('components')
     const {
@@ -109,95 +118,91 @@ const SANLessonResult = ({
     }, [questions, percentToCorrect])
 
     const renderCollection = useCallback(
-        (question, index) => (
-            <SANBox
-                bg={{ lg: 'grey.5', _: 'grey-solid.8' }}
-                key={index}
-                display='flex'
-                flexDirection='column'
-                justifyContent='space-between'
-                pt='xl'
-                px={{ xs: 'xxl', _: 'md' }}
-            >
+        (question, index) => {
+            const props = {
+                fontSize: 'lg',
+                fontWeight: 'bold',
+                color: hasSuccessColletion(question) ? 'white.10' : 'error',
+                onClick: () =>
+                    !hasSuccessColletion(question) && onGoQuiz(question),
+                style: {
+                    cursor: hasSuccessColletion(question)
+                        ? 'default'
+                        : 'pointer'
+                },
+                children: hasSuccessColletion(question)
+                    ? t('lessonResult.itemSuccess')
+                    : t('lessonResult.itemError')
+            }
+
+            return (
                 <SANBox
+                    bg={{ lg: 'grey.5', _: 'grey-solid.8' }}
+                    key={index}
                     display='flex'
-                    alignItems='center'
+                    flexDirection='column'
                     justifyContent='space-between'
-                    borderBottom={index < questions.length - 1 && '1px solid'}
-                    borderColor='white.1'
-                    pb='xl'
+                    pt='xl'
+                    px={{ xs: 'xxl', _: 'md' }}
                 >
-                    <SANBox display='flex' alignItems='center'>
-                        <SANBox
-                            color='white.10'
-                            minWidth='24px'
-                            width='24px'
-                            height='24px'
-                            minHeight='24px'
-                            borderRadius='12px'
-                            bg={
-                                hasSuccessColletion(question)
-                                    ? 'success'
-                                    : 'error'
-                            }
-                            mr='md'
-                            display='flex'
-                            alignItems='center'
-                            justifyContent='center'
-                        >
-                            <SANTypography fontSize='sm' fontWeight='bold'>
-                                {index + 1}
-                            </SANTypography>
-                        </SANBox>
-                        <SANBox display='flex' flexDirection='column'>
-                            <SANBox display={{ md: 'none', _: 'block' }}>
+                    <SANBox
+                        display='flex'
+                        alignItems='center'
+                        justifyContent='space-between'
+                        borderBottom={
+                            index < questions.length - 1 && '1px solid'
+                        }
+                        borderColor='white.1'
+                        pb='xl'
+                    >
+                        <SANBox display='flex' alignItems='center'>
+                            <SANBox
+                                color='white.10'
+                                minWidth='24px'
+                                width='24px'
+                                height='24px'
+                                minHeight='24px'
+                                borderRadius='12px'
+                                bg={
+                                    hasSuccessColletion(question)
+                                        ? 'success'
+                                        : 'error'
+                                }
+                                mr='md'
+                                display='flex'
+                                alignItems='center'
+                                justifyContent='center'
+                            >
+                                <SANTypography fontSize='sm' fontWeight='bold'>
+                                    {index + 1}
+                                </SANTypography>
+                            </SANBox>
+                            <SANBox display='flex' flexDirection='column'>
+                                <SANBox display={{ md: 'none', _: 'block' }}>
+                                    <SANTypography {...props} />
+                                </SANBox>
                                 <SANTypography
                                     fontSize='lg'
                                     fontWeight='bold'
-                                    color={
-                                        hasSuccessColletion(question)
-                                            ? 'white.10'
-                                            : 'error'
-                                    }
+                                    color='white.5'
                                 >
-                                    {hasSuccessColletion(question)
-                                        ? t('lessonResult.itemSuccess')
-                                        : t('lessonResult.itemError')}
+                                    {`${question.title} (${question.corrects}/${question.total})`}
                                 </SANTypography>
                             </SANBox>
-                            <SANTypography
-                                fontSize='lg'
-                                fontWeight='bold'
-                                color='white.5'
-                            >
-                                {`${question.title} (${question.corrects}/${question.total})`}
-                            </SANTypography>
+                        </SANBox>
+                        <SANBox display={{ md: 'block', _: 'none' }}>
+                            <SANTypography {...props} />
                         </SANBox>
                     </SANBox>
-                    <SANBox display={{ md: 'block', _: 'none' }}>
-                        <SANTypography
-                            fontSize='lg'
-                            fontWeight='bold'
-                            color={
-                                hasSuccessColletion(question)
-                                    ? 'white.10'
-                                    : 'error'
-                            }
-                        >
-                            {hasSuccessColletion(question)
-                                ? t('lessonResult.itemSuccess')
-                                : t('lessonResult.itemError')}
-                        </SANTypography>
-                    </SANBox>
                 </SANBox>
-            </SANBox>
-        ),
+            )
+        },
         [questions]
     )
 
     return (
-        <SANSpin spinning={loading} dark flex>
-            <SANBoxStyled borderRadius={{ lg: 'base', _: '0px' }}>
+        <SANBoxStyled borderRadius={{ lg: 'base', _: '0px' }}>
+            <SANSpin spinning={loading} dark flex>
                 <SANBox
                     p='xl'
                     display='flex'
@@ -277,11 +282,11 @@ const SANLessonResult = ({
                         </SANCol>
                     </SANRow>
                 </SANBox>
-                {loading
-                    ? arrLoading.map(renderSkeleton)
-                    : questions.map(renderCollection)}
-            </SANBoxStyled>
-        </SANSpin>
+            </SANSpin>
+            {loading
+                ? arrLoading.map(renderSkeleton)
+                : questions.map(renderCollection)}
+        </SANBoxStyled>
     )
 }
 

@@ -22,6 +22,8 @@ import RMCollection from 'Components/Collection'
 import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomQuizContext } from './Context'
+import { useClassroomContext } from '../Context'
+import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
 
 const SANColFloat = styled(SANCol)`
     && {
@@ -56,10 +58,13 @@ const RMClassroomQuizQuestion = ({
         questionsMap,
         setQuestionsMap
     } = useClassroomQuizContext()
+    const { handleProgress } = useClassroomContext()
     const { params: paramsLayout } = useLayoutContext()
     const [visible, setVisible] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [skipped, seSkipped] = useState(0)
     const [responses, setResponses] = useState<any[]>([])
+    const { handleTrack } = useTrackContext()
 
     const goToNext = () => {
         // if have next question on quiz go to next
@@ -79,12 +84,24 @@ const RMClassroomQuizQuestion = ({
         }
     }
 
-    const handleJump = () => goToNext()
+    const handleJump = () => {
+        seSkipped(old => old + 1)
+        goToNext()
+    }
 
     const handleNext = () => goToNext()
 
     const handleConfirm = async alternativeId => {
         setLoading(true)
+        const current = index + 1 - skipped
+        handleProgress({
+            resourceId: paramsLayout.contentId,
+            resourceType: 'Quiz',
+            percentage: parseInt(
+                ((current * 100) / questions.length).toString(),
+                10
+            )
+        })
 
         try {
             const {
@@ -127,6 +144,15 @@ const RMClassroomQuizQuestion = ({
                         : e
                 )
             )
+
+            handleTrack('Question answred', {
+                'Specialty ID': paramsLayout.specialtyId,
+                'Subspecialty ID': paramsLayout.subspecialtyId,
+                'Lesson ID': paramsLayout.lessonId,
+                'Clicker ID': paramsLayout.collectionId,
+                'Question ID': questions[index].id,
+                Correct: correct.id === alternativeId
+            })
         } catch (e) {}
         setLoading(false)
     }
@@ -180,6 +206,7 @@ const RMClassroomQuizQuestion = ({
                             variant='outlined'
                             color='light'
                             onClick={toggleVisible}
+                            mr={{ lg: '0', _: 'md' }}
                         >
                             <SANEvaIcon name='map-outline' mr='xs' />
                             {t('classroom.quiz.questionMap')}

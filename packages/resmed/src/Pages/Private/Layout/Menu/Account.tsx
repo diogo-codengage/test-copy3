@@ -18,6 +18,7 @@ import {
 import { useAuthContext } from 'Hooks/auth'
 import RMLogout from 'Components/ModalLogout'
 import { useLayoutContext } from '../Context'
+import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
 
 import { logout } from 'Config/AWSCognito'
 
@@ -30,10 +31,12 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
     const [visibleLogout, setVisibleLogout] = useState(false)
     const [showModalTerms, setShowModalTerms] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
+    const { handleTrack } = useTrackContext()
 
     const signOut = () => {
         logout({})
         setMe(undefined)
+        handleTrack('Logout', undefined)
         history.push('/auth/entrar')
     }
 
@@ -117,7 +120,10 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
             </SANNavigationList>
 
             <RMModalTermsAndPrivacy
-                onCancel={() => setShowModalTerms(false)}
+                onCancel={() => {
+                    setShowModalTerms(false)
+                    setActiveKey(0)
+                }}
                 visible={showModalTerms}
                 defaultActiveKey={activeKey}
                 scrolling

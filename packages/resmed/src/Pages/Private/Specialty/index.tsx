@@ -1,8 +1,9 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useApolloClient, useQuery } from '@apollo/react-hooks'
+import { useLayoutContext } from 'Pages/Private/Context'
 
 import {
     SANBox,
@@ -66,17 +67,41 @@ interface IRMSubspecialtiesProps extends RouteComponentProps<IRouteProps> {
 
 const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
     ({ match: { params }, history, onSeeLessons }: IRMSubspecialtiesProps) => {
+        const { handleTrack } = useLayoutContext()
         const { t } = useTranslation('resmed')
+        const [subSpecialties, setSubSpecialties] = useState([])
+
+        useEffect(() => {
+            handleTrack('Specialty viewed', {
+                'Specialty ID': params.specialtyId
+            })
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [params.specialtyId])
+
+        useEffect(() => {
+            subSpecialties.forEach((subspecialty: ISubspecialtyItems) => {
+                handleTrack('Subspecialty viewed', {
+                    'Specialty ID': params.specialtyId,
+                    'Subspecialty ID': subspecialty.id
+                })
+            })
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [subSpecialties, params.specialtyId])
+
+        const onCompleted = ({ subSpecialties }) =>
+            setSubSpecialties(subSpecialties.items)
 
         const onStart = ({
             specialtyId,
             subSpecialtyId,
-            lessonId,
+            lesson,
             collectionId,
             resource
         }: ILastAccessed) => {
             history.push(
-                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${
+                    lesson.id
+                }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
                     resource.id
                 }`
             )
@@ -102,15 +127,40 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                         }}
                         continue={{
                             title: subspecialty.lastAccessed.resource.title,
-                            index: subspecialty.lastAccessed.resource.index
+                            index: subspecialty.lastAccessed.lesson.index,
+                            onClick: () => {
+                                onStart(subspecialty.lastAccessed)
+                                handleTrack('Continuar button clicked', {
+                                    'Specialty ID':
+                                        subspecialty.lastAccessed.specialtyId,
+                                    'Subspecialty ID':
+                                        subspecialty.lastAccessed
+                                            .subSpecialtyId,
+                                    'Lesson ID':
+                                        subspecialty.lastAccessed.lesson.id,
+                                    'Clicker ID':
+                                        subspecialty.lastAccessed.collectionId
+                                })
+                            }
                         }}
-                        onClickRight={() => onSeeLessons(subspecialty)}
-                        onClickLeft={() => onStart(subspecialty.lastAccessed)}
+                        onClick={() => {
+                            onSeeLessons(subspecialty)
+                            handleTrack('Ver aulas button clicked', {
+                                'Specialty ID':
+                                    subspecialty.lastAccessed.specialtyId,
+                                'Subspecialty ID':
+                                    subspecialty.lastAccessed.subSpecialtyId,
+                                'Lesson ID':
+                                    subspecialty.lastAccessed.lesson.id,
+                                'Clicker ID':
+                                    subspecialty.lastAccessed.collectionId
+                            })
+                        }}
                     />
                 </SANCol>
             ),
             // eslint-disable-next-line react-hooks/exhaustive-deps
-            [onSeeLessons]
+            []
         )
 
         return (
@@ -118,7 +168,8 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                 query={GET_SUBSPECIALTIES}
                 options={{
                     variables: { parentId: params.specialtyId },
-                    skip: !params.specialtyId
+                    skip: !params.specialtyId,
+                    onCompleted: onCompleted
                 }}
                 loaderProps={{ minHeight: '250px', flex: true }}
                 errorProps={{ flex: 1 }}
@@ -157,10 +208,11 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
     }
 )
 
-const RMSubSpecialties = ({
+const RMSpecialty = ({
     history,
     match: { params }
 }: RouteComponentProps<IRouteProps>) => {
+    const { handleTrack } = useLayoutContext()
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
@@ -171,7 +223,9 @@ const RMSubSpecialties = ({
             lastAccessed: {
                 specialtyId: '',
                 subSpecialtyId: '',
-                lessonId: '',
+                lesson: {
+                    id: ''
+                },
                 collectionId: '',
                 resource: {
                     id: '',
@@ -226,12 +280,14 @@ const RMSubSpecialties = ({
     const onStart = ({
         specialtyId,
         subSpecialtyId,
-        lessonId,
+        lesson,
         collectionId,
         resource
     }) => {
         history.push(
-            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lessonId}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${
+                lesson.id
+            }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
                 resource.id
             }`
         )
@@ -243,7 +299,19 @@ const RMSubSpecialties = ({
                 visible={current.open}
                 title={current.subspecialty.name}
                 onCancel={onCancel}
-                onContinue={() => onStart(current.subspecialty.lastAccessed)}
+                onContinue={() => {
+                    onStart(current.subspecialty.lastAccessed)
+                    handleTrack('Continuar de onde parei button clicked', {
+                        'Specialty ID':
+                            current.subspecialty.lastAccessed.specialtyId,
+                        'Subspecialty ID':
+                            current.subspecialty.lastAccessed.subSpecialtyId,
+                        'Lesson ID':
+                            current.subspecialty.lastAccessed.lesson.id,
+                        'Clicker ID':
+                            current.subspecialty.lastAccessed.collectionId
+                    })
+                }}
                 themes={lessons}
                 loading={loading}
             />
@@ -261,7 +329,10 @@ const RMSubSpecialties = ({
                     flexDirection: 'column'
                 }}
                 HeaderProps={{
-                    onBack: () => history.push('/inicio/curso'),
+                    onBack: () => {
+                        history.push('/inicio/curso')
+                        handleTrack('Voltar button clicked')
+                    },
                     SessionTitleProps: {
                         title: !loadingSpecialty ? (
                             specialty.name
@@ -286,4 +357,4 @@ const RMSubSpecialties = ({
     )
 }
 
-export default withRouter<RouteComponentProps<IRouteProps>>(RMSubSpecialties)
+export default withRouter<RouteComponentProps<IRouteProps>>(RMSpecialty)

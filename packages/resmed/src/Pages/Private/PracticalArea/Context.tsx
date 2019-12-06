@@ -18,7 +18,9 @@ import {
     GET_QUESTIONS,
     IQuestionsQuery
 } from 'Apollo/PracticalArea/Queries/questions'
-import { reducer, initialStats, IAction, IState } from './reducer'
+import { reducer, initialStats, IAction, IState, IFilter } from './reducer'
+
+import { useLayoutContext } from 'Pages/Private/Context'
 
 interface IRMPracticalProviderValue {
     stopwatchRef: any
@@ -45,6 +47,31 @@ const initialState = {
     bookmarked: false
 }
 
+const mapItem = item => item.value
+const getFilters = (filter: IFilter) => ({
+    ...(!!filter.categories && {
+        categoriesIds: filter.categories.map(mapItem)
+    }),
+    ...(!!filter.specialties && {
+        specialtiesIds: filter.specialties.map(mapItem)
+    }),
+    ...(!!filter.subspecialties && {
+        subSpecialtiesIds: filter.subspecialties.map(mapItem)
+    }),
+    ...(!!filter.lessons && {
+        lessonsIds: filter.lessons.map(mapItem)
+    }),
+    ...(!!filter.institution && {
+        institutionId: filter.institution.value
+    }),
+    ...(!!filter.state && {
+        state: filter.state
+    }),
+    ...(!!filter.year && { year: Number(filter.year.format('YYYY')) }),
+    withImage: filter.onlyHasImages,
+    isCommentedByExpert: filter.onlyComments
+})
+
 const RMPracticalProvider: React.FC<RouteComponentProps> = ({
     children,
     location: { pathname }
@@ -57,7 +84,11 @@ const RMPracticalProvider: React.FC<RouteComponentProps> = ({
         reducer,
         initialState
     )
-
+    const { handleTrack } = useLayoutContext()
+    useEffect(() => {
+        handleTrack('Área de Prática viewed')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     const totalAnsweredQuestions = useMemo(
         () => state.stats.correct + state.stats.wrong + state.stats.skipped,
         [state.stats]
@@ -109,7 +140,8 @@ const RMPracticalProvider: React.FC<RouteComponentProps> = ({
                 query: GET_QUESTIONS,
                 fetchPolicy: 'network-only',
                 variables: {
-                    limit: 20
+                    limit: 20,
+                    ...getFilters(state.filter)
                 }
             })
             dispatch({

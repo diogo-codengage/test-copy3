@@ -30,7 +30,8 @@ const ESSignInForm = ({
     keepMeLogged,
     facebookKey,
     googleKey,
-    form
+    form,
+    track = null
 }) => {
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-sign-in-form', className)
@@ -43,10 +44,18 @@ const ESSignInForm = ({
             if (!err) {
                 signInByEmail(email, password)
                     .then(response => {
+                        track &&
+                            track('Login success', {
+                                Email: email
+                            })
                         setLoading(false)
                         actProp(response)
                     })
                     .catch(error => {
+                        track &&
+                            track('Login failed', {
+                                Email: email
+                            })
                         setLoading(false)
                         message.error(error.message)
                     })

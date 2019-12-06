@@ -17,10 +17,25 @@ import imageMarketing from 'Assets/images/auth/marketing.png'
 
 import { login } from 'Config/AWSCognito'
 
+import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
+
+import { segmentTrack } from 'Config/Segment/track'
+import { IEvents, IOptions } from 'Config/Segment'
+
 const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
     const [keepMeLoggedIn, setKeepMeLoggedIn] = useState(false)
+    const [showModalTerms, setShowModalTerms] = useState(false)
+    const [activeKey, setActiveKey] = useState(0)
 
+    const handleTrack = (event: IEvents, attrs?: IOptions) => {
+        const data = {
+            'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
+            ...attrs
+        }
+
+        segmentTrack(event, data)
+    }
     const action = response => {
         if (response.newPasswordRequired) {
             history.push('/auth/nova-senha')
@@ -33,6 +48,11 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
         setKeepMeLoggedIn(old => !old)
     }
 
+    const modalTermsOpen = defaultKey => {
+        setActiveKey(defaultKey)
+        setShowModalTerms(true)
+    }
+
     const terms = useMemo(
         () => (
             <ESRow type='flex' align='middle' justify='center'>
@@ -42,9 +62,13 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
                 <ESCol md={18}>
                     <ESTypography>
                         {t('auth.footer.onEnter')}
-                        <span>{t('global.termsOfUse')}</span>
+                        <span onClick={() => modalTermsOpen('0')}>
+                            {t('global.termsOfUse')}
+                        </span>
                         {t('auth.footer.us')}
-                        <span>{t('global.privacyPolicy')}</span>
+                        <span onClick={() => modalTermsOpen('1')}>
+                            {t('global.privacyPolicy')}
+                        </span>
                     </ESTypography>
                 </ESCol>
             </ESRow>
@@ -62,25 +86,38 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
         [t]
     )
     return (
-        <ESAuthTemplate
-            image={imageMarketing}
-            marketing={marketing}
-            terms={terms}
-            title={t('auth.hello')}
-            description={t('auth.signInDescription')}
-            header={<ESBrandHeader logo={logo} />}
-            form={
-                <ESSignInForm
-                    keepMeLoggedIn={t('auth.keepMeLoggedIn')}
-                    forgotPassword={t('auth.forgotPassword')}
-                    login={t('auth.login')}
-                    action={action}
-                    isKeepMeLoggedChecked={keepMeLoggedIn}
-                    keepMeLogged={onKeepMeLoggedIn}
-                    signInByEmail={login}
-                />
-            }
-        />
+        <>
+            <ESAuthTemplate
+                image={imageMarketing}
+                marketing={marketing}
+                terms={terms}
+                title={t('auth.hello')}
+                description={t('auth.signInDescription')}
+                header={<ESBrandHeader logo={logo} />}
+                form={
+                    <ESSignInForm
+                        keepMeLoggedIn={t('auth.keepMeLoggedIn')}
+                        forgotPassword={t('auth.forgotPassword')}
+                        login={t('auth.login')}
+                        action={action}
+                        isKeepMeLoggedChecked={keepMeLoggedIn}
+                        keepMeLogged={onKeepMeLoggedIn}
+                        signInByEmail={login}
+                        track={handleTrack}
+                    />
+                }
+            />
+
+            <RMModalTermsAndPrivacy
+                onCancel={() => {
+                    setShowModalTerms(false)
+                    setActiveKey(0)
+                }}
+                visible={showModalTerms}
+                defaultActiveKey={activeKey}
+                scrolling
+            />
+        </>
     )
 }
 

@@ -9,42 +9,20 @@ import {
     SANForm,
     SANButton,
     SANSessionTitle,
-    SANFormItem
+    SANBox
 } from '@sanar/components'
 
 import RMFilterSelects from './Selects'
-import RMFilterAdvanced from './Advanced'
+import RMFilterAdvanced, { OnlyComments } from './Advanced'
+
+import { useLayoutContext } from 'Pages/Private/Context'
 
 import { useQuestionsContext } from '../Context'
-
-const mapItem = item => item.value
-export const makeFilter = (values, userId) => {
-    if (!userId) {
-        throw Error('Argument userId is required in function makeFilter')
-    }
-    return {
-        ...(values.year && {
-            years: [Number(values.year.format('YYYY'))]
-        }),
-        ...(values.tags && { tagIds: values.tags.map(mapItem) }),
-        ...(values.levels && {
-            levelIds: values.levels.map(mapItem)
-        }),
-        ...(values.boards && {
-            boardIds: values.boards.map(mapItem)
-        }),
-        ...(values.exams && { examIds: values.exams.map(mapItem) }),
-        ...(values.isCommentedByExpert && {
-            isCommentedByExpert: values.isCommentedByExpert
-        }),
-        ...(values.progress === '2' && { notAnsweredByUser: userId }),
-        ...(values.progress === '3' && { answeredByUser: userId })
-    }
-}
 
 const RMFilter = ({ form, history }) => {
     const { t } = useTranslation('resmed')
     const { dispatch, reset } = useQuestionsContext()
+    const { handleTrack } = useLayoutContext()
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -67,29 +45,32 @@ const RMFilter = ({ form, history }) => {
                 hasContainer
                 BoxProps={{
                     bg: 'grey-solid.1',
-                    py: { xs: '8', _: 'xl' },
+                    py: { xs: '8', _: 'lg' },
                     display: 'flex',
                     flexDirection: 'column'
                 }}
                 HeaderProps={{
-                    onBack: () => history.push('/inicio/curso'),
+                    onBack: () => {
+                        history.push('/inicio/curso')
+                        handleTrack('Voltar button clicked')
+                    },
                     SessionTitleProps: {
                         title: t('practicalArea.filter.header.title'),
                         subtitle: t('practicalArea.filter.header.subtitle'),
                         extra: (
-                            <SANFormItem>
+                            <SANBox display='flex' flex='1'>
                                 <SANButton
                                     variant='solid'
                                     color='primary'
                                     size='small'
                                     uppercase
                                     htmlType='submit'
-                                    blockOnlyMobile
                                     bold
+                                    block
                                 >
                                     {t('practicalArea.filter.header.start')}
                                 </SANButton>
-                            </SANFormItem>
+                            </SANBox>
                         )
                     }
                 }}
@@ -97,6 +78,7 @@ const RMFilter = ({ form, history }) => {
                 <SANSessionTitle
                     title={t('practicalArea.filter.subheader.title')}
                     subtitle={t('practicalArea.filter.subheader.subtitle')}
+                    extra={<OnlyComments m='0' />}
                 />
                 <RMFilterSelects />
                 <RMFilterAdvanced />

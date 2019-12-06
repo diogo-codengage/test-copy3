@@ -42,7 +42,7 @@ const SANCardSpecialtyStyled = styled(SANBox)<IStyled>`
         bottom: 0;
         background: linear-gradient(
             0deg,
-            ${theme('colors.grey.7')},
+            ${theme('colors.grey.9')},
             ${theme('colors.grey.4')}
         );
     }
