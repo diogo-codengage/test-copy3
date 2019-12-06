@@ -113,7 +113,7 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
     return (
         <SANForm form={form} onSubmit={handleSubmit}>
             <SANRow gutter={24}>
-                <SANCol xs={16} sm={9} lg={13}>
+                <SANCol>
                     <SANFormItem
                         name='graduatedStep'
                         label={t('userProfile.graduatedStep.label')}
@@ -135,7 +135,7 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
                 </SANCol>
             </SANRow>
             <SANRow gutter={24}>
-                <SANCol xs={16} sm={9} lg={13}>
+                <SANCol>
                     <SANFormItem
                         name='institutions'
                         label={t('userProfile.institutions')}
@@ -153,7 +153,7 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
             </SANRow>
 
             <SANRow gutter={24}>
-                <SANCol xs={16} sm={9} lg={13}>
+                <SANCol>
                     <SANFormItem
                         name='specialties'
                         label={t('userProfile.specialties')}
@@ -170,7 +170,7 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
                 </SANCol>
             </SANRow>
             <SANRow gutter={24}>
-                <SANCol xs={16} sm={9} lg={13}>
+                <SANCol>
                     <SANFormItem
                         name='testExperiences'
                         label={t('userProfile.testExperiences.label')}
@@ -191,7 +191,7 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
                 </SANCol>
             </SANRow>
             <SANRow gutter={24}>
-                <SANCol xs={16} sm={9} lg={13}>
+                <SANCol>
                     <SANCourseStatusFormItem
                         name='preparatoryCourse'
                         label={t('userProfile.preparatoryCourse.label')}
@@ -222,7 +222,7 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
             </SANRow>
             {requireCurseName && (
                 <SANRow gutter={24}>
-                    <SANCol xs={16} sm={9} lg={13}>
+                    <SANCol>
                         <SANFormItem
                             name='preparatoryCourseName'
                             initialValue={
@@ -241,7 +241,7 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
                 </SANRow>
             )}
             <SANRow gutter={24}>
-                <SANCol xs={16} sm={9} lg={13}>
+                <SANCol>
                     <SANFormItem name='createSubmit'>
                         <SANButton
                             mt='md'
