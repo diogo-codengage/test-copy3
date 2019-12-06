@@ -246,5 +246,9 @@ export default {
             question: 'Questão',
             questionMap: 'Mapa de questões'
         }
+    },
+    lives: {
+        title: 'Lives',
+        subtitle: 'Veja as lives que ainda vão acontecer e as que já rolaram'
     }
 }

@@ -36,6 +36,13 @@ const RMMenuInitial: React.FC = () => {
                 dataTestid='rm-menu__go-to--account'
                 title={t('mainMenu.initial.account')}
             />
+            <SANNavigationListItem
+                to='/inicio/lives'
+                icon={<SANEvaIcon name='play-circle-outline' color='default' />}
+                onClick={onCloseMenu}
+                dataTestid='rm-menu__go-to--lives'
+                title={t('mainMenu.initial.lives')}
+            />
         </SANNavigationList>
     )
 }
