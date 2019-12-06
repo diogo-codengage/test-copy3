@@ -266,21 +266,18 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = ({
             event =>
                 isEqual(event.start, newDate) && event.id.includes('freeday')
         )
-        if (!!freeDay) {
-            freeDay.remove()
-        } else {
-            const hasOldFreeDay = freeDays.find(event =>
-                isEqual(event.start, oldDate)
-            )
-            const isEmptyDay = events.find(
-                event =>
-                    isEqual(event.start, oldDate) &&
-                    !event.id.includes('freeday')
-            )
+        !!freeDay && freeDay.remove()
 
-            if (!!hasOldFreeDay && !isEmptyDay) {
-                calendar.addEvent(hasOldFreeDay)
-            }
+        const hasOldFreeDay = freeDays.find(event =>
+            isEqual(event.start, oldDate)
+        )
+        const isEmptyDay = events.find(
+            event =>
+                isEqual(event.start, oldDate) && !event.id.includes('freeday')
+        )
+
+        if (!!hasOldFreeDay && !isEmptyDay) {
+            calendar.addEvent(hasOldFreeDay)
         }
 
         !!eventDrop && eventDrop(e)
