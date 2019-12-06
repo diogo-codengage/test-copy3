@@ -125,6 +125,7 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                             me: subspecialty.progress.me,
                             others: subspecialty.progress.all
                         }}
+                        image={subspecialty.image}
                         continue={{
                             title: subspecialty.lastAccessed.resource.title,
                             index: subspecialty.lastAccessed.lesson.index,
