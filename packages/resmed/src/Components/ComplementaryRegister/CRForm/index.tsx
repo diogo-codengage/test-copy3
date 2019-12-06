@@ -50,19 +50,19 @@ const SANStyledRadioGroup = styled(SANRadioGroup)`
 
 interface IFormDataProps {
     graduatedStep?: string
-    institutionIds: [
+    institutionIds?: [
         {
             id: number
             name: string
         }
     ]
-    specialtyIds: [
+    specialtyIds?: [
         {
             id: number
             name: string
         }
     ]
-    testExperience: string
+    testExperience?: string
     preparatoryCourseStatus?: string
     preparatoryCourseName?: string
 }
