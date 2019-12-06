@@ -69,7 +69,8 @@ const SANSelectFilter = ({
     onClear,
     onSelectItem,
     onDeselectItem,
-    InputProps
+    InputProps,
+    ...props
 }) => {
     const dropdownRef = useRef<any>()
     const menuRef = useRef()
@@ -167,102 +168,105 @@ const SANSelectFilter = ({
     }, [value])
 
     return (
-        <SANDropdown
-            trigger={['click']}
-            visible={open}
-            getPopupContainer={() => dropdownRef && dropdownRef.current}
-            overlay={
-                <div ref={menuRef}>
-                    <SANBox
-                        mt='6px'
-                        bg='white.10'
-                        boxShadow='1'
-                        borderRadius='base'
-                        border='1px solid'
-                        borderColor='grey.2'
-                    >
+        <SANBox {...props}>
+            <SANDropdown
+                mt='16px'
+                trigger={['click']}
+                visible={open}
+                getPopupContainer={() => dropdownRef && dropdownRef.current}
+                overlay={
+                    <div ref={menuRef}>
                         <SANBox
-                            displayFlex
-                            alignItems='center'
-                            justifyContent='center'
-                            py='xxs'
-                        >
-                            <SANButton
-                                onClick={handleSelectAll(filtered)}
-                                bold
-                                variant='text'
-                                size='xsmall'
-                                className='mr-sm'
-                            >
-                                {t('selectFilter.selectAll')}
-                            </SANButton>
-                            <SANButton
-                                onClick={handleClear}
-                                bold
-                                variant='text'
-                                size='xsmall'
-                                disabled={!value.length}
-                            >
-                                {t('selectFilter.clearSelect')}
-                            </SANButton>
-                        </SANBox>
-                        <SANDivider
-                            my='0'
-                            mx='auto'
-                            width='calc(100% - 24px)'
-                            bg='grey.2'
-                        />
-                        <SANScroll
-                            autoHeight
-                            autoHeightMax={198}
-                            style={{
-                                width: dropdownRef.current
-                                    ? dropdownRef.current.offsetWidth
-                                    : 426,
-                                maxWidth: '100%'
-                            }}
-                        >
-                            <SANBox py='xxs'>
-                                {rows.length ? rows : <SANEmpty />}
-                            </SANBox>
-                        </SANScroll>
-                        <SANBox
-                            displayFlex
-                            alignItems='center'
-                            justifyContent='center'
-                            py='xxs'
-                            bg='grey-solid.1'
-                            borderTop='1px solid'
+                            mt='6px'
+                            bg='white.10'
+                            boxShadow='1'
+                            borderRadius='base'
+                            border='1px solid'
                             borderColor='grey.2'
                         >
-                            <SANButton
-                                onClick={handleClose}
-                                bold
-                                variant='text'
-                                size='small'
-                                className='mr-sm'
-                                color='primary'
+                            <SANBox
+                                displayFlex
+                                alignItems='center'
+                                justifyContent='center'
+                                py='xxs'
                             >
-                                {t('selectFilter.close')}
-                            </SANButton>
+                                <SANButton
+                                    onClick={handleSelectAll(filtered)}
+                                    bold
+                                    variant='text'
+                                    size='xsmall'
+                                    className='mr-sm'
+                                >
+                                    {t('selectFilter.selectAll')}
+                                </SANButton>
+                                <SANButton
+                                    onClick={handleClear}
+                                    bold
+                                    variant='text'
+                                    size='xsmall'
+                                    disabled={!value.length}
+                                >
+                                    {t('selectFilter.clearSelect')}
+                                </SANButton>
+                            </SANBox>
+                            <SANDivider
+                                my='0'
+                                mx='auto'
+                                width='calc(100% - 24px)'
+                                bg='grey.2'
+                            />
+                            <SANScroll
+                                autoHeight
+                                autoHeightMax={198}
+                                style={{
+                                    width: dropdownRef.current
+                                        ? dropdownRef.current.offsetWidth
+                                        : 426,
+                                    maxWidth: '100%'
+                                }}
+                            >
+                                <SANBox py='xxs'>
+                                    {rows.length ? rows : <SANEmpty />}
+                                </SANBox>
+                            </SANScroll>
+                            <SANBox
+                                displayFlex
+                                alignItems='center'
+                                justifyContent='center'
+                                py='xxs'
+                                bg='grey-solid.1'
+                                borderTop='1px solid'
+                                borderColor='grey.2'
+                            >
+                                <SANButton
+                                    onClick={handleClose}
+                                    bold
+                                    variant='text'
+                                    size='small'
+                                    className='mr-sm'
+                                    color='primary'
+                                >
+                                    {t('selectFilter.close')}
+                                </SANButton>
+                            </SANBox>
                         </SANBox>
-                    </SANBox>
-                </div>
-            }
-        >
-            <span style={{ width: '100%' }} ref={dropdownRef}>
-                <SANStyledInput
-                    onFocus={onFocus}
-                    placeholder={
-                        placeholder ? placeholder : t('selectFilter.select')
-                    }
-                    iconLeft='search-outline'
-                    onChange={handleSearch}
-                    value={open ? search : labelSelecteds}
-                    {...InputProps}
-                />
-            </span>
-        </SANDropdown>
+                    </div>
+                }
+            >
+                <span style={{ width: '100%' }} ref={dropdownRef}>
+                    <SANStyledInput
+                        onFocus={onFocus}
+                        placeholder={
+                            placeholder ? placeholder : t('selectFilter.select')
+                        }
+                        iconLeft='search-outline'
+                        onChange={handleSearch}
+                        value={open ? search : labelSelecteds}
+                        {...InputProps}
+                    />
+                </span>
+            </SANDropdown>
+        </SANBox>
     )
 }
 
