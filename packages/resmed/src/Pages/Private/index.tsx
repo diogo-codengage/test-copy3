@@ -17,6 +17,7 @@ const RMAccount = React.lazy(() => import('Pages/Private/Account'))
 const RMPracticalArea = React.lazy(() => import('Pages/Private/PracticalArea'))
 const RMClassroom = React.lazy(() => import('Pages/Private/Classroom'))
 const RMSchedule = React.lazy(() => import('Pages/Private/Schedule'))
+const FLXError500 = React.lazy(() => import('Components/Error500'))
 
 const RMPrivatePages: React.FC<RouteComponentProps> = ({
     history,
@@ -25,7 +26,7 @@ const RMPrivatePages: React.FC<RouteComponentProps> = ({
     const { t } = useTranslation('resmed')
 
     const reload = () => {
-        history.push('/inicio')
+        history.push('/inicio/curso')
         window.location.reload()
     }
 
@@ -68,6 +69,10 @@ const RMPrivatePages: React.FC<RouteComponentProps> = ({
                                 <Route
                                     path={`${url}/cronograma`}
                                     component={RMSchedule}
+                                />
+                                <Route
+                                    path={`${url}/erro`}
+                                    component={FLXError500}
                                 />
                                 <Route
                                     path={[`${url}/`, `${url}`]}
