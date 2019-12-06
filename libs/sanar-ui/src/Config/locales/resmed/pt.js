@@ -278,6 +278,7 @@ export default {
             missing: 'Não',
             in_progress: 'Sim, faço',
             completed: 'Sim, Já fiz',
+            inputLabel: 'Qual?'
         },
         placeholder: 'Selecione',
     }

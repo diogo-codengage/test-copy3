@@ -14,13 +14,42 @@ import {
     SANButton,
     withSANForm,
     SANFormItem,
-    SANRadioButton,
+    SANRadio,
     SANSelectFilter,
-    SANSelectOption
+    SANSelectOption,
+    SANRadioGroup
 } from '@sanar/components'
 
-import styled from 'styled-components'
-import { theme } from 'styled-tools'
+import styled, { css } from 'styled-components'
+import { theme, ifProp } from 'styled-tools'
+
+const SANCourseStatusFormItem = styled(SANFormItem)<{
+    requireCurseName?: boolean
+}>`
+    &&& {
+        ${ifProp(
+            'requireCurseName',
+            css`
+                margin-bottom: 12px;
+            `,
+            css`
+                margin-bottom: 32px;
+            `
+        )}
+    }
+`
+
+const SANStyledSelect = styled(SANSelect)`
+    &&& {
+        margin-top: 16px;
+    }
+`
+
+const SANStyledRadioGroup = styled(SANRadioGroup)`
+    &&& {
+        margin-top: 16px;
+    }
+`
 
 interface IFormDataProps {
     graduatedStep?: string
@@ -69,18 +98,12 @@ const test = [
     { label: 'teste9', value: 'teste9' }
 ]
 
-// const preparatoryCourseStatus = [
-//     { value: 'missing', label: t('userProfile.preaparatoryCourse.missing') },
-//     {
-//         value: 'in_progress',
-//         label: t('userProfile.preaparatoryCourse.in_progress')
-//     },
-//     { value: 'completed', label: t('userProfile.preaparatoryCourse.completed') }
-// ]
+const preparatoryCourseStatus = ['missing', 'in_progress', 'completed']
 
 const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
     const { t } = useTranslation('resmed')
     const [institutionsSelecteds, setInstitutionsSelecteds] = useState([])
+    const [requireCurseName, setRequireCurseName] = useState(false)
 
     const handleChangeInstitutions = (selecteds, event) => {
         console.log('handleChangeInstitutions', selecteds)
@@ -97,7 +120,7 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
                         initialValue={!!data ? data.graduatedStep : undefined}
                         // rules={[{ required: true }]}
                     >
-                        <SANSelect
+                        <SANStyledSelect
                             required
                             placeholder={t('userProfile.placeholder')}
                             size='large'
@@ -107,7 +130,7 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
                                     {t(`userProfile.graduatedStep.${item}`)}
                                 </SANSelectOption>
                             ))}
-                        </SANSelect>
+                        </SANStyledSelect>
                     </SANFormItem>
                 </SANCol>
             </SANRow>
@@ -123,6 +146,7 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
                             placeholder={t('userProfile.placeholder')}
                             items={test}
                             InputProps={{ size: 'large' }}
+                            mt='md'
                         />
                     </SANFormItem>
                 </SANCol>
@@ -140,55 +164,100 @@ const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
                             placeholder={t('userProfile.placeholder')}
                             items={test}
                             InputProps={{ size: 'large' }}
+                            mt='md'
                         />
                     </SANFormItem>
                 </SANCol>
             </SANRow>
-            {/*
             <SANRow gutter={24}>
                 <SANCol xs={16} sm={9} lg={13}>
                     <SANFormItem
-                        name='card_number'
-                        label={t('userProfile.graduatedStep.label')}
-                        initialValue={!!data ? data.graduatedStep : undefined}
+                        name='testExperiences'
+                        label={t('userProfile.testExperiences.label')}
                         // rules={[{ required: true }]}
+                        valuePropName='check'
                     >
-                        <SANSelect
-                            required
-                            placeholder={t('userProfile.placeholder')}
-                            size='large'
+                        <SANStyledRadioGroup
+                            mt='16px'
+                            defaultValue={testExperiences[0]}
                         >
-                            {graduatedSteps.map(item => (
-                                <SANSelectOption key={item}>
-                                    {t(`userProfile.graduatedStep.${item}`)}
-                                </SANSelectOption>
+                            {testExperiences.map(item => (
+                                <SANRadio value={item}>
+                                    {t(`userProfile.testExperiences.${item}`)}
+                                </SANRadio>
                             ))}
-                        </SANSelect>
+                        </SANStyledRadioGroup>
                     </SANFormItem>
                 </SANCol>
             </SANRow>
             <SANRow gutter={24}>
                 <SANCol xs={16} sm={9} lg={13}>
-                    <SANFormItem
-                        name='card_number'
-                        label={t('userProfile.graduatedStep.label')}
-                        initialValue={!!data ? data.graduatedStep : undefined}
+                    <SANCourseStatusFormItem
+                        name='preparatoryCourse'
+                        label={t('userProfile.preparatoryCourse.label')}
+                        initialValue={
+                            !!data ? data.preparatoryCourseStatus : undefined
+                        }
+                        requireCurseName={requireCurseName}
                         // rules={[{ required: true }]}
                     >
-                        <SANSelect
+                        <SANStyledSelect
                             required
                             placeholder={t('userProfile.placeholder')}
                             size='large'
+                            onChange={item =>
+                                setRequireCurseName(
+                                    item !== preparatoryCourseStatus[0]
+                                )
+                            }
                         >
-                            {graduatedSteps.map(item => (
-                                <SANSelectOption key={item}>
-                                    {t(`userProfile.graduatedStep.${item}`)}
+                            {preparatoryCourseStatus.map(item => (
+                                <SANSelectOption key={item} value={item}>
+                                    {t(`userProfile.preparatoryCourse.${item}`)}
                                 </SANSelectOption>
                             ))}
-                        </SANSelect>
+                        </SANStyledSelect>
+                    </SANCourseStatusFormItem>
+                </SANCol>
+            </SANRow>
+            {requireCurseName && (
+                <SANRow gutter={24}>
+                    <SANCol xs={16} sm={9} lg={13}>
+                        <SANFormItem
+                            name='preparatoryCourseName'
+                            initialValue={
+                                !!data ? data.preparatoryCourseName : undefined
+                            }
+                            // rules={[{ required: true }]}
+                        >
+                            <SANInput
+                                size='large'
+                                placeholder={t(
+                                    'userProfile.preparatoryCourse.inputLabel'
+                                )}
+                            />
+                        </SANFormItem>
+                    </SANCol>
+                </SANRow>
+            )}
+            <SANRow gutter={24}>
+                <SANCol xs={16} sm={9} lg={13}>
+                    <SANFormItem name='createSubmit'>
+                        <SANButton
+                            mt='md'
+                            mx='auto'
+                            size='small'
+                            variant='solid'
+                            color='primary'
+                            uppercase
+                            bold
+                            onClick={false}
+                        >
+                            {t('userProfile.createSubmit')}
+                        </SANButton>
                     </SANFormItem>
                 </SANCol>
-            </SANRow> */}
+            </SANRow>
         </SANForm>
     )
 }
