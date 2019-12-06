@@ -108,7 +108,6 @@ interface INagivations {
 }
 
 const FLXLayoutProvider = withRouter(({ history, children }) => {
-    const lastLocation = useLastLocation()
     const { t } = useTranslation('sanarflix')
     const [state, dispatch] = useReducer(reducer, initialState)
     const [navigations, setNavigations] = useState<INagivations>(
