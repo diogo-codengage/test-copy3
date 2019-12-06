@@ -52,6 +52,8 @@ export {
     flowchart,
     mentalmap,
     article,
+    lessonResultSuccess,
+    lessonResultError,
     document,
     blocked,
     empty,
@@ -60,7 +62,5 @@ export {
     badEmoji,
     regularEmoji,
     goodEmoji,
-    awesomeEmoji,
-    lessonResultSuccess,
-    lessonResultError
+    awesomeEmoji
 }

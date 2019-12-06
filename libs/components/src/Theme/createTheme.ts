@@ -229,6 +229,10 @@ const assetsDefault = {
             course: typeIconPrimaryCourse
         }
     },
+    lessonResult: {
+        success: lessonResultSuccess,
+        error: lessonResultError
+    },
     empty,
     cardSchedule: {
         suggestedSchedule
@@ -239,10 +243,6 @@ const assetsDefault = {
         regular: regularEmoji,
         good: goodEmoji,
         awesome: awesomeEmoji
-    },
-    lessonResult: {
-        error: lessonResultError,
-        success: lessonResultSuccess
     }
 }
 
