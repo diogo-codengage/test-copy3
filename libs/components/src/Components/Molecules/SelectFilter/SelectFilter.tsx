@@ -2,7 +2,7 @@ import React, { useState, useRef, useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import useOnClickOutside from 'sanar-ui/dist/Hooks/useOnClickOutside'
+import useOnClickOutside from '@sanar/utils/dist/Hooks/useOnClickOutside'
 
 import { SANBox } from '../../Atoms/Box'
 import { SANInput, ISANInputProps } from '../../Atoms/Input'
