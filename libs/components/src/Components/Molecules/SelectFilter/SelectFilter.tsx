@@ -10,7 +10,7 @@ import { SANCheckbox } from '../../Atoms/Checkbox'
 import { SANButton } from '../../Atoms/Button'
 import { SANDivider } from '../../Atoms/Divider'
 import { SANDropdown } from '../../Atoms/Dropdown'
-import { Scrollbars } from 'react-custom-scrollbars'
+import { SANScroll } from '../../Atoms/Scroll'
 import { SANEmpty } from '../../Atoms/Empty'
 
 import styled from 'styled-components'
@@ -212,7 +212,7 @@ const SANSelectFilter = ({
                             width='calc(100% - 24px)'
                             bg='grey.2'
                         />
-                        <Scrollbars
+                        <SANScroll
                             autoHeight
                             autoHeightMax={198}
                             style={{
@@ -225,7 +225,7 @@ const SANSelectFilter = ({
                             <SANBox py='xxs'>
                                 {rows.length ? rows : <SANEmpty />}
                             </SANBox>
-                        </Scrollbars>
+                        </SANScroll>
                         <SANBox
                             displayFlex
                             alignItems='center'
