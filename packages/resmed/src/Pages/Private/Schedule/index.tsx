@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-import { format } from 'date-fns'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
@@ -36,7 +35,7 @@ const lesson = {
         title: 'Nome da aula',
         subtitle: '15:00',
         description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Proin fermentum leo vel orci porta non pulvinar. Hendrerit dolor magna eget est lorem ipsum dolor sit. Cum sociis natoque penatibus et magnis dis parturient montes nascetur. Gravida cum sociis natoque penatibus et magnis dis parturient montes. Natoque penatibus et magnis dis parturient montes nascetur. Platea dictumst vestibulum rhoncus est pellentesque. Convallis convallis tellus id interdum velit laoreet id. Nisl nisi scelerisque eu ultrices vitae. Ac turpis egestas integer eget. Id velit ut tortor pretium viverra suspendisse. Urna neque viverra justo nec ultrices.'
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Proin fermentum leo vel orci porta non pulvinar. Hendrerit dolor magna eget est lorem ipsum dolor sit.'
     }
 }
 
@@ -46,13 +45,14 @@ const live = {
         title: 'Live de Correção da prova SUS-SP 2019 - Parte 1',
         subtitle: '15:00',
         description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Proin fermentum leo vel orci porta non pulvinar. Hendrerit dolor magna eget est lorem ipsum dolor sit. Cum sociis natoque penatibus et magnis dis parturient montes nascetur. Gravida cum sociis natoque penatibus et magnis dis parturient montes. Natoque penatibus et magnis dis parturient montes nascetur. Platea dictumst vestibulum rhoncus est pellentesque. Convallis convallis tellus id interdum velit laoreet id. Nisl nisi scelerisque eu ultrices vitae. Ac turpis egestas integer eget. Id velit ut tortor pretium viverra suspendisse. Urna neque viverra justo nec ultrices.'
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Proin fermentum leo vel orci porta non pulvinar. Hendrerit dolor magna eget est lorem ipsum dolor sit.'
     }
 }
 
 const exam = {
     extendedProps: {
         type: 'exam',
+        status: 'exams',
         title: 'Inscrição para a prova Lorem ipsum'
     }
 }
@@ -315,8 +315,16 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                                         <SANTypography
                                             transform='uppercase'
                                             color='grey.5'
+                                            fontWeight='bold'
                                         >
-                                            {format(new Date(), 'DD/MM/YYYY')}
+                                            {new Date().toLocaleDateString(
+                                                'pt-BR',
+                                                {
+                                                    year: 'numeric',
+                                                    month: 'long',
+                                                    day: 'numeric'
+                                                }
+                                            )}
                                         </SANTypography>
                                     }
                                 />
@@ -347,7 +355,14 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                             <SANCol xs={24} sm={24} md={12}>
                                 <SANSessionTitle
                                     title={t('schedule.thisWeek.title')}
-                                    subtitle={t('schedule.thisWeek.subtitle')}
+                                    subtitle={
+                                        <SANTypography
+                                            color='grey.5'
+                                            fontWeight='bold'
+                                        >
+                                            {t('schedule.thisWeek.subtitle')}
+                                        </SANTypography>
+                                    }
                                     mt={{ md: '0', _: 'xl' }}
                                 />
                                 <SANCardEvent

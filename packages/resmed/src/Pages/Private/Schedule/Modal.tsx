@@ -26,6 +26,14 @@ export interface IOption {
     description: string
 }
 
+const defaultOption: IOption = {
+    status: 'unseen',
+    type: 'lesson',
+    title: '',
+    subtitle: '',
+    description: ''
+}
+
 const SANTypographyStyled = styled(SANTypography)<{ status: IStatus }>`
     && {
         &:before {
@@ -50,12 +58,7 @@ const Wrapper = styled(SANBox)<{ status: IStatus }>`
     && {
         cursor: pointer;
         &:hover {
-            background-color: ${switchProp('status', {
-                viewed: theme('colors.primary-2'),
-                unseen: theme('colors.burgundy.2'),
-                live: theme('colors.grey.0'),
-                exams: theme('colors.blue.0')
-            })};
+            background-color: ${theme('colors.grey.0')};
             &:first-child {
                 border-top-left-radius: ${theme('radii.base')};
                 border-top-right-radius: ${theme('radii.base')};
@@ -181,7 +184,7 @@ interface IRMModalSchedule extends ISANModalProps {
 }
 
 export const RMModalSchedule = ({
-    options,
+    options = defaultOption,
     onClick,
     ...props
 }: IRMModalSchedule) => {
@@ -226,9 +229,13 @@ export const RMModalSchedule = ({
                 <SANTypography fontSize='xs' color='grey.5' mt='xxs' mb='md'>
                     {options.subtitle}
                 </SANTypography>
-                <SANTypography fontSize='md' color='grey.6'>
-                    {options.description}
-                </SANTypography>
+                <SANBox height={80}>
+                    <SANScroll>
+                        <SANTypography fontSize='md' color='grey.6'>
+                            {options.description}
+                        </SANTypography>
+                    </SANScroll>
+                </SANBox>
             </SANBox>
             <SANBox
                 borderTop='1px solid'
