@@ -1,15 +1,12 @@
-import React, { useState, useRef, useMemo } from 'react'
+import React, { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
 import {
-    SANBox,
     SANCol,
     SANRow,
     SANForm,
-    SANPage,
     SANInput,
-    SANModal,
     SANSelect,
     SANButton,
     withSANForm,
@@ -102,13 +99,7 @@ const preparatoryCourseStatus = ['missing', 'in_progress', 'completed']
 
 const RMForm = ({ data = {} as IFormDataProps, handleSubmit, form }) => {
     const { t } = useTranslation('resmed')
-    const [institutionsSelecteds, setInstitutionsSelecteds] = useState([])
     const [requireCurseName, setRequireCurseName] = useState(false)
-
-    const handleChangeInstitutions = (selecteds, event) => {
-        console.log('handleChangeInstitutions', selecteds)
-        setInstitutionsSelecteds(selecteds)
-    }
 
     return (
         <SANForm form={form} onSubmit={handleSubmit}>
