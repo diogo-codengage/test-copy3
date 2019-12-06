@@ -14,7 +14,6 @@ import { withRouter } from 'react-router'
 import { useApolloClient } from '@apollo/react-hooks'
 import { GET_LAST_ACCESSED } from 'Apollo/Menu/Queries/last-accessed'
 
-import { useLastLocation } from 'react-router-last-location'
 
 type IMenuContext = 'general' | 'classroom'
 
