@@ -62,7 +62,5 @@ export {
     badEmoji,
     regularEmoji,
     goodEmoji,
-    awesomeEmoji,
-    lessonResultSuccess,
-    lessonResultError
+    awesomeEmoji
 }
