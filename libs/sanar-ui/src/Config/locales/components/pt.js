@@ -246,5 +246,11 @@ export default {
     },
     collection: {
         part: 'Parte'
+    },
+    selectFilter: {
+        select: 'Selecione',
+        selectAll: 'Selecionar todos',
+        clearSelect: 'Limpar seleção',
+        close: 'Fechar'
     }
 }
