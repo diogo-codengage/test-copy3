@@ -281,5 +281,17 @@ export default {
             inputLabel: 'Qual?'
         },
         placeholder: 'Selecione',
+        messages: {
+            mutations: {
+                create: {
+                    success: 'Sucesso, seus dados foram salvos corretamente!',
+                    error: 'Erro, ocorreu um erro e seus dados não foram salvos!'
+                },
+                update: {
+                    success: 'Sucesso, seus dados foram atualizados corretamente!',
+                    error: 'Erro, ocorreu um erro e seus dados não foram atualzados!'
+                }
+            }
+        }
     }
 }

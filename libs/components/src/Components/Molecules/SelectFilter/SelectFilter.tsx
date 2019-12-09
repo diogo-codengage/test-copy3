@@ -152,7 +152,7 @@ const SANSelectFilter = ({
 
     const rows = filtered.map(item => (
         <SANStyledCheckbox
-            key={item.id}
+            key={item.value}
             onChange={onCheckboxChange(item)}
             checked={!!value.find(checkValue(item))}
         >
@@ -166,7 +166,6 @@ const SANSelectFilter = ({
             setLabelSelecteds(label)
         }
     }, [value])
-
     return (
         <SANBox {...props}>
             <SANDropdown
