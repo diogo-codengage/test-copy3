@@ -12,9 +12,12 @@ import { SANSpace } from '../../Atoms/Space'
 import facebook from '../../../Assets/images/social/facebook.svg'
 import instagram from '../../../Assets/images/social/instagram.svg'
 import youtube from '../../../Assets/images/social/youtube.svg'
+import whatsapp from '../../../Assets/images/social/whatsapp.svg'
 import { SANButton, ISANButtonProps } from '../../Atoms/Button'
 import { SANBox } from '../../Atoms/Box'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
+
+
 
 const SANLayoutFooterStyled = styled.footer`
     background-color: ${ifProp(
@@ -171,11 +174,12 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
                                     />
                                 )}
                                 {whatsappProp && (
-                                    <ContactInfo
-                                        info={whatsappProp}
-                                        name='phone-outline'
-                                        darkMode={darkMode}
-                                    />
+                                    <IconAndText darkMode={darkMode}>
+                                        <SANFlexbox alignItems='center'>
+                                            <img src={whatsapp} width={16} height={16} />
+                                            <SANTypography>{whatsappProp}</SANTypography>
+                                        </SANFlexbox>
+                                    </IconAndText>
                                 )}
                                 {emailProp && (
                                     <ContactInfo
