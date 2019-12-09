@@ -6,11 +6,14 @@ import { useTranslation } from 'react-i18next'
 
 import { useSnackbarContext } from '@sanar/components'
 
+import { segmentTrack } from 'Config/Segment/track'
+import { IEvents, IOptions } from 'Config/Segment'
 import { useAuthContext } from 'Hooks/auth'
 import { GET_ACTIVE_COURSE } from 'Apollo/User/Queries/active-course'
 
 interface RMMainContext {
     getCurrentEnrollment: () => void
+    handleTrack: (event: IEvents, attrs?: IOptions) => void
 }
 
 const Context = createContext<RMMainContext>({} as RMMainContext)
@@ -21,7 +24,7 @@ const RMMainProvider: React.FC<RouteComponentProps> = ({ children }) => {
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
     const { t } = useTranslation('resmed')
-    const { setActiveCourse } = useAuthContext()
+    const { setActiveCourse, me, activeCourse } = useAuthContext()
 
     const getCurrentEnrollment = async () => {
         try {
@@ -30,12 +33,23 @@ const RMMainProvider: React.FC<RouteComponentProps> = ({ children }) => {
             } = await client.query({ query: GET_ACTIVE_COURSE })
 
             setActiveCourse(activeCourse)
-        } catch (error) {
+        } catch {
             createSnackbar({
                 message: t('main.errorLoadActiveCourse'),
                 theme: 'error'
             })
         }
+    }
+
+    const handleTrack = (event: IEvents, attrs?: IOptions) => {
+        const data = {
+            'User ID': me.id,
+            'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
+            'Course ID': activeCourse.id,
+            ...attrs
+        }
+
+        segmentTrack(event, data)
     }
 
     useEffect(() => {
@@ -44,7 +58,8 @@ const RMMainProvider: React.FC<RouteComponentProps> = ({ children }) => {
     }, [])
 
     const value = {
-        getCurrentEnrollment
+        getCurrentEnrollment,
+        handleTrack
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

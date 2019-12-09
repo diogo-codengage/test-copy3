@@ -25,6 +25,7 @@ import {
     document,
     blocked,
     defaultThumbnail,
+    empty,
     suggestedSchedule,
     awfulEmoji,
     badEmoji,
@@ -232,6 +233,11 @@ const assetsDefault = {
     cardLives: {
         defaultThumbnail
     },
+    lessonResult: {
+        success: lessonResultSuccess,
+        error: lessonResultError
+    },
+    empty,
     cardSchedule: {
         suggestedSchedule
     },
@@ -241,10 +247,6 @@ const assetsDefault = {
         regular: regularEmoji,
         good: goodEmoji,
         awesome: awesomeEmoji
-    },
-    lessonResult: {
-        error: lessonResultError,
-        success: lessonResultSuccess
     }
 }
 

@@ -3,9 +3,13 @@ import React, { createContext, useState, useContext } from 'react'
 import { IMe } from 'Apollo/User/Queries/me'
 import { ICourse } from 'Apollo/User/Queries/active-course'
 
+export interface IMeAuth extends IMe {
+    hasActiveSubscription
+}
+
 type RMAuthContextValues = {
-    me: IMe
-    setMe: React.Dispatch<React.SetStateAction<IMe | undefined>>
+    me: IMeAuth
+    setMe: React.Dispatch<React.SetStateAction<IMeAuth | undefined>>
     activeCourse: ICourse
     setActiveCourse: React.Dispatch<React.SetStateAction<ICourse>>
 }

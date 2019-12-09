@@ -22,6 +22,8 @@ import RMCollection from 'Components/Collection'
 import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomQuizContext } from './Context'
+import { useClassroomContext } from '../Context'
+import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
 
 const SANColFloat = styled(SANCol)`
     && {
@@ -56,10 +58,13 @@ const RMClassroomQuizQuestion = ({
         questionsMap,
         setQuestionsMap
     } = useClassroomQuizContext()
+    const { handleProgress } = useClassroomContext()
     const { params: paramsLayout } = useLayoutContext()
     const [visible, setVisible] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [skipped, seSkipped] = useState(0)
     const [responses, setResponses] = useState<any[]>([])
+    const { handleTrack } = useTrackContext()
 
     const goToNext = () => {
         // if have next question on quiz go to next
@@ -79,12 +84,24 @@ const RMClassroomQuizQuestion = ({
         }
     }
 
-    const handleJump = () => goToNext()
+    const handleJump = () => {
+        seSkipped(old => old + 1)
+        goToNext()
+    }
 
     const handleNext = () => goToNext()
 
     const handleConfirm = async alternativeId => {
         setLoading(true)
+        const current = index + 1 - skipped
+        handleProgress({
+            resourceId: paramsLayout.contentId,
+            resourceType: 'Quiz',
+            percentage: parseInt(
+                ((current * 100) / questions.length).toString(),
+                10
+            )
+        })
 
         try {
             const {
@@ -115,8 +132,27 @@ const RMClassroomQuizQuestion = ({
                 }
             ])
             setQuestionsMap(oldMap =>
-                oldMap.map(e => (e.id === id ? { ...e, status: true } : e))
+                oldMap.map(e =>
+                    e.id === id
+                        ? {
+                              ...e,
+                              status:
+                                  correct.id === alternativeId
+                                      ? 'correct'
+                                      : 'wrong'
+                          }
+                        : e
+                )
             )
+
+            handleTrack('Question answred', {
+                'Specialty ID': paramsLayout.specialtyId,
+                'Subspecialty ID': paramsLayout.subspecialtyId,
+                'Lesson ID': paramsLayout.lessonId,
+                'Clicker ID': paramsLayout.collectionId,
+                'Question ID': questions[index].id,
+                Correct: correct.id === alternativeId
+            })
         } catch (e) {}
         setLoading(false)
     }
@@ -133,6 +169,8 @@ const RMClassroomQuizQuestion = ({
         [questionId, questions]
     )
 
+    const isFull = useMemo(() => width <= 992, [width])
+
     return (
         <>
             <SANRow type='flex' align='middle' justifyContent='space-between'>
@@ -141,6 +179,7 @@ const RMClassroomQuizQuestion = ({
                         display='flex'
                         alignItems='center'
                         mb={{ sm: '0', _: 'md' }}
+                        px={{ lg: '0', _: 'md' }}
                     >
                         <SANTypography color='white.10' level={4} mr='xs'>
                             {t('classroom.quiz.question')} {index + 1}
@@ -159,7 +198,6 @@ const RMClassroomQuizQuestion = ({
                         <SANQuestionMap
                             items={questionsMap}
                             current={index}
-                            mock
                             onCancel={toggleVisible}
                             visible={visible}
                         />
@@ -168,6 +206,7 @@ const RMClassroomQuizQuestion = ({
                             variant='outlined'
                             color='light'
                             onClick={toggleVisible}
+                            mr={{ lg: '0', _: 'md' }}
                         >
                             <SANEvaIcon name='map-outline' mr='xs' />
                             {t('classroom.quiz.questionMap')}
@@ -178,6 +217,7 @@ const RMClassroomQuizQuestion = ({
 
             <SANBox mt={{ sm: '8', _: 'sm' }}>
                 <SANQuestion
+                    full={isFull}
                     question={questions[index]}
                     {...responses.find(
                         res => res.questionId === questions[index].id
@@ -186,9 +226,10 @@ const RMClassroomQuizQuestion = ({
                     onConfirm={handleConfirm}
                     onJump={handleJump}
                     onNext={handleNext}
+                    labelMonitor={t('global.expert')}
                 />
             </SANBox>
-            <SANBox mt='xl' px={width > 884 && 20}>
+            <SANBox mt={{ lg: 'xl', _: '0' }} px={width > 884 && 18}>
                 <RMCollection
                     parentId={paramsLayout.lessonId}
                     value={paramsLayout.collectionId}

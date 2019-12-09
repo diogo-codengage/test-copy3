@@ -142,6 +142,7 @@ const reducer: React.Reducer<IState, IAction> = (state, action) => {
             return {
                 ...state,
                 filter: action.filter,
+                questions: [],
                 skip: 0
             }
         case 'stats':

@@ -18,19 +18,31 @@ import {
 import { useAuthContext } from 'Hooks/auth'
 import RMLogout from 'Components/ModalLogout'
 import { useLayoutContext } from '../Context'
+import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
 
 import { logout } from 'Config/AWSCognito'
+
+import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 
 const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
     const { setMe, me } = useAuthContext()
     const { onCloseMenu, setMenuTab } = useLayoutContext()
     const [visibleLogout, setVisibleLogout] = useState(false)
+    const [showModalTerms, setShowModalTerms] = useState(false)
+    const [activeKey, setActiveKey] = useState(0)
+    const { handleTrack } = useTrackContext()
 
     const signOut = () => {
         logout({})
         setMe(undefined)
+        handleTrack('Logout', undefined)
         history.push('/auth/entrar')
+    }
+
+    const modalTermsOpen = defaultKey => {
+        setActiveKey(defaultKey)
+        setShowModalTerms(true)
     }
 
     return (
@@ -63,13 +75,6 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
             </SANTypography>
             <SANNavigationList>
                 <SANNavigationListItem
-                    to='/inicio/minha-conta/meus-dados'
-                    icon={<SANEvaIcon name='folder-outline' color='default' />}
-                    onClick={onCloseMenu}
-                    dataTestid='flix_menu_my-account__go_to--profile'
-                    title={t('mainMenu.account.myData')}
-                />
-                <SANNavigationListItem
                     to='/inicio/minha-conta/alterar-senha'
                     icon={<SANEvaIcon name='lock-outline' color='default' />}
                     onClick={onCloseMenu}
@@ -100,10 +105,12 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                 <SANNavigationListItem
                     data-testid='flix_menu_my-account__go_to--terms-of-use'
                     title={t('mainMenu.account.termsOfUse')}
+                    onClick={() => modalTermsOpen('0')}
                 />
                 <SANNavigationListItem
                     data-testid='flix_menu_my-account__go_to--privacy-policy'
                     title={t('mainMenu.account.privacyPolicy')}
+                    onClick={() => modalTermsOpen('1')}
                 />
                 <SANNavigationListItem
                     onClick={() => setVisibleLogout(true)}
@@ -111,6 +118,16 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     title={t('mainMenu.account.signOut')}
                 />
             </SANNavigationList>
+
+            <RMModalTermsAndPrivacy
+                onCancel={() => {
+                    setShowModalTerms(false)
+                    setActiveKey(0)
+                }}
+                visible={showModalTerms}
+                defaultActiveKey={activeKey}
+                scrolling
+            />
         </SANScroll>
     )
 }

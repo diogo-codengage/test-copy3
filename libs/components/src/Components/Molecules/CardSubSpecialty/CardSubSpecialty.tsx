@@ -20,6 +20,7 @@ interface IProgress {
 interface IContinue {
     title: string
     index: number
+    onClick: () => void
 }
 
 export interface ISANCardSubSpecialtyProps {
@@ -27,8 +28,7 @@ export interface ISANCardSubSpecialtyProps {
     title: string
     progress: IProgress
     continue: IContinue
-    onClickRight: () => void
-    onClickLeft: () => void
+    onClick: () => void
 }
 
 const FooterStyled = styled(SANBox)<{ blocked?: boolean }>`
@@ -115,8 +115,7 @@ const SANCardSubSpecialty = ({
     title,
     progress,
     continue: continueProp,
-    onClickRight,
-    onClickLeft
+    onClick
 }: ISANCardSubSpecialtyProps) => {
     const { t } = useTranslation('components')
 
@@ -148,7 +147,13 @@ const SANCardSubSpecialty = ({
                 justifyContent='space-between'
                 p='md'
             >
-                <SANTypography fontWeight='bold' fontSize='lg' ellipsis>
+                <SANTypography
+                    fontWeight='bold'
+                    fontSize='lg'
+                    ellipsis
+                    onClick={onClick}
+                    style={{ cursor: 'pointer' }}
+                >
                     {title}
                 </SANTypography>
 
@@ -180,6 +185,8 @@ const SANCardSubSpecialty = ({
                     display='flex'
                     alignItems='center'
                     blocked={blocked}
+                    style={{ cursor: 'pointer' }}
+                    onClick={continueProp.onClick}
                 >
                     <SANBox
                         mr='xs'
@@ -218,7 +225,7 @@ const SANCardSubSpecialty = ({
             </SANBox>
             <FooterStyled
                 display='flex'
-                justifyContent='space-between'
+                justifyContent='center'
                 p='md'
                 blocked={blocked}
             >
@@ -228,18 +235,7 @@ const SANCardSubSpecialty = ({
                     color='primary'
                     uppercase
                     bold
-                    onClick={onClickLeft}
-                >
-                    {continueProp.index === 1
-                        ? t('cardSubSpecialty.start')
-                        : t('cardSubSpecialty.continue')}
-                </SANButton>
-                <SANButton
-                    size='xsmall'
-                    variant='text'
-                    uppercase
-                    bold
-                    onClick={onClickRight}
+                    onClick={onClick}
                 >
                     {t('cardSubSpecialty.seeClasses')}
                 </SANButton>

@@ -8,15 +8,19 @@ interface IProgress {
 interface ILastAccessedResource {
     id: string
     type: 'Quiz' | 'Video'
-    index: number
     title: string
+}
+
+interface ILesson {
+    id: string
+    index: number
 }
 
 export interface ILastAccessed {
     specialtyId: string
     subSpecialtyId?: string
-    lessonId: string
     collectionId: string
+    lesson: ILesson
     resource: ILastAccessedResource
 }
 
@@ -47,11 +51,13 @@ export const GET_SUBSPECIALTIES = gql`
                 lastAccessed {
                     specialtyId
                     subSpecialtyId
-                    lessonId
                     collectionId
-                    resource {
+                    lesson {
                         id
                         index
+                    }
+                    resource {
+                        id
                         type
                         title
                     }

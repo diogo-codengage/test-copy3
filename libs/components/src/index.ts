@@ -36,6 +36,7 @@ import { SANQuery } from 'Components/Molecules/Query'
 import { SANFlexbox } from 'Components/Atoms/Flexbox'
 import { SANSpace } from 'Components/Atoms/Space'
 import { SANBox } from 'Components/Atoms/Box'
+import { SANDatePicker } from 'Components/Atoms/DatePicker'
 import { SANThemeProvider } from 'Components/Atoms/ThemeProvider'
 import { SANScrollTop } from 'Components/Atoms/ScrollTop'
 import { SANCardInfo } from 'Components/Molecules/CardInfo'
@@ -66,6 +67,7 @@ import {
 } from 'Components/Organisms/ClassroomMenu'
 import { SANPracticeCompleted } from 'Components/Organisms/PracticeCompleted'
 import { SANScroll } from 'Components/Atoms/Scroll'
+import { SANSwitch } from 'Components/Atoms/Switch'
 import { SANAvatar } from 'Components/Atoms/Avatar'
 import { SANIcon } from 'Components/Atoms/Icon'
 import { SANSkeleton, ISANSkeletonProps } from 'Components/Atoms/Skeleton'
@@ -103,6 +105,8 @@ import { SANCardSubSpecialty } from 'Components/Molecules/CardSubSpecialty'
 import { SANCommonBadge } from 'Components/Atoms/CommonBadge'
 import { SANCardSchedule } from 'Components/Molecules/CardSchedule'
 import { SANLessonFeedback } from 'Components/Molecules/LessonFeedback'
+import { SANCheckbox } from 'Components/Atoms/Checkbox'
+import { SANModalTabs } from 'Components/Organisms/ModalTabs'
 import { SANCollection } from 'Components/Molecules/Collection'
 import { SANLessonResult } from 'Components/Molecules/LessonResult'
 
@@ -212,8 +216,12 @@ export {
     SANHelpCenter,
     SANCollapse,
     SANCollapsePanel,
+    SANSwitch,
+    SANDatePicker,
     SANCardSchedule,
     SANLessonFeedback,
+    SANCheckbox,
+    SANModalTabs,
     SANCollection,
     SANLessonResult
 }

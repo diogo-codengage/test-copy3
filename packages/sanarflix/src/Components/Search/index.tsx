@@ -52,7 +52,11 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
         debounceOnSearch(value)
     }
 
-    const seeMore = () => history.push(`/portal/busca?pesquisa=${value}`)
+    const seeMore = () => {
+        if(value) {
+            history.push(`/portal/busca?pesquisa=${value}`)
+        }
+    }
 
     const debounceOnSearch = useThrottle(onSearch, 500)
 

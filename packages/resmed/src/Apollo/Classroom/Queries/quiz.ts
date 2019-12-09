@@ -24,7 +24,6 @@ interface ISizes {
 interface IImage {
     id: string
     data: {
-        id: string
         sized_images: ISizes
     }
 }
@@ -40,15 +39,9 @@ interface IQuestion {
     images: IImage
 }
 
-interface ISpecialty {
-    id: string
-    name: string
-}
-
 export interface IQuiz {
     id: string
     title: string
-    specialty: ISpecialty
     questions: IQuestion[]
 }
 
@@ -61,10 +54,6 @@ export const GET_QUIZ = gql`
         quiz(where: { id: $id }) {
             id
             title
-            specialty {
-                id
-                name
-            }
             questions {
                 id
                 statement
@@ -80,7 +69,6 @@ export const GET_QUIZ = gql`
                     }
                 }
                 images {
-                    id
                     data {
                         id
                         sized_images: sizedImages {

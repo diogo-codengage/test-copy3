@@ -10,17 +10,11 @@ import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
 import { Scrollbars } from 'react-custom-scrollbars'
-import { Empty, Skeleton } from 'antd'
+import { Empty } from 'antd'
 
-import useOnClickOutside from '../../../Hooks/useOnClickOutside'
-
-import ESInput from '../../Atoms/Input'
 import ESCheckbox from '../../Atoms/Checkbox'
-import ESEvaIcon from '../../Atoms/EvaIcon'
-import ESDropdown from '../../Atoms/Dropdown'
 import ESButton from '../../Atoms/Button'
 import ESDivider from '../../Atoms/Divider'
-import ESTypography from '../../Atoms/Typography'
 import ESCard from '../Card'
 
 const ESCardSelectFilterMenu = forwardRef(
@@ -59,7 +53,7 @@ const ESCardSelectFilterMenu = forwardRef(
                 checked={!!value.find(checkValue(item))}
                 className='es-card-select-filter__menu__items--item'
             >
-                {item.label}
+                {item.label.toLowerCase()}
             </ESCheckbox>
         ))
 

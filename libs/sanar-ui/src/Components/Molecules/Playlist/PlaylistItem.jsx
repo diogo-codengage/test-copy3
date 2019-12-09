@@ -59,7 +59,7 @@ const ESPlaylistItem = ({ className, index, item, current, onClick }) => {
                     ellipsis
                     variant='subtitle2'
                     className={classNames('description', {
-                        'description--time': durationInSeconds
+                        'description--time': durationInSeconds || item.extra
                     })}
                 >
                     {title}
@@ -70,6 +70,7 @@ const ESPlaylistItem = ({ className, index, item, current, onClick }) => {
                     {esUtilConvertSecondsToTime(durationInSeconds)}
                 </ESTypography>
             )}
+            {!!item.extra && <span className='time'>{item.extra}</span>}
         </div>
     )
 }

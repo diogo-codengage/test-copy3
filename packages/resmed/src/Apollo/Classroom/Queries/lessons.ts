@@ -3,7 +3,6 @@ import gql from 'graphql-tag'
 interface ILastAccessedResource {
     id: string
     type: 'Quiz' | 'Video'
-    index: number
     title: string
 }
 
@@ -18,17 +17,22 @@ interface ISubSpecialty {
     specialty: ISpecialty
 }
 
+interface ILessonLastAccessed {
+    id: string
+    index: number
+}
 export interface ILastAccessed {
     specialtyId: string
     subSpecialtyId?: string
-    lessonId: string
     collectionId: string
+    lesson: ILessonLastAccessed
     resource: ILastAccessedResource
 }
 
 export interface ILesson {
     id: string
     title: string
+    completed: boolean
     lastAccessed: ILastAccessed
     subSpecialty: ISubSpecialty
 }
@@ -43,6 +47,7 @@ export const GET_LESSONS = gql`
             id
             title: name
             status
+            completed
             subSpecialty {
                 id
                 name
@@ -54,11 +59,13 @@ export const GET_LESSONS = gql`
             lastAccessed {
                 specialtyId
                 subSpecialtyId
-                lessonId
                 collectionId
-                resource {
+                lesson {
                     id
                     index
+                }
+                resource {
+                    id
                     type
                     title
                 }

@@ -4,25 +4,20 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import { getInstance } from 'Config/AWSCognito'
 import { CognitoUserSession } from 'amazon-cognito-identity-js'
 
-const config = getInstance()
-
 const getAccessToken = async () => {
-    const cognitoUser = config.userPool.getCurrentUser()
-
-    if (!!cognitoUser) {
-        return cognitoUser.getSession((_, session: CognitoUserSession) => {
-            if (session.isValid()) {
-                return session.getIdToken().getJwtToken()
-            } else {
-                return cognitoUser.refreshSession(
-                    session.getRefreshToken(),
-                    (_, session: CognitoUserSession) => {
-                        return session.getIdToken().getJwtToken()
-                    }
-                )
-            }
-        })
-    }
+    const { user } = getInstance();
+    return new Promise((resolve, reject) => {
+        try {
+            user.getSession( (err, session: CognitoUserSession) => {
+                if(err) reject(err);
+                const jwtToken = session.getIdToken().getJwtToken();
+                resolve(jwtToken);
+            })
+        } catch (e) {
+            window.localStorage.clear();
+            reject(e);
+        }
+    });
 }
 
 const onError = ({ graphQLErrors, forward, operation, networkError }) => {
@@ -45,12 +40,14 @@ const onError = ({ graphQLErrors, forward, operation, networkError }) => {
 const client = new ApolloClient({
     uri: process.env.REACT_APP_URL_API,
     onError,
-    request: async operation =>
-        operation.setContext({
+    request: async operation => {
+        const token = await getAccessToken();
+        return operation.setContext({
             headers: {
-                Authorization: await getAccessToken()
+                Authorization: token
             }
         })
+    }
 } as any)
 
 const FLXGraphQLProvider = props => (
