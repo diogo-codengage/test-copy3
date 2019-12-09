@@ -4,7 +4,6 @@ import { useLayoutContext } from '../Context'
 
 import FLXClassroomMenu from './Classroom'
 import FLXAccountMenu from './Account'
-import FLXMenuSearch from './Search'
 
 const FLXMenuContent: React.FC = () => {
     const { currentMenuIndex } = useLayoutContext()
@@ -16,8 +15,6 @@ const FLXMenuContent: React.FC = () => {
             return <FLXClassroomMenu />
         case 2:
             return <FLXAccountMenu />
-        case 3:
-            return <FLXMenuSearch />
         default:
             return <FLXMenuInitial />
     }
