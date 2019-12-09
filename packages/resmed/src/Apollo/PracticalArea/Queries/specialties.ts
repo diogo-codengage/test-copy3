@@ -11,7 +11,7 @@ export interface IISpecialtiesQuery {
 
 export const GET_SPECIALTIES = gql`
     query Specialties {
-        specialties {
+        specialties: contentSpecialties {
             value: id
             label: name
         }

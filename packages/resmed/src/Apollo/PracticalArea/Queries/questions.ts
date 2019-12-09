@@ -61,7 +61,7 @@ export const GET_QUESTIONS = gql`
         $year: Int
         $isCommentedByExpert: Boolean
         $withImage: Boolean
-        $state: State
+        $state: BRStates
     ) {
         questions(
             limit: $limit

@@ -193,7 +193,7 @@ const Subspecialties = ({ initialValue }) => {
                 setData(old => ({
                     ...old,
                     loading: false,
-                    items: subSpecialties.items
+                    items: subSpecialties
                 }))
             } catch {
                 setData({ loading: false, error: false, items: [] })
