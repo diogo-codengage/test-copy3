@@ -249,6 +249,10 @@ export default {
     },
     lives: {
         title: 'Lives',
-        subtitle: 'Veja as lives que ainda vão acontecer e as que já rolaram'
+        subtitle: 'Veja as lives que ainda vão acontecer e as que já rolaram',
+        nexts: {
+            title: 'Próximas lives',
+            seeLive: 'Ver live'
+        }
     }
 }

@@ -3,9 +3,11 @@ import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-import { SANBox, SANPage, SANLayoutContainer } from '@sanar/components'
+import { SANBox, SANPage } from '@sanar/components'
 
 import RMLive from 'Components/Live'
+
+import RMNexts from './Nexts'
 
 const RMSpecialty = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
@@ -23,8 +25,11 @@ const RMSpecialty = ({ history }: RouteComponentProps) => {
                 }
             }}
         >
-            <SANBox my={{ xs: '8', _: 'md' }}>
+            <SANBox py={{ xs: '8', _: 'md' }}>
                 <RMLive />
+            </SANBox>
+            <SANBox bg='grey-solid.1' py={{ xs: '8', _: 'md' }}>
+                <RMNexts />
             </SANBox>
         </SANPage>
     )
