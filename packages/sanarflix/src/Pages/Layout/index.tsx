@@ -121,7 +121,6 @@ const FLXLayout: React.FC<RouterProps> = ({ history, children }) => {
 
     const FooterProps: ISANLayoutFooterProps = {
         logo: logoFooter,
-        phone: '71 3052-4831',
         whatsapp: '71 99172-4740',
         email: 'suportesanarflix@editorasanar.com.br',
         facebook:
