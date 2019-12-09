@@ -8,7 +8,7 @@ interface IProfile {
     testExperience: 'none' | 'one' | 'many'
     preparatoryCourseStatus: 'inProgress' | 'completed' | 'missing'
     userId: string
-    courseId: string
+    courseId?: string
 }
 
 export interface IMe {
@@ -16,7 +16,7 @@ export interface IMe {
     name: string
     profilePicture: string
     hasActiveSubscription: boolean
-    profile: IProfile
+    profile: IProfile | []
 }
 
 export const GET_ME = gql`
@@ -26,6 +26,9 @@ export const GET_ME = gql`
             name
             profilePicture
             hasActiveSubscription
+            profile {
+                id
+            }
         }
     }
 `
