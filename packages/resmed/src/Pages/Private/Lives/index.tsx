@@ -8,6 +8,7 @@ import { SANBox, SANPage } from '@sanar/components'
 import RMLive from 'Components/Live'
 
 import RMNexts from './Nexts'
+import RMPrevious from './Previous'
 
 const RMSpecialty = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
@@ -30,6 +31,9 @@ const RMSpecialty = ({ history }: RouteComponentProps) => {
             </SANBox>
             <SANBox bg='grey-solid.1' py={{ xs: '8', _: 'md' }}>
                 <RMNexts />
+            </SANBox>
+            <SANBox py={{ xs: '8', _: 'md' }}>
+                <RMPrevious />
             </SANBox>
         </SANPage>
     )

@@ -109,6 +109,8 @@ import { SANCheckbox } from 'Components/Atoms/Checkbox'
 import { SANModalTabs } from 'Components/Organisms/ModalTabs'
 import { SANCollection } from 'Components/Molecules/Collection'
 import { SANLessonResult } from 'Components/Molecules/LessonResult'
+import { SANCardLive } from 'Components/Molecules/CardLives'
+
 
 export {
     SANCommonBadge,
@@ -223,5 +225,6 @@ export {
     SANCheckbox,
     SANModalTabs,
     SANCollection,
-    SANLessonResult
+    SANLessonResult,
+    SANCardLive
 }

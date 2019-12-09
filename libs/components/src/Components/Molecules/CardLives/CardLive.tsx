@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import { theme, ifProp } from 'styled-tools'
 import { css } from 'styled-components'
@@ -63,26 +63,37 @@ const SANCardLive = ({
         }
     } = useThemeContext()
 
+    const props = useMemo(
+        () => ({
+            wrapper: {
+                height: hasList ? '120px' : 'auto',
+                display: hasList ? 'inline-flex' : 'block'
+            },
+            image: {
+                width: { _: '120px', sm: 'auto' },
+                height: {
+                    _: '120px',
+                    sm: hasList ? '120px' : '131px'
+                }
+            },
+            wrapperText: {
+                mx: { _: 'md', sm: hasList ? 'xl' : 'md' }
+            }
+        }),
+        [hasList]
+    )
+
     return (
         <SANBox
             boxShadow={1}
-            width={{ _: '100%', sm: hasList ? '100%' : 'auto' }}
-            height={{ _: '120px', sm: hasList ? '120px' : 'auto' }}
-            display={hasList ? 'inline-flex' : 'block'}
             bg='white.10'
             borderRadius='base'
             border='1px solid'
             borderColor='grey.2'
+            width='100%'
+            {...props.wrapper}
         >
-            <SANImageBox
-                hasList={hasList}
-                onClick={onClick}
-                width={{ _: '120px', sm: 'auto' }}
-                height={{
-                    _: '120px',
-                    sm: hasList ? '120px' : '131px'
-                }}
-            >
+            <SANImageBox hasList={hasList} onClick={onClick} {...props.image}>
                 <SANBox
                     as='img'
                     src={image ? image : defaultThumbnail}
@@ -90,21 +101,13 @@ const SANCardLive = ({
                     width='100%'
                 />
             </SANImageBox>
-            <SANBox
-                width={{
-                    _: 'calc(100% - 144px)',
-                    sm: hasList ? 'calc(100% - 258px)' : 'auto'
-                }}
-                py='md'
-                mx={{ _: 'md', sm: hasList ? 'xl' : 'md' }}
-                textAlign='left'
-            >
+            <SANBox py='md' textAlign='left' {...props.wrapperText}>
                 <SANTypography
                     fontSize='md'
                     fontWeight='bold'
                     color='grey.6'
                     mb='xs'
-                    ellipsis={{ rows: hasList ? 1 : 2 }}
+                    // ellipsis={{ rows: hasList ? 1 : 2 }}
                     lineHeight='1.40'
                 >
                     {title}

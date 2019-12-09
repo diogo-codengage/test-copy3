@@ -253,6 +253,10 @@ export default {
         nexts: {
             title: 'Próximas lives',
             seeLive: 'Ver live'
+        },
+        previous: {
+            title: 'Lives anteriores',
+            loadMore: 'Carregar mais'
         }
     }
 }
