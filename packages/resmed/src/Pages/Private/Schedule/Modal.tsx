@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback } from 'react'
 
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { theme, switchProp } from 'styled-tools'
@@ -15,12 +16,12 @@ import {
 } from '@sanar/components'
 import { ISANModalProps } from '@sanar/components/dist/Components/Molecules/Modal'
 
-type IStatus = 'viewed' | 'unseen' | 'live' | 'exams'
-type IType = 'lesson' | 'live' | 'exams'
+import { IAppointment } from 'Apollo/Schedule/Queries/appointments'
 
-export interface IOption {
+type IStatus = 'viewed' | 'unseen' | 'live' | 'exams'
+
+export interface IOption extends IAppointment {
     status: IStatus
-    type: IType
     title: string
     subtitle: string
     description: string
@@ -28,7 +29,6 @@ export interface IOption {
 
 const defaultOption: IOption = {
     status: 'unseen',
-    type: 'lesson',
     title: '',
     subtitle: '',
     description: ''
@@ -177,96 +177,126 @@ export const RMModalSuggestion = ({
     )
 }
 
-const types: IType[] = ['lesson', 'live']
-
-interface IRMModalSchedule extends ISANModalProps {
+interface IRMModalSchedule extends ISANModalProps, RouteComponentProps {
     onClick: () => void
     options: IOption
 }
 
-export const RMModalSchedule = ({
-    options = defaultOption,
-    onClick,
-    ...props
-}: IRMModalSchedule) => {
-    const { t } = useTranslation('resmed')
+const types = ['viewed', 'unseen', 'live']
 
-    const title = useMemo(() => {
-        switch (options.type) {
-            case 'lesson':
-                return t('schedule.modal.lesson.title')
-            case 'live':
-                return t('schedule.modal.live.title')
-            default:
-                return t('schedule.modal.lesson.title')
+export const RMModalSchedule = withRouter(
+    ({
+        options = defaultOption,
+        onClick,
+        history,
+        ...props
+    }: IRMModalSchedule) => {
+        const { t } = useTranslation('resmed')
+
+        const handleClick = () => {
+            const {
+                specialtyId,
+                subSpecialtyId,
+                lesson,
+                collectionId,
+                resource
+            } = options.accessContent
+            if (options.resource.type === 'Level') {
+                const final = `${
+                    lesson.id
+                }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                    resource.id
+                }`
+                if (!!subSpecialtyId) {
+                    history.push(
+                        `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${final}`
+                    )
+                } else {
+                    history.push(`/inicio/sala-aula/${specialtyId}/${final}`)
+                }
+            }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [options])
 
-    const button = useMemo(() => {
-        switch (options.type) {
-            case 'lesson':
-                return options.status === 'viewed'
-                    ? t('schedule.modal.lesson.watched')
-                    : t('schedule.modal.lesson.watch')
-            case 'live':
-                return t('schedule.modal.live.button')
-            default:
-                return options.status === 'viewed'
-                    ? t('schedule.modal.lesson.watched')
-                    : t('schedule.modal.lesson.watch')
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [options])
+        const title = useMemo(() => {
+            switch (options.status) {
+                case 'viewed' || 'unseen':
+                    return t('schedule.modal.lesson.title')
+                case 'live':
+                    return t('schedule.modal.live.title')
+                default:
+                    return t('schedule.modal.lesson.title')
+            }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [options])
 
-    if (!types.includes(options.type)) return null
+        const button = useMemo(() => {
+            switch (options.status) {
+                case 'viewed':
+                    return t('schedule.modal.lesson.watched')
+                case 'unseen':
+                    return t('schedule.modal.lesson.watch')
+                case 'live':
+                    return t('schedule.modal.live.button')
+                default:
+                    return t('schedule.modal.lesson.watch')
+            }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [options])
 
-    return (
-        <SANModal width={360} title={title} centered {...props}>
-            <SANBox>
-                <SANTypography fontSize='lg' color='grey.7'>
-                    {options.title}
-                </SANTypography>
-                <SANTypography fontSize='xs' color='grey.5' mt='xxs' mb='md'>
-                    {options.subtitle}
-                </SANTypography>
-                <SANBox height={80}>
-                    <SANScroll>
-                        <SANTypography fontSize='md' color='grey.6' pr='sm'>
-                            {options.description}
-                        </SANTypography>
-                    </SANScroll>
+        if (!types.includes(options.status)) return null
+
+        return (
+            <SANModal width={360} title={title} centered {...props}>
+                <SANBox>
+                    <SANTypography fontSize='lg' color='grey.7'>
+                        {options.title}
+                    </SANTypography>
+                    <SANTypography
+                        fontSize='xs'
+                        color='grey.5'
+                        mt='xxs'
+                        mb='md'
+                    >
+                        {options.subtitle}
+                    </SANTypography>
+                    <SANBox height={80}>
+                        <SANScroll>
+                            <SANTypography fontSize='md' color='grey.6' pr='sm'>
+                                {options.description}
+                            </SANTypography>
+                        </SANScroll>
+                    </SANBox>
                 </SANBox>
-            </SANBox>
-            <SANBox
-                borderTop='1px solid'
-                borderColor='grey.1'
-                display='flex'
-                alignItems='center'
-                justifyContent='center'
-                p='md'
-                mt='xl'
-                mb='-24px'
-                mx='-24px'
-            >
-                <SANButton
-                    onClick={onClick}
-                    size='xsmall'
-                    variant='text'
-                    color='primary'
-                    uppercase
-                    bold
+                <SANBox
+                    borderTop='1px solid'
+                    borderColor='grey.1'
+                    display='flex'
+                    alignItems='center'
+                    justifyContent='center'
+                    p='md'
+                    mt='xl'
+                    mb='-24px'
+                    mx='-24px'
                 >
-                    {options.status === 'viewed' && (
-                        <SANEvaIcon
-                            name='checkmark-circle-2'
-                            mr='xs'
-                            size='large'
-                        />
-                    )}
-                    {button}
-                </SANButton>
-            </SANBox>
-        </SANModal>
-    )
-}
+                    <SANButton
+                        onClick={handleClick}
+                        size='xsmall'
+                        variant='text'
+                        color='primary'
+                        uppercase
+                        bold
+                    >
+                        {options.status === 'viewed' && (
+                            <SANEvaIcon
+                                name='checkmark-circle-2'
+                                mr='xs'
+                                size='large'
+                            />
+                        )}
+                        {button}
+                    </SANButton>
+                </SANBox>
+            </SANModal>
+        )
+    }
+)

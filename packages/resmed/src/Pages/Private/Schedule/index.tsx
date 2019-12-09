@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
+import { useApolloClient } from '@apollo/react-hooks'
+import { format, isEqual } from 'date-fns'
 
 import {
     SANPage,
@@ -15,11 +17,14 @@ import {
     SANTypography,
     SANEvaIcon,
     SANBox,
-    SANLayoutContainer,
-    SANSessionTitle,
-    SANCardEvent
+    SANLayoutContainer
 } from '@sanar/components'
 import { IEvent } from '@sanar/components/dist/Components/Organisms/BigCalendar'
+
+import {
+    GET_APPOINTMENTS,
+    IAppointmentsQuery
+} from 'Apollo/Schedule/Queries/appointments'
 
 import {
     RMModalSchedule,
@@ -28,145 +33,8 @@ import {
     IOption
 } from './Modal'
 
-const lesson = {
-    extendedProps: {
-        type: 'lesson',
-        status: 'viewed',
-        title: 'Nome da aula',
-        subtitle: '15:00',
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Proin fermentum leo vel orci porta non pulvinar. Hendrerit dolor magna eget est lorem ipsum dolor sit.'
-    }
-}
-
-const live = {
-    extendedProps: {
-        type: 'live',
-        title: 'Live de Correção da prova SUS-SP 2019 - Parte 1',
-        subtitle: '15:00',
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Proin fermentum leo vel orci porta non pulvinar. Hendrerit dolor magna eget est lorem ipsum dolor sit.'
-    }
-}
-
-const exam = {
-    extendedProps: {
-        type: 'exam',
-        status: 'exams',
-        title: 'Inscrição para a prova Lorem ipsum'
-    }
-}
-
-const events: IEvent[] = [
-    {
-        id: '1',
-        title: 'Aulas vistas',
-        start: new Date(2019, 11, 2),
-        status: 'viewed',
-        ...lesson
-    },
-    {
-        id: '2',
-        title: 'Provas e Inscrições',
-        start: new Date(2019, 11, 2),
-        status: 'exams',
-        ...exam
-    },
-    {
-        id: '3',
-        title: 'Aulas vistas',
-        start: new Date(2019, 11, 5),
-        status: 'viewed',
-        startEditable: true,
-        ...lesson
-    },
-    {
-        id: '4',
-        title: 'Provas e Inscrições',
-        start: new Date(2019, 11, 5),
-        status: 'exams',
-        startEditable: true,
-        ...exam
-    },
-    {
-        id: '5',
-        title: 'Aulas vistas',
-        start: new Date(2019, 11, 6),
-        status: 'viewed',
-        startEditable: true,
-        ...lesson
-    },
-    {
-        id: '6',
-        title: 'Provas e Inscrições',
-        start: new Date(2019, 11, 6),
-        status: 'exams',
-        startEditable: true,
-        ...exam
-    },
-    {
-        id: '7',
-        title: 'Aulas vistas',
-        start: new Date(2019, 11, 6),
-        status: 'viewed',
-        startEditable: true,
-        ...lesson
-    },
-    {
-        id: '8',
-        title: 'Provas e Inscrições',
-        start: new Date(2019, 11, 6),
-        status: 'exams',
-        startEditable: true,
-        ...exam
-    },
-    {
-        id: '9',
-        title: 'Provas e Inscrições',
-        start: new Date(2019, 11, 6),
-        status: 'exams',
-        startEditable: true,
-        ...exam
-    },
-    {
-        id: '10',
-        title: 'Provas e Inscrições',
-        start: new Date(2019, 11, 6),
-        status: 'exams',
-        startEditable: true,
-        ...exam
-    },
-    {
-        id: '11',
-        title: 'Aulas não vistas',
-        start: new Date(2019, 11, 4, 23, 59),
-        status: 'unseen',
-        startEditable: true,
-        ...lesson
-    },
-    {
-        id: '11',
-        title: 'Aulas não vistas lorem ipsum',
-        start: new Date(2019, 11, 26),
-        status: 'unseen',
-        startEditable: true,
-        ...lesson
-    },
-    {
-        id: '12',
-        title: 'Live',
-        start: new Date(2019, 11, 2),
-        status: 'live',
-        ...live
-    },
-    {
-        id: '13',
-        title: 'Live',
-        start: new Date(2019, 11, 6),
-        status: 'live',
-        ...live
-    }
-]
+import RMToday from './Today'
+import RMWeek from './Week'
 
 const SuggestionStyled = styled(SANBox)`
     align-items: center;
@@ -194,8 +62,31 @@ const boxProps = {
     flexDirection: 'column'
 }
 
+export const getStatus = event => {
+    switch (event.resource.type) {
+        case 'Exam':
+            return 'exams'
+        case 'Live':
+            return 'live'
+        case 'Level':
+            return event.seen ? 'viewed' : 'unseen'
+        default:
+            return 'unseen'
+    }
+}
+
+const formatMinutes = minutes =>
+    new Date(minutes * 60000).toISOString().substr(11, 5)
+
 const RMSchedule = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
+    const client = useApolloClient()
+    const [loading, setLoading] = useState(false)
+    const [currentRange, setCurrentRange] = useState({
+        start: '',
+        end: ''
+    })
+    const [events, setEvents] = useState<IEvent[]>([])
     const [modalSchedule, setModalSchedule] = useState<{
         visible: boolean
         options: IOption | any
@@ -215,10 +106,19 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
         options: []
     })
 
+    const handleChangeMonth = dates => {
+        if (
+            !isEqual(dates.start, currentRange.start) ||
+            !isEqual(dates.end, currentRange.end)
+        ) {
+            setCurrentRange(dates)
+        }
+    }
+
     const handleEventLimitClick = e => {
         setModalMore({
             visible: true,
-            options: e.segs.map(seg => seg.eventRange.def.extendedProps)
+            options: e.segs.filter(seg => !!seg.eventRange.def.extendedProps.id)
         })
     }
 
@@ -227,6 +127,39 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
 
     const handleChangeSuggestion = checked =>
         setModalSuggestion({ checked, visible: true })
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            setLoading(true)
+            try {
+                const {
+                    data: { appointments }
+                } = await client.query<IAppointmentsQuery>({
+                    query: GET_APPOINTMENTS,
+                    variables: {
+                        start: format(currentRange.start, 'YYYY-MM-DD'),
+                        end: format(currentRange.end, 'YYYY-MM-DD')
+                    }
+                })
+                setEvents(
+                    appointments.map(v => ({
+                        extendedProps: {
+                            ...v,
+                            subtitle: formatMinutes(v.timeInMinutes)
+                        },
+                        id: v.id,
+                        title: v.title,
+                        start: new Date(v.start),
+                        startEditable: !v.fixed,
+                        status: getStatus(v)
+                    }))
+                )
+            } catch {}
+            setLoading(false)
+        }
+        if (!!currentRange.start && !!currentRange.end) fetchEvents()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentRange])
 
     return (
         <>
@@ -276,9 +209,11 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                         />
                         <SANBox mx={{ md: '0', _: '-16px' }}>
                             <SANBigCalendar
+                                loading={loading}
                                 events={events}
                                 eventClick={handleEventClick}
                                 eventLimitClick={handleEventLimitClick}
+                                onChangeMonth={handleChangeMonth}
                             />
                         </SANBox>
 
@@ -309,73 +244,10 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                     <SANLayoutContainer>
                         <SANRow gutter={24}>
                             <SANCol xs={24} sm={24} md={12}>
-                                <SANSessionTitle
-                                    title={t('schedule.today')}
-                                    subtitle={
-                                        <SANTypography
-                                            transform='uppercase'
-                                            color='grey.5'
-                                            fontWeight='bold'
-                                        >
-                                            {new Date().toLocaleDateString(
-                                                'pt-BR',
-                                                {
-                                                    year: 'numeric',
-                                                    month: 'long',
-                                                    day: 'numeric'
-                                                }
-                                            )}
-                                        </SANTypography>
-                                    }
-                                />
-                                <SANCardEvent
-                                    title='Inscrição para a prova tal'
-                                    date='12/06/2019, às 10h até 12/07/2019, às 18h'
-                                    type='exams'
-                                    mb='xs'
-                                />
-                                <SANCardEvent
-                                    title='Live de Correção da prova SUS-SP 2019'
-                                    date='14:00'
-                                    type='live'
-                                    mb='xs'
-                                />
-                                <SANCardEvent
-                                    title='Aula'
-                                    date='9:30 até 10:30'
-                                    type='views'
-                                    mb='xs'
-                                />
-                                <SANCardEvent
-                                    title='Aula'
-                                    date='9:30 até 10:30'
-                                    type='unseen'
-                                />
+                                <RMToday />
                             </SANCol>
                             <SANCol xs={24} sm={24} md={12}>
-                                <SANSessionTitle
-                                    title={t('schedule.thisWeek.title')}
-                                    subtitle={
-                                        <SANTypography
-                                            color='grey.5'
-                                            fontWeight='bold'
-                                        >
-                                            {t('schedule.thisWeek.subtitle')}
-                                        </SANTypography>
-                                    }
-                                    mt={{ md: '0', _: 'xl' }}
-                                />
-                                <SANCardEvent
-                                    title='Aula'
-                                    date='9:30 até 10:30'
-                                    type='unseen'
-                                    mb='xs'
-                                />
-                                <SANCardEvent
-                                    title='Inscrição para a prova tal'
-                                    date='12/06/2019, às 10h até 12/07/2019, às 18h'
-                                    type='exams'
-                                />
+                                <RMWeek />
                             </SANCol>
                         </SANRow>
                     </SANLayoutContainer>

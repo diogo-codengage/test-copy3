@@ -259,6 +259,8 @@ export default {
             title: 'Esta semana',
             subtitle: 'Confira as suas próximas atividades'
         },
+        emptyToday: 'Voce não tem nenhuma aula para hoje',
+        emptyWeek: 'Voce não tem nenhuma aula nessa semana',
         modal: {
             day: 'Dia',
             lesson: {

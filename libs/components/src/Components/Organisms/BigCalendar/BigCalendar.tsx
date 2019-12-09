@@ -20,6 +20,8 @@ import './big-calendar.css'
 
 import { useThemeContext } from '@sanar/utils/dist/Hooks'
 
+import { SANSpin } from '../../Atoms/Spin'
+
 export interface IEvent {
     id: string
     title: string
@@ -33,7 +35,9 @@ export interface IEvent {
 }
 
 export interface ISANBigCalendarProps {
+    loading?: boolean
     events: IEvent[]
+    onChangeMonth?: (arg: { start: Date; end: Date }) => void
     eventLimitClick?: (arg: {
         date: Date
         allDay: boolean
@@ -249,12 +253,22 @@ const getFreeDays = ({ current = new Date().getFullYear() }) => {
 const SANBigCalendar: React.FC<ISANBigCalendarProps> = ({
     events,
     eventDrop,
+    loading = false,
+    onChangeMonth,
     ...props
 }) => {
     const { t } = useTranslation('components')
     const theme = useThemeContext()
     const calendarRef = useRef<FullCalendar>()
     const { width } = useWindowSize()
+
+    const handleChangeMonth = (arg: { view: View; el: HTMLElement }) => {
+        !!onChangeMonth &&
+            onChangeMonth({
+                start: arg.view.activeStart,
+                end: arg.view.activeEnd
+            })
+    }
 
     const handleEventDrop = e => {
         const calendar = calendarRef.current.getApi()
@@ -323,24 +337,27 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = ({
 
     return (
         <FullCalendarWrapper>
-            <FullCalendar
-                height={width < 768 && 650}
-                aspectRatio={1.7}
-                events={eventsMap}
-                ref={calendarRef}
-                locale={ptLocale}
-                defaultView='dayGridMonth'
-                plugins={[dayGridPlugin, interactionPlugin]}
-                header={{
-                    left: 'prev',
-                    right: 'next',
-                    center: 'title'
-                }}
-                eventLimit
-                eventLimitText={n => `${t('bigCalendar.more')} ${n}`}
-                eventDrop={handleEventDrop}
-                {...props}
-            />
+            <SANSpin spinning={loading} flex>
+                <FullCalendar
+                    height={width < 768 && 650}
+                    aspectRatio={1.7}
+                    events={eventsMap}
+                    ref={calendarRef}
+                    locale={ptLocale}
+                    defaultView='dayGridMonth'
+                    plugins={[dayGridPlugin, interactionPlugin]}
+                    header={{
+                        left: 'prev',
+                        right: 'next',
+                        center: 'title'
+                    }}
+                    datesRender={handleChangeMonth}
+                    eventLimit
+                    eventLimitText={n => `${t('bigCalendar.more')} ${n}`}
+                    eventDrop={handleEventDrop}
+                    {...props}
+                />
+            </SANSpin>
         </FullCalendarWrapper>
     )
 }
