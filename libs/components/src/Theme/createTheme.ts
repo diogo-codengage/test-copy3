@@ -24,6 +24,7 @@ import {
     article,
     document,
     blocked,
+    defaultThumbnail,
     empty,
     suggestedSchedule,
     awfulEmoji,
@@ -228,6 +229,9 @@ const assetsDefault = {
             video: typeIconPrimaryVideo,
             course: typeIconPrimaryCourse
         }
+    },
+    cardLives: {
+        defaultThumbnail
     },
     lessonResult: {
         success: lessonResultSuccess,
