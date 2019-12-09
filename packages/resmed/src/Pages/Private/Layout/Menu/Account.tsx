@@ -82,6 +82,15 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     title={t('mainMenu.account.changePassword')}
                 />
             </SANNavigationList>
+            <SANNavigationList>
+                <SANNavigationListItem
+                    to='/inicio/minha-conta/dados-complementares'
+                    icon={<SANEvaIcon name='clipboard' color='default' />}
+                    onClick={onCloseMenu}
+                    dataTestid='flix_menu_my-account__go_to--complementary-register'
+                    title={t('mainMenu.account.complementaryRegister')}
+                />
+            </SANNavigationList>
             <SANDivider mx='md' my='lg' bg='white.1' />
 
             <SANTypography variant='overline' px='md' color='white.5'>
