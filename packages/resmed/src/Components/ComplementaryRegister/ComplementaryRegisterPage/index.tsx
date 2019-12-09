@@ -18,7 +18,7 @@ import {
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 
-const RMProfile = ({ history, form, update }) => {
+const RMPage = ({ history, form, update }) => {
     const { t } = useTranslation('resmed')
 
     return (
@@ -50,3 +50,5 @@ const RMProfile = ({ history, form, update }) => {
         </SANPage>
     )
 }
+
+export default RMPage

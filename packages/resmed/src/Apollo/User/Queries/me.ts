@@ -2,7 +2,14 @@ import gql from 'graphql-tag'
 
 interface IProfile {
     id: string
-    graduationStep: 'firstYear' | 'secondYear' | 'thirdYear' | 'fourthYear' | 'fifthYear' | 'sixthYear' | 'formed'
+    graduationStep:
+        | 'firstYear'
+        | 'secondYear'
+        | 'thirdYear'
+        | 'fourthYear'
+        | 'fifthYear'
+        | 'sixthYear'
+        | 'formed'
     institutionIds: string[]
     specialtyIds: number[]
     testExperience: 'none' | 'one' | 'many'
@@ -16,7 +23,7 @@ export interface IMe {
     name: string
     profilePicture: string
     hasActiveSubscription: boolean
-    profile: IProfile | []
+    profile: IProfile
 }
 
 export const GET_ME = gql`

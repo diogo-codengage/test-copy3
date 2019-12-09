@@ -1,5 +1,9 @@
-import RMComplementaryRegisterForm from './CRForm'
-import RMComplementaryRegisterModal from './CRModal'
-import RMComplementaryRegisterPage from './CRPage'
+import RMComplementaryRegisterForm from './ComplementaryRegisterForm'
+import RMComplementaryRegisterModal from './ComplementaryRegisterModal'
+import RMComplementaryRegisterPage from './ComplementaryRegisterPage'
 
-export { RMComplementaryRegisterForm, RMComplementaryRegisterModal, RMComplementaryRegisterPage }
+export {
+    RMComplementaryRegisterForm,
+    RMComplementaryRegisterModal,
+    RMComplementaryRegisterPage
+}
