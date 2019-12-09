@@ -276,21 +276,19 @@ export default {
         preparatoryCourse: {
             label: 'Fez/Faz algum outro curso preparatório?',
             missing: 'Não',
-            in_progress: 'Sim, faço',
+            inProgress: 'Sim, faço',
             completed: 'Sim, Já fiz',
             inputLabel: 'Qual?'
         },
         placeholder: 'Selecione',
-        messages: {
-            mutations: {
-                create: {
-                    success: 'Sucesso, seus dados foram salvos corretamente!',
-                    error: 'Erro, ocorreu um erro e seus dados não foram salvos!'
-                },
-                update: {
-                    success: 'Sucesso, seus dados foram atualizados corretamente!',
-                    error: 'Erro, ocorreu um erro e seus dados não foram atualzados!'
-                }
+        mutations: {
+            create: {
+                success: 'Sucesso, seus dados foram salvos corretamente!',
+                error: 'Erro, ocorreu um erro e seus dados não foram salvos!'
+            },
+            update: {
+                success: 'Sucesso, seus dados foram atualizados corretamente!',
+                error: 'Erro, ocorreu um erro e seus dados não foram atualzados!'
             }
         }
     }

@@ -13,7 +13,7 @@ import { theme } from 'styled-tools'
 
 import logo from 'Assets/images/brand/logo.svg'
 import { GET_SUPPLEMENTARY_SPECIALTIES } from 'Apollo/User/Queries/supplementary-specialties'
-import { GET_INSTITUTIONS } from 'Apollo/PracticalArea/Queries/institutions'
+// import { GET_INSTITUTIONS } from 'Apollo/PracticalArea/Queries/institutions'
 
 const SANStyledModal = styled(SANModal)`
     &&& {
@@ -69,20 +69,21 @@ const RMModal = () => {
         }
     }
 
-    const getInstitutions = async () => {
-        try {
-            // const {
-            //     data: { institutions }
-            // } = await client.query({ query: GET_INSTITUTIONS })
-            // setInstitutions(
-            //     institutions.map(({ id, name }) =>
-            //         Object({ label: name, value: id })
-            //     )
-            // )
-        } catch (err) {
-            throw new Error(err)
-        }
-    }
+    // const getInstitutions = async () => {
+    //     try {
+    // const {
+    //     data: { institutions }
+    // } = await client.query({ query: GET_INSTITUTIONS })
+    // setInstitutions(
+    //     institutions.map(({ id, name }) =>
+    //         Object({ label: name, value: id })
+    //     )
+    // )
+    //     } catch (err) {
+    //         throw new Error(err)
+    //     }
+    // }
+
     const test = [
         { label: 'teste0', value: '5dbe35bc107f4d001122aa43' },
         { label: 'teste1', value: '5dbe35bc107f4d001122aa44' },
@@ -99,6 +100,7 @@ const RMModal = () => {
     useEffect(() => {
         getSpecialties()
         // getInstitutions()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

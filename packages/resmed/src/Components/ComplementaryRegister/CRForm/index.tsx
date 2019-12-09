@@ -128,7 +128,7 @@ const graduatedSteps = [
 
 const testExperiences = ['none', 'one', 'many']
 
-const preparatoryCourseStatus = ['missing', 'in_progress', 'completed']
+const preparatoryCourseStatus = ['missing', 'inProgress', 'completed']
 
 const RMForm = ({
     oldData = {} as IFormDataProps,
@@ -162,12 +162,12 @@ const RMForm = ({
             })
             setMe(old => ({ ...old, ...createProfile }))
             snackbar({
-                message: t('mutations.create.success'),
+                message: t('userProfile.mutations.create.success'),
                 theme: 'success'
             })
         } catch {
             snackbar({
-                message: t('mutations.create.error'),
+                message: t('userProfile.mutations.create.error'),
                 theme: 'error'
             })
         }
@@ -193,12 +193,12 @@ const RMForm = ({
             })
             setMe(old => ({ ...old, ...updateProfile }))
             snackbar({
-                message: t('mutations.update.success'),
+                message: t('userProfile.mutations.update.success'),
                 theme: 'success'
             })
         } catch {
             snackbar({
-                message: t('mutations.update.error'),
+                message: t('userProfile.mutations.update.error'),
                 theme: 'error'
             })
         }
