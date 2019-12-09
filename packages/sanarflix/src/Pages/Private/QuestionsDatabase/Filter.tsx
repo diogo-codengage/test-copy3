@@ -61,7 +61,7 @@ export const FLXSelectsFilter = ({
 }: IFLXSelectsFilter) => {
     const { t } = useTranslation('sanarflix')
     const client = useApolloClient()
-    const [courses, setCouses] = useState<ICourse[]>([])
+    const [courses, setCourses] = useState<ICourse[]>([])
     const [themes, setThemes] = useState<ITheme[]>([])
     const [loading, setLoading] = useState({
         courses: false,
@@ -71,12 +71,28 @@ export const FLXSelectsFilter = ({
     useEffect(() => {
         const fetchCourses = async () => {
             setLoading(old => ({ ...old, courses: true }))
+
+            let tempCourses = []
+
             try {
-                const { data }: { data: ICourses } = await client.query({
-                    query: GET_COURSES
-                })
-                setCouses(data.courses.data || [])
-            } catch {}
+                let count;
+                let again;
+                do {
+                    const resp = await client.query<ICourses>({
+                        query: GET_COURSES,
+                        variables: {
+                            skip: tempCourses.length
+                        }
+                    })
+                    tempCourses = tempCourses.concat(resp.data.courses.data as [])
+                    count = resp.data.courses.count
+                    again = count > tempCourses.length;
+                } while (again);
+            } catch(ex) {
+               console.error({ex})
+            }
+
+            setCourses(tempCourses)
             setLoading(old => ({ ...old, courses: false }))
         }
         fetchCourses()
