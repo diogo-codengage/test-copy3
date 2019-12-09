@@ -30,8 +30,8 @@ const App: React.FC<RouteComponentProps> = ({ history, location }) => {
         getInstance().user.getSession((_, result) => {
             if (!result) {
                 setMe(undefined)
-            } else {
                 window.localStorage.clear();
+            } else {
                 const { pathname } = location
                 pathname.includes('auth') && history.push('/portal/inicio')
             }
