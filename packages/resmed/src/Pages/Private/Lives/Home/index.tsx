@@ -29,9 +29,7 @@ const RMSpecialty = ({ history }: RouteComponentProps) => {
             <SANBox pt={{ xs: '8', _: '0' }} pb={{ xs: '8', _: 'md' }}>
                 <RMLive />
             </SANBox>
-            <SANBox bg='grey-solid.1' py={{ xs: '8', _: 'md' }}>
-                <RMNexts />
-            </SANBox>
+            <RMNexts />
             <SANBox py={{ xs: '8', _: 'md' }}>
                 <RMPrevious />
             </SANBox>

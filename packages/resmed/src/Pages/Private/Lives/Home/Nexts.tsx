@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 
 import { useTranslation } from 'react-i18next'
+import { format } from 'date-fns'
 
 import {
     SANButton,
@@ -8,8 +9,11 @@ import {
     SANSessionTitle,
     SANBox,
     SANTypography,
-    SANCarousel
+    SANCarousel,
+    SANQuery
 } from '@sanar/components'
+
+import { GET_LIVES, ILivesQuery, ILive } from 'Apollo/Lives/Queries/lives'
 
 const arr = new Array(20).fill(0).map((_, i) => i)
 
@@ -119,36 +123,56 @@ const RMNexts = () => {
     const { t } = useTranslation('resmed')
 
     const renderLive = useCallback(
-        e => (
+        (live: ILive) => (
             <RMCardNextLive
-                key={e}
-                title={'Live de Correção da prova SUS-SP 2019 '}
-                subtitle={'27/04/2019 às 10h'}
+                key={live.id}
+                title={live.title}
+                subtitle={live.date}
             />
         ),
         []
     )
 
     return (
-        <SANLayoutContainer>
-            <SANSessionTitle title={t('lives.nextsList.title')} />
-            <SANBox mx='-12px'>
-                <SANCarousel
-                    slidesToScroll={1}
-                    slidesToShow={4}
-                    infinite={false}
-                    dots={false}
-                    arrows
-                    focusOnSelect
-                    swipe
-                    swipeToSlide
-                    responsive={responsive(arr.length)}
-                    draggable
-                >
-                    {arr.map(renderLive)}
-                </SANCarousel>
-            </SANBox>
-        </SANLayoutContainer>
+        <SANQuery
+            query={GET_LIVES}
+            options={{
+                variables: {
+                    start: format(new Date(), 'YYYY-MM-DD')
+                }
+            }}
+            loaderProps={{ minHeight: '200px', flex: true }}
+        >
+            {({ data: { lives } }: { data: ILivesQuery }) => {
+                if (!lives.length) return null
+
+                return (
+                    <SANBox bg='grey-solid.1' py={{ xs: '8', _: 'md' }}>
+                        <SANLayoutContainer>
+                            <SANSessionTitle
+                                title={t('lives.nextsList.title')}
+                            />
+                            <SANBox mx='-12px'>
+                                <SANCarousel
+                                    slidesToScroll={1}
+                                    slidesToShow={4}
+                                    infinite={false}
+                                    dots={false}
+                                    arrows
+                                    focusOnSelect
+                                    swipe
+                                    swipeToSlide
+                                    responsive={responsive(arr.length)}
+                                    draggable
+                                >
+                                    {lives.map(renderLive)}
+                                </SANCarousel>
+                            </SANBox>
+                        </SANLayoutContainer>
+                    </SANBox>
+                )
+            }}
+        </SANQuery>
     )
 }
 
