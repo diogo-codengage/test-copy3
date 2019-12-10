@@ -3,22 +3,26 @@ import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useApolloClient } from '@apollo/react-hooks'
 import { useAuthContext } from 'Hooks/auth'
+import { useSnackbarContext } from '@sanar/components'
 
 import { RMComplementaryRegisterForm } from '../'
 
 import { SANBox, SANPage, SANTypography } from '@sanar/components'
 
 import { GET_SUPPLEMENTARY_SPECIALTIES } from 'Apollo/User/Queries/supplementary-specialties'
+import { GET_INSTITUTIONS } from 'Apollo/PracticalArea/Queries/institutions'
 
 interface IListProps {
     label: string
-    value: number
+    value: number | string
 }
 const RMPage = ({ history }) => {
     const { t } = useTranslation('resmed')
     const { me } = useAuthContext()
     const client = useApolloClient()
+    const snackbar = useSnackbarContext()
     const [profileData, setProfileData] = useState({})
+    const [institutions, setInstitutions] = useState<IListProps[]>([])
     const [suppSpecialties, setSuppSpecialties] = useState<IListProps[]>([])
 
     const getSpecialties = async () => {
@@ -29,17 +33,35 @@ const RMPage = ({ history }) => {
 
             setSuppSpecialties(supplementarySpecialties)
         } catch (err) {
-            throw new Error(err)
+            snackbar({
+                message: t('userProfile.loadError.specialties'),
+                theme: 'error'
+            })
+        }
+    }
+
+    const getInstitutions = async () => {
+        try {
+            const {
+                data: { institutions }
+            } = await client.query({ query: GET_INSTITUTIONS })
+
+            setInstitutions(institutions)
+        } catch (err) {
+            snackbar({
+                message: t('userProfile.loadError.institutions'),
+                theme: 'error'
+            })
         }
     }
 
     const getProfile = async () => {
-        if (!!me && me.profile && suppSpecialties) {
+        if (!!me && me.profile && suppSpecialties && institutions) {
             const findedSpecialties = suppSpecialties.filter(({ value }) =>
                 me.profile.specialtyIds.find(sp => value === sp)
             )
 
-            const findedInstitutions = test.filter(({ value }) =>
+            const findedInstitutions = institutions.filter(({ value }) =>
                 me.profile.institutionIds.find(itt => value === itt)
             )
 
@@ -51,28 +73,16 @@ const RMPage = ({ history }) => {
         }
     }
 
-    const test = [
-        { label: 'teste0', value: '5dbe35bc107f4d001122aa43' },
-        { label: 'teste1', value: '5dbe35bc107f4d001122aa44' },
-        { label: 'teste2', value: '5dbe35bc107f4d001122aa45' },
-        { label: 'teste3', value: '5dbe35bc107f4d001122aa46' },
-        { label: 'teste4', value: '5dbe35bc107f4d001122aa47' },
-        { label: 'teste5', value: '5dbe35bc107f4d001122aa48' },
-        { label: 'teste6', value: '5dbe35bc107f4d001122aa49' },
-        { label: 'teste7', value: '5dbe35bc107f4d001122aa50' },
-        { label: 'teste8', value: '5dbe35bc107f4d001122aa51' },
-        { label: 'teste9', value: '5dbe35bc107f4d001122aa52' }
-    ]
-
     useEffect(() => {
         getSpecialties()
+        getInstitutions()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
         getProfile()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [suppSpecialties])
+    }, [suppSpecialties, institutions])
 
     return (
         <SANPage
@@ -111,7 +121,7 @@ const RMPage = ({ history }) => {
                     <RMComplementaryRegisterForm
                         oldData={profileData}
                         specialties={suppSpecialties}
-                        institutions={test}
+                        institutions={institutions}
                     />
                 </SANBox>
             </SANBox>

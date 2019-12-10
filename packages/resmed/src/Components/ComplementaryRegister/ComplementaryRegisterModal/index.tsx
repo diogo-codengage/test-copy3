@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
 import { useApolloClient } from '@apollo/react-hooks'
+import { useSnackbarContext } from '@sanar/components'
 
 import { SANBox, SANModal, SANDivider, SANTypography } from '@sanar/components'
 
@@ -13,6 +14,7 @@ import { theme } from 'styled-tools'
 
 import logo from 'Assets/images/brand/logo.svg'
 import { GET_SUPPLEMENTARY_SPECIALTIES } from 'Apollo/User/Queries/supplementary-specialties'
+import { GET_INSTITUTIONS } from 'Apollo/PracticalArea/Queries/institutions'
 
 const SANStyledModal = styled(SANModal)`
     &&& {
@@ -45,11 +47,17 @@ const styleToModalBody = {
     padding: 0
 }
 
+interface IListProps {
+    label: string
+    value: number | string
+}
 const RMModal = () => {
     const { t } = useTranslation('resmed')
     const { width } = useWindowSize()
     const client = useApolloClient()
-    const [suppSpecialties, setSuppSpecialties] = useState([])
+    const snackbar = useSnackbarContext()
+    const [suppSpecialties, setSuppSpecialties] = useState<IListProps[]>([])
+    const [institutions, setInstitutions] = useState<IListProps[]>([])
 
     const getSpecialties = async () => {
         try {
@@ -59,25 +67,31 @@ const RMModal = () => {
 
             setSuppSpecialties(supplementarySpecialties)
         } catch (err) {
-            throw new Error(err)
+            snackbar({
+                message: t('userProfile.loadError.specialties'),
+                theme: 'error'
+            })
         }
     }
 
-    const test = [
-        { label: 'teste0', value: '5dbe35bc107f4d001122aa43' },
-        { label: 'teste1', value: '5dbe35bc107f4d001122aa44' },
-        { label: 'teste2', value: '5dbe35bc107f4d001122aa45' },
-        { label: 'teste3', value: '5dbe35bc107f4d001122aa46' },
-        { label: 'teste4', value: '5dbe35bc107f4d001122aa47' },
-        { label: 'teste5', value: '5dbe35bc107f4d001122aa48' },
-        { label: 'teste6', value: '5dbe35bc107f4d001122aa49' },
-        { label: 'teste7', value: '5dbe35bc107f4d001122aa50' },
-        { label: 'teste8', value: '5dbe35bc107f4d001122aa51' },
-        { label: 'teste9', value: '5dbe35bc107f4d001122aa52' }
-    ]
+    const getInstitutions = async () => {
+        try {
+            const {
+                data: { institutions }
+            } = await client.query({ query: GET_INSTITUTIONS })
+
+            setInstitutions(institutions)
+        } catch (err) {
+            snackbar({
+                message: t('userProfile.loadError.institutions'),
+                theme: 'error'
+            })
+        }
+    }
 
     useEffect(() => {
         getSpecialties()
+        getInstitutions()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -115,7 +129,7 @@ const RMModal = () => {
                 <SANDivider my='xl' mx='auto' bg='grey.2' />
                 <RMComplementaryRegisterForm
                     specialties={suppSpecialties}
-                    institutions={test}
+                    institutions={institutions}
                 />
             </SANBox>
         </SANStyledModal>
