@@ -20,7 +20,7 @@ import { IAppointment } from 'Apollo/Schedule/Queries/appointments'
 
 type IStatus = 'viewed' | 'unseen' | 'live' | 'exams'
 
-export interface IOption extends IAppointment {
+export interface IOption extends Partial<IAppointment> {
     status: IStatus
     title: string
     subtitle: string
@@ -194,25 +194,30 @@ export const RMModalSchedule = withRouter(
         const { t } = useTranslation('resmed')
 
         const handleClick = () => {
-            const {
-                specialtyId,
-                subSpecialtyId,
-                lesson,
-                collectionId,
-                resource
-            } = options.accessContent
-            if (options.resource.type === 'Level') {
-                const final = `${
-                    lesson.id
-                }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-                    resource.id
-                }`
-                if (!!subSpecialtyId) {
-                    history.push(
-                        `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${final}`
-                    )
-                } else {
-                    history.push(`/inicio/sala-aula/${specialtyId}/${final}`)
+            if (!!options && !!options.accessContent) {
+                const {
+                    specialtyId,
+                    subSpecialtyId,
+                    lesson,
+                    collectionId,
+                    resource
+                } = options.accessContent
+
+                if (!!options.resource && options.resource.type === 'Level') {
+                    const final = `${
+                        lesson.id
+                    }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                        resource.id
+                    }`
+                    if (!!subSpecialtyId) {
+                        history.push(
+                            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${final}`
+                        )
+                    } else {
+                        history.push(
+                            `/inicio/sala-aula/${specialtyId}/${final}`
+                        )
+                    }
                 }
             }
         }

@@ -32,6 +32,8 @@ const App: React.FC<RouteComponentProps> = ({ history, location }) => {
                 setMe(undefined)
                 window.localStorage.clear();
             } else {
+                window.sanarflix_user_email = result.idToken.payload.email;
+                window.sanarflix_user_name = result.idToken.payload.name;
                 const { pathname } = location
                 pathname.includes('auth') && history.push('/portal/inicio')
             }

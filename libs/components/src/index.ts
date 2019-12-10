@@ -111,6 +111,7 @@ import { SANCollection } from 'Components/Molecules/Collection'
 import { SANLessonResult } from 'Components/Molecules/LessonResult'
 import { SANBigCalendar } from 'Components/Organisms/BigCalendar'
 import { SANCardEvent } from 'Components/Molecules/CardEvent'
+import { SANSelectFilter } from 'Components/Molecules/SelectFilter'
 
 export {
     SANCommonBadge,
@@ -227,5 +228,6 @@ export {
     SANCollection,
     SANLessonResult,
     SANBigCalendar,
-    SANCardEvent
+    SANCardEvent,
+    SANSelectFilter
 }

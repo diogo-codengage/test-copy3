@@ -249,5 +249,11 @@ export default {
     },
     bigCalendar: {
         more: 'Mais'
+    },
+    selectFilter: {
+        select: 'Selecione',
+        selectAll: 'Selecionar todos',
+        clearSelect: 'Limpar seleção',
+        close: 'Fechar'
     }
 }
