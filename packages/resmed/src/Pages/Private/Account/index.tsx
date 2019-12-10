@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, Switch, RouteComponentProps } from 'react-router-dom'
+import { Route, Switch, Redirect, RouteComponentProps } from 'react-router-dom'
 
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 

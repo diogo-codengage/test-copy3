@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { useApolloClient } from '@apollo/react-hooks'
+import { useAuthContext } from 'Hooks/auth'
 
 import { RMComplementaryRegisterForm } from '../'
 
@@ -9,10 +10,16 @@ import { SANBox, SANPage, SANTypography } from '@sanar/components'
 
 import { GET_SUPPLEMENTARY_SPECIALTIES } from 'Apollo/User/Queries/supplementary-specialties'
 
+interface IListProps {
+    label: string
+    value: number
+}
 const RMPage = ({ history }) => {
     const { t } = useTranslation('resmed')
+    const { me } = useAuthContext()
     const client = useApolloClient()
-    const [suppSpecialties, setSuppSpecialties] = useState([])
+    const [profileData, setProfileData] = useState({})
+    const [suppSpecialties, setSuppSpecialties] = useState<IListProps[]>([])
 
     const getSpecialties = async () => {
         try {
@@ -23,6 +30,24 @@ const RMPage = ({ history }) => {
             setSuppSpecialties(supplementarySpecialties)
         } catch (err) {
             throw new Error(err)
+        }
+    }
+
+    const getProfile = async () => {
+        if (!!me && me.profile && suppSpecialties) {
+            const findedSpecialties = suppSpecialties.filter(({ value }) =>
+                me.profile.specialtyIds.find(sp => value === sp)
+            )
+
+            const findedInstitutions = test.filter(({ value }) =>
+                me.profile.institutionIds.find(itt => value === itt)
+            )
+
+            setProfileData({
+                ...me.profile,
+                specialtyIds: findedSpecialties,
+                institutionIds: findedInstitutions
+            })
         }
     }
 
@@ -43,6 +68,11 @@ const RMPage = ({ history }) => {
         getSpecialties()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        getProfile()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [suppSpecialties])
 
     return (
         <SANPage
@@ -79,6 +109,7 @@ const RMPage = ({ history }) => {
                     py={{ _: 'xl', sm: 'xxxl' }}
                 >
                     <RMComplementaryRegisterForm
+                        oldData={profileData}
                         specialties={suppSpecialties}
                         institutions={test}
                     />

@@ -30,12 +30,10 @@ import {
     UPDATE_PROFILE_MUTATION
 } from 'Apollo/User/Mutations/profile'
 
-const SANCourseStatusFormItem = styled(SANFormItem)<{
-    requireCurseName?: boolean
-}>`
+const SANCourseStatusFormItem = styled(SANFormItem)<{ rcn?: boolean }>`
     &&& {
         ${ifProp(
-            'requireCurseName',
+            'rcn',
             css`
                 margin-bottom: 12px;
             `,
@@ -58,13 +56,11 @@ const SANStyledRadioGroup = styled(SANRadioGroup)`
     }
 `
 
-const SANStyledRadio = styled(SANRadio)<{
-    second?: boolean
-}>`
+const SANStyledRadio = styled(SANRadio)<{ nd?: boolean }>`
     &&& {
         display: block;
         ${ifProp(
-            'second',
+            'nd',
             css`
                 margin-top: 12px;
                 margin-bottom: 12px;
@@ -138,7 +134,7 @@ const RMForm = ({
 }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
-    const [requireCurseName, setRequireCurseName] = useState(false)
+    const [rcn, setRcn] = useState(false) //requiredCourseName
     const [submitting, setSubmitting] = useState(false)
     const snackbar = useSnackbarContext()
     const { setMe } = useAuthContext()
@@ -177,7 +173,6 @@ const RMForm = ({
     const updateProfile = async profile => {
         let institutionIds = profile.institutionIds.map(({ value }) => value)
         let specialtyIds = profile.specialtyIds.map(({ value }) => value)
-        // console.log('update', profile)
         try {
             const {
                 data: { updateProfile }
@@ -211,7 +206,7 @@ const RMForm = ({
         form.validateFields((err, values) => {
             if (!err) {
                 if (oldData.id) {
-                    updateProfile(values)
+                    updateProfile({ id: oldData.id, ...values })
                 } else {
                     createProfile(values)
                 }
@@ -330,7 +325,7 @@ const RMForm = ({
                                 {testExperiences.map(item => (
                                     <SANStyledRadio
                                         key={item}
-                                        second={item === testExperiences[1]}
+                                        nd={item === testExperiences[1]}
                                         value={item}
                                     >
                                         {t(
@@ -352,7 +347,7 @@ const RMForm = ({
                                     ? oldData.preparatoryCourseStatus
                                     : undefined
                             }
-                            requireCurseName={requireCurseName}
+                            rcn={rcn}
                             rules={[
                                 {
                                     required: true,
@@ -365,9 +360,7 @@ const RMForm = ({
                                 placeholder={t('userProfile.placeholder')}
                                 size='large'
                                 onChange={item =>
-                                    setRequireCurseName(
-                                        item !== preparatoryCourseStatus[0]
-                                    )
+                                    setRcn(item !== preparatoryCourseStatus[0])
                                 }
                             >
                                 {preparatoryCourseStatus.map(item => (
@@ -381,7 +374,7 @@ const RMForm = ({
                         </SANCourseStatusFormItem>
                     </SANCol>
                 </SANRow>
-                {requireCurseName && (
+                {rcn && (
                     <SANRow gutter={24}>
                         <SANCol>
                             <SANFormItem
