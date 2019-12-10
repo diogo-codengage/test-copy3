@@ -85,6 +85,7 @@ export default {
             management: 'Gerenciamento',
             myData: 'Meus dados',
             changePassword: 'Trocar minha senha',
+            complementaryRegister: 'Ficha complementar',
             help: 'Ajuda',
             helpCenter: 'Central de ajuda',
             otherLinks: 'Outros links',
@@ -308,6 +309,10 @@ export default {
                 error:
                     'Erro, ocorreu um erro e seus dados não foram atualzados!'
             }
+        },
+        loadError: {
+            specialties: 'Erro, não foi possivel carregar as Especialidades!',
+            institutions: 'Erro, não foi possivel carregar as Instituições!'
         }
     }
 }

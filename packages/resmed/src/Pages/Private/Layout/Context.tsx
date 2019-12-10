@@ -5,7 +5,7 @@ import { withRouter, RouteComponentProps } from 'react-router'
 
 import { SANClassroomMenuHeader } from '@sanar/components'
 
-import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 type IMenuContext = 'general' | 'classroom'
 
@@ -101,7 +101,7 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
         defaultNavigations
     )
     const menuRef = useRef<any>()
-    const { handleTrack } = useTrackContext()
+    const { handleTrack } = useMainContext()
 
     const onCloseMenu = () => {
         menuRef && menuRef.current && menuRef.current.setToggle(false)

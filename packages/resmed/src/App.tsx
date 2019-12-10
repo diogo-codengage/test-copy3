@@ -27,13 +27,14 @@ const RMApp: React.FC<RouteComponentProps> = ({ history, location }) => {
 
     useEffect(() => {
         const cognitoUser = getCognitoUser()
-        const { pathname } = location
 
         if (!!cognitoUser) {
-            cognitoUser.getSession((err: any, session: CognitoUserSession) => {
+            cognitoUser.getSession((_: any, session: CognitoUserSession) => {
                 if (!session) {
                     setMe(undefined)
+                    window.localStorage.clear()
                 } else {
+                    const { pathname } = location
                     pathname.includes('auth/entrar') && history.push('/inicio')
                 }
                 setLoading(false)

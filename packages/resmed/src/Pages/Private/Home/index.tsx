@@ -17,7 +17,7 @@ import {
 } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
-import { useLayoutContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 import RMGeneral from './General'
 import RMAbout from './About'
@@ -93,7 +93,7 @@ const Header = () => {
 
 const RMHome = () => {
     const { t } = useTranslation('resmed')
-    const { handleTrack } = useLayoutContext()
+    const { handleTrack } = useMainContext()
 
     useEffect(() => {
         handleTrack('Course Homepage viewed')

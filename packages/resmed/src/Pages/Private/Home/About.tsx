@@ -19,7 +19,7 @@ import aboutSvg from 'Assets/images/home/about.png'
 
 import { useAuthContext } from 'Hooks/auth'
 
-import { useLayoutContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 const SANCollapsePanelStyle = styled(SANCollapsePanel)`
     &&& {
@@ -47,7 +47,8 @@ const SANCollapselStyle = styled(SANCollapse)`
 const RMAbout = () => {
     const { t } = useTranslation('resmed')
     const { activeCourse } = useAuthContext()
-    const { handleTrack } = useLayoutContext()
+    const { handleTrack } = useMainContext()
+
     useEffect(() => {
         handleTrack('Informações do Curso Viewed')
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -59,7 +59,7 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
 
         if (!!cognitoUser) {
             cognitoUser.getSession((err: any, session: CognitoUserSession) => {
-                if (session.isValid()) {
+                if (!!session && session.isValid()) {
                     fetchMe()
                 } else {
                     logout({ callback: onLogout })

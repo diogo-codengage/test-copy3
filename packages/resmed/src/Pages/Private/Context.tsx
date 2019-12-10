@@ -18,7 +18,7 @@ interface RMMainContext {
 
 const Context = createContext<RMMainContext>({} as RMMainContext)
 
-export const useLayoutContext = () => useContext(Context)
+export const useMainContext = () => useContext(Context)
 
 const RMMainProvider: React.FC<RouteComponentProps> = ({ children }) => {
     const client = useApolloClient()

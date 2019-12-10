@@ -2,6 +2,7 @@ import { AuthenticationDetails } from 'amazon-cognito-identity-js'
 import { getInstance } from 'Config/AWSCognito'
 import i18n from 'sanar-ui/dist/Config/i18n'
 
+
 // TODO: Create custom type to return errors
 const signInByEmail = (email, password): Promise<any> => {
     return new Promise((resolve, reject) => {
