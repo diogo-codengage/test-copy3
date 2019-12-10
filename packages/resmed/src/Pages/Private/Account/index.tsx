@@ -19,13 +19,13 @@ const RMAccount = ({ match: { url } }: RouteComponentProps) => {
     return (
         <Switch>
             <Route path={`${url}/alterar-senha`} component={RMChangePassword} />
-            {/* <Route
-                path={[`${url}`, `${url}/`]}
-                render={() => <Redirect to={`${url}/alterar-senha`} />}
-            /> */}
             <Route
                 path={`${url}/dados-complementares`}
                 component={RMComplementaryRegisterPage}
+            />
+            <Route
+                path={[`${url}`, `${url}/`]}
+                render={() => <Redirect to={`${url}/alterar-senha`} />}
             />
         </Switch>
     )
