@@ -34,7 +34,7 @@ const RMPrivatePages: React.FC<RouteComponentProps> = ({
             <RMMainProvider>
                 <RMLayoutProvider>
                     <RMLayout>
-                        <Suspense fallback={<RMSplashLoader size='flexible' />}>
+                        <Suspense fallback={<RMSplashLoader />}>
                             <Switch>
                                 <Route
                                     path={`${url}/curso`}

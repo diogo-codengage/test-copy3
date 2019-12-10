@@ -77,7 +77,11 @@ const SANCardLive = ({
                 }
             },
             wrapperText: {
-                mx: { _: 'md', sm: hasList ? 'xl' : 'md' }
+                mx: { _: 'md', sm: hasList ? 'xl' : 'md' },
+                width: {
+                    _: 'calc(100% - 144px)',
+                    sm: hasList ? 'calc(100% - 258px)' : 'auto'
+                }
             }
         }),
         [hasList]
@@ -107,7 +111,7 @@ const SANCardLive = ({
                     fontWeight='bold'
                     color='grey.6'
                     mb='xs'
-                    // ellipsis={{ rows: hasList ? 1 : 2 }}
+                    ellipsis={{ rows: hasList ? 1 : 2 }}
                     lineHeight='1.40'
                 >
                     {title}

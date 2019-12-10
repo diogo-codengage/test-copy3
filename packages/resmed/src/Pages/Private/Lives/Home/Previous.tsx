@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
     SANLayoutContainer,
@@ -16,7 +17,7 @@ import { useThemeContext, useWindowSize } from '@sanar/utils/dist/Hooks'
 
 const arr = new Array(8).fill(0).map((_, i) => i)
 
-const RMPrevious = () => {
+const RMPrevious = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
     const theme = useThemeContext()
     const { width } = useWindowSize()
@@ -42,11 +43,11 @@ const RMPrevious = () => {
         e => (
             <SANCol mb={{ sm: 'xl', _: 'sm' }} key={e} {...propsCol}>
                 <SANCardLive
-                    hasList={isList ? hasList : false}
+                    hasList={isList ? hasList : true}
                     title='Live de Correção da prova SUS-SP 2019'
                     date='27/04/2019'
                     description='Essa é a oportunidade de você aprender como planejar seus estudos em 2019! Saiba como montar um cronograma, quanto tempo deverá dedicar ao estudo por dia, quantas horas para cada matéria…'
-                    onClick={console.log}
+                    onClick={() => history.push('/inicio/lives/anterior')}
                 />
             </SANCol>
         ),
@@ -64,7 +65,7 @@ const RMPrevious = () => {
             >
                 <SANBox flex='1'>
                     <SANTypography fontWeight='bold' fontSize='lg'>
-                        {t('lives.previous.title')}
+                        {t('lives.previousList.title')}
                     </SANTypography>
                 </SANBox>
                 <SANBox
@@ -108,11 +109,11 @@ const RMPrevious = () => {
                     bold
                     block
                 >
-                    {t('lives.previous.loadMore')}
+                    {t('lives.previousList.loadMore')}
                 </SANButton>
             </SANBox>
         </SANLayoutContainer>
     )
 }
 
-export default RMPrevious
+export default withRouter(RMPrevious)

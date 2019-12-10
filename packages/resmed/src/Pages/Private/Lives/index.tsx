@@ -1,42 +1,16 @@
 import React from 'react'
 
-import { withRouter, RouteComponentProps } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
-import { SANBox, SANPage } from '@sanar/components'
+import RMHomeLives from './Home'
+import RMPreviousLive from './Previous'
 
-import RMLive from 'Components/Live'
+const RMLives = () => (
+    <Switch>
+        <Route path='/inicio/lives/atual' component={RMHomeLives} />
+        <Route path='/inicio/lives/anterior' component={RMPreviousLive} />
+        <Route render={() => <Redirect to='/inicio/lives/atual' />} />
+    </Switch>
+)
 
-import RMNexts from './Nexts'
-import RMPrevious from './Previous'
-
-const RMSpecialty = ({ history }: RouteComponentProps) => {
-    const { t } = useTranslation('resmed')
-
-    return (
-        <SANPage
-            BoxProps={{
-                p: '0'
-            }}
-            HeaderProps={{
-                onBack: () => history.push('/inicio/curso'),
-                SessionTitleProps: {
-                    title: t('lives.title'),
-                    subtitle: t('lives.subtitle')
-                }
-            }}
-        >
-            <SANBox py={{ xs: '8', _: 'md' }}>
-                <RMLive />
-            </SANBox>
-            <SANBox bg='grey-solid.1' py={{ xs: '8', _: 'md' }}>
-                <RMNexts />
-            </SANBox>
-            <SANBox py={{ xs: '8', _: 'md' }}>
-                <RMPrevious />
-            </SANBox>
-        </SANPage>
-    )
-}
-
-export default withRouter(RMSpecialty)
+export default RMLives

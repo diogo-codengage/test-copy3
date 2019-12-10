@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
+import { isBrowser } from 'react-device-detect'
 
 import {
     SANBox,
     SANTypography,
     SANAvatar,
     SANLayoutContainer,
-    SANSkeleton
+    SANSkeleton,
+    SANEvaIcon
 } from '@sanar/components'
 
 const skeletonProps = {
@@ -46,6 +48,17 @@ const SkeletonChat = () => (
         {arr.map(renderSkeleton)}
     </SANBox>
 )
+
+const Linkedin = styled(SANEvaIcon)`
+    background-color: ${theme('colors.grey.0')};
+    border: 1px solid ${theme('colors.grey.1')};
+    border-radius: ${theme('radii.base')};
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
 
 const Content = styled.iframe`
     position: absolute;
@@ -93,9 +106,21 @@ const RMLive = () => {
     const [hasLoadedVideo, setLoadedVideo] = useState(false)
     const [hasLoadedChat, setLoadedChat] = useState(false)
 
-    // window.navigator['__defineGetter__']('userAgent', function() {
-    //     return 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36'
-    // })
+    const chat = useMemo(
+        () => (
+            <ChatWrapper {...style}>
+                {!hasLoadedChat && <SkeletonChat />}
+                <Content
+                    src={`https://www.youtube.com/live_chat?v=642ce4LxrXc&embed_domain=${window.location.hostname}`}
+                    allowFullScreen
+                    title='Chat'
+                    referrerPolicy='origin'
+                    onLoad={() => setLoadedChat(true)}
+                />
+            </ChatWrapper>
+        ),
+        []
+    )
 
     return (
         <>
@@ -114,16 +139,7 @@ const RMLive = () => {
                             onLoad={() => setLoadedVideo(true)}
                         />
                     </VideoWrapper>
-                    <ChatWrapper {...style}>
-                        {!hasLoadedChat && <SkeletonChat />}
-                        <Content
-                            src={`https://www.youtube.com/live_chat?v=642ce4LxrXc&embed_domain=${window.location.hostname}`}
-                            allowFullScreen
-                            title='Chat'
-                            referrerPolicy='origin'
-                            onLoad={() => setLoadedChat(true)}
-                        />
-                    </ChatWrapper>
+                    {isBrowser && chat}
                 </SANBox>
             </SANLayoutContainer>
             <SANLayoutContainer>
@@ -164,9 +180,12 @@ const RMLive = () => {
                         >
                             Diogo Biz
                         </SANTypography>
-                        <SANTypography color='grey.6' fontSize='sm'>
-                            Enfermeiro mestre em alguma coisa
-                        </SANTypography>
+                        <SANBox display='flex' alignItems='center'>
+                            <Linkedin name='linkedin' mr='xs' size='xsmall' />
+                            <SANTypography color='grey.6' fontSize='sm'>
+                                Enfermeiro mestre em alguma coisa
+                            </SANTypography>
+                        </SANBox>
                     </SANBox>
                 </SANBox>
             </SANLayoutContainer>

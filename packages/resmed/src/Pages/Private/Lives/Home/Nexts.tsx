@@ -108,7 +108,7 @@ const RMCardNextLive = ({ title, subtitle }) => {
                     color='primary'
                     disabled
                 >
-                    {t('lives.nexts.seeLive')}
+                    {t('lives.nextsList.seeLive')}
                 </SANButton>
             </SANBox>
         </SANBox>
@@ -131,7 +131,7 @@ const RMNexts = () => {
 
     return (
         <SANLayoutContainer>
-            <SANSessionTitle title={t('lives.nexts.title')} />
+            <SANSessionTitle title={t('lives.nextsList.title')} />
             <SANBox mx='-12px'>
                 <SANCarousel
                     slidesToScroll={1}

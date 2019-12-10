@@ -250,13 +250,17 @@ export default {
     lives: {
         title: 'Lives',
         subtitle: 'Veja as lives que ainda vão acontecer e as que já rolaram',
-        nexts: {
+        nextsList: {
             title: 'Próximas lives',
             seeLive: 'Ver live'
         },
-        previous: {
+        previousList: {
             title: 'Lives anteriores',
             loadMore: 'Carregar mais'
+        },
+        previous: {
+            title: 'Assistir live anterior',
+            back: 'Voltar para lives'
         }
     },
     userProfile: {
