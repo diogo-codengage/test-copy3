@@ -111,6 +111,7 @@ const logout = ({ callback }: { callback?: Function }) => {
     if (!cognitoUser) {
         return
     }
+    window.localStorage.clear()
     cognitoUser.signOut()
     !!callback && callback()
 }
@@ -156,7 +157,7 @@ const changePassword = ({
     return new Promise((resolve, reject) =>
         cognitoUser.getSession((_, session: CognitoUserSession) => {
             if (session.isValid()) {
-                cognitoUser.changePassword(oldPassword, newPassword, function (
+                cognitoUser.changePassword(oldPassword, newPassword, function(
                     err: any,
                     result
                 ) {
