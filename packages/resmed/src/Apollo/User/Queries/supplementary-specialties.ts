@@ -8,8 +8,8 @@ export interface ISupplementarySpecialties {
 export const GET_SUPPLEMENTARY_SPECIALTIES = gql`
     {
         supplementarySpecialties {
-            id
-            name
+            value: id
+            label: name
         }
     }
 `

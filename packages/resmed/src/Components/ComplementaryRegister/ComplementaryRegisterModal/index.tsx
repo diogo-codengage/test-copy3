@@ -57,11 +57,7 @@ const RMModal = () => {
                 data: { supplementarySpecialties }
             } = await client.query({ query: GET_SUPPLEMENTARY_SPECIALTIES })
 
-            setSuppSpecialties(
-                supplementarySpecialties.map(({ id, name }) =>
-                    Object({ label: name, value: id })
-                )
-            )
+            setSuppSpecialties(supplementarySpecialties)
         } catch (err) {
             throw new Error(err)
         }
