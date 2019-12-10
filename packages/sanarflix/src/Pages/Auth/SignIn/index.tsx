@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter, Redirect, RouteComponentProps } from 'react-router-dom'
 
 import { useApolloClient } from '@apollo/react-hooks'
 
@@ -21,8 +21,9 @@ import imageMarketing from 'Assets/images/auth/marketing.png'
 
 import { getInstance } from 'Config/AWSCognito'
 import { events } from 'Config/Segment'
+import { trySetTokenAutoLoginFromLocationSearch } from './autoLoginSetToken'
 
-const FLXSignIn: React.FC<any> = ({ history }) => {
+const FLXSignIn: React.FC<RouteComponentProps> = ({ history, location }) => {
     const { t } = useTranslation('sanarflix')
     const client = useApolloClient()
     const [keepMeLoggedIn, setKeepMeLoggedIn] = useState(false)
@@ -32,6 +33,8 @@ const FLXSignIn: React.FC<any> = ({ history }) => {
         isValid: false,
         loading: true
     })
+
+    trySetTokenAutoLoginFromLocationSearch(location.search);
 
     const marketing = {
         title: t('auth.marketing.title'),
@@ -80,12 +83,14 @@ const FLXSignIn: React.FC<any> = ({ history }) => {
     )
 
     useEffect(() => {
+
+
         const config = getInstance()
         const cognitoUser = config.userPool.getCurrentUser()
 
         if (!!cognitoUser) {
             cognitoUser.getSession(async (_, session) => {
-                if (session.isValid()) {
+                if (session && session.isValid()) {
                     setSession({
                         loading: false,
                         isValid: true
