@@ -35,6 +35,11 @@ export const GET_ME = gql`
             hasActiveSubscription
             profile {
                 id
+                graduationStep
+                institutionIds
+                specialtyIds
+                testExperience
+                preparatoryCourseStatus
             }
         }
     }
