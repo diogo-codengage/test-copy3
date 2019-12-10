@@ -56,22 +56,15 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
         [params, me]
     )
 
-    const handleVideoReady = () => {
-        setVideoReady(true)
-        handleTrack('Video started', dataToTrack)
-    }
+    const handleVideoReady = () => setVideoReady(true)
 
-    const handlePlay = () => {
-        handleTrack('Video resumed', dataToTrack)
-    }
+    const handlePlay = () => handleTrack('Video started', dataToTrack)
 
-    const handlePause = () => {
-        handleTrack('Video paused', dataToTrack)
-    }
+    const handleResume = () => handleTrack('Video resumed', dataToTrack)
 
-    const handleComplete = () => {
-        handleTrack('Video completed', dataToTrack)
-    }
+    const handlePause = () => handleTrack('Video paused', dataToTrack)
+
+    const handleComplete = () => handleTrack('Video completed', dataToTrack)
 
     const handleVideoError = () => setVideoError(true)
 
@@ -177,6 +170,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                                     ref={playerRef}
                                     onReady={handleVideoReady}
                                     onPlay={handlePlay}
+                                    onResume={handleResume}
                                     onPause={handlePause}
                                     onError={handleVideoError}
                                     onOpenMenu={onOpenMenu}
