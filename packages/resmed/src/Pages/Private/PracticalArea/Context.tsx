@@ -48,29 +48,31 @@ const initialState = {
 }
 
 const mapItem = item => item.value
-const getFilters = (filter: IFilter) => ({
-    ...(!!filter.categories && {
-        categoriesIds: filter.categories.map(mapItem)
-    }),
-    ...(!!filter.specialties && {
-        specialtiesIds: filter.specialties.map(mapItem)
-    }),
-    ...(!!filter.subspecialties && {
-        subSpecialtiesIds: filter.subspecialties.map(mapItem)
-    }),
-    ...(!!filter.lessons && {
-        lessonsIds: filter.lessons.map(mapItem)
-    }),
-    ...(!!filter.institution && {
-        institutionId: filter.institution.value
-    }),
-    ...(!!filter.state && {
-        state: filter.state
-    }),
-    ...(!!filter.year && { year: Number(filter.year.format('YYYY')) }),
-    withImage: filter.onlyHasImages,
-    isCommentedByExpert: filter.onlyComments
-})
+const getFilters = (filter: IFilter) => {
+    return {
+        ...(!!filter.categories && {
+            categoriesIds: filter.categories.map(mapItem)
+        }),
+        ...(!!filter.specialties && {
+            specialtiesIds: filter.specialties.map(mapItem)
+        }),
+        ...(!!filter.subspecialties && {
+            subSpecialtiesIds: filter.subspecialties.map(mapItem)
+        }),
+        ...(!!filter.lessons && {
+            lessonsIds: filter.lessons.map(mapItem)
+        }),
+        ...(!!filter.institution && {
+            institutionId: filter.institution
+        }),
+        ...(!!filter.state && {
+            state: filter.state
+        }),
+        ...(!!filter.year && { year: Number(filter.year.format('YYYY')) }),
+        withImage: filter.onlyHasImages,
+        isCommentedByExpert: filter.onlyComments
+    }
+}
 
 const RMPracticalProvider: React.FC<RouteComponentProps> = ({
     children,

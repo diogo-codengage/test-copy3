@@ -111,6 +111,7 @@ import { SANCollection } from 'Components/Molecules/Collection'
 import { SANLessonResult } from 'Components/Molecules/LessonResult'
 import { SANCardLive } from 'Components/Molecules/CardLives'
 
+import { SANSelectFilter } from 'Components/Molecules/SelectFilter'
 
 export {
     SANCommonBadge,
@@ -226,5 +227,6 @@ export {
     SANModalTabs,
     SANCollection,
     SANLessonResult,
-    SANCardLive
+    SANCardLive,
+    SANSelectFilter
 }
