@@ -80,11 +80,15 @@ const SwitchStyled = styled(SANFormItem)`
 
 export const OnlyComments = props => {
     const { t } = useTranslation('resmed')
+    const {
+        state: { filter }
+    } = useQuestionsContext()
     return (
         <SwitchStyled
             name='onlyComments'
             label={t('practicalArea.filter.advanced.onlyComments')}
             valuePropName='checked'
+            initialValue={!!filter && filter.onlyComments}
             {...props}
         >
             <SANSwitch />

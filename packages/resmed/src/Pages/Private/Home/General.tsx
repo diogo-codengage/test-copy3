@@ -26,7 +26,7 @@ import { useAuthContext } from 'Hooks/auth'
 import appleSvg from 'Assets/images/app-logos/apple.svg'
 import googlePlaySvg from 'Assets/images/app-logos/google-play.svg'
 
-import { useLayoutContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 const RMSpecialties = withRouter<RouteComponentProps>(
     ({ history }: RouteComponentProps) => {
@@ -111,7 +111,7 @@ const SpecialtiesStyled = styled(SANBox)`
 
 const RMGeneral = () => {
     const { t } = useTranslation('resmed')
-    const { handleTrack } = useLayoutContext()
+    const { handleTrack } = useMainContext()
     const handleAppClicked = OS => {
         handleTrack('App Banner Clicked', {
             'OS Type': OS

@@ -15,19 +15,20 @@ import {
 import RMFilterSelects from './Selects'
 import RMFilterAdvanced, { OnlyComments } from './Advanced'
 
-import { useLayoutContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 import { useQuestionsContext } from '../Context'
 
 const RMFilter = ({ form, history }) => {
     const { t } = useTranslation('resmed')
-    const { dispatch, reset } = useQuestionsContext()
-    const { handleTrack } = useLayoutContext()
+    const { dispatch, reset, handleTrackFilter } = useQuestionsContext()
+    const { handleTrack } = useMainContext()
 
     const handleSubmit = e => {
         e.preventDefault()
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
+                handleTrackFilter(values)
                 dispatch({ type: 'filter', filter: values })
                 history.push('/inicio/area-pratica/perguntas/pratica')
             }

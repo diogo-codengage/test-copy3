@@ -16,7 +16,7 @@ import { createDebounce } from '@sanar/utils/dist/Debounce'
 import RMCollection from 'Components/Collection'
 import { GET_VIDEO, IVideoQuery, IVideo } from 'Apollo/Classroom/Queries/video'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
-import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 import { useClassroomContext } from './Context'
 
 import { useAuthContext } from 'Hooks/auth'
@@ -37,7 +37,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
     const collectionRef = useRef<any>()
     const { handleProgress, specialty } = useClassroomContext()
     const { params, onOpenMenu } = useLayoutContext()
-    const { handleTrack } = useTrackContext()
+    const { handleTrack } = useMainContext()
     const [videoError, setVideoError] = useState(false)
     const [videoReady, setVideoReady] = useState(false)
     const [willStart, setWillStart] = useState(true)

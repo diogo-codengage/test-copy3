@@ -23,7 +23,7 @@ import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomQuizContext } from './Context'
 import { useClassroomContext } from '../Context'
-import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 const SANColFloat = styled(SANCol)`
     && {
@@ -64,7 +64,7 @@ const RMClassroomQuizQuestion = ({
     const [loading, setLoading] = useState(false)
     const [skipped, seSkipped] = useState(0)
     const [responses, setResponses] = useState<any[]>([])
-    const { handleTrack } = useTrackContext()
+    const { handleTrack } = useMainContext()
 
     const goToNext = () => {
         // if have next question on quiz go to next
@@ -145,7 +145,7 @@ const RMClassroomQuizQuestion = ({
                 )
             )
 
-            handleTrack('Question answred', {
+            handleTrack('Question answered', {
                 'Specialty ID': paramsLayout.specialtyId,
                 'Subspecialty ID': paramsLayout.subspecialtyId,
                 'Lesson ID': paramsLayout.lessonId,
