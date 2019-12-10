@@ -14,6 +14,7 @@ interface IProfile {
     specialtyIds: number[]
     testExperience: 'none' | 'one' | 'many'
     preparatoryCourseStatus: 'inProgress' | 'completed' | 'missing'
+    preparatoryCourseName?: string
     userId: string
     courseId?: string
 }
@@ -40,6 +41,7 @@ export const GET_ME = gql`
                 specialtyIds
                 testExperience
                 preparatoryCourseStatus
+                preparatoryCourseName
             }
         }
     }

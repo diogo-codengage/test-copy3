@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -138,6 +138,10 @@ const RMForm = ({
     const [submitting, setSubmitting] = useState(false)
     const snackbar = useSnackbarContext()
     const { setMe } = useAuthContext()
+
+    useEffect(() => {
+        setRcn(oldData.preparatoryCourseStatus !== preparatoryCourseStatus[0])
+    }, [oldData])
 
     const createProfile = async profile => {
         let institutionIds = profile.institutionIds.map(({ value }) => value)
