@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react'
+import React, { useRef, useState, useMemo, memo } from 'react'
 
 import { theme } from 'styled-tools'
 import styled from 'styled-components'
@@ -31,7 +31,7 @@ const Header = styled.div`
     }
 `
 
-const RMClassroomVideo = ({ history }: RouteComponentProps) => {
+const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
     const { width } = useWindowSize()
     const playerRef = useRef<any>()
     const collectionRef = useRef<any>()
@@ -217,6 +217,6 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
             }}
         </SANQuery>
     )
-}
+})
 
 export default withRouter(RMClassroomVideo)

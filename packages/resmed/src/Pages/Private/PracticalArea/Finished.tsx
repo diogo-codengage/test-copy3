@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { theme } from 'styled-tools'
 import { useTranslation } from 'react-i18next'
@@ -26,7 +26,7 @@ const SANPracticeCompletedStyled = SANStyled(SANPracticeCompleted)`
     }
 `
 
-const FLXClassRoomQuizFinished = ({ history }: RouteComponentProps) => {
+const RMClassRoomQuizFinished = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
     const {
         state: {
@@ -93,6 +93,6 @@ const FLXClassRoomQuizFinished = ({ history }: RouteComponentProps) => {
             <SANPracticeCompletedStyled values={summary} />
         </SANPage>
     )
-}
+})
 
-export default withRouter(FLXClassRoomQuizFinished)
+export default withRouter(RMClassRoomQuizFinished)

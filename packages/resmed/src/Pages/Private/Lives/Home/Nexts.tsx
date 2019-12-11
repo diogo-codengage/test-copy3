@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { format } from 'date-fns'
@@ -14,8 +14,6 @@ import {
 } from '@sanar/components'
 
 import { GET_LIVES, ILivesQuery, ILive } from 'Apollo/Lives/Queries/lives'
-
-const arr = new Array(20).fill(0).map((_, i) => i)
 
 const responsive = size => [
     {
@@ -63,63 +61,65 @@ const responsive = size => [
     }
 ]
 
-const RMCardNextLive = ({ title, subtitle }) => {
-    const { t } = useTranslation('resmed')
-    return (
-        <SANBox
-            borderRadius='base'
-            border='1px solid'
-            borderColor='grey.1'
-            boxShadow='1'
-            bg='white.10'
-            mx='sm'
-        >
+const RMCardNextLive = memo<{ title: string; subtitle: string }>(
+    ({ title, subtitle }) => {
+        const { t } = useTranslation('resmed')
+        return (
             <SANBox
-                py='sm'
-                px='md'
-                minHeight='92px'
-                display='flex'
-                flexDirection='column'
-                justifyContent='space-between'
-            >
-                <SANTypography
-                    fontSize='md'
-                    fontWeight='bold'
-                    color='grey.6'
-                    mb='xs'
-                    ellipsis={{ rows: 2 }}
-                >
-                    {title}
-                </SANTypography>
-                <SANTypography fontSize='sm' color='grey.4'>
-                    {subtitle}
-                </SANTypography>
-            </SANBox>
-            <SANBox
-                display='flex'
-                alignItems='center'
-                justifyContent='center'
-                p='xxs'
-                borderTop='1px solid'
+                borderRadius='base'
+                border='1px solid'
                 borderColor='grey.1'
+                boxShadow='1'
+                bg='white.10'
+                mx='sm'
             >
-                <SANButton
-                    uppercase
-                    bold
-                    block
-                    size='xsmall'
-                    variant='text'
-                    color='primary'
-                    disabled
+                <SANBox
+                    py='sm'
+                    px='md'
+                    minHeight='92px'
+                    display='flex'
+                    flexDirection='column'
+                    justifyContent='space-between'
                 >
-                    {t('lives.nextsList.seeLive')}
-                </SANButton>
+                    <SANTypography
+                        fontSize='md'
+                        fontWeight='bold'
+                        color='grey.6'
+                        mb='xs'
+                        ellipsis={{ rows: 2 }}
+                    >
+                        {title}
+                    </SANTypography>
+                    <SANTypography fontSize='sm' color='grey.4'>
+                        {subtitle}
+                    </SANTypography>
+                </SANBox>
+                <SANBox
+                    display='flex'
+                    alignItems='center'
+                    justifyContent='center'
+                    p='xxs'
+                    borderTop='1px solid'
+                    borderColor='grey.1'
+                >
+                    <SANButton
+                        uppercase
+                        bold
+                        block
+                        size='xsmall'
+                        variant='text'
+                        color='primary'
+                        disabled
+                    >
+                        {t('lives.nextsList.seeLive')}
+                    </SANButton>
+                </SANBox>
             </SANBox>
-        </SANBox>
-    )
-}
+        )
+    }
+)
 
-const RMNexts = () => {
+const RMNexts = memo(() => {
     const { t } = useTranslation('resmed')
 
     const renderLive = useCallback(
@@ -144,7 +144,7 @@ const RMNexts = () => {
             loaderProps={{ minHeight: '200px', flex: true }}
         >
             {({ data: { lives } }: { data: ILivesQuery }) => {
-                if (!lives.length) return null
+                if (!lives.items.length) return null
 
                 return (
                     <SANBox bg='grey-solid.1' py={{ xs: '8', _: 'md' }}>
@@ -162,10 +162,10 @@ const RMNexts = () => {
                                     focusOnSelect
                                     swipe
                                     swipeToSlide
-                                    responsive={responsive(arr.length)}
+                                    responsive={responsive(lives.items.length)}
                                     draggable
                                 >
-                                    {lives.map(renderLive)}
+                                    {lives.items.map(renderLive)}
                                 </SANCarousel>
                             </SANBox>
                         </SANLayoutContainer>
@@ -174,6 +174,6 @@ const RMNexts = () => {
             }}
         </SANQuery>
     )
-}
+})
 
 export default RMNexts

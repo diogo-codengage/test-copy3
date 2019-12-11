@@ -1,7 +1,8 @@
-import React, { useCallback, useState, useMemo } from 'react'
+import React, { useCallback, useState, useMemo, memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { format } from 'date-fns'
 
 import {
     SANLayoutContainer,
@@ -11,13 +12,25 @@ import {
     SANButton,
     SANBox,
     SANEvaIcon,
-    SANTypography
+    SANTypography,
+    SANQuery
 } from '@sanar/components'
 import { useThemeContext, useWindowSize } from '@sanar/utils/dist/Hooks'
+import { getUTCDate } from '@sanar/utils/dist/Date'
 
-const arr = new Array(8).fill(0).map((_, i) => i)
+import { GET_LIVES, ILivesQuery, ILive } from 'Apollo/Lives/Queries/lives'
 
-const RMPrevious = ({ history }: RouteComponentProps) => {
+const updateCacheLives = (prev, { fetchMoreResult }) => {
+    if (!fetchMoreResult) return prev
+    return Object.assign({}, prev, {
+        lives: {
+            ...prev.lives,
+            ...prev.lives
+        }
+    })
+}
+
+const RMPrevious = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
     const theme = useThemeContext()
     const { width } = useWindowSize()
@@ -34,20 +47,22 @@ const RMPrevious = ({ history }: RouteComponentProps) => {
                   md: 12,
                   lg: 6
               }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [hasList])
 
     const isList = useMemo(() => width > 576, [width])
 
     const renderLive = useCallback(
-        e => (
-            <SANCol mb={{ sm: 'xl', _: 'sm' }} key={e} {...propsCol}>
+        (live: ILive) => (
+            <SANCol mb={{ sm: 'xl', _: 'sm' }} key={live.id} {...propsCol}>
                 <SANCardLive
                     hasList={isList ? hasList : true}
-                    title='Live de Correção da prova SUS-SP 2019'
-                    date='27/04/2019'
-                    description='Essa é a oportunidade de você aprender como planejar seus estudos em 2019! Saiba como montar um cronograma, quanto tempo deverá dedicar ao estudo por dia, quantas horas para cada matéria…'
-                    onClick={() => history.push('/inicio/lives/anterior')}
+                    title={live.title}
+                    date={format(getUTCDate(live.date), 'DD/MM/YYYY')}
+                    description={live.description}
+                    image={live.image}
+                    onClick={() =>
+                        history.push(`/inicio/lives/anterior/${live.id}`)
+                    }
                 />
             </SANCol>
         ),
@@ -56,64 +71,109 @@ const RMPrevious = ({ history }: RouteComponentProps) => {
     )
 
     return (
-        <SANLayoutContainer>
-            <SANBox
-                display='flex'
-                alignItem='center'
-                justifyConten='space-between'
-                mb='md'
-            >
-                <SANBox flex='1'>
-                    <SANTypography fontWeight='bold' fontSize='lg'>
-                        {t('lives.previousList.title')}
-                    </SANTypography>
-                </SANBox>
-                <SANBox
-                    display={{ xs: 'flex', _: 'none' }}
-                    alignItems='center'
-                    justifyContent='flex-end'
-                >
-                    <SANButton
-                        size='xsmall'
-                        variant='text'
-                        circle
-                        mr='xs'
-                        style={{
-                            backgroundColor: !hasList && theme.colors.grey[2]
-                        }}
-                        onClick={() => setHasList(false)}
-                    >
-                        <SANEvaIcon name='grid-outline' />
-                    </SANButton>
-                    <SANButton
-                        size='xsmall'
-                        variant='text'
-                        circle
-                        style={{
-                            backgroundColor: hasList && theme.colors.grey[2]
-                        }}
-                        onClick={() => setHasList(true)}
-                    >
-                        >
-                        <SANEvaIcon name='list-outline' />
-                    </SANButton>
-                </SANBox>
-            </SANBox>
-            <SANRow gutter={24}>{arr.map(renderLive)}</SANRow>
-            <SANBox maxWidth='232px' mt={{ xs: 'xl', _: 'md' }} mx='auto'>
-                <SANButton
-                    size='xsmall'
-                    variant='outlined'
-                    color='primary'
-                    uppercase
-                    bold
-                    block
-                >
-                    {t('lives.previousList.loadMore')}
-                </SANButton>
-            </SANBox>
-        </SANLayoutContainer>
+        <SANQuery
+            query={GET_LIVES}
+            options={{
+                variables: {
+                    end: format(new Date(), 'YYYY-MM-DD')
+                }
+            }}
+            loaderProps={{ minHeight: '200px', flex: true }}
+        >
+            {({
+                data: { lives },
+                fetchMore
+            }: {
+                data: ILivesQuery
+                fetchMore: (data: any) => Object
+            }) => {
+                if (!lives.items.length) return null
+
+                return (
+                    <SANBox py={{ xs: '8', _: 'md' }}>
+                        <SANLayoutContainer>
+                            <SANBox
+                                display='flex'
+                                alignItem='center'
+                                justifyConten='space-between'
+                                mb='md'
+                            >
+                                <SANBox flex='1'>
+                                    <SANTypography
+                                        fontWeight='bold'
+                                        fontSize='lg'
+                                    >
+                                        {t('lives.previousList.title')}
+                                    </SANTypography>
+                                </SANBox>
+                                <SANBox
+                                    display={{ xs: 'flex', _: 'none' }}
+                                    alignItems='center'
+                                    justifyContent='flex-end'
+                                >
+                                    <SANButton
+                                        size='xsmall'
+                                        variant='text'
+                                        circle
+                                        mr='xs'
+                                        style={{
+                                            backgroundColor:
+                                                !hasList && theme.colors.grey[2]
+                                        }}
+                                        onClick={() => setHasList(false)}
+                                    >
+                                        <SANEvaIcon name='grid-outline' />
+                                    </SANButton>
+                                    <SANButton
+                                        size='xsmall'
+                                        variant='text'
+                                        circle
+                                        style={{
+                                            backgroundColor:
+                                                hasList && theme.colors.grey[2]
+                                        }}
+                                        onClick={() => setHasList(true)}
+                                    >
+                                        >
+                                        <SANEvaIcon name='list-outline' />
+                                    </SANButton>
+                                </SANBox>
+                            </SANBox>
+                            <SANRow gutter={24}>
+                                {lives.items.map(renderLive)}
+                            </SANRow>
+                            {lives.items.length < lives.totalCount && (
+                                <SANBox
+                                    maxWidth='232px'
+                                    mt={{ xs: 'xl', _: 'md' }}
+                                    mx='auto'
+                                >
+                                    <SANButton
+                                        size='xsmall'
+                                        variant='outlined'
+                                        color='primary'
+                                        uppercase
+                                        bold
+                                        block
+                                        onClick={() =>
+                                            fetchMore({
+                                                variables: {
+                                                    skip: lives.items.length
+                                                },
+                                                updateQuery: updateCacheLives
+                                            })
+                                        }
+                                    >
+                                        {t('lives.previousList.loadMore')}
+                                    </SANButton>
+                                </SANBox>
+                            )}
+                        </SANLayoutContainer>
+                    </SANBox>
+                )
+            }}
+        </SANQuery>
     )
-}
+})
 
 export default withRouter(RMPrevious)

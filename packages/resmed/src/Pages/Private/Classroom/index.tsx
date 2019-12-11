@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, memo } from 'react'
 
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
@@ -44,23 +44,23 @@ const Wrapper = styled.div`
     flex-direction: column;
 `
 
-const RMClassroom: React.FC<RouteComponentProps<IParams>> = ({
-    match: { params }
-}) => {
-    const { setParams } = useLayoutContext()
+const RMClassroom = memo<RouteComponentProps<IParams>>(
+    ({ match: { params } }) => {
+        const { setParams } = useLayoutContext()
 
-    useEffect(() => {
-        setParams(params)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params])
+        useEffect(() => {
+            setParams(params)
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [params])
 
-    return (
-        <RMClassroomProvider>
-            <Wrapper>
-                {renderResourceContent(params.type || params.status)}
-            </Wrapper>
-        </RMClassroomProvider>
-    )
-}
+        return (
+            <RMClassroomProvider>
+                <Wrapper>
+                    {renderResourceContent(params.type || params.status)}
+                </Wrapper>
+            </RMClassroomProvider>
+        )
+    }
+)
 
 export default withRouter(RMClassroom)

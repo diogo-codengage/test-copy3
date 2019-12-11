@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 import { ILive } from './lives'
 
-export interface ILivesQuery {
+export interface ILiveQuery {
     live: ILive
 }
 
@@ -13,8 +13,9 @@ export const GET_LIVE = gql`
             title
             description
             date
+            image
             youtubeId
-            profressor: facilitedBy {
+            professor: facilitedBy {
                 id
                 name
                 profilePicture

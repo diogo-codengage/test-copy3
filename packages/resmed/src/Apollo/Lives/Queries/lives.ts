@@ -12,26 +12,34 @@ export interface ILive {
     description: string
     date: string
     youtubeId: string
-    profressor: IProfessor
+    image: string
+    professor: IProfessor
 }
 
 export interface ILivesQuery {
-    lives: ILive[]
+    lives: {
+        items: ILive[]
+        totalCount: number
+    }
 }
 
 export const GET_LIVES = gql`
     query Lives($start: Date, $end: Date) {
         lives(where: { start: $start, end: $end }) {
-            id
-            title
-            description
-            date
-            youtubeId
-            profressor: facilitedBy {
+            items {
                 id
-                name
-                profilePicture
+                title
+                description
+                date
+                image
+                youtubeId
+                professor: facilitedBy {
+                    id
+                    name
+                    profilePicture
+                }
             }
+            totalCount
         }
     }
 `

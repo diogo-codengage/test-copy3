@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -10,7 +10,7 @@ import {
 
 import { useLayoutContext } from '../Context'
 
-const RMMenuInitial: React.FC = () => {
+const RMMenuInitial = memo(() => {
     const { t } = useTranslation('resmed')
     const { onCloseMenu, setMenuTab } = useLayoutContext()
 
@@ -45,6 +45,6 @@ const RMMenuInitial: React.FC = () => {
             />
         </SANNavigationList>
     )
-}
+})
 
 export default RMMenuInitial

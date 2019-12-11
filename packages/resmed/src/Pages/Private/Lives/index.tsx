@@ -8,7 +8,10 @@ import RMPreviousLive from './Previous'
 const RMLives = () => (
     <Switch>
         <Route path='/inicio/lives/atual' component={RMHomeLives} />
-        <Route path='/inicio/lives/anterior' component={RMPreviousLive} />
+        <Route
+            path='/inicio/lives/anterior/:previousId'
+            component={RMPreviousLive}
+        />
         <Route render={() => <Redirect to='/inicio/lives/atual' />} />
     </Switch>
 )

@@ -1,8 +1,11 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect, memo } from 'react'
 
 import styled from 'styled-components'
-import { theme } from 'styled-tools'
+import { theme, ifProp, ifNotProp } from 'styled-tools'
 import { isBrowser } from 'react-device-detect'
+import { useApolloClient } from '@apollo/react-hooks'
+import { format } from 'date-fns'
+import { useTranslation } from 'react-i18next'
 
 import {
     SANBox,
@@ -12,6 +15,9 @@ import {
     SANSkeleton,
     SANEvaIcon
 } from '@sanar/components'
+import { getUTCDate } from '@sanar/utils/dist/Date'
+
+import { GET_LIVE, ILiveQuery } from 'Apollo/Lives/Queries/live'
 
 const skeletonProps = {
     bg: 'grey.8',
@@ -49,6 +55,17 @@ const SkeletonChat = () => (
     </SANBox>
 )
 
+const SkeletonDescription = () => (
+    <SANBox mt='xxl'>
+        <SANSkeleton active paragraph={{ rows: 1, width: '10%' }} />
+        <SANSkeleton
+            avatar={{ size: 40, shape: 'circle' }}
+            active
+            paragraph={{ rows: 1, width: '40%' }}
+        />
+    </SANBox>
+)
+
 const Linkedin = styled(SANEvaIcon)`
     background-color: ${theme('colors.grey.0')};
     border: 1px solid ${theme('colors.grey.1')};
@@ -69,9 +86,11 @@ const Content = styled.iframe`
     border: 0;
 `
 
-const VideoWrapper = styled(SANBox)`
+const VideoWrapper = styled(SANBox)<{ current: boolean }>`
     border-radius: ${theme('radii.base')};
-    width: 68%;
+    width: ${ifProp('current', '68%', '100%')};
+    padding-bottom: ${ifNotProp('current', '55.25%')};
+
     ${theme('mediaQueries.down.lg')} {
         width: 100%;
         margin-bottom: ${theme('space.md')};
@@ -102,24 +121,55 @@ const style = {
     overflow: 'hidden'
 }
 
-const RMLive = () => {
+const youtubeId = process.env.REACT_APP_YOUTUBE_ID
+
+interface IRMLiveProps {
+    id: string
+    current?: boolean
+}
+
+const RMLive = memo<IRMLiveProps>(({ id, current = true }) => {
+    const client = useApolloClient()
+    const { t } = useTranslation('resmed')
     const [hasLoadedVideo, setLoadedVideo] = useState(false)
     const [hasLoadedChat, setLoadedChat] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [live, setLive] = useState()
+
+    useEffect(() => {
+        const fetchLive = async () => {
+            setLoading(true)
+            try {
+                const {
+                    data: { live }
+                } = await client.query<ILiveQuery>({
+                    query: GET_LIVE,
+                    variables: { id }
+                })
+                setLive(live)
+            } catch {}
+            setLoading(false)
+        }
+        !!id && fetchLive()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id])
 
     const chat = useMemo(
         () => (
             <ChatWrapper {...style}>
-                {!hasLoadedChat && <SkeletonChat />}
-                <Content
-                    src={`https://www.youtube.com/live_chat?v=642ce4LxrXc&embed_domain=${window.location.hostname}`}
-                    allowFullScreen
-                    title='Chat'
-                    referrerPolicy='origin'
-                    onLoad={() => setLoadedChat(true)}
-                />
+                {(!hasLoadedChat || loading) && <SkeletonChat />}
+                {!loading && !!live && (
+                    <Content
+                        src={`https://www.youtube.com/live_chat?v=${live.youtubeId}&embed_domain=${window.location.hostname}`}
+                        allowFullScreen
+                        title='Chat'
+                        referrerPolicy='origin'
+                        onLoad={() => setLoadedChat(true)}
+                    />
+                )}
             </ChatWrapper>
         ),
-        []
+        [loading, hasLoadedChat, live]
     )
 
     return (
@@ -130,67 +180,83 @@ const RMLive = () => {
                     justifyContent='space-between'
                     flexDirection={{ lg: 'row', _: 'column' }}
                 >
-                    <VideoWrapper {...style}>
-                        {!hasLoadedVideo && <SkeletonVideo />}
+                    <VideoWrapper current={current} {...style}>
+                        {(!hasLoadedVideo || loading) && <SkeletonVideo />}
                         <Content
-                            src='https://www.youtube.com/embed/live_stream?channel=UCuKwxu1nZp3ysEixnMQpPjA'
+                            src={`https://www.youtube.com/embed/live_stream?channel=${youtubeId}`}
                             allowFullScreen
                             title='Stream'
                             onLoad={() => setLoadedVideo(true)}
                         />
                     </VideoWrapper>
-                    {isBrowser && chat}
+                    {isBrowser && current && chat}
                 </SANBox>
             </SANLayoutContainer>
             <SANLayoutContainer>
-                <SANTypography
-                    color='grey.7'
-                    fontWeight='bold'
-                    fontSize='lg'
-                    mb='xs'
-                    mt={{ xs: '8', _: 'xxl' }}
-                >
-                    Live de Correção da prova SUS-SP 2019 - Parte 1
-                </SANTypography>
-                <SANTypography color='grey.4' fontSize='sm' mb='lg'>
-                    27/04/2019
-                </SANTypography>
-                <SANTypography color='grey.7' fontSize='md'>
-                    Essa é a oportunidade de você aprender como planejar seus
-                    estudos em 2019! Saiba como montar um cronograma, quanto
-                    tempo deverá dedicar ao estudo por dia, quantas horas para
-                    cada matéria.
-                </SANTypography>
-                <SANBox display='flex' alignItems='center' mt='lg'>
-                    <SANAvatar
-                        src={
-                            'https://cdn-images-1.medium.com/fit/c/200/200/0*XlT1iL_rE4s6_sa2.jpg'
-                        }
-                        size={40}
-                        borderRadius={50}
-                    />
-                    <SANBox ml='sm'>
-                        <SANTypography color='grey.4' fontSize='xs'>
-                            LIVE FACILITADA POR:
-                        </SANTypography>
+                {!loading && !!live ? (
+                    <>
                         <SANTypography
                             color='grey.7'
                             fontWeight='bold'
-                            fontSize='md'
+                            fontSize='lg'
+                            mb='xs'
+                            mt={{ xs: '8', _: 'xxl' }}
                         >
-                            Diogo Biz
+                            {live.title}
                         </SANTypography>
-                        <SANBox display='flex' alignItems='center'>
-                            <Linkedin name='linkedin' mr='xs' size='xsmall' />
-                            <SANTypography color='grey.6' fontSize='sm'>
-                                Enfermeiro mestre em alguma coisa
+                        <SANTypography color='grey.4' fontSize='sm' mb='lg'>
+                            {format(getUTCDate(live.date), 'DD/MM/YYYY')}
+                        </SANTypography>
+                        {!!live.description && (
+                            <SANTypography color='grey.7' fontSize='md'>
+                                {live.description}
                             </SANTypography>
-                        </SANBox>
-                    </SANBox>
-                </SANBox>
+                        )}
+                        {!!live.professor && (
+                            <SANBox display='flex' alignItems='center' mt='lg'>
+                                <SANAvatar
+                                    src={live.professor.profilePicture}
+                                    size={40}
+                                    borderRadius={50}
+                                />
+                                <SANBox ml='sm'>
+                                    <SANTypography
+                                        color='grey.4'
+                                        fontSize='xs'
+                                        transform='uppercase'
+                                    >
+                                        {t('lives.facilitedBy')}
+                                    </SANTypography>
+                                    <SANTypography
+                                        color='grey.7'
+                                        fontWeight='bold'
+                                        fontSize='md'
+                                    >
+                                        {live.professor.name}
+                                    </SANTypography>
+                                    <SANBox display='flex' alignItems='center'>
+                                        <Linkedin
+                                            name='linkedin'
+                                            mr='xs'
+                                            size='xsmall'
+                                        />
+                                        <SANTypography
+                                            color='grey.6'
+                                            fontSize='sm'
+                                        >
+                                            Enfermeiro mestre em alguma coisa
+                                        </SANTypography>
+                                    </SANBox>
+                                </SANBox>
+                            </SANBox>
+                        )}
+                    </>
+                ) : (
+                    <SkeletonDescription />
+                )}
             </SANLayoutContainer>
         </>
     )
-}
+})
 
 export default RMLive

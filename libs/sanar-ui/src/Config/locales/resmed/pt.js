@@ -251,6 +251,7 @@ export default {
     lives: {
         title: 'Lives',
         subtitle: 'Veja as lives que ainda vão acontecer e as que já rolaram',
+        facilitedBy: 'Live facilitada por:',
         nextsList: {
             title: 'Próximas lives',
             seeLive: 'Ver live'
