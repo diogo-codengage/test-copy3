@@ -13,12 +13,24 @@ import { SANDropdown } from '../../Atoms/Dropdown'
 import { SANScroll } from '../../Atoms/Scroll'
 import { SANEmpty } from '../../Atoms/Empty'
 
-import styled from 'styled-components'
-import { theme } from 'styled-tools'
+import styled, { css } from 'styled-components'
+import { theme, ifProp } from 'styled-tools'
 
 const SANStyledInput = styled(SANInput)`
     text-overflow: ellipsis;
     background-color: ${theme('colors.white.10')};
+
+    ${ifProp(
+        'hasError',
+        css`
+            border-color: ${theme('colors.error')};
+        `
+    )}
+`
+const SANStyledScroll = styled(SANScroll)`
+    &&& {
+        max-height: 198px;
+    }
 `
 const SANStyledCheckbox = styled(SANCheckbox)`
     && {
@@ -32,7 +44,7 @@ const SANStyledCheckbox = styled(SANCheckbox)`
         }
 
         :hover {
-            background-color: ${theme('colors.grey.0')};
+            background-color: ${theme('colors.primary-2')};
         }
     }
 `
@@ -53,10 +65,19 @@ export interface ISANSelectFilterProps {
     onClear?: () => void
     onSelectItem?: (item: IItem) => void
     onDeselectItem?: (item: IItem) => void
+    hasError?: boolean
     InputProps?: ISANInputProps
 }
 
-const makeLabel = value => value.map(lt => lt.label).join(', ')
+const makeLabel = value =>
+    value
+        .map(
+            lt =>
+                `${lt.label.charAt(0).toUpperCase()}${lt.label
+                    .slice(1)
+                    .toLowerCase()}`
+        )
+        .join(', ')
 
 const SANSelectFilter = ({
     placeholder,
@@ -69,6 +90,7 @@ const SANSelectFilter = ({
     onClear,
     onSelectItem,
     onDeselectItem,
+    hasError,
     InputProps,
     ...props
 }) => {
@@ -124,7 +146,10 @@ const SANSelectFilter = ({
         }
     }
 
-    const onFocus = () => handleOpen(true)
+    const onFocus = () => {
+        handleOpen(true)
+        setSearch('')
+    }
 
     const clickOutside = () => {
         setSearch('')
@@ -176,6 +201,11 @@ const SANSelectFilter = ({
                 overlay={
                     <div ref={menuRef}>
                         <SANBox
+                            width={
+                                dropdownRef.current
+                                    ? dropdownRef.current.offsetWidth
+                                    : 426
+                            }
                             mt='6px'
                             bg='white.10'
                             boxShadow='1'
@@ -214,20 +244,11 @@ const SANSelectFilter = ({
                                 width='calc(100% - 24px)'
                                 bg='grey.2'
                             />
-                            <SANScroll
-                                autoHeight
-                                autoHeightMax={198}
-                                style={{
-                                    width: dropdownRef.current
-                                        ? dropdownRef.current.offsetWidth
-                                        : 426,
-                                    maxWidth: '100%'
-                                }}
-                            >
+                            <SANStyledScroll>
                                 <SANBox py='xxs'>
                                     {rows.length ? rows : <SANEmpty />}
                                 </SANBox>
-                            </SANScroll>
+                            </SANStyledScroll>
                             <SANBox
                                 displayFlex
                                 alignItems='center'
@@ -261,6 +282,7 @@ const SANSelectFilter = ({
                         iconLeft='search-outline'
                         onChange={handleSearch}
                         value={open ? search : labelSelecteds}
+                        hasError={hasError}
                         {...InputProps}
                     />
                 </span>
