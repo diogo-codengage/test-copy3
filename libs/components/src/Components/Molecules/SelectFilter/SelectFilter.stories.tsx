@@ -80,6 +80,7 @@ const SelectFilter = () => {
             onClear={onClear}
             onSelectItem={onSelectItem}
             onDeselectItem={onDeselectItem}
+            hasError={false}
             InputProps={{ size: select('Size to input', inputSizes, 'medium') }}
         />
     )
