@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState, useMemo } from 'react'
+import React, { Suspense, useEffect, useState, useMemo, memo } from 'react'
 import {
     Switch,
     Route,
@@ -19,7 +19,7 @@ import { getCognitoUser } from 'Config/AWSCognito'
 const RMAuth = React.lazy(() => import('Pages/Auth'))
 const RMPrivatePages = React.lazy(() => import('Pages/Private'))
 
-const RMApp: React.FC<RouteComponentProps> = ({ history, location }) => {
+const RMApp = memo<RouteComponentProps>(({ history, location }) => {
     const { me, setMe } = useAuthContext()
     const [loading, setLoading] = useState(true)
 
@@ -60,6 +60,6 @@ const RMApp: React.FC<RouteComponentProps> = ({ history, location }) => {
             </SANScrollTop>
         </Suspense>
     )
-}
+})
 
 export default withRouter(RMApp)

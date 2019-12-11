@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState, useMemo, memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -30,7 +30,7 @@ const initialResponse = {
     stats: []
 }
 
-const FLXPractice = ({ history }: RouteComponentProps) => {
+const RMPractice = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
     const { width } = useWindowSize()
@@ -176,6 +176,6 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
             />
         </>
     )
-}
+})
 
-export default withRouter(FLXPractice)
+export default withRouter(RMPractice)

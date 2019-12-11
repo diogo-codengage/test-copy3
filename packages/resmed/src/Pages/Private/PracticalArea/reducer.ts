@@ -24,7 +24,7 @@ export interface IState {
     bookmarked: boolean
 }
 
-interface IOwner {
+export interface IOwner {
     label: string
     value: string
 }
