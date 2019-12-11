@@ -11,6 +11,8 @@ import { useAuthContext } from 'Hooks/auth'
 import { getInstance } from 'Config/AWSCognito'
 import { GET_ME } from 'Apollo/User/Queries/me'
 
+declare var Conpass:any;
+
 interface FLXPrivateRouteProps extends RouteComponentProps {
     component: React.ElementType
     path: string
@@ -46,6 +48,16 @@ const FLXPrivateRoute: React.FC<FLXPrivateRouteProps> = ({
                 throw new Error()
             } else {
                 setMe(me)
+                Conpass.init({
+                    name: me.name,
+                    email: me.email,
+
+                    // Informações opcionais (usado para segmentação)
+                    // custom_fields: {
+                    //   lang: "pt_BR",
+                    //   sexo: "Feminino",
+                    // }
+                });
             }
         } catch {
             logout()

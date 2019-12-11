@@ -56,10 +56,12 @@ export const GET_QUESTIONS = gql`
         $categoriesIds: [ID!]
         $specialtiesIds: [ID!]
         $subSpecialtiesIds: [ID!]
+        $lessonsIds: [ID!]
         $institutionId: ID
         $year: Int
         $isCommentedByExpert: Boolean
         $withImage: Boolean
+        $state: BRStates
     ) {
         questions(
             limit: $limit
@@ -67,10 +69,12 @@ export const GET_QUESTIONS = gql`
                 categoriesIds: $categoriesIds
                 specialtiesIds: $specialtiesIds
                 subSpecialtiesIds: $subSpecialtiesIds
+                lessonsIds: $lessonsIds
                 institutionId: $institutionId
                 year: $year
                 isCommentedByExpert: $isCommentedByExpert
                 withImage: $withImage
+                state: $state
             }
         ) {
             totalCount

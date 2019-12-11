@@ -19,12 +19,23 @@ import { login } from 'Config/AWSCognito'
 
 import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 
+import { segmentTrack } from 'Config/Segment/track'
+import { IEvents, IOptions } from 'Config/Segment'
+
 const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
     const [keepMeLoggedIn, setKeepMeLoggedIn] = useState(false)
     const [showModalTerms, setShowModalTerms] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
 
+    const handleTrack = (event: IEvents, attrs?: IOptions) => {
+        const data = {
+            'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
+            ...attrs
+        }
+
+        segmentTrack(event, data)
+    }
     const action = response => {
         if (response.newPasswordRequired) {
             history.push('/auth/nova-senha')
@@ -92,6 +103,7 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
                         isKeepMeLoggedChecked={keepMeLoggedIn}
                         keepMeLogged={onKeepMeLoggedIn}
                         signInByEmail={login}
+                        track={handleTrack}
                     />
                 }
             />

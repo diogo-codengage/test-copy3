@@ -85,6 +85,7 @@ export default {
             management: 'Gerenciamento',
             myData: 'Meus dados',
             changePassword: 'Trocar minha senha',
+            complementaryRegister: 'Ficha complementar',
             help: 'Ajuda',
             helpCenter: 'Central de ajuda',
             otherLinks: 'Outros links',
@@ -245,6 +246,55 @@ export default {
         quiz: {
             question: 'Questão',
             questionMap: 'Mapa de questões'
+        }
+    },
+    userProfile: {
+        title: 'Cadastro complementar',
+        modalSubtitle: 'Preencha a ficha abaixo para continuar',
+        modalSubmit: 'ENVIAR',
+        pageSubtitle: 'Confirme os dados abaixo para continuar',
+        pageSubmit: 'SALVAR',
+        pagePresentation: 'Olá futuro residente! Conta pra gente um pouco mais sobre você para traçarmos juntos uma trilha pra sua aprovação :)',
+        inputPlaceholder: 'Selecione',
+        graduatedStep: {
+            label: 'Etapa da formação',
+            firstYear: '1º ano',
+            secondYear: '2º ano',
+            thirdYear: '3º ano',
+            fourthYear: '4º ano',
+            fifthYear: '5º ano',
+            sixthYear: '6º ano',
+            formed: 'Formado',
+        },
+        institutions: 'Quais instituições quer fazer prova?',
+        specialties: 'Quais especialidades quer seguir?',
+        testExperiences: {
+            label: 'Selecione sua experiência com provas',
+            none: 'Nunca fiz',
+            one: 'Já fiz uma vez',
+            many: 'Já fiz mais de uma vez',
+        },
+        preparatoryCourse: {
+            label: 'Fez/Faz algum outro curso preparatório?',
+            missing: 'Não',
+            inProgress: 'Sim, faço',
+            completed: 'Sim, Já fiz',
+            inputLabel: 'Qual?'
+        },
+        placeholder: 'Selecione',
+        mutations: {
+            create: {
+                success: 'Sucesso, seus dados foram salvos corretamente!',
+                error: 'Erro, ocorreu um erro e seus dados não foram salvos!'
+            },
+            update: {
+                success: 'Sucesso, seus dados foram atualizados corretamente!',
+                error: 'Erro, ocorreu um erro e seus dados não foram atualzados!'
+            }
+        },
+        loadError: {
+            specialties: 'Erro, não foi possivel carregar as Especialidades!',
+            institutions: 'Erro, não foi possivel carregar as Instituições!'
         }
     }
 }

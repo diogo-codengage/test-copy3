@@ -25,6 +25,7 @@ import lessonResultError from './images/lessonResult/ninja-negativo.png'
 
 import blocked from './images/sub-specialty/blocked.svg'
 
+import defaultThumbnail from './images/card-lives/default_thumbnail.png'
 import empty from './images/empty/empty.svg'
 import suggestedSchedule from './images/card-schedule/suggested.png'
 
@@ -52,15 +53,16 @@ export {
     flowchart,
     mentalmap,
     article,
+    lessonResultSuccess,
+    lessonResultError,
     document,
     blocked,
+    defaultThumbnail,
     empty,
     suggestedSchedule,
     awfulEmoji,
     badEmoji,
     regularEmoji,
     goodEmoji,
-    awesomeEmoji,
-    lessonResultSuccess,
-    lessonResultError
+    awesomeEmoji
 }

@@ -13,18 +13,22 @@ import {
 } from '@sanar/components'
 
 import RMFilterSelects from './Selects'
-import RMFilterAdvanced from './Advanced'
+import RMFilterAdvanced, { OnlyComments } from './Advanced'
+
+import { useMainContext } from 'Pages/Private/Context'
 
 import { useQuestionsContext } from '../Context'
 
 const RMFilter = ({ form, history }) => {
     const { t } = useTranslation('resmed')
-    const { dispatch, reset } = useQuestionsContext()
+    const { dispatch, reset, handleTrackFilter } = useQuestionsContext()
+    const { handleTrack } = useMainContext()
 
     const handleSubmit = e => {
         e.preventDefault()
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
+                handleTrackFilter(values)
                 dispatch({ type: 'filter', filter: values })
                 history.push('/inicio/area-pratica/perguntas/pratica')
             }
@@ -47,7 +51,10 @@ const RMFilter = ({ form, history }) => {
                     flexDirection: 'column'
                 }}
                 HeaderProps={{
-                    onBack: () => history.push('/inicio/curso'),
+                    onBack: () => {
+                        history.push('/inicio/curso')
+                        handleTrack('Voltar button clicked')
+                    },
                     SessionTitleProps: {
                         title: t('practicalArea.filter.header.title'),
                         subtitle: t('practicalArea.filter.header.subtitle'),
@@ -72,6 +79,7 @@ const RMFilter = ({ form, history }) => {
                 <SANSessionTitle
                     title={t('practicalArea.filter.subheader.title')}
                     subtitle={t('practicalArea.filter.subheader.subtitle')}
+                    extra={<OnlyComments m='0' />}
                 />
                 <RMFilterSelects />
                 <RMFilterAdvanced />

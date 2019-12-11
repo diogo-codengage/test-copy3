@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { SANSpin, SANButton, SANBox, SANCheckbox } from '@sanar/components'
 import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
+
+import { useMainContext } from 'Pages/Private/Context'
 
 const SANIframeBox = styled(SANBox)`
     width: 100%;
@@ -20,12 +22,19 @@ const SANCheckboxContainer = styled(SANBox)`
 
 const RMTermsFrame = ({ onAccept, tosRequired }) => {
     const { t } = useTranslation('resmed')
+    const { handleTrack } = useMainContext()
     const [loading, setLoading] = useState(true)
     const [checked, setChecked] = useState(false)
 
     const manipuleLoading = () => {
         setLoading(false)
     }
+
+    useEffect(() => {
+        !!handleTrack && handleTrack('Terms viewed')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <SANBox display='flex' flexDirection='column' height='100%'>
             <SANSpin flex spinning={loading} minHeight='100%' />

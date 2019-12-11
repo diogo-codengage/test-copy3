@@ -18,6 +18,7 @@ import {
 import { useAuthContext } from 'Hooks/auth'
 import RMLogout from 'Components/ModalLogout'
 import { useLayoutContext } from '../Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 import { logout } from 'Config/AWSCognito'
 
@@ -30,10 +31,12 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
     const [visibleLogout, setVisibleLogout] = useState(false)
     const [showModalTerms, setShowModalTerms] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
+    const { handleTrack } = useMainContext()
 
     const signOut = () => {
         logout({})
         setMe(undefined)
+        handleTrack('Logout', undefined)
         history.push('/auth/entrar')
     }
 
@@ -77,6 +80,15 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     onClick={onCloseMenu}
                     dataTestid='flix_menu_my-account__go_to--change-password'
                     title={t('mainMenu.account.changePassword')}
+                />
+            </SANNavigationList>
+            <SANNavigationList>
+                <SANNavigationListItem
+                    to='/inicio/minha-conta/dados-complementares'
+                    icon={<SANEvaIcon name='clipboard' color='default' />}
+                    onClick={onCloseMenu}
+                    dataTestid='flix_menu_my-account__go_to--complementary-register'
+                    title={t('mainMenu.account.complementaryRegister')}
                 />
             </SANNavigationList>
             <SANDivider mx='md' my='lg' bg='white.1' />

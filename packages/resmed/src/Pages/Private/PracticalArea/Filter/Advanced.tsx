@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
 import { theme } from 'styled-tools'
+import { space } from 'styled-system'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { useApolloClient } from '@apollo/react-hooks'
@@ -49,25 +50,51 @@ const SwitchStyled = styled(SANFormItem)`
         background-color: ${theme('colors.grey-solid.1')};
         border-radius: ${theme('radii.base')};
         border: 1px solid ${theme('colors.grey.1')};
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: ${theme('space.md')};
+        padding-right: ${theme('space.md')};
+        width: 100%;
+
+        & > div:first-child {
+            flex: 3;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        & > div {
+            padding: 0;
+            flex: 1;
+            text-align: right;
+        }
 
         ${theme('mediaQueries.down.xs')} {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: ${theme('space.xxs')} ${theme('space.md')};
-
-            & div:first-child {
-                flex: 3;
-            }
-
-            & > div {
-                padding: 0;
-                flex: 1;
-            }
+            padding-top: ${theme('space.xxs')};
+            padding-bottom: ${theme('space.xxs')};
+            margin-bottom: 0;
         }
+        ${space}
     }
 `
+
+export const OnlyComments = props => {
+    const { t } = useTranslation('resmed')
+    const {
+        state: { filter }
+    } = useQuestionsContext()
+    return (
+        <SwitchStyled
+            name='onlyComments'
+            label={t('practicalArea.filter.advanced.onlyComments')}
+            valuePropName='checked'
+            initialValue={!!filter && filter.onlyComments}
+            {...props}
+        >
+            <SANSwitch />
+        </SwitchStyled>
+    )
+}
 
 interface IRMFilterAdvancedProps {
     defaultOpen?: boolean
@@ -160,12 +187,28 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
                 showArrow={false}
                 key='1'
             >
-                <SANBox
-                    mx={{ lg: 9, _: '0' }}
-                    mt={{ lg: 'xxl', _: 'lg' }}
-                    mb={{ lg: 'xxl', _: 'lg' }}
-                >
+                <SANBox mx={{ lg: 9, _: '0' }} mt={{ lg: 'xxl', _: '0' }}>
                     <SANRow gutter={24}>
+                        <SANCol xs={24} sm={12}>
+                            <SANFormItem
+                                name='state'
+                                label={t(
+                                    'practicalArea.filter.advanced.state.title'
+                                )}
+                                initialValue={!!filter && filter.state}
+                            >
+                                <SANSelect
+                                    loading={loading.intitutions}
+                                    placeholder={t(
+                                        'practicalArea.filter.advanced.state.placeholder'
+                                    )}
+                                    allowClear
+                                    size='large'
+                                >
+                                    {states.map(renderState)}
+                                </SANSelect>
+                            </SANFormItem>
+                        </SANCol>
                         <SANCol xs={24} sm={12}>
                             <SANFormItem
                                 name='institution'
@@ -206,43 +249,12 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
                             </SANFormItem>
                         </SANCol>
                         <SANCol xs={24} sm={12}>
-                            <SANFormItem
-                                name='state'
-                                label={t(
-                                    'practicalArea.filter.advanced.state.title'
-                                )}
-                                initialValue={!!filter && filter.state}
-                            >
-                                <SANSelect
-                                    loading={loading.intitutions}
-                                    placeholder={t(
-                                        'practicalArea.filter.advanced.state.placeholder'
-                                    )}
-                                    allowClear
-                                    size='large'
-                                >
-                                    {states.map(renderState)}
-                                </SANSelect>
-                            </SANFormItem>
-                        </SANCol>
-                        <SANCol xs={24} sm={6}>
                             <SwitchStyled
+                                mt={{ xs: '22px', _: '0' }}
                                 initialValue={!!filter && filter.onlyHasImages}
                                 name='onlyHasImages'
                                 label={t(
                                     'practicalArea.filter.advanced.onlyHasImages'
-                                )}
-                                valuePropName='checked'
-                            >
-                                <SANSwitch />
-                            </SwitchStyled>
-                        </SANCol>
-                        <SANCol xs={24} sm={6}>
-                            <SwitchStyled
-                                initialValue={!!filter && filter.onlyComments}
-                                name='onlyComments'
-                                label={t(
-                                    'practicalArea.filter.advanced.onlyComments'
                                 )}
                                 valuePropName='checked'
                             >

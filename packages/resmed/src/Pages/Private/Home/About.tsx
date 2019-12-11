@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react'
+import React, { useMemo, useCallback, useEffect } from 'react'
 
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
@@ -18,6 +18,8 @@ import {
 import aboutSvg from 'Assets/images/home/about.png'
 
 import { useAuthContext } from 'Hooks/auth'
+
+import { useMainContext } from 'Pages/Private/Context'
 
 const SANCollapsePanelStyle = styled(SANCollapsePanel)`
     &&& {
@@ -45,6 +47,12 @@ const SANCollapselStyle = styled(SANCollapse)`
 const RMAbout = () => {
     const { t } = useTranslation('resmed')
     const { activeCourse } = useAuthContext()
+    const { handleTrack } = useMainContext()
+
+    useEffect(() => {
+        handleTrack('Informações do Curso Viewed')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const infos = useMemo(() => (!!activeCourse && activeCourse.infos) || [], [
         activeCourse

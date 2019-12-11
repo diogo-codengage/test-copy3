@@ -19,24 +19,26 @@ import {
 import { ISANModalProps } from '@sanar/components/dist/Components/Molecules/Modal'
 import { ILastAccessed } from 'Apollo/Subspecialties/Queries/lessons'
 
-const ItemStyled = styled(SANBox) <{ blocked?: boolean }>`
+import { useMainContext } from 'Pages/Private/Context'
+
+const ItemStyled = styled(SANBox)<{ blocked?: boolean }>`
     &:nth-child(even) {
         background-color: ${theme('colors.grey-solid.1')};
     }
 
     ${ifProp(
-    'blocked',
-    css`
+        'blocked',
+        css`
             opacity: 0.5;
             cursor: not-allowed;
         `,
-    css`
+        css`
             &:hover {
                 background-color: ${theme('colors.grey-solid.2')};
             }
             cursor: pointer;
         `
-)}
+    )}
 `
 
 const Item = ({ index, name, completed, status, onClick }) => {
@@ -57,14 +59,14 @@ const Item = ({ index, name, completed, status, onClick }) => {
             <SANBox display='flex' alignItems='center'>
                 <SANTypography
                     color={completed ? 'primary' : 'grey.5'}
-                    fontSize='xs'
+                    fontSize='md'
                     fontWeight='bold'
                     lineHeight='1'
                     mr='xs'
                 >
                     {index}
                 </SANTypography>
-                <SANTypography fontSize='md' lineHeight='1'>
+                <SANTypography fontSize='lg' lineHeight='1' mr='xs'>
                     {status !== 'active' ? t('modalThemes.blocked') : name}
                 </SANTypography>
             </SANBox>
@@ -72,11 +74,11 @@ const Item = ({ index, name, completed, status, onClick }) => {
                 <SANEvaIcon
                     name='checkmark-circle-2'
                     color='primary'
-                    size='large'
+                    size='xlarge'
                 />
             ) : (
-                    <SANEvaIcon name='arrow-ios-forward-outline' size='large' />
-                )}
+                <SANEvaIcon name='arrow-ios-forward-outline' size='large' />
+            )}
         </ItemStyled>
     )
 }
@@ -115,6 +117,7 @@ const RMModalThemes = ({
     ...props
 }: IRMModalThemesProps) => {
     const { t } = useTranslation('resmed')
+    const { handleTrack } = useMainContext()
 
     const onClickItem = (lastAccessed: ILastAccessed) => {
         const {
@@ -125,9 +128,18 @@ const RMModalThemes = ({
             resource
         } = lastAccessed
 
+        handleTrack('Lesson clicked', {
+            'Specialty ID': specialtyId,
+            'Subspecialty ID': subSpecialtyId,
+            'Lesson ID': lesson.id,
+            'Clicker ID': collectionId
+        })
+
         history.push(
-            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-            resource.id
+            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${
+                lesson.id
+            }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                resource.id
             }`
         )
     }
@@ -140,7 +152,7 @@ const RMModalThemes = ({
             {...props}
         >
             <SANSpin spinning={loading}>
-                <SANBox margin='-24px' mb='lg' py='sm' height={427}>
+                <SANBox margin='-24px' mb='lg' py='sm' height={345}>
                     <SANScroll>
                         {themes.map((theme, index) =>
                             renderTheme(theme, index, onClickItem)

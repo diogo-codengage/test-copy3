@@ -1,6 +1,7 @@
 import React from 'react'
 
-import { theme } from 'styled-tools'
+import { css } from 'styled-components'
+import { theme, switchProp } from 'styled-tools'
 
 import { SANStyled } from '../../../Theme'
 import { SANButton, ISANButtonProps } from '../../Atoms/Button'
@@ -10,6 +11,8 @@ import { SANBox } from '../../Atoms/Box'
 import { SANDivider } from '../../Atoms/Divider'
 import { SANRow, SANCol } from '../Grid'
 
+type IPlataform = 'esanar' | 'sanarflix' | 'resmed'
+
 export interface ISANClassroomHeaderProps {
     title: string
     subtitle: string
@@ -18,15 +21,36 @@ export interface ISANClassroomHeaderProps {
     ButtonPreviousProps?: ISANButtonProps
     ButtonNextProps?: ISANButtonProps
     ButtonBookmarkProps?: ISANButtonProps
+    plataform?: IPlataform
 }
 
-const SANButtonMenu = SANStyled(SANButton)`
+const SANButtonMenu = SANStyled(SANButton)<{ plataform?: IPlataform }>`
     &&& {
-        background-color: ${theme('colors.secondary')};
+        background-color: ${switchProp('plataform', {
+            resmed: theme(`colors.grey.5`),
+            sanarflix: theme(`colors.secondary`),
+            esanar: theme(`colors.secondary`)
+        })};
+
+        color: ${switchProp('plataform', {
+            resmed: theme(`colors.white.6`),
+            sanarflix: theme(`colors.grey.6`),
+            esanar: theme(`colors.grey.6`)
+        })};
+
         &:focus,
         &:active,
         &:hover {
-            background-color: ${theme('colors.yellow.1')};
+            background-color: ${switchProp('plataform', {
+                resmed: theme(`colors.grey.8`),
+                sanarflix: theme(`colors.yellow.1`),
+                esanar: theme(`colors.yellow.1`)
+            })};
+            color: ${switchProp('plataform', {
+                resmed: theme(`colors.white.8`),
+                sanarflix: theme(`colors.grey.6`),
+                esanar: theme(`colors.grey.6`)
+            })};
         }
         ${theme('mediaQueries.down.sm')} {
             width: 32px;
@@ -42,7 +66,8 @@ const SANClassroomHeader = ({
     onOpenMenu,
     ButtonPreviousProps,
     ButtonNextProps,
-    ButtonBookmarkProps
+    ButtonBookmarkProps,
+    plataform = 'sanarflix'
 }: ISANClassroomHeaderProps) => {
     const buttonDefaultProps = {
         size: 'small',
@@ -147,8 +172,16 @@ const SANClassroomHeader = ({
                             circle
                             variant='text'
                             mr={{ sm: 'xl', _: '0' }}
+                            plataform={plataform}
                         >
-                            <SANEvaIcon name='menu-outline' size='large' />
+                            <SANEvaIcon
+                                name={
+                                    plataform === 'resmed'
+                                        ? 'keypad-outline'
+                                        : 'menu-outline'
+                                }
+                                size='large'
+                            />
                         </SANButtonMenu>
                     </SANBox>
                     <SANBox order={{ sm: 2, _: 1 }}>
@@ -159,7 +192,12 @@ const SANClassroomHeader = ({
                         >
                             {title}
                         </SANTypography>
-                        <SANTypography fontSize='md' color='gold.0'>
+                        <SANTypography
+                            fontSize='md'
+                            color={
+                                plataform === 'resmed' ? 'white.9' : 'gold.0'
+                            }
+                        >
                             {subtitle}
                         </SANTypography>
                     </SANBox>

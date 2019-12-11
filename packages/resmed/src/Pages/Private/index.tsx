@@ -11,9 +11,7 @@ import RMMainProvider from 'Pages/Private/Context'
 import RMLayout from 'Pages/Private/Layout'
 
 const RMHome = React.lazy(() => import('Pages/Private/Home'))
-const RMSubSpecialties = React.lazy(() =>
-    import('Pages/Private/SubSpecialties')
-)
+const RMSpecialty = React.lazy(() => import('Pages/Private/Specialty'))
 const RMHelpCenter = React.lazy(() => import('Pages/Private/HelpCenter'))
 const RMAccount = React.lazy(() => import('Pages/Private/Account'))
 const RMPracticalArea = React.lazy(() => import('Pages/Private/PracticalArea'))
@@ -43,7 +41,7 @@ const RMPrivatePages: React.FC<RouteComponentProps> = ({
                                 />
                                 <Route
                                     path={`${url}/subespecialidades/:specialtyId`}
-                                    component={RMSubSpecialties}
+                                    component={RMSpecialty}
                                 />
                                 <Route
                                     path={`${url}/central-ajuda`}

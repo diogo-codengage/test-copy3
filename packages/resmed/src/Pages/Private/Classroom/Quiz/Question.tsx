@@ -23,6 +23,7 @@ import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomQuizContext } from './Context'
 import { useClassroomContext } from '../Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 const SANColFloat = styled(SANCol)`
     && {
@@ -61,7 +62,9 @@ const RMClassroomQuizQuestion = ({
     const { params: paramsLayout } = useLayoutContext()
     const [visible, setVisible] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [skipped, seSkipped] = useState(0)
     const [responses, setResponses] = useState<any[]>([])
+    const { handleTrack } = useMainContext()
 
     const goToNext = () => {
         // if have next question on quiz go to next
@@ -81,17 +84,21 @@ const RMClassroomQuizQuestion = ({
         }
     }
 
-    const handleJump = () => goToNext()
+    const handleJump = () => {
+        seSkipped(old => old + 1)
+        goToNext()
+    }
 
     const handleNext = () => goToNext()
 
     const handleConfirm = async alternativeId => {
         setLoading(true)
+        const current = index + 1 - skipped
         handleProgress({
             resourceId: paramsLayout.contentId,
             resourceType: 'Quiz',
             percentage: parseInt(
-                (((index + 1) * 100) / questions.length).toString(),
+                ((current * 100) / questions.length).toString(),
                 10
             )
         })
@@ -137,6 +144,15 @@ const RMClassroomQuizQuestion = ({
                         : e
                 )
             )
+
+            handleTrack('Question answered', {
+                'Specialty ID': paramsLayout.specialtyId,
+                'Subspecialty ID': paramsLayout.subspecialtyId,
+                'Lesson ID': paramsLayout.lessonId,
+                'Clicker ID': paramsLayout.collectionId,
+                'Question ID': questions[index].id,
+                Correct: correct.id === alternativeId
+            })
         } catch (e) {}
         setLoading(false)
     }

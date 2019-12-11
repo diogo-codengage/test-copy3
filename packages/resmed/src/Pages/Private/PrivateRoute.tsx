@@ -13,8 +13,12 @@ import { GET_ME } from 'Apollo/User/Queries/me'
 import { useAuthContext } from 'Hooks/auth'
 import { logout, getCognitoUser } from 'Config/AWSCognito'
 
+import { segmentTrack } from 'Config/Segment/track'
+
 import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 import RMSplashLoader from 'Components/SplashLoader'
+
+import { RMComplementaryRegisterModal } from 'Components/ComplementaryRegister'
 
 interface RMPrivateRouteProps extends RouteComponentProps {
     component: React.ElementType
@@ -42,7 +46,7 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
             const {
                 data: { me }
             } = await client.query({ query: GET_ME })
-
+            segmentTrack('Session started')
             setMe(me)
         } catch {
             logout({ callback: onLogout })
@@ -55,7 +59,7 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
 
         if (!!cognitoUser) {
             cognitoUser.getSession((err: any, session: CognitoUserSession) => {
-                if (session.isValid()) {
+                if (!!session && session.isValid()) {
                     fetchMe()
                 } else {
                     logout({ callback: onLogout })
@@ -79,6 +83,10 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
                 scrolling
             />
         )
+    }
+
+    if (!!me && !me.profile) {
+        return <RMComplementaryRegisterModal />
     }
 
     return (

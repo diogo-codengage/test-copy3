@@ -3,9 +3,10 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { useApolloClient } from '@apollo/react-hooks'
 import { withRouter, RouteComponentProps } from 'react-router'
 
-import { SANClassroomMenu } from '@sanar/components'
+import { SANClassroomMenu, SANEvaIcon } from '@sanar/components'
 import { useTryToCrash } from '@sanar/utils/dist/Hooks'
 
+import { useMainContext } from 'Pages/Private/Context'
 import { GET_LESSONS, ILessons } from 'Apollo/Classroom/Queries/lessons'
 import { useAuthContext } from 'Hooks/auth'
 
@@ -13,6 +14,7 @@ import { useLayoutContext } from '../Context'
 
 const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     const client = useApolloClient()
+    const { handleTrack } = useMainContext()
     const { activeCourse } = useAuthContext()
     const setCrash = useTryToCrash()
     const { params, onCloseMenu } = useLayoutContext()
@@ -35,6 +37,13 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
             collectionId,
             resource
         } = item.lastAccessed
+
+        handleTrack('Lesson clicked', {
+            'Specialty ID': specialtyId,
+            'Subspecialty ID': subSpecialtyId,
+            'Lesson ID': lesson.id,
+            'Clicker ID': collectionId
+        })
 
         setIndex(item.id, lessons)
         history.push(
@@ -63,7 +72,18 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     lessons.map(lesson => ({
                         ...lesson,
                         hasType: false,
-                        completed: lesson.completed
+                        completed: lesson.completed,
+                        extra: lesson.completed ? (
+                            <SANEvaIcon
+                                name='checkmark-circle-2'
+                                color='warning'
+                            />
+                        ) : (
+                            <SANEvaIcon
+                                name='arrow-ios-forward-outline'
+                                color='light'
+                            />
+                        )
                     }))
                 )
             } catch {

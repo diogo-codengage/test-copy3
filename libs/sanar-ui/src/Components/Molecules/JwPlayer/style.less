@@ -57,20 +57,50 @@
         &--left {
             display: flex;
             z-index: 1;
-            & .es-button {
-                background-color: @secondary-color;
-                margin-right: @margin-md;
 
-                &.visible {
-                    visibility: visible;
+            &.esanar,
+            &.sanarflix {
+                & .es-button {
+                    background-color: @secondary-color;
+                    color: @grey-6;
+                    margin-right: @margin-md;
+
+                    &:hover {
+                        background-color: @yellow-1;
+                        color: @grey-6;
+                    }
+
+                    &.visible {
+                        visibility: visible;
+                    }
+                }
+                & .subtitle {
+                    color: @gold-1;
+                }
+            }
+
+            &.resmed {
+                & .es-button {
+                    background-color: @grey-5;
+                    color: @white-6;
+                    margin-right: @margin-md;
+
+                    &:hover {
+                        background-color: @grey-8;
+                        color: @white-8;
+                    }
+
+                    &.visible {
+                        visibility: visible;
+                    }
+                }
+                & .subtitle {
+                    color: @white-10;
                 }
             }
 
             & .title {
                 color: @white-10;
-            }
-            & .subtitle {
-                color: @gold-1;
             }
         }
 

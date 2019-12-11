@@ -9,10 +9,16 @@ import {
     ILessonQuery,
     ILesson
 } from 'Apollo/Classroom/Queries/lesson'
+import {
+    GET_SPECIALTY,
+    ISpecialtyQuery,
+    ISpecialty
+} from 'Apollo/Classroom/Queries/specialty'
 
 interface IRMClassroomProviderValue {
     handleProgress: (data: IDataProgress) => void
     lesson: ILesson
+    specialty: ISpecialty
 }
 
 interface IDataProgress {
@@ -29,14 +35,11 @@ const RMClassroomProvider: React.FC = ({ children }) => {
     const client = useApolloClient()
     const [lesson, setLesson] = useState<ILesson>({
         id: '',
-        title: '',
-        subSpecialty: {
-            id: '',
-            specialty: {
-                id: '',
-                name: ''
-            }
-        }
+        title: ''
+    })
+    const [specialty, setSpecialty] = useState<ISpecialty>({
+        id: '',
+        title: ''
     })
     const { setMenuTab, params } = useLayoutContext()
 
@@ -45,6 +48,24 @@ const RMClassroomProvider: React.FC = ({ children }) => {
             mutation: CREATE_PROGRESS,
             variables: data
         })
+
+    useEffect(() => {
+        const fetchSpecialtyId = async () => {
+            try {
+                const {
+                    data: { specialty }
+                } = await client.query<ISpecialtyQuery>({
+                    query: GET_SPECIALTY,
+                    variables: {
+                        id: params.specialtyId
+                    }
+                })
+                setSpecialty(specialty)
+            } catch {}
+        }
+        !!params.specialtyId && fetchSpecialtyId()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [params.specialtyId])
 
     useEffect(() => {
         const fetchLesson = async () => {
@@ -74,7 +95,8 @@ const RMClassroomProvider: React.FC = ({ children }) => {
 
     const value: IRMClassroomProviderValue = {
         handleProgress,
-        lesson
+        lesson,
+        specialty
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

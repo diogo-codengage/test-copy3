@@ -25,7 +25,7 @@ const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
     const { params, onOpenMenu } = useLayoutContext()
     const [loading, setLoading] = useState(true)
     const [questions, setQuestions] = useState<any>([])
-    const { lesson } = useClassroomContext()
+    const { lesson, specialty } = useClassroomContext()
 
     const onChangeCollection = collection =>
         history.push(`./${collection.id}/video/${collection.content.video.id}`)
@@ -41,23 +41,32 @@ const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
                         lessonId: params.lessonId
                     }
                 })
-                setQuestions(lessonPerformance.items)
+                setQuestions(lessonPerformance)
             } catch {}
             setLoading(false)
         }
-        fetchResult()
+        !!params.lessonId && fetchResult()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [params.lessonId])
 
     const handleGoPractice = () => history.push('/inicio/area-pratica/filtro')
+
+    const handleGoQuiz = collection => {
+        const {
+            id,
+            quiz: { questions, id: quizId }
+        } = collection
+        history.push(`./${id}/quiz/${quizId}/${questions[0].id}`)
+    }
 
     return (
         <SANBox flex='1'>
             <SANClassroomHeader
                 title={lesson.title}
-                subtitle={lesson.subSpecialty.specialty.name}
+                subtitle={specialty.title}
                 onOpenMenu={onOpenMenu}
                 actions={false}
+                plataform='resmed'
             />
             <SANLayoutContainer
                 pb='8'
@@ -66,6 +75,7 @@ const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
             >
                 <SANLessonResult
                     onGoPractice={handleGoPractice}
+                    onGoQuiz={handleGoQuiz}
                     questions={questions}
                     loading={loading}
                 />
