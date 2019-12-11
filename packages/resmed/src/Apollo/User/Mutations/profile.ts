@@ -9,6 +9,12 @@ export const CREATE_PROFILE_MUTATION = gql`
             name
             profile {
                 id
+                graduationStep
+                institutionIds
+                specialtyIds
+                testExperience
+                preparatoryCourseStatus
+                preparatoryCourseName
             }
         }
     }
@@ -23,6 +29,12 @@ export const UPDATE_PROFILE_MUTATION = gql`
             name
             profile {
                 id
+                graduationStep
+                institutionIds
+                specialtyIds
+                testExperience
+                preparatoryCourseStatus
+                preparatoryCourseName
             }
         }
     }

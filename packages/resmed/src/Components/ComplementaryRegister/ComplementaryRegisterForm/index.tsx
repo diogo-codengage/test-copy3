@@ -160,7 +160,11 @@ const RMForm = ({
                     data: {
                         ...profile,
                         institutionIds,
-                        specialtyIds
+                        specialtyIds,
+                        preparatoryCourseName:
+                            profile.preparatoryCourseStatus === 'missing'
+                                ? null
+                                : profile.preparatoryCourseName
                     }
                 }
             })
@@ -190,7 +194,11 @@ const RMForm = ({
                     data: {
                         ...profile,
                         institutionIds,
-                        specialtyIds
+                        specialtyIds,
+                        preparatoryCourseName:
+                            profile.preparatoryCourseStatus === 'missing'
+                                ? null
+                                : profile.preparatoryCourseName
                     }
                 }
             })
@@ -378,7 +386,7 @@ const RMForm = ({
                         </SANCourseStatusFormItem>
                     </SANCol>
                 </SANRow>
-                {(rcn || oldData.preparatoryCourseName) && (
+                {(rcn || oldData.preparatoryCourseStatus !== 'missing') && (
                     <SANRow gutter={24}>
                         <SANCol>
                             <SANStyledFormItem
