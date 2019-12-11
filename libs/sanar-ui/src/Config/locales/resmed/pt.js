@@ -294,7 +294,8 @@ export default {
         },
         loadError: {
             specialties: 'Erro, não foi possivel carregar as Especialidades!',
-            institutions: 'Erro, não foi possivel carregar as Instituições!'
+            institutions: 'Erro, não foi possivel carregar as Instituições!',
+            profileData: 'Erro, não foi possivel carregar os seus dados!'
         }
     }
 }
