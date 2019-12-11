@@ -4,13 +4,16 @@ interface IProfessor {
     id: string
     name: string
     profilePicture: string
+    academicTraining: string
+    linkedInLink: string
 }
 
 export interface ILive {
     id: string
     title: string
     description: string
-    date: string
+    startDate: string
+    endDate: string
     youtubeId: string
     image: string
     professor: IProfessor
@@ -30,7 +33,8 @@ export const GET_LIVES = gql`
                 id
                 title
                 description
-                date
+                startDate
+                endDate
                 image
                 youtubeId
                 professor: facilitedBy {

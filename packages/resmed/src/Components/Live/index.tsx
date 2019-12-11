@@ -1,9 +1,8 @@
-import React, { useState, useMemo, useEffect, memo } from 'react'
+import React, { useState, useMemo, memo } from 'react'
 
 import styled from 'styled-components'
 import { theme, ifProp, ifNotProp } from 'styled-tools'
 import { isBrowser } from 'react-device-detect'
-import { useApolloClient } from '@apollo/react-hooks'
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 
@@ -17,7 +16,7 @@ import {
 } from '@sanar/components'
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
-import { GET_LIVE, ILiveQuery } from 'Apollo/Lives/Queries/live'
+import { ILive } from 'Apollo/Lives/Queries/lives'
 
 const skeletonProps = {
     bg: 'grey.8',
@@ -86,10 +85,10 @@ const Content = styled.iframe`
     border: 0;
 `
 
-const VideoWrapper = styled(SANBox)<{ current: boolean }>`
+const VideoWrapper = styled(SANBox)<{ hasLive: boolean }>`
     border-radius: ${theme('radii.base')};
-    width: ${ifProp('current', '68%', '100%')};
-    padding-bottom: ${ifNotProp('current', '55.25%')};
+    width: ${ifProp('hasLive', '68%', '100%')};
+    padding-bottom: ${ifNotProp('hasLive', '55.25%')};
 
     ${theme('mediaQueries.down.lg')} {
         width: 100%;
@@ -124,139 +123,152 @@ const style = {
 const youtubeId = process.env.REACT_APP_YOUTUBE_ID
 
 interface IRMLiveProps {
-    id: string
-    current?: boolean
+    hasLive?: boolean
+    loading?: boolean
+    hasOnline?: boolean
+    live?: ILive
 }
 
-const RMLive = memo<IRMLiveProps>(({ id, current = true }) => {
-    const client = useApolloClient()
-    const { t } = useTranslation('resmed')
-    const [hasLoadedVideo, setLoadedVideo] = useState(false)
-    const [hasLoadedChat, setLoadedChat] = useState(false)
-    const [loading, setLoading] = useState(false)
-    const [live, setLive] = useState()
+const RMLive = memo<IRMLiveProps>(
+    ({ live, loading = false, hasLive = true, hasOnline = false }) => {
+        const { t } = useTranslation('resmed')
+        const [hasLoadedVideo, setLoadedVideo] = useState(false)
+        const [hasLoadedChat, setLoadedChat] = useState(false)
 
-    useEffect(() => {
-        const fetchLive = async () => {
-            setLoading(true)
-            try {
-                const {
-                    data: { live }
-                } = await client.query<ILiveQuery>({
-                    query: GET_LIVE,
-                    variables: { id }
-                })
-                setLive(live)
-            } catch {}
-            setLoading(false)
-        }
-        !!id && fetchLive()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id])
-
-    const chat = useMemo(
-        () => (
-            <ChatWrapper {...style}>
-                {(!hasLoadedChat || loading) && <SkeletonChat />}
-                {!loading && !!live && (
-                    <Content
-                        src={`https://www.youtube.com/live_chat?v=${live.youtubeId}&embed_domain=${window.location.hostname}`}
-                        allowFullScreen
-                        title='Chat'
-                        referrerPolicy='origin'
-                        onLoad={() => setLoadedChat(true)}
-                    />
-                )}
-            </ChatWrapper>
-        ),
-        [loading, hasLoadedChat, live]
-    )
-
-    return (
-        <>
-            <SANLayoutContainer px={{ sm: 'md', _: '0' }}>
-                <SANBox
-                    display='flex'
-                    justifyContent='space-between'
-                    flexDirection={{ lg: 'row', _: 'column' }}
-                >
-                    <VideoWrapper current={current} {...style}>
-                        {(!hasLoadedVideo || loading) && <SkeletonVideo />}
+        const chat = useMemo(
+            () => (
+                <ChatWrapper {...style}>
+                    {(!hasLoadedChat || loading) && <SkeletonChat />}
+                    {!loading && !!live && (
                         <Content
-                            src={`https://www.youtube.com/embed/live_stream?channel=${youtubeId}`}
+                            src={`https://www.youtube.com/live_chat?v=${live.youtubeId}&embed_domain=${window.location.hostname}`}
                             allowFullScreen
-                            title='Stream'
-                            onLoad={() => setLoadedVideo(true)}
+                            title='Chat'
+                            referrerPolicy='origin'
+                            onLoad={() => setLoadedChat(true)}
                         />
-                    </VideoWrapper>
-                    {isBrowser && current && chat}
-                </SANBox>
-            </SANLayoutContainer>
-            <SANLayoutContainer>
-                {!loading && !!live ? (
-                    <>
-                        <SANTypography
-                            color='grey.7'
-                            fontWeight='bold'
-                            fontSize='lg'
-                            mb='xs'
-                            mt={{ xs: '8', _: 'xxl' }}
-                        >
-                            {live.title}
-                        </SANTypography>
-                        <SANTypography color='grey.4' fontSize='sm' mb='lg'>
-                            {format(getUTCDate(live.date), 'DD/MM/YYYY')}
-                        </SANTypography>
-                        {!!live.description && (
-                            <SANTypography color='grey.7' fontSize='md'>
-                                {live.description}
+                    )}
+                </ChatWrapper>
+            ),
+            [loading, hasLoadedChat, live]
+        )
+
+        const videoPath = useMemo(() => {
+            if (hasLive) {
+                return `https://www.youtube.com/embed/live_stream?channel=${youtubeId}`
+            } else if (!!live) {
+                return `https://www.youtube.com/embed/${live.youtubeId}`
+            }
+        }, [hasLive, live])
+
+        return (
+            <>
+                <SANLayoutContainer px={{ sm: 'md', _: '0' }}>
+                    <SANBox
+                        display='flex'
+                        justifyContent='space-between'
+                        flexDirection={{ lg: 'row', _: 'column' }}
+                    >
+                        <VideoWrapper hasLive={hasLive} {...style}>
+                            {(!hasLoadedVideo || loading) && <SkeletonVideo />}
+                            <Content
+                                src={videoPath}
+                                allowFullScreen
+                                title='Stream'
+                                onLoad={() => setLoadedVideo(true)}
+                            />
+                        </VideoWrapper>
+                        {isBrowser && hasOnline && chat}
+                    </SANBox>
+                </SANLayoutContainer>
+                <SANLayoutContainer>
+                    {!loading && !!live ? (
+                        <>
+                            <SANTypography
+                                color='grey.7'
+                                fontWeight='bold'
+                                fontSize='lg'
+                                mb='xs'
+                                mt={{ xs: '8', _: 'xxl' }}
+                            >
+                                {live.title}
                             </SANTypography>
-                        )}
-                        {!!live.professor && (
-                            <SANBox display='flex' alignItems='center' mt='lg'>
-                                <SANAvatar
-                                    src={live.professor.profilePicture}
-                                    size={40}
-                                    borderRadius={50}
-                                />
-                                <SANBox ml='sm'>
-                                    <SANTypography
-                                        color='grey.4'
-                                        fontSize='xs'
-                                        transform='uppercase'
-                                    >
-                                        {t('lives.facilitedBy')}
-                                    </SANTypography>
-                                    <SANTypography
-                                        color='grey.7'
-                                        fontWeight='bold'
-                                        fontSize='md'
-                                    >
-                                        {live.professor.name}
-                                    </SANTypography>
-                                    <SANBox display='flex' alignItems='center'>
-                                        <Linkedin
-                                            name='linkedin'
-                                            mr='xs'
-                                            size='xsmall'
-                                        />
+                            <SANTypography color='grey.4' fontSize='sm' mb='lg'>
+                                {format(
+                                    getUTCDate(live.startDate),
+                                    'DD/MM/YYYY'
+                                )}
+                            </SANTypography>
+                            {!!live.description && (
+                                <SANTypography color='grey.7' fontSize='md'>
+                                    {live.description}
+                                </SANTypography>
+                            )}
+                            {!!live.professor && (
+                                <SANBox
+                                    display='flex'
+                                    alignItems='center'
+                                    mt='lg'
+                                >
+                                    <SANAvatar
+                                        src={live.professor.profilePicture}
+                                        size={40}
+                                        borderRadius={50}
+                                    />
+                                    <SANBox ml='sm'>
                                         <SANTypography
-                                            color='grey.6'
-                                            fontSize='sm'
+                                            color='grey.4'
+                                            fontSize='xs'
+                                            transform='uppercase'
                                         >
-                                            Enfermeiro mestre em alguma coisa
+                                            {t('lives.facilitedBy')}
                                         </SANTypography>
+                                        <SANTypography
+                                            color='grey.7'
+                                            fontWeight='bold'
+                                            fontSize='md'
+                                        >
+                                            {live.professor.name}
+                                        </SANTypography>
+                                        <SANBox
+                                            display='flex'
+                                            alignItems='center'
+                                        >
+                                            <a
+                                                target='_blank'
+                                                href={
+                                                    live.professor.linkedInLink
+                                                }
+                                                rel='noopener noreferrer'
+                                            >
+                                                <Linkedin
+                                                    name='linkedin'
+                                                    mr='xs'
+                                                    size='xsmall'
+                                                    color='grey'
+                                                />
+                                            </a>
+                                            <SANTypography
+                                                color='grey.6'
+                                                fontSize='sm'
+                                            >
+                                                {
+                                                    live.professor
+                                                        .academicTraining
+                                                }
+                                            </SANTypography>
+                                        </SANBox>
                                     </SANBox>
                                 </SANBox>
-                            </SANBox>
-                        )}
-                    </>
-                ) : (
-                    <SkeletonDescription />
-                )}
-            </SANLayoutContainer>
-        </>
-    )
-})
+                            )}
+                        </>
+                    ) : (
+                        <SkeletonDescription />
+                    )}
+                </SANLayoutContainer>
+            </>
+        )
+    }
+)
 
 export default RMLive

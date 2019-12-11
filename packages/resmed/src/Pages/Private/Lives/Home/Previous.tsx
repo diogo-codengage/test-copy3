@@ -57,7 +57,10 @@ const RMPrevious = memo<RouteComponentProps>(({ history }) => {
                 <SANCardLive
                     hasList={isList ? hasList : true}
                     title={live.title}
-                    date={format(getUTCDate(live.date), 'DD/MM/YYYY')}
+                    date={format(
+                        getUTCDate(live.startDate),
+                        `DD/MM/YYYY [${t('lives.nextsList.at')}] HH`
+                    )}
                     description={live.description}
                     image={live.image}
                     onClick={() =>
@@ -67,7 +70,7 @@ const RMPrevious = memo<RouteComponentProps>(({ history }) => {
             </SANCol>
         ),
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [hasList, isList]
+        [hasList, isList, t]
     )
 
     return (

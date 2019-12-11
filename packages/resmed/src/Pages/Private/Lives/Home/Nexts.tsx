@@ -12,6 +12,7 @@ import {
     SANCarousel,
     SANQuery
 } from '@sanar/components'
+import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import { GET_LIVES, ILivesQuery, ILive } from 'Apollo/Lives/Queries/lives'
 
@@ -127,9 +128,13 @@ const RMNexts = memo(() => {
             <RMCardNextLive
                 key={live.id}
                 title={live.title}
-                subtitle={live.date}
+                subtitle={format(
+                    getUTCDate('2019-06-03T00:00:00.000Z'),
+                    `DD/MM/YYYY [${t('lives.nextsList.at')}] HH`
+                )}
             />
         ),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         []
     )
 

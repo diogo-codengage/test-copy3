@@ -2,13 +2,13 @@ import gql from 'graphql-tag'
 
 import { ILive } from './lives'
 
-export interface ILiveQuery {
-    live: ILive
+export interface IActiveLiveQuery {
+    activeLive: ILive
 }
 
-export const GET_LIVE = gql`
-    query Live($id: ID) {
-        live(where: { id: $id }) {
+export const GET_ACTIVE_LIVE = gql`
+    {
+        activeLive {
             id
             title
             description
