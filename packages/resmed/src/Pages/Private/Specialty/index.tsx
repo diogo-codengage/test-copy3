@@ -3,7 +3,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useApolloClient, useQuery } from '@apollo/react-hooks'
-import { useLayoutContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 import {
     SANBox,
@@ -67,9 +67,8 @@ interface IRMSubspecialtiesProps extends RouteComponentProps<IRouteProps> {
 
 const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
     ({ match: { params }, history, onSeeLessons }: IRMSubspecialtiesProps) => {
-        const { handleTrack } = useLayoutContext()
+        const { handleTrack } = useMainContext()
         const { t } = useTranslation('resmed')
-        const [subSpecialties, setSubSpecialties] = useState([])
 
         useEffect(() => {
             handleTrack('Specialty viewed', {
@@ -77,19 +76,6 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
             })
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [params.specialtyId])
-
-        useEffect(() => {
-            subSpecialties.forEach((subspecialty: ISubspecialtyItems) => {
-                handleTrack('Subspecialty viewed', {
-                    'Specialty ID': params.specialtyId,
-                    'Subspecialty ID': subspecialty.id
-                })
-            })
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [subSpecialties, params.specialtyId])
-
-        const onCompleted = ({ subSpecialties }) =>
-            setSubSpecialties(subSpecialties.items)
 
         const onStart = ({
             specialtyId,
@@ -168,8 +154,7 @@ const RMSubspecialties = withRouter<IRMSubspecialtiesProps>(
                 query={GET_SUBSPECIALTIES}
                 options={{
                     variables: { parentId: params.specialtyId },
-                    skip: !params.specialtyId,
-                    onCompleted: onCompleted
+                    skip: !params.specialtyId
                 }}
                 loaderProps={{ minHeight: '250px', flex: true }}
                 errorProps={{ flex: 1 }}
@@ -212,7 +197,7 @@ const RMSpecialty = ({
     history,
     match: { params }
 }: RouteComponentProps<IRouteProps>) => {
-    const { handleTrack } = useLayoutContext()
+    const { handleTrack } = useMainContext()
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()

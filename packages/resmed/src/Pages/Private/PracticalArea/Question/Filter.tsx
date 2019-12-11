@@ -23,12 +23,18 @@ interface IProps extends RouteComponentProps {
 
 const RMFilter = ({ history, form }: IProps) => {
     const { t } = useTranslation('resmed')
-    const { startStopwatch, pauseStopwatch, dispatch } = useQuestionsContext()
+    const {
+        startStopwatch,
+        pauseStopwatch,
+        dispatch,
+        handleTrackFilter
+    } = useQuestionsContext()
 
     const handleSubmit = e => {
         e.preventDefault()
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
+                handleTrackFilter(values)
                 dispatch({ type: 'filter', filter: values })
                 history.push('./pratica')
             }

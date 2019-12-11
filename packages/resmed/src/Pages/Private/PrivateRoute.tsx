@@ -18,6 +18,8 @@ import { segmentTrack } from 'Config/Segment/track'
 import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 import RMSplashLoader from 'Components/SplashLoader'
 
+import { RMComplementaryRegisterModal } from 'Components/ComplementaryRegister'
+
 interface RMPrivateRouteProps extends RouteComponentProps {
     component: React.ElementType
     path: string
@@ -57,7 +59,7 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
 
         if (!!cognitoUser) {
             cognitoUser.getSession((err: any, session: CognitoUserSession) => {
-                if (session.isValid()) {
+                if (!!session && session.isValid()) {
                     fetchMe()
                 } else {
                     logout({ callback: onLogout })
@@ -81,6 +83,10 @@ const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
                 scrolling
             />
         )
+    }
+
+    if (!!me && !me.profile) {
+        return <RMComplementaryRegisterModal />
     }
 
     return (

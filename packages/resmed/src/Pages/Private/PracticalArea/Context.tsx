@@ -20,7 +20,7 @@ import {
 } from 'Apollo/PracticalArea/Queries/questions'
 import { reducer, initialStats, IAction, IState, IFilter } from './reducer'
 
-import { useLayoutContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 interface IRMPracticalProviderValue {
     stopwatchRef: any
@@ -31,6 +31,7 @@ interface IRMPracticalProviderValue {
     reset: () => void
     state: IState
     dispatch: React.Dispatch<IAction>
+    handleTrackFilter: (values: IFilter) => void
 }
 
 const Context = createContext<IRMPracticalProviderValue>(
@@ -86,31 +87,20 @@ const RMPracticalProvider: React.FC<RouteComponentProps> = ({
         reducer,
         initialState
     )
-    const { handleTrack } = useLayoutContext()
-    useEffect(() => {
-        handleTrack('Área de Prática viewed')
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-    const totalAnsweredQuestions = useMemo(
-        () => state.stats.correct + state.stats.wrong + state.stats.skipped,
-        [state.stats]
-    )
+    const { handleTrack } = useMainContext()
 
-    const calcPercent = useCallback(
-        type => {
-            switch (type) {
-                case 'skipped':
-                    return (state.stats.skipped * 100) / totalAnsweredQuestions
-                case 'wrong':
-                    return (state.stats.wrong * 100) / totalAnsweredQuestions
-                case 'correct':
-                    return (state.stats.correct * 100) / totalAnsweredQuestions
-                default:
-                    return 0
-            }
-        },
-        [state.stats, totalAnsweredQuestions]
-    )
+    const handleTrackFilter = values => {
+        try {
+            handleTrack('Filter used', {
+                'Filter ID': 'Question',
+                'Specialty ID': (values.specialties || []).map(v => v.value),
+                'Tag ID': (values.lessons || []).map(v => v.value),
+                'Institution ID': values.institution,
+                'State ID': values.state,
+                'Commented by Expert': values.onlyComments || false
+            })
+        } catch {}
+    }
 
     const pauseStopwatch = () => {
         if (stopwatchRef && stopwatchRef.current) {
@@ -187,6 +177,32 @@ const RMPracticalProvider: React.FC<RouteComponentProps> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.currentIndex])
 
+    useEffect(() => {
+        handleTrack('Área de Prática viewed')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const totalAnsweredQuestions = useMemo(
+        () => state.stats.correct + state.stats.wrong + state.stats.skipped,
+        [state.stats]
+    )
+
+    const calcPercent = useCallback(
+        type => {
+            switch (type) {
+                case 'skipped':
+                    return (state.stats.skipped * 100) / totalAnsweredQuestions
+                case 'wrong':
+                    return (state.stats.wrong * 100) / totalAnsweredQuestions
+                case 'correct':
+                    return (state.stats.correct * 100) / totalAnsweredQuestions
+                default:
+                    return 0
+            }
+        },
+        [state.stats, totalAnsweredQuestions]
+    )
+
     const value = {
         stopwatchRef,
         pauseStopwatch,
@@ -195,7 +211,8 @@ const RMPracticalProvider: React.FC<RouteComponentProps> = ({
         totalAnsweredQuestions,
         reset,
         state,
-        dispatch
+        dispatch,
+        handleTrackFilter
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

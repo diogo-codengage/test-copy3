@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
 
-import { useLayoutContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 const SANIframeBox = styled(SANBox)`
     width: 100%;
@@ -22,7 +22,7 @@ const SANCheckboxContainer = styled(SANBox)`
 
 const RMTermsFrame = ({ onAccept, tosRequired }) => {
     const { t } = useTranslation('resmed')
-    const { handleTrack } = useLayoutContext()
+    const { handleTrack } = useMainContext()
     const [loading, setLoading] = useState(true)
     const [checked, setChecked] = useState(false)
 
