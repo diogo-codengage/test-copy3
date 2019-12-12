@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, memo } from 'react'
 
 import { theme } from 'styled-tools'
 import { space } from 'styled-system'
@@ -100,7 +100,7 @@ interface IRMFilterAdvancedProps {
     defaultOpen?: boolean
 }
 
-const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
+const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
     const {
@@ -266,6 +266,6 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
             </SANCollapsePanel>
         </SANCollapse>
     )
-}
+})
 
 export default RMFilterAdvanced

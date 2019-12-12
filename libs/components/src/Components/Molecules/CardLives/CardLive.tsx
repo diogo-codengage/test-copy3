@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo, memo } from 'react'
 
 import { theme, ifProp } from 'styled-tools'
 import { css } from 'styled-components'
@@ -49,85 +49,99 @@ const SANImageBox = SANStyled(SANBox)<{ hasList: boolean }>`
     }
 `
 
-const SANCardLive = ({
-    image,
-    hasList = true,
-    title,
-    date,
-    description,
-    onClick
-}: ISANCardLiveProps) => {
-    const {
-        assets: {
-            cardLives: { defaultThumbnail }
-        }
-    } = useThemeContext()
+const SANCardLive = memo<ISANCardLiveProps>(
+    ({ image, hasList = true, title, date, description, onClick }) => {
+        const {
+            assets: {
+                cardLives: { defaultThumbnail }
+            }
+        } = useThemeContext()
 
-    return (
-        <SANBox
-            boxShadow={1}
-            width={{ _: '100%', sm: hasList ? '100%' : 'auto' }}
-            height={{ _: '120px', sm: hasList ? '120px' : 'auto' }}
-            display={hasList ? 'inline-flex' : 'block'}
-            bg='white.10'
-            borderRadius='base'
-            border='1px solid'
-            borderColor='grey.2'
-        >
-            <SANImageBox
-                hasList={hasList}
-                onClick={onClick}
-                width={{ _: '120px', sm: 'auto' }}
-                height={{
-                    _: '120px',
-                    sm: hasList ? '120px' : '131px'
-                }}
-            >
-                <SANBox
-                    as='img'
-                    src={image ? image : defaultThumbnail}
-                    height='100%'
-                    width='100%'
-                />
-            </SANImageBox>
+        const props = useMemo(
+            () => ({
+                wrapper: {
+                    height: hasList ? '120px' : 'auto',
+                    display: hasList ? 'inline-flex' : 'block'
+                },
+                image: {
+                    width: { _: '120px', sm: hasList ? '210px' : 'auto' },
+                    height: {
+                        _: '120px',
+                        sm: hasList ? '120px' : '131px'
+                    }
+                },
+                wrapperText: {
+                    mx: { _: 'md', sm: hasList ? 'xl' : 'md' },
+                    width: {
+                        _: 'calc(100% - 144px)',
+                        sm: hasList ? 'calc(100% - 258px)' : 'auto'
+                    }
+                }
+            }),
+            [hasList]
+        )
+
+        const imagePath = useMemo(() => (image ? image : defaultThumbnail), [
+            image
+        ])
+
+        return (
             <SANBox
-                width={{
-                    _: 'calc(100% - 144px)',
-                    sm: hasList ? 'calc(100% - 258px)' : 'auto'
-                }}
-                py='md'
-                mx={{ _: 'md', sm: hasList ? 'xl' : 'md' }}
-                textAlign='left'
+                boxShadow={1}
+                bg='white.10'
+                borderRadius='base'
+                border='1px solid'
+                borderColor='grey.2'
+                width='100%'
+                {...props.wrapper}
             >
-                <SANTypography
-                    fontSize='md'
-                    fontWeight='bold'
-                    color='grey.6'
-                    mb='xs'
-                    ellipsis={{ rows: hasList ? 1 : 2 }}
-                    lineHeight='1.40'
+                <SANImageBox
+                    hasList={hasList}
+                    onClick={onClick}
+                    {...props.image}
                 >
-                    {title}
-                </SANTypography>
-                <SANTypography
-                    fontSize='sm'
-                    color='grey.4'
-                    mb={{ _: 'sm' }}
-                    lineHeight='1.35'
-                >
-                    {date}
-                </SANTypography>
-                <SANTypography
-                    fontSize='sm'
-                    color='grey.5'
-                    ellipsis={{ rows: 2 }}
-                    lineHeight='1.35'
-                >
-                    {description}
-                </SANTypography>
+                    <SANBox
+                        as='img'
+                        src={imagePath}
+                        height='100%'
+                        width='100%'
+                    />
+                </SANImageBox>
+                <SANBox py='md' textAlign='left' {...props.wrapperText}>
+                    <SANBox height={hasList ? 'auto' : '38px'}>
+                        <SANTypography
+                            fontSize='md'
+                            fontWeight='bold'
+                            color='grey.6'
+                            mb='xs'
+                            ellipsis={{ rows: hasList ? 1 : 2 }}
+                            lineHeight='1.40'
+                        >
+                            {title}
+                        </SANTypography>
+                    </SANBox>
+                    <SANTypography
+                        fontSize='sm'
+                        color='grey.4'
+                        mb={{ _: 'sm' }}
+                        lineHeight='1.35'
+                    >
+                        {date}
+                    </SANTypography>
+                    {!!description && (
+                        <SANTypography
+                            fontSize='sm'
+                            color='grey.5'
+                            ellipsis={{ rows: 2 }}
+                            lineHeight='1.35'
+                        >
+                            {description}
+                        </SANTypography>
+                    )}
+                </SANBox>
             </SANBox>
-        </SANBox>
-    )
-}
+        )
+    }
+)
 
 export default SANCardLive

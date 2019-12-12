@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useEffect } from 'react'
+import React, { useMemo, useCallback, useEffect, memo } from 'react'
 
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
@@ -44,7 +44,7 @@ const SANCollapselStyle = styled(SANCollapse)`
     }
 `
 
-const RMAbout = () => {
+const RMAbout = memo(() => {
     const { t } = useTranslation('resmed')
     const { activeCourse } = useAuthContext()
     const { handleTrack } = useMainContext()
@@ -137,6 +137,6 @@ const RMAbout = () => {
             </SANLayoutContainer>
         </SANBox>
     )
-}
+})
 
 export default RMAbout

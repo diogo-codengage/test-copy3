@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -71,10 +71,10 @@ export const Performace = ({ vertical = false, ...props }) => {
     )
 }
 
-const RMSubheader: React.FC<{ extra?: React.ReactNode }> = ({
-    children,
-    extra
-}) => (
+const RMSubheader = memo<{
+    extra?: React.ReactNode
+    children?: React.ReactNode
+}>(({ children, extra }) => (
     <SANBox
         display='flex'
         flexDirection={{ _: 'column-reverse', lg: 'row' }}
@@ -89,6 +89,6 @@ const RMSubheader: React.FC<{ extra?: React.ReactNode }> = ({
         )}
         {children}
     </SANBox>
-)
+))
 
 export default RMSubheader

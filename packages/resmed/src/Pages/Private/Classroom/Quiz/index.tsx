@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { compose } from 'ramda'
 import {
@@ -23,7 +23,7 @@ import { useClassroomContext } from '../Context'
 import { withClassroomProvider, useClassroomQuizContext } from './Context'
 import RMClassRoomQuizQuestion from './Question'
 
-const RMClassRoomQuiz = (props: RouteComponentProps) => {
+const RMClassRoomQuiz = memo<RouteComponentProps>(props => {
     const {
         match: { url },
         history
@@ -74,7 +74,7 @@ const RMClassRoomQuiz = (props: RouteComponentProps) => {
             )}
         </SANQuery>
     )
-}
+})
 
 const enhance = compose(withClassroomProvider, withRouter)
 

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, memo } from 'react'
 
 import { SANBox, ISANBoxProps } from '../../Atoms/Box'
 import { SANHeader, ISANHeaderProps } from '../../Molecules/Header'
@@ -9,35 +9,32 @@ export interface ISANPageProps {
     ContainerProps?: ISANContainerProps
     BoxProps?: ISANBoxProps
     hasContainer?: boolean
+    children: React.ReactNode
 }
 
-const SANPage: React.FC<ISANPageProps> = ({
-    children,
-    hasContainer,
-    HeaderProps,
-    ContainerProps,
-    BoxProps
-}) => {
-    const content = useMemo(
-        () =>
-            hasContainer ? (
-                <SANLayoutContainer {...ContainerProps}>
-                    {children}
-                </SANLayoutContainer>
-            ) : (
-                children
-            ),
-        [hasContainer, children, ContainerProps]
-    )
+const SANPage = memo<ISANPageProps>(
+    ({ children, hasContainer, HeaderProps, ContainerProps, BoxProps }) => {
+        const content = useMemo(
+            () =>
+                hasContainer ? (
+                    <SANLayoutContainer {...ContainerProps}>
+                        {children}
+                    </SANLayoutContainer>
+                ) : (
+                    children
+                ),
+            [hasContainer, children, ContainerProps]
+        )
 
-    return (
-        <SANBox display='flex' flexDirection='column' flex='1'>
-            {!!HeaderProps && <SANHeader {...HeaderProps} />}
-            <SANBox flex={1} pb={9} {...BoxProps}>
-                {content}
+        return (
+            <SANBox display='flex' flexDirection='column' flex='1'>
+                {!!HeaderProps && <SANHeader {...HeaderProps} />}
+                <SANBox flex={1} pb={9} {...BoxProps}>
+                    {content}
+                </SANBox>
             </SANBox>
-        </SANBox>
-    )
-}
+        )
+    }
+)
 
 export default SANPage

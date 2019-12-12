@@ -248,13 +248,32 @@ export default {
             questionMap: 'Mapa de questões'
         }
     },
+    lives: {
+        title: 'Lives',
+        subtitle: 'Veja as lives que ainda vão acontecer e as que já rolaram',
+        facilitedBy: 'Live facilitada por:',
+        nextsList: {
+            title: 'Próximas lives',
+            seeLive: 'Ver live',
+            at: 'às'
+        },
+        previousList: {
+            title: 'Lives anteriores',
+            loadMore: 'Carregar mais'
+        },
+        previous: {
+            title: 'Assistir live anterior',
+            back: 'Voltar para lives'
+        }
+    },
     userProfile: {
         title: 'Cadastro complementar',
         modalSubtitle: 'Preencha a ficha abaixo para continuar',
         modalSubmit: 'ENVIAR',
         pageSubtitle: 'Confirme os dados abaixo para continuar',
         pageSubmit: 'SALVAR',
-        pagePresentation: 'Olá futuro residente! Conta pra gente um pouco mais sobre você para traçarmos juntos uma trilha pra sua aprovação :)',
+        pagePresentation:
+            'Olá futuro residente! Conta pra gente um pouco mais sobre você para traçarmos juntos uma trilha pra sua aprovação :)',
         inputPlaceholder: 'Selecione',
         graduatedStep: {
             label: 'Etapa da formação',
@@ -264,7 +283,7 @@ export default {
             fourthYear: '4º ano',
             fifthYear: '5º ano',
             sixthYear: '6º ano',
-            formed: 'Formado',
+            formed: 'Formado'
         },
         institutions: 'Quais instituições quer fazer prova?',
         specialties: 'Quais especialidades quer seguir?',
@@ -272,7 +291,7 @@ export default {
             label: 'Selecione sua experiência com provas',
             none: 'Nunca fiz',
             one: 'Já fiz uma vez',
-            many: 'Já fiz mais de uma vez',
+            many: 'Já fiz mais de uma vez'
         },
         preparatoryCourse: {
             label: 'Fez/Faz algum outro curso preparatório?',
@@ -289,7 +308,8 @@ export default {
             },
             update: {
                 success: 'Sucesso, seus dados foram atualizados corretamente!',
-                error: 'Erro, ocorreu um erro e seus dados não foram atualzados!'
+                error:
+                    'Erro, ocorreu um erro e seus dados não foram atualzados!'
             }
         },
         loadError: {

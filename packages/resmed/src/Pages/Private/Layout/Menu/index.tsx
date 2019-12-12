@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { useLayoutContext } from '../Context'
 
@@ -6,7 +6,7 @@ import RMMenuInitial from './Initial'
 import RMAccountMenu from './Account'
 import RMClassroomMenu from './Classroom'
 
-const RMMenuContent: React.FC = () => {
+const RMMenuContent = memo(() => {
     const { currentMenuIndex } = useLayoutContext()
 
     switch (currentMenuIndex) {
@@ -19,6 +19,6 @@ const RMMenuContent: React.FC = () => {
         default:
             return <RMMenuInitial />
     }
-}
+})
 
 export default RMMenuContent
