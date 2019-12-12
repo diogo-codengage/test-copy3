@@ -85,6 +85,20 @@ const SANCardLive = memo<ISANCardLiveProps>(
             image
         ])
 
+        const keyTitle = useMemo(() => new Date().getTime(), [hasList])
+        const keyDescription = useMemo(() => new Date().getTime() + 1, [
+            hasList
+        ])
+
+        const titleRows = useMemo(() => {
+            if (hasList && !!description) {
+                return { rows: 1 }
+            } else if (hasList && !description) {
+                return { rows: 3 }
+            }
+            return { rows: 2 }
+        }, [hasList, description])
+
         return (
             <SANBox
                 boxShadow={1}
@@ -114,8 +128,9 @@ const SANCardLive = memo<ISANCardLiveProps>(
                             fontWeight='bold'
                             color='grey.6'
                             mb='xs'
-                            ellipsis={{ rows: hasList ? 1 : 2 }}
+                            ellipsis={titleRows}
                             lineHeight='1.40'
+                            key={keyTitle}
                         >
                             {title}
                         </SANTypography>
@@ -134,6 +149,7 @@ const SANCardLive = memo<ISANCardLiveProps>(
                             color='grey.5'
                             ellipsis={{ rows: 2 }}
                             lineHeight='1.35'
+                            key={keyDescription}
                         >
                             {description}
                         </SANTypography>
