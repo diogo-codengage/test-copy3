@@ -44,7 +44,7 @@ const SANStyledCheckbox = styled(SANCheckbox)`
         }
 
         :hover {
-            background-color: ${theme('colors.primary-2')};
+            background-color: ${theme('colors.primary-1')};
         }
     }
 `

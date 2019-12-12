@@ -5,5 +5,5 @@ import RMComplementaryRegisterPage from './ComplementaryRegisterPage'
 export {
     RMComplementaryRegisterForm,
     RMComplementaryRegisterModal,
-    RMComplementaryRegisterPage
+    RMComplementaryRegisterPage,
 }

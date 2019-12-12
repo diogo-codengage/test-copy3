@@ -15,6 +15,8 @@ import { theme } from 'styled-tools'
 import logo from 'Assets/images/brand/logo.svg'
 import { GET_SUPPLEMENTARY_SPECIALTIES } from 'Apollo/User/Queries/supplementary-specialties'
 import { GET_INSTITUTIONS } from 'Apollo/PracticalArea/Queries/institutions'
+import { IListProps } from '../ComplementaryRegisterForm'
+import { IProfile } from 'Apollo/User/Queries/me'
 
 const SANStyledModal = styled(SANModal)`
     &&& {
@@ -47,17 +49,19 @@ const styleToModalBody = {
     padding: 0
 }
 
-interface IListProps {
-    label: string
-    value: number | string
-}
-const RMModal = () => {
+const RMModal = ({ profileData = {} as IProfile }) => {
     const { t } = useTranslation('resmed')
     const { width } = useWindowSize()
     const client = useApolloClient()
     const snackbar = useSnackbarContext()
     const [suppSpecialties, setSuppSpecialties] = useState<IListProps[]>([])
     const [institutions, setInstitutions] = useState<IListProps[]>([])
+    const [dataToForm, setDataToForm] = useState({})
+    const [modalOpen, setModalOpen] = useState(true)
+
+    const handleModalVisible = () => {
+        setModalOpen(old => !old)
+    }
 
     const getSpecialties = async () => {
         try {
@@ -89,15 +93,50 @@ const RMModal = () => {
         }
     }
 
+    const getProfile = async () => {
+        if (profileData && suppSpecialties[0] && institutions[0]) {
+            try {
+                const findedSpecialties = suppSpecialties.filter(({ value }) =>
+                    profileData.specialtyIds.find(sp => value === sp)
+                )
+
+                const findedInstitutions = institutions.filter(({ value }) =>
+                    profileData.institutionIds.find(itt => value === itt)
+                )
+
+                setDataToForm({
+                    ...profileData,
+                    specialtyIds: findedSpecialties,
+                    institutionIds: findedInstitutions
+                })
+            } catch {
+                snackbar({
+                    message: t('userProfile.loadError.profileData'),
+                    theme: 'error'
+                })
+            }
+        }
+    }
+
     useEffect(() => {
         getSpecialties()
         getInstitutions()
+        if (profileData.id) {
+            setDataToForm({ id: profileData.id })
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    useEffect(() => {
+        if (profileData.id) {
+            getProfile()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [suppSpecialties, institutions])
+
     return (
         <SANStyledModal
-            visible
+            visible={modalOpen}
             centered={width >= 576}
             closable={false}
             maxWidth={{ _: '100%', sm: '744px' }}
@@ -128,8 +167,10 @@ const RMModal = () => {
                 </SANTypography>
                 <SANDivider my='xl' mx='auto' bg='grey.2' />
                 <RMComplementaryRegisterForm
+                    oldData={!!profileData.id && dataToForm}
                     specialties={suppSpecialties}
                     institutions={institutions}
+                    closeModal={!!profileData.id && handleModalVisible}
                 />
             </SANBox>
         </SANStyledModal>
