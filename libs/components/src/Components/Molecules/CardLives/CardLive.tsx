@@ -108,16 +108,18 @@ const SANCardLive = memo<ISANCardLiveProps>(
                     />
                 </SANImageBox>
                 <SANBox py='md' textAlign='left' {...props.wrapperText}>
-                    <SANTypography
-                        fontSize='md'
-                        fontWeight='bold'
-                        color='grey.6'
-                        mb='xs'
-                        ellipsis={{ rows: hasList ? 1 : 2 }}
-                        lineHeight='1.40'
-                    >
-                        {title}
-                    </SANTypography>
+                    <SANBox height={hasList ? 'auto' : '38px'}>
+                        <SANTypography
+                            fontSize='md'
+                            fontWeight='bold'
+                            color='grey.6'
+                            mb='xs'
+                            ellipsis={{ rows: hasList ? 1 : 2 }}
+                            lineHeight='1.40'
+                        >
+                            {title}
+                        </SANTypography>
+                    </SANBox>
                     <SANTypography
                         fontSize='sm'
                         color='grey.4'

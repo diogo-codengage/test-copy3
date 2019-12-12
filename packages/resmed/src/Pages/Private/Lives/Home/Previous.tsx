@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo, memo } from 'react'
+import React, { useCallback, useState, useMemo, memo, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -30,11 +30,24 @@ const updateCacheLives = (prev, { fetchMoreResult }) => {
     })
 }
 
+const storageKey = 'rm-previous-list-lives'
+
 const RMPrevious = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
     const theme = useThemeContext()
     const { width } = useWindowSize()
     const [hasList, setHasList] = useState(false)
+
+    useEffect(() => {
+        const item = localStorage.getItem(storageKey)
+        if (!!item && Boolean(item) !== hasList) {
+            setHasList(Boolean(item))
+        }
+        return () => {
+            localStorage.setItem(storageKey, hasList.toString())
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const propsCol = useMemo(() => {
         return hasList
