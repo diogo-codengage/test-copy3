@@ -70,10 +70,7 @@ const RMPrevious = memo<RouteComponentProps>(({ history }) => {
                 <SANCardLive
                     hasList={isList ? hasList : true}
                     title={live.title}
-                    date={format(
-                        getUTCDate(live.startDate),
-                        `DD/MM/YYYY [${t('lives.nextsList.at')}] HH[h]`
-                    )}
+                    date={format(getUTCDate(live.startDate), 'DD/MM/YYYY')}
                     description={live.description}
                     image={live.image}
                     onClick={() =>

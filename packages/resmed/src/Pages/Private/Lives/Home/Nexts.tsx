@@ -129,7 +129,7 @@ const RMNexts = memo(() => {
                 key={live.id}
                 title={live.title}
                 subtitle={format(
-                    getUTCDate('2019-06-03T00:00:00.000Z'),
+                    getUTCDate(live.startDate),
                     `DD/MM/YYYY [${t('lives.nextsList.at')}] HH[h]`
                 )}
             />
