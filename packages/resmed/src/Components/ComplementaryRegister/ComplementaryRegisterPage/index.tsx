@@ -16,11 +16,8 @@ import {
 import { GET_SUPPLEMENTARY_SPECIALTIES } from 'Apollo/User/Queries/supplementary-specialties'
 import { GET_INSTITUTIONS } from 'Apollo/PracticalArea/Queries/institutions'
 import { GET_ME } from 'Apollo/User/Queries/me'
+import { IListProps } from '../ComplementaryRegisterForm'
 
-interface IListProps {
-    label: string
-    value: number | string
-}
 const RMPage = ({ history }) => {
     const { t } = useTranslation('resmed')
     const { width } = useWindowSize()
@@ -64,18 +61,23 @@ const RMPage = ({ history }) => {
         if (suppSpecialties[0] && institutions[0]) {
             try {
                 const {
-                    data: { me }
+                    data: {
+                        me: { profile }
+                    }
                 } = await client.query({ query: GET_ME })
+                if (profile.id) {
+                    setProfileData({ id: profile.id })
+                }
                 const findedSpecialties = suppSpecialties.filter(({ value }) =>
-                    me.profile.specialtyIds.find(sp => value === sp)
+                    profile.specialtyIds.find(sp => value === sp)
                 )
 
                 const findedInstitutions = institutions.filter(({ value }) =>
-                    me.profile.institutionIds.find(itt => value === itt)
+                    profile.institutionIds.find(itt => value === itt)
                 )
 
                 setProfileData({
-                    ...me.profile,
+                    ...profile,
                     specialtyIds: findedSpecialties,
                     institutionIds: findedInstitutions
                 })

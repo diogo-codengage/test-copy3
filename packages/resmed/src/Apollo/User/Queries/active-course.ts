@@ -5,6 +5,7 @@ export interface ICourse {
     name: string | undefined
     progress: number
     infos?: IInfo[]
+    accessed: boolean
 }
 
 interface IInfo {
@@ -22,6 +23,7 @@ export const GET_ACTIVE_COURSE = gql`
                 title
                 body
             }
+            accessed
         }
     }
 `
