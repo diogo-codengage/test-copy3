@@ -17,15 +17,17 @@ import styled, { css } from 'styled-components'
 import { theme, ifProp } from 'styled-tools'
 
 const SANStyledInput = styled(SANInput)`
-    text-overflow: ellipsis;
-    background-color: ${theme('colors.white.10')};
+    && {
+        text-overflow: ellipsis;
+        background-color: ${theme('colors.white.10')};
 
-    ${ifProp(
-        'hasError',
-        css`
-            border-color: ${theme('colors.error')};
-        `
-    )}
+        ${ifProp(
+            'hasError',
+            css`
+                border-color: ${theme('colors.error')};
+            `
+        )}
+    }
 `
 const SANStyledScroll = styled(SANScroll)`
     &&& {
@@ -46,6 +48,17 @@ const SANStyledCheckbox = styled(SANCheckbox)`
         :hover {
             background-color: ${theme('colors.primary-1')};
         }
+    }
+`
+const SANStyledButton = styled(SANButton)`
+    && {
+        color: ${theme('colors.grey.3')};
+    }
+`
+const SANStyledCloseButton = styled(SANButton)`
+    && {
+        border-bottom-right-radius: ${theme('radii.base')};
+        border-bottom-left-radius: ${theme('radii.base')};
     }
 `
 
@@ -143,6 +156,7 @@ const SANSelectFilter = ({
             )
             onDeselectItem && onDeselectItem(item)
             onChange && onChange(newItems)
+            !newItems[0] && setLabelSelecteds('')
         }
     }
 
@@ -206,7 +220,7 @@ const SANSelectFilter = ({
                                     ? dropdownRef.current.offsetWidth
                                     : 426
                             }
-                            mt='6px'
+                            mt='10px'
                             bg='white.10'
                             boxShadow='1'
                             borderRadius='base'
@@ -228,7 +242,7 @@ const SANSelectFilter = ({
                                 >
                                     {t('selectFilter.selectAll')}
                                 </SANButton>
-                                <SANButton
+                                <SANStyledButton
                                     onClick={handleClear}
                                     bold
                                     variant='text'
@@ -236,7 +250,7 @@ const SANSelectFilter = ({
                                     disabled={!value.length}
                                 >
                                     {t('selectFilter.clearSelect')}
-                                </SANButton>
+                                </SANStyledButton>
                             </SANBox>
                             <SANDivider
                                 my='0'
@@ -258,7 +272,7 @@ const SANSelectFilter = ({
                                 borderTop='1px solid'
                                 borderColor='grey.2'
                             >
-                                <SANButton
+                                <SANStyledCloseButton
                                     onClick={handleClose}
                                     bold
                                     variant='text'
@@ -267,7 +281,7 @@ const SANSelectFilter = ({
                                     color='primary'
                                 >
                                     {t('selectFilter.close')}
-                                </SANButton>
+                                </SANStyledCloseButton>
                             </SANBox>
                         </SANBox>
                     </div>

@@ -163,6 +163,11 @@ const RMModal = ({ profileData = {} as IProfile }) => {
                     {t('userProfile.title')}
                 </SANTypography>
                 <SANTypography fontSize='md' color='grey.6'>
+                    {t(
+                        `userProfile.${
+                            !!profileData.id ? 'pageSubtitle' : 'modalSubtitle'
+                        }`
+                    )}
                     {t('userProfile.modalSubtitle')}
                 </SANTypography>
                 <SANDivider my='xl' mx='auto' bg='grey.2' />

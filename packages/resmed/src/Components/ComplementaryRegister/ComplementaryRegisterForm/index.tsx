@@ -47,8 +47,16 @@ const SANCourseStatusFormItem = styled(SANFormItem)<{ rcn?: boolean }>`
 `
 
 const SANStyledFormItem = styled(SANFormItem)`
-    &&& {
-        margin-bottom: 24px;
+    &&&&& {
+        ${ifProp(
+            'hasError',
+            css`
+                margin-bottom: 5px !important;
+            `,
+            css`
+                margin-bottom: 24px;
+            `
+        )}
     }
 `
 
@@ -304,6 +312,7 @@ const RMForm = ({
                                     message: 'Este campo é obrigatório!'
                                 }
                             ]}
+                            hasError={!!form.getFieldError('institutionIds')}
                         >
                             <SANSelectFilter
                                 placeholder={t('userProfile.placeholder')}
@@ -331,6 +340,7 @@ const RMForm = ({
                                     message: 'Este campo é obrigatório!'
                                 }
                             ]}
+                            hasError={!!form.getFieldError('specialtyIds')}
                         >
                             <SANSelectFilter
                                 placeholder={t('userProfile.placeholder')}
