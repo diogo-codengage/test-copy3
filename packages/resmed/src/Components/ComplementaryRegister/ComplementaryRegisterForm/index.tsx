@@ -146,7 +146,7 @@ const RMForm = ({
     const [rcn, setRcn] = useState(false) //requiredCourseName
     const [submitting, setSubmitting] = useState(false)
     const snackbar = useSnackbarContext()
-    const { setMe, activeCourse, setActiveCourse } = useAuthContext()
+    const { setMe, setActiveCourse } = useAuthContext()
 
     useEffect(() => {
         if (!!oldData.graduationStep) {
@@ -232,7 +232,6 @@ const RMForm = ({
                 mutation: UPDATE_COURSE_ACCESSED,
                 variables: {
                     data: {
-                        id: activeCourse.progress_id,
                         accessed: true
                     }
                 }

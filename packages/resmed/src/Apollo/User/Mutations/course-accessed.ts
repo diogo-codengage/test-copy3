@@ -12,8 +12,7 @@ export const UPDATE_COURSE_ACCESSED = gql`
                 title
                 body
             }
-            accessed
-            progress_id
+            accessed            
         }
     }
 `
