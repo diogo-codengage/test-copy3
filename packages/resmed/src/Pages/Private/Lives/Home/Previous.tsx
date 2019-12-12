@@ -72,7 +72,7 @@ const RMPrevious = memo<RouteComponentProps>(({ history }) => {
                     title={live.title}
                     date={format(
                         getUTCDate(live.startDate),
-                        `DD/MM/YYYY [${t('lives.nextsList.at')}] HH`
+                        `DD/MM/YYYY [${t('lives.nextsList.at')}] HH[h]`
                     )}
                     description={live.description}
                     image={live.image}
