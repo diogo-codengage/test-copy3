@@ -232,14 +232,13 @@ const RMForm = ({
                 mutation: UPDATE_COURSE_ACCESSED,
                 variables: {
                     data: {
-                        id: activeCourse.id,
+                        id: activeCourse.progress_id,
                         accessed: true
                     }
                 }
             })
             setActiveCourse({
-                ...activeCourse,
-                accessed: updateCourseProgressAccess.accessed
+                ...updateCourseProgressAccess
             })
         }
     }

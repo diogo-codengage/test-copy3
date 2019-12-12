@@ -5,7 +5,15 @@ export const UPDATE_COURSE_ACCESSED = gql`
         $data: CourseAccessedUpdateInput!
     ) {
         updateCourseProgressAccess(data: $data) {
+            id
+            name
+            progress
+            infos {
+                title
+                body
+            }
             accessed
+            progress_id
         }
     }
 `
