@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -40,15 +40,21 @@ import { useAuthContext } from 'Hooks/auth'
 
 import { useQuestionsContext } from '../Context'
 
+import { IOwner } from '../reducer'
+
 interface ILoading {
     loading: boolean
     error: boolean
+}
+
+interface IProps {
+    initialValue?: IOwner[]
 }
 interface ICategoryState extends ILoading {
     items: ICategory[]
 }
 
-const Categories = ({ initialValue }) => {
+const Categories = memo<IProps>(({ initialValue }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
     const [data, setData] = useState<ICategoryState>({
@@ -102,13 +108,13 @@ const Categories = ({ initialValue }) => {
             />
         </SANFormItem>
     )
-}
+})
 
 interface ISpecialtiyState extends ILoading {
     items: ISpecialty[]
 }
 
-const Specialties = ({ initialValue }) => {
+const Specialties = memo<IProps>(({ initialValue }) => {
     const client = useApolloClient()
     const { activeCourse } = useAuthContext()
     const { t } = useTranslation('resmed')
@@ -163,13 +169,13 @@ const Specialties = ({ initialValue }) => {
             />
         </SANFormItem>
     )
-}
+})
 
 interface ISubspecialtyState extends ILoading {
     items: ISubspecialty[]
 }
 
-const Subspecialties = ({ initialValue }) => {
+const Subspecialties = memo<IProps>(({ initialValue }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
     const [data, setData] = useState<ISubspecialtyState>({
@@ -225,13 +231,13 @@ const Subspecialties = ({ initialValue }) => {
             />
         </SANFormItem>
     )
-}
+})
 
 interface ILessonState extends ILoading {
     items: ILesson[]
 }
 
-const Lessons = ({ initialValue }) => {
+const Lessons = memo<IProps>(({ initialValue }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
     const [data, setData] = useState<ILessonState>({
@@ -281,9 +287,9 @@ const Lessons = ({ initialValue }) => {
             />
         </SANFormItem>
     )
-}
+})
 
-const RMFilterSelects = () => {
+const RMFilterSelects = memo(() => {
     const {
         state: { filter }
     } = useQuestionsContext()
@@ -291,21 +297,19 @@ const RMFilterSelects = () => {
     return (
         <SANRow gutter={24}>
             <SANCol xs={24} sm={24} md={12}>
-                <Categories initialValue={!!filter && filter.categories} />
+                <Categories initialValue={filter.categories} />
             </SANCol>
             <SANCol xs={24} sm={24} md={12}>
-                <Specialties initialValue={!!filter && filter.specialties} />
+                <Specialties initialValue={filter.specialties} />
             </SANCol>
             <SANCol xs={24} sm={24} md={12}>
-                <Subspecialties
-                    initialValue={!!filter && filter.subspecialties}
-                />
+                <Subspecialties initialValue={filter.subspecialties} />
             </SANCol>
             <SANCol xs={24} sm={24} md={12}>
-                <Lessons initialValue={!!filter && filter.lessons} />
+                <Lessons initialValue={filter.lessons} />
             </SANCol>
         </SANRow>
     )
-}
+})
 
 export default RMFilterSelects

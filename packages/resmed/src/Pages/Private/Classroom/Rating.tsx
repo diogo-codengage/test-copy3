@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { useApolloClient } from '@apollo/react-hooks'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -15,7 +15,7 @@ import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomContext } from './Context'
 import { useMainContext } from 'Pages/Private/Context'
 
-const RMClassroomRating = ({ history }: RouteComponentProps) => {
+const RMClassroomRating = memo<RouteComponentProps>(({ history }) => {
     const client = useApolloClient()
     const { params, onOpenMenu } = useLayoutContext()
     const { handleTrack } = useMainContext()
@@ -62,6 +62,6 @@ const RMClassroomRating = ({ history }: RouteComponentProps) => {
             </SANLayoutContainer>
         </SANBox>
     )
-}
+})
 
 export default withRouter(RMClassroomRating)

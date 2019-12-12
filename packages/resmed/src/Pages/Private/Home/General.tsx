@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react'
+import React, { useMemo, useCallback, memo } from 'react'
 
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
@@ -109,7 +109,7 @@ const SpecialtiesStyled = styled(SANBox)`
     min-height: 429px;
 `
 
-const RMGeneral = () => {
+const RMGeneral = memo(() => {
     const { t } = useTranslation('resmed')
     const { handleTrack } = useMainContext()
     const handleAppClicked = OS => {
@@ -194,6 +194,6 @@ const RMGeneral = () => {
             </SANBox>
         </>
     )
-}
+})
 
 export default withRouter<RouteComponentProps>(RMGeneral)

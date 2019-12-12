@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
@@ -7,38 +7,34 @@ import ESTypography from '../../Atoms/Typography'
 import ESButton from '../../Atoms/Button'
 import ESComment from '../Comment'
 
-const ESQuestionComment = ({
-    user,
-    text,
-    time,
-    onSendFeedback,
-    labelMonitor
-}) => {
-    const { t } = useTranslation('sanarui')
+const ESQuestionComment = memo(
+    ({ user, text, time, onSendFeedback, labelMonitor }) => {
+        const { t } = useTranslation('sanarui')
 
-    return (
-        <div className='es-question__content-comment'>
-            <div className='es-question__content-comment__header'>
-                <ESTypography variant='body1' strong>
-                    {t('question.expertComment')}
-                </ESTypography>
-                {onSendFeedback && (
-                    <ESButton variant='outlined' size='xsmall' bold>
-                        {t('global.sendFeedback')}
-                    </ESButton>
-                )}
+        return (
+            <div className='es-question__content-comment'>
+                <div className='es-question__content-comment__header'>
+                    <ESTypography variant='body1' strong>
+                        {t('question.expertComment')}
+                    </ESTypography>
+                    {onSendFeedback && (
+                        <ESButton variant='outlined' size='xsmall' bold>
+                            {t('global.sendFeedback')}
+                        </ESButton>
+                    )}
+                </div>
+                <ESComment
+                    labelMonitor={labelMonitor}
+                    monitor
+                    className='es-question__content-comment__body'
+                    user={user}
+                    text={text}
+                    time={time}
+                />
             </div>
-            <ESComment
-                labelMonitor={labelMonitor}
-                monitor
-                className='es-question__content-comment__body'
-                user={user}
-                text={text}
-                time={time}
-            />
-        </div>
-    )
-}
+        )
+    }
+)
 
 ESQuestionComment.propTypes = {
     user: PropTypes.shape({

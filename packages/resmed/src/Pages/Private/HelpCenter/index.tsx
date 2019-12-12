@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router'
 
 import { SANHelpCenter } from '@sanar/components'
 import { useMainContext } from 'Pages/Private/Context'
 
-const RMHelpCenter = ({ history }: RouteComponentProps) => {
+const RMHelpCenter = memo<RouteComponentProps>(({ history }) => {
     const { handleTrack } = useMainContext()
 
     return (
@@ -16,6 +16,6 @@ const RMHelpCenter = ({ history }: RouteComponentProps) => {
             }}
         />
     )
-}
+})
 
 export default withRouter(RMHelpCenter)
