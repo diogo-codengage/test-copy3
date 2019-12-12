@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -10,7 +10,7 @@ import {
 
 import { useLayoutContext } from '../Context'
 
-const RMMenuInitial: React.FC = () => {
+const RMMenuInitial = memo(() => {
     const { t } = useTranslation('resmed')
     const { onCloseMenu, setMenuTab } = useLayoutContext()
 
@@ -36,8 +36,15 @@ const RMMenuInitial: React.FC = () => {
                 dataTestid='rm-menu__go-to--account'
                 title={t('mainMenu.initial.account')}
             />
+            <SANNavigationListItem
+                to='/inicio/lives'
+                icon={<SANEvaIcon name='play-circle-outline' color='default' />}
+                onClick={onCloseMenu}
+                dataTestid='rm-menu__go-to--lives'
+                title={t('mainMenu.initial.lives')}
+            />
         </SANNavigationList>
     )
-}
+})
 
 export default RMMenuInitial

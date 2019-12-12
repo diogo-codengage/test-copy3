@@ -49,6 +49,7 @@ const ESJwPlayer = forwardRef(
             title,
             subtitle,
             BookmarkProps,
+            plataform = 'sanarflix',
             ...props
         },
         ref
@@ -180,7 +181,9 @@ const ESJwPlayer = forwardRef(
                             ['has-header']: isPause
                         })}
                     >
-                        <div className='es-jw-player__header--left'>
+                        <div
+                            className={`es-jw-player__header--left ${plataform}`}
+                        >
                             <ESButton
                                 onClick={onOpenMenu}
                                 circle
@@ -190,7 +193,13 @@ const ESJwPlayer = forwardRef(
                                     ['visible']: isReady
                                 })}
                             >
-                                <ESEvaIcon name='menu-outline' />
+                                <ESEvaIcon
+                                    name={
+                                        plataform === 'resmed'
+                                            ? 'keypad-outline'
+                                            : 'menu-outline'
+                                    }
+                                />
                             </ESButton>
                             <div>
                                 <ESTypography level={5} className='title'>

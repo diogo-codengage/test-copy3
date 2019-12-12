@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react'
+import React, { useState, useMemo, useRef, memo } from 'react'
 
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
@@ -22,6 +22,8 @@ import RMCollection from 'Components/Collection'
 import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomQuizContext } from './Context'
+import { useClassroomContext } from '../Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 const SANColFloat = styled(SANCol)`
     && {
@@ -41,178 +43,209 @@ interface IParams {
     questionId: string
 }
 
-const RMClassroomQuizQuestion = ({
-    history,
-    match: {
-        params: { questionId }
-    }
-}: RouteComponentProps<IParams>) => {
-    const client = useApolloClient()
-    const { t } = useTranslation('resmed')
-    const { width } = useWindowSize()
-    const collectionRef = useRef<any>()
-    const {
-        questions,
-        questionsMap,
-        setQuestionsMap
-    } = useClassroomQuizContext()
-    const { params: paramsLayout } = useLayoutContext()
-    const [visible, setVisible] = useState(false)
-    const [loading, setLoading] = useState(false)
-    const [responses, setResponses] = useState<any[]>([])
+const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
+    ({
+        history,
+        match: {
+            params: { questionId }
+        }
+    }) => {
+        const client = useApolloClient()
+        const { t } = useTranslation('resmed')
+        const { width } = useWindowSize()
+        const collectionRef = useRef<any>()
+        const {
+            questions,
+            questionsMap,
+            setQuestionsMap
+        } = useClassroomQuizContext()
+        const { handleProgress } = useClassroomContext()
+        const { params: paramsLayout } = useLayoutContext()
+        const [visible, setVisible] = useState(false)
+        const [loading, setLoading] = useState(false)
+        const [skipped, seSkipped] = useState(0)
+        const [responses, setResponses] = useState<any[]>([])
+        const { handleTrack } = useMainContext()
 
-    const goToNext = () => {
-        // if have next question on quiz go to next
-        if (questions[index + 1]) {
-            history.push(`./${questions[index + 1].id}`)
-        } else {
-            const next = collectionRef.current.getNext()
-            // if have next clicker go to next
-            if (!!next) {
-                history.push(
-                    `../../../${next.id}/video/${next.content.video.id}`
-                )
+        const goToNext = () => {
+            // if have next question on quiz go to next
+            if (questions[index + 1]) {
+                history.push(`./${questions[index + 1].id}`)
             } else {
-                // if dont have next clicker go to rating
-                history.push(`../../../avaliacao`)
+                const next = collectionRef.current.getNext()
+                // if have next clicker go to next
+                if (!!next) {
+                    history.push(
+                        `../../../${next.id}/video/${next.content.video.id}`
+                    )
+                } else {
+                    // if dont have next clicker go to rating
+                    history.push(`../../../avaliacao`)
+                }
             }
         }
-    }
 
-    const handleJump = () => goToNext()
+        const handleJump = () => {
+            seSkipped(old => old + 1)
+            goToNext()
+        }
 
-    const handleNext = () => goToNext()
+        const handleNext = () => goToNext()
 
-    const handleConfirm = async alternativeId => {
-        setLoading(true)
-
-        try {
-            const {
-                data: {
-                    answerQuestion: {
-                        question: { comment, alternatives, id },
-                        stats
-                    }
-                }
-            } = await client.mutate({
-                mutation: ANSWER_MUTATION,
-                variables: {
-                    questionId: questions[index].id,
-                    alternativeId
-                }
+        const handleConfirm = async alternativeId => {
+            setLoading(true)
+            const current = index + 1 - skipped
+            handleProgress({
+                resourceId: paramsLayout.contentId,
+                resourceType: 'Quiz',
+                percentage: parseInt(
+                    ((current * 100) / questions.length).toString(),
+                    10
+                )
             })
 
-            const correct = alternatives.data.find(
-                alternative => alternative.isCorrect
-            )
-            setResponses(oldResponses => [
-                ...oldResponses,
-                {
-                    stats,
-                    comment,
-                    answer: correct.id,
-                    questionId: id
-                }
-            ])
-            setQuestionsMap(oldMap =>
-                oldMap.map(e =>
-                    e.id === id
-                        ? {
-                              ...e,
-                              status:
-                                  correct.id === alternativeId
-                                      ? 'correct'
-                                      : 'wrong'
-                          }
-                        : e
+            try {
+                const {
+                    data: {
+                        answerQuestion: {
+                            question: { comment, alternatives, id },
+                            stats
+                        }
+                    }
+                } = await client.mutate({
+                    mutation: ANSWER_MUTATION,
+                    variables: {
+                        questionId: questions[index].id,
+                        alternativeId
+                    }
+                })
+
+                const correct = alternatives.data.find(
+                    alternative => alternative.isCorrect
                 )
+                setResponses(oldResponses => [
+                    ...oldResponses,
+                    {
+                        stats,
+                        comment,
+                        answer: correct.id,
+                        questionId: id
+                    }
+                ])
+                setQuestionsMap(oldMap =>
+                    oldMap.map(e =>
+                        e.id === id
+                            ? {
+                                  ...e,
+                                  status:
+                                      correct.id === alternativeId
+                                          ? 'correct'
+                                          : 'wrong'
+                              }
+                            : e
+                    )
+                )
+
+                handleTrack('Question answered', {
+                    'Specialty ID': paramsLayout.specialtyId,
+                    'Subspecialty ID': paramsLayout.subspecialtyId,
+                    'Lesson ID': paramsLayout.lessonId,
+                    'Clicker ID': paramsLayout.collectionId,
+                    'Question ID': questions[index].id,
+                    Correct: correct.id === alternativeId
+                })
+            } catch (e) {}
+            setLoading(false)
+        }
+
+        const toggleVisible = () => setVisible(oldVisible => !oldVisible)
+
+        const onChangeCollection = collection =>
+            history.push(
+                `../../../${collection.id}/video/${collection.content.video.id}`
             )
-        } catch (e) {}
-        setLoading(false)
-    }
 
-    const toggleVisible = () => setVisible(oldVisible => !oldVisible)
-
-    const onChangeCollection = collection =>
-        history.push(
-            `../../../${collection.id}/video/${collection.content.video.id}`
+        const index = useMemo(
+            () => questions.findIndex(question => question.id === questionId),
+            [questionId, questions]
         )
 
-    const index = useMemo(
-        () => questions.findIndex(question => question.id === questionId),
-        [questionId, questions]
-    )
+        const isFull = useMemo(() => width <= 992, [width])
 
-    const isFull = useMemo(() => width <= 992, [width])
-
-    return (
-        <>
-            <SANRow type='flex' align='middle' justifyContent='space-between'>
-                <SANCol xs={24} sm={8}>
-                    <SANBox
-                        display='flex'
-                        alignItems='center'
-                        mb={{ sm: '0', _: 'md' }}
-                        px={{ lg: '0', _: 'md' }}
-                    >
-                        <SANTypography color='white.10' level={4} mr='xs'>
-                            {t('classroom.quiz.question')} {index + 1}
-                        </SANTypography>
-                        <SANTypography color='white.5' vairnat='subtitle1'>
-                            / {questions.length}
-                        </SANTypography>
-                    </SANBox>
-                </SANCol>
-                <SANColFloat md={8} bg='grey-solid.8'>
-                    <SANBox
-                        display='flex'
-                        alignItems='center'
-                        justifyContent={{ md: 'flex-end', _: 'center' }}
-                    >
-                        <SANQuestionMap
-                            items={questionsMap}
-                            current={index}
-                            onCancel={toggleVisible}
-                            visible={visible}
-                        />
-                        <SANButton
-                            size='small'
-                            variant='outlined'
-                            color='light'
-                            onClick={toggleVisible}
+        return (
+            <>
+                <SANRow
+                    type='flex'
+                    align='middle'
+                    justifyContent='space-between'
+                >
+                    <SANCol xs={24} sm={8}>
+                        <SANBox
+                            display='flex'
+                            alignItems='center'
+                            mb={{ sm: '0', _: 'md' }}
+                            px={{ lg: '0', _: 'md' }}
                         >
-                            <SANEvaIcon name='map-outline' mr='xs' />
-                            {t('classroom.quiz.questionMap')}
-                        </SANButton>
-                    </SANBox>
-                </SANColFloat>
-            </SANRow>
+                            <SANTypography color='white.10' level={4} mr='xs'>
+                                {t('classroom.quiz.question')} {index + 1}
+                            </SANTypography>
+                            <SANTypography color='white.5' vairnat='subtitle1'>
+                                / {questions.length}
+                            </SANTypography>
+                        </SANBox>
+                    </SANCol>
+                    <SANColFloat md={8} bg='grey-solid.8'>
+                        <SANBox
+                            display='flex'
+                            alignItems='center'
+                            justifyContent={{ md: 'flex-end', _: 'center' }}
+                        >
+                            <SANQuestionMap
+                                items={questionsMap}
+                                current={index}
+                                onCancel={toggleVisible}
+                                visible={visible}
+                            />
+                            <SANButton
+                                size='small'
+                                variant='outlined'
+                                color='light'
+                                onClick={toggleVisible}
+                                mr={{ lg: '0', _: 'md' }}
+                            >
+                                <SANEvaIcon name='map-outline' mr='xs' />
+                                {t('classroom.quiz.questionMap')}
+                            </SANButton>
+                        </SANBox>
+                    </SANColFloat>
+                </SANRow>
 
-            <SANBox mt={{ sm: '8', _: 'sm' }}>
-                <SANQuestion
-                    full={isFull}
-                    question={questions[index]}
-                    {...responses.find(
-                        res => res.questionId === questions[index].id
-                    )}
-                    loading={loading}
-                    onConfirm={handleConfirm}
-                    onJump={handleJump}
-                    onNext={handleNext}
-                    labelMonitor={t('global.expert')}
-                />
-            </SANBox>
-            <SANBox mt={{ lg: 'xl', _: '0' }} px={width > 884 && 18}>
-                <RMCollection
-                    parentId={paramsLayout.lessonId}
-                    value={paramsLayout.collectionId}
-                    vertical={false}
-                    onChange={onChangeCollection}
-                    ref={collectionRef}
-                />
-            </SANBox>
-        </>
-    )
-}
+                <SANBox mt={{ sm: '8', _: 'sm' }}>
+                    <SANQuestion
+                        full={isFull}
+                        question={questions[index]}
+                        {...responses.find(
+                            res => res.questionId === questions[index].id
+                        )}
+                        loading={loading}
+                        onConfirm={handleConfirm}
+                        onJump={handleJump}
+                        onNext={handleNext}
+                        labelMonitor={t('global.expert')}
+                    />
+                </SANBox>
+                <SANBox mt={{ lg: 'xl', _: '0' }} px={width > 884 && 18}>
+                    <RMCollection
+                        parentId={paramsLayout.lessonId}
+                        value={paramsLayout.collectionId}
+                        vertical={false}
+                        onChange={onChangeCollection}
+                        ref={collectionRef}
+                    />
+                </SANBox>
+            </>
+        )
+    }
+)
 
 export default withRouter(RMClassroomQuizQuestion)

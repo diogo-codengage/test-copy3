@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { Switch, Route, Redirect } from 'react-router-dom'
@@ -28,45 +28,62 @@ const SANStopwatchStyled = styled(SANStopwatch)`
     }
 `
 
-const FinishWithoutQuestions = ({ onClose, onRestart, ...props }) => {
-    const { t } = useTranslation('resmed')
-    return (
-        <SANModal
-            title={t('practicalArea.question.endPractice.modal.title')}
-            centered
-            closable={false}
-            {...props}
-        >
-            <SANTypography variant='subtitle1' mb='xl'>
-                {t('practicalArea.question.endPractice.modal.subtitle')}
-            </SANTypography>
-            <SANModalFooter>
-                <SANButton
-                    size='small'
-                    mr='md'
-                    variant='text'
-                    uppercase
-                    bold
-                    onClick={onClose}
-                >
-                    {t('practicalArea.question.endPractice.modal.close')}
-                </SANButton>
-                <SANButton
-                    size='small'
-                    variant='solid'
-                    color='primary'
-                    uppercase
-                    bold
-                    onClick={onRestart}
-                >
-                    {t('practicalArea.question.endPractice.modal.restart')}
-                </SANButton>
-            </SANModalFooter>
-        </SANModal>
-    )
+interface IModalProps {
+    onCancel: () => void
+    visible: boolean
 }
 
-const GetOutPractice = ({ onConfirm, ...props }) => {
+interface IFinishWithoutQuestionsProps extends IModalProps {
+    onClose: () => void
+    onRestart: () => void
+}
+
+const FinishWithoutQuestions = memo<IFinishWithoutQuestionsProps>(
+    ({ onClose, onRestart, ...props }) => {
+        const { t } = useTranslation('resmed')
+        return (
+            <SANModal
+                title={t('practicalArea.question.endPractice.modal.title')}
+                centered
+                closable={false}
+                {...props}
+            >
+                <SANTypography variant='subtitle1' mb='xl'>
+                    {t('practicalArea.question.endPractice.modal.subtitle')}
+                </SANTypography>
+                <SANModalFooter>
+                    <SANButton
+                        size='small'
+                        mr='md'
+                        variant='text'
+                        uppercase
+                        bold
+                        onClick={onClose}
+                    >
+                        {t('practicalArea.question.endPractice.modal.close')}
+                    </SANButton>
+                    <SANButton
+                        size='small'
+                        variant='solid'
+                        color='primary'
+                        uppercase
+                        bold
+                        onClick={onRestart}
+                    >
+                        {t('practicalArea.question.endPractice.modal.restart')}
+                    </SANButton>
+                </SANModalFooter>
+            </SANModal>
+        )
+    }
+)
+
+interface IGetOutPracticeProps extends IModalProps {
+    onCancel: () => void
+    onConfirm: () => void
+}
+
+const GetOutPractice = memo<IGetOutPracticeProps>(({ onConfirm, ...props }) => {
     const { t } = useTranslation('resmed')
     return (
         <SANModal
@@ -102,9 +119,9 @@ const GetOutPractice = ({ onConfirm, ...props }) => {
             </SANModalFooter>
         </SANModal>
     )
-}
+})
 
-const RMQuestion = ({ match: { url }, history }) => {
+const RMQuestion = memo<any>(({ match: { url }, history, location }) => {
     const { t } = useTranslation('resmed')
     const {
         stopwatchRef,
@@ -116,6 +133,15 @@ const RMQuestion = ({ match: { url }, history }) => {
     const [visibleFinish, setVisibleFinish] = useState(false)
     const [visibleExit, setVisibleExit] = useState(false)
 
+    const onFinished = () => {
+        !!stopwatchRef.current &&
+            dispatch({
+                type: 'stats',
+                stats: { time: stopwatchRef.current.time() }
+            })
+        history.push('/inicio/area-pratica/finalizado')
+    }
+
     const validatePractice = () => {
         if (
             totalAnsweredQuestions === 0 ||
@@ -124,12 +150,7 @@ const RMQuestion = ({ match: { url }, history }) => {
             setVisibleFinish(true)
             return
         } else {
-            !!stopwatchRef.current &&
-                dispatch({
-                    type: 'stats',
-                    stats: { time: stopwatchRef.current.time() }
-                })
-            history.push('/inicio/area-pratica/finalizado')
+            onFinished()
         }
     }
 
@@ -144,7 +165,7 @@ const RMQuestion = ({ match: { url }, history }) => {
     }
 
     const onConfirm = () => {
-        history.push('/inicio/area-pratica/finalizado')
+        onFinished()
         setVisibleExit(false)
     }
 
@@ -186,10 +207,13 @@ const RMQuestion = ({ match: { url }, history }) => {
                 BoxProps={{
                     bg: 'grey-solid.1',
                     flex: '1',
-                    py: '8'
+                    py: { sm: '8', _: 'md' }
                 }}
                 ContainerProps={{
-                    height: '100%'
+                    height: '100%',
+                    px: location.pathname.includes('/pratica')
+                        ? { lg: 'md', _: '0' }
+                        : 'md'
                 }}
                 HeaderProps={{
                     extra: (
@@ -244,6 +268,6 @@ const RMQuestion = ({ match: { url }, history }) => {
             </SANPage>
         </>
     )
-}
+})
 
 export default RMQuestion

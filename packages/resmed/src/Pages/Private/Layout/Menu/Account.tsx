@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -18,22 +18,25 @@ import {
 import { useAuthContext } from 'Hooks/auth'
 import RMLogout from 'Components/ModalLogout'
 import { useLayoutContext } from '../Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 import { logout } from 'Config/AWSCognito'
 
 import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 
-const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
+const RMMenuAccount = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
     const { setMe, me } = useAuthContext()
     const { onCloseMenu, setMenuTab } = useLayoutContext()
     const [visibleLogout, setVisibleLogout] = useState(false)
     const [showModalTerms, setShowModalTerms] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
+    const { handleTrack } = useMainContext()
 
     const signOut = () => {
         logout({})
         setMe(undefined)
+        handleTrack('Logout', undefined)
         history.push('/auth/entrar')
     }
 
@@ -79,6 +82,15 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
                     title={t('mainMenu.account.changePassword')}
                 />
             </SANNavigationList>
+            <SANNavigationList>
+                <SANNavigationListItem
+                    to='/inicio/minha-conta/dados-complementares'
+                    icon={<SANEvaIcon name='clipboard' color='default' />}
+                    onClick={onCloseMenu}
+                    dataTestid='flix_menu_my-account__go_to--complementary-register'
+                    title={t('mainMenu.account.complementaryRegister')}
+                />
+            </SANNavigationList>
             <SANDivider mx='md' my='lg' bg='white.1' />
 
             <SANTypography variant='overline' px='md' color='white.5'>
@@ -117,13 +129,16 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
             </SANNavigationList>
 
             <RMModalTermsAndPrivacy
-                onCancel={() => setShowModalTerms(false)}
+                onCancel={() => {
+                    setShowModalTerms(false)
+                    setActiveKey(0)
+                }}
                 visible={showModalTerms}
                 defaultActiveKey={activeKey}
                 scrolling
             />
         </SANScroll>
     )
-}
+})
 
 export default withRouter(RMMenuAccount)

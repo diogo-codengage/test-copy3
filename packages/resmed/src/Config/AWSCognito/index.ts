@@ -111,6 +111,7 @@ const logout = ({ callback }: { callback?: Function }) => {
     if (!cognitoUser) {
         return
     }
+    window.localStorage.clear()
     cognitoUser.signOut()
     !!callback && callback()
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
@@ -17,6 +17,7 @@ import {
 } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
+import { useMainContext } from 'Pages/Private/Context'
 
 import RMGeneral from './General'
 import RMAbout from './About'
@@ -74,12 +75,12 @@ const Header = () => {
                                 <SANCommonBadge
                                     count={activeCourse.progress}
                                     suffix='%'
-                                    status='warning'
+                                    status='primary'
                                 />
                             </SANBox>
                             <SANProgress
                                 percent={activeCourse.progress}
-                                color='secondary'
+                                color='primary'
                                 backdrop='grey.1'
                             />
                         </SANBox>
@@ -90,8 +91,14 @@ const Header = () => {
     )
 }
 
-const RMHome = () => {
+const RMHome = memo(() => {
     const { t } = useTranslation('resmed')
+    const { handleTrack } = useMainContext()
+
+    useEffect(() => {
+        handleTrack('Course Homepage viewed')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <SANBox flex='1' display='flex' flexDirection='column'>
@@ -126,6 +133,6 @@ const RMHome = () => {
             </SANTabs>
         </SANBox>
     )
-}
+})
 
 export default RMHome

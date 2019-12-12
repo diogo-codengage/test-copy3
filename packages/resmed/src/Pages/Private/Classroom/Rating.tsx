@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { useApolloClient } from '@apollo/react-hooks'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -13,13 +13,22 @@ import {
 import { CREATE_RATING } from 'Apollo/Classroom/Mutations/create-rating'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomContext } from './Context'
+import { useMainContext } from 'Pages/Private/Context'
 
-const RMClassroomRating = ({ history }: RouteComponentProps) => {
+const RMClassroomRating = memo<RouteComponentProps>(({ history }) => {
     const client = useApolloClient()
     const { params, onOpenMenu } = useLayoutContext()
-    const { lesson } = useClassroomContext()
+    const { handleTrack } = useMainContext()
+    const { lesson, specialty } = useClassroomContext()
 
     const handleRating = async (value, { setSubmitting }) => {
+        handleTrack('Video rated', {
+            'Specialty ID': params.specialtyId,
+            'Subspecialty ID': params.subspecialtyId,
+            'Lesson ID': params.lessonId,
+            'Clicker ID': params.collectionId,
+            Rating: value
+        })
         try {
             await client.mutate({
                 mutation: CREATE_RATING,
@@ -39,9 +48,10 @@ const RMClassroomRating = ({ history }: RouteComponentProps) => {
         <SANBox flex='1'>
             <SANClassroomHeader
                 title={lesson.title}
-                subtitle={lesson.subSpecialty.specialty.name}
+                subtitle={specialty.title}
                 onOpenMenu={onOpenMenu}
                 actions={false}
+                plataform='resmed'
             />
             <SANLayoutContainer
                 pb='8'
@@ -52,6 +62,6 @@ const RMClassroomRating = ({ history }: RouteComponentProps) => {
             </SANLayoutContainer>
         </SANBox>
     )
-}
+})
 
 export default withRouter(RMClassroomRating)

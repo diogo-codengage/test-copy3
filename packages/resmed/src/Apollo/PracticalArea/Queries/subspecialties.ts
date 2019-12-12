@@ -10,8 +10,8 @@ export interface ISubspecialtiesQuery {
 }
 
 export const GET_SUBSPECIALTIES = gql`
-    query SubSpecialties($parentId: ID) {
-        subSpecialties(where: { parentId: $parentId }) {
+    query SubSpecialties {
+        subSpecialties: contentSubSpecialties {
             value: id
             label: name
         }

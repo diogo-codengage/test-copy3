@@ -17,6 +17,8 @@ const Wrapper = styled.div`
     position: relative;
     height: 6px;
     width: 100%;
+    overflow: hidden;
+    border-radius: 3px;
 `
 
 const Progress = styled(SANBox)`
@@ -44,7 +46,7 @@ const SANProgress = ({
             <Progress
                 style={{ width: `${percent}%` }}
                 bg={color || 'primary'}
-                borderRadius={percent <= 1 ? '50%' : '3px'}
+                borderRadius='base'
             />
             <Background bg={backdrop || 'white.3'} />
         </Wrapper>
