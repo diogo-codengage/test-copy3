@@ -35,19 +35,25 @@ import { UPDATE_COURSE_ACCESSED } from 'Apollo/User/Mutations/course-accessed'
 const SANCourseStatusFormItem = styled(SANFormItem)<{ rcn?: boolean }>`
     &&& {
         ${ifProp(
-            'rcn',
+            'hasError',
             css`
-                margin-bottom: 12px;
+                margin-bottom: 5px !important;
             `,
-            css`
-                margin-bottom: 24px;
-            `
+            ifProp(
+                'rcn',
+                css`
+                    margin-bottom: 12px;
+                `,
+                css`
+                    margin-bottom: 24px;
+                `
+            )
         )}
     }
 `
 
 const SANStyledFormItem = styled(SANFormItem)`
-    &&&&& {
+    &&& {
         ${ifProp(
             'hasError',
             css`
@@ -283,6 +289,7 @@ const RMForm = ({
                                     message: 'Este campo é obrigatório!'
                                 }
                             ]}
+                            hasError={!!form.getFieldError('graduationStep')}
                         >
                             <SANStyledSelect
                                 required
@@ -364,6 +371,7 @@ const RMForm = ({
                                     message: 'Este campo é obrigatório!'
                                 }
                             ]}
+                            hasError={!!form.getFieldError('testExperience')}
                             valuePropName='checked'
                         >
                             <SANStyledRadioGroup
@@ -402,6 +410,9 @@ const RMForm = ({
                                     message: 'Este campo é obrigatório!'
                                 }
                             ]}
+                            hasError={
+                                !!form.getFieldError('preparatoryCourseStatus')
+                            }
                         >
                             <SANStyledSelect
                                 required
@@ -438,6 +449,11 @@ const RMForm = ({
                                         message: 'Este campo é obrigatório!'
                                     }
                                 ]}
+                                hasError={
+                                    !!form.getFieldError(
+                                        'preparatoryCourseName'
+                                    )
+                                }
                             >
                                 <SANInput
                                     size='large'
