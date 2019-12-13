@@ -24,7 +24,6 @@ import { IEvent } from '@sanar/components/dist/Components/Organisms/BigCalendar'
 import {
     GET_APPOINTMENTS,
     IAppointmentsQuery,
-    IAppointments,
     IAppointment
 } from 'Apollo/Schedule/Queries/appointments'
 import {

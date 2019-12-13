@@ -14,7 +14,6 @@ import {
     SANEvaIcon,
     SANScroll
 } from '@sanar/components'
-import { ISANModalProps } from '@sanar/components/dist/Components/Molecules/Modal'
 
 import { IAppointment } from 'Apollo/Schedule/Queries/appointments'
 
@@ -25,6 +24,11 @@ export interface IOption extends Partial<IAppointment> {
     title: string
     subtitle: string
     description: string
+}
+
+interface IModalProps {
+    onCancel: () => void
+    visible: boolean
 }
 
 const defaultOption: IOption = {
@@ -71,7 +75,7 @@ const Wrapper = styled(SANBox)<{ status: IStatus }>`
     }
 `
 
-interface IRMModalMore extends ISANModalProps {
+interface IRMModalMore extends IModalProps {
     options: IOption[]
 }
 
@@ -124,7 +128,7 @@ export const RMModalMore = ({ options = [], ...props }: IRMModalMore) => {
     )
 }
 
-interface IRMModalSuggestion extends ISANModalProps {
+interface IRMModalSuggestion extends IModalProps {
     onConfirm: () => void
     checked: boolean
 }
@@ -141,7 +145,6 @@ export const RMModalSuggestion = ({
             width={436}
             title={t('schedule.modal.suggestion.title')}
             centered
-            onCancel={() => props.onCancel(checked)}
             {...props}
         >
             <SANTypography fontSize='lg' color='grey.7' mb='xl'>
@@ -169,7 +172,7 @@ export const RMModalSuggestion = ({
                     color='primary'
                     uppercase
                     bold
-                    onClick={() => props.onCancel(checked)}
+                    onClick={props.onCancel}
                 >
                     {t('schedule.modal.suggestion.back')}
                 </SANButton>
@@ -178,7 +181,7 @@ export const RMModalSuggestion = ({
     )
 }
 
-interface IRMModalSchedule extends ISANModalProps, RouteComponentProps {
+interface IRMModalSchedule extends IModalProps, RouteComponentProps {
     onClick: () => void
     options: IOption
 }
