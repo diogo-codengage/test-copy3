@@ -33,16 +33,16 @@ export interface IAppointment {
     accessContent: IAccessContent
 }
 
-export interface IAppointmentsQuery {
-    appointments: {
+export interface IResetSchedule {
+    resetSchedule: {
         items: IAppointment[]
         hasModified: boolean
     }
 }
 
-export const GET_APPOINTMENTS = gql`
-    query Appointments($start: Date!, $end: Date!, $exact: Boolean) {
-        appointments(where: { start: $start, end: $end, exact: $exact }) {
+export const RESET_SCHEDULE = gql`
+    mutation ResetSchedule($start: Date!, $end: Date!) {
+        resetSchedule(where: { start: $start, end: $end }) {
             hasModified: didModified
             items {
                 id

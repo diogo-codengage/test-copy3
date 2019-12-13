@@ -33,7 +33,7 @@ const getWeekend = () => {
     }
 }
 
-const RMWeek = () => {
+const RMWeek = ({ hasModified = false }) => {
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
     const [loading, setLoading] = useState(false)
@@ -55,7 +55,7 @@ const RMWeek = () => {
                     }
                 })
                 setEvents(
-                    appointments.map(v => ({
+                    appointments.items.map(v => ({
                         ...v,
                         type: getStatus(v)
                     }))
@@ -65,7 +65,7 @@ const RMWeek = () => {
         }
         fetchEventsWeek()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [hasModified])
 
     const renderEvent = useCallback(
         event => (

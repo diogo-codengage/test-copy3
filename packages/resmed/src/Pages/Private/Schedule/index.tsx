@@ -23,12 +23,16 @@ import { IEvent } from '@sanar/components/dist/Components/Organisms/BigCalendar'
 
 import {
     GET_APPOINTMENTS,
-    IAppointmentsQuery
+    IAppointmentsQuery,
+    IAppointment
 } from 'Apollo/Schedule/Queries/appointments'
 import {
     UPDATE_APPOINTMENT,
     IUpdateAppointment
 } from 'Apollo/Schedule/Mutations/update-appointment'
+import { RESET_SCHEDULE, IResetSchedule } from 'Apollo/Schedule/Mutations/reset'
+
+import { useAuthContext } from 'Hooks/auth'
 
 import {
     RMModalSchedule,
@@ -82,11 +86,25 @@ export const getStatus = event => {
 const formatMinutes = minutes =>
     new Date(minutes * 60000).toISOString().substr(11, 5)
 
+const makeEvents = (event: IAppointment, hasModified = false) => ({
+    extendedProps: {
+        ...event,
+        subtitle: formatMinutes(event.timeInMinutes)
+    },
+    id: event.id,
+    title: event.title,
+    start: new Date(event.start),
+    startEditable: hasModified ? !event.fixed : false,
+    status: getStatus(event)
+})
+
 const RMSchedule = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
     const calendarRef = useRef<SANBigCalendar>()
     const client = useApolloClient()
+    const { activeCourse } = useAuthContext()
     const [loading, setLoading] = useState(false)
+    const [hasModified, setModified] = useState(false)
     const [currentRange, setCurrentRange] = useState({
         start: '',
         end: ''
@@ -101,7 +119,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
     })
     const [modalSuggestion, setModalSuggestion] = useState({
         visible: false,
-        checked: false
+        checked: true
     })
     const [modalMore, setModalMore] = useState<{
         visible: boolean
@@ -135,6 +153,27 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
     const handleChangeSuggestion = checked =>
         setModalSuggestion({ checked, visible: true })
 
+    const handleConfirmSuggestion = async () => {
+        try {
+            setLoading(true)
+            setModalSuggestion({ checked: hasModified, visible: false })
+            const {
+                data: { resetSchedule }
+            } = await client.mutate<IResetSchedule>({
+                mutation: RESET_SCHEDULE,
+                variables: {
+                    start: format(currentRange.start, 'YYYY-MM-DD'),
+                    end: format(currentRange.end, 'YYYY-MM-DD')
+                }
+            })
+            setEvents(resetSchedule.items.map(makeEvents) as IEvent[])
+            setModified(old => !old)
+        } catch {
+            setModalSuggestion({ checked: !hasModified, visible: false })
+        }
+        setLoading(false)
+    }
+
     const handleEventDrop = e => {
         const { event } = e
         const date = new Date(new Date(event.start).toUTCString()).toISOString()
@@ -165,19 +204,15 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                     }
                 })
                 setEvents(
-                    appointments.map(v => ({
-                        extendedProps: {
-                            ...v,
-                            subtitle: formatMinutes(v.timeInMinutes)
-                        },
-                        id: v.id,
-                        title: v.title,
-                        start: new Date(v.start),
-                        // startEditable: !v.fixed,
-                        startEditable: true,
-                        status: getStatus(v)
-                    }))
+                    appointments.items.map(event =>
+                        makeEvents(event, appointments.hasModified)
+                    ) as IEvent[]
                 )
+                setModified(appointments.hasModified)
+                setModalSuggestion(old => ({
+                    ...old,
+                    checked: !appointments.hasModified
+                }))
             } catch {}
             setLoading(false)
         }
@@ -205,11 +240,12 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                 visible={modalSuggestion.visible}
                 checked={modalSuggestion.checked}
                 onCancel={() =>
-                    setModalSuggestion({ checked: false, visible: false })
+                    setModalSuggestion(old => ({
+                        checked: !hasModified,
+                        visible: false
+                    }))
                 }
-                onConfirm={() =>
-                    setModalSuggestion({ checked: true, visible: false })
-                }
+                onConfirm={handleConfirmSuggestion}
             />
             <SANPage
                 BoxProps={{
@@ -240,6 +276,16 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                                 eventDrop={handleEventDrop}
                                 eventLimitClick={handleEventLimitClick}
                                 onChangeMonth={handleChangeMonth}
+                                validRange={{
+                                    start: format(
+                                        new Date('2018-12-01'),
+                                        'YYYY-MM-DD'
+                                    ),
+                                    end: format(
+                                        new Date('2020-01-31'),
+                                        'YYYY-MM-DD'
+                                    )
+                                }}
                             />
                         </SANBox>
 
@@ -270,10 +316,10 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                     <SANLayoutContainer>
                         <SANRow gutter={24}>
                             <SANCol xs={24} sm={24} md={12}>
-                                <RMToday />
+                                <RMToday hasModified={hasModified} />
                             </SANCol>
                             <SANCol xs={24} sm={24} md={12}>
-                                <RMWeek />
+                                <RMWeek hasModified={hasModified} />
                             </SANCol>
                         </SANRow>
                     </SANLayoutContainer>

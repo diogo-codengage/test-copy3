@@ -6,17 +6,6 @@ interface ILastAccessedResource {
     title: string
 }
 
-interface ISpecialty {
-    id: string
-    name: string
-}
-
-interface ISubSpecialty {
-    id: string
-    name: string
-    specialty: ISpecialty
-}
-
 interface ILessonLastAccessed {
     id: string
 }

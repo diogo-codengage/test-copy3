@@ -141,6 +141,7 @@ export const RMModalSuggestion = ({
             width={436}
             title={t('schedule.modal.suggestion.title')}
             centered
+            onCancel={() => props.onCancel(checked)}
             {...props}
         >
             <SANTypography fontSize='lg' color='grey.7' mb='xl'>
@@ -168,7 +169,7 @@ export const RMModalSuggestion = ({
                     color='primary'
                     uppercase
                     bold
-                    onClick={props.onCancel}
+                    onClick={() => props.onCancel(checked)}
                 >
                     {t('schedule.modal.suggestion.back')}
                 </SANButton>

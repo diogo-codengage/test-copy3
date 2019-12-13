@@ -22,7 +22,7 @@ import {
 
 import { getStatus } from './index'
 
-const RMToday = () => {
+const RMToday = ({ hasModified = false }) => {
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
     const [loading, setLoading] = useState(false)
@@ -43,7 +43,7 @@ const RMToday = () => {
                     }
                 })
                 setEvents(
-                    appointments.map(v => ({
+                    appointments.items.map(v => ({
                         ...v,
                         type: getStatus(v)
                     }))
@@ -53,7 +53,7 @@ const RMToday = () => {
         }
         fetchEventsToday()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [hasModified])
 
     const renderEvent = useCallback(
         event => (
