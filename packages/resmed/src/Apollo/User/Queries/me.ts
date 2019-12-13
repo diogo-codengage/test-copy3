@@ -1,19 +1,20 @@
 import gql from 'graphql-tag'
 
-interface IProfile {
+export interface IProfile {
     id: string
     graduationStep:
-        | 'firstYear'
-        | 'secondYear'
-        | 'thirdYear'
-        | 'fourthYear'
-        | 'fifthYear'
-        | 'sixthYear'
-        | 'formed'
+    | 'firstYear'
+    | 'secondYear'
+    | 'thirdYear'
+    | 'fourthYear'
+    | 'fifthYear'
+    | 'sixthYear'
+    | 'formed'
     institutionIds: string[]
     specialtyIds: number[]
     testExperience: 'none' | 'one' | 'many'
     preparatoryCourseStatus: 'inProgress' | 'completed' | 'missing'
+    preparatoryCourseName?: string
     userId: string
     courseId?: string
 }
@@ -35,6 +36,12 @@ export const GET_ME = gql`
             hasActiveSubscription
             profile {
                 id
+                graduationStep
+                institutionIds
+                specialtyIds
+                testExperience
+                preparatoryCourseStatus
+                preparatoryCourseName
             }
         }
     }

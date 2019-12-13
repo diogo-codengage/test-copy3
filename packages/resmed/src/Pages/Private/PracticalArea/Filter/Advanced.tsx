@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, memo } from 'react'
 
 import { theme } from 'styled-tools'
 import { space } from 'styled-system'
@@ -80,11 +80,15 @@ const SwitchStyled = styled(SANFormItem)`
 
 export const OnlyComments = props => {
     const { t } = useTranslation('resmed')
+    const {
+        state: { filter }
+    } = useQuestionsContext()
     return (
         <SwitchStyled
             name='onlyComments'
             label={t('practicalArea.filter.advanced.onlyComments')}
             valuePropName='checked'
+            initialValue={!!filter && filter.onlyComments}
             {...props}
         >
             <SANSwitch />
@@ -96,7 +100,7 @@ interface IRMFilterAdvancedProps {
     defaultOpen?: boolean
 }
 
-const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
+const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
     const {
@@ -262,6 +266,6 @@ const RMFilterAdvanced = ({ defaultOpen }: IRMFilterAdvancedProps) => {
             </SANCollapsePanel>
         </SANCollapse>
     )
-}
+})
 
 export default RMFilterAdvanced

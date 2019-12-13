@@ -27,7 +27,7 @@ import {
 } from 'Apollo/Schedule/Queries/appointments'
 import {
     UPDATE_APPOINTMENT,
-    IAppointmentMutation
+    IUpdateAppointment
 } from 'Apollo/Schedule/Mutations/update-appointment'
 
 import {
@@ -137,7 +137,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
         const { event } = e
         const date = new Date(new Date(event.start).toUTCString()).toISOString()
         try {
-            client.mutate({
+            client.mutate<IUpdateAppointment>({
                 mutation: UPDATE_APPOINTMENT,
                 variables: {
                     id: event.extendedProps.id,

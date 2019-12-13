@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { Switch, Route, Redirect } from 'react-router-dom'
@@ -28,45 +28,62 @@ const SANStopwatchStyled = styled(SANStopwatch)`
     }
 `
 
-const FinishWithoutQuestions = ({ onClose, onRestart, ...props }) => {
-    const { t } = useTranslation('resmed')
-    return (
-        <SANModal
-            title={t('practicalArea.question.endPractice.modal.title')}
-            centered
-            closable={false}
-            {...props}
-        >
-            <SANTypography variant='subtitle1' mb='xl'>
-                {t('practicalArea.question.endPractice.modal.subtitle')}
-            </SANTypography>
-            <SANModalFooter>
-                <SANButton
-                    size='small'
-                    mr='md'
-                    variant='text'
-                    uppercase
-                    bold
-                    onClick={onClose}
-                >
-                    {t('practicalArea.question.endPractice.modal.close')}
-                </SANButton>
-                <SANButton
-                    size='small'
-                    variant='solid'
-                    color='primary'
-                    uppercase
-                    bold
-                    onClick={onRestart}
-                >
-                    {t('practicalArea.question.endPractice.modal.restart')}
-                </SANButton>
-            </SANModalFooter>
-        </SANModal>
-    )
+interface IModalProps {
+    onCancel: () => void
+    visible: boolean
 }
 
-const GetOutPractice = ({ onConfirm, ...props }) => {
+interface IFinishWithoutQuestionsProps extends IModalProps {
+    onClose: () => void
+    onRestart: () => void
+}
+
+const FinishWithoutQuestions = memo<IFinishWithoutQuestionsProps>(
+    ({ onClose, onRestart, ...props }) => {
+        const { t } = useTranslation('resmed')
+        return (
+            <SANModal
+                title={t('practicalArea.question.endPractice.modal.title')}
+                centered
+                closable={false}
+                {...props}
+            >
+                <SANTypography variant='subtitle1' mb='xl'>
+                    {t('practicalArea.question.endPractice.modal.subtitle')}
+                </SANTypography>
+                <SANModalFooter>
+                    <SANButton
+                        size='small'
+                        mr='md'
+                        variant='text'
+                        uppercase
+                        bold
+                        onClick={onClose}
+                    >
+                        {t('practicalArea.question.endPractice.modal.close')}
+                    </SANButton>
+                    <SANButton
+                        size='small'
+                        variant='solid'
+                        color='primary'
+                        uppercase
+                        bold
+                        onClick={onRestart}
+                    >
+                        {t('practicalArea.question.endPractice.modal.restart')}
+                    </SANButton>
+                </SANModalFooter>
+            </SANModal>
+        )
+    }
+)
+
+interface IGetOutPracticeProps extends IModalProps {
+    onCancel: () => void
+    onConfirm: () => void
+}
+
+const GetOutPractice = memo<IGetOutPracticeProps>(({ onConfirm, ...props }) => {
     const { t } = useTranslation('resmed')
     return (
         <SANModal
@@ -102,9 +119,9 @@ const GetOutPractice = ({ onConfirm, ...props }) => {
             </SANModalFooter>
         </SANModal>
     )
-}
+})
 
-const RMQuestion = ({ match: { url }, history, location }) => {
+const RMQuestion = memo<any>(({ match: { url }, history, location }) => {
     const { t } = useTranslation('resmed')
     const {
         stopwatchRef,
@@ -251,6 +268,6 @@ const RMQuestion = ({ match: { url }, history, location }) => {
             </SANPage>
         </>
     )
-}
+})
 
 export default RMQuestion

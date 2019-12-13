@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState, useMemo, memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -15,7 +15,7 @@ import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
 import { ANSWER_MUTATION } from 'Apollo/PracticalArea/Mutations/answer'
 
-import { useLayoutContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 import RMSubheader from './Subheader'
 import RMEmpty from './Empty'
 import { useQuestionsContext } from '../Context'
@@ -30,11 +30,11 @@ const initialResponse = {
     stats: []
 }
 
-const FLXPractice = ({ history }: RouteComponentProps) => {
+const RMPractice = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
     const { width } = useWindowSize()
-    const { handleTrack } = useLayoutContext()
+    const { handleTrack } = useMainContext()
     const snackbar = useSnackbarContext()
     const {
         startStopwatch,
@@ -64,7 +64,7 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
             })
 
             const correct = alternatives.data.find(getCorrect)
-            handleTrack('Question answred', {
+            handleTrack('Question answered', {
                 'Question ID': state.questions[state.currentIndex].id,
                 Correct: correct.id === alternativeId
             })
@@ -176,6 +176,6 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
             />
         </>
     )
-}
+})
 
-export default withRouter(FLXPractice)
+export default withRouter(RMPractice)

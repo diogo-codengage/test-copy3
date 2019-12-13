@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
@@ -17,10 +17,11 @@ import {
 } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
-import { useLayoutContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 import RMGeneral from './General'
 import RMAbout from './About'
+import { RMComplementaryRegisterModal } from 'Components/ComplementaryRegister'
 
 const TitleCol = styled(SANCol)`
     ${theme('mediaQueries.up.md')} {
@@ -91,9 +92,10 @@ const Header = () => {
     )
 }
 
-const RMHome = () => {
+const RMHome = memo(() => {
     const { t } = useTranslation('resmed')
-    const { handleTrack } = useLayoutContext()
+    const { handleTrack } = useMainContext()
+    const { activeCourse, me } = useAuthContext()
 
     useEffect(() => {
         handleTrack('Course Homepage viewed')
@@ -102,6 +104,9 @@ const RMHome = () => {
 
     return (
         <SANBox flex='1' display='flex' flexDirection='column'>
+            {!!activeCourse.id && !activeCourse.accessed && (
+                <RMComplementaryRegisterModal profileData={me.profile} />
+            )}
             <Header />
             <SANTabs center defaultActiveKey='1' tabBarGutter={0} flex='1'>
                 <SANTabPane
@@ -133,6 +138,6 @@ const RMHome = () => {
             </SANTabs>
         </SANBox>
     )
-}
+})
 
 export default RMHome

@@ -1,4 +1,11 @@
-import React, { useCallback, useMemo, useState, useRef, useEffect } from 'react'
+import React, {
+    useCallback,
+    useMemo,
+    useState,
+    useRef,
+    useEffect,
+    memo
+} from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled, { css } from 'styled-components'
@@ -237,72 +244,70 @@ const SANCollectionItem = ({ item, index, onChange, value }: any) => {
     )
 }
 
-const SANCollection: React.FC<ISANCollectionProps> = ({
-    items,
-    vertical,
-    onChange,
-    value,
-    loading = false
-}) => {
-    const [isDragging, setIsDragging] = useState(false)
-    const sliderRef = useRef<any>()
+const SANCollection = memo<ISANCollectionProps>(
+    ({ items, vertical, onChange, value, loading = false }) => {
+        const [isDragging, setIsDragging] = useState(false)
+        const sliderRef = useRef<any>()
 
-    const renderItem = useCallback(
-        (item, index) => (
-            <SANCollectionItem
-                isDragging={isDragging}
-                onChange={onChange}
-                value={value}
-                item={item}
-                index={index + 1}
-                key={index}
-            />
-        ),
-        [value, isDragging]
-    )
+        const renderItem = useCallback(
+            (item, index) => (
+                <SANCollectionItem
+                    isDragging={isDragging}
+                    onChange={onChange}
+                    value={value}
+                    item={item}
+                    index={index + 1}
+                    key={index}
+                />
+            ),
+            [value, isDragging]
+        )
 
-    const index = useMemo(() => items.findIndex(item => item.id === value), [
-        items,
-        value
-    ])
+        const index = useMemo(
+            () => items.findIndex(item => item.id === value),
+            [items, value]
+        )
 
-    const settings = useMemo(
-        () => ({
-            focusOnSelect: true,
-            swipe: true,
-            swipeToSlide: true,
-            draggable: true,
-            dots: false,
-            infinite: items.length >= 5,
-            beforeChange: () => setIsDragging(true),
-            afterChange: () => setIsDragging(false),
-            slidesToScroll: 1,
-            nextArrow: <NextArrow />,
-            prevArrow: <PrevArrow />,
-            verticalSwiping: vertical,
-            arrows: !vertical,
-            slidesToShow: vertical ? 6 : 5,
-            vertical,
-            responsive: vertical ? responsiveVertical : responsiveHorizontal
-        }),
-        [vertical, items]
-    )
+        const settings = useMemo(
+            () => ({
+                focusOnSelect: true,
+                swipe: true,
+                swipeToSlide: true,
+                draggable: true,
+                dots: false,
+                infinite: items.length >= 5,
+                beforeChange: () => setIsDragging(true),
+                afterChange: () => setIsDragging(false),
+                slidesToScroll: 1,
+                nextArrow: <NextArrow />,
+                prevArrow: <PrevArrow />,
+                verticalSwiping: vertical,
+                arrows: !vertical,
+                slidesToShow: vertical ? 6 : 5,
+                vertical,
+                responsive: vertical ? responsiveVertical : responsiveHorizontal
+            }),
+            [vertical, items]
+        )
 
-    const key = useMemo(() => `san-collection-${new Date().getTime()}`, [
-        vertical
-    ])
+        const key = useMemo(() => `san-collection-${new Date().getTime()}`, [
+            vertical
+        ])
 
-    useEffect(() => {
-        if (!!sliderRef && !!sliderRef.current && index > 0) {
-            sliderRef.current.slickGoTo(index)
-        }
-    }, [index])
+        useEffect(() => {
+            if (!!sliderRef && !!sliderRef.current && index > 0) {
+                sliderRef.current.slickGoTo(index)
+            }
+        }, [index])
 
-    return (
-        <SliderStyled ref={sliderRef} key={key} {...settings}>
-            {loading ? arrLoading.map(renderSkeleton) : items.map(renderItem)}
-        </SliderStyled>
-    )
-}
+        return (
+            <SliderStyled ref={sliderRef} key={key} {...settings}>
+                {loading
+                    ? arrLoading.map(renderSkeleton)
+                    : items.map(renderItem)}
+            </SliderStyled>
+        )
+    }
+)
 
 export default SANCollection

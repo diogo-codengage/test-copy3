@@ -19,7 +19,7 @@ import {
 import { ISANModalProps } from '@sanar/components/dist/Components/Molecules/Modal'
 import { ILastAccessed } from 'Apollo/Subspecialties/Queries/lessons'
 
-import { useLayoutContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 const ItemStyled = styled(SANBox)<{ blocked?: boolean }>`
     &:nth-child(even) {
@@ -117,7 +117,7 @@ const RMModalThemes = ({
     ...props
 }: IRMModalThemesProps) => {
     const { t } = useTranslation('resmed')
-    const { handleTrack } = useLayoutContext()
+    const { handleTrack } = useMainContext()
 
     const onClickItem = (lastAccessed: ILastAccessed) => {
         const {

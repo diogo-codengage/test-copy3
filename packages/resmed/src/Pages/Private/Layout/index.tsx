@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { useLayoutContext } from './Context'
-import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 import { SANLayout } from '@sanar/components'
 
@@ -18,7 +18,7 @@ const RMLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
         menuContext,
         footerProps
     } = useLayoutContext()
-    const { handleTrack } = useTrackContext()
+    const { handleTrack } = useMainContext()
 
     const MenuProps = useMemo(
         () => ({

@@ -8,7 +8,7 @@ import { useSnackbarContext, SANModalTabs } from '@sanar/components'
 import { useAuthContext } from 'Hooks/auth'
 import { IMe } from 'Apollo/User/Queries/me'
 import { ACCEPT_TERMS_USE_MUTATION } from 'Apollo/User/Mutations/accept-terms-use'
-import { useLayoutContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 import logo from 'Assets/images/brand/logo.svg'
 
@@ -24,7 +24,7 @@ const SANModalTermsAndPrivacy = ({
     const { t } = useTranslation('resmed')
     const createSnackbar = useSnackbarContext()
     const client = useApolloClient()
-    const { handleTrack } = useLayoutContext()
+    const { handleTrack } = useMainContext()
     const { setMe } = useAuthContext()
     const [activeKey, setActiveKey] = useState(defaultActiveKey)
     const [signed, setSigned] = useState<number[]>([])

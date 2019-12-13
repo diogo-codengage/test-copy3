@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react'
+import React, { useMemo, useCallback, memo } from 'react'
 
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
@@ -26,7 +26,7 @@ import { useAuthContext } from 'Hooks/auth'
 import appleSvg from 'Assets/images/app-logos/apple.svg'
 import googlePlaySvg from 'Assets/images/app-logos/google-play.svg'
 
-import { useLayoutContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 const RMSpecialties = withRouter<RouteComponentProps>(
     ({ history }: RouteComponentProps) => {
@@ -109,9 +109,9 @@ const SpecialtiesStyled = styled(SANBox)`
     min-height: 429px;
 `
 
-const RMGeneral = () => {
+const RMGeneral = memo(() => {
     const { t } = useTranslation('resmed')
-    const { handleTrack } = useLayoutContext()
+    const { handleTrack } = useMainContext()
     const handleAppClicked = OS => {
         handleTrack('App Banner Clicked', {
             'OS Type': OS
@@ -194,6 +194,6 @@ const RMGeneral = () => {
             </SANBox>
         </>
     )
-}
+})
 
 export default withRouter<RouteComponentProps>(RMGeneral)

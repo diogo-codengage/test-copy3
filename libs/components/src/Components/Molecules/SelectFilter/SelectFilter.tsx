@@ -13,12 +13,26 @@ import { SANDropdown } from '../../Atoms/Dropdown'
 import { SANScroll } from '../../Atoms/Scroll'
 import { SANEmpty } from '../../Atoms/Empty'
 
-import styled from 'styled-components'
-import { theme } from 'styled-tools'
+import styled, { css } from 'styled-components'
+import { theme, ifProp } from 'styled-tools'
 
 const SANStyledInput = styled(SANInput)`
-    text-overflow: ellipsis;
-    background-color: ${theme('colors.white.10')};
+    && {
+        text-overflow: ellipsis;
+        background-color: ${theme('colors.white.10')};
+
+        ${ifProp(
+            'hasError',
+            css`
+                border-color: ${theme('colors.error')};
+            `
+        )}
+    }
+`
+const SANStyledScroll = styled(SANScroll)`
+    &&& {
+        max-height: 198px;
+    }
 `
 const SANStyledCheckbox = styled(SANCheckbox)`
     && {
@@ -32,8 +46,19 @@ const SANStyledCheckbox = styled(SANCheckbox)`
         }
 
         :hover {
-            background-color: ${theme('colors.grey.0')};
+            background-color: ${theme('colors.primary-1')};
         }
+    }
+`
+const SANStyledButton = styled(SANButton)`
+    && {
+        color: ${theme('colors.grey.3')};
+    }
+`
+const SANStyledCloseButton = styled(SANButton)`
+    && {
+        border-bottom-right-radius: ${theme('radii.base')};
+        border-bottom-left-radius: ${theme('radii.base')};
     }
 `
 
@@ -53,10 +78,19 @@ export interface ISANSelectFilterProps {
     onClear?: () => void
     onSelectItem?: (item: IItem) => void
     onDeselectItem?: (item: IItem) => void
+    hasError?: boolean
     InputProps?: ISANInputProps
 }
 
-const makeLabel = value => value.map(lt => lt.label).join(', ')
+const makeLabel = value =>
+    value
+        .map(
+            lt =>
+                `${lt.label.charAt(0).toUpperCase()}${lt.label
+                    .slice(1)
+                    .toLowerCase()}`
+        )
+        .join(', ')
 
 const SANSelectFilter = ({
     placeholder,
@@ -69,6 +103,7 @@ const SANSelectFilter = ({
     onClear,
     onSelectItem,
     onDeselectItem,
+    hasError,
     InputProps,
     ...props
 }) => {
@@ -121,10 +156,14 @@ const SANSelectFilter = ({
             )
             onDeselectItem && onDeselectItem(item)
             onChange && onChange(newItems)
+            !newItems[0] && setLabelSelecteds('')
         }
     }
 
-    const onFocus = () => handleOpen(true)
+    const onFocus = () => {
+        handleOpen(true)
+        setSearch('')
+    }
 
     const clickOutside = () => {
         setSearch('')
@@ -176,7 +215,12 @@ const SANSelectFilter = ({
                 overlay={
                     <div ref={menuRef}>
                         <SANBox
-                            mt='6px'
+                            width={
+                                dropdownRef.current
+                                    ? dropdownRef.current.offsetWidth
+                                    : 426
+                            }
+                            mt='10px'
                             bg='white.10'
                             boxShadow='1'
                             borderRadius='base'
@@ -198,7 +242,7 @@ const SANSelectFilter = ({
                                 >
                                     {t('selectFilter.selectAll')}
                                 </SANButton>
-                                <SANButton
+                                <SANStyledButton
                                     onClick={handleClear}
                                     bold
                                     variant='text'
@@ -206,7 +250,7 @@ const SANSelectFilter = ({
                                     disabled={!value.length}
                                 >
                                     {t('selectFilter.clearSelect')}
-                                </SANButton>
+                                </SANStyledButton>
                             </SANBox>
                             <SANDivider
                                 my='0'
@@ -214,20 +258,11 @@ const SANSelectFilter = ({
                                 width='calc(100% - 24px)'
                                 bg='grey.2'
                             />
-                            <SANScroll
-                                autoHeight
-                                autoHeightMax={198}
-                                style={{
-                                    width: dropdownRef.current
-                                        ? dropdownRef.current.offsetWidth
-                                        : 426,
-                                    maxWidth: '100%'
-                                }}
-                            >
+                            <SANStyledScroll>
                                 <SANBox py='xxs'>
                                     {rows.length ? rows : <SANEmpty />}
                                 </SANBox>
-                            </SANScroll>
+                            </SANStyledScroll>
                             <SANBox
                                 displayFlex
                                 alignItems='center'
@@ -237,7 +272,7 @@ const SANSelectFilter = ({
                                 borderTop='1px solid'
                                 borderColor='grey.2'
                             >
-                                <SANButton
+                                <SANStyledCloseButton
                                     onClick={handleClose}
                                     bold
                                     variant='text'
@@ -246,7 +281,7 @@ const SANSelectFilter = ({
                                     color='primary'
                                 >
                                     {t('selectFilter.close')}
-                                </SANButton>
+                                </SANStyledCloseButton>
                             </SANBox>
                         </SANBox>
                     </div>
@@ -261,6 +296,7 @@ const SANSelectFilter = ({
                         iconLeft='search-outline'
                         onChange={handleSearch}
                         value={open ? search : labelSelecteds}
+                        hasError={hasError}
                         {...InputProps}
                     />
                 </span>

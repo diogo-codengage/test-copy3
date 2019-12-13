@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { useApolloClient } from '@apollo/react-hooks'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -13,12 +13,12 @@ import {
 import { CREATE_RATING } from 'Apollo/Classroom/Mutations/create-rating'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomContext } from './Context'
-import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
-const RMClassroomRating = ({ history }: RouteComponentProps) => {
+const RMClassroomRating = memo<RouteComponentProps>(({ history }) => {
     const client = useApolloClient()
     const { params, onOpenMenu } = useLayoutContext()
-    const { handleTrack } = useTrackContext()
+    const { handleTrack } = useMainContext()
     const { lesson, specialty } = useClassroomContext()
 
     const handleRating = async (value, { setSubmitting }) => {
@@ -62,6 +62,6 @@ const RMClassroomRating = ({ history }: RouteComponentProps) => {
             </SANLayoutContainer>
         </SANBox>
     )
-}
+})
 
 export default withRouter(RMClassroomRating)

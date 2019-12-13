@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import { useSnackbarContext } from '@sanar/components'
 import { useApolloClient } from '@apollo/react-hooks'
 import { useAuthContext } from 'Hooks/auth'
+import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
 import {
     SANCol,
@@ -19,7 +19,8 @@ import {
     SANFormItem,
     SANRadioGroup,
     SANSelectFilter,
-    SANSelectOption
+    SANSelectOption,
+    useSnackbarContext
 } from '@sanar/components'
 
 import styled, { css } from 'styled-components'
@@ -29,18 +30,31 @@ import {
     CREATE_PROFILE_MUTATION,
     UPDATE_PROFILE_MUTATION
 } from 'Apollo/User/Mutations/profile'
+import { UPDATE_COURSE_ACCESSED } from 'Apollo/User/Mutations/course-accessed'
 
-const SANCourseStatusFormItem = styled(SANFormItem)<{
-    requireCurseName?: boolean
-}>`
+const SANCourseStatusFormItem = styled(SANFormItem)<{ rcn?: boolean }>`
     &&& {
         ${ifProp(
-            'requireCurseName',
+            'rcn',
             css`
                 margin-bottom: 12px;
             `,
             css`
-                margin-bottom: 32px;
+                margin-bottom: 24px;
+            `
+        )}
+    }
+`
+
+const SANStyledFormItem = styled(SANFormItem)`
+    &&&&& {
+        ${ifProp(
+            'hasError',
+            css`
+                margin-bottom: 5px !important;
+            `,
+            css`
+                margin-bottom: 24px;
             `
         )}
     }
@@ -58,13 +72,11 @@ const SANStyledRadioGroup = styled(SANRadioGroup)`
     }
 `
 
-const SANStyledRadio = styled(SANRadio)<{
-    second?: boolean
-}>`
+const SANStyledRadio = styled(SANRadio)<{ nd?: boolean }>`
     &&& {
         display: block;
         ${ifProp(
-            'second',
+            'nd',
             css`
                 margin-top: 12px;
                 margin-bottom: 12px;
@@ -88,32 +100,31 @@ const SANSTyledButtonFormItem = styled(SANFormItem)`
     }
 `
 
-interface IFormDataProps {
+export interface IFormDataProps {
     id?: string
-    graduationStep?: string
-    institutionIds?: [
+    graduationStep: string
+    institutionIds: [
+        {
+            id: string
+            name: string
+        }
+    ]
+    specialtyIds: [
         {
             id: number
             name: string
         }
     ]
-    specialtyIds?: [
-        {
-            id: number
-            name: string
-        }
-    ]
-    testExperience?: string
-    preparatoryCourseStatus?: string
+    testExperience: string
+    preparatoryCourseStatus: string
     preparatoryCourseName?: string
-    modal?: boolean
 }
 interface IFormProps {
     form: any
 }
-interface IListProps {
+export interface IListProps {
     label: string
-    value: number
+    value: number | string
 }
 
 const graduatedSteps = [
@@ -134,19 +145,30 @@ const RMForm = ({
     oldData = {} as IFormDataProps,
     form,
     specialties = [] as IListProps[],
-    institutions = [] as IListProps[]
+    institutions = [] as IListProps[],
+    closeModal
 }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
-    const [requireCurseName, setRequireCurseName] = useState(false)
+    const { width } = useWindowSize()
+    const [rcn, setRcn] = useState(false) //requiredCourseName
     const [submitting, setSubmitting] = useState(false)
     const snackbar = useSnackbarContext()
-    const { setMe } = useAuthContext()
+    const { setMe, setActiveCourse } = useAuthContext()
+
+    useEffect(() => {
+        if (!!oldData.graduationStep) {
+            setSubmitting(old => !!old && !old)
+            setRcn(oldData.preparatoryCourseStatus !== 'missing')
+        }
+        if (!!oldData.id && !oldData.graduationStep) {
+            setSubmitting(old => !old && true)
+        }
+    }, [oldData])
 
     const createProfile = async profile => {
         let institutionIds = profile.institutionIds.map(({ value }) => value)
         let specialtyIds = profile.specialtyIds.map(({ value }) => value)
-        // console.log('create', profile, institutionIds, specialtyIds)
         try {
             const {
                 data: { createProfile }
@@ -156,7 +178,11 @@ const RMForm = ({
                     data: {
                         ...profile,
                         institutionIds,
-                        specialtyIds
+                        specialtyIds,
+                        preparatoryCourseName:
+                            profile.preparatoryCourseStatus === 'missing'
+                                ? null
+                                : profile.preparatoryCourseName
                     }
                 }
             })
@@ -177,7 +203,6 @@ const RMForm = ({
     const updateProfile = async profile => {
         let institutionIds = profile.institutionIds.map(({ value }) => value)
         let specialtyIds = profile.specialtyIds.map(({ value }) => value)
-        // console.log('update', profile)
         try {
             const {
                 data: { updateProfile }
@@ -187,7 +212,11 @@ const RMForm = ({
                     data: {
                         ...profile,
                         institutionIds,
-                        specialtyIds
+                        specialtyIds,
+                        preparatoryCourseName:
+                            profile.preparatoryCourseStatus === 'missing'
+                                ? null
+                                : profile.preparatoryCourseName
                     }
                 }
             })
@@ -203,6 +232,22 @@ const RMForm = ({
             })
         }
         setSubmitting(false)
+        !!closeModal && closeModal()
+        if (!!oldData.id) {
+            const {
+                data: { updateCourseProgressAccess }
+            } = await client.mutate({
+                mutation: UPDATE_COURSE_ACCESSED,
+                variables: {
+                    data: {
+                        accessed: true
+                    }
+                }
+            })
+            setActiveCourse({
+                ...updateCourseProgressAccess
+            })
+        }
     }
 
     const handleSubmit = e => {
@@ -211,7 +256,7 @@ const RMForm = ({
         form.validateFields((err, values) => {
             if (!err) {
                 if (oldData.id) {
-                    updateProfile(values)
+                    updateProfile({ id: oldData.id, ...values })
                 } else {
                     createProfile(values)
                 }
@@ -220,12 +265,13 @@ const RMForm = ({
             }
         })
     }
+
     return (
         <SANSpin spinning={submitting} flex>
             <SANForm form={form} onSubmit={handleSubmit}>
                 <SANRow gutter={24}>
                     <SANCol>
-                        <SANFormItem
+                        <SANStyledFormItem
                             name='graduationStep'
                             label={t('userProfile.graduatedStep.label')}
                             initialValue={
@@ -249,12 +295,12 @@ const RMForm = ({
                                     </SANSelectOption>
                                 ))}
                             </SANStyledSelect>
-                        </SANFormItem>
+                        </SANStyledFormItem>
                     </SANCol>
                 </SANRow>
                 <SANRow gutter={24}>
                     <SANCol>
-                        <SANFormItem
+                        <SANStyledFormItem
                             name='institutionIds'
                             label={t('userProfile.institutions')}
                             initialValue={
@@ -266,20 +312,23 @@ const RMForm = ({
                                     message: 'Este campo é obrigatório!'
                                 }
                             ]}
+                            hasError={!!form.getFieldError('institutionIds')}
                         >
                             <SANSelectFilter
                                 placeholder={t('userProfile.placeholder')}
                                 items={institutions}
+                                hasError={
+                                    !!form.getFieldError('institutionIds')
+                                }
                                 InputProps={{ size: 'large' }}
                                 mt='md'
                             />
-                        </SANFormItem>
+                        </SANStyledFormItem>
                     </SANCol>
                 </SANRow>
                 <SANRow gutter={24}>
                     <SANCol>
-                        {/* {specialties[0] && ( */}
-                        <SANFormItem
+                        <SANStyledFormItem
                             name='specialtyIds'
                             label={t('userProfile.specialties')}
                             initialValue={
@@ -291,27 +340,21 @@ const RMForm = ({
                                     message: 'Este campo é obrigatório!'
                                 }
                             ]}
+                            hasError={!!form.getFieldError('specialtyIds')}
                         >
-                            {/* {console.log('in render', specialties)} */}
-
                             <SANSelectFilter
                                 placeholder={t('userProfile.placeholder')}
                                 items={specialties}
-                                // items={[
-                                //     specialties.map(({ name, id }) =>
-                                //         Object({ label: name, value: id })
-                                //     )
-                                // ]}
+                                hasError={!!form.getFieldError('specialtyIds')}
                                 InputProps={{ size: 'large' }}
                                 mt='md'
                             />
-                        </SANFormItem>
-                        {/* )} */}
+                        </SANStyledFormItem>
                     </SANCol>
                 </SANRow>
                 <SANRow gutter={24}>
                     <SANCol>
-                        <SANFormItem
+                        <SANStyledFormItem
                             name='testExperience'
                             label={t('userProfile.testExperiences.label')}
                             initialValue={testExperiences[0]}
@@ -330,7 +373,7 @@ const RMForm = ({
                                 {testExperiences.map(item => (
                                     <SANStyledRadio
                                         key={item}
-                                        second={item === testExperiences[1]}
+                                        nd={item === testExperiences[1]}
                                         value={item}
                                     >
                                         {t(
@@ -339,7 +382,7 @@ const RMForm = ({
                                     </SANStyledRadio>
                                 ))}
                             </SANStyledRadioGroup>
-                        </SANFormItem>
+                        </SANStyledFormItem>
                     </SANCol>
                 </SANRow>
                 <SANRow gutter={24}>
@@ -352,7 +395,7 @@ const RMForm = ({
                                     ? oldData.preparatoryCourseStatus
                                     : undefined
                             }
-                            requireCurseName={requireCurseName}
+                            rcn={rcn}
                             rules={[
                                 {
                                     required: true,
@@ -365,9 +408,7 @@ const RMForm = ({
                                 placeholder={t('userProfile.placeholder')}
                                 size='large'
                                 onChange={item =>
-                                    setRequireCurseName(
-                                        item !== preparatoryCourseStatus[0]
-                                    )
+                                    setRcn(item !== preparatoryCourseStatus[0])
                                 }
                             >
                                 {preparatoryCourseStatus.map(item => (
@@ -381,17 +422,22 @@ const RMForm = ({
                         </SANCourseStatusFormItem>
                     </SANCol>
                 </SANRow>
-                {requireCurseName && (
+                {rcn && (
                     <SANRow gutter={24}>
                         <SANCol>
-                            <SANFormItem
+                            <SANStyledFormItem
                                 name='preparatoryCourseName'
                                 initialValue={
                                     !!oldData
                                         ? oldData.preparatoryCourseName
                                         : undefined
                                 }
-                                rules={[{ required: true }]}
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Este campo é obrigatório!'
+                                    }
+                                ]}
                             >
                                 <SANInput
                                     size='large'
@@ -399,7 +445,7 @@ const RMForm = ({
                                         'userProfile.preparatoryCourse.inputLabel'
                                     )}
                                 />
-                            </SANFormItem>
+                            </SANStyledFormItem>
                         </SANCol>
                     </SANRow>
                 )}
@@ -413,14 +459,15 @@ const RMForm = ({
                                 variant='solid'
                                 color='primary'
                                 uppercase
+                                block={width < 576}
                                 bold
                                 type='submit'
                             >
                                 {t(
                                     `userProfile.${
                                         oldData.id
-                                            ? 'modalSubmit'
-                                            : 'pageSubmit'
+                                            ? 'pageSubmit'
+                                            : 'modalSubmit'
                                     }`
                                 )}
                             </SANButton>

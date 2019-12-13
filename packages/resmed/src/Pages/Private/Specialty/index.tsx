@@ -3,7 +3,7 @@ import React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@apollo/react-hooks'
-import { useLayoutContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 import {
     SANBox,
@@ -53,7 +53,7 @@ const RMSpecialty = ({
     history,
     match: { params }
 }: RouteComponentProps<IRouteProps>) => {
-    const { handleTrack } = useLayoutContext()
+    const { handleTrack } = useMainContext()
 
     const {
         data: { specialty },

@@ -1,4 +1,4 @@
-import React, { useContext, createContext, useEffect } from 'react'
+import React, { useContext, createContext, useEffect, memo } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router'
 import { useApolloClient } from '@apollo/react-hooks'
@@ -18,9 +18,9 @@ interface RMMainContext {
 
 const Context = createContext<RMMainContext>({} as RMMainContext)
 
-export const useLayoutContext = () => useContext(Context)
+export const useMainContext = () => useContext(Context)
 
-const RMMainProvider: React.FC<RouteComponentProps> = ({ children }) => {
+const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
     const { t } = useTranslation('resmed')
@@ -63,6 +63,6 @@ const RMMainProvider: React.FC<RouteComponentProps> = ({ children }) => {
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>
-}
+})
 
 export default withRouter(RMMainProvider)

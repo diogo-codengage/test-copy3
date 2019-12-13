@@ -44,7 +44,7 @@ export interface IAppointment {
     accessContent: IAccessContent
 }
 
-export interface IAppointmentMutation {
+export interface IUpdateAppointment {
     updateAppointment: IAppointment
 }
 

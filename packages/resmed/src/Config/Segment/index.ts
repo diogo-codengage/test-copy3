@@ -4,20 +4,19 @@ export type IEvents =
     | 'Session started'
     | 'Logout'
     | 'Password recovered'
-    | 'Question answred'
+    | 'Question answered'
     | 'Filter used'
     | 'Terms acepted'
     | 'Terms rejected'
     | 'Terms viewed'
     | 'Course Homepage viewed'
     | 'Specialty viewed'
-    | 'Subspecialty viewed'
     | 'Lesson clicked'
     | 'Video started'
     | 'Video resumed'
     | 'Video paused'
     | 'Video completed'
-    | 'Question answred'
+    | 'Question answered'
     | 'Área de Prática viewed'
     | 'Informações do Curso Viewed'
     | 'Voltar button clicked'
@@ -32,22 +31,22 @@ export interface IOptions {
     ProductType?: 'ALL'
     Product?: 'Residência Médica'
     Category?:
-    | 'Login'
-    | 'Session'
-    | 'Logout'
-    | 'Recover Password'
-    | 'Question'
-    | 'Filter'
-    | 'Terms'
-    | 'Course'
-    | 'Specialty'
-    | 'Subspecialty'
-    | 'Lesson'
-    | 'Video'
-    | 'Quizz'
-    | 'Course Menu'
-    | 'Rating'
-    | 'App Banner'
+        | 'Login'
+        | 'Session'
+        | 'Logout'
+        | 'Recover Password'
+        | 'Question'
+        | 'Filter'
+        | 'Terms'
+        | 'Course'
+        | 'Specialty'
+        | 'Subspecialty'
+        | 'Lesson'
+        | 'Video'
+        | 'Quizz'
+        | 'Course Menu'
+        | 'Rating'
+        | 'App Banner'
     'User ID'?: string
     Email?: string
     'Plataform ID'?: string
@@ -64,7 +63,7 @@ export interface IOptions {
     'Clicker ID'?: string
     'Video ID'?: string
     'OS Type'?: 'IOS' | 'ANDROID'
-    'Rating'?: string
+    Rating?: string
 }
 
 export const events = {
@@ -108,8 +107,8 @@ export const events = {
             Category: 'Recover Password'
         }
     },
-    'Question answred': {
-        event: 'Question answred',
+    'Question answered': {
+        event: 'Question answered',
         data: {
             ProductType: 'ALL',
             Product: 'Residência Médica',
@@ -156,14 +155,6 @@ export const events = {
             Category: 'Specialty'
         }
     },
-    'Subspecialty viewed': {
-        event: 'Subspecialty viewed',
-        data: {
-            ProductType: 'ALL',
-            Product: 'Residência Médica',
-            Category: 'Subspecialty'
-        }
-    },
     'Lesson clicked': {
         event: 'Lesson clicked',
         data: {
@@ -204,8 +195,8 @@ export const events = {
             Category: 'Video'
         }
     },
-    'Question answred quiz': {
-        event: 'Question answred',
+    'Question answered quiz': {
+        event: 'Question answered',
         data: {
             ProductType: 'ALL',
             Product: 'Residência Médica',

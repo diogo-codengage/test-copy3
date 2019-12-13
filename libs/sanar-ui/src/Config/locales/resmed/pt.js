@@ -85,6 +85,7 @@ export default {
             management: 'Gerenciamento',
             myData: 'Meus dados',
             changePassword: 'Trocar minha senha',
+            complementaryRegister: 'Ficha complementar',
             help: 'Ajuda',
             helpCenter: 'Central de ajuda',
             otherLinks: 'Outros links',
@@ -283,6 +284,24 @@ export default {
             }
         }
     },
+    lives: {
+        title: 'Lives',
+        subtitle: 'Veja as lives que ainda vão acontecer e as que já rolaram',
+        facilitedBy: 'Live facilitada por:',
+        nextsList: {
+            title: 'Próximas lives',
+            seeLive: 'Ver live',
+            at: 'às'
+        },
+        previousList: {
+            title: 'Lives anteriores',
+            loadMore: 'Carregar mais'
+        },
+        previous: {
+            title: 'Assistir live anterior',
+            back: 'Voltar para lives'
+        }
+    },
     userProfile: {
         title: 'Cadastro complementar',
         modalSubtitle: 'Preencha a ficha abaixo para continuar',
@@ -328,6 +347,11 @@ export default {
                 error:
                     'Erro, ocorreu um erro e seus dados não foram atualzados!'
             }
+        },
+        loadError: {
+            specialties: 'Erro, não foi possivel carregar as Especialidades!',
+            institutions: 'Erro, não foi possivel carregar as Instituições!',
+            profileData: 'Erro, não foi possivel carregar os seus dados!'
         }
     }
 }

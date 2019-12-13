@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useApolloClient } from '@apollo/react-hooks'
 
-import { useLayoutContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 
 import {
     SANBox,
@@ -36,11 +36,10 @@ const RMSubspecialties = ({
     match: { params },
     history
 }: IRMSubspecialtiesProps) => {
-    const { handleTrack } = useLayoutContext()
+    const { handleTrack } = useMainContext()
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
     const { t } = useTranslation('resmed')
-    const [subSpecialties, setSubSpecialties] = useState([])
     const [loading, setLoading] = useState(false)
     const [lessons, setLessons] = useState<ILesson[]>([])
     const [current, setCurrent] = useState<{
@@ -66,9 +65,6 @@ const RMSubspecialties = ({
             }
         }
     })
-
-    const onCompleted = ({ subSpecialties }) =>
-        setSubSpecialties(subSpecialties.items)
 
     const onStart = ({
         specialtyId,
@@ -176,16 +172,6 @@ const RMSubspecialties = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.specialtyId])
 
-    useEffect(() => {
-        subSpecialties.forEach((subspecialty: ISubspecialtyItems) => {
-            handleTrack('Subspecialty viewed', {
-                'Specialty ID': params.specialtyId,
-                'Subspecialty ID': subspecialty.id
-            })
-        })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [subSpecialties, params.specialtyId])
-
     return (
         <>
             <RMModalThemes
@@ -212,8 +198,7 @@ const RMSubspecialties = ({
                 query={GET_SUBSPECIALTIES}
                 options={{
                     variables: { parentId: params.specialtyId },
-                    skip: !params.specialtyId,
-                    onCompleted: onCompleted
+                    skip: !params.specialtyId
                 }}
                 loaderProps={{ minHeight: '250px', flex: true }}
                 errorProps={{ flex: 1 }}

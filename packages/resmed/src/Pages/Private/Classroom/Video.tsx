@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react'
+import React, { useRef, useState, useMemo, memo } from 'react'
 
 import { theme } from 'styled-tools'
 import styled from 'styled-components'
@@ -16,7 +16,7 @@ import { createDebounce } from '@sanar/utils/dist/Debounce'
 import RMCollection from 'Components/Collection'
 import { GET_VIDEO, IVideoQuery, IVideo } from 'Apollo/Classroom/Queries/video'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
-import { useLayoutContext as useTrackContext } from 'Pages/Private/Context'
+import { useMainContext } from 'Pages/Private/Context'
 import { useClassroomContext } from './Context'
 
 import { useAuthContext } from 'Hooks/auth'
@@ -31,13 +31,13 @@ const Header = styled.div`
     }
 `
 
-const RMClassroomVideo = ({ history }: RouteComponentProps) => {
+const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
     const { width } = useWindowSize()
     const playerRef = useRef<any>()
     const collectionRef = useRef<any>()
     const { handleProgress, specialty } = useClassroomContext()
     const { params, onOpenMenu } = useLayoutContext()
-    const { handleTrack } = useTrackContext()
+    const { handleTrack } = useMainContext()
     const [videoError, setVideoError] = useState(false)
     const [videoReady, setVideoReady] = useState(false)
     const [willStart, setWillStart] = useState(true)
@@ -56,22 +56,15 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
         [params, me]
     )
 
-    const handleVideoReady = () => {
-        setVideoReady(true)
-        handleTrack('Video started', dataToTrack)
-    }
+    const handleVideoReady = () => setVideoReady(true)
 
-    const handlePlay = () => {
-        handleTrack('Video resumed', dataToTrack)
-    }
+    const handlePlay = () => handleTrack('Video started', dataToTrack)
 
-    const handlePause = () => {
-        handleTrack('Video paused', dataToTrack)
-    }
+    const handleResume = () => handleTrack('Video resumed', dataToTrack)
 
-    const handleComplete = () => {
-        handleTrack('Video completed', dataToTrack)
-    }
+    const handlePause = () => handleTrack('Video paused', dataToTrack)
+
+    const handleComplete = () => handleTrack('Video completed', dataToTrack)
 
     const handleVideoError = () => setVideoError(true)
 
@@ -177,6 +170,7 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
                                     ref={playerRef}
                                     onReady={handleVideoReady}
                                     onPlay={handlePlay}
+                                    onResume={handleResume}
                                     onPause={handlePause}
                                     onError={handleVideoError}
                                     onOpenMenu={onOpenMenu}
@@ -223,6 +217,6 @@ const RMClassroomVideo = ({ history }: RouteComponentProps) => {
             }}
         </SANQuery>
     )
-}
+})
 
 export default withRouter(RMClassroomVideo)

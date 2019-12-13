@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -10,7 +10,7 @@ import {
 
 import { useLayoutContext } from '../Context'
 
-const RMMenuInitial: React.FC = () => {
+const RMMenuInitial = memo(() => {
     const { t } = useTranslation('resmed')
     const { onCloseMenu, setMenuTab } = useLayoutContext()
 
@@ -31,20 +31,27 @@ const RMMenuInitial: React.FC = () => {
                 title={t('mainMenu.initial.practiceArea')}
             />
             <SANNavigationListItem
-                icon={<SANEvaIcon name='person-outline' color='default' />}
-                onClick={() => setMenuTab(1)}
-                dataTestid='rm-menu__go-to--account'
-                title={t('mainMenu.initial.account')}
-            />
-            <SANNavigationListItem
                 to='/inicio/cronograma'
                 icon={<SANEvaIcon name='calendar-outline' color='default' />}
                 onClick={onCloseMenu}
                 dataTestid='rm-menu__go-to--schedule'
                 title={t('mainMenu.initial.schedule')}
             />
+            <SANNavigationListItem
+                to='/inicio/lives'
+                icon={<SANEvaIcon name='play-circle-outline' color='default' />}
+                onClick={onCloseMenu}
+                dataTestid='rm-menu__go-to--lives'
+                title={t('mainMenu.initial.lives')}
+            />
+            <SANNavigationListItem
+                icon={<SANEvaIcon name='person-outline' color='default' />}
+                onClick={() => setMenuTab(1)}
+                dataTestid='rm-menu__go-to--account'
+                title={t('mainMenu.initial.account')}
+            />
         </SANNavigationList>
     )
-}
+})
 
 export default RMMenuInitial

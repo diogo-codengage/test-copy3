@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 
 import { theme } from 'styled-tools'
@@ -58,57 +58,54 @@ export interface ISANHeaderProps {
     extra?: React.ReactNode
 }
 
-const SANHeader: React.FC<ISANHeaderProps> = ({
-    SessionTitleProps,
-    ExtraProps,
-    onBack,
-    extra
-}) => {
-    const responsive = !!extra ? { xs: 24, sm: 12, md: 14 } : { xs: 24 }
+const SANHeader = memo<ISANHeaderProps>(
+    ({ SessionTitleProps, ExtraProps, onBack, extra }) => {
+        const responsive = !!extra ? { xs: 24, sm: 12, md: 14 } : { xs: 24 }
 
-    return (
-        <SANHeaderStyled data-testid='san-header'>
-            <SANLayoutContainer>
-                {!!onBack && (
-                    <SANButtonBack
-                        circle
-                        size='xsmall'
-                        variant='text'
-                        onClick={onBack}
-                        data-testid='san-header__back'
-                    >
-                        <SANEvaIcon
-                            name='arrow-ios-back-outline'
-                            size='medium'
-                        />
-                    </SANButtonBack>
-                )}
-                <SANRow
-                    type='flex'
-                    align='middle'
-                    justify='space-between'
-                    gutter={24}
-                >
-                    <SANCol {...responsive}>
-                        <SANSessionTitle
-                            {...{ ...SessionTitleProps, levelTitle: 4 }}
-                        />
-                    </SANCol>
-                    {!!extra && (
-                        <SANCol
-                            mt={{ sm: 0, _: 'md' }}
-                            xs={24}
-                            sm={12}
-                            md={10}
-                            {...ExtraProps}
+        return (
+            <SANHeaderStyled data-testid='san-header'>
+                <SANLayoutContainer>
+                    {!!onBack && (
+                        <SANButtonBack
+                            circle
+                            size='xsmall'
+                            variant='text'
+                            onClick={onBack}
+                            data-testid='san-header__back'
                         >
-                            {extra}
-                        </SANCol>
+                            <SANEvaIcon
+                                name='arrow-ios-back-outline'
+                                size='medium'
+                            />
+                        </SANButtonBack>
                     )}
-                </SANRow>
-            </SANLayoutContainer>
-        </SANHeaderStyled>
-    )
-}
+                    <SANRow
+                        type='flex'
+                        align='middle'
+                        justify='space-between'
+                        gutter={24}
+                    >
+                        <SANCol {...responsive}>
+                            <SANSessionTitle
+                                {...{ ...SessionTitleProps, levelTitle: 4 }}
+                            />
+                        </SANCol>
+                        {!!extra && (
+                            <SANCol
+                                mt={{ sm: 0, _: 'md' }}
+                                xs={24}
+                                sm={12}
+                                md={10}
+                                {...ExtraProps}
+                            >
+                                {extra}
+                            </SANCol>
+                        )}
+                    </SANRow>
+                </SANLayoutContainer>
+            </SANHeaderStyled>
+        )
+    }
+)
 
 export default SANHeader
