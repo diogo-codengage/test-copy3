@@ -120,7 +120,7 @@ const RMPrevious = memo<RouteComponentProps>(({ history }) => {
                                     </SANTypography>
                                 </SANBox>
                                 <SANBox
-                                    display={{ xs: 'flex', _: 'none' }}
+                                    display={{ md: 'flex', _: 'none' }}
                                     alignItems='center'
                                     justifyContent='flex-end'
                                 >

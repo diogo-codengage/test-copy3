@@ -52,7 +52,7 @@ const RMSpecialty = memo<RouteComponentProps>(({ history }) => {
                 }
             }}
         >
-            <SANBox pt={{ xs: '8', _: '0' }} pb={{ xs: '8', _: 'md' }}>
+            <SANBox pt={{ md: '8', _: '0' }} pb={{ md: '8', _: 'md' }}>
                 <RMLive
                     loading={loading}
                     live={!!data ? data.activeLive : undefined}

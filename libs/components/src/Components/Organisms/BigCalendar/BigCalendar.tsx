@@ -244,7 +244,7 @@ const getFreeDays = (current = new Date().getFullYear()) => {
 }
 
 const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
-    { events, eventDrop, loading = false, onChangeMonth, ...props },
+    { events = [], eventDrop, loading = false, onChangeMonth, ...props },
     ref
 ) => {
     const { t } = useTranslation('components')

@@ -33,17 +33,29 @@ export interface IAppointment {
     accessContent: IAccessContent
 }
 
+interface IInterval {
+    start: string
+    end: string
+}
+
+export interface IAppointments {
+    items: IAppointment[]
+    hasModified: boolean
+    interval: IInterval
+}
+
 export interface IAppointmentsQuery {
-    appointments: {
-        items: IAppointment[]
-        hasModified: boolean
-    }
+    appointments: IAppointments
 }
 
 export const GET_APPOINTMENTS = gql`
     query Appointments($start: Date!, $end: Date!, $exact: Boolean) {
         appointments(where: { start: $start, end: $end, exact: $exact }) {
             hasModified: didModified
+            interval {
+                start
+                end
+            }
             items {
                 id
                 title

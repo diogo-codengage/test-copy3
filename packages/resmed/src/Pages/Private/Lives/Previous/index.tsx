@@ -61,7 +61,7 @@ const RMPreviousLive = memo<RouteComponentProps<{ previousId: string }>>(
                     }
                 }}
             >
-                <SANBox mb={{ xs: '8', _: 'xxl' }} mt={{ xs: '8', _: '0' }}>
+                <SANBox pt={{ md: '8', _: '0' }} pb={{ md: '8', _: 'md' }}>
                     <RMLive live={live} loading={loading} hasLive={false} />
                 </SANBox>
             </SANPage>

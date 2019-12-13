@@ -24,6 +24,7 @@ import { IEvent } from '@sanar/components/dist/Components/Organisms/BigCalendar'
 import {
     GET_APPOINTMENTS,
     IAppointmentsQuery,
+    IAppointments,
     IAppointment
 } from 'Apollo/Schedule/Queries/appointments'
 import {
@@ -31,8 +32,6 @@ import {
     IUpdateAppointment
 } from 'Apollo/Schedule/Mutations/update-appointment'
 import { RESET_SCHEDULE, IResetSchedule } from 'Apollo/Schedule/Mutations/reset'
-
-import { useAuthContext } from 'Hooks/auth'
 
 import {
     RMModalSchedule,
@@ -98,18 +97,32 @@ const makeEvents = (event: IAppointment, hasModified = false) => ({
     status: getStatus(event)
 })
 
+interface ISchedule {
+    hasModified: boolean
+    items: IEvent[]
+    interval: {
+        start: string
+        end: string
+    }
+}
+
 const RMSchedule = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
     const calendarRef = useRef<SANBigCalendar>()
     const client = useApolloClient()
-    const { activeCourse } = useAuthContext()
     const [loading, setLoading] = useState(false)
-    const [hasModified, setModified] = useState(false)
     const [currentRange, setCurrentRange] = useState({
         start: '',
         end: ''
     })
-    const [events, setEvents] = useState<IEvent[]>([])
+    const [schedule, setSchedule] = useState<ISchedule>({
+        hasModified: false,
+        items: [],
+        interval: {
+            start: '',
+            end: ''
+        }
+    })
     const [modalSchedule, setModalSchedule] = useState<{
         visible: boolean
         options: IOption | any
@@ -156,7 +169,10 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
     const handleConfirmSuggestion = async () => {
         try {
             setLoading(true)
-            setModalSuggestion({ checked: hasModified, visible: false })
+            setModalSuggestion({
+                checked: schedule.hasModified,
+                visible: false
+            })
             const {
                 data: { resetSchedule }
             } = await client.mutate<IResetSchedule>({
@@ -166,10 +182,17 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                     end: format(currentRange.end, 'YYYY-MM-DD')
                 }
             })
-            setEvents(resetSchedule.items.map(makeEvents) as IEvent[])
-            setModified(old => !old)
+            setSchedule({
+                ...resetSchedule,
+                items: resetSchedule.items.map(event =>
+                    makeEvents(event, resetSchedule.hasModified)
+                ) as IEvent[]
+            })
         } catch {
-            setModalSuggestion({ checked: !hasModified, visible: false })
+            setModalSuggestion({
+                checked: !schedule.hasModified,
+                visible: false
+            })
         }
         setLoading(false)
     }
@@ -203,12 +226,12 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                         end: format(currentRange.end, 'YYYY-MM-DD')
                     }
                 })
-                setEvents(
-                    appointments.items.map(event =>
+                setSchedule({
+                    ...appointments,
+                    items: appointments.items.map(event =>
                         makeEvents(event, appointments.hasModified)
                     ) as IEvent[]
-                )
-                setModified(appointments.hasModified)
+                })
                 setModalSuggestion(old => ({
                     ...old,
                     checked: !appointments.hasModified
@@ -241,7 +264,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                 checked={modalSuggestion.checked}
                 onCancel={() =>
                     setModalSuggestion(old => ({
-                        checked: !hasModified,
+                        checked: !schedule.hasModified,
                         visible: false
                     }))
                 }
@@ -271,18 +294,18 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                             <SANBigCalendar
                                 ref={calendarRef}
                                 loading={loading}
-                                events={events}
+                                events={schedule.items}
                                 eventClick={handleEventClick}
                                 eventDrop={handleEventDrop}
                                 eventLimitClick={handleEventLimitClick}
                                 onChangeMonth={handleChangeMonth}
                                 validRange={{
                                     start: format(
-                                        new Date('2018-12-01'),
+                                        new Date(schedule.interval.start),
                                         'YYYY-MM-DD'
                                     ),
                                     end: format(
-                                        new Date('2020-01-31'),
+                                        new Date(schedule.interval.end),
                                         'YYYY-MM-DD'
                                     )
                                 }}
@@ -316,10 +339,10 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                     <SANLayoutContainer>
                         <SANRow gutter={24}>
                             <SANCol xs={24} sm={24} md={12}>
-                                <RMToday hasModified={hasModified} />
+                                <RMToday hasModified={schedule.hasModified} />
                             </SANCol>
                             <SANCol xs={24} sm={24} md={12}>
-                                <RMWeek hasModified={hasModified} />
+                                <RMWeek hasModified={schedule.hasModified} />
                             </SANCol>
                         </SANRow>
                     </SANLayoutContainer>

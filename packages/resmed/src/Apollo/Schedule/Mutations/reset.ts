@@ -32,11 +32,15 @@ export interface IAppointment {
     timeInMinutes: number
     accessContent: IAccessContent
 }
-
+interface IInterval {
+    start: string
+    end: string
+}
 export interface IResetSchedule {
     resetSchedule: {
         items: IAppointment[]
         hasModified: boolean
+        interval: IInterval
     }
 }
 
@@ -44,6 +48,10 @@ export const RESET_SCHEDULE = gql`
     mutation ResetSchedule($start: Date!, $end: Date!) {
         resetSchedule(where: { start: $start, end: $end }) {
             hasModified: didModified
+            interval {
+                start
+                end
+            }
             items {
                 id
                 title
