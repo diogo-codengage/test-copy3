@@ -148,7 +148,7 @@ const testExperiences = ['none', 'one', 'many']
 const preparatoryCourseStatus = ['missing', 'inProgress', 'completed']
 
 const RMForm = ({
-    oldData = {} as IFormDataProps,
+    oldData = (undefined as unknown) as IFormDataProps,
     form,
     specialties = [] as IListProps[],
     institutions = [] as IListProps[],
@@ -163,9 +163,11 @@ const RMForm = ({
     const { setMe, setActiveCourse } = useAuthContext()
 
     useEffect(() => {
+        setSubmitting(old => !old && true)
         if (!!oldData.graduationStep) {
             setSubmitting(old => !!old && !old)
             setRcn(oldData.preparatoryCourseStatus !== 'missing')
+            form.setFieldsValue({ testExperience: oldData.testExperience })
         }
         if (!!oldData.id && !oldData.graduationStep) {
             setSubmitting(old => !old && true)
@@ -376,8 +378,14 @@ const RMForm = ({
                         >
                             <SANStyledRadioGroup
                                 mt='16px'
-                                defaultValue={testExperiences[0]}
+                                defaultValue={
+                                    !!oldData
+                                        ? oldData.testExperience
+                                        : testExperiences[0]
+                                }
                             >
+                                {/* {!!oldData &&
+                                    console.log(oldData.testExperience)} */}
                                 {testExperiences.map(item => (
                                     <SANStyledRadio
                                         key={item}

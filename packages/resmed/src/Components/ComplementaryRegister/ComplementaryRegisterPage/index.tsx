@@ -76,7 +76,10 @@ const RMPage = ({ history }) => {
                     }
                 } = await client.query({ query: GET_ME })
                 if (profile.id) {
-                    setProfileData({ id: profile.id })
+                    setProfileData({
+                        id: profile.id,
+                        testExperience: profile.testExperience
+                    })
                 }
                 const findedSpecialties = suppSpecialties.filter(({ value }) =>
                     profile.specialtyIds.find(sp => value === sp)

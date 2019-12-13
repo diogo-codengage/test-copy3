@@ -143,7 +143,10 @@ const RMModal = ({ profileData = {} as IProfile }) => {
         getSpecialties()
         getInstitutions()
         if (profileData.id) {
-            setDataToForm({ id: profileData.id })
+            setDataToForm({
+                id: profileData.id,
+                testExperience: profileData.testExperience
+            })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
