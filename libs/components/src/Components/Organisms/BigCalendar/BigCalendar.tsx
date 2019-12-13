@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react'
+import React, { useRef, useMemo, useImperativeHandle, forwardRef } from 'react'
 
 import { EventApi, View, Duration } from '@fullcalendar/core'
 import FullCalendar from '@fullcalendar/react'
@@ -140,13 +140,6 @@ const FullCalendarWrapper = styled.div`
             padding: 0.7em 0;
         }
 
-        & .fc-day-number {
-            float: left;
-            font-size: 0.7em;
-            margin-left: 8px;
-            margin-bottom: 4px;
-        }
-
         & .fc-event-container .fc-day-grid-event {
             padding: 0 8px;
             border-radius: 8px;
@@ -171,24 +164,34 @@ const FullCalendarWrapper = styled.div`
             background-color: ${theme('colors.primary')};
         }
 
+        
+        & .fc-day-number {
+            float: left;
+            font-size: 0.7em;
+            margin-left: 8px;
+            margin-bottom: 4px;
+        }
+
         & .fc-today {
-            background: transparent;
-            border-color: inherit;
-            position: relative;
-            &:before {
-                content: '${() => format(new Date(), 'd')}';
-                font-size: 0.7em;
-                width: 15px;
-                height: 15px;
-                border-radius: 9px;
-                background-color: ${theme('colors.primary')};
-                color: ${theme('colors.white.10')};
-                position: absolute;
-                left: 4px;
-                top: 4px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+            & .fc-day-number {
+                background: transparent;
+                border-color: inherit;
+                position: relative;
+                &:before {
+                    content: '${() => format(new Date(), 'd')}';
+                    font-size: 0.7em;
+                    width: 15px;
+                    height: 15px;
+                    border-radius: 9px;
+                    background-color: ${theme('colors.primary')};
+                    color: ${theme('colors.white.10')};
+                    position: absolute;
+                    left: 1px;
+                    top: 2px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
             }
         }
 
@@ -250,13 +253,10 @@ const getFreeDays = ({ current = new Date().getFullYear() }) => {
     }))
 }
 
-const SANBigCalendar: React.FC<ISANBigCalendarProps> = ({
-    events,
-    eventDrop,
-    loading = false,
-    onChangeMonth,
-    ...props
-}) => {
+const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
+    { events, eventDrop, loading = false, onChangeMonth, ...props },
+    ref
+) => {
     const { t } = useTranslation('components')
     const theme = useThemeContext()
     const calendarRef = useRef<FullCalendar>()
@@ -335,6 +335,8 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = ({
         [events, freeDays]
     )
 
+    useImperativeHandle(ref, () => calendarRef.current)
+
     return (
         <FullCalendarWrapper>
             <SANSpin spinning={loading} flex>
@@ -362,4 +364,4 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = ({
     )
 }
 
-export default SANBigCalendar
+export default forwardRef(SANBigCalendar)

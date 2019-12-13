@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -25,6 +25,10 @@ import {
     GET_APPOINTMENTS,
     IAppointmentsQuery
 } from 'Apollo/Schedule/Queries/appointments'
+import {
+    UPDATE_APPOINTMENT,
+    IAppointmentMutation
+} from 'Apollo/Schedule/Mutations/update-appointment'
 
 import {
     RMModalSchedule,
@@ -80,6 +84,7 @@ const formatMinutes = minutes =>
 
 const RMSchedule = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
+    const calendarRef = useRef<SANBigCalendar>()
     const client = useApolloClient()
     const [loading, setLoading] = useState(false)
     const [currentRange, setCurrentRange] = useState({
@@ -128,6 +133,22 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
     const handleChangeSuggestion = checked =>
         setModalSuggestion({ checked, visible: true })
 
+    const handleEventDrop = e => {
+        const { event } = e
+        const date = new Date(new Date(event.start).toUTCString()).toISOString()
+        try {
+            client.mutate({
+                mutation: UPDATE_APPOINTMENT,
+                variables: {
+                    id: event.extendedProps.id,
+                    date
+                }
+            })
+        } catch {
+            e.revert()
+        }
+    }
+
     useEffect(() => {
         const fetchEvents = async () => {
             setLoading(true)
@@ -150,7 +171,8 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                         id: v.id,
                         title: v.title,
                         start: new Date(v.start),
-                        startEditable: !v.fixed,
+                        // startEditable: !v.fixed,
+                        startEditable: true,
                         status: getStatus(v)
                     }))
                 )
@@ -209,9 +231,11 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                         />
                         <SANBox mx={{ md: '0', _: '-16px' }}>
                             <SANBigCalendar
+                                ref={calendarRef}
                                 loading={loading}
                                 events={events}
                                 eventClick={handleEventClick}
+                                eventDrop={handleEventDrop}
                                 eventLimitClick={handleEventLimitClick}
                                 onChangeMonth={handleChangeMonth}
                             />

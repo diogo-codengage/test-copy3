@@ -9,6 +9,10 @@
     cursor: default;
 }
 
+.san-free-day > .fc-content {
+    display: none;
+}
+
 .san-free-day:before {
     content: 'Dia Livre';
     font-size: 1.2em;
