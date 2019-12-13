@@ -41,24 +41,29 @@ const RMPreviousLive = memo<RouteComponentProps<{ previousId: string }>>(
                 }}
                 HeaderProps={{
                     SessionTitleProps: {
-                        title: t('lives.previous.title'),
-                        extra: (
-                            <SANBox display='flex' flex='1'>
-                                <SANButton
-                                    size='small'
-                                    variant='outlined'
-                                    uppercase
-                                    bold
-                                    block
-                                    onClick={() =>
-                                        history.push('/inicio/lives/atual')
-                                    }
-                                >
-                                    {t('lives.previous.back')}
-                                </SANButton>
-                            </SANBox>
-                        )
-                    }
+                        title: t('lives.previous.title')
+                    },
+                    ExtraProps: {
+                        sm: 9,
+                        md: 7,
+                        lg: 5
+                    },
+                    extra: (
+                        <SANBox display='flex' flex='1'>
+                            <SANButton
+                                size='small'
+                                variant='outlined'
+                                uppercase
+                                bold
+                                block
+                                onClick={() =>
+                                    history.push('/inicio/lives/atual')
+                                }
+                            >
+                                {t('lives.previous.back')}
+                            </SANButton>
+                        </SANBox>
+                    )
                 }}
             >
                 <SANBox pt={{ md: '8', _: '0' }} pb={{ md: '8', _: 'md' }}>
