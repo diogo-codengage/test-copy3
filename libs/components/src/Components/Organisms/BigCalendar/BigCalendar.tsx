@@ -6,7 +6,7 @@ import ptLocale from '@fullcalendar/core/locales/pt-br'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
-import { isPast, format, isEqual } from 'date-fns'
+import { isPast, format, isEqual, eachWeekendOfYear } from 'date-fns'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { useTranslation } from 'react-i18next'
@@ -230,24 +230,14 @@ const FullCalendarWrapper = styled.div`
     }
 `
 
-const getFreeDays = ({ current = new Date().getFullYear() }) => {
-    let freeDays = []
-    for (let year = current - 1; year <= current + 1; year++) {
-        for (let month = 0; month <= 11; month++) {
-            for (let i = 0; i <= new Date(year, month, 0).getDate(); i++) {
-                const date = new Date(year, month, i)
-
-                if (date.getDay() == 6 || date.getDay() == 0) {
-                    freeDays.push(date.getTime())
-                }
-            }
-        }
-    }
-    const distinct = [...new Set(freeDays)]
-
-    return distinct.map(e => ({
+const getFreeDays = (current = new Date().getFullYear()) => {
+    return [
+        ...eachWeekendOfYear(new Date(current - 1, 1, 1)),
+        ...eachWeekendOfYear(new Date(current, 1, 1)),
+        ...eachWeekendOfYear(new Date(current + 1, 1, 1))
+    ].map(e => ({
         start: new Date(e),
-        id: `freeday-${e}`,
+        id: `freeday-${new Date(e).getTime()}`,
         allDay: true,
         classNames: 'san-free-day'
     }))
@@ -319,7 +309,7 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
         []
     )
 
-    const freeDays = useMemo(() => getFreeDays({}), [])
+    const freeDays = useMemo(() => getFreeDays(), [])
 
     const eventsMap = useMemo(
         () => [
