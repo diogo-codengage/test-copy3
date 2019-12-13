@@ -168,7 +168,6 @@ const RMModal = ({ profileData = {} as IProfile }) => {
                             !!profileData.id ? 'pageSubtitle' : 'modalSubtitle'
                         }`
                     )}
-                    {t('userProfile.modalSubtitle')}
                 </SANTypography>
                 <SANDivider my='xl' mx='auto' bg='grey.2' />
                 <RMComplementaryRegisterForm
