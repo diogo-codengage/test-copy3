@@ -123,7 +123,9 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
     const handleEventLimitClick = e => {
         setModalMore({
             visible: true,
-            options: e.segs.filter(seg => !!seg.eventRange.def.extendedProps.id)
+            options: e.segs
+                .filter(seg => !!seg.eventRange.def.extendedProps.id)
+                .map(seg => seg.eventRange.def.extendedProps)
         })
     }
 
