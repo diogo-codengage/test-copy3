@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -24,7 +24,7 @@ import { logout } from 'Config/AWSCognito'
 
 import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 
-const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
+const RMMenuAccount = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
     const { setMe, me } = useAuthContext()
     const { onCloseMenu, setMenuTab } = useLayoutContext()
@@ -139,6 +139,6 @@ const RMMenuAccount: React.FC<RouteComponentProps> = ({ history }) => {
             />
         </SANScroll>
     )
-}
+})
 
 export default withRouter(RMMenuAccount)

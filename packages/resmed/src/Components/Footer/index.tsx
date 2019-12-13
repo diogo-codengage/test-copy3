@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router'
@@ -86,7 +86,7 @@ export const defaultFooterProps = (darkMode = false) => ({
 
 interface IProps extends RouteComponentProps, Partial<ISANLayoutFooterProps> {}
 
-const RMFooter = ({ history, ...props }: IProps) => {
+const RMFooter = memo<IProps>(({ history, ...props }) => {
     const customProps: ISANLayoutFooterProps = {
         ...defaultFooterProps(),
         HelpButton: {
@@ -99,6 +99,6 @@ const RMFooter = ({ history, ...props }: IProps) => {
             <SANLayoutFooter {...customProps} />
         </SANBox>
     )
-}
+})
 
 export default withRouter<IProps>(RMFooter)

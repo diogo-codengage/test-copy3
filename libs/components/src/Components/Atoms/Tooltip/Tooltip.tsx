@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { layout, LayoutProps } from 'styled-system'
 import ReactTooltip from 'react-tooltip'
-
-import { SANTypography } from '../Typography'
 
 export interface ISANTooltipProps extends ReactTooltip.Props, LayoutProps {}
 
@@ -38,6 +36,8 @@ const ReactTooltipStyled = styled(ReactTooltip)`
     }
 `
 
-const SANTooltip = props => <ReactTooltipStyled {...props} />
+const SANTooltip = memo<ISANTooltipProps>(props => (
+    <ReactTooltipStyled {...props} />
+))
 
 export default SANTooltip

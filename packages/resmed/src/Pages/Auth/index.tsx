@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState, memo } from 'react'
 import { Switch, RouteComponentProps, Route, Redirect } from 'react-router-dom'
 import { useApolloClient } from '@apollo/react-hooks'
 
@@ -10,7 +10,7 @@ const RMLogin = React.lazy(() => import('./Login'))
 const RMPasswordRecovery = React.lazy(() => import('./PasswordRecovery'))
 const RMNewPassword = React.lazy(() => import('./NewPassword'))
 
-const RMAuth: React.FC<RouteComponentProps> = ({ match: { url } }) => {
+const RMAuth = memo<RouteComponentProps>(({ match: { url } }) => {
     const client = useApolloClient()
     const [session, setSession] = useState({
         isValid: false,
@@ -71,6 +71,6 @@ const RMAuth: React.FC<RouteComponentProps> = ({ match: { url } }) => {
             </Switch>
         </Suspense>
     )
-}
+})
 
 export default RMAuth

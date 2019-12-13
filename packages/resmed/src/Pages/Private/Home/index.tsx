@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
@@ -92,7 +92,7 @@ const Header = () => {
     )
 }
 
-const RMHome = () => {
+const RMHome = memo(() => {
     const { t } = useTranslation('resmed')
     const { handleTrack } = useMainContext()
     const { activeCourse, me } = useAuthContext()
@@ -138,6 +138,6 @@ const RMHome = () => {
             </SANTabs>
         </SANBox>
     )
-}
+})
 
 export default RMHome

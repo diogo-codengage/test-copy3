@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import {
     Route,
     Redirect,
@@ -25,82 +25,82 @@ interface RMPrivateRouteProps extends RouteComponentProps {
     path: string
 }
 
-const RMPrivateRoute: React.FC<RMPrivateRouteProps> = ({
-    component: Component,
-    history,
-    ...rest
-}) => {
-    const client = useApolloClient()
-    const { setMe, me } = useAuthContext()
-    const [logged, setLogged] = useState(true)
-    const [loading, setLoading] = useState(false)
+const RMPrivateRoute = memo<RMPrivateRouteProps>(
+    ({ component: Component, history, ...rest }) => {
+        const client = useApolloClient()
+        const { setMe, me } = useAuthContext()
+        const [logged, setLogged] = useState(true)
+        const [loading, setLoading] = useState(false)
 
-    const onLogout = () => {
-        setMe(undefined)
-        setLogged(false)
-    }
-
-    const fetchMe = async () => {
-        setLoading(true)
-        try {
-            const {
-                data: { me }
-            } = await client.query({ query: GET_ME })
-            segmentTrack('Session started')
-            setMe(me)
-        } catch {
-            logout({ callback: onLogout })
+        const onLogout = () => {
+            setMe(undefined)
+            setLogged(false)
         }
-        setLoading(false)
-    }
 
-    useEffect(() => {
-        const cognitoUser = getCognitoUser()
-
-        if (!!cognitoUser) {
-            cognitoUser.getSession((err: any, session: CognitoUserSession) => {
-                if (!!session && session.isValid()) {
-                    fetchMe()
-                } else {
-                    logout({ callback: onLogout })
-                }
-            })
-        } else {
-            onLogout()
+        const fetchMe = async () => {
+            setLoading(true)
+            try {
+                const {
+                    data: { me }
+                } = await client.query({ query: GET_ME })
+                segmentTrack('Session started')
+                setMe(me)
+            } catch {
+                logout({ callback: onLogout })
+            }
+            setLoading(false)
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
-    if (loading) return <RMSplashLoader />
+        useEffect(() => {
+            const cognitoUser = getCognitoUser()
 
-    if (!!me && !me.hasActiveSubscription) {
+            if (!!cognitoUser) {
+                cognitoUser.getSession(
+                    (err: any, session: CognitoUserSession) => {
+                        if (!!session && session.isValid()) {
+                            fetchMe()
+                        } else {
+                            logout({ callback: onLogout })
+                        }
+                    }
+                )
+            } else {
+                onLogout()
+            }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [])
+
+        if (loading) return <RMSplashLoader />
+
+        if (!!me && !me.hasActiveSubscription) {
+            return (
+                <RMModalTermsAndPrivacy
+                    tosRequired
+                    visible
+                    closable={false}
+                    defaultActiveKey={0}
+                    scrolling
+                />
+            )
+        }
+
+        if (!!me && !me.profile) {
+            return <RMComplementaryRegisterModal />
+        }
+
         return (
-            <RMModalTermsAndPrivacy
-                tosRequired
-                visible
-                closable={false}
-                defaultActiveKey={0}
-                scrolling
+            <Route
+                {...rest}
+                render={props =>
+                    logged ? (
+                        <Component {...props} />
+                    ) : (
+                        <Redirect to='/auth/entrar' />
+                    )
+                }
             />
         )
     }
-
-    if (!!me && !me.profile) {
-        return <RMComplementaryRegisterModal />
-    }
-
-    return (
-        <Route
-            {...rest}
-            render={props =>
-                logged ? (
-                    <Component {...props} />
-                ) : (
-                    <Redirect to='/auth/entrar' />
-                )
-            }
-        />
-    )
-}
+)
 
 export default withRouter(RMPrivateRoute)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 
 import { useApolloClient } from '@apollo/react-hooks'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -19,7 +19,7 @@ import RMCollection from 'Components/Collection'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomContext } from './Context'
 
-const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
+const RMClassroomFeedback = memo<RouteComponentProps>(({ history }) => {
     const client = useApolloClient()
     const { width } = useWindowSize()
     const { params, onOpenMenu } = useLayoutContext()
@@ -91,6 +91,6 @@ const RMClassroomFeedback = ({ history }: RouteComponentProps) => {
             </SANLayoutContainer>
         </SANBox>
     )
-}
+})
 
 export default withRouter(RMClassroomFeedback)

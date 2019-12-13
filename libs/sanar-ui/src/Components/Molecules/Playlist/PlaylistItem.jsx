@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, memo } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
@@ -13,7 +13,7 @@ const icons = {
     Quiz: 'edit-outline'
 }
 
-const ESPlaylistItem = ({ className, index, item, current, onClick }) => {
+const ESPlaylistItem = memo(({ className, index, item, current, onClick }) => {
     const { title, progress, durationInSeconds } = useMemo(
         () => (item.hasType ? item[item.resource_type.toLowerCase()] : item),
         [item]
@@ -73,7 +73,7 @@ const ESPlaylistItem = ({ className, index, item, current, onClick }) => {
             {!!item.extra && <span className='time'>{item.extra}</span>}
         </div>
     )
-}
+})
 
 ESPlaylistItem.propTypes = {
     className: PropTypes.string,
