@@ -6,7 +6,7 @@ import ptLocale from '@fullcalendar/core/locales/pt-br'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
-import { isPast, format, isEqual, eachWeekendOfYear } from 'date-fns'
+import { isPast, format, isEqual, eachWeekendOfYear, isSameDay } from 'date-fns'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { useTranslation } from 'react-i18next'
@@ -320,7 +320,10 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
                 classNames: !!event.start &&
                     isPast(event.start) && ['san-past-event']
             })),
-            ...freeDays
+            ...freeDays.filter(
+                free =>
+                    !events.find(event => isSameDay(event.start, free.start))
+            )
         ],
         [events, freeDays]
     )
