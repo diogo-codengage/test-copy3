@@ -18,6 +18,16 @@ import { GET_INSTITUTIONS } from 'Apollo/PracticalArea/Queries/institutions'
 import { GET_ME } from 'Apollo/User/Queries/me'
 import { IListProps } from '../ComplementaryRegisterForm'
 
+import styled from 'styled-components'
+import { theme } from 'styled-tools'
+
+const SANStyledBox = styled(SANBox)`
+    &&& {
+        ${theme('mediaQueries.down.sm')} {
+            border-radius: 0 !important;
+        }
+    }
+`
 const RMPage = ({ history }) => {
     const { t } = useTranslation('resmed')
     const { width } = useWindowSize()
@@ -137,7 +147,7 @@ const RMPage = ({ history }) => {
                 >
                     {t('userProfile.pagePresentation')}
                 </SANTypography>
-                <SANBox
+                <SANStyledBox
                     bg='white.10'
                     borderRadius='base'
                     border='1px solid'
@@ -151,7 +161,7 @@ const RMPage = ({ history }) => {
                         specialties={suppSpecialties}
                         institutions={institutions}
                     />
-                </SANBox>
+                </SANStyledBox>
             </SANBox>
         </SANPage>
     )
