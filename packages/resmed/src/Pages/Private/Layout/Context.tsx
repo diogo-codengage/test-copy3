@@ -2,6 +2,7 @@ import React, { useContext, useState, createContext, useRef } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router'
+import { useLastLocation } from 'react-router-last-location'
 
 import { SANClassroomMenuHeader } from '@sanar/components'
 
@@ -89,6 +90,7 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
 }) => {
     const hasClassroom = window.location.href.includes('sala-aula')
     const { t } = useTranslation('resmed')
+    const lastLocation = useLastLocation()
     const [footerProps, setFooterProps] = useState({})
     const [params, setParams] = useState<IParams>(defaultParams)
     const [menuState, setMenuState] = useState<IMenuState>({
@@ -113,7 +115,11 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
 
     const handleBackClassroom = () => {
         handleTrack('Voltar button clicked')
-        history.push(`/portal/curso`)
+        if (!lastLocation) {
+            history.push(`/inicio/curso`)
+        } else if (!lastLocation.pathname.includes('sala-aula')) {
+            history.push(lastLocation.pathname)
+        }
     }
 
     const setMenuTab = index => {

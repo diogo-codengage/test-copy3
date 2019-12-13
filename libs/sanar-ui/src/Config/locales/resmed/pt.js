@@ -249,6 +249,7 @@ export default {
         }
     },
     schedule: {
+        suggestedClass: 'Aula sugerida',
         header: {
             title: 'Cronograma',
             subtitle: 'Use esse espaço para organizar os seus estudos'
