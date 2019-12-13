@@ -55,7 +55,7 @@ const SkeletonChat = () => (
 )
 
 const SkeletonDescription = () => (
-    <SANBox mt='xxl'>
+    <SANBox mt={{ md: '7', _: '0' }}>
         <SANSkeleton active paragraph={{ rows: 1, width: '10%' }} />
         <SANSkeleton
             avatar={{ size: 40, shape: 'circle' }}
@@ -108,7 +108,7 @@ const ChatWrapper = styled(SANBox)`
         width: 100%;
         padding-bottom: 100%;
     }
-    ${theme('mediaQueries.down.sm')} {
+    ${theme('mediaQueries.down.md')} {
         border-radius: 0;
     }
 `
@@ -163,7 +163,7 @@ const RMLive = memo<IRMLiveProps>(
 
         return (
             <>
-                <SANLayoutContainer px={{ sm: 'md', _: '0' }}>
+                <SANLayoutContainer px={{ md: 'md', _: '0' }}>
                     <SANBox
                         display='flex'
                         justifyContent='space-between'
@@ -189,11 +189,15 @@ const RMLive = memo<IRMLiveProps>(
                                 fontWeight='bold'
                                 fontSize='lg'
                                 mb='xs'
-                                mt={{ xs: '8', _: 'xxl' }}
+                                mt={{ md: '7', _: '0' }}
                             >
                                 {live.title}
                             </SANTypography>
-                            <SANTypography color='grey.4' fontSize='sm' mb='lg'>
+                            <SANTypography
+                                color='grey.4'
+                                fontSize='sm'
+                                mb={{ md: 'lg', _: 'md' }}
+                            >
                                 {format(
                                     getUTCDate(live.startDate),
                                     'DD/MM/YYYY'
@@ -208,7 +212,7 @@ const RMLive = memo<IRMLiveProps>(
                                 <SANBox
                                     display='flex'
                                     alignItems='center'
-                                    mt='lg'
+                                    mt={{ md: 'lg', _: 'md' }}
                                 >
                                     <SANAvatar
                                         src={live.professor.profilePicture}

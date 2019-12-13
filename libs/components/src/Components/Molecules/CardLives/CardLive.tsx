@@ -122,7 +122,11 @@ const SANCardLive = memo<ISANCardLiveProps>(
                     />
                 </SANImageBox>
                 <SANBox py='md' textAlign='left' {...props.wrapperText}>
-                    <SANBox height={hasList ? 'auto' : '38px'}>
+                    <SANBox
+                        height={hasList ? 'auto' : '38px'}
+                        onClick={onClick}
+                        style={{ cursor: 'pointer' }}
+                    >
                         <SANTypography
                             fontSize='md'
                             fontWeight='bold'
