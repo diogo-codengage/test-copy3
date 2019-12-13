@@ -5,7 +5,13 @@ import { useWindowSize } from '@sanar/utils/dist/Hooks'
 import { useApolloClient } from '@apollo/react-hooks'
 import { useSnackbarContext } from '@sanar/components'
 
-import { SANBox, SANModal, SANDivider, SANTypography } from '@sanar/components'
+import {
+    SANBox,
+    SANModal,
+    SANDivider,
+    SANTypography,
+    SANScroll
+} from '@sanar/components'
 
 import { RMComplementaryRegisterForm } from '../'
 
@@ -29,6 +35,21 @@ const SANStyledModal = styled(SANModal)`
         ${theme('mediaQueries.down.sm')} {
             div.ant-modal-content {
                 border-radius: 0 !important;
+            }
+        }
+        ${theme('mediaQueries.up.sm')} {
+            max-height: 85vh;
+
+            .ant-modal-content {
+                max-height: inherit;
+
+                .ant-modal-body {
+                    max-height: inherit;
+
+                    .modal-scroll {
+                        max-height: inherit;
+                    }
+                }
             }
         }
     }
@@ -137,7 +158,7 @@ const RMModal = ({ profileData = {} as IProfile }) => {
     return (
         <SANStyledModal
             visible={modalOpen}
-            centered={width >= 576}
+            centered={width >= 480}
             closable={false}
             maxWidth={{ _: '100%', sm: '744px' }}
             bodyStyle={width < 576 ? styleToModalBodyMobile : styleToModalBody}
@@ -152,31 +173,37 @@ const RMModal = ({ profileData = {} as IProfile }) => {
                 />
                 <SANDivider my='0' mx='auto' bg='grey.2' />
             </SANImageBox>
-
-            <SANBox px={{ _: 'md', sm: '60px' }} py={{ _: 'xl', sm: 'xxxl' }}>
-                <SANTypography
-                    fontSize='xl'
-                    fontWeight='bold'
-                    color='grey.7'
-                    mb='xs'
+            <SANScroll className='modal-scroll'>
+                <SANBox
+                    px={{ _: 'md', sm: '60px' }}
+                    py={{ _: 'xl', sm: 'xxxl' }}
                 >
-                    {t('userProfile.title')}
-                </SANTypography>
-                <SANTypography fontSize='md' color='grey.6'>
-                    {t(
-                        `userProfile.${
-                            !!profileData.id ? 'pageSubtitle' : 'modalSubtitle'
-                        }`
-                    )}
-                </SANTypography>
-                <SANDivider my='xl' mx='auto' bg='grey.2' />
-                <RMComplementaryRegisterForm
-                    oldData={!!profileData.id && dataToForm}
-                    specialties={suppSpecialties}
-                    institutions={institutions}
-                    closeModal={!!profileData.id && handleModalVisible}
-                />
-            </SANBox>
+                    <SANTypography
+                        fontSize='xl'
+                        fontWeight='bold'
+                        color='grey.7'
+                        mb='xs'
+                    >
+                        {t('userProfile.title')}
+                    </SANTypography>
+                    <SANTypography fontSize='md' color='grey.6'>
+                        {t(
+                            `userProfile.${
+                                !!profileData.id
+                                    ? 'pageSubtitle'
+                                    : 'modalSubtitle'
+                            }`
+                        )}
+                    </SANTypography>
+                    <SANDivider my='xl' mx='auto' bg='grey.2' />
+                    <RMComplementaryRegisterForm
+                        oldData={!!profileData.id && dataToForm}
+                        specialties={suppSpecialties}
+                        institutions={institutions}
+                        closeModal={!!profileData.id && handleModalVisible}
+                    />
+                </SANBox>
+            </SANScroll>
         </SANStyledModal>
     )
 }
