@@ -55,7 +55,7 @@ const SANStyledButton = styled(SANButton)`
         color: ${theme('colors.grey.3')};
     }
 `
-const SANStyledCloseButton = styled(SANButton)`
+const SANCloseButtonBox = styled(SANBox)`
     && {
         border-bottom-right-radius: ${theme('radii.base')};
         border-bottom-left-radius: ${theme('radii.base')};
@@ -263,7 +263,7 @@ const SANSelectFilter = ({
                                     {rows.length ? rows : <SANEmpty />}
                                 </SANBox>
                             </SANStyledScroll>
-                            <SANBox
+                            <SANCloseButtonBox
                                 displayFlex
                                 alignItems='center'
                                 justifyContent='center'
@@ -272,7 +272,7 @@ const SANSelectFilter = ({
                                 borderTop='1px solid'
                                 borderColor='grey.2'
                             >
-                                <SANStyledCloseButton
+                                <SANButton
                                     onClick={handleClose}
                                     bold
                                     variant='text'
@@ -281,8 +281,8 @@ const SANSelectFilter = ({
                                     color='primary'
                                 >
                                     {t('selectFilter.close')}
-                                </SANStyledCloseButton>
-                            </SANBox>
+                                </SANButton>
+                            </SANCloseButtonBox>
                         </SANBox>
                     </div>
                 }
