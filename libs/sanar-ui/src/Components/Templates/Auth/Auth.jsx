@@ -75,6 +75,7 @@ const ESAuthTemplate = ({
                             size='small'
                             variant='outlined'
                             target='_blank'
+                            rel='noopener'
                             uppercase
                         >
                             {marketing.linkDescription}

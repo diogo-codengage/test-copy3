@@ -13,7 +13,7 @@ import { SANBox } from '@sanar/components'
 
 import logo from 'Assets/images/brand/logo.svg'
 import sanar from 'Assets/images/brand/sanar.svg'
-import imageMarketing from 'Assets/images/auth/marketing.png'
+import imageMarketing from 'Assets/images/auth/marketing.jpg'
 
 import { login } from 'Config/AWSCognito'
 
