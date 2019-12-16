@@ -288,6 +288,7 @@ export default {
     lives: {
         title: 'Lives',
         subtitle: 'Veja as lives que ainda vão acontecer e as que já rolaram',
+        empty: 'Não existe nenhuma live',
         facilitedBy: 'Live facilitada por:',
         nextsList: {
             title: 'Próximas lives',

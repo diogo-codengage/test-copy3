@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useQuery } from '@apollo/react-hooks'
 import { isAfter, isBefore, isToday } from 'date-fns'
 
-import { SANBox, SANPage } from '@sanar/components'
+import { SANBox, SANPage, SANEmpty } from '@sanar/components'
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import RMLive from 'Components/Live'
@@ -53,12 +53,16 @@ const RMSpecialty = memo<RouteComponentProps>(({ history }) => {
             }}
         >
             <SANBox pt={{ md: '8', _: '0' }} pb={{ md: '8', _: 'md' }}>
-                <RMLive
-                    loading={loading}
-                    live={!!data ? data.activeLive : undefined}
-                    hasOnline={status.hasOnline}
-                    hasLive={status.hasLive}
-                />
+                {!!data ? (
+                    <RMLive
+                        loading={loading}
+                        live={data.activeLive}
+                        hasOnline={status.hasOnline}
+                        hasLive={status.hasLive}
+                    />
+                ) : (
+                    <SANEmpty title={t('lives.empty')} />
+                )}
             </SANBox>
             <RMNexts />
             <RMPrevious />
