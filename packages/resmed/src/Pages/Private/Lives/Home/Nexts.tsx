@@ -45,7 +45,7 @@ const responsive = size => [
         }
     },
     {
-        breakpoint: 960,
+        breakpoint: 768,
         settings: {
             slidesToShow: 2,
             arrows: false,
@@ -54,7 +54,7 @@ const responsive = size => [
         }
     },
     {
-        breakpoint: 576,
+        breakpoint: 500,
         settings: {
             slidesToShow: 1,
             arrows: false,

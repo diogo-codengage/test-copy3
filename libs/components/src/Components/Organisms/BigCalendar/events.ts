@@ -5,7 +5,7 @@ export const events: IEvent[] = [
         id: '1',
         title: 'Aulas vistas',
         start: new Date(2019, 11, 2),
-        status: 'views'
+        status: 'viewed'
     },
     {
         id: '2',
@@ -17,7 +17,7 @@ export const events: IEvent[] = [
         id: '3',
         title: 'Aulas vistas',
         start: new Date(2019, 11, 5),
-        status: 'views',
+        status: 'viewed',
         startEditable: true
     },
     {
@@ -31,7 +31,7 @@ export const events: IEvent[] = [
         id: '5',
         title: 'Aulas vistas',
         start: new Date(2019, 11, 6),
-        status: 'views',
+        status: 'viewed',
         startEditable: true
     },
     {
@@ -45,7 +45,7 @@ export const events: IEvent[] = [
         id: '7',
         title: 'Aulas vistas',
         start: new Date(2019, 11, 6),
-        status: 'views',
+        status: 'viewed',
         startEditable: true
     },
     {

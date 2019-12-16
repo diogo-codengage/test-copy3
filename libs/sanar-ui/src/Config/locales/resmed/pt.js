@@ -248,6 +248,43 @@ export default {
             questionMap: 'Mapa de questões'
         }
     },
+    schedule: {
+        suggestedClass: 'Aula sugerida',
+        header: {
+            title: 'Cronograma',
+            subtitle: 'Use esse espaço para organizar os seus estudos'
+        },
+        suggestion: 'Sugestão do professor',
+        pdfDownload: 'Baixar em .pdf',
+        today: 'Hoje',
+        thisWeek: {
+            title: 'Esta semana',
+            subtitle: 'Confira as suas próximas atividades'
+        },
+        emptyToday: 'Voce não tem nenhuma aula para hoje',
+        emptyWeek: 'Voce não tem nenhuma aula nessa semana',
+        modal: {
+            day: 'Dia',
+            lesson: {
+                title: 'Aula',
+                watch: 'Assistir aula',
+                watched: 'Aula assistida'
+            },
+            live: {
+                title: 'Live',
+                button: 'Assistir live'
+            },
+            suggestion: {
+                title: 'Sugestão do professor',
+                descriptionDisable:
+                    'Ao desabilitar essa opção, você poderá editar seu calendário movendo as aulas.',
+                descriptionEnable:
+                    'Ao habilitar essa opção, você perderá todas as alterações feitas no seu calendário.',
+                confirm: 'Confirmar',
+                back: 'Voltar'
+            }
+        }
+    },
     lives: {
         title: 'Lives',
         subtitle: 'Veja as lives que ainda vão acontecer e as que já rolaram',

@@ -6,6 +6,11 @@
     background-color: transparent;
     opacity: 1;
     border: none;
+    cursor: default;
+}
+
+.san-free-day > .fc-content {
+    display: none;
 }
 
 .san-free-day:before {
@@ -17,4 +22,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .san-free-day:before {
+        font-size: 0.8em;
+    }
 }

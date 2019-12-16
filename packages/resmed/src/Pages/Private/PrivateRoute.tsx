@@ -30,7 +30,7 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
         const client = useApolloClient()
         const { setMe, me } = useAuthContext()
         const [logged, setLogged] = useState(true)
-        const [loading, setLoading] = useState(false)
+        const [loading, setLoading] = useState(true)
 
         const onLogout = () => {
             setMe(undefined)
@@ -66,6 +66,7 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
                 )
             } else {
                 onLogout()
+                setLoading(false)
             }
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])

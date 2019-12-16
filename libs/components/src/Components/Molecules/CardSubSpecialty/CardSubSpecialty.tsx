@@ -26,6 +26,7 @@ interface IContinue {
 export interface ISANCardSubSpecialtyProps {
     blocked?: boolean
     title: string
+    image?: string
     progress: IProgress
     continue: IContinue
     onClick: () => void
@@ -114,6 +115,7 @@ const SANCardSubSpecialty = ({
     blocked,
     title,
     progress,
+    image,
     continue: continueProp,
     onClick
 }: ISANCardSubSpecialtyProps) => {
@@ -147,15 +149,26 @@ const SANCardSubSpecialty = ({
                 justifyContent='space-between'
                 p='md'
             >
-                <SANTypography
-                    fontWeight='bold'
-                    fontSize='lg'
-                    ellipsis
-                    onClick={onClick}
-                    style={{ cursor: 'pointer' }}
-                >
-                    {title}
-                </SANTypography>
+                <SANBox display='flex' alignItems='center'>
+                    {!!image && (
+                        <SANBox
+                            as='img'
+                            src={image}
+                            width={32}
+                            height={32}
+                            mr='xs'
+                        />
+                    )}
+                    <SANTypography
+                        fontWeight='bold'
+                        fontSize='lg'
+                        ellipsis
+                        onClick={onClick}
+                        style={{ cursor: 'pointer' }}
+                    >
+                        {title}
+                    </SANTypography>
+                </SANBox>
 
                 <SANBox zIndex={1} width='100%' mt='md'>
                     <SANBox display='flex' alignItems='center' mb='xs'>

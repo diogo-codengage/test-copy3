@@ -11,8 +11,7 @@ import {
     SANTypography,
     SANAvatar,
     SANLayoutContainer,
-    SANSkeleton,
-    SANEvaIcon
+    SANSkeleton
 } from '@sanar/components'
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
@@ -55,7 +54,7 @@ const SkeletonChat = () => (
 )
 
 const SkeletonDescription = () => (
-    <SANBox mt='xxl'>
+    <SANBox mt={{ md: '7', _: '0' }}>
         <SANSkeleton active paragraph={{ rows: 1, width: '10%' }} />
         <SANSkeleton
             avatar={{ size: 40, shape: 'circle' }}
@@ -64,17 +63,6 @@ const SkeletonDescription = () => (
         />
     </SANBox>
 )
-
-const Linkedin = styled(SANEvaIcon)`
-    background-color: ${theme('colors.grey.0')};
-    border: 1px solid ${theme('colors.grey.1')};
-    border-radius: ${theme('radii.base')};
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`
 
 const Content = styled.iframe`
     position: absolute;
@@ -108,7 +96,7 @@ const ChatWrapper = styled(SANBox)`
         width: 100%;
         padding-bottom: 100%;
     }
-    ${theme('mediaQueries.down.sm')} {
+    ${theme('mediaQueries.down.md')} {
         border-radius: 0;
     }
 `
@@ -163,7 +151,7 @@ const RMLive = memo<IRMLiveProps>(
 
         return (
             <>
-                <SANLayoutContainer px={{ sm: 'md', _: '0' }}>
+                <SANLayoutContainer px={{ md: 'md', _: '0' }}>
                     <SANBox
                         display='flex'
                         justifyContent='space-between'
@@ -189,11 +177,15 @@ const RMLive = memo<IRMLiveProps>(
                                 fontWeight='bold'
                                 fontSize='lg'
                                 mb='xs'
-                                mt={{ xs: '8', _: 'xxl' }}
+                                mt={{ md: '7', _: '0' }}
                             >
                                 {live.title}
                             </SANTypography>
-                            <SANTypography color='grey.4' fontSize='sm' mb='lg'>
+                            <SANTypography
+                                color='grey.4'
+                                fontSize='sm'
+                                mb={{ md: 'lg', _: 'md' }}
+                            >
                                 {format(
                                     getUTCDate(live.startDate),
                                     'DD/MM/YYYY'
@@ -208,7 +200,7 @@ const RMLive = memo<IRMLiveProps>(
                                 <SANBox
                                     display='flex'
                                     alignItems='center'
-                                    mt='lg'
+                                    mt={{ md: 'lg', _: 'md' }}
                                 >
                                     <SANAvatar
                                         src={live.professor.profilePicture}
@@ -230,34 +222,12 @@ const RMLive = memo<IRMLiveProps>(
                                         >
                                             {live.professor.name}
                                         </SANTypography>
-                                        <SANBox
-                                            display='flex'
-                                            alignItems='center'
+                                        <SANTypography
+                                            color='grey.6'
+                                            fontSize='sm'
                                         >
-                                            <a
-                                                target='_blank'
-                                                href={
-                                                    live.professor.linkedInLink
-                                                }
-                                                rel='noopener noreferrer'
-                                            >
-                                                <Linkedin
-                                                    name='linkedin'
-                                                    mr='xs'
-                                                    size='xsmall'
-                                                    color='grey'
-                                                />
-                                            </a>
-                                            <SANTypography
-                                                color='grey.6'
-                                                fontSize='sm'
-                                            >
-                                                {
-                                                    live.professor
-                                                        .academicTraining
-                                                }
-                                            </SANTypography>
-                                        </SANBox>
+                                            {live.professor.academicTraining}
+                                        </SANTypography>
                                     </SANBox>
                                 </SANBox>
                             )}

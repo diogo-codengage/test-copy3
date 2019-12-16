@@ -1,1 +1,5 @@
-export { default as SANBigCalendar, ISANBigCalendarProps } from './BigCalendar'
+export {
+    default as SANBigCalendar,
+    ISANBigCalendarProps,
+    IEvent
+} from './BigCalendar'

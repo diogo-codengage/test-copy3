@@ -12,7 +12,7 @@ storiesOf('Molecules.CardEvent', module).add('simple', () => (
             <SANCardEvent
                 title='Inscrição para a prova tal'
                 date='12/06/2019, às 10h até 12/07/2019, às 18h'
-                type={'courseActivity'}
+                type={'viewed'}
                 onClick={onButtonPress}
             />
         </div>
@@ -28,7 +28,7 @@ storiesOf('Molecules.CardEvent', module).add('simple', () => (
             <SANCardEvent
                 title='Aula wnofeihwoenso oaihnwejknfçod'
                 date='9:30 até 10:30'
-                type={'lesson'}
+                type={'unseen'}
                 onClick={onButtonPress}
             />
         </div>

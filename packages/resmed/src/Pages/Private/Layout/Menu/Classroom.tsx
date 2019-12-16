@@ -93,7 +93,7 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
         }
         fetchLessons()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params])
+    }, [params.subspecialtyId, params.specialtyId])
 
     useEffect(() => {
         setIndex(params.lessonId, lessons)
