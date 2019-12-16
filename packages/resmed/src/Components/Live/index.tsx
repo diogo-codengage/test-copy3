@@ -11,8 +11,7 @@ import {
     SANTypography,
     SANAvatar,
     SANLayoutContainer,
-    SANSkeleton,
-    SANEvaIcon
+    SANSkeleton
 } from '@sanar/components'
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
@@ -64,17 +63,6 @@ const SkeletonDescription = () => (
         />
     </SANBox>
 )
-
-const Linkedin = styled(SANEvaIcon)`
-    background-color: ${theme('colors.grey.0')};
-    border: 1px solid ${theme('colors.grey.1')};
-    border-radius: ${theme('radii.base')};
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`
 
 const Content = styled.iframe`
     position: absolute;
@@ -234,34 +222,12 @@ const RMLive = memo<IRMLiveProps>(
                                         >
                                             {live.professor.name}
                                         </SANTypography>
-                                        <SANBox
-                                            display='flex'
-                                            alignItems='center'
+                                        <SANTypography
+                                            color='grey.6'
+                                            fontSize='sm'
                                         >
-                                            <a
-                                                target='_blank'
-                                                href={
-                                                    live.professor.linkedInLink
-                                                }
-                                                rel='noopener noreferrer'
-                                            >
-                                                <Linkedin
-                                                    name='linkedin'
-                                                    mr='xs'
-                                                    size='xsmall'
-                                                    color='grey'
-                                                />
-                                            </a>
-                                            <SANTypography
-                                                color='grey.6'
-                                                fontSize='sm'
-                                            >
-                                                {
-                                                    live.professor
-                                                        .academicTraining
-                                                }
-                                            </SANTypography>
-                                        </SANBox>
+                                            {live.professor.academicTraining}
+                                        </SANTypography>
                                     </SANBox>
                                 </SANBox>
                             )}

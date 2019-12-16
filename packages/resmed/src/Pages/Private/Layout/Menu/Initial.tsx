@@ -65,15 +65,18 @@ const RMSuggestedClass = withRouter(({ history }) => {
         return <SANLeftOffError />
     }
 
+    if (!data || (!!data && !data.suggestedClass)) {
+        return null
+    }
+
     return (
         <SANLeftOff
             label={t('schedule.suggestedClass')}
-            onClick={() => goToResource()}
+            onClick={goToResource}
             resourceType={'Video'}
-            classReference={!!data && data.suggestedClass.title}
-            moduleReference={formatMinutes(
-                !!data && data.suggestedClass.timeInMinutes
-            )}
+            classReference={data.suggestedClass.title}
+            moduleReference={formatMinutes(data.suggestedClass.timeInMinutes)}
+            thumbnail={data.suggestedClass.image}
         />
     )
 })
