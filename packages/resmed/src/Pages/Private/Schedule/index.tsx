@@ -168,10 +168,10 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
     const handleConfirmSuggestion = async () => {
         try {
             setLoading(true)
-            setModalSuggestion({
-                checked: schedule.hasModified,
+            setModalSuggestion(old => ({
+                checked: old.checked,
                 visible: false
-            })
+            }))
             const {
                 data: { resetSchedule }
             } = await client.mutate<IResetSchedule>({
@@ -181,12 +181,13 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                     end: format(currentRange.end, 'YYYY-MM-DD')
                 }
             })
-            setSchedule({
+            setSchedule(old => ({
                 ...resetSchedule,
+                hasModified: old.hasModified,
                 items: resetSchedule.items.map(event =>
                     makeEvents(event, resetSchedule.hasModified)
                 ) as IEvent[]
-            })
+            }))
         } catch {
             setModalSuggestion({
                 checked: !schedule.hasModified,
@@ -263,7 +264,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                 checked={modalSuggestion.checked}
                 onCancel={() =>
                     setModalSuggestion(old => ({
-                        checked: !schedule.hasModified,
+                        checked: !old.checked,
                         visible: false
                     }))
                 }
