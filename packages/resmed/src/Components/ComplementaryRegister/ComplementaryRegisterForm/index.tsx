@@ -152,22 +152,24 @@ const RMForm = ({
     form,
     specialties = [] as IListProps[],
     institutions = [] as IListProps[],
-    closeModal
+    closeModal,
+    defaultSubmitting = false
 }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
     const { width } = useWindowSize()
     const [rcn, setRcn] = useState(false) //requiredCourseName
     const [submitting, setSubmitting] = useState(false)
+    const [testValue, setTestValue] = useState('missing')
     const snackbar = useSnackbarContext()
     const { setMe, setActiveCourse } = useAuthContext()
 
     useEffect(() => {
-        setSubmitting(old => !old && true)
+        setSubmitting(defaultSubmitting)
         if (!!oldData.graduationStep) {
             setSubmitting(old => !!old && !old)
             setRcn(oldData.preparatoryCourseStatus !== 'missing')
-            form.setFieldsValue({ testExperience: oldData.testExperience })
+            setTestValue(oldData.testExperience)
         }
         if (!!oldData.id && !oldData.graduationStep) {
             setSubmitting(old => !old && true)
@@ -378,11 +380,8 @@ const RMForm = ({
                         >
                             <SANStyledRadioGroup
                                 mt='16px'
-                                defaultValue={
-                                    !!oldData
-                                        ? oldData.testExperience
-                                        : testExperiences[0]
-                                }
+                                value={testValue}
+                                onChange={e => setTestValue(e.target.value)}
                             >
                                 {/* {!!oldData &&
                                     console.log(oldData.testExperience)} */}

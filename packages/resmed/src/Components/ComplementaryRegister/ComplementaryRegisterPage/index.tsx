@@ -163,6 +163,7 @@ const RMPage = ({ history }) => {
                         oldData={profileData}
                         specialties={suppSpecialties}
                         institutions={institutions}
+                        defaultSubmitting={true}
                     />
                 </SANStyledBox>
             </SANBox>
