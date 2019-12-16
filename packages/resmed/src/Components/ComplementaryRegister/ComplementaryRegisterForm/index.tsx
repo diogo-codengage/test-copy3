@@ -148,7 +148,7 @@ const testExperiences = ['none', 'one', 'many']
 const preparatoryCourseStatus = ['missing', 'inProgress', 'completed']
 
 const RMForm = ({
-    oldData = (undefined as unknown) as IFormDataProps,
+    oldData = {} as IFormDataProps,
     form,
     specialties = [] as IListProps[],
     institutions = [] as IListProps[],
@@ -174,6 +174,7 @@ const RMForm = ({
         if (!!oldData.id && !oldData.graduationStep) {
             setSubmitting(old => !old && true)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [oldData])
 
     const createProfile = async profile => {
@@ -383,8 +384,6 @@ const RMForm = ({
                                 value={testValue}
                                 onChange={e => setTestValue(e.target.value)}
                             >
-                                {/* {!!oldData &&
-                                    console.log(oldData.testExperience)} */}
                                 {testExperiences.map(item => (
                                     <SANStyledRadio
                                         key={item}
