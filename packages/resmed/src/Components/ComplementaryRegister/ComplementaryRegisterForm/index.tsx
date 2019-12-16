@@ -160,7 +160,7 @@ const RMForm = ({
     const { width } = useWindowSize()
     const [rcn, setRcn] = useState(false) //requiredCourseName
     const [submitting, setSubmitting] = useState(false)
-    const [testValue, setTestValue] = useState('missing')
+    const [testValue, setTestValue] = useState('none')
     const snackbar = useSnackbarContext()
     const { setMe, setActiveCourse } = useAuthContext()
 
