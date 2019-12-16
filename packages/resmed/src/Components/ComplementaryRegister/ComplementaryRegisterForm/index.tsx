@@ -152,24 +152,29 @@ const RMForm = ({
     form,
     specialties = [] as IListProps[],
     institutions = [] as IListProps[],
-    closeModal
+    closeModal,
+    defaultSubmitting = false
 }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
     const { width } = useWindowSize()
     const [rcn, setRcn] = useState(false) //requiredCourseName
     const [submitting, setSubmitting] = useState(false)
+    const [testValue, setTestValue] = useState('none')
     const snackbar = useSnackbarContext()
     const { setMe, setActiveCourse } = useAuthContext()
 
     useEffect(() => {
+        setSubmitting(defaultSubmitting)
         if (!!oldData.graduationStep) {
             setSubmitting(old => !!old && !old)
             setRcn(oldData.preparatoryCourseStatus !== 'missing')
+            setTestValue(oldData.testExperience)
         }
         if (!!oldData.id && !oldData.graduationStep) {
             setSubmitting(old => !old && true)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [oldData])
 
     const createProfile = async profile => {
@@ -376,7 +381,8 @@ const RMForm = ({
                         >
                             <SANStyledRadioGroup
                                 mt='16px'
-                                defaultValue={testExperiences[0]}
+                                value={testValue}
+                                onChange={e => setTestValue(e.target.value)}
                             >
                                 {testExperiences.map(item => (
                                     <SANStyledRadio
