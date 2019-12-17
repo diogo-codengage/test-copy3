@@ -254,6 +254,10 @@ export default {
             title: 'Cronograma',
             subtitle: 'Use esse espaço para organizar os seus estudos'
         },
+        changeEvent: {
+            error: 'Ocorreu um erro ao mover aula - {{name}}',
+            exceeded: 'Você excedeu o limite de aulas por dia'
+        },
         suggestion: 'Sugestão do professor',
         pdfDownload: 'Baixar em .pdf',
         today: 'Hoje',

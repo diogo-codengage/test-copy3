@@ -17,7 +17,8 @@ import {
     SANTypography,
     SANEvaIcon,
     SANBox,
-    SANLayoutContainer
+    SANLayoutContainer,
+    useSnackbarContext
 } from '@sanar/components'
 import { IEvent } from '@sanar/components/dist/Components/Organisms/BigCalendar'
 
@@ -107,9 +108,11 @@ interface ISchedule {
 
 const RMSchedule = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
+    const createSnackbar = useSnackbarContext()
     const calendarRef = useRef<SANBigCalendar>()
     const client = useApolloClient()
     const [loading, setLoading] = useState(false)
+    const [trigger, setTrigger] = useState()
     const [currentRange, setCurrentRange] = useState({
         start: '',
         end: ''
@@ -208,8 +211,25 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                     date
                 }
             })
-        } catch {
+            setTimeout(() => setTrigger(new Date().getTime()))
+        } catch (err) {
             e.revert()
+            if (!!err.graphQLErrors.length) {
+                const code = err.graphQLErrors[0].extensions.code
+                if (code === 'INTERNAL_SERVER_ERROR') {
+                    createSnackbar({
+                        message: t('schedule.changeEvent.error', {
+                            name: event.extendedProps.title
+                        }),
+                        theme: 'error'
+                    })
+                } else {
+                    createSnackbar({
+                        message: t('schedule.changeEvent.exceeded'),
+                        theme: 'error'
+                    })
+                }
+            }
         }
     }
 
@@ -339,10 +359,10 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                     <SANLayoutContainer>
                         <SANRow gutter={24}>
                             <SANCol xs={24} sm={24} md={12}>
-                                <RMToday hasModified={schedule.hasModified} />
+                                <RMToday hasModified={trigger} />
                             </SANCol>
                             <SANCol xs={24} sm={24} md={12}>
-                                <RMWeek hasModified={schedule.hasModified} />
+                                <RMWeek hasModified={trigger} />
                             </SANCol>
                         </SANRow>
                     </SANLayoutContainer>

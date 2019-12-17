@@ -33,7 +33,7 @@ const getWeekend = () => {
     }
 }
 
-const RMWeek = ({ hasModified = false }) => {
+const RMWeek = ({ hasModified }) => {
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
     const [loading, setLoading] = useState(false)
@@ -48,6 +48,7 @@ const RMWeek = ({ hasModified = false }) => {
                     data: { appointments }
                 } = await client.query<IAppointmentsQuery>({
                     query: GET_APPOINTMENTS,
+                    fetchPolicy: 'network-only',
                     variables: {
                         start: sunday,
                         end: saturday,

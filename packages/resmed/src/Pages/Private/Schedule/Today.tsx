@@ -22,7 +22,7 @@ import {
 
 import { getStatus } from './index'
 
-const RMToday = ({ hasModified = false }) => {
+const RMToday = ({ hasModified }) => {
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
     const [loading, setLoading] = useState(false)
@@ -36,6 +36,7 @@ const RMToday = ({ hasModified = false }) => {
                     data: { appointments }
                 } = await client.query<IAppointmentsQuery>({
                     query: GET_APPOINTMENTS,
+                    fetchPolicy: 'network-only',
                     variables: {
                         start: format(new Date(), 'YYYY-MM-DD'),
                         end: format(new Date(), 'YYYY-MM-DD'),
