@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "react-app-polyfill": "^1.0.5",
         "react-device-detect": "^1.11.14",
         "react-router-last-location": "^2.0.1"
     },
