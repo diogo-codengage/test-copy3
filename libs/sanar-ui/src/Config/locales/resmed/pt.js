@@ -292,7 +292,6 @@ export default {
         facilitedBy: 'Live facilitada por:',
         nextsList: {
             title: 'Próximas lives',
-            seeLive: 'Ver live',
             at: 'às'
         },
         previousList: {

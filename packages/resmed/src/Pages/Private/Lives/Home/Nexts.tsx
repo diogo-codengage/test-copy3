@@ -102,26 +102,6 @@ const RMCardNextLive = memo<{ title: string; subtitle: string }>(
                         {subtitle}
                     </SANTypography>
                 </SANBox>
-                <SANBox
-                    display='flex'
-                    alignItems='center'
-                    justifyContent='center'
-                    p='xxs'
-                    borderTop='1px solid'
-                    borderColor='grey.1'
-                >
-                    <SANButton
-                        uppercase
-                        bold
-                        block
-                        size='xsmall'
-                        variant='text'
-                        color='primary'
-                        disabled
-                    >
-                        {t('lives.nextsList.seeLive')}
-                    </SANButton>
-                </SANBox>
             </SANBox>
         )
     }
