@@ -185,7 +185,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                 ...resetSchedule,
                 hasModified: old.hasModified,
                 items: resetSchedule.items.map(event =>
-                    makeEvents(event, resetSchedule.hasModified)
+                    makeEvents(event, !modalSuggestion.checked)
                 ) as IEvent[]
             }))
         } catch {
