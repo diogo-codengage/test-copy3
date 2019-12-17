@@ -21,7 +21,6 @@ export const GET_LIVE = gql`
                 name
                 profilePicture
                 academicTraining
-                linkedInLink
             }
         }
     }
