@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -30,24 +30,39 @@ import {
     CREATE_PROFILE_MUTATION,
     UPDATE_PROFILE_MUTATION
 } from 'Apollo/User/Mutations/profile'
+import { UPDATE_COURSE_ACCESSED } from 'Apollo/User/Mutations/course-accessed'
 
 const SANCourseStatusFormItem = styled(SANFormItem)<{ rcn?: boolean }>`
     &&& {
         ${ifProp(
-            'rcn',
+            'hasError',
             css`
-                margin-bottom: 12px;
+                margin-bottom: 5px !important;
             `,
-            css`
-                margin-bottom: 24px;
-            `
+            ifProp(
+                'rcn',
+                css`
+                    margin-bottom: 12px;
+                `,
+                css`
+                    margin-bottom: 24px;
+                `
+            )
         )}
     }
 `
 
 const SANStyledFormItem = styled(SANFormItem)`
     &&& {
-        margin-bottom: 24px;
+        ${ifProp(
+            'hasError',
+            css`
+                margin-bottom: 5px !important;
+            `,
+            css`
+                margin-bottom: 24px;
+            `
+        )}
     }
 `
 
@@ -91,32 +106,31 @@ const SANSTyledButtonFormItem = styled(SANFormItem)`
     }
 `
 
-interface IFormDataProps {
+export interface IFormDataProps {
     id?: string
-    graduationStep?: string
-    institutionIds?: [
+    graduationStep: string
+    institutionIds: [
+        {
+            id: string
+            name: string
+        }
+    ]
+    specialtyIds: [
         {
             id: number
             name: string
         }
     ]
-    specialtyIds?: [
-        {
-            id: number
-            name: string
-        }
-    ]
-    testExperience?: string
-    preparatoryCourseStatus?: string
+    testExperience: string
+    preparatoryCourseStatus: string
     preparatoryCourseName?: string
-    modal?: boolean
 }
 interface IFormProps {
     form: any
 }
-interface IListProps {
+export interface IListProps {
     label: string
-    value: number
+    value: number | string
 }
 
 const graduatedSteps = [
@@ -137,20 +151,35 @@ const RMForm = ({
     oldData = {} as IFormDataProps,
     form,
     specialties = [] as IListProps[],
-    institutions = [] as IListProps[]
+    institutions = [] as IListProps[],
+    closeModal,
+    defaultSubmitting = false
 }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
     const { width } = useWindowSize()
     const [rcn, setRcn] = useState(false) //requiredCourseName
     const [submitting, setSubmitting] = useState(false)
+    const [testValue, setTestValue] = useState('none')
     const snackbar = useSnackbarContext()
-    const { setMe } = useAuthContext()
+    const { setMe, setActiveCourse } = useAuthContext()
+
+    useEffect(() => {
+        setSubmitting(defaultSubmitting)
+        if (!!oldData.graduationStep) {
+            setSubmitting(old => !!old && !old)
+            setRcn(oldData.preparatoryCourseStatus !== 'missing')
+            setTestValue(oldData.testExperience)
+        }
+        if (!!oldData.id && !oldData.graduationStep) {
+            setSubmitting(old => !old && true)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [oldData])
 
     const createProfile = async profile => {
         let institutionIds = profile.institutionIds.map(({ value }) => value)
         let specialtyIds = profile.specialtyIds.map(({ value }) => value)
-        // console.log('create', profile, institutionIds, specialtyIds)
         try {
             const {
                 data: { createProfile }
@@ -214,6 +243,22 @@ const RMForm = ({
             })
         }
         setSubmitting(false)
+        !!closeModal && closeModal()
+        if (!!oldData.id) {
+            const {
+                data: { updateCourseProgressAccess }
+            } = await client.mutate({
+                mutation: UPDATE_COURSE_ACCESSED,
+                variables: {
+                    data: {
+                        accessed: true
+                    }
+                }
+            })
+            setActiveCourse({
+                ...updateCourseProgressAccess
+            })
+        }
     }
 
     const handleSubmit = e => {
@@ -249,6 +294,7 @@ const RMForm = ({
                                     message: 'Este campo é obrigatório!'
                                 }
                             ]}
+                            hasError={!!form.getFieldError('graduationStep')}
                         >
                             <SANStyledSelect
                                 required
@@ -278,6 +324,7 @@ const RMForm = ({
                                     message: 'Este campo é obrigatório!'
                                 }
                             ]}
+                            hasError={!!form.getFieldError('institutionIds')}
                         >
                             <SANSelectFilter
                                 placeholder={t('userProfile.placeholder')}
@@ -305,6 +352,7 @@ const RMForm = ({
                                     message: 'Este campo é obrigatório!'
                                 }
                             ]}
+                            hasError={!!form.getFieldError('specialtyIds')}
                         >
                             <SANSelectFilter
                                 placeholder={t('userProfile.placeholder')}
@@ -328,11 +376,13 @@ const RMForm = ({
                                     message: 'Este campo é obrigatório!'
                                 }
                             ]}
+                            hasError={!!form.getFieldError('testExperience')}
                             valuePropName='checked'
                         >
                             <SANStyledRadioGroup
                                 mt='16px'
-                                defaultValue={testExperiences[0]}
+                                value={testValue}
+                                onChange={e => setTestValue(e.target.value)}
                             >
                                 {testExperiences.map(item => (
                                     <SANStyledRadio
@@ -366,6 +416,9 @@ const RMForm = ({
                                     message: 'Este campo é obrigatório!'
                                 }
                             ]}
+                            hasError={
+                                !!form.getFieldError('preparatoryCourseStatus')
+                            }
                         >
                             <SANStyledSelect
                                 required
@@ -386,7 +439,7 @@ const RMForm = ({
                         </SANCourseStatusFormItem>
                     </SANCol>
                 </SANRow>
-                {(rcn || oldData.preparatoryCourseStatus !== 'missing') && (
+                {rcn && (
                     <SANRow gutter={24}>
                         <SANCol>
                             <SANStyledFormItem
@@ -402,6 +455,11 @@ const RMForm = ({
                                         message: 'Este campo é obrigatório!'
                                     }
                                 ]}
+                                hasError={
+                                    !!form.getFieldError(
+                                        'preparatoryCourseName'
+                                    )
+                                }
                             >
                                 <SANInput
                                     size='large'

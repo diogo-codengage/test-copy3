@@ -27,8 +27,8 @@ export interface ILivesQuery {
 }
 
 export const GET_LIVES = gql`
-    query Lives($start: Date, $end: Date) {
-        lives(where: { start: $start, end: $end }) {
+    query Lives($start: Date, $end: Date, $order: Order) {
+        lives(where: { start: $start, end: $end }, order: $order) {
             items {
                 id
                 title

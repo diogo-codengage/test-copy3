@@ -109,6 +109,8 @@ import { SANCheckbox } from 'Components/Atoms/Checkbox'
 import { SANModalTabs } from 'Components/Organisms/ModalTabs'
 import { SANCollection } from 'Components/Molecules/Collection'
 import { SANLessonResult } from 'Components/Molecules/LessonResult'
+import { SANBigCalendar } from 'Components/Organisms/BigCalendar'
+import { SANCardEvent } from 'Components/Molecules/CardEvent'
 import { SANCardLive } from 'Components/Molecules/CardLives'
 
 import { SANSelectFilter } from 'Components/Molecules/SelectFilter'
@@ -227,6 +229,8 @@ export {
     SANModalTabs,
     SANCollection,
     SANLessonResult,
+    SANBigCalendar,
+    SANCardEvent,
     SANCardLive,
     SANSelectFilter
 }

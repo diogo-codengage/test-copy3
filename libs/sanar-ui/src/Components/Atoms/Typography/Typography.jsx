@@ -65,6 +65,7 @@ const ESTypography = ({
             <ResponsiveEllipsis
                 style={{ whiteSpace: 'pre-wrap' }}
                 text={children}
+                trimRight
                 maxLine={ellipsis.rows ? ellipsis.rows : 2}
                 basedOn={ellipsis.basedOn}
                 ellipsis={

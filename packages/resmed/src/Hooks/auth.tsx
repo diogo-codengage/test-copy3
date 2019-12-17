@@ -20,7 +20,8 @@ const initialCourse: ICourse = {
     id: '',
     name: '',
     progress: 0,
-    infos: []
+    infos: [],
+    accessed: false
 }
 
 export const RMAuthProvider: React.FC = ({ children }) => {

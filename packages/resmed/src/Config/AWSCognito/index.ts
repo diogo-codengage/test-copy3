@@ -99,7 +99,10 @@ const getAccessToken = () => {
 
     return new Promise((resolve, reject) => {
         user.getSession((err, session: CognitoUserSession) => {
-            if (err) reject(err)
+            if (err || !session) {
+                console.log('[Session]', session)
+                reject(err)
+            }
             const jwtToken = session.getIdToken().getJwtToken()
             resolve(jwtToken)
         })

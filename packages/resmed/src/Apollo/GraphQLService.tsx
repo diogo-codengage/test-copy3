@@ -3,7 +3,7 @@ import ApolloClient, { Operation } from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { ErrorResponse } from 'apollo-link-error'
 
-import { getAccessToken } from 'Config/AWSCognito'
+import { getAccessToken, logout } from 'Config/AWSCognito'
 
 const onError = ({
     graphQLErrors,
@@ -13,7 +13,9 @@ const onError = ({
 }: ErrorResponse) => {
     if (graphQLErrors) {
         graphQLErrors.forEach(error => {
+            console.error('[Grapqhl error]: %o', error)
             if (error.message.statusCode === 401) {
+                logout({})
                 localStorage.clear()
                 window.location.hash = '/#/auth/entrar'
             }

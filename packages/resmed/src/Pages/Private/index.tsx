@@ -16,6 +16,8 @@ const RMHelpCenter = React.lazy(() => import('Pages/Private/HelpCenter'))
 const RMAccount = React.lazy(() => import('Pages/Private/Account'))
 const RMPracticalArea = React.lazy(() => import('Pages/Private/PracticalArea'))
 const RMClassroom = React.lazy(() => import('Pages/Private/Classroom'))
+const RMSchedule = React.lazy(() => import('Pages/Private/Schedule'))
+const FLXError500 = React.lazy(() => import('Components/Error500'))
 const RMLives = React.lazy(() => import('Pages/Private/Lives'))
 
 const RMPrivatePages = memo<RouteComponentProps>(
@@ -23,7 +25,7 @@ const RMPrivatePages = memo<RouteComponentProps>(
         const { t } = useTranslation('resmed')
 
         const reload = () => {
-            history.push('/inicio')
+            history.push('/inicio/curso')
             window.location.reload()
         }
 
@@ -32,7 +34,9 @@ const RMPrivatePages = memo<RouteComponentProps>(
                 <RMMainProvider>
                     <RMLayoutProvider>
                         <RMLayout>
-                            <Suspense fallback={<RMSplashLoader />}>
+                            <Suspense
+                                fallback={<RMSplashLoader size='flexible' />}
+                            >
                                 <Switch>
                                     <Route
                                         path={`${url}/curso`}
@@ -55,10 +59,6 @@ const RMPrivatePages = memo<RouteComponentProps>(
                                         component={RMPracticalArea}
                                     />
                                     <Route
-                                        path={`${url}/lives`}
-                                        component={RMLives}
-                                    />
-                                    <Route
                                         path={[
                                             `${url}/sala-aula/:specialtyId/:subspecialtyId/:lessonId/:collectionId/:type/:contentId`,
                                             `${url}/sala-aula/:specialtyId/:lessonId/:collectionId/:type/:contentId`,
@@ -66,6 +66,18 @@ const RMPrivatePages = memo<RouteComponentProps>(
                                             `${url}/sala-aula/:specialtyId/:lessonId/:status`
                                         ]}
                                         component={RMClassroom}
+                                    />
+                                    <Route
+                                        path={`${url}/cronograma`}
+                                        component={RMSchedule}
+                                    />
+                                    <Route
+                                        path={`${url}/lives`}
+                                        component={RMLives}
+                                    />
+                                    <Route
+                                        path={`${url}/erro`}
+                                        component={FLXError500}
                                     />
                                     <Route
                                         path={[`${url}/`, `${url}`]}

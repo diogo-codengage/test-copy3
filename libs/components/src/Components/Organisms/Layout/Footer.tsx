@@ -209,6 +209,7 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
                                     target='_blank'
                                     size='small'
                                     variant='text'
+                                    rel='noopener'
                                 >
                                     <SANBox
                                         as='img'
@@ -223,6 +224,7 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
                                     target='_blank'
                                     size='small'
                                     variant='text'
+                                    rel='noopener'
                                 >
                                     <SANBox
                                         as='img'
@@ -237,6 +239,7 @@ const SANLayoutFooter: React.FC<ISANLayoutFooterProps> = ({
                                     target='_blank'
                                     size='small'
                                     variant='text'
+                                    rel='noopener'
                                 >
                                     <SANBox
                                         as='img'

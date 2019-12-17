@@ -4,6 +4,7 @@ import { HashRouter as Router } from 'react-router-dom'
 
 import App from './App'
 import * as serviceWorker from './serviceWorker'
+import * as Sentry from '@sentry/browser';
 
 import 'sanar-ui/dist/Config/i18n'
 
@@ -32,5 +33,6 @@ const FLXApp: React.FC = () => (
     </FLXGraphQLProvider>
 )
 
+Sentry.init({ dsn: `${process.env.REACT_APP_SENTRY_DSN}` });
 ReactDOM.render(<FLXApp />, document.getElementById('root'))
 serviceWorker.register()

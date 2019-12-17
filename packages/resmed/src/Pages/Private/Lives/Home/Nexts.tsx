@@ -2,6 +2,8 @@ import React, { useCallback, memo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { format } from 'date-fns'
+import styled from 'styled-components'
+import { theme } from 'styled-tools'
 
 import {
     SANButton,
@@ -43,7 +45,7 @@ const responsive = size => [
         }
     },
     {
-        breakpoint: 960,
+        breakpoint: 768,
         settings: {
             slidesToShow: 2,
             arrows: false,
@@ -52,7 +54,7 @@ const responsive = size => [
         }
     },
     {
-        breakpoint: 576,
+        breakpoint: 500,
         settings: {
             slidesToShow: 1,
             arrows: false,
@@ -61,6 +63,11 @@ const responsive = size => [
         }
     }
 ]
+
+const SANBoxStyled = styled(SANBox)`
+    border-top: 1px solid ${theme('colors.grey.0')};
+    border-bottom: 1px solid ${theme('colors.grey.0')};
+`
 
 const RMCardNextLive = memo<{ title: string; subtitle: string }>(
     ({ title, subtitle }) => {
@@ -152,7 +159,7 @@ const RMNexts = memo(() => {
                 if (!lives.items.length) return null
 
                 return (
-                    <SANBox bg='grey-solid.1' py={{ xs: '8', _: 'md' }}>
+                    <SANBoxStyled bg='grey-solid.1' py={{ xs: '8', _: 'md' }}>
                         <SANLayoutContainer>
                             <SANSessionTitle
                                 title={t('lives.nextsList.title')}
@@ -174,7 +181,7 @@ const RMNexts = memo(() => {
                                 </SANCarousel>
                             </SANBox>
                         </SANLayoutContainer>
-                    </SANBox>
+                    </SANBoxStyled>
                 )
             }}
         </SANQuery>

@@ -30,13 +30,15 @@ const ESLeftOff = ({
                 <ESSkeleton paragraph={{ rows: 3 }} dark />
             ) : (
                 <>
-                    <ESTypography
-                        className='es-left-off--title mb-xs'
-                        ellipsis
-                        level={6}
-                    >
-                        {title}
-                    </ESTypography>
+                    {!!title && (
+                        <ESTypography
+                            className='es-left-off--title mb-xs'
+                            ellipsis
+                            level={6}
+                        >
+                            {title}
+                        </ESTypography>
+                    )}
                     <ESTypography
                         variant='overline'
                         className='text-white-6 mb-sm'

@@ -247,6 +247,9 @@ export default {
     collection: {
         part: 'Parte'
     },
+    bigCalendar: {
+        more: 'Mais'
+    },
     selectFilter: {
         select: 'Selecione',
         selectAll: 'Selecionar todos',

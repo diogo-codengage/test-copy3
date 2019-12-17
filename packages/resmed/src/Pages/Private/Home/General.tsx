@@ -175,6 +175,7 @@ const RMGeneral = memo(() => {
                                 mr='xl'
                                 href='https://apps.apple.com/br/app/sanar-residência-médica/id1375384328'
                                 target='_blank'
+                                rel='noopener'
                             >
                                 <SANBox as='img' src={appleSvg} />
                             </SANButton>
@@ -185,6 +186,7 @@ const RMGeneral = memo(() => {
                                 color='black'
                                 href='https://play.google.com/store/apps/details?id=br.com.editorasanar.residencia&hl=pt_BR'
                                 target='_blank'
+                                rel='noopener'
                             >
                                 <SANBox as='img' src={googlePlaySvg} />
                             </SANButton>

@@ -116,6 +116,7 @@ const RMSendPasswordRecoveryPage: React.FC<IProps> = ({ form, history }) => {
                         </SANButton>
                         <SANButton
                             href='/#/auth/entrar'
+                            rel='noopener'
                             uppercase
                             block
                             bold

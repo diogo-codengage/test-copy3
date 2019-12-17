@@ -88,7 +88,8 @@ const RMPrevious = memo<RouteComponentProps>(({ history }) => {
             query={GET_LIVES}
             options={{
                 variables: {
-                    end: format(new Date(), 'YYYY-MM-DD')
+                    end: format(new Date(), 'YYYY-MM-DD'),
+                    order: 'DESC'
                 }
             }}
             loaderProps={{ minHeight: '200px', flex: true }}
@@ -120,7 +121,7 @@ const RMPrevious = memo<RouteComponentProps>(({ history }) => {
                                     </SANTypography>
                                 </SANBox>
                                 <SANBox
-                                    display={{ xs: 'flex', _: 'none' }}
+                                    display={{ md: 'flex', _: 'none' }}
                                     alignItems='center'
                                     justifyContent='flex-end'
                                 >
