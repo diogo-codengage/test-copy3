@@ -182,7 +182,8 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
 
     const profile = useMemo(
         () =>
-            !!me && {
+            !!me &&
+            !!me.profile && {
                 ...me.profile,
                 institutionIds: institutions.filter(({ value }) =>
                     me.profile.institutionIds.find(itt => value === itt)
