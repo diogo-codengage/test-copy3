@@ -73,12 +73,13 @@ const RMSubspecialties = ({
         collectionId,
         resource
     }: ILastAccessed) => {
+        const type = resource.type.toLocaleLowerCase()
         history.push(
             `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${
                 lesson.id
             }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
                 resource.id
-            }`
+            }${type === 'quiz' && '/0'}`
         )
     }
 

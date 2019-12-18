@@ -25,15 +25,13 @@ import RMClassRoomQuizQuestion from './Question'
 
 const RMClassRoomQuiz = memo<RouteComponentProps>(props => {
     const {
-        match: { url },
-        history
+        match: { url }
     } = props
     const { onOpenMenu, params } = useLayoutContext()
     const { setQuestions } = useClassroomQuizContext()
     const { specialty } = useClassroomContext()
 
     const setQuestionContext = ({ quiz }) => {
-        history.push(`${url}/${quiz.questions[0].id}`)
         setQuestions(quiz.questions)
     }
 
@@ -65,7 +63,7 @@ const RMClassRoomQuiz = memo<RouteComponentProps>(props => {
                         <Switch>
                             <Route
                                 exact
-                                path={`${url}/:questionId`}
+                                path={`${url}/:questionIndex`}
                                 component={RMClassRoomQuizQuestion}
                             />
                         </Switch>
