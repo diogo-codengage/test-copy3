@@ -87,6 +87,7 @@ const RMWeek = ({ hasModified }) => {
                 mb='xs'
             />
         ),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         []
     )
 
