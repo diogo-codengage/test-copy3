@@ -145,10 +145,7 @@ const ESMainMenu = forwardRef(
         }))
 
         return (
-            <RemoveScroll
-                className={classesWrapper}
-                enabled={toggle && context === 'classroom'}
-            >
+            <RemoveScroll className={classesWrapper} enabled={toggle}>
                 <div className={classes}>
                     <div className={classesContent}>
                         {typeof title === 'string' ? (
