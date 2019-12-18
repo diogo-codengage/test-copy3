@@ -59,7 +59,7 @@ const Input = styled.input`
     }
 
     &:hover:not(:disabled) {
-        border-color: ${theme('colors.grey.5')};
+        border-color: ${theme('colors.primary')};
     }
 
     &:focus {
@@ -157,7 +157,9 @@ const SANInput: React.FC<ISANInputProps> = (
     },
     ref
 ) => {
-    const customPlaceholder = props.customRequired ? `${placeholder} *` : placeholder
+    const customPlaceholder = props.customRequired
+        ? `${placeholder} *`
+        : placeholder
 
     const inputProps = {
         ...props,
