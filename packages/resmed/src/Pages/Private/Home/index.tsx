@@ -21,7 +21,6 @@ import { useMainContext } from 'Pages/Private/Context'
 
 import RMGeneral from './General'
 import RMAbout from './About'
-import { RMComplementaryRegisterModal } from 'Components/ComplementaryRegister'
 
 const TitleCol = styled(SANCol)`
     ${theme('mediaQueries.up.md')} {
@@ -95,7 +94,6 @@ const Header = () => {
 const RMHome = memo(() => {
     const { t } = useTranslation('resmed')
     const { handleTrack } = useMainContext()
-    const { activeCourse, me } = useAuthContext()
 
     useEffect(() => {
         handleTrack('Course Homepage viewed')
@@ -104,9 +102,6 @@ const RMHome = memo(() => {
 
     return (
         <SANBox flex='1' display='flex' flexDirection='column'>
-            {!!activeCourse.id && !activeCourse.accessed && (
-                <RMComplementaryRegisterModal profileData={me.profile} />
-            )}
             <Header />
             <SANTabs center defaultActiveKey='1' tabBarGutter={0} flex='1'>
                 <SANTabPane

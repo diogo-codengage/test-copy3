@@ -1,10 +1,19 @@
-import React, { useContext, createContext, useEffect, memo } from 'react'
+import React, {
+    useContext,
+    createContext,
+    useEffect,
+    useState,
+    memo
+} from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router'
 import { useApolloClient } from '@apollo/react-hooks'
 import { useTranslation } from 'react-i18next'
 
 import { useSnackbarContext } from '@sanar/components'
+
+import { RMComplementaryRegisterModal } from 'Components/ComplementaryRegister'
+import RMSplashLoader from 'Components/SplashLoader'
 
 import { segmentTrack } from 'Config/Segment/track'
 import { IEvents, IOptions } from 'Config/Segment'
@@ -24,10 +33,12 @@ const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
     const { t } = useTranslation('resmed')
+    const [loading, setLoading] = useState(true)
     const { setActiveCourse, me, activeCourse } = useAuthContext()
 
     const getCurrentEnrollment = async () => {
         try {
+            setLoading(true)
             const {
                 data: { activeCourse }
             } = await client.query({ query: GET_ACTIVE_COURSE })
@@ -39,6 +50,7 @@ const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
                 theme: 'error'
             })
         }
+        setLoading(false)
     }
 
     const handleTrack = (event: IEvents, attrs?: IOptions) => {
@@ -56,6 +68,12 @@ const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
         getCurrentEnrollment()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    if (loading) return <RMSplashLoader />
+
+    if (!!activeCourse && !activeCourse.accessed) {
+        return <RMComplementaryRegisterModal />
+    }
 
     const value = {
         getCurrentEnrollment,

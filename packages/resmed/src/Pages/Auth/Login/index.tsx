@@ -21,17 +21,12 @@ import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 
 import { segmentTrack } from 'Config/Segment/track'
 import { IEvents, IOptions } from 'Config/Segment'
-import { useAuthContext } from 'Hooks/auth'
-import { useApolloClient } from '@apollo/react-hooks'
-import { UPDATE_COURSE_ACCESSED } from 'Apollo/User/Mutations/course-accessed'
 
 const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
-    const client = useApolloClient()
     const [keepMeLoggedIn, setKeepMeLoggedIn] = useState(false)
     const [showModalTerms, setShowModalTerms] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
-    const { activeCourse, setActiveCourse } = useAuthContext()
 
     const handleTrack = (event: IEvents, attrs?: IOptions) => {
         const data = {
@@ -42,26 +37,7 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
         segmentTrack(event, data)
     }
 
-    const setAccessedToTrue = async () => {
-        const {
-            data: { updateCourseProgressAccess }
-        } = await client.mutate({
-            mutation: UPDATE_COURSE_ACCESSED,
-            variables: {
-                data: {
-                    accessed: true
-                }
-            }
-        })
-        setActiveCourse({
-            ...updateCourseProgressAccess
-        })
-    }
-
     const action = response => {
-        if (!activeCourse.accessed) {
-            setAccessedToTrue()
-        }
         if (response.newPasswordRequired) {
             history.push('/auth/nova-senha')
         } else {

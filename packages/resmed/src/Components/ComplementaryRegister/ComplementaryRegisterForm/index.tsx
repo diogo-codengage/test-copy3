@@ -1,126 +1,30 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
-
 import { useApolloClient } from '@apollo/react-hooks'
+
+import { withSANForm, useSnackbarContext } from '@sanar/components'
+
 import { useAuthContext } from 'Hooks/auth'
-import { useWindowSize } from '@sanar/utils/dist/Hooks'
-
-import {
-    SANCol,
-    SANRow,
-    SANForm,
-    SANSpin,
-    SANInput,
-    SANRadio,
-    SANSelect,
-    SANButton,
-    withSANForm,
-    SANFormItem,
-    SANRadioGroup,
-    SANSelectFilter,
-    SANSelectOption,
-    useSnackbarContext
-} from '@sanar/components'
-
-import styled, { css } from 'styled-components'
-import { theme, ifProp } from 'styled-tools'
-
 import {
     CREATE_PROFILE_MUTATION,
     UPDATE_PROFILE_MUTATION
 } from 'Apollo/User/Mutations/profile'
-import { UPDATE_COURSE_ACCESSED } from 'Apollo/User/Mutations/course-accessed'
+import { GET_SUPPLEMENTARY_SPECIALTIES } from 'Apollo/User/Queries/supplementary-specialties'
+import { GET_INSTITUTIONS } from 'Apollo/PracticalArea/Queries/institutions'
+import { GET_ACTIVE_COURSE } from 'Apollo/User/Queries/active-course'
 
-const SANCourseStatusFormItem = styled(SANFormItem)<{ rcn?: boolean }>`
-    &&& {
-        ${ifProp(
-            'hasError',
-            css`
-                margin-bottom: 5px !important;
-            `,
-            ifProp(
-                'rcn',
-                css`
-                    margin-bottom: 12px;
-                `,
-                css`
-                    margin-bottom: 24px;
-                `
-            )
-        )}
-    }
-`
+import RMForm from './Form'
 
-const SANStyledFormItem = styled(SANFormItem)`
-    &&& {
-        ${ifProp(
-            'hasError',
-            css`
-                margin-bottom: 5px !important;
-            `,
-            css`
-                margin-bottom: 24px;
-            `
-        )}
-    }
-`
-
-const SANStyledSelect = styled(SANSelect)`
-    &&& {
-        margin-top: 16px;
-    }
-`
-
-const SANStyledRadioGroup = styled(SANRadioGroup)`
-    &&& {
-        margin-top: 16px;
-    }
-`
-
-const SANStyledRadio = styled(SANRadio)<{ nd?: boolean }>`
-    &&& {
-        display: block;
-        ${ifProp(
-            'nd',
-            css`
-                margin-top: 12px;
-                margin-bottom: 12px;
-            `,
-            css`
-                margin-top: 0;
-                margin-bottom: 0;
-            `
-        )}
-        ${theme('mediaQueries.up.xs')} {
-            display: inline-block;
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-    }
-`
-
-const SANSTyledButtonFormItem = styled(SANFormItem)`
-    &&& {
-        margin-bottom: 0;
-    }
-`
-
+interface IOwner {
+    label: string
+    value: string
+}
 export interface IFormDataProps {
     id?: string
     graduationStep: string
-    institutionIds: [
-        {
-            id: string
-            name: string
-        }
-    ]
-    specialtyIds: [
-        {
-            id: number
-            name: string
-        }
-    ]
+    institutionIds: IOwner[]
+    specialtyIds: IOwner[]
     testExperience: string
     preparatoryCourseStatus: string
     preparatoryCourseName?: string
@@ -128,74 +32,60 @@ export interface IFormDataProps {
 interface IFormProps {
     form: any
 }
-export interface IListProps {
-    label: string
-    value: number | string
+
+const updateActiveCourseCache = store => {
+    try {
+        const data = store.readQuery({
+            query: GET_ACTIVE_COURSE
+        })
+
+        data.activeCourse = {
+            ...data.activeCourse,
+            accessed: true
+        }
+
+        store.writeQuery({
+            query: GET_ACTIVE_COURSE,
+            data
+        })
+    } catch (err) {
+        console.error(err.message)
+    }
 }
 
-const graduatedSteps = [
-    'firstYear',
-    'secondYear',
-    'thirdYear',
-    'fourthYear',
-    'fifthYear',
-    'sixthYear',
-    'formed'
-]
-
-const testExperiences = ['none', 'one', 'many']
-
-const preparatoryCourseStatus = ['missing', 'inProgress', 'completed']
-
-const RMForm = ({
-    oldData = {} as IFormDataProps,
-    form,
-    specialties = [] as IListProps[],
-    institutions = [] as IListProps[],
-    closeModal,
-    defaultSubmitting = false
-}) => {
+const RMComplementaryRegisterForm = ({ form, closeModal }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
-    const { width } = useWindowSize()
     const [rcn, setRcn] = useState(false) //requiredCourseName
     const [submitting, setSubmitting] = useState(false)
     const [testValue, setTestValue] = useState('none')
+    const [institutions, setInstitutions] = useState<IOwner[]>([])
+    const [supplementarySpecialties, setSupplementarySpecialties] = useState<
+        IOwner[]
+    >([])
     const snackbar = useSnackbarContext()
-    const { setMe, setActiveCourse } = useAuthContext()
+    const { me, setMe, setActiveCourse } = useAuthContext()
 
-    useEffect(() => {
-        setSubmitting(defaultSubmitting)
-        if (!!oldData.graduationStep) {
-            setSubmitting(old => !!old && !old)
-            setRcn(oldData.preparatoryCourseStatus !== 'missing')
-            setTestValue(oldData.testExperience)
-        }
-        if (!!oldData.id && !oldData.graduationStep) {
-            setSubmitting(old => !old && true)
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [oldData])
+    const makePayload = (profile: IFormDataProps) => ({
+        ...profile,
+        institutionIds: profile.institutionIds.map(({ value }) => value),
+        specialtyIds: profile.specialtyIds.map(({ value }) => value),
+        preparatoryCourseName:
+            profile.preparatoryCourseStatus === 'missing'
+                ? null
+                : profile.preparatoryCourseName
+    })
 
     const createProfile = async profile => {
-        let institutionIds = profile.institutionIds.map(({ value }) => value)
-        let specialtyIds = profile.specialtyIds.map(({ value }) => value)
         try {
             const {
                 data: { createProfile }
             } = await client.mutate({
                 mutation: CREATE_PROFILE_MUTATION,
                 variables: {
-                    data: {
-                        ...profile,
-                        institutionIds,
-                        specialtyIds,
-                        preparatoryCourseName:
-                            profile.preparatoryCourseStatus === 'missing'
-                                ? null
-                                : profile.preparatoryCourseName
-                    }
-                }
+                    data: makePayload(profile)
+                },
+                update: updateActiveCourseCache
             })
             setMe(old => ({ ...old, ...createProfile }))
             snackbar({
@@ -212,24 +102,15 @@ const RMForm = ({
     }
 
     const updateProfile = async profile => {
-        let institutionIds = profile.institutionIds.map(({ value }) => value)
-        let specialtyIds = profile.specialtyIds.map(({ value }) => value)
         try {
             const {
                 data: { updateProfile }
             } = await client.mutate({
                 mutation: UPDATE_PROFILE_MUTATION,
                 variables: {
-                    data: {
-                        ...profile,
-                        institutionIds,
-                        specialtyIds,
-                        preparatoryCourseName:
-                            profile.preparatoryCourseStatus === 'missing'
-                                ? null
-                                : profile.preparatoryCourseName
-                    }
-                }
+                    data: makePayload(profile)
+                },
+                update: updateActiveCourseCache
             })
             setMe(old => ({ ...old, ...updateProfile }))
             snackbar({
@@ -244,21 +125,6 @@ const RMForm = ({
         }
         setSubmitting(false)
         !!closeModal && closeModal()
-        if (!!oldData.id) {
-            const {
-                data: { updateCourseProgressAccess }
-            } = await client.mutate({
-                mutation: UPDATE_COURSE_ACCESSED,
-                variables: {
-                    data: {
-                        accessed: true
-                    }
-                }
-            })
-            setActiveCourse({
-                ...updateCourseProgressAccess
-            })
-        }
     }
 
     const handleSubmit = e => {
@@ -266,239 +132,84 @@ const RMForm = ({
         setSubmitting(true)
         form.validateFields((err, values) => {
             if (!err) {
-                if (oldData.id) {
-                    updateProfile({ id: oldData.id, ...values })
+                if (!!me.profile && !!me.profile.id) {
+                    updateProfile({ id: me.profile.id, ...values })
                 } else {
                     createProfile(values)
                 }
+                setActiveCourse(old => ({ ...old, accessed: true }))
             } else {
                 setSubmitting(false)
             }
         })
     }
 
+    const fetchSpecialties = async () => {
+        try {
+            const {
+                data: { supplementarySpecialties }
+            } = await client.query({ query: GET_SUPPLEMENTARY_SPECIALTIES })
+
+            setSupplementarySpecialties(supplementarySpecialties)
+        } catch (err) {
+            snackbar({
+                message: t('userProfile.loadError.specialties'),
+                theme: 'error'
+            })
+        }
+    }
+
+    const fetchInstitutions = async () => {
+        try {
+            const {
+                data: { institutions }
+            } = await client.query({ query: GET_INSTITUTIONS })
+
+            setInstitutions(institutions)
+        } catch (err) {
+            snackbar({
+                message: t('userProfile.loadError.institutions'),
+                theme: 'error'
+            })
+        }
+    }
+
+    useEffect(() => {
+        fetchSpecialties()
+        fetchInstitutions()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const profile = useMemo(
+        () =>
+            !!me && {
+                ...me.profile,
+                institutionIds: institutions.filter(({ value }) =>
+                    me.profile.institutionIds.find(itt => value === itt)
+                ),
+                specialtyIds: supplementarySpecialties.filter(({ value }) =>
+                    me.profile.specialtyIds.find(sp => value === sp)
+                )
+            },
+        [me, institutions, supplementarySpecialties]
+    )
+
     return (
-        <SANSpin spinning={submitting} flex>
-            <SANForm form={form} onSubmit={handleSubmit}>
-                <SANRow gutter={24}>
-                    <SANCol>
-                        <SANStyledFormItem
-                            name='graduationStep'
-                            label={t('userProfile.graduatedStep.label')}
-                            initialValue={
-                                !!oldData ? oldData.graduationStep : undefined
-                            }
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Este campo é obrigatório!'
-                                }
-                            ]}
-                            hasError={!!form.getFieldError('graduationStep')}
-                        >
-                            <SANStyledSelect
-                                required
-                                placeholder={t('userProfile.placeholder')}
-                                size='large'
-                            >
-                                {graduatedSteps.map(item => (
-                                    <SANSelectOption key={item}>
-                                        {t(`userProfile.graduatedStep.${item}`)}
-                                    </SANSelectOption>
-                                ))}
-                            </SANStyledSelect>
-                        </SANStyledFormItem>
-                    </SANCol>
-                </SANRow>
-                <SANRow gutter={24}>
-                    <SANCol>
-                        <SANStyledFormItem
-                            name='institutionIds'
-                            label={t('userProfile.institutions')}
-                            initialValue={
-                                !!oldData ? oldData.institutionIds : undefined
-                            }
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Este campo é obrigatório!'
-                                }
-                            ]}
-                            hasError={!!form.getFieldError('institutionIds')}
-                        >
-                            <SANSelectFilter
-                                placeholder={t('userProfile.placeholder')}
-                                items={institutions}
-                                hasError={
-                                    !!form.getFieldError('institutionIds')
-                                }
-                                InputProps={{ size: 'large' }}
-                                mt='md'
-                            />
-                        </SANStyledFormItem>
-                    </SANCol>
-                </SANRow>
-                <SANRow gutter={24}>
-                    <SANCol>
-                        <SANStyledFormItem
-                            name='specialtyIds'
-                            label={t('userProfile.specialties')}
-                            initialValue={
-                                !!oldData ? oldData.specialtyIds : undefined
-                            }
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Este campo é obrigatório!'
-                                }
-                            ]}
-                            hasError={!!form.getFieldError('specialtyIds')}
-                        >
-                            <SANSelectFilter
-                                placeholder={t('userProfile.placeholder')}
-                                items={specialties}
-                                hasError={!!form.getFieldError('specialtyIds')}
-                                InputProps={{ size: 'large' }}
-                                mt='md'
-                            />
-                        </SANStyledFormItem>
-                    </SANCol>
-                </SANRow>
-                <SANRow gutter={24}>
-                    <SANCol>
-                        <SANStyledFormItem
-                            name='testExperience'
-                            label={t('userProfile.testExperiences.label')}
-                            initialValue={testExperiences[0]}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Este campo é obrigatório!'
-                                }
-                            ]}
-                            hasError={!!form.getFieldError('testExperience')}
-                            valuePropName='checked'
-                        >
-                            <SANStyledRadioGroup
-                                mt='16px'
-                                value={testValue}
-                                onChange={e => setTestValue(e.target.value)}
-                            >
-                                {testExperiences.map(item => (
-                                    <SANStyledRadio
-                                        key={item}
-                                        nd={item === testExperiences[1]}
-                                        value={item}
-                                    >
-                                        {t(
-                                            `userProfile.testExperiences.${item}`
-                                        )}
-                                    </SANStyledRadio>
-                                ))}
-                            </SANStyledRadioGroup>
-                        </SANStyledFormItem>
-                    </SANCol>
-                </SANRow>
-                <SANRow gutter={24}>
-                    <SANCol>
-                        <SANCourseStatusFormItem
-                            name='preparatoryCourseStatus'
-                            label={t('userProfile.preparatoryCourse.label')}
-                            initialValue={
-                                !!oldData
-                                    ? oldData.preparatoryCourseStatus
-                                    : undefined
-                            }
-                            rcn={rcn}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Este campo é obrigatório!'
-                                }
-                            ]}
-                            hasError={
-                                !!form.getFieldError('preparatoryCourseStatus')
-                            }
-                        >
-                            <SANStyledSelect
-                                required
-                                placeholder={t('userProfile.placeholder')}
-                                size='large'
-                                onChange={item =>
-                                    setRcn(item !== preparatoryCourseStatus[0])
-                                }
-                            >
-                                {preparatoryCourseStatus.map(item => (
-                                    <SANSelectOption key={item} value={item}>
-                                        {t(
-                                            `userProfile.preparatoryCourse.${item}`
-                                        )}
-                                    </SANSelectOption>
-                                ))}
-                            </SANStyledSelect>
-                        </SANCourseStatusFormItem>
-                    </SANCol>
-                </SANRow>
-                {rcn && (
-                    <SANRow gutter={24}>
-                        <SANCol>
-                            <SANStyledFormItem
-                                name='preparatoryCourseName'
-                                initialValue={
-                                    !!oldData
-                                        ? oldData.preparatoryCourseName
-                                        : undefined
-                                }
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Este campo é obrigatório!'
-                                    }
-                                ]}
-                                hasError={
-                                    !!form.getFieldError(
-                                        'preparatoryCourseName'
-                                    )
-                                }
-                            >
-                                <SANInput
-                                    size='large'
-                                    placeholder={t(
-                                        'userProfile.preparatoryCourse.inputLabel'
-                                    )}
-                                />
-                            </SANStyledFormItem>
-                        </SANCol>
-                    </SANRow>
-                )}
-                <SANRow gutter={24}>
-                    <SANCol>
-                        <SANSTyledButtonFormItem name='submitButton'>
-                            <SANButton
-                                mt='md'
-                                mx='auto'
-                                size='small'
-                                variant='solid'
-                                color='primary'
-                                uppercase
-                                block={width < 576}
-                                bold
-                                type='submit'
-                            >
-                                {t(
-                                    `userProfile.${
-                                        oldData.id
-                                            ? 'pageSubmit'
-                                            : 'modalSubmit'
-                                    }`
-                                )}
-                            </SANButton>
-                        </SANSTyledButtonFormItem>
-                    </SANCol>
-                </SANRow>
-            </SANForm>
-        </SANSpin>
+        <RMForm
+            {...{
+                form,
+                submitting,
+                handleSubmit,
+                profile,
+                institutions,
+                supplementarySpecialties,
+                testValue,
+                setTestValue,
+                rcn,
+                setRcn
+            }}
+        />
     )
 }
 
-export default withSANForm<IFormProps>(RMForm)
+export default withSANForm<IFormProps>(RMComplementaryRegisterForm)

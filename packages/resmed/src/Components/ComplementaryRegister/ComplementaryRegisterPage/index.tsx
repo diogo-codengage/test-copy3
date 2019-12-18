@@ -1,118 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import { useTranslation } from 'react-i18next'
-import { useApolloClient } from '@apollo/react-hooks'
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
 import { RMComplementaryRegisterForm } from '../'
 
-import {
-    SANBox,
-    SANPage,
-    SANTypography,
-    useSnackbarContext
-} from '@sanar/components'
+import { SANBox, SANPage, SANTypography } from '@sanar/components'
 
-import { GET_SUPPLEMENTARY_SPECIALTIES } from 'Apollo/User/Queries/supplementary-specialties'
-import { GET_INSTITUTIONS } from 'Apollo/PracticalArea/Queries/institutions'
-import { GET_ME } from 'Apollo/User/Queries/me'
-import { IListProps } from '../ComplementaryRegisterForm'
-
-import styled from 'styled-components'
-import { theme } from 'styled-tools'
-
-const SANStyledBox = styled(SANBox)`
-    &&& {
-        ${theme('mediaQueries.down.sm')} {
-            border-radius: 0 !important;
-        }
-    }
-`
-const RMPage = ({ history }) => {
+const RMComplementaryRegisterPage = ({ history }) => {
     const { t } = useTranslation('resmed')
     const { width } = useWindowSize()
-    const client = useApolloClient()
-    const snackbar = useSnackbarContext()
-    const [profileData, setProfileData] = useState({})
-    const [institutions, setInstitutions] = useState<IListProps[]>([])
-    const [suppSpecialties, setSuppSpecialties] = useState<IListProps[]>([])
-
-    const getSpecialties = async () => {
-        try {
-            const {
-                data: { supplementarySpecialties }
-            } = await client.query({ query: GET_SUPPLEMENTARY_SPECIALTIES })
-
-            setSuppSpecialties(supplementarySpecialties)
-        } catch (err) {
-            snackbar({
-                message: t('userProfile.loadError.specialties'),
-                theme: 'error'
-            })
-        }
-    }
-
-    const getInstitutions = async () => {
-        try {
-            const {
-                data: { institutions }
-            } = await client.query({ query: GET_INSTITUTIONS })
-
-            setInstitutions(institutions)
-        } catch (err) {
-            snackbar({
-                message: t('userProfile.loadError.institutions'),
-                theme: 'error'
-            })
-        }
-    }
-
-    const getProfile = async () => {
-        if (suppSpecialties[0] && institutions[0]) {
-            try {
-                const {
-                    data: {
-                        me: { profile }
-                    }
-                } = await client.query({ query: GET_ME })
-                if (profile.id) {
-                    setProfileData({
-                        id: profile.id,
-                        testExperience: profile.testExperience
-                    })
-                }
-                const findedSpecialties = suppSpecialties.filter(({ value }) =>
-                    profile.specialtyIds.find(sp => value === sp)
-                )
-
-                const findedInstitutions = institutions.filter(({ value }) =>
-                    profile.institutionIds.find(itt => value === itt)
-                )
-
-                setProfileData({
-                    ...profile,
-                    specialtyIds: findedSpecialties,
-                    institutionIds: findedInstitutions
-                })
-            } catch {
-                snackbar({
-                    message: t('userProfile.loadError.profileData'),
-                    theme: 'error'
-                })
-            }
-        }
-    }
-
-    useEffect(() => {
-        getSpecialties()
-        getInstitutions()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    useEffect(() => {
-        getProfile()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [suppSpecialties, institutions])
 
     return (
         <SANPage
@@ -125,7 +22,7 @@ const RMPage = ({ history }) => {
                 pb: { _: '0', sm: '8' }
             }}
             HeaderProps={{
-                onBack: () => history.goBack(),
+                onBack: () => history.push('/inicio/curso'),
                 SessionTitleProps: {
                     title: t('userProfile.title'),
                     subtitle: t('userProfile.pageSubtitle')
@@ -150,25 +47,20 @@ const RMPage = ({ history }) => {
                 >
                     {t('userProfile.pagePresentation')}
                 </SANTypography>
-                <SANStyledBox
+                <SANBox
                     bg='white.10'
-                    borderRadius='base'
+                    borderRadius={{ sm: 'base', _: '0' }}
                     border='1px solid'
                     borderColor='grey.2'
                     boxShadow='1'
                     px={{ _: 'md', sm: '60px' }}
                     py={{ _: 'xl', sm: 'xxxl' }}
                 >
-                    <RMComplementaryRegisterForm
-                        oldData={profileData}
-                        specialties={suppSpecialties}
-                        institutions={institutions}
-                        defaultSubmitting={true}
-                    />
-                </SANStyledBox>
+                    <RMComplementaryRegisterForm />
+                </SANBox>
             </SANBox>
         </SANPage>
     )
 }
 
-export default RMPage
+export default RMComplementaryRegisterPage
