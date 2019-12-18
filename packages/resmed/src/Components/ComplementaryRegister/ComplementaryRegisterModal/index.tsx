@@ -71,7 +71,7 @@ const RMComplementaryRegisterModal = () => {
     const [modalOpen, setModalOpen] = useState(true)
 
     const handleModalVisible = () => {
-        if (!!me && !!me.profile.id) {
+        if (!!me && !!me.profile && !!me.profile.id) {
             setModalOpen(old => !old)
         }
     }
@@ -110,7 +110,7 @@ const RMComplementaryRegisterModal = () => {
                     <SANTypography fontSize='md' color='grey.6'>
                         {t(
                             `userProfile.${
-                                !!me && !!me.profile.id
+                                !!me && !!me.profile && !!me.profile.id
                                     ? 'pageSubtitle'
                                     : 'modalSubtitle'
                             }`
