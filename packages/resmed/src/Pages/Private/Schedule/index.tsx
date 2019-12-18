@@ -184,6 +184,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                     end: format(currentRange.end, 'YYYY-MM-DD')
                 }
             })
+            setTrigger(new Date().getTime())
             setSchedule(old => ({
                 ...resetSchedule,
                 hasModified: old.hasModified,
@@ -203,34 +204,34 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
     const handleEventDrop = e => {
         const { event } = e
         const date = new Date(new Date(event.start).toUTCString()).toISOString()
-        try {
-            client.mutate<IUpdateAppointment>({
+        client
+            .mutate<IUpdateAppointment>({
                 mutation: UPDATE_APPOINTMENT,
                 variables: {
                     id: event.extendedProps.id,
                     date
                 }
             })
-            setTimeout(() => setTrigger(new Date().getTime()))
-        } catch (err) {
-            e.revert()
-            if (!!err.graphQLErrors.length) {
-                const code = err.graphQLErrors[0].extensions.code
-                if (code === 'INTERNAL_SERVER_ERROR') {
-                    createSnackbar({
-                        message: t('schedule.changeEvent.error', {
-                            name: event.extendedProps.title
-                        }),
-                        theme: 'error'
-                    })
-                } else {
-                    createSnackbar({
-                        message: t('schedule.changeEvent.exceeded'),
-                        theme: 'error'
-                    })
+            .then(() => setTrigger(new Date().getTime()))
+            .catch(err => {
+                e.revert()
+                if (!!err.graphQLErrors.length) {
+                    const code = err.graphQLErrors[0].extensions.code
+                    if (code === 'INTERNAL_SERVER_ERROR') {
+                        createSnackbar({
+                            message: t('schedule.changeEvent.error', {
+                                name: event.extendedProps.title
+                            }),
+                            theme: 'error'
+                        })
+                    } else {
+                        createSnackbar({
+                            message: t('schedule.changeEvent.exceeded'),
+                            theme: 'error'
+                        })
+                    }
                 }
-            }
-        }
+            })
     }
 
     useEffect(() => {
