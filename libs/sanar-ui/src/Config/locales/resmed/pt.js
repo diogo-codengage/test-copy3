@@ -249,6 +249,8 @@ export default {
         }
     },
     schedule: {
+        at: 'às',
+        until: 'até',
         suggestedClass: 'Aula sugerida',
         header: {
             title: 'Cronograma',

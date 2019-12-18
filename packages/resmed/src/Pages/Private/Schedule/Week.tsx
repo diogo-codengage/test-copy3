@@ -8,9 +8,9 @@ import {
     SANTypography,
     SANSessionTitle,
     SANCardEvent,
-    SANEmpty,
-    SANSpin
+    SANEmpty
 } from '@sanar/components'
+import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import emptyImage from 'Assets/images/empty/empty.svg'
 
@@ -21,6 +21,7 @@ import {
 } from 'Apollo/Schedule/Queries/appointments'
 
 import { getStatus } from './index'
+import { Skeleton } from './Today'
 
 const getWeekend = () => {
     const curr = new Date()
@@ -73,7 +74,15 @@ const RMWeek = ({ hasModified }) => {
             <SANCardEvent
                 key={event.id}
                 title={event.title}
-                date='12/06/2019, às 10h até 12/07/2019, às 18h'
+                date={`${format(
+                    getUTCDate(event.start),
+                    `DD/MM/YYYY [${t('schedule.at')}] HH[h] [${t(
+                        'schedule.until'
+                    )}]`
+                )} ${t('schedule.at')} ${format(
+                    getUTCDate(event.end),
+                    `DD/MM/YYYY [${t('schedule.at')}] HH[h]`
+                )}`}
                 type={getStatus(event)}
                 mb='xs'
             />
@@ -93,7 +102,7 @@ const RMWeek = ({ hasModified }) => {
                 mt={{ md: '0', _: 'xl' }}
             />
             {loading ? (
-                <SANSpin flex minHeight={130} />
+                <Skeleton />
             ) : !!events.length ? (
                 events.map(renderEvent)
             ) : (
