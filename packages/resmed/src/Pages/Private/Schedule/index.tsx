@@ -233,17 +233,22 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
             })
             .catch(err => {
                 e.revert()
-                console.error('[event drop]', err)
                 if (!!err.graphQLErrors.length) {
-                    const code = err.graphQLErrors[0].extensions.code
-                    if (code === 'INTERNAL_SERVER_ERROR') {
+                    const status500 = err.graphQLErrors.find(
+                        e => e.extensions.exception.status === 500
+                    )
+                    const exceeded422 = err.graphQLErrors.find(
+                        e => e.extensions.exception.status === 422
+                    )
+                    if (!!status500) {
                         createSnackbar({
                             message: t('schedule.changeEvent.error', {
                                 name: event.extendedProps.title
                             }),
                             theme: 'error'
                         })
-                    } else {
+                    }
+                    if (!!exceeded422) {
                         createSnackbar({
                             message: t('schedule.changeEvent.exceeded'),
                             theme: 'error'
