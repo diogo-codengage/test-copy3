@@ -89,7 +89,7 @@ export const getStatus = event => {
 const formatMinutes = minutes =>
     new Date(minutes * 60000).toISOString().substr(11, 5)
 
-const makeEvents = (event: IAppointment, hasModified = false) => ({
+const makeEvent = (event: IAppointment, hasModified = false) => ({
     extendedProps: {
         ...event,
         subtitle: formatMinutes(event.timeInMinutes)
@@ -194,7 +194,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                 ...resetSchedule,
                 hasModified: old.hasModified,
                 items: resetSchedule.items.map(event =>
-                    makeEvents(event, !modalSuggestion.checked)
+                    makeEvent(event, !modalSuggestion.checked)
                 ) as IEvent[]
             }))
         } catch {
@@ -217,7 +217,20 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                     date
                 }
             })
-            .then(() => setTrigger(new Date().getTime()))
+            .then(({ data: { updateAppointment } }) => {
+                setTrigger(new Date().getTime())
+                setSchedule(old => ({
+                    ...old,
+                    items: old.items.map(item =>
+                        item.id !== event.extendedProps.id
+                            ? item
+                            : (makeEvent(
+                                  updateAppointment,
+                                  schedule.hasModified
+                              ) as IEvent)
+                    )
+                }))
+            })
             .catch(err => {
                 e.revert()
                 console.error('[event drop]', err)
@@ -260,7 +273,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                         ? appointments.hasModified
                         : !modalSuggestion.checked,
                     items: appointments.items.map(event =>
-                        makeEvents(event, appointments.hasModified)
+                        makeEvent(event, appointments.hasModified)
                     ) as IEvent[]
                 })
                 setModalSuggestion(old => ({
