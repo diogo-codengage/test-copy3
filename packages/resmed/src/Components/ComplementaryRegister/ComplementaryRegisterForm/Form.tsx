@@ -286,7 +286,7 @@ const RMForm = ({
                         </SANCourseStatusFormItem>
                     </SANCol>
                 </SANRow>
-                {rcn && (
+                {rcn && rcn !== 'missing' && (
                     <SANRow gutter={24}>
                         <SANCol>
                             <SANStyledFormItem
