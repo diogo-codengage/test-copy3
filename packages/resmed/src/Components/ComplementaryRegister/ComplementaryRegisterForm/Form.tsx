@@ -215,7 +215,9 @@ const RMForm = ({
                         <SANStyledFormItem
                             name='testExperience'
                             label={t('userProfile.testExperiences.label')}
-                            initialValue={testExperiences[0]}
+                            initialValue={
+                                !!profile ? profile.testExperience : undefined
+                            }
                             rules={[
                                 {
                                     required: true,
@@ -223,7 +225,6 @@ const RMForm = ({
                                 }
                             ]}
                             hasError={!!form.getFieldError('testExperience')}
-                            valuePropName='checked'
                         >
                             <SANStyledRadioGroup
                                 mt='16px'

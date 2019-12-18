@@ -56,7 +56,7 @@ const updateActiveCourseCache = store => {
 const RMComplementaryRegisterForm = ({ form, closeModal }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
-    const [rcn, setRcn] = useState(false) //requiredCourseName
+    const [rcn, setRcn] = useState('missing')
     const [submitting, setSubmitting] = useState(false)
     const [testValue, setTestValue] = useState('none')
     const [institutions, setInstitutions] = useState<IOwner[]>([])
@@ -180,10 +180,10 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const profile = useMemo(
-        () =>
-            !!me &&
-            !!me.profile && {
+    const profile = useMemo(() => {
+        if (!!me && !!me.profile) {
+            setRcn(me.profile.preparatoryCourseStatus)
+            return {
                 ...me.profile,
                 institutionIds: institutions.filter(({ value }) =>
                     me.profile.institutionIds.find(itt => value === itt)
@@ -191,9 +191,9 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
                 specialtyIds: supplementarySpecialties.filter(({ value }) =>
                     me.profile.specialtyIds.find(sp => value === sp)
                 )
-            },
-        [me, institutions, supplementarySpecialties]
-    )
+            }
+        }
+    }, [me, institutions, supplementarySpecialties])
 
     return (
         <RMForm
