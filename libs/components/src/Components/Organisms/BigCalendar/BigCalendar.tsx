@@ -335,6 +335,7 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
             <SANSpin spinning={loading} flex>
                 <FullCalendar
                     height={width < 768 && 650}
+                    fixedWeekCount={false}
                     aspectRatio={1.7}
                     events={eventsMap}
                     ref={calendarRef}

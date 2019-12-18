@@ -51,14 +51,18 @@ const SuggestionStyled = styled(SANBox)`
     padding: ${theme('space.sm')} ${theme('space.lg')};
 `
 
-const Suggestion = ({ onChange, checked, ...props }) => {
+const Suggestion = ({ onChange, checked, loading, ...props }) => {
     const { t } = useTranslation('resmed')
     return (
         <SuggestionStyled {...props}>
             <SANTypography fontWeight='bold' mr='lg'>
                 {t('schedule.suggestion')}
             </SANTypography>
-            <SANSwitch onChange={onChange} checked={checked} />
+            <SANSwitch
+                onChange={onChange}
+                checked={checked}
+                loading={loading}
+            />
         </SuggestionStyled>
     )
 }
@@ -111,6 +115,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
     const createSnackbar = useSnackbarContext()
     const calendarRef = useRef<SANBigCalendar>()
     const client = useApolloClient()
+    const [firstLoad, setFirstLoad] = useState(true)
     const [loading, setLoading] = useState(false)
     const [trigger, setTrigger] = useState()
     const [currentRange, setCurrentRange] = useState({
@@ -215,6 +220,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
             .then(() => setTrigger(new Date().getTime()))
             .catch(err => {
                 e.revert()
+                console.error('[event drop]', err)
                 if (!!err.graphQLErrors.length) {
                     const code = err.graphQLErrors[0].extensions.code
                     if (code === 'INTERNAL_SERVER_ERROR') {
@@ -247,16 +253,23 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                         end: format(currentRange.end, 'YYYY-MM-DD')
                     }
                 })
+
                 setSchedule({
                     ...appointments,
+                    hasModified: firstLoad
+                        ? appointments.hasModified
+                        : !modalSuggestion.checked,
                     items: appointments.items.map(event =>
                         makeEvents(event, appointments.hasModified)
                     ) as IEvent[]
                 })
                 setModalSuggestion(old => ({
                     ...old,
-                    checked: !appointments.hasModified
+                    checked: firstLoad
+                        ? !appointments.hasModified
+                        : modalSuggestion.checked
                 }))
+                firstLoad && setFirstLoad(false)
             } catch {}
             setLoading(false)
         }
@@ -310,6 +323,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                             display={{ md: 'none', _: 'flex' }}
                             onChange={handleChangeSuggestion}
                             checked={modalSuggestion.checked}
+                            loading={loading}
                         />
                         <SANBox mx={{ md: '0', _: '-16px' }}>
                             <SANBigCalendar
@@ -343,12 +357,14 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                                 display={{ md: 'flex', _: 'none' }}
                                 onChange={handleChangeSuggestion}
                                 checked={modalSuggestion.checked}
+                                loading={loading}
                             />
                             <SANButton
                                 size='small'
                                 variant='outlined'
                                 bold
                                 blockOnlyMobile
+                                loading={loading}
                             >
                                 <SANEvaIcon name='download-outline' mr='xs' />
                                 {t('schedule.pdfDownload')}
