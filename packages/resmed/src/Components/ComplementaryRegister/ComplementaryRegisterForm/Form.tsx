@@ -121,6 +121,7 @@ const RMForm = ({
     setRcn
 }) => {
     const { t } = useTranslation('resmed')
+    const { t: tComponents } = useTranslation('components')
     const { width } = useWindowSize()
 
     return (
@@ -137,7 +138,9 @@ const RMForm = ({
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Este campo é obrigatório!'
+                                    message: tComponents(
+                                        'formValidateMessages.required'
+                                    )
                                 }
                             ]}
                             hasError={!!form.getFieldError('graduationStep')}
@@ -167,7 +170,9 @@ const RMForm = ({
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Este campo é obrigatório!'
+                                    message: tComponents(
+                                        'formValidateMessages.required'
+                                    )
                                 }
                             ]}
                             hasError={!!form.getFieldError('institutionIds')}
@@ -195,7 +200,9 @@ const RMForm = ({
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Este campo é obrigatório!'
+                                    message: tComponents(
+                                        'formValidateMessages.required'
+                                    )
                                 }
                             ]}
                             hasError={!!form.getFieldError('specialtyIds')}
@@ -221,7 +228,9 @@ const RMForm = ({
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Este campo é obrigatório!'
+                                    message: tComponents(
+                                        'formValidateMessages.required'
+                                    )
                                 }
                             ]}
                             hasError={!!form.getFieldError('testExperience')}
@@ -260,7 +269,9 @@ const RMForm = ({
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Este campo é obrigatório!'
+                                    message: tComponents(
+                                        'formValidateMessages.required'
+                                    )
                                 }
                             ]}
                             hasError={
@@ -299,7 +310,9 @@ const RMForm = ({
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Este campo é obrigatório!'
+                                        message: tComponents(
+                                            'formValidateMessages.required'
+                                        )
                                     }
                                 ]}
                                 hasError={
@@ -334,7 +347,7 @@ const RMForm = ({
                             >
                                 {t(
                                     `userProfile.${
-                                        profile.id
+                                        !!profile && !!profile.id
                                             ? 'pageSubmit'
                                             : 'modalSubmit'
                                     }`
