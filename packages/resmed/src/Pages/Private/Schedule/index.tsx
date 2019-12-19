@@ -10,12 +10,10 @@ import { format, isEqual } from 'date-fns'
 import {
     SANPage,
     SANBigCalendar,
-    SANButton,
     SANSwitch,
     SANRow,
     SANCol,
     SANTypography,
-    SANEvaIcon,
     SANBox,
     SANLayoutContainer,
     useSnackbarContext
@@ -74,7 +72,7 @@ const boxProps = {
 }
 
 export const getStatus = event => {
-    switch (event.resource.type) {
+    switch (event.resourceType) {
         case 'Exam':
             return 'exams'
         case 'Live':
@@ -369,7 +367,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                             mt={{ md: '8', _: 'lg' }}
                             display='flex'
                             alignItems='center'
-                            justifyContent='space-between'
+                            justifyContent='start'
                         >
                             <Suggestion
                                 display={{ md: 'flex', _: 'none' }}
@@ -377,7 +375,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                                 checked={modalSuggestion.checked}
                                 loading={loading}
                             />
-                            <SANButton
+                            {/* <SANButton
                                 size='small'
                                 variant='outlined'
                                 bold
@@ -386,7 +384,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                             >
                                 <SANEvaIcon name='download-outline' mr='xs' />
                                 {t('schedule.pdfDownload')}
-                            </SANButton>
+                            </SANButton> */}
                         </SANBox>
                     </SANLayoutContainer>
                 </SANBox>
