@@ -294,8 +294,10 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
         )
         !!freeDay && freeDay.remove()
 
-        const hasOldFreeDay = freeDays.find(event =>
-            isEqual(event.start, oldDate)
+        const hasOldFreeDay = freeDays.find(
+            event =>
+                isEqual(event.start, oldDate) &&
+                e.oldEvent.id.includes('freeday')
         )
         const isEmptyDay = events.find(
             event =>
