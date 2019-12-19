@@ -1,4 +1,10 @@
-import React, { useRef, useMemo, useImperativeHandle, forwardRef } from 'react'
+import React, {
+    useRef,
+    useMemo,
+    useImperativeHandle,
+    forwardRef,
+    useState
+} from 'react'
 
 import { EventApi, View, Duration } from '@fullcalendar/core'
 import FullCalendar from '@fullcalendar/react'
@@ -262,8 +268,13 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
     const theme = useThemeContext()
     const calendarRef = useRef<FullCalendar>()
     const { width } = useWindowSize()
+    const [currentMonth, setCurrentMonth] = useState(new Date())
 
     const handleChangeMonth = (arg: { view: View; el: HTMLElement }) => {
+        if (!isEqual(arg.view.currentStart, currentMonth)) {
+            setCurrentMonth(arg.view.currentStart)
+        }
+
         !!onChangeMonth &&
             onChangeMonth({
                 start: arg.view.activeStart,
@@ -323,7 +334,7 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
     const freeDays = useMemo(() => getFreeDays(), [])
 
     const eventsMap = useMemo(() => {
-        const nextMonth = startOfMonth(addMonths(new Date(), 1))
+        const nextMonth = startOfMonth(addMonths(new Date(currentMonth), 1))
 
         return [
             ...events.map(event => ({
@@ -341,7 +352,7 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
                     !events.find(event => isSameDay(event.start, free.start))
             )
         ]
-    }, [events, freeDays])
+    }, [events, freeDays, currentMonth])
 
     useImperativeHandle(ref, () => calendarRef.current)
 
