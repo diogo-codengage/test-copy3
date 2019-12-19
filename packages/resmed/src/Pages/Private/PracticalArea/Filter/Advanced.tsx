@@ -127,7 +127,12 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
                 } = await client.query<IInstitutionsQuery>({
                     query: GET_INSTITUTIONS
                 })
-                setIntitutions(institutions)
+                setIntitutions(
+                    institutions.map(v => ({
+                        ...v,
+                        label: v.label.toLowerCase()
+                    }))
+                )
             } catch {}
             setLoading(old => ({ ...old, intitutions: false }))
         }
