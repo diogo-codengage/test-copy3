@@ -3,15 +3,15 @@ import gql from 'graphql-tag'
 export interface IProfile {
     id: string
     graduationStep:
-    | 'firstYear'
-    | 'secondYear'
-    | 'thirdYear'
-    | 'fourthYear'
-    | 'fifthYear'
-    | 'sixthYear'
-    | 'formed'
+        | 'firstYear'
+        | 'secondYear'
+        | 'thirdYear'
+        | 'fourthYear'
+        | 'fifthYear'
+        | 'sixthYear'
+        | 'formed'
     institutionIds: string[]
-    specialtyIds: number[]
+    specialtyIds: string[]
     testExperience: 'none' | 'one' | 'many'
     preparatoryCourseStatus: 'inProgress' | 'completed' | 'missing'
     preparatoryCourseName?: string

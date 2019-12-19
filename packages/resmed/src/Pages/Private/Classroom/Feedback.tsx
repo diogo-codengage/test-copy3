@@ -54,9 +54,9 @@ const RMClassroomFeedback = memo<RouteComponentProps>(({ history }) => {
     const handleGoQuiz = collection => {
         const {
             id,
-            quiz: { questions, id: quizId }
+            quiz: { id: quizId }
         } = collection
-        history.push(`./${id}/quiz/${quizId}/${questions[0].id}`)
+        history.push(`./${id}/quiz/${quizId}/0`)
     }
 
     return (

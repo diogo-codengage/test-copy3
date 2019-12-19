@@ -23,10 +23,7 @@ export interface IAppointment {
     description: string
     start: string
     end: string
-    resource: {
-        id: string
-        type: 'Live' | 'Level' | 'Exam'
-    }
+    resourceType: 'Live' | 'Level' | 'Exam'
     fixed: boolean
     seen: boolean
     timeInMinutes: number
@@ -58,10 +55,7 @@ export const RESET_SCHEDULE = gql`
                 description
                 start: date
                 end: endDate
-                resource {
-                    id
-                    type
-                }
+                resourceType
                 fixed
                 seen
                 timeInMinutes

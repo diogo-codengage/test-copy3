@@ -40,14 +40,14 @@ const SANColFloat = styled(SANCol)`
 `
 
 interface IParams {
-    questionId: string
+    questionIndex: string
 }
 
 const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
     ({
         history,
         match: {
-            params: { questionId }
+            params: { questionIndex }
         }
     }) => {
         const client = useApolloClient()
@@ -69,8 +69,8 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
 
         const goToNext = () => {
             // if have next question on quiz go to next
-            if (questions[index + 1]) {
-                history.push(`./${questions[index + 1].id}`)
+            if (questions[Number(questionIndex) + 1]) {
+                history.push(`./${Number(questionIndex) + 1}`)
             } else {
                 const next = collectionRef.current.getNext()
                 // if have next clicker go to next
@@ -94,7 +94,7 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
 
         const handleConfirm = async alternativeId => {
             setLoading(true)
-            const current = index + 1 - skipped
+            const current = Number(questionIndex) + 1 - skipped
             handleProgress({
                 resourceId: paramsLayout.contentId,
                 resourceType: 'Quiz',
@@ -115,7 +115,7 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                 } = await client.mutate({
                     mutation: ANSWER_MUTATION,
                     variables: {
-                        questionId: questions[index].id,
+                        questionId: questions[questionIndex].id,
                         alternativeId
                     }
                 })
@@ -151,7 +151,7 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                     'Subspecialty ID': paramsLayout.subspecialtyId,
                     'Lesson ID': paramsLayout.lessonId,
                     'Clicker ID': paramsLayout.collectionId,
-                    'Question ID': questions[index].id,
+                    'Question ID': questions[questionIndex].id,
                     Correct: correct.id === alternativeId
                 })
             } catch (e) {}
@@ -164,11 +164,6 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
             history.push(
                 `../../../${collection.id}/video/${collection.content.video.id}`
             )
-
-        const index = useMemo(
-            () => questions.findIndex(question => question.id === questionId),
-            [questionId, questions]
-        )
 
         const isFull = useMemo(() => width <= 992, [width])
 
@@ -187,7 +182,8 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                             px={{ lg: '0', _: 'md' }}
                         >
                             <SANTypography color='white.10' level={4} mr='xs'>
-                                {t('classroom.quiz.question')} {index + 1}
+                                {t('classroom.quiz.question')}{' '}
+                                {Number(questionIndex) + 1}
                             </SANTypography>
                             <SANTypography color='white.5' vairnat='subtitle1'>
                                 / {questions.length}
@@ -202,7 +198,7 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                         >
                             <SANQuestionMap
                                 items={questionsMap}
-                                current={index}
+                                current={questionIndex}
                                 onCancel={toggleVisible}
                                 visible={visible}
                             />
@@ -223,9 +219,10 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                 <SANBox mt={{ sm: '8', _: 'sm' }}>
                     <SANQuestion
                         full={isFull}
-                        question={questions[index]}
+                        question={questions[questionIndex]}
                         {...responses.find(
-                            res => res.questionId === questions[index].id
+                            res =>
+                                res.questionId === questions[questionIndex].id
                         )}
                         loading={loading}
                         onConfirm={handleConfirm}

@@ -205,6 +205,7 @@ const SANSelectFilter = ({
             setLabelSelecteds(label)
         }
     }, [value])
+
     return (
         <SANBox {...props}>
             <SANDropdown

@@ -1,4 +1,10 @@
-import React, { useRef, useMemo, useImperativeHandle, forwardRef } from 'react'
+import React, {
+    useRef,
+    useMemo,
+    useImperativeHandle,
+    forwardRef,
+    useState
+} from 'react'
 
 import { EventApi, View, Duration } from '@fullcalendar/core'
 import FullCalendar from '@fullcalendar/react'
@@ -6,7 +12,18 @@ import ptLocale from '@fullcalendar/core/locales/pt-br'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
-import { isPast, format, isEqual, eachWeekendOfYear, isSameDay } from 'date-fns'
+import {
+    isPast,
+    format,
+    isEqual,
+    eachWeekendOfYear,
+    isSameDay,
+    addMonths,
+    startOfMonth,
+    isAfter,
+    startOfDay,
+    endOfDay
+} from 'date-fns'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { useTranslation } from 'react-i18next'
@@ -251,8 +268,13 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
     const theme = useThemeContext()
     const calendarRef = useRef<FullCalendar>()
     const { width } = useWindowSize()
+    const [currentMonth, setCurrentMonth] = useState(new Date())
 
     const handleChangeMonth = (arg: { view: View; el: HTMLElement }) => {
+        if (!isEqual(arg.view.currentStart, currentMonth)) {
+            setCurrentMonth(arg.view.currentStart)
+        }
+
         !!onChangeMonth &&
             onChangeMonth({
                 start: arg.view.activeStart,
@@ -311,22 +333,25 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
 
     const freeDays = useMemo(() => getFreeDays(), [])
 
-    const eventsMap = useMemo(
-        () => [
+    const eventsMap = useMemo(() => {
+        const nextMonth = startOfMonth(addMonths(new Date(currentMonth), 1))
+
+        return [
             ...events.map(event => ({
                 ...event,
                 ...colors[event.status],
                 allDay: true,
-                classNames: !!event.start &&
-                    isPast(event.start) && ['san-past-event']
+                classNames: ((!!event.start && isPast(endOfDay(event.start))) ||
+                    isAfter(endOfDay(event.start), startOfDay(nextMonth))) && [
+                    'san-past-event'
+                ]
             })),
             ...freeDays.filter(
                 free =>
                     !events.find(event => isSameDay(event.start, free.start))
             )
-        ],
-        [events, freeDays]
-    )
+        ]
+    }, [events, freeDays, currentMonth])
 
     useImperativeHandle(ref, () => calendarRef.current)
 
@@ -335,6 +360,7 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
             <SANSpin spinning={loading} flex>
                 <FullCalendar
                     height={width < 768 && 650}
+                    fixedWeekCount={false}
                     aspectRatio={1.7}
                     events={eventsMap}
                     ref={calendarRef}

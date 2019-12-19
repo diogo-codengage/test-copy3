@@ -10,14 +10,13 @@ import { format, isEqual } from 'date-fns'
 import {
     SANPage,
     SANBigCalendar,
-    SANButton,
     SANSwitch,
     SANRow,
     SANCol,
     SANTypography,
-    SANEvaIcon,
     SANBox,
-    SANLayoutContainer
+    SANLayoutContainer,
+    useSnackbarContext
 } from '@sanar/components'
 import { IEvent } from '@sanar/components/dist/Components/Organisms/BigCalendar'
 
@@ -50,14 +49,18 @@ const SuggestionStyled = styled(SANBox)`
     padding: ${theme('space.sm')} ${theme('space.lg')};
 `
 
-const Suggestion = ({ onChange, checked, ...props }) => {
+const Suggestion = ({ onChange, checked, loading, ...props }) => {
     const { t } = useTranslation('resmed')
     return (
         <SuggestionStyled {...props}>
             <SANTypography fontWeight='bold' mr='lg'>
                 {t('schedule.suggestion')}
             </SANTypography>
-            <SANSwitch onChange={onChange} checked={checked} />
+            <SANSwitch
+                onChange={onChange}
+                checked={checked}
+                loading={loading}
+            />
         </SuggestionStyled>
     )
 }
@@ -69,7 +72,7 @@ const boxProps = {
 }
 
 export const getStatus = event => {
-    switch (event.resource.type) {
+    switch (event.resourceType) {
         case 'Exam':
             return 'exams'
         case 'Live':
@@ -84,7 +87,7 @@ export const getStatus = event => {
 const formatMinutes = minutes =>
     new Date(minutes * 60000).toISOString().substr(11, 5)
 
-const makeEvents = (event: IAppointment, hasModified = false) => ({
+const makeEvent = (event: IAppointment, hasModified = false) => ({
     extendedProps: {
         ...event,
         subtitle: formatMinutes(event.timeInMinutes)
@@ -107,9 +110,12 @@ interface ISchedule {
 
 const RMSchedule = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
+    const createSnackbar = useSnackbarContext()
     const calendarRef = useRef<SANBigCalendar>()
     const client = useApolloClient()
+    const [firstLoad, setFirstLoad] = useState(true)
     const [loading, setLoading] = useState(false)
+    const [trigger, setTrigger] = useState()
     const [currentRange, setCurrentRange] = useState({
         start: '',
         end: ''
@@ -181,11 +187,12 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                     end: format(currentRange.end, 'YYYY-MM-DD')
                 }
             })
+            setTrigger(new Date().getTime())
             setSchedule(old => ({
                 ...resetSchedule,
                 hasModified: old.hasModified,
                 items: resetSchedule.items.map(event =>
-                    makeEvents(event, resetSchedule.hasModified)
+                    makeEvent(event, !modalSuggestion.checked)
                 ) as IEvent[]
             }))
         } catch {
@@ -200,17 +207,53 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
     const handleEventDrop = e => {
         const { event } = e
         const date = new Date(new Date(event.start).toUTCString()).toISOString()
-        try {
-            client.mutate<IUpdateAppointment>({
+        client
+            .mutate<IUpdateAppointment>({
                 mutation: UPDATE_APPOINTMENT,
                 variables: {
                     id: event.extendedProps.id,
                     date
                 }
             })
-        } catch {
-            e.revert()
-        }
+            .then(({ data: { updateAppointment } }) => {
+                setTrigger(new Date().getTime())
+                setSchedule(old => ({
+                    ...old,
+                    items: old.items.map(item =>
+                        item.id !== event.extendedProps.id
+                            ? item
+                            : (makeEvent(
+                                  updateAppointment,
+                                  schedule.hasModified
+                              ) as IEvent)
+                    )
+                }))
+            })
+            .catch(err => {
+                e.revert()
+                if (!!err.graphQLErrors.length) {
+                    const status500 = err.graphQLErrors.find(
+                        e => e.extensions.exception.status === 500
+                    )
+                    const exceeded422 = err.graphQLErrors.find(
+                        e => e.extensions.exception.status === 422
+                    )
+                    if (!!status500) {
+                        createSnackbar({
+                            message: t('schedule.changeEvent.error', {
+                                name: event.extendedProps.title
+                            }),
+                            theme: 'error'
+                        })
+                    }
+                    if (!!exceeded422) {
+                        createSnackbar({
+                            message: t('schedule.changeEvent.exceeded'),
+                            theme: 'error'
+                        })
+                    }
+                }
+            })
     }
 
     useEffect(() => {
@@ -226,16 +269,23 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                         end: format(currentRange.end, 'YYYY-MM-DD')
                     }
                 })
+
                 setSchedule({
                     ...appointments,
+                    hasModified: firstLoad
+                        ? appointments.hasModified
+                        : !modalSuggestion.checked,
                     items: appointments.items.map(event =>
-                        makeEvents(event, appointments.hasModified)
+                        makeEvent(event, appointments.hasModified)
                     ) as IEvent[]
                 })
                 setModalSuggestion(old => ({
                     ...old,
-                    checked: !appointments.hasModified
+                    checked: firstLoad
+                        ? !appointments.hasModified
+                        : modalSuggestion.checked
                 }))
+                firstLoad && setFirstLoad(false)
             } catch {}
             setLoading(false)
         }
@@ -289,6 +339,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                             display={{ md: 'none', _: 'flex' }}
                             onChange={handleChangeSuggestion}
                             checked={modalSuggestion.checked}
+                            loading={loading}
                         />
                         <SANBox mx={{ md: '0', _: '-16px' }}>
                             <SANBigCalendar
@@ -316,22 +367,24 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                             mt={{ md: '8', _: 'lg' }}
                             display='flex'
                             alignItems='center'
-                            justifyContent='space-between'
+                            justifyContent='start'
                         >
                             <Suggestion
                                 display={{ md: 'flex', _: 'none' }}
                                 onChange={handleChangeSuggestion}
                                 checked={modalSuggestion.checked}
+                                loading={loading}
                             />
-                            <SANButton
+                            {/* <SANButton
                                 size='small'
                                 variant='outlined'
                                 bold
                                 blockOnlyMobile
+                                loading={loading}
                             >
                                 <SANEvaIcon name='download-outline' mr='xs' />
                                 {t('schedule.pdfDownload')}
-                            </SANButton>
+                            </SANButton> */}
                         </SANBox>
                     </SANLayoutContainer>
                 </SANBox>
@@ -339,10 +392,10 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                     <SANLayoutContainer>
                         <SANRow gutter={24}>
                             <SANCol xs={24} sm={24} md={12}>
-                                <RMToday hasModified={schedule.hasModified} />
+                                <RMToday hasModified={trigger} />
                             </SANCol>
                             <SANCol xs={24} sm={24} md={12}>
-                                <RMWeek hasModified={schedule.hasModified} />
+                                <RMWeek hasModified={trigger} />
                             </SANCol>
                         </SANRow>
                     </SANLayoutContainer>

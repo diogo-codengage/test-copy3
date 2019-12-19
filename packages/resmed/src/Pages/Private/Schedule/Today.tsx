@@ -9,8 +9,9 @@ import {
     SANSessionTitle,
     SANCardEvent,
     SANEmpty,
-    SANSpin
+    SANBox
 } from '@sanar/components'
+import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import emptyImage from 'Assets/images/empty/empty.svg'
 
@@ -22,7 +23,16 @@ import {
 
 import { getStatus } from './index'
 
-const RMToday = ({ hasModified = false }) => {
+export const Skeleton = () => (
+    <>
+        <SANBox height='69px' mb='md' borderRadius='base' bg='grey.0' />
+        <SANBox height='69px' mb='md' borderRadius='base' bg='grey.0' />
+        <SANBox height='69px' mb='md' borderRadius='base' bg='grey.0' />
+        <SANBox height='69px' mb='md' borderRadius='base' bg='grey.0' />
+    </>
+)
+
+const RMToday = ({ hasModified }) => {
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
     const [loading, setLoading] = useState(false)
@@ -36,6 +46,7 @@ const RMToday = ({ hasModified = false }) => {
                     data: { appointments }
                 } = await client.query<IAppointmentsQuery>({
                     query: GET_APPOINTMENTS,
+                    fetchPolicy: 'network-only',
                     variables: {
                         start: format(new Date(), 'YYYY-MM-DD'),
                         end: format(new Date(), 'YYYY-MM-DD'),
@@ -60,11 +71,20 @@ const RMToday = ({ hasModified = false }) => {
             <SANCardEvent
                 key={event.id}
                 title={event.title}
-                date='12/06/2019, às 10h até 12/07/2019, às 18h'
+                date={`${format(
+                    getUTCDate(event.start),
+                    `DD/MM/YYYY [${t('schedule.at')}] HH[h] [${t(
+                        'schedule.until'
+                    )}]`
+                )} ${t('schedule.at')} ${format(
+                    getUTCDate(event.end),
+                    `DD/MM/YYYY [${t('schedule.at')}] HH[h]`
+                )}`}
                 type={getStatus(event)}
                 mb='xs'
             />
         ),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         []
     )
 
@@ -87,7 +107,7 @@ const RMToday = ({ hasModified = false }) => {
                 }
             />
             {loading ? (
-                <SANSpin flex minHeight={130} />
+                <Skeleton />
             ) : !!events.length ? (
                 events.map(renderEvent)
             ) : (

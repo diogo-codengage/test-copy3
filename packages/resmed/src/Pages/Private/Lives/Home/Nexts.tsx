@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import { theme } from 'styled-tools'
 
 import {
-    SANButton,
     SANLayoutContainer,
     SANSessionTitle,
     SANBox,
@@ -70,61 +69,38 @@ const SANBoxStyled = styled(SANBox)`
 `
 
 const RMCardNextLive = memo<{ title: string; subtitle: string }>(
-    ({ title, subtitle }) => {
-        const { t } = useTranslation('resmed')
-        return (
+    ({ title, subtitle }) => (
+        <SANBox
+            borderRadius='base'
+            border='1px solid'
+            borderColor='grey.1'
+            boxShadow='1'
+            bg='white.10'
+            mx='sm'
+        >
             <SANBox
-                borderRadius='base'
-                border='1px solid'
-                borderColor='grey.1'
-                boxShadow='1'
-                bg='white.10'
-                mx='sm'
+                py='sm'
+                px='md'
+                minHeight='92px'
+                display='flex'
+                flexDirection='column'
+                justifyContent='space-between'
             >
-                <SANBox
-                    py='sm'
-                    px='md'
-                    minHeight='92px'
-                    display='flex'
-                    flexDirection='column'
-                    justifyContent='space-between'
+                <SANTypography
+                    fontSize='md'
+                    fontWeight='bold'
+                    color='grey.6'
+                    mb='xs'
+                    ellipsis={{ rows: 2 }}
                 >
-                    <SANTypography
-                        fontSize='md'
-                        fontWeight='bold'
-                        color='grey.6'
-                        mb='xs'
-                        ellipsis={{ rows: 2 }}
-                    >
-                        {title}
-                    </SANTypography>
-                    <SANTypography fontSize='sm' color='grey.4'>
-                        {subtitle}
-                    </SANTypography>
-                </SANBox>
-                <SANBox
-                    display='flex'
-                    alignItems='center'
-                    justifyContent='center'
-                    p='xxs'
-                    borderTop='1px solid'
-                    borderColor='grey.1'
-                >
-                    <SANButton
-                        uppercase
-                        bold
-                        block
-                        size='xsmall'
-                        variant='text'
-                        color='primary'
-                        disabled
-                    >
-                        {t('lives.nextsList.seeLive')}
-                    </SANButton>
-                </SANBox>
+                    {title}
+                </SANTypography>
+                <SANTypography fontSize='sm' color='grey.4'>
+                    {subtitle}
+                </SANTypography>
             </SANBox>
-        )
-    }
+        </SANBox>
+    )
 )
 
 const RMNexts = memo(() => {

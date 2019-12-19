@@ -98,14 +98,19 @@ const getAccessToken = () => {
     })
 
     return new Promise((resolve, reject) => {
-        user.getSession((err, session: CognitoUserSession) => {
-            if (err || !session) {
-                console.log('[Session]', session)
-                reject(err)
-            }
-            const jwtToken = session.getIdToken().getJwtToken()
-            resolve(jwtToken)
-        })
+        try {
+            user.getSession((err, session: CognitoUserSession) => {
+                if (err || !session) {
+                    console.log('[Session]', session)
+                    reject(err)
+                }
+                const jwtToken = session.getIdToken().getJwtToken()
+                resolve(jwtToken)
+            })
+        } catch (e) {
+            window.localStorage.clear()
+            reject(e)
+        }
     })
 }
 

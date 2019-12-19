@@ -207,7 +207,7 @@ export const RMModalSchedule = withRouter(
                     resource
                 } = options.accessContent
 
-                if (!!options.resource && options.resource.type === 'Level') {
+                if (options.resourceType === 'Level') {
                     const final = `${
                         lesson.id
                     }/${collectionId}/${resource.type.toLocaleLowerCase()}/${

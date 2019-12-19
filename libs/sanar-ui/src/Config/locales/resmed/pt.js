@@ -249,10 +249,16 @@ export default {
         }
     },
     schedule: {
+        at: 'às',
+        until: 'até',
         suggestedClass: 'Aula sugerida',
         header: {
             title: 'Cronograma',
             subtitle: 'Use esse espaço para organizar os seus estudos'
+        },
+        changeEvent: {
+            error: 'Ocorreu um erro ao mover aula - {{name}}',
+            exceeded: 'Você excedeu o limite de aulas por dia'
         },
         suggestion: 'Sugestão do professor',
         pdfDownload: 'Baixar em .pdf',
@@ -261,8 +267,8 @@ export default {
             title: 'Esta semana',
             subtitle: 'Confira as suas próximas atividades'
         },
-        emptyToday: 'Voce não tem nenhuma aula para hoje',
-        emptyWeek: 'Voce não tem nenhuma aula nessa semana',
+        emptyToday: 'Você não tem nenhuma aula para hoje',
+        emptyWeek: 'Você não tem nenhuma aula nessa semana',
         modal: {
             day: 'Dia',
             lesson: {
@@ -292,7 +298,6 @@ export default {
         facilitedBy: 'Live facilitada por:',
         nextsList: {
             title: 'Próximas lives',
-            seeLive: 'Ver live',
             at: 'às'
         },
         previousList: {
