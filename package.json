@@ -66,7 +66,6 @@
     },
     "scripts": {
         "commit": "git-cz",
-        "esdemo:start": "yarn workspace es-demo start",
         "sanarui:build": "yarn workspace sanar-ui build",
         "sanarui:cli": "yarn workspace sanar-ui cli",
         "sanarui:dev": "yarn workspace sanar-ui dev",
