@@ -341,8 +341,7 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
                 ...event,
                 ...colors[event.status],
                 allDay: true,
-                classNames: ((!!event.start &&
-                    isPast(startOfDay(event.start))) ||
+                classNames: ((!!event.start && isPast(endOfDay(event.start))) ||
                     isAfter(endOfDay(event.start), startOfDay(nextMonth))) && [
                     'san-past-event'
                 ]
