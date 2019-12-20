@@ -107,8 +107,8 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
 
     const handlePlaybackRateChanged = () => {
         window.analytics.track(
-            events['E-Learning']['Content Video Evaluated'] && events['E-Learning']['Content Video Evaluated'].event,
-            events['E-Learning']['Content Video Evaluated'] && events['E-Learning']['Content Video Evaluated'].data
+            events['E-Learning']['Content Evaluated'].event,
+            events['E-Learning']['Content Evaluated'].data
         )
     }
 

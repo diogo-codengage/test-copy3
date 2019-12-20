@@ -24,12 +24,6 @@ const renderResourceContent = type => {
     }
 }
 
-interface IParams extends IUrlParams {
-    contentId: string
-    themeId: string
-    type: 'video' | 'documento' | 'questoes'
-}
-
 const Wrapper = styled.div`
     background-color: ${theme('colors.grey-solid.8')};
     flex: 1;
@@ -37,20 +31,15 @@ const Wrapper = styled.div`
     flex-direction: column;
 `
 
-const FLXCourses: React.FC<RouteComponentProps<IParams>> = ({
+const FLXCourses: React.FC<RouteComponentProps<IUrlParams>> = ({
     match: { params }
 }) => {
     const { setUrlParams } = useLayoutContext()
 
     useEffect(() => {
-        setUrlParams({
-            courseId: params.courseId,
-            themeId: params.themeId,
-            type: params.type,
-            resourceId: params.resourceId
-        })
+        setUrlParams(params)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params.courseId, params.themeId, params.type, params.resourceId])
+    }, [params])
 
     return (
         <FLXClassroomProvider>
