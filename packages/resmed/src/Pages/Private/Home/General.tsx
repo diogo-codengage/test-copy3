@@ -46,13 +46,16 @@ const RMSpecialties = withRouter<RouteComponentProps>(
             collectionId,
             resource
         }: ILastAccessed) => {
-            history.push(
-                `/inicio/sala-aula/${specialtyId}/${
-                    lesson.id
-                }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-                    resource.id
-                }`
-            )
+            const type = resource.type.toLocaleLowerCase()
+            if (type === 'quiz') {
+                history.push(
+                    `/inicio/sala-aula/${specialtyId}/${lesson.id}/${collectionId}/quiz/${resource.id}/0`
+                )
+            } else {
+                history.push(
+                    `/inicio/sala-aula/${specialtyId}/${lesson.id}/${collectionId}/video/${resource.id}`
+                )
+            }
         }
 
         const renderContent = (specialty: ISpecialties) => {

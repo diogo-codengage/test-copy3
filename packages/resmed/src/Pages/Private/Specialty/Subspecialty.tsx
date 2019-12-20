@@ -74,13 +74,15 @@ const RMSubspecialties = ({
         resource
     }: ILastAccessed) => {
         const type = resource.type.toLocaleLowerCase()
-        history.push(
-            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${
-                lesson.id
-            }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-                resource.id
-            }${type === 'quiz' && '/0'}`
-        )
+        if (type === 'quiz') {
+            history.push(
+                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}/quiz/${resource.id}/0`
+            )
+        } else {
+            history.push(
+                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}/video/${resource.id}`
+            )
+        }
     }
 
     const onCancel = () => {
