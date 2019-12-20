@@ -196,6 +196,10 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                 ) as IEvent[]
             }))
         } catch {
+            createSnackbar({
+                message: t('schedule.switchError'),
+                theme: 'error'
+            })
             setModalSuggestion({
                 checked: !schedule.hasModified,
                 visible: false
@@ -287,7 +291,12 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                         : modalSuggestion.checked
                 }))
                 firstLoad && setFirstLoad(false)
-            } catch {}
+            } catch {
+                createSnackbar({
+                    message: t('schedule.loadingError'),
+                    theme: 'error'
+                })
+            }
             setLoading(false)
         }
         if (!!currentRange.start && !!currentRange.end) fetchEvents()
