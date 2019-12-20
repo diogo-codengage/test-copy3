@@ -26,10 +26,10 @@ const resources = {
     Quiz: 'questoes'
 }
 
-const FLXCourseNavigation: React.FC<RouteComponentProps<{ id: string }>> = ({
+const FLXCourseNavigation: React.FC<RouteComponentProps<{ courseId: string }>> = ({
     history,
     match: {
-        params: { id: courseId }
+        params: { courseId }
     }
 }) => {
     const { t } = useTranslation('sanarflix')

@@ -73,7 +73,7 @@ export const events = {
                 SourceType: 'local'
             }
         },
-        'Video Evaluated': {
+        'Content Evaluated': {
             event: 'Content Evaluated',
             data: {
                 ProductType: 'E-Learning',
