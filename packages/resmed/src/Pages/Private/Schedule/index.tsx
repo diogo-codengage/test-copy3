@@ -264,6 +264,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                     data: { appointments }
                 } = await client.query<IAppointmentsQuery>({
                     query: GET_APPOINTMENTS,
+                    fetchPolicy: 'network-only',
                     variables: {
                         start: format(currentRange.start, 'YYYY-MM-DD'),
                         end: format(currentRange.end, 'YYYY-MM-DD')

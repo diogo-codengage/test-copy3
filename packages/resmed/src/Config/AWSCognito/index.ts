@@ -101,7 +101,12 @@ const getAccessToken = () => {
         try {
             user.getSession((err, session: CognitoUserSession) => {
                 if (err || !session) {
-                    console.log('[Session]', session)
+                    console.error('[getSession]', err, session)
+                    const refreshToken = session.getRefreshToken()
+                    user.refreshSession(refreshToken, function(err, session) {
+                        console.error('[refreshSession]', err, session)
+                        resolve(session.getIdToken().getJwtToken())
+                    })
                     reject(err)
                 }
                 const jwtToken = session.getIdToken().getJwtToken()
