@@ -27,14 +27,7 @@ const initialState = {
     themes: [],
     totalThemes: 0,
     fetchingContents: false,
-    themeContents: [],
-    currentCourse: {
-        id: window.location.hash.split('/')[3],
-        name: null,
-        knowledge_area: null,
-        progress_percentage: 0
-    },
-    theme: { id: window.location.hash.split('/')[4], index: 1 }
+    themeContents: []
 }
 
 const reducer = (state, action) => {
@@ -74,18 +67,27 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('sanarflix')
     const client = useApolloClient()
     const setCrash = useTryToCrash()
-    const { onCloseMenu, setNavigations } = useLayoutContext()
-    const [state, dispatch] = useReducer(reducer, initialState)
-
-    const courseId = window.location.hash.split('/')[3]
-    const resourceId = window.location.hash.split('/')[6]
+    const { urlParams, onCloseMenu, setNavigations } = useLayoutContext()
+    const [state, dispatch] = useReducer(reducer, {
+        ...initialState,
+        currentCourse: {
+            id: urlParams.courseId,
+            name: null,
+            knowledge_area: null,
+            progress_percentage: 0
+        },
+        theme: {
+            id: urlParams.themeId,
+            index: 1
+        }
+    })
 
     const { data } = useQuery(GET_THEME, {
         variables: {
             id: state.theme.id,
-            courseId
+            courseId: urlParams.courseId
         },
-        skip: !state.theme.id || !courseId
+        skip: !state.theme.id || !urlParams.courseId
     })
 
     const configureThemeContentsIcon = (resourceType, type) => {
@@ -118,7 +120,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 data: { themeContents }
             } = await client.query({
                 query: GET_THEME_CONTENTS,
-                variables: { themeId: nextTheme.id, courseId }
+                variables: { themeId: nextTheme.id, courseId: urlParams.courseId }
             })
 
             const themeContentsIcons = (themeContents.data || []).map(item => ({
@@ -168,13 +170,13 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     const currentResource = useMemo(() => {
         if (!!state.themeContents.length) {
             const index = state.themeContents.findIndex(
-                item => item.resource_id === resourceId
+                item => item.resource_id === urlParams.resourceId
             )
             return index >= 0 ? index : 0
         } else {
             return 0
         }
-    }, [state.themeContents, resourceId])
+    }, [state.themeContents, urlParams.resourceId])
 
     const makeAction = resource =>
         !!resource
@@ -193,7 +195,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
         hasClose = true
     ) => {
         history.push(
-            `/portal/sala-aula/${courseId}/${themeId}/${
+            `/portal/sala-aula/${urlParams.courseId}/${themeId}/${
                 types[item.resource_type]
             }/${item.resource_id}`
         )
@@ -222,16 +224,16 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
 
     useEffect(() => {
         !!state.themes.length &&
-            window.location.hash.split('/')[4] &&
-            getThemeContents({ id: window.location.hash.split('/')[4] })
+            urlParams.themeId &&
+            getThemeContents({ id: urlParams.themeId })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [window.location.hash.split('/')[4]])
+    }, [urlParams.themeId])
 
     useEffect(() => {
         dispatch({
             type: 'updateTheme',
             payload: {
-                id: window.location.hash.split('/')[4],
+                id: urlParams.themeId,
                 index: 1
             }
         })
@@ -263,7 +265,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
 
             dispatch({ type: 'fetchingContents', payload: false })
         }
-        loadThemes(courseId)
+        loadThemes(urlParams.courseId)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
