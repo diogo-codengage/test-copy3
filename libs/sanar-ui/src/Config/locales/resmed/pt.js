@@ -269,6 +269,10 @@ export default {
         },
         emptyToday: 'Você não tem nenhuma aula para hoje',
         emptyWeek: 'Você não tem nenhuma aula nessa semana',
+        switchError: 'Ocorreu um erro ao alternar cronograma',
+        loadingError: 'Ocorreu um erro ao carregar cronograma',
+        loadingWeek: 'Ocorreu um erro ao carregar eventos da semana',
+        loadingToday: 'Ocorreu um erro ao carregar eventos de hoje',
         modal: {
             day: 'Dia',
             lesson: {

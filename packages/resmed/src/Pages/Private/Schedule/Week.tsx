@@ -8,7 +8,8 @@ import {
     SANTypography,
     SANSessionTitle,
     SANCardEvent,
-    SANEmpty
+    SANEmpty,
+    useSnackbarContext
 } from '@sanar/components'
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
@@ -36,6 +37,7 @@ const getWeekend = () => {
 
 const RMWeek = ({ hasModified }) => {
     const { t } = useTranslation('resmed')
+    const createSnackbar = useSnackbarContext()
     const client = useApolloClient()
     const [loading, setLoading] = useState(false)
     const [events, setEvents] = useState<IAppointment[]>([])
@@ -62,7 +64,12 @@ const RMWeek = ({ hasModified }) => {
                         type: getStatus(v)
                     }))
                 )
-            } catch {}
+            } catch {
+                createSnackbar({
+                    message: t('schedule.loadingWeek'),
+                    theme: 'error'
+                })
+            }
             setLoading(false)
         }
         fetchEventsWeek()
