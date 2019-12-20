@@ -70,7 +70,7 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
 
     const getStartTime = time => {
         if (videoReady && playerRef && playerRef.current) {
-            playerRef.current.seek(time)
+            !!playerRef.current.seek && playerRef.current.seek(time)
             playerRef.current.pause()
             setWillStart(false)
         }
