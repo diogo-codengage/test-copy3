@@ -25,13 +25,13 @@ import { events } from 'Config/Segment'
 import { GET_RESOURCE } from 'Apollo/Classroom/Queries/resource'
 import { CREATE_RATING } from 'Apollo/Classroom/Mutations/rating'
 import { useClassroomContext } from './Context'
-import { useLayoutContext } from 'Pages/Layout/Context'
+import { useLayoutContext, IUrlParams } from 'Pages/Layout/Context'
 
-interface IParams {
+interface IParams extends IUrlParams {
     courseId: string
     resourceId: string
     themeId: string
-    type: string
+    type: 'video' | 'documento' | 'questoes'
 }
 
 const Header = styled.div`
@@ -107,8 +107,8 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
 
     const handlePlaybackRateChanged = () => {
         window.analytics.track(
-            events['E-Learning']['Content Video Evaluated'].event,
-            events['E-Learning']['Content Video Evaluated'].data
+            events['E-Learning']['Content Video Evaluated'] && events['E-Learning']['Content Video Evaluated'].event,
+            events['E-Learning']['Content Video Evaluated'] && events['E-Learning']['Content Video Evaluated'].data
         )
     }
 

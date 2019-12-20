@@ -24,6 +24,13 @@ interface IInitialState {
     menuContext: IMenuContext
 }
 
+export interface IUrlParams {
+    courseId?: string
+    themeId?: string
+    type?: 'video' | 'documento' | 'questoes'
+    resourceId?: string
+}
+
 type IFLXLayoutProviderValue = {
     currentMenuIndex: number
     currentMenuTitle: string
@@ -44,11 +51,20 @@ type IFLXLayoutProviderValue = {
     context: any
     setContext: (context) => void
     loadLastAcessed: () => void
+    urlParams: IUrlParams
+    setUrlParams: React.Dispatch<React.SetStateAction<IUrlParams>>
 }
 
 const defaultNavigations = {
     next: {},
     previous: {}
+}
+
+const defaultUrlParams: IUrlParams = {
+    courseId: '',
+    themeId: '',
+    type: 'video',
+    resourceId: ''
 }
 
 const defaultValue: IFLXLayoutProviderValue = {
@@ -68,7 +84,9 @@ const defaultValue: IFLXLayoutProviderValue = {
     setLastAccessed: () => {},
     context: {},
     setContext: () => {},
-    loadLastAcessed: () => {}
+    loadLastAcessed: () => { },
+    urlParams: defaultUrlParams,
+    setUrlParams: () => {}
 }
 
 const Context = createContext<IFLXLayoutProviderValue>(defaultValue)
@@ -112,6 +130,7 @@ const FLXLayoutProvider = withRouter(({ history, children }) => {
     const [navigations, setNavigations] = useState<INagivations>(
         defaultNavigations
     )
+    const [urlParams, setUrlParams] = useState<IUrlParams>(defaultUrlParams)
     const [menuState, setMenuState] = useState(false)
     const [context, setContext] = useState('general')
     const [lastAccessed, setLastAccessed] = useState()
@@ -132,7 +151,7 @@ const FLXLayoutProvider = withRouter(({ history, children }) => {
     }
 
     const handleClassroomBack = () => {
-            history.push(`/portal/curso/${window.location.hash.split('/')[3]}`)
+        history.push(`/portal/curso/${window.location.hash.split('/')[3]}`)
     }
 
     const loadLastAcessed = async () => {
@@ -217,7 +236,9 @@ const FLXLayoutProvider = withRouter(({ history, children }) => {
         setLastAccessed,
         context,
         setContext,
-        loadLastAcessed
+        loadLastAcessed,
+        urlParams,
+        setUrlParams
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

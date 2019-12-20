@@ -161,10 +161,10 @@ const Cards = ({ counters }: { counters: ICourseCounters }) => {
     )
 }
 
-const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
+const FLXCourse: React.FC<RouteComponentProps<{ courseId: string }>> = ({
     history,
     match: {
-        params: { id }
+        params: { courseId }
     }
 }) => {
     const { t } = useTranslation('sanarflix')
@@ -185,7 +185,7 @@ const FLXCourse: React.FC<RouteComponentProps<{ id: string }>> = ({
     return (
         <SANQuery
             query={GET_COURSE}
-            options={{ variables: { id } }}
+            options={{ variables: { id: courseId } }}
             loaderProps={{ minHeight: '100%', flex: true }}
             errorProps={{ flex: 1 }}
         >
