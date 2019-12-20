@@ -190,7 +190,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
             setTrigger(new Date().getTime())
             setSchedule(old => ({
                 ...resetSchedule,
-                hasModified: old.hasModified,
+                hasModified: !old.hasModified,
                 items: resetSchedule.items.map(event =>
                     makeEvent(event, !modalSuggestion.checked)
                 ) as IEvent[]
@@ -224,7 +224,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                             ? item
                             : (makeEvent(
                                   updateAppointment,
-                                  schedule.hasModified
+                                  old.hasModified
                               ) as IEvent)
                     )
                 }))
