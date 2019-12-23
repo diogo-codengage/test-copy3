@@ -17,12 +17,12 @@ import {
     format,
     isEqual,
     eachWeekendOfInterval,
-    isSameDay,
     addMonths,
     startOfMonth,
     isAfter,
     startOfDay,
-    endOfDay
+    endOfDay,
+    isSameDay
 } from 'date-fns'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
@@ -87,15 +87,17 @@ export interface ISANBigCalendarProps {
         jsEvent: MouseEvent
         view: View
     }) => void
-    eventDrop?: (arg: {
-        el: HTMLElement
-        event: EventApi
-        oldEvent: EventApi
-        delta: Duration
-        revert: () => void
-        jsEvent: Event
-        view: View
-    }) => void
+    eventDrop?: (arg: IEventDrop) => void
+}
+
+interface IEventDrop {
+    el: HTMLElement
+    event: EventApi
+    oldEvent: EventApi
+    delta: Duration
+    revert: () => void
+    jsEvent: Event
+    view: View
 }
 
 const FullCalendarWrapper = styled.div`
@@ -296,28 +298,26 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
             })
     }
 
-    const handleEventDrop = e => {
+    const handleEventDrop = (e: IEventDrop) => {
         const calendar = calendarRef.current.getApi()
         const events = calendar.getEvents()
         const newDate = e.event.start
         const oldDate = e.oldEvent.start
 
-        const freeDay = events.find(
+        // if have free day on new drop day, remove free day
+        const hasFreeDay = events.find(
             event =>
-                isEqual(event.start, newDate) && event.id.includes('freeday')
+                isSameDay(event.start, newDate) && event.id.includes('freeday')
         )
-        !!freeDay && freeDay.remove()
+        !!hasFreeDay && hasFreeDay.remove()
 
-        const hasOldFreeDay = freeDays.find(
-            event =>
-                isEqual(event.start, oldDate) &&
-                e.oldEvent.id.includes('freeday')
+        // if there was a free day
+        const hasOldFreeDay = freeDays.find(freeDay =>
+            isSameDay(freeDay.start, oldDate)
         )
-        const isEmptyDay = events.find(
-            event =>
-                isEqual(event.start, oldDate) && !event.id.includes('freeday')
-        )
-
+        const isEmptyDay = events.find(event => {
+            return isSameDay(event.start, oldDate)
+        })
         if (!!hasOldFreeDay && !isEmptyDay) {
             calendar.addEvent(hasOldFreeDay)
         }

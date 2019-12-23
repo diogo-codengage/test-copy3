@@ -226,17 +226,17 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
             })
             .then(({ data: { updateAppointment } }) => {
                 setTrigger(new Date().getTime())
-                setSchedule(old => ({
-                    ...old,
-                    items: old.items.map(item =>
-                        item.id !== event.extendedProps.id
-                            ? item
-                            : (makeEvent(
-                                  updateAppointment,
-                                  old.hasModified
-                              ) as IEvent)
-                    )
-                }))
+                // setSchedule(old => ({
+                //     ...old,
+                //     items: old.items.map(item =>
+                //         item.id !== event.extendedProps.id
+                //             ? item
+                //             : (makeEvent(
+                //                   updateAppointment,
+                //                   old.hasModified
+                //               ) as IEvent)
+                //     )
+                // }))
             })
             .catch(err => {
                 e.revert()
