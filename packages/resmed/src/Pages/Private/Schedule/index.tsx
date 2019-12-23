@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { useApolloClient } from '@apollo/react-hooks'
-import { format, isEqual } from 'date-fns'
+import { format, isEqual, isToday } from 'date-fns'
 
 import {
     SANPage,
@@ -31,6 +31,8 @@ import {
     IUpdateAppointment
 } from 'Apollo/Schedule/Mutations/update-appointment'
 import { RESET_SCHEDULE, IResetSchedule } from 'Apollo/Schedule/Mutations/reset'
+
+import { useLayoutContext } from 'Pages/Private/Layout/Context'
 
 import {
     RMModalSchedule,
@@ -111,6 +113,7 @@ interface ISchedule {
 
 const RMSchedule = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
+    const { fetchSuggestedClass } = useLayoutContext()
     const createSnackbar = useSnackbarContext()
     const calendarRef = useRef<SANBigCalendar>()
     const client = useApolloClient()
@@ -212,6 +215,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
     const handleEventDrop = e => {
         const { event } = e
         const date = new Date(new Date(event.start).toUTCString()).toISOString()
+        isToday(date) && fetchSuggestedClass()
         client
             .mutate<IUpdateAppointment>({
                 mutation: UPDATE_APPOINTMENT,

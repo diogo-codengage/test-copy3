@@ -14,7 +14,7 @@ import { useWindowSize } from '@sanar/utils/dist/Hooks'
 import { createDebounce } from '@sanar/utils/dist/Debounce'
 
 import RMCollection from 'Components/Collection'
-import { GET_VIDEO, IVideoQuery, IVideo } from 'Apollo/Classroom/Queries/video'
+import { GET_VIDEO, IVideoQuery } from 'Apollo/Classroom/Queries/video'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useMainContext } from 'Pages/Private/Context'
 import { useClassroomContext } from './Context'
@@ -41,7 +41,6 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
     const [videoError, setVideoError] = useState(false)
     const [videoReady, setVideoReady] = useState(false)
     const [willStart, setWillStart] = useState(true)
-    const [video, setVideo] = useState<IVideo>()
     const { me } = useAuthContext()
 
     const dataToTrack = useMemo(
@@ -80,8 +79,6 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
         history.push(
             `../../${collection.id}/video/${collection.content.video.id}`
         )
-
-    const onCompleted = ({ video }) => setVideo(video)
 
     const onProgress = (percentage, content) => {
         new Promise(resolve => {
@@ -146,8 +143,7 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
             options={{
                 variables: { id: params.contentId },
                 fetchPolicy: 'network-only',
-                skip: !params.contentId,
-                onCompleted: onCompleted
+                skip: !params.contentId
             }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
             errorProps={{ dark: true }}
