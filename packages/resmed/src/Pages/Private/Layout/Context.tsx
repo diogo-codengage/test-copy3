@@ -1,12 +1,25 @@
-import React, { useContext, useState, createContext, useRef } from 'react'
+import React, {
+    useContext,
+    useState,
+    createContext,
+    useRef,
+    useEffect
+} from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { useLastLocation } from 'react-router-last-location'
+import { useApolloClient } from '@apollo/react-hooks'
 
 import { SANClassroomMenuHeader } from '@sanar/components'
 
 import { useMainContext } from 'Pages/Private/Context'
+
+import {
+    GET_SUGGESTED_CLASS,
+    ISuggestedClassQuery,
+    IAppointment
+} from 'Apollo/Schedule/Queries/suggested-class'
 
 type IMenuContext = 'general' | 'classroom'
 
@@ -32,6 +45,14 @@ type IRMLayoutProviderValue = {
     setParams: React.Dispatch<React.SetStateAction<IParams>>
     footerProps: Object
     setFooterProps: React.Dispatch<React.SetStateAction<Object>>
+    suggestedClass: ISuggestedClass
+    fetchSuggestedClass: () => void
+}
+
+interface ISuggestedClass {
+    loading: boolean
+    error: boolean
+    data?: IAppointment
 }
 
 const defaultNavigations: INagivations = {
@@ -90,8 +111,14 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
 }) => {
     const hasClassroom = window.location.href.includes('sala-aula')
     const { t } = useTranslation('resmed')
+    const client = useApolloClient()
     const lastLocation = useLastLocation()
     const [footerProps, setFooterProps] = useState({})
+    const [suggestedClass, setSuggestedClass] = useState<ISuggestedClass>({
+        loading: false,
+        error: false
+    })
+
     const [params, setParams] = useState<IParams>(defaultParams)
     const [menuState, setMenuState] = useState<IMenuState>({
         ...defaultMenuState,
@@ -158,6 +185,31 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
         }
     }
 
+    const fetchSuggestedClass = async () => {
+        try {
+            setSuggestedClass(old => ({ ...old, loading: true }))
+            const {
+                data: { suggestedClass }
+            } = await client.query<ISuggestedClassQuery>({
+                query: GET_SUGGESTED_CLASS,
+                fetchPolicy: 'network-only'
+            })
+
+            setSuggestedClass({
+                data: suggestedClass,
+                error: false,
+                loading: false
+            })
+        } catch (e) {
+            setSuggestedClass({ error: true, loading: false })
+        }
+    }
+
+    useEffect(() => {
+        fetchSuggestedClass()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     const value = {
         currentMenuIndex: menuState.indexMenu,
         currentMenuTitle: menuState.menuTitle,
@@ -172,7 +224,9 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
         params,
         setParams,
         footerProps,
-        setFooterProps
+        setFooterProps,
+        suggestedClass,
+        fetchSuggestedClass
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

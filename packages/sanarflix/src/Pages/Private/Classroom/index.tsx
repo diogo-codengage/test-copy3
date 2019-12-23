@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom'
 
 import FLXClassroomProvider from './Context'
+import { useLayoutContext, IUrlParams } from 'Pages/Layout/Context'
 
 const FLXClassroomVideo = React.lazy(() => import('./Video'))
 const FLXClassroomDocument = React.lazy(() => import('./Document'))
@@ -23,12 +24,6 @@ const renderResourceContent = type => {
     }
 }
 
-interface IParams {
-    contentId: string
-    themeId: string
-    type: string
-}
-
 const Wrapper = styled.div`
     background-color: ${theme('colors.grey-solid.8')};
     flex: 1;
@@ -36,9 +31,16 @@ const Wrapper = styled.div`
     flex-direction: column;
 `
 
-const FLXCourses: React.FC<RouteComponentProps<IParams>> = ({
+const FLXCourses: React.FC<RouteComponentProps<IUrlParams>> = ({
     match: { params }
 }) => {
+    const { setUrlParams } = useLayoutContext()
+
+    useEffect(() => {
+        setUrlParams(params)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [params])
+
     return (
         <FLXClassroomProvider>
             <Wrapper>{renderResourceContent(params.type)}</Wrapper>

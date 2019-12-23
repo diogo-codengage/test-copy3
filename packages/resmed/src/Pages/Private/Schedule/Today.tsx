@@ -9,7 +9,8 @@ import {
     SANSessionTitle,
     SANCardEvent,
     SANEmpty,
-    SANBox
+    SANBox,
+    useSnackbarContext
 } from '@sanar/components'
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
@@ -34,6 +35,7 @@ export const Skeleton = () => (
 
 const RMToday = ({ hasModified }) => {
     const { t } = useTranslation('resmed')
+    const createSnackbar = useSnackbarContext()
     const client = useApolloClient()
     const [loading, setLoading] = useState(false)
     const [events, setEvents] = useState<IAppointment[]>([])
@@ -59,7 +61,12 @@ const RMToday = ({ hasModified }) => {
                         type: getStatus(v)
                     }))
                 )
-            } catch {}
+            } catch {
+                createSnackbar({
+                    message: t('schedule.loadingToday'),
+                    theme: 'error'
+                })
+            }
             setLoading(false)
         }
         fetchEventsToday()

@@ -41,7 +41,7 @@ const RMClassroomProvider: React.FC = ({ children }) => {
         id: '',
         title: ''
     })
-    const { setMenuTab, params } = useLayoutContext()
+    const { setMenuTab, params, fetchSuggestedClass } = useLayoutContext()
 
     const handleProgress = async (data: IDataProgress) =>
         await client.mutate({
@@ -90,6 +90,11 @@ const RMClassroomProvider: React.FC = ({ children }) => {
         return () => {
             setMenuTab(0)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        return fetchSuggestedClass
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

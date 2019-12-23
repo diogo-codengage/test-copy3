@@ -70,8 +70,8 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
 
     const getStartTime = time => {
         if (videoReady && playerRef && playerRef.current) {
-            playerRef.current.seek(time)
-            playerRef.current.pause()
+            !!playerRef.current.seek && playerRef.current.seek(time)
+            !!playerRef.current.pause && playerRef.current.pause()
             setWillStart(false)
         }
     }
@@ -83,38 +83,45 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
 
     const onCompleted = ({ video }) => setVideo(video)
 
-    const onProgress = (percentage, resourceId) => {
-        if (!videoError && !!video && video.progress < 100) {
-            const timeInSeconds =
-                playerRef && playerRef.current
-                    ? playerRef.current.position()
-                    : 0
+    const onProgress = async (percentage, resourceId) => {
+        await new Promise((resolve, reject) => {
+            if (!videoError && !!video && video.progress < 100) {
+                const timeInSeconds =
+                    playerRef && playerRef.current
+                        ? playerRef.current.position()
+                        : 0
 
-            handleProgress({
-                timeInSeconds: parseInt(timeInSeconds, 10),
-                percentage,
-                resourceId,
-                resourceType: 'Video'
-            })
-        }
+                handleProgress({
+                    timeInSeconds: parseInt(timeInSeconds, 10),
+                    percentage,
+                    resourceId,
+                    resourceType: 'Video'
+                })
+                resolve()
+            } else {
+                reject()
+            }
+        })
 
         if (percentage === 100) {
-            const current = collectionRef.current.getCurrent()
-            // if have quiz on this clicker go to quiz
-            if (!!current && !!current.content.quiz) {
-                history.push(
-                    `../../${current.id}/quiz/${current.content.quiz.id}/0`
-                )
+            goNextConteent()
+        }
+    }
+
+    const goNextConteent = () => {
+        const current = collectionRef.current.getCurrent()
+        // if have quiz on this clicker go to quiz
+        if (!!current && !!current.content.quiz) {
+            history.push(
+                `../../${current.id}/quiz/${current.content.quiz.id}/0`
+            )
+        } else {
+            const next = collectionRef.current.getNext()
+            // if have next clicker go to next
+            if (!!next) {
+                history.push(`../../${next.id}/video/${next.content.video.id}`)
             } else {
-                const next = collectionRef.current.getNext()
-                // if have next clicker go to next
-                if (!!next) {
-                    history.push(
-                        `../../${next.id}/video/${next.content.video.id}`
-                    )
-                } else {
-                    history.push(`../../avaliacao`)
-                }
+                history.push(`../../avaliacao`)
             }
         }
     }

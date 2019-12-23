@@ -135,13 +135,16 @@ const RMModalThemes = ({
             'Clicker ID': collectionId
         })
 
-        history.push(
-            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${
-                lesson.id
-            }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-                resource.id
-            }`
-        )
+        const type = resource.type.toLocaleLowerCase()
+        if (type === 'quiz') {
+            history.push(
+                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}/quiz/${resource.id}/0`
+            )
+        } else {
+            history.push(
+                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}/video/${resource.id}`
+            )
+        }
     }
 
     return (

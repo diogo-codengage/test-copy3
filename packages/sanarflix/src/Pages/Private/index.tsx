@@ -54,7 +54,7 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
                                     component={FLXCourses}
                                 />
                                 <FLXActiveAccountRoute
-                                    path={`${url}/curso/:id`}
+                                    path={`${url}/curso/:courseId`}
                                     component={FLXCourse}
                                 />
                                 <FLXActiveAccountRoute

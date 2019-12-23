@@ -191,12 +191,16 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
             setTrigger(new Date().getTime())
             setSchedule(old => ({
                 ...resetSchedule,
-                hasModified: old.hasModified,
+                hasModified: !old.hasModified,
                 items: resetSchedule.items.map(event =>
                     makeEvent(event, !modalSuggestion.checked)
                 ) as IEvent[]
             }))
         } catch {
+            createSnackbar({
+                message: t('schedule.switchError'),
+                theme: 'error'
+            })
             setModalSuggestion({
                 checked: !schedule.hasModified,
                 visible: false
@@ -225,7 +229,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                             ? item
                             : (makeEvent(
                                   updateAppointment,
-                                  schedule.hasModified
+                                  old.hasModified
                               ) as IEvent)
                     )
                 }))
@@ -265,6 +269,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                     data: { appointments }
                 } = await client.query<IAppointmentsQuery>({
                     query: GET_APPOINTMENTS,
+                    fetchPolicy: 'network-only',
                     variables: {
                         start: format(currentRange.start, 'YYYY-MM-DD'),
                         end: format(currentRange.end, 'YYYY-MM-DD')
@@ -287,7 +292,12 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                         : modalSuggestion.checked
                 }))
                 firstLoad && setFirstLoad(false)
-            } catch {}
+            } catch {
+                createSnackbar({
+                    message: t('schedule.loadingError'),
+                    theme: 'error'
+                })
+            }
             setLoading(false)
         }
         if (!!currentRange.start && !!currentRange.end) fetchEvents()
