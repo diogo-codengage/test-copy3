@@ -19,6 +19,7 @@ import {
     useSnackbarContext
 } from '@sanar/components'
 import { IEvent } from '@sanar/components/dist/Components/Organisms/BigCalendar'
+import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import {
     GET_APPOINTMENTS,
@@ -94,7 +95,7 @@ const makeEvent = (event: IAppointment, hasModified = false) => ({
     },
     id: event.id,
     title: event.title,
-    start: new Date(event.start),
+    start: getUTCDate(event.start),
     startEditable: hasModified ? !event.fixed : false,
     status: getStatus(event)
 })
