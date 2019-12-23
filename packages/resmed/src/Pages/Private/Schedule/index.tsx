@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -304,6 +304,17 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentRange])
 
+    const validRange = useMemo(() => {
+        return {
+            start: !!schedule.interval.start
+                ? format(new Date(schedule.interval.start), 'YYYY-MM-DD')
+                : format(new Date(), 'YYYY-MM-DD'),
+            end: !!schedule.interval.end
+                ? format(new Date(schedule.interval.end), 'YYYY-MM-DD')
+                : format(new Date(), 'YYYY-MM-DD')
+        }
+    }, [schedule.interval])
+
     return (
         <>
             <RMModalMore
@@ -361,16 +372,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                                 eventDrop={handleEventDrop}
                                 eventLimitClick={handleEventLimitClick}
                                 onChangeMonth={handleChangeMonth}
-                                validRange={{
-                                    start: format(
-                                        new Date(schedule.interval.start),
-                                        'YYYY-MM-DD'
-                                    ),
-                                    end: format(
-                                        new Date(schedule.interval.end),
-                                        'YYYY-MM-DD'
-                                    )
-                                }}
+                                validRange={validRange}
                             />
                         </SANBox>
 

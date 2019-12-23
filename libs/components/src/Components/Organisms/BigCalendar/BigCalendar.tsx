@@ -16,7 +16,7 @@ import {
     isPast,
     format,
     isEqual,
-    eachWeekendOfYear,
+    eachWeekendOfInterval,
     isSameDay,
     addMonths,
     startOfMonth,
@@ -51,9 +51,16 @@ export interface IEvent {
     extendedProps?: object
 }
 
+type DateInput = Date | string
+export interface IDateRangeInput {
+    start?: DateInput
+    end?: DateInput
+}
+
 export interface ISANBigCalendarProps {
     loading?: boolean
     events: IEvent[]
+    validRange: IDateRangeInput
     onChangeMonth?: (arg: { start: Date; end: Date }) => void
     eventLimitClick?: (arg: {
         date: Date
@@ -247,12 +254,12 @@ const FullCalendarWrapper = styled.div`
     }
 `
 
-const getFreeDays = (current = new Date().getFullYear()) => {
-    return [
-        ...eachWeekendOfYear(new Date(current - 1, 1, 1)),
-        ...eachWeekendOfYear(new Date(current, 1, 1)),
-        ...eachWeekendOfYear(new Date(current + 1, 1, 1))
-    ].map(e => ({
+const getFreeDays = (start, end) => {
+    if (!start || !end) return []
+    return eachWeekendOfInterval({
+        start,
+        end
+    }).map(e => ({
         start: new Date(e),
         id: `freeday-${new Date(e).getTime()}`,
         allDay: true,
@@ -261,7 +268,14 @@ const getFreeDays = (current = new Date().getFullYear()) => {
 }
 
 const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
-    { events = [], eventDrop, loading = false, onChangeMonth, ...props },
+    {
+        events = [],
+        eventDrop,
+        loading = false,
+        onChangeMonth,
+        validRange,
+        ...props
+    },
     ref
 ) => {
     const { t } = useTranslation('components')
@@ -333,7 +347,16 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
         []
     )
 
-    const freeDays = useMemo(() => getFreeDays(), [])
+    const freeDays = useMemo(
+        () =>
+            validRange
+                ? getFreeDays(
+                      new Date(validRange.start),
+                      new Date(validRange.end)
+                  )
+                : [],
+        [validRange]
+    )
 
     const eventsMap = useMemo(() => {
         const nextMonth = startOfMonth(addMonths(new Date(currentMonth), 1))
@@ -378,6 +401,7 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
                     eventLimit
                     eventLimitText={n => `${t('bigCalendar.more')} ${n}`}
                     eventDrop={handleEventDrop}
+                    validRange={validRange}
                     {...props}
                 />
             </SANSpin>
