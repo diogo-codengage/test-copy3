@@ -100,7 +100,9 @@ const ButtonArrowStyled = styled(SANButton)`
     }
 `
 
-const ImageStyled = styled(SANBox)``
+const ImageStyled = styled(SANBox)`
+    max-height: 120px;
+`
 
 const SANCollectionItemStyled = styled(SANBox)<{ current: boolean }>`
     &:hover {

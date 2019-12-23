@@ -83,9 +83,9 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
 
     const onCompleted = ({ video }) => setVideo(video)
 
-    const onProgress = async (percentage, resourceId) => {
-        await new Promise((resolve, reject) => {
-            if (!videoError && !!video && video.progress < 100) {
+    const onProgress = (percentage, content) => {
+        new Promise(resolve => {
+            if (!videoError && !!content && content.progress < 100) {
                 const timeInSeconds =
                     playerRef && playerRef.current
                         ? playerRef.current.position()
@@ -94,18 +94,18 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
                 handleProgress({
                     timeInSeconds: parseInt(timeInSeconds, 10),
                     percentage,
-                    resourceId,
+                    resourceId: content.id,
                     resourceType: 'Video'
                 })
                 resolve()
             } else {
-                reject()
+                resolve()
+            }
+        }).then(() => {
+            if (percentage === 100) {
+                goNextConteent()
             }
         })
-
-        if (percentage === 100) {
-            goNextConteent()
-        }
     }
 
     const goNextConteent = () => {
@@ -194,19 +194,19 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
                                     title={video.title}
                                     subtitle={specialty.title}
                                     onThreeSeconds={() =>
-                                        debounceProgress(1, video.id)
+                                        debounceProgress(1, video)
                                     }
                                     onTwentyFivePercent={() =>
-                                        debounceProgress(25, video.id)
+                                        debounceProgress(25, video)
                                     }
                                     onFiftyPercent={() =>
-                                        debounceProgress(50, video.id)
+                                        debounceProgress(50, video)
                                     }
                                     onSeventyFivePercent={() =>
-                                        debounceProgress(75, video.id)
+                                        debounceProgress(75, video)
                                     }
                                     onOneHundredPercent={() => {
-                                        debounceProgress(100, video.id)
+                                        debounceProgress(100, video)
                                         handleComplete()
                                     }}
                                 />
