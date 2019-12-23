@@ -100,21 +100,28 @@ const getAccessToken = () => {
     return new Promise((resolve, reject) => {
         try {
             user.getSession((err, session: CognitoUserSession) => {
-                if (err || !session) {
-                    console.error('[getSession]', err, session)
-                    const refreshToken = session.getRefreshToken()
-                    user.refreshSession(refreshToken, function(err, session) {
-                        console.error('[refreshSession]', err, session)
-                        resolve(session.getIdToken().getJwtToken())
-                    })
-                    reject(err)
+                if (!!err) {
+                    console.error('[getSession:err]', err)
+                    if (!!session) {
+                        console.error('[getSession:session]', session)
+                        const refreshToken = session.getRefreshToken()
+                        user.refreshSession(refreshToken, function(
+                            err,
+                            session
+                        ) {
+                            console.error('[refreshSession]', err, session)
+                            return resolve(session.getIdToken().getJwtToken())
+                        })
+                    } else {
+                        return reject(err)
+                    }
                 }
                 const jwtToken = session.getIdToken().getJwtToken()
-                resolve(jwtToken)
+                return resolve(jwtToken)
             })
         } catch (e) {
             window.localStorage.clear()
-            reject(e)
+            return reject(e)
         }
     })
 }
@@ -175,7 +182,7 @@ const changePassword = ({
                     result
                 ) {
                     err && onFailure(reject)(err)
-                    resolve(result)
+                    return resolve(result)
                 })
             }
         })

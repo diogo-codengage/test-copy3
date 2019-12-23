@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { useApolloClient } from '@apollo/react-hooks'
-import { format, isEqual } from 'date-fns'
+import { format, isEqual, isToday } from 'date-fns'
 
 import {
     SANPage,
@@ -19,6 +19,7 @@ import {
     useSnackbarContext
 } from '@sanar/components'
 import { IEvent } from '@sanar/components/dist/Components/Organisms/BigCalendar'
+import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import {
     GET_APPOINTMENTS,
@@ -30,6 +31,8 @@ import {
     IUpdateAppointment
 } from 'Apollo/Schedule/Mutations/update-appointment'
 import { RESET_SCHEDULE, IResetSchedule } from 'Apollo/Schedule/Mutations/reset'
+
+import { useLayoutContext } from 'Pages/Private/Layout/Context'
 
 import {
     RMModalSchedule,
@@ -94,7 +97,7 @@ const makeEvent = (event: IAppointment, hasModified = false) => ({
     },
     id: event.id,
     title: event.title,
-    start: new Date(event.start),
+    start: getUTCDate(event.start),
     startEditable: hasModified ? !event.fixed : false,
     status: getStatus(event)
 })
@@ -110,6 +113,7 @@ interface ISchedule {
 
 const RMSchedule = ({ history }: RouteComponentProps) => {
     const { t } = useTranslation('resmed')
+    const { fetchSuggestedClass } = useLayoutContext()
     const createSnackbar = useSnackbarContext()
     const calendarRef = useRef<SANBigCalendar>()
     const client = useApolloClient()
@@ -211,6 +215,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
     const handleEventDrop = e => {
         const { event } = e
         const date = new Date(new Date(event.start).toUTCString()).toISOString()
+        isToday(date) && fetchSuggestedClass()
         client
             .mutate<IUpdateAppointment>({
                 mutation: UPDATE_APPOINTMENT,
@@ -221,17 +226,17 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
             })
             .then(({ data: { updateAppointment } }) => {
                 setTrigger(new Date().getTime())
-                setSchedule(old => ({
-                    ...old,
-                    items: old.items.map(item =>
-                        item.id !== event.extendedProps.id
-                            ? item
-                            : (makeEvent(
-                                  updateAppointment,
-                                  old.hasModified
-                              ) as IEvent)
-                    )
-                }))
+                // setSchedule(old => ({
+                //     ...old,
+                //     items: old.items.map(item =>
+                //         item.id !== event.extendedProps.id
+                //             ? item
+                //             : (makeEvent(
+                //                   updateAppointment,
+                //                   old.hasModified
+                //               ) as IEvent)
+                //     )
+                // }))
             })
             .catch(err => {
                 e.revert()
@@ -303,6 +308,17 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentRange])
 
+    const validRange = useMemo(() => {
+        return {
+            start: !!schedule.interval.start
+                ? format(new Date(schedule.interval.start), 'YYYY-MM-DD')
+                : format(new Date(), 'YYYY-MM-DD'),
+            end: !!schedule.interval.end
+                ? format(new Date(schedule.interval.end), 'YYYY-MM-DD')
+                : format(new Date(), 'YYYY-MM-DD')
+        }
+    }, [schedule.interval])
+
     return (
         <>
             <RMModalMore
@@ -360,16 +376,7 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                                 eventDrop={handleEventDrop}
                                 eventLimitClick={handleEventLimitClick}
                                 onChangeMonth={handleChangeMonth}
-                                validRange={{
-                                    start: format(
-                                        new Date(schedule.interval.start),
-                                        'YYYY-MM-DD'
-                                    ),
-                                    end: format(
-                                        new Date(schedule.interval.end),
-                                        'YYYY-MM-DD'
-                                    )
-                                }}
+                                validRange={validRange}
                             />
                         </SANBox>
 

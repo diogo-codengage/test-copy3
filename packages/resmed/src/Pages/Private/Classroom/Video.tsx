@@ -14,7 +14,7 @@ import { useWindowSize } from '@sanar/utils/dist/Hooks'
 import { createDebounce } from '@sanar/utils/dist/Debounce'
 
 import RMCollection from 'Components/Collection'
-import { GET_VIDEO, IVideoQuery, IVideo } from 'Apollo/Classroom/Queries/video'
+import { GET_VIDEO, IVideoQuery } from 'Apollo/Classroom/Queries/video'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useMainContext } from 'Pages/Private/Context'
 import { useClassroomContext } from './Context'
@@ -41,7 +41,6 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
     const [videoError, setVideoError] = useState(false)
     const [videoReady, setVideoReady] = useState(false)
     const [willStart, setWillStart] = useState(true)
-    const [video, setVideo] = useState<IVideo>()
     const { me } = useAuthContext()
 
     const dataToTrack = useMemo(
@@ -71,7 +70,7 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
     const getStartTime = time => {
         if (videoReady && playerRef && playerRef.current) {
             !!playerRef.current.seek && playerRef.current.seek(time)
-            playerRef.current.pause()
+            !!playerRef.current.pause && playerRef.current.pause()
             setWillStart(false)
         }
     }
@@ -81,40 +80,45 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
             `../../${collection.id}/video/${collection.content.video.id}`
         )
 
-    const onCompleted = ({ video }) => setVideo(video)
+    const onProgress = (percentage, content) => {
+        new Promise(resolve => {
+            if (!videoError && !!content && content.progress < 100) {
+                const timeInSeconds =
+                    playerRef && playerRef.current
+                        ? playerRef.current.position()
+                        : 0
 
-    const onProgress = (percentage, resourceId) => {
-        if (!videoError && !!video && video.progress < 100) {
-            const timeInSeconds =
-                playerRef && playerRef.current
-                    ? playerRef.current.position()
-                    : 0
-
-            handleProgress({
-                timeInSeconds: parseInt(timeInSeconds, 10),
-                percentage,
-                resourceId,
-                resourceType: 'Video'
-            })
-        }
-
-        if (percentage === 100) {
-            const current = collectionRef.current.getCurrent()
-            // if have quiz on this clicker go to quiz
-            if (!!current && !!current.content.quiz) {
-                history.push(
-                    `../../${current.id}/quiz/${current.content.quiz.id}/0`
-                )
+                handleProgress({
+                    timeInSeconds: parseInt(timeInSeconds, 10),
+                    percentage,
+                    resourceId: content.id,
+                    resourceType: 'Video'
+                })
+                resolve()
             } else {
-                const next = collectionRef.current.getNext()
-                // if have next clicker go to next
-                if (!!next) {
-                    history.push(
-                        `../../${next.id}/video/${next.content.video.id}`
-                    )
-                } else {
-                    history.push(`../../avaliacao`)
-                }
+                resolve()
+            }
+        }).then(() => {
+            if (percentage === 100) {
+                goNextConteent()
+            }
+        })
+    }
+
+    const goNextConteent = () => {
+        const current = collectionRef.current.getCurrent()
+        // if have quiz on this clicker go to quiz
+        if (!!current && !!current.content.quiz) {
+            history.push(
+                `../../${current.id}/quiz/${current.content.quiz.id}/0`
+            )
+        } else {
+            const next = collectionRef.current.getNext()
+            // if have next clicker go to next
+            if (!!next) {
+                history.push(`../../${next.id}/video/${next.content.video.id}`)
+            } else {
+                history.push(`../../avaliacao`)
             }
         }
     }
@@ -139,8 +143,7 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
             options={{
                 variables: { id: params.contentId },
                 fetchPolicy: 'network-only',
-                skip: !params.contentId,
-                onCompleted: onCompleted
+                skip: !params.contentId
             }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
             errorProps={{ dark: true }}
@@ -187,19 +190,19 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
                                     title={video.title}
                                     subtitle={specialty.title}
                                     onThreeSeconds={() =>
-                                        debounceProgress(1, video.id)
+                                        debounceProgress(1, video)
                                     }
                                     onTwentyFivePercent={() =>
-                                        debounceProgress(25, video.id)
+                                        debounceProgress(25, video)
                                     }
                                     onFiftyPercent={() =>
-                                        debounceProgress(50, video.id)
+                                        debounceProgress(50, video)
                                     }
                                     onSeventyFivePercent={() =>
-                                        debounceProgress(75, video.id)
+                                        debounceProgress(75, video)
                                     }
                                     onOneHundredPercent={() => {
-                                        debounceProgress(100, video.id)
+                                        debounceProgress(100, video)
                                         handleComplete()
                                     }}
                                 />
