@@ -33,6 +33,6 @@ const FLXApp: React.FC = () => (
     </FLXGraphQLProvider>
 )
 
-Sentry.init({ dsn: `${process.env.REACT_APP_SENTRY_DSN}` });
+if (process.env.NODE_ENV === 'production') Sentry.init({ dsn: `${process.env.REACT_APP_SENTRY_DSN}` });
 ReactDOM.render(<FLXApp />, document.getElementById('root'))
 serviceWorker.register()
