@@ -101,4 +101,4 @@ const RMFooter = memo<IProps>(({ history, ...props }) => {
     )
 })
 
-export default withRouter<IProps>(RMFooter)
+export default withRouter(RMFooter)

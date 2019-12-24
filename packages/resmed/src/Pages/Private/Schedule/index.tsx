@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { useApolloClient } from '@apollo/react-hooks'
-import { format, isEqual, isToday } from 'date-fns'
+import { format, isEqual } from 'date-fns'
 
 import {
     SANPage,
@@ -215,7 +215,6 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
     const handleEventDrop = e => {
         const { event } = e
         const date = new Date(new Date(event.start).toUTCString()).toISOString()
-        isToday(date) && fetchSuggestedClass()
         client
             .mutate<IUpdateAppointment>({
                 mutation: UPDATE_APPOINTMENT,
@@ -224,19 +223,14 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                     date
                 }
             })
-            .then(({ data: { updateAppointment } }) => {
-                setTrigger(new Date().getTime())
-                // setSchedule(old => ({
-                //     ...old,
-                //     items: old.items.map(item =>
-                //         item.id !== event.extendedProps.id
-                //             ? item
-                //             : (makeEvent(
-                //                   updateAppointment,
-                //                   old.hasModified
-                //               ) as IEvent)
-                //     )
-                // }))
+            .then(() => {
+                setTimeout(() => {
+                    setTrigger(new Date().getTime())
+                    if (!!event.extendedProps) {
+                        event.extendedProps.status === 'unseen' &&
+                            fetchSuggestedClass()
+                    }
+                }, 500)
             })
             .catch(err => {
                 e.revert()

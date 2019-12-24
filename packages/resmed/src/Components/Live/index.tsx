@@ -132,7 +132,6 @@ const RMLive = memo<IRMLiveProps>(
                             src={`https://www.youtube.com/live_chat?v=${live.youtubeId}&embed_domain=${window.location.hostname}`}
                             allowFullScreen
                             title='Chat'
-                            referrerPolicy='origin'
                             onLoad={() => setLoadedChat(true)}
                         />
                     )}
