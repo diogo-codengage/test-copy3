@@ -13,12 +13,14 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
 import {
-    isPast,
+    isBefore,
     format,
     isEqual,
     eachWeekendOfInterval,
     addMonths,
+    subMonths,
     startOfMonth,
+    endOfMonth,
     isAfter,
     startOfDay,
     endOfDay,
@@ -304,6 +306,15 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
         const newDate = e.event.start
         const oldDate = e.oldEvent.start
 
+        if (
+            isBefore(startOfDay(newDate), previousMonth) ||
+            isAfter(endOfDay(newDate), nextMonth)
+        ) {
+            e.event.setProp('classNames', 'san-past-event')
+        } else {
+            e.event.setProp('classNames', '')
+        }
+
         // if have free day on new drop day, remove free day
         const hasFreeDay = events.find(
             event =>
@@ -358,16 +369,23 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
         [validRange]
     )
 
-    const eventsMap = useMemo(() => {
-        const nextMonth = startOfMonth(addMonths(new Date(currentMonth), 1))
+    const nextMonth = useMemo(
+        () => startOfMonth(addMonths(startOfDay(new Date(currentMonth)), 1)),
+        [currentMonth]
+    )
+    const previousMonth = useMemo(
+        () => endOfMonth(subMonths(endOfDay(new Date(currentMonth)), 1)),
+        [currentMonth]
+    )
 
+    const eventsMap = useMemo(() => {
         return [
             ...events.map(event => ({
                 ...event,
                 ...colors[event.status],
                 allDay: true,
-                classNames: ((!!event.start && isPast(endOfDay(event.start))) ||
-                    isAfter(endOfDay(event.start), startOfDay(nextMonth))) && [
+                classNames: (isBefore(startOfDay(event.start), previousMonth) ||
+                    isAfter(endOfDay(event.start), nextMonth)) && [
                     'san-past-event'
                 ]
             })),
@@ -376,7 +394,7 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
                     !events.find(event => isSameDay(event.start, free.start))
             )
         ]
-    }, [events, freeDays, currentMonth])
+    }, [events, freeDays, currentMonth, previousMonth])
 
     useImperativeHandle(ref, () => calendarRef.current)
 
