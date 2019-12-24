@@ -17,12 +17,13 @@ import emptyImage from 'Assets/images/empty/empty.svg'
 
 import {
     GET_APPOINTMENTS,
-    IAppointmentsQuery,
-    IAppointment
+    IAppointmentsQuery
 } from 'Apollo/Schedule/Queries/appointments'
 
-import { getStatus } from './index'
+import { formatMinutes, getStatus } from './index'
 import { Skeleton } from './Today'
+import { IOption } from './Modal'
+import { useScheduleContext } from './Context'
 
 const getWeekend = () => {
     const curr = new Date()
@@ -39,8 +40,12 @@ const RMWeek = ({ hasModified }) => {
     const { t } = useTranslation('resmed')
     const createSnackbar = useSnackbarContext()
     const client = useApolloClient()
+    const { setModalSchedule } = useScheduleContext()
     const [loading, setLoading] = useState(false)
-    const [events, setEvents] = useState<IAppointment[]>([])
+    const [events, setEvents] = useState<IOption[]>([])
+
+    const handleShowModal = event =>
+        setModalSchedule({ visible: true, options: event })
 
     useEffect(() => {
         const fetchEventsWeek = async () => {
@@ -59,9 +64,10 @@ const RMWeek = ({ hasModified }) => {
                     }
                 })
                 setEvents(
-                    appointments.items.map(v => ({
-                        ...v,
-                        type: getStatus(v)
+                    appointments.items.map(event => ({
+                        ...event,
+                        status: getStatus(event),
+                        subtitle: formatMinutes(event.timeInMinutes)
                     }))
                 )
             } catch {
@@ -92,6 +98,7 @@ const RMWeek = ({ hasModified }) => {
                 )}`}
                 type={getStatus(event)}
                 mb='xs'
+                onClick={() => handleShowModal(event)}
             />
         ),
         // eslint-disable-next-line react-hooks/exhaustive-deps
