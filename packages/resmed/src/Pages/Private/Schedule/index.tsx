@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { useApolloClient } from '@apollo/react-hooks'
 import { format, isEqual } from 'date-fns'
+import { compose } from 'ramda'
 
 import {
     SANPage,
@@ -40,6 +41,8 @@ import {
     RMModalMore,
     IOption
 } from './Modal'
+
+import { useScheduleContext, withScheduleContext } from './Context'
 
 import RMToday from './Today'
 import RMWeek from './Week'
@@ -87,10 +90,10 @@ export const getStatus = event => {
     }
 }
 
-const formatMinutes = minutes =>
+export const formatMinutes = minutes =>
     new Date(minutes * 60000).toISOString().substr(11, 5)
 
-const makeEvent = (event: IAppointment, hasModified = false) => ({
+export const makeEvent = (event: IAppointment, hasModified = false) => ({
     extendedProps: {
         ...event,
         subtitle: formatMinutes(event.timeInMinutes)
@@ -111,33 +114,24 @@ interface ISchedule {
     }
 }
 
-const RMSchedule = ({ history }: RouteComponentProps) => {
+const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
     const { fetchSuggestedClass } = useLayoutContext()
     const createSnackbar = useSnackbarContext()
     const calendarRef = useRef<SANBigCalendar>()
     const client = useApolloClient()
+    const {
+        modalSchedule,
+        setModalSchedule,
+        schedule,
+        setSchedule
+    } = useScheduleContext()
     const [firstLoad, setFirstLoad] = useState(true)
     const [loading, setLoading] = useState(false)
     const [trigger, setTrigger] = useState()
     const [currentRange, setCurrentRange] = useState({
         start: '',
         end: ''
-    })
-    const [schedule, setSchedule] = useState<ISchedule>({
-        hasModified: false,
-        items: [],
-        interval: {
-            start: '',
-            end: ''
-        }
-    })
-    const [modalSchedule, setModalSchedule] = useState<{
-        visible: boolean
-        options: IOption | any
-    }>({
-        visible: false,
-        options: {}
     })
     const [modalSuggestion, setModalSuggestion] = useState({
         visible: false,
@@ -325,9 +319,6 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
                 onCancel={() =>
                     setModalSchedule({ visible: false, options: undefined })
                 }
-                onClick={() =>
-                    setModalSchedule({ visible: false, options: undefined })
-                }
             />
             <RMModalSuggestion
                 visible={modalSuggestion.visible}
@@ -416,4 +407,6 @@ const RMSchedule = ({ history }: RouteComponentProps) => {
     )
 }
 
-export default withRouter<RouteComponentProps>(RMSchedule)
+const enhance = compose(withScheduleContext, withRouter)
+
+export default enhance(RMSchedule)

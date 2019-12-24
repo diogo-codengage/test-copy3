@@ -183,7 +183,8 @@ export default {
     cardSpecialty: {
         access: 'Acessar',
         you: 'Você',
-        others: 'Outros'
+        others: 'Outros',
+        comingSoon: 'Em breve'
     },
     helpCenter: {
         header: {

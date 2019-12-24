@@ -1,7 +1,7 @@
 import React from 'react'
 
 import styled from 'styled-components'
-import { theme, ifProp, prop } from 'styled-tools'
+import { theme, prop } from 'styled-tools'
 import { useTranslation } from 'react-i18next'
 
 import { SANButton } from '../../Atoms/Button'
@@ -17,6 +17,7 @@ interface IProgress {
 export interface ISANCardSpecialtyProps {
     image: string
     title: string
+    disabled?: boolean
     progress: IProgress
     onClick: () => void
 }
@@ -66,6 +67,7 @@ const SANCardSpecialty = ({
     image,
     title,
     progress,
+    disabled,
     onClick
 }: ISANCardSpecialtyProps) => {
     const { t } = useTranslation('components')
@@ -118,8 +120,11 @@ const SANCardSpecialty = ({
                 variant='outlined'
                 size='small'
                 color='light'
+                disabled={disabled}
             >
-                {t('cardSpecialty.access')}
+                {disabled
+                    ? t('cardSpecialty.comingSoon')
+                    : t('cardSpecialty.access')}
             </SANButton>
         </SANCardSpecialtyStyled>
     )

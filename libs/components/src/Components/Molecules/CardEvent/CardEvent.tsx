@@ -15,22 +15,26 @@ export interface ISANCardEventProps extends ISANBoxProps {
 
 const SANCardBox = styled(SANBox)<{ type: IType }>`
     &&& {
+        cursor: pointer;
         border-color: ${switchProp('type', {
             viewed: theme('colors.primary-4'),
             unseen: theme('colors.burgundy.1'),
             live: theme('colors.grey.4'),
             exams: theme('colors.blue.2')
         })};
+
+        &:hover {
+            background-color: ${switchProp('type', {
+                viewed: theme('colors.primary-1'),
+                unseen: theme('colors.burgundy.0'),
+                live: theme('colors.grey.0'),
+                exams: theme('colors.blue.0')
+            })};
+        }
     }
 `
 
-const SANCardEvent = ({
-    title,
-    date,
-    type,
-    onClick,
-    ...props
-}: ISANCardEventProps) => (
+const SANCardEvent = ({ title, date, type, ...props }: ISANCardEventProps) => (
     <SANCardBox
         type={type}
         boxShadow={1}

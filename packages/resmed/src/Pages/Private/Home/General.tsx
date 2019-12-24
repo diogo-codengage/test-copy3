@@ -81,6 +81,10 @@ const RMSpecialties = withRouter<RouteComponentProps>(
                             me: specialty.progress.me,
                             others: specialty.progress.all
                         }}
+                        disabled={
+                            !specialty.hasSubSpecialties &&
+                            !specialty.lastAccessed
+                        }
                         onClick={() => renderContent(specialty)}
                     />
                 </SANCol>

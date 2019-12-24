@@ -182,19 +182,13 @@ export const RMModalSuggestion = ({
 }
 
 interface IRMModalSchedule extends IModalProps, RouteComponentProps {
-    onClick: () => void
     options: IOption
 }
 
 const types = ['viewed', 'unseen', 'live']
 
 export const RMModalSchedule = withRouter(
-    ({
-        options = defaultOption,
-        onClick,
-        history,
-        ...props
-    }: IRMModalSchedule) => {
+    ({ options = defaultOption, history, ...props }: IRMModalSchedule) => {
         const { t } = useTranslation('resmed')
 
         const handleClick = () => {

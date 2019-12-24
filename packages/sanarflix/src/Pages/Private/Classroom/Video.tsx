@@ -63,8 +63,9 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
         setVideoReady(true)
     }
 
-    const handleVideoError = () => {
+    const handleVideoError = (e) => {
         setVideoError(true)
+        console.error(e)
     }
 
     const handleRating = async ({ value, resourceId }) => {
@@ -157,6 +158,10 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
         }
     }
 
+    const handleSetupError = (e) => {
+        console.error(e)
+    }
+
     return (
         <SANQuery
             query={GET_RESOURCE}
@@ -247,6 +252,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                             bookmark: resource.video.bookmarked
                                         })
                                 }}
+                                onSetupError={handleSetupError}
                             />
                             <SANBox
                                 display={{ md: 'none', _: 'flex' }}

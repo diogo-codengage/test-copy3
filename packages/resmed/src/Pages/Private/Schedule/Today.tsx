@@ -18,11 +18,12 @@ import emptyImage from 'Assets/images/empty/empty.svg'
 
 import {
     GET_APPOINTMENTS,
-    IAppointmentsQuery,
-    IAppointment
+    IAppointmentsQuery
 } from 'Apollo/Schedule/Queries/appointments'
 
-import { getStatus } from './index'
+import { formatMinutes, getStatus } from './index'
+import { useScheduleContext } from './Context'
+import { IOption } from './Modal'
 
 export const Skeleton = () => (
     <>
@@ -37,8 +38,13 @@ const RMToday = ({ hasModified }) => {
     const { t } = useTranslation('resmed')
     const createSnackbar = useSnackbarContext()
     const client = useApolloClient()
+    const { setModalSchedule } = useScheduleContext()
     const [loading, setLoading] = useState(false)
-    const [events, setEvents] = useState<IAppointment[]>([])
+    const [events, setEvents] = useState<IOption[]>([])
+
+    const handleShowModal = event => {
+        setModalSchedule({ visible: true, options: event })
+    }
 
     useEffect(() => {
         const fetchEventsToday = async () => {
@@ -56,9 +62,10 @@ const RMToday = ({ hasModified }) => {
                     }
                 })
                 setEvents(
-                    appointments.items.map(v => ({
-                        ...v,
-                        type: getStatus(v)
+                    appointments.items.map(event => ({
+                        ...event,
+                        status: getStatus(event),
+                        subtitle: formatMinutes(event.timeInMinutes)
                     }))
                 )
             } catch {
@@ -88,6 +95,7 @@ const RMToday = ({ hasModified }) => {
                     `DD/MM/YYYY [${t('schedule.at')}] HH[h]`
                 )}`}
                 type={getStatus(event)}
+                onClick={() => handleShowModal(event)}
                 mb='xs'
             />
         ),
