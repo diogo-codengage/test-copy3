@@ -126,7 +126,10 @@ const RMSubspecialties = ({
                 mb='xl'
             >
                 <SANCardSubSpecialty
-                    blocked={subspecialty.status === 'construction'}
+                    blocked={
+                        subspecialty.status === 'construction' ||
+                        !subspecialty.lastAccessed
+                    }
                     title={subspecialty.name}
                     progress={{
                         me: subspecialty.progress.me,
