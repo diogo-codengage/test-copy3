@@ -51,8 +51,8 @@ const FLXPrivateRoute: React.FC<FLXPrivateRouteProps> = ({
                 //TODO Remover o if a seguir assim que validar a hipótese do name estar como null
                 if(!me.name || me.name === null) console.error(`Me has an invalid name : ${JSON.stringify(me)}`) 
                 Conpass.init({
-                    name: me.name,
-                    email: me.email,
+                    name: me.name || 'anônimo',
+                    email: me.email || 'anonimo@sanarflix.com.br',
 
                     // Informações opcionais (usado para segmentação)
                     // custom_fields: {
