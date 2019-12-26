@@ -135,6 +135,14 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
         [width]
     )
 
+    const pathScript = useMemo(
+        () =>
+            process.env.REACT_APP_ENV === 'production'
+                ? '/residenciamedica/jwplayer/jwplayer.js'
+                : '/jwplayer/jwplayer.js',
+        []
+    )
+
     const debounceProgress = createDebounce(onProgress, 500)
 
     return (
@@ -178,7 +186,7 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
                                     onError={handleVideoError}
                                     onOpenMenu={onOpenMenu}
                                     playerId='playerId'
-                                    playerScript='/jwplayer/jwplayer.js'
+                                    playerScript={pathScript}
                                     playlist={[
                                         {
                                             file: video.source,
