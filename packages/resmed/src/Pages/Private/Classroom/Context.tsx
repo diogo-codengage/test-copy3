@@ -19,6 +19,8 @@ interface IRMClassroomProviderValue {
     handleProgress: (data: IDataProgress) => Promise<any>
     lesson: ILesson
     specialty: ISpecialty
+    clickerName: string
+    setClickerName: React.Dispatch<React.SetStateAction<string>>
 }
 
 interface IDataProgress {
@@ -41,6 +43,7 @@ const RMClassroomProvider: React.FC = ({ children }) => {
         id: '',
         title: ''
     })
+    const [clickerName, setClickerName] = useState('')
     const { setMenuTab, params, fetchSuggestedClass } = useLayoutContext()
 
     const handleProgress = (data: IDataProgress) =>
@@ -101,7 +104,9 @@ const RMClassroomProvider: React.FC = ({ children }) => {
     const value: IRMClassroomProviderValue = {
         handleProgress,
         lesson,
-        specialty
+        specialty,
+        clickerName,
+        setClickerName
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

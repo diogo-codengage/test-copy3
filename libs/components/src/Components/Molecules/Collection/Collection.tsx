@@ -171,7 +171,7 @@ const SliderStyled = styled(Slider)`
     }
 `
 
-interface ICollection {
+export interface ICollection {
     name: string
     image: string
     completed: boolean

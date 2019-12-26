@@ -18,6 +18,7 @@ import ESEvaIcon from '../../Atoms/EvaIcon'
 import ESTypography from '../../Atoms/Typography'
 import ESRate from '../../Atoms/Rate'
 import ESSpin from '../../Atoms/Spin'
+import ESSkeleton from '../../Atoms/Skeleton'
 
 import useWindowSize from '../../../Hooks/useWindowSize'
 
@@ -201,10 +202,19 @@ const ESJwPlayer = forwardRef(
                                     }
                                 />
                             </ESButton>
-                            <div>
-                                <ESTypography level={5} className='title'>
-                                    {title}
-                                </ESTypography>
+                            <div style={{ width: '100%' }}>
+                                <ESSkeleton
+                                    loading={!title}
+                                    paragraph={false}
+                                    title={{
+                                        width: '40%'
+                                    }}
+                                    dark
+                                >
+                                    <ESTypography level={5} className='title'>
+                                        {title}
+                                    </ESTypography>
+                                </ESSkeleton>
                                 <ESTypography
                                     variant='subtitle2'
                                     className='subtitle'

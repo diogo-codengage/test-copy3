@@ -59,7 +59,7 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
             questionsMap,
             setQuestionsMap
         } = useClassroomQuizContext()
-        const { handleProgress } = useClassroomContext()
+        const { handleProgress, setClickerName } = useClassroomContext()
         const { params: paramsLayout } = useLayoutContext()
         const [visible, setVisible] = useState(false)
         const [loading, setLoading] = useState(false)
@@ -160,10 +160,12 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
 
         const toggleVisible = () => setVisible(oldVisible => !oldVisible)
 
-        const onChangeCollection = collection =>
+        const onChangeCollection = collection => {
+            setClickerName(collection.name)
             history.push(
                 `../../../${collection.id}/video/${collection.content.video.id}`
             )
+        }
 
         const isFull = useMemo(() => width <= 992, [width])
 
@@ -238,6 +240,7 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                         vertical={false}
                         onChange={onChangeCollection}
                         ref={collectionRef}
+                        onCompleted={(collection) => setClickerName(collection.name)}
                     />
                 </SANBox>
             </>

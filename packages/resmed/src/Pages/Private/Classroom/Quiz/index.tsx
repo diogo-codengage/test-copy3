@@ -15,7 +15,7 @@ import {
     SANLayoutContainer
 } from '@sanar/components'
 
-import { GET_QUIZ, IQuizQuery } from 'Apollo/Classroom/Queries/quiz'
+import { GET_QUIZ } from 'Apollo/Classroom/Queries/quiz'
 
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 
@@ -29,7 +29,7 @@ const RMClassRoomQuiz = memo<RouteComponentProps>(props => {
     } = props
     const { onOpenMenu, params } = useLayoutContext()
     const { setQuestions } = useClassroomQuizContext()
-    const { specialty } = useClassroomContext()
+    const { specialty, clickerName } = useClassroomContext()
 
     const setQuestionContext = ({ quiz }) => {
         setQuestions(quiz.questions)
@@ -46,10 +46,10 @@ const RMClassRoomQuiz = memo<RouteComponentProps>(props => {
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
             errorProps={{ dark: true }}
         >
-            {({ data: { quiz } }: { data: IQuizQuery }) => (
+            {() => (
                 <SANBox flex='1'>
                     <SANClassroomHeader
-                        title={quiz.title}
+                        title={clickerName}
                         subtitle={specialty.title}
                         onOpenMenu={onOpenMenu}
                         actions={false}

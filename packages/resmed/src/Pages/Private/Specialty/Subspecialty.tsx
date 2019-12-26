@@ -54,6 +54,7 @@ const RMSubspecialties = ({
                 subSpecialtyId: '',
                 lesson: {
                     id: '',
+                    name: '',
                     index: 0
                 },
                 collectionId: '',
@@ -137,7 +138,7 @@ const RMSubspecialties = ({
                     }}
                     image={subspecialty.image}
                     continue={{
-                        title: subspecialty.lastAccessed.resource.title,
+                        title: subspecialty.lastAccessed.lesson.name,
                         index: subspecialty.lastAccessed.lesson.index,
                         onClick: () => {
                             onStart(subspecialty.lastAccessed)
