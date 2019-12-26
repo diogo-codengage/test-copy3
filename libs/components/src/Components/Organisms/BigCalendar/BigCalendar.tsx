@@ -62,7 +62,7 @@ export interface IDateRangeInput {
 export interface ISANBigCalendarProps {
     loading?: boolean
     events: IEvent[]
-    validRange: IDateRangeInput
+    validRange?: IDateRangeInput
     onChangeMonth?: (arg: { start: Date; end: Date }) => void
     eventLimitClick?: (arg: {
         date: Date

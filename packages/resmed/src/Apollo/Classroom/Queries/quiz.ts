@@ -41,7 +41,6 @@ interface IQuestion {
 
 export interface IQuiz {
     id: string
-    title: string
     questions: IQuestion[]
 }
 
@@ -53,7 +52,6 @@ export const GET_QUIZ = gql`
     query Quiz($id: ID!) {
         quiz(where: { id: $id }) {
             id
-            title
             questions {
                 id
                 statement

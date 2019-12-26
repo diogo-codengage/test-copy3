@@ -35,7 +35,12 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
     const { width } = useWindowSize()
     const playerRef = useRef<any>()
     const collectionRef = useRef<any>()
-    const { handleProgress, specialty } = useClassroomContext()
+    const {
+        handleProgress,
+        specialty,
+        clickerName,
+        setClickerName
+    } = useClassroomContext()
     const { params, onOpenMenu } = useLayoutContext()
     const { handleTrack } = useMainContext()
     const [videoError, setVideoError] = useState(false)
@@ -75,10 +80,12 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
         }
     }
 
-    const onChangeCollection = collection =>
+    const onChangeCollection = collection => {
+        setClickerName(collection.name)
         history.push(
             `../../${collection.id}/video/${collection.content.video.id}`
         )
+    }
 
     const onProgress = (percentage, content) => {
         new Promise(resolve => {
@@ -167,7 +174,7 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
                     <SANBox bg='grey-solid.8' position='relative'>
                         <Header>
                             <SANClassroomHeader
-                                title={video.title}
+                                title={clickerName}
                                 subtitle={specialty.title}
                                 actions={false}
                                 onOpenMenu={onOpenMenu}
@@ -195,7 +202,7 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
                                     ]}
                                     licenseKey={process.env.REACT_APP_JWPLAYER}
                                     isMuted={false}
-                                    title={video.title}
+                                    title={clickerName}
                                     subtitle={specialty.title}
                                     onThreeSeconds={() =>
                                         debounceProgress(1, video)
@@ -220,6 +227,9 @@ const RMClassroomVideo = memo<RouteComponentProps>(({ history }) => {
                                 value={params.collectionId}
                                 vertical={width > 884}
                                 onChange={onChangeCollection}
+                                onCompleted={collection =>
+                                    setClickerName(collection.name)
+                                }
                                 ref={collectionRef}
                             />
                         </SANBox>

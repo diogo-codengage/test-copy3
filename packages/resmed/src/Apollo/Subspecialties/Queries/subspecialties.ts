@@ -13,6 +13,7 @@ interface ILastAccessedResource {
 
 interface ILesson {
     id: string
+    name: string
     index: number
 }
 
@@ -56,6 +57,7 @@ export const GET_SUBSPECIALTIES = gql`
                     collectionId
                     lesson {
                         id
+                        name
                         index
                     }
                     resource {

@@ -8,7 +8,10 @@ import React, {
 import { useApolloClient } from '@apollo/react-hooks'
 
 import { SANCollection } from '@sanar/components'
-import { ISANCollectionProps } from '@sanar/components/dist/Components/Molecules/Collection'
+import {
+    ISANCollectionProps,
+    ICollection
+} from '@sanar/components/dist/Components/Molecules/Collection'
 
 import {
     GET_COLLECTIONS,
@@ -18,10 +21,11 @@ import {
 interface IRMCollectionProps
     extends Pick<ISANCollectionProps, 'vertical' | 'value' | 'onChange'> {
     parentId: string
+    onCompleted?: (collection: ICollection) => void
 }
 
 const RMCollection: React.FC<IRMCollectionProps> = (
-    { parentId, value, vertical = true, onChange },
+    { parentId, value, vertical = true, onChange, onCompleted },
     ref
 ) => {
     const client = useApolloClient()
@@ -38,13 +42,18 @@ const RMCollection: React.FC<IRMCollectionProps> = (
                     query: GET_COLLECTIONS,
                     variables: { parentId }
                 })
-                setCollections(
-                    collections.map(collection => ({
-                        ...collection,
-                        image: collection.content.video.image,
-                        completed: collection.content.video.progress === 100
-                    }))
-                )
+                const makeCollections = collections.map(collection => ({
+                    ...collection,
+                    image: collection.content.video.image,
+                    completed: collection.content.video.progress === 100
+                }))
+                setCollections(makeCollections)
+                if (!!onCompleted) {
+                    const collection = makeCollections.find(
+                        collection => collection.id === value
+                    )
+                    !!collection && onCompleted(collection)
+                }
             } catch {}
             setLoading(false)
         }
