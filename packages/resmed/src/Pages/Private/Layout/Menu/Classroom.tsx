@@ -103,7 +103,11 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
     const specialtyName = useMemo(() => {
         if (!!lessons.length) {
             const lesson = lessons[currentResource]
-            if (lesson.subSpecialty && lesson.subSpecialty.specialty) {
+            if (
+                lesson &&
+                lesson.subSpecialty &&
+                lesson.subSpecialty.specialty
+            ) {
                 return lesson.subSpecialty.specialty.name
             }
         }
