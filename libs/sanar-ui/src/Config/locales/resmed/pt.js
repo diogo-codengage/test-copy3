@@ -139,8 +139,7 @@ export default {
         errorLoadLessons: 'Ocorreu um erro ao carregar suas aulas'
     },
     modalThemes: {
-        continue: 'Continuar de onde parei',
-        blocked: 'Disponível em breve!'
+        continue: 'Continuar de onde parei'
     },
     main: {
         errorLoadActiveCourse: 'Ocorreu um erro ao carregar seu curso ativo'

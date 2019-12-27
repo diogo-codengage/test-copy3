@@ -200,7 +200,7 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                         >
                             <SANQuestionMap
                                 items={questionsMap}
-                                current={questionIndex}
+                                current={Number(questionIndex)}
                                 onCancel={toggleVisible}
                                 visible={visible}
                             />
@@ -240,7 +240,9 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                         vertical={false}
                         onChange={onChangeCollection}
                         ref={collectionRef}
-                        onCompleted={(collection) => setClickerName(collection.name)}
+                        onCompleted={collection =>
+                            setClickerName(collection.name)
+                        }
                     />
                 </SANBox>
             </>

@@ -9,6 +9,7 @@ import { SANEvaIcon } from '../../Atoms/EvaIcon'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANBox } from '../../Atoms/Box'
 import { SANDivider } from '../../Atoms/Divider'
+import { SANSkeleton } from '../../Atoms/Skeleton'
 import { SANRow, SANCol } from '../Grid'
 
 type IPlataform = 'esanar' | 'sanarflix' | 'resmed'
@@ -162,7 +163,7 @@ const SANClassroomHeader = ({
         >
             <SANCol {...grid}>
                 <SANBox
-                    displayFlex
+                    display='flex'
                     justifyContent={{ sm: 'flex-start', _: 'space-between' }}
                     mb={{ md: '0', _: 'md' }}
                 >
@@ -184,14 +185,24 @@ const SANClassroomHeader = ({
                             />
                         </SANButtonMenu>
                     </SANBox>
-                    <SANBox order={{ sm: 2, _: 1 }}>
-                        <SANTypography
-                            fontSize={{ xs: 'xl', _: 'lg' }}
-                            fontWeight='bold'
-                            color='white.10'
+                    <SANBox order={{ sm: 2, _: 1 }} flex='1'>
+                        <SANSkeleton
+                            loading={!title}
+                            paragraph={false}
+                            title={{
+                                width: '40%'
+                            }}
+                            dark
+                            mt='-16px'
                         >
-                            {title}
-                        </SANTypography>
+                            <SANTypography
+                                fontSize={{ xs: 'xl', _: 'lg' }}
+                                fontWeight='bold'
+                                color='white.10'
+                            >
+                                {title}
+                            </SANTypography>
+                        </SANSkeleton>
                         <SANTypography
                             fontSize='md'
                             color={

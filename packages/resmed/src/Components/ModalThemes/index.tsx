@@ -41,47 +41,43 @@ const ItemStyled = styled(SANBox)<{ blocked?: boolean }>`
     )}
 `
 
-const Item = ({ index, name, completed, status, onClick }) => {
-    const { t } = useTranslation('resmed')
-
-    return (
-        <ItemStyled
-            py='md'
-            px='lg'
-            pr='sm'
-            display='flex'
-            alignItems='center'
-            justifyContent='space-between'
-            blocked={status !== 'active'}
-            onClick={status === 'active' && onClick}
-            mr='xs'
-        >
-            <SANBox display='flex' alignItems='center'>
-                <SANTypography
-                    color={completed ? 'primary' : 'grey.5'}
-                    fontSize='md'
-                    fontWeight='bold'
-                    lineHeight='1'
-                    mr='xs'
-                >
-                    {index}
-                </SANTypography>
-                <SANTypography fontSize='lg' lineHeight='1' mr='xs'>
-                    {status !== 'active' ? t('modalThemes.blocked') : name}
-                </SANTypography>
-            </SANBox>
-            {completed ? (
-                <SANEvaIcon
-                    name='checkmark-circle-2'
-                    color='primary'
-                    size='xlarge'
-                />
-            ) : (
-                <SANEvaIcon name='arrow-ios-forward-outline' size='large' />
-            )}
-        </ItemStyled>
-    )
-}
+const Item = ({ index, name, completed, status, onClick }) => (
+    <ItemStyled
+        py='md'
+        px='lg'
+        pr='sm'
+        display='flex'
+        alignItems='center'
+        justifyContent='space-between'
+        blocked={status !== 'active'}
+        onClick={status === 'active' && onClick}
+        mr='xs'
+    >
+        <SANBox display='flex' alignItems='center'>
+            <SANTypography
+                color={completed ? 'primary' : 'grey.5'}
+                fontSize='md'
+                fontWeight='bold'
+                lineHeight='1'
+                mr='xs'
+            >
+                {index}
+            </SANTypography>
+            <SANTypography fontSize='lg' lineHeight='1' mr='xs'>
+                {name}
+            </SANTypography>
+        </SANBox>
+        {completed ? (
+            <SANEvaIcon
+                name='checkmark-circle-2'
+                color='primary'
+                size='xlarge'
+            />
+        ) : (
+            <SANEvaIcon name='arrow-ios-forward-outline' size='large' />
+        )}
+    </ItemStyled>
+)
 
 interface ITheme {
     name: string
