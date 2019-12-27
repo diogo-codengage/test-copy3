@@ -10,8 +10,9 @@ import { useApolloClient } from '@apollo/react-hooks'
 import { useAuthContext } from 'Hooks/auth'
 import { getInstance } from 'Config/AWSCognito'
 import { GET_ME } from 'Apollo/User/Queries/me'
+import * as Sentry from '@sentry/browser';
 
-declare var Conpass:any;
+declare var Conpass: any;
 
 interface FLXPrivateRouteProps extends RouteComponentProps {
     component: React.ElementType
@@ -48,8 +49,7 @@ const FLXPrivateRoute: React.FC<FLXPrivateRouteProps> = ({
                 throw new Error()
             } else {
                 setMe(me)
-                //TODO Remover o if a seguir assim que validar a hipótese do name estar como null
-                if(!me.name || me.name === null) console.error(`Me has an invalid name : ${JSON.stringify(me)}`) 
+
                 Conpass.init({
                     name: me.name || 'anônimo',
                     email: me.email || 'anonimo@sanarflix.com.br',
@@ -59,6 +59,16 @@ const FLXPrivateRoute: React.FC<FLXPrivateRouteProps> = ({
                     //   lang: "pt_BR",
                     //   sexo: "Feminino",
                     // }
+                });
+
+                Sentry.configureScope((scope) => {
+                    scope.setUser(
+                        {
+                            "id": me.id,
+                            "name": me.name,
+                            "email": me.email
+                        }
+                    );
                 });
             }
         } catch {
