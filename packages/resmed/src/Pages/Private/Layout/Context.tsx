@@ -180,6 +180,14 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
                     menuContext: 'classroom'
                 })
                 break
+            case 3:
+                setMenuState({
+                    indexMenu: index,
+                    menuTitle: t('mainMenu.changeCourse.title'),
+                    darkMode: false,
+                    menuContext: 'general'
+                })
+                break
             default:
                 setMenuState(defaultMenuState)
         }

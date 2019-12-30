@@ -67,11 +67,25 @@
 
     &__content {
         z-index: 1000;
-        background-color: inherit;
         height: ~'calc(100% + 8px)';
         overflow: hidden;
         width: 304px;
+        background-color: inherit;
         transition: transform 0.3s ease-in-out;
+
+        &.primary {
+            background-color: @primary-4;
+        }
+        &.dark {
+            background-color: @grey-solid-9;
+        }
+        &.light {
+            background-color: #f9f9f9;
+
+            & .es-main-menu__content--header * {
+                color: @grey-8;
+            }
+        }
 
         // Sempre que não houver espaço deixará "scrollavel", mesmo em desktop.
         &--scrollable {

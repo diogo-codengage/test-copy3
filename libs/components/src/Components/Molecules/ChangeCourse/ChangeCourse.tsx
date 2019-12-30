@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled, { css } from 'styled-components'
-import { theme, prop, ifProp } from 'styled-tools'
+import { theme, ifProp } from 'styled-tools'
+import { space, SpaceProps } from 'styled-system'
 
 import { SANTypography } from '../../Atoms/Typography'
 import { SANProgress } from '../../Atoms/Progress'
@@ -123,7 +124,8 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
     coverPicture,
     onChange,
     ContinueProps,
-    loading
+    loading,
+    ...props
 }) => {
     const { t } = useTranslation('components')
     const onClick = e => {
@@ -141,6 +143,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
             backgroundImage={`url(${coverPicture})`}
             borderRadius={!!ContinueProps ? '0px' : 'base'}
             hasPointer={!ContinueProps}
+            {...props}
         >
             <SANBox
                 px={!!ContinueProps ? 'md' : 'sm'}

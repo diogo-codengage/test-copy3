@@ -78,7 +78,8 @@ export default {
             performance: 'Desempenho',
             lives: 'Lives',
             schedule: 'Cronograma',
-            account: 'Minha conta'
+            account: 'Minha conta',
+            changeCourse: 'Trocar de curso'
         },
         account: {
             title: 'Minha Conta',
@@ -95,6 +96,10 @@ export default {
         },
         classroom: {
             specialty: 'Nome da especialidade'
+        },
+        changeCourse: {
+            title: 'Estou estudando',
+            subtitle: 'Trocar de curso'
         }
     },
     logout: {

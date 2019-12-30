@@ -16,7 +16,8 @@ const RMLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
         currentMenuTitle,
         darkMode,
         menuContext,
-        footerProps
+        footerProps,
+        currentMenuIndex
     } = useLayoutContext()
     const { handleTrack } = useMainContext()
 
@@ -29,6 +30,7 @@ const RMLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
             onHome: () => history.push('/inicio'),
             context: menuContext,
             theme: darkMode ? 'dark' : 'primary',
+            ...(currentMenuIndex === 3 && { contentColor: 'light' }),
             showContinueBar: false
         }),
         [darkMode, menuContext, currentMenuTitle, menuRef, history]
