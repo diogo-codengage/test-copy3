@@ -12,8 +12,6 @@ import { getInstance } from 'Config/AWSCognito'
 import { GET_ME } from 'Apollo/User/Queries/me'
 import * as Sentry from '@sentry/browser';
 
-declare var Conpass: any;
-
 interface FLXPrivateRouteProps extends RouteComponentProps {
     component: React.ElementType
     path: string
@@ -50,16 +48,14 @@ const FLXPrivateRoute: React.FC<FLXPrivateRouteProps> = ({
             } else {
                 setMe(me)
 
-                Conpass.init({
-                    name: me.name || 'anônimo',
-                    email: me.email || 'anonimo@sanarflix.com.br',
+                if (window["Conpass"]) {
+                    window["Conpass"].init({
+                        name: 'Marissol Ivo Braz' || 'anônimo',
+                        email: 'marissolbraz@hotmail.com' || 'anonimo@sanarflix.com.br',
+                    })
 
-                    // Informações opcionais (usado para segmentação)
-                    // custom_fields: {
-                    //   lang: "pt_BR",
-                    //   sexo: "Feminino",
-                    // }
-                });
+                    window["Conpass"].debug()
+                }
 
                 Sentry.configureScope((scope) => {
                     scope.setUser(
