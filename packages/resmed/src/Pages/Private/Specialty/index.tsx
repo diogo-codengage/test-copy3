@@ -13,7 +13,11 @@ import {
     SANIcon
 } from '@sanar/components'
 
-import { GET_SPECIALTY } from 'Apollo/Subspecialties/Queries/specialty'
+import {
+    GET_SPECIALTY,
+    ISpecialtyQuery,
+    ISpecialtyVariables
+} from 'Apollo/Subspecialties/Queries/specialty'
 
 import RMSubspecialties from './Subspecialty'
 
@@ -55,14 +59,15 @@ const RMSpecialty = ({
 }: RouteComponentProps<IRouteProps>) => {
     const { handleTrack } = useMainContext()
 
-    const {
-        data: { specialty },
-        loading: loadingSpecialty
-    } = useQuery<any, any>(GET_SPECIALTY, {
-        variables: {
-            id: params.specialtyId
+    const { data, loading } = useQuery<ISpecialtyQuery, ISpecialtyVariables>(
+        GET_SPECIALTY,
+        {
+            variables: {
+                id: params.specialtyId
+            }
         }
-    })
+    )
+
     return (
         <>
             <SANPage
@@ -84,19 +89,24 @@ const RMSpecialty = ({
                         handleTrack('Voltar button clicked')
                     },
                     SessionTitleProps: {
-                        title: !loadingSpecialty ? (
-                            specialty.name
-                        ) : (
-                            <SANIcon type='loading' />
-                        )
+                        title:
+                            !loading && data ? (
+                                data.specialty.name
+                            ) : (
+                                <SANIcon type='loading' />
+                            )
                     },
                     ExtraProps: {
                         md: 7
                     },
                     extra: (
                         <Progress
-                            loading={loadingSpecialty}
-                            percent={!loadingSpecialty && specialty.progress.me}
+                            loading={loading}
+                            percent={
+                                !loading && !!data
+                                    ? data.specialty.progress.me
+                                    : 0
+                            }
                         />
                     )
                 }}

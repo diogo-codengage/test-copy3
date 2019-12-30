@@ -99,7 +99,8 @@ export default {
         },
         changeCourse: {
             title: 'Estou estudando',
-            subtitle: 'Trocar de curso'
+            subtitle: 'Trocar de curso',
+            continue: 'Continuar na aula {{index}}'
         }
     },
     logout: {

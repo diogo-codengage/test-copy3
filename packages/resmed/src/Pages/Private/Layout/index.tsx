@@ -33,7 +33,14 @@ const RMLayout: React.FC<RouteComponentProps> = ({ history, children }) => {
             ...(currentMenuIndex === 3 && { contentColor: 'light' }),
             showContinueBar: false
         }),
-        [darkMode, menuContext, currentMenuTitle, menuRef, history]
+        [
+            darkMode,
+            menuContext,
+            currentMenuTitle,
+            menuRef,
+            history,
+            currentMenuIndex
+        ]
     )
 
     const FooterProps = useMemo(

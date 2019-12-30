@@ -14,6 +14,7 @@ import { useApolloClient } from '@apollo/react-hooks'
 import { SANClassroomMenuHeader } from '@sanar/components'
 
 import { useMainContext } from 'Pages/Private/Context'
+import { useAuthContext } from 'Hooks/auth'
 
 import {
     GET_SUGGESTED_CLASS,
@@ -112,6 +113,8 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
     const hasClassroom = window.location.href.includes('sala-aula')
     const { t } = useTranslation('resmed')
     const client = useApolloClient()
+    const { activeCourse } = useAuthContext()
+    const { handleTrack } = useMainContext()
     const lastLocation = useLastLocation()
     const [footerProps, setFooterProps] = useState({})
     const [suggestedClass, setSuggestedClass] = useState<ISuggestedClass>({
@@ -130,7 +133,6 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
         defaultNavigations
     )
     const menuRef = useRef<any>()
-    const { handleTrack } = useMainContext()
 
     const onCloseMenu = () => {
         menuRef && menuRef.current && menuRef.current.setToggle(false)
@@ -216,7 +218,7 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
     useEffect(() => {
         fetchSuggestedClass()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [activeCourse.id])
 
     const value = {
         currentMenuIndex: menuState.indexMenu,

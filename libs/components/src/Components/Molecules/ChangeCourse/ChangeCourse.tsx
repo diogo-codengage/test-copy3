@@ -93,7 +93,7 @@ const SANContinue: React.FC<ISANContinueProps> = ({
     >
         <SANSkeleton
             active
-            paragraph={{ rows: 1, width: '90%' }}
+            paragraph={false}
             title={{ width: '80%' }}
             loading={loading}
         >
@@ -152,7 +152,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
                 position='inherit'
             >
                 <SANSkeleton
-                    paragraph={{ rows: 1, width: '80%' }}
+                    paragraph={false}
                     title={{ width: '90%' }}
                     active
                     dark
