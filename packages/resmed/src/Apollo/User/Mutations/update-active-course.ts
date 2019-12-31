@@ -22,6 +22,20 @@ export const UPDATE_ACTIVE_COURSE = gql`
             }
             expireDate
             accessed
+            lastAccessed {
+                specialtyId
+                subSpecialtyId
+                collectionId
+                lesson {
+                    id
+                    index
+                }
+                resource {
+                    id
+                    type
+                    title
+                }
+            }
         }
     }
 `

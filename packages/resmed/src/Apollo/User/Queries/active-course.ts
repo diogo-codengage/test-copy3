@@ -1,5 +1,7 @@
 import gql from 'graphql-tag'
 
+import { ILastAccessed } from 'Apollo/Subspecialties/Queries/lessons'
+
 export interface ICourse {
     id: string | undefined
     name: string | undefined
@@ -7,6 +9,7 @@ export interface ICourse {
     infos?: IInfo[]
     accessed: boolean
     expireDate: string
+    lastAccessed: ILastAccessed
 }
 
 interface IInfo {
@@ -26,6 +29,20 @@ export const GET_ACTIVE_COURSE = gql`
             }
             expireDate
             accessed
+            lastAccessed {
+                specialtyId
+                subSpecialtyId
+                collectionId
+                lesson {
+                    id
+                    index
+                }
+                resource {
+                    id
+                    type
+                    title
+                }
+            }
         }
     }
 `

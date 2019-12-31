@@ -87,6 +87,27 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
     const { activeCourse } = useAuthContext()
     const { setMenuTab } = useLayoutContext()
 
+    const goToClassroom = () => {
+        const {
+            lastAccessed: {
+                specialtyId,
+                subSpecialtyId,
+                resource,
+                collectionId,
+                lesson
+            }
+        } = activeCourse
+        const type = resource.type.toLocaleLowerCase()
+        const path = subSpecialtyId
+            ? `${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}`
+            : `${specialtyId}/${lesson.id}/${collectionId}`
+        if (type === 'quiz') {
+            history.push(`/inicio/sala-aula/${path}/quiz/${resource.id}/0`)
+        } else {
+            history.push(`/inicio/sala-aula/${path}/video/${resource.id}`)
+        }
+    }
+
     return (
         <SANScroll>
             <SANBox px='md'>
@@ -111,11 +132,11 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                     percent={activeCourse.progress}
                     coverPicture='http://sites.psu.edu/huangnutr360/files/2017/04/lesson-0-1ta118a.png'
                     ContinueProps={{
-                        onClick: console.log,
+                        onClick: goToClassroom,
                         title: t('mainMenu.changeCourse.continue', {
-                            index: 5
+                            index: activeCourse.lastAccessed.lesson.index
                         }),
-                        subtitle: 'Duis rhoncus dui venenatis consequa'
+                        subtitle: activeCourse.lastAccessed.resource.title
                     }}
                 />
             )}
