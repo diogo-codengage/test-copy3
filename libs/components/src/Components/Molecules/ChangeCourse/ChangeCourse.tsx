@@ -194,7 +194,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
                 {!ContinueProps && (
                     <SANEvaIcon
                         ml='xs'
-                        size='large'
+                        size='medium'
                         name='arrow-forward-outline'
                         color='white.7'
                     />

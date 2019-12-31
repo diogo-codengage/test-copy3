@@ -9,12 +9,17 @@ export interface ICourse {
     infos?: IInfo[]
     accessed: boolean
     expireDate: string
+    images: IImages
     lastAccessed: ILastAccessed
 }
 
 interface IInfo {
     title: string
     body: string
+}
+
+interface IImages {
+    original: string
 }
 
 export const GET_ACTIVE_COURSE = gql`
@@ -29,6 +34,9 @@ export const GET_ACTIVE_COURSE = gql`
             }
             expireDate
             accessed
+            images {
+                original
+            }
             lastAccessed {
                 specialtyId
                 subSpecialtyId

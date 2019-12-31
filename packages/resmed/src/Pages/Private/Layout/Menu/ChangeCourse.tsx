@@ -50,6 +50,7 @@ const Courses = withRouter(({ history }) => {
                       title: course.name,
                       date: formatExpireDate(course.expireDate),
                       percent: course.progress,
+                      coverPicture: course.images.original,
                       onChange: () =>
                           changeCourse({ variables: { courseId: course.id } })
                   }
@@ -59,12 +60,7 @@ const Courses = withRouter(({ history }) => {
     )
 
     const renderCourse = course => (
-        <SANChangeCourse
-            mb='md'
-            loading={loading}
-            {...getProps(course)}
-            coverPicture='http://sites.psu.edu/huangnutr360/files/2017/04/lesson-0-1ta118a.png'
-        />
+        <SANChangeCourse mb='md' loading={loading} {...getProps(course)} />
     )
 
     const courses = useMemo(() => {
@@ -130,7 +126,7 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                     title={activeCourse.name}
                     date={formatExpireDate(activeCourse.expireDate)}
                     percent={activeCourse.progress}
-                    coverPicture='http://sites.psu.edu/huangnutr360/files/2017/04/lesson-0-1ta118a.png'
+                    coverPicture={activeCourse.images.original}
                     ContinueProps={{
                         onClick: goToClassroom,
                         title: t('mainMenu.changeCourse.continue', {

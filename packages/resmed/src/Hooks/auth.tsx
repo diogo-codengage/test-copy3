@@ -23,6 +23,9 @@ const initialCourse: ICourse = {
     infos: [],
     accessed: false,
     expireDate: '',
+    images: {
+        original: ''
+    },
     lastAccessed: {
         specialtyId: '',
         subSpecialtyId: '',
