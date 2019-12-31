@@ -285,7 +285,7 @@ const SANLessonResult = ({
             </SANSpin>
             {loading
                 ? arrLoading.map(renderSkeleton)
-                : questions.map(renderCollection)}
+                : !!props.total && questions.map(renderCollection)}
         </SANBoxStyled>
     )
 }

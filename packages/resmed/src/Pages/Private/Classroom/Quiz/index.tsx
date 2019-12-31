@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
 
 import { compose } from 'ramda'
 import {
@@ -25,9 +25,9 @@ import RMClassRoomQuizQuestion from './Question'
 
 const RMClassRoomQuiz = memo<RouteComponentProps>(props => {
     const {
-        match: { url }
+        match: { url, params: paramsProp }
     } = props
-    const { onOpenMenu, params } = useLayoutContext()
+    const { onOpenMenu, params, setParams } = useLayoutContext()
     const { setQuestions } = useClassroomQuizContext()
     const { specialty, clickerName } = useClassroomContext()
 
@@ -35,13 +35,18 @@ const RMClassRoomQuiz = memo<RouteComponentProps>(props => {
         setQuestions(quiz.questions)
     }
 
+    useEffect(() => {
+        setParams(old => ({ ...old, ...paramsProp }))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <SANQuery
             query={GET_QUIZ}
             options={{
                 variables: { id: params.contentId },
                 onCompleted: setQuestionContext,
-                skip: !params.contentId || params.type !== 'quiz'
+                skip: !params.contentId
             }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
             errorProps={{ dark: true }}

@@ -2,7 +2,12 @@ import React, { useEffect, memo } from 'react'
 
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
-import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom'
+import {
+    withRouter,
+    RouteComponentProps,
+    Switch,
+    Route
+} from 'react-router-dom'
 
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import RMClassroomProvider from './Context'
@@ -12,22 +17,7 @@ import RMClassroomQuiz from './Quiz'
 import RMClassroomRating from './Rating'
 import RMClassroomFeedback from './Feedback'
 
-const renderResourceContent = type => {
-    switch (type) {
-        case 'video':
-            return <RMClassroomVideo />
-        case 'quiz':
-            return <RMClassroomQuiz />
-        case 'avaliacao':
-            return <RMClassroomRating />
-        case 'feedback':
-            return <RMClassroomFeedback />
-        default:
-            return <Redirect to='/portal/curso' />
-    }
-}
-
-interface IParams {
+export interface IParams {
     specialtyId: string
     subspecialtyId: string
     lessonId: string
@@ -45,18 +35,49 @@ const Wrapper = styled.div`
 `
 
 const RMClassroom = memo<RouteComponentProps<IParams>>(
-    ({ match: { params } }) => {
+    ({ match: { params, url } }) => {
         const { setParams } = useLayoutContext()
 
         useEffect(() => {
-            setParams(params)
+            setParams(old => ({ ...old, ...params }))
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [params])
 
         return (
             <RMClassroomProvider>
                 <Wrapper>
-                    {renderResourceContent(params.type || params.status)}
+                    <Switch>
+                        <Route
+                            path={[
+                                `${url}/:subspecialtyId/:lessonId/:collectionId/quiz/:contentId`,
+                                `${url}/:lessonId/:collectionId/quiz/:contentId`
+                            ]}
+                            component={RMClassroomQuiz}
+                        />
+                        <Route
+                            path={[
+                                `${url}/:subspecialtyId/:lessonId/:collectionId/video/:contentId`,
+                                `${url}/:lessonId/:collectionId/video/:contentId`
+                            ]}
+                            component={RMClassroomVideo}
+                        />
+                        <Route
+                            exact
+                            path={[
+                                `${url}/:subspecialtyId/:lessonId/avaliacao`,
+                                `${url}/:lessonId/avaliacao`
+                            ]}
+                            component={RMClassroomRating}
+                        />
+                        <Route
+                            exact
+                            path={[
+                                `${url}/:subspecialtyId/:lessonId/feedback`,
+                                `${url}/:lessonId/feedback`
+                            ]}
+                            component={RMClassroomFeedback}
+                        />
+                    </Switch>
                 </Wrapper>
             </RMClassroomProvider>
         )

@@ -160,6 +160,7 @@ const SANCardSubSpecialty = ({
                         />
                     )}
                     <SANTypography
+                        width={!!image ? 'calc(100% - 40px)' : '100%'}
                         fontWeight='bold'
                         fontSize='lg'
                         ellipsis

@@ -114,6 +114,7 @@ import { SANCardEvent } from 'Components/Molecules/CardEvent'
 import { SANCardLive } from 'Components/Molecules/CardLives'
 
 import { SANSelectFilter } from 'Components/Molecules/SelectFilter'
+import { SANChangeCourse } from 'Components/Molecules/ChangeCourse'
 
 export {
     SANCommonBadge,
@@ -232,5 +233,6 @@ export {
     SANBigCalendar,
     SANCardEvent,
     SANCardLive,
-    SANSelectFilter
+    SANSelectFilter,
+    SANChangeCourse
 }
