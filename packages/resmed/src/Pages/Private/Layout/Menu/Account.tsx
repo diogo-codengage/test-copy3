@@ -59,9 +59,10 @@ const RMMenuAccount = memo<RouteComponentProps>(({ history }) => {
                     variant='outlined'
                     color='white'
                     block
+                    bold
                     onClick={() => setMenuTab(0)}
                 >
-                    <SANEvaIcon name='arrow-back-outline' />
+                    <SANEvaIcon name='arrow-back-outline' mr='xs' />
                     {t('mainMenu.back')}
                 </SANButton>
                 <SANAvatarMenu
@@ -78,7 +79,7 @@ const RMMenuAccount = memo<RouteComponentProps>(({ history }) => {
                     to='/inicio/minha-conta/alterar-senha'
                     icon={<SANEvaIcon name='lock-outline' color='default' />}
                     onClick={onCloseMenu}
-                    dataTestid='flix_menu_my-account__go_to--change-password'
+                    dataTestid='rm_menu_my-account__go_to--change-password'
                     title={t('mainMenu.account.changePassword')}
                 />
             </SANNavigationList>
@@ -87,7 +88,7 @@ const RMMenuAccount = memo<RouteComponentProps>(({ history }) => {
                     to='/inicio/minha-conta/dados-complementares'
                     icon={<SANEvaIcon name='clipboard' color='default' />}
                     onClick={onCloseMenu}
-                    dataTestid='flix_menu_my-account__go_to--complementary-register'
+                    dataTestid='rm_menu_my-account__go_to--complementary-register'
                     title={t('mainMenu.account.complementaryRegister')}
                 />
             </SANNavigationList>
@@ -98,7 +99,7 @@ const RMMenuAccount = memo<RouteComponentProps>(({ history }) => {
             </SANTypography>
             <SANNavigationList>
                 <SANNavigationListItem
-                    data-testid='flix-menu-navigation__my-account__help-center'
+                    dataTestid='rm_menu_my-menu-navigation__my-account__help-center'
                     title={t('mainMenu.account.helpCenter')}
                     icon={<SANEvaIcon name='lock-outline' color='default' />}
                     onClick={onCloseMenu}
@@ -112,18 +113,18 @@ const RMMenuAccount = memo<RouteComponentProps>(({ history }) => {
             </SANTypography>
             <SANNavigationList>
                 <SANNavigationListItem
-                    data-testid='flix_menu_my-account__go_to--terms-of-use'
+                    dataTestid='rm_menu_my-account__go_to--terms-of-use'
                     title={t('mainMenu.account.termsOfUse')}
                     onClick={() => modalTermsOpen('0')}
                 />
                 <SANNavigationListItem
-                    data-testid='flix_menu_my-account__go_to--privacy-policy'
+                    dataTestid='rm_menu_my-account__go_to--privacy-policy'
                     title={t('mainMenu.account.privacyPolicy')}
                     onClick={() => modalTermsOpen('1')}
                 />
                 <SANNavigationListItem
                     onClick={() => setVisibleLogout(true)}
-                    data-testid='flix_menu_my-account__go_to--leave-account'
+                    data-testid='rm_menu_my-account__go_to--leave-account'
                     title={t('mainMenu.account.signOut')}
                 />
             </SANNavigationList>
