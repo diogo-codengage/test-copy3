@@ -114,6 +114,12 @@ const RMMenuInitial = memo(() => {
                     title={t('mainMenu.initial.lives')}
                 />
                 <SANNavigationListItem
+                    dataTestid='rm-menu__go-to--change-course'
+                    onClick={() => setMenuTab(3)}
+                    icon={<SANEvaIcon name='swap-outline' color='default' />}
+                    title={t('mainMenu.initial.changeCourse')}
+                />
+                <SANNavigationListItem
                     icon={<SANEvaIcon name='person-outline' color='default' />}
                     onClick={() => setMenuTab(1)}
                     dataTestid='rm-menu__go-to--account'

@@ -11,7 +11,8 @@ import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
 
-import ReactJWPlayer from 'react-jw-player'
+// import ReactJWPlayer from 'react-jw-player'
+import ReactJWPlayer from './ReactJWPlayer'
 
 import ESButton from '../../Atoms/Button'
 import ESEvaIcon from '../../Atoms/EvaIcon'
@@ -82,7 +83,7 @@ const ESJwPlayer = forwardRef(
             )
 
             instance.on('error', function() {
-                setError(true)
+                setError(true)                
                 instance.load({
                     file:
                         '//content.jwplatform.com/videos/7RtXk3vl-52qL9xLP.mp4',
@@ -121,7 +122,7 @@ const ESJwPlayer = forwardRef(
                 play: () => player.play(),
                 pause: () => player.pause()
             })
-        }))
+        }))        
 
         const height = useMemo(
             () =>
@@ -165,7 +166,7 @@ const ESJwPlayer = forwardRef(
             }
         }, [isReady, onNext, onPrevious])
 
-        const state = !!player && player.getState && player.getState()
+        const state = !!player && player.getState && player.getState()        
 
         return (
             <div className={classes} ref={wrapperRef}>

@@ -256,5 +256,8 @@ export default {
         selectAll: 'Selecionar todos',
         clearSelect: 'Limpar seleção',
         close: 'Fechar'
+    },
+    changeCourse: {
+        ends: 'Termina em:'
     }
 }
