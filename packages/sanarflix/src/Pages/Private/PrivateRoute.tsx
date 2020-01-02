@@ -61,6 +61,8 @@ const FLXPrivateRoute: React.FC<FLXPrivateRouteProps> = ({
                     // }
                 });
 
+                Conpass.debug();
+
                 Sentry.configureScope((scope) => {
                     scope.setUser(
                         {
