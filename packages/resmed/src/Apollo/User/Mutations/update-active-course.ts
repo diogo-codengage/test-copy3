@@ -22,6 +22,9 @@ export const UPDATE_ACTIVE_COURSE = gql`
             }
             expireDate
             accessed
+            images {
+                original
+            }
             lastAccessed {
                 specialtyId
                 subSpecialtyId
