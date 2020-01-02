@@ -137,15 +137,20 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                     date={formatExpireDate(activeCourse.expireDate)}
                     percent={activeCourse.progress}
                     coverPicture={activeCourse.images.original}
-                    ContinueProps={{
-                        onClick: goToClassroom,
-                        title: t('mainMenu.changeCourse.continue', {
-                            index: suggestedClass.data!.accessContent.lesson
-                                .index
-                        }),
-                        subtitle: suggestedClass.data!.title,
-                        loading: suggestedClass.loading
-                    }}
+                    hasActive
+                    ContinueProps={
+                        !!suggestedClass.data
+                            ? {
+                                  onClick: goToClassroom,
+                                  title: t('mainMenu.changeCourse.continue', {
+                                      index: suggestedClass.data!.accessContent
+                                          .lesson.index
+                                  }),
+                                  subtitle: suggestedClass.data!.title,
+                                  loading: suggestedClass.loading
+                              }
+                            : null
+                    }
                 />
             )}
 

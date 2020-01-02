@@ -70,6 +70,7 @@ export interface ISANChangeCourseProps {
     coverPicture: string
     onChange: (id: string) => void
     ContinueProps?: IContinue
+    hasActive?: boolean
 }
 
 export interface ISANContinueProps extends IContinue {
@@ -126,6 +127,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
     onChange,
     ContinueProps,
     loading,
+    hasActive,
     ...props
 }) => {
     const { t } = useTranslation('components')
@@ -142,12 +144,12 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
             backgroundPosition='center'
             backgroundSize='cover'
             backgroundImage={`url(${coverPicture})`}
-            borderRadius={!!ContinueProps ? '0px' : 'base'}
-            hasPointer={!ContinueProps}
+            borderRadius={hasActive ? '0px' : 'base'}
+            hasPointer={hasActive}
             {...props}
         >
             <SANBox
-                px={!!ContinueProps ? 'md' : 'sm'}
+                px={hasActive ? 'md' : 'sm'}
                 pt={!!ContinueProps ? 'xl' : 'md'}
                 pb={!!ContinueProps ? 'xxl' : 'md'}
                 position='inherit'
@@ -190,7 +192,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
                     InfoProps={{ color: 'warning' }}
                     height={4}
                 />
-                {!ContinueProps && (
+                {!hasActive && (
                     <SANEvaIcon
                         ml='xs'
                         size='medium'
