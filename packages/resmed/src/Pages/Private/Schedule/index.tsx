@@ -139,9 +139,11 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     })
     const [modalMore, setModalMore] = useState<{
         visible: boolean
+        date: Date
         options: IOption[] | []
     }>({
         visible: false,
+        date: new Date(),
         options: []
     })
 
@@ -157,6 +159,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     const handleEventLimitClick = e => {
         setModalMore({
             visible: true,
+            date: e.date,
             options: e.segs
                 .filter(seg => !!seg.eventRange.def.extendedProps.id)
                 .map(seg => seg.eventRange.def.extendedProps)
@@ -311,7 +314,13 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
         <>
             <RMModalMore
                 {...modalMore}
-                onCancel={() => setModalMore({ options: [], visible: false })}
+                onCancel={() =>
+                    setModalMore(old => ({
+                        ...old,
+                        options: [],
+                        visible: false
+                    }))
+                }
             />
             <RMModalSchedule
                 visible={modalSchedule.visible}
