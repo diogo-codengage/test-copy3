@@ -59,12 +59,6 @@ const RMPrivatePages = memo<RouteComponentProps>(
                                         component={RMPracticalArea}
                                     />
                                     <Route
-                                        // path={[
-                                        //     `${url}/sala-aula/:specialtyId/:subspecialtyId/:lessonId/:collectionId/:type/:contentId`,
-                                        //     `${url}/sala-aula/:specialtyId/:lessonId/:collectionId/:type/:contentId`,
-                                        //     `${url}/sala-aula/:specialtyId/:subspecialtyId/:lessonId/:status`,
-                                        //     `${url}/sala-aula/:specialtyId/:lessonId/:status`
-                                        // ]}
                                         path={`${url}/sala-aula/:specialtyId`}
                                         component={RMClassroom}
                                     />

@@ -8,6 +8,7 @@ interface ILastAccessedResource {
 
 interface ILessonLastAccessed {
     id: string
+    index: string
 }
 export interface IAccessContent {
     specialtyId: string
@@ -69,6 +70,7 @@ export const GET_APPOINTMENTS = gql`
                     collectionId
                     lesson {
                         id
+                        index
                     }
                     resource {
                         id

@@ -3,17 +3,19 @@ import { useTranslation } from 'react-i18next'
 
 import { useThemeContext } from '@sanar/utils/dist/Hooks'
 
-import { SANTypography } from '../../Atoms/Typography'
+import { SANTypography, ISANTypographyProps } from '../../Atoms/Typography'
 import { SANBox, ISANBoxProps } from '../../Atoms/Box'
 
 export interface ISANGenericErrorProps extends ISANBoxProps {
     message?: React.ReactNode | string
     dark?: boolean
+    TypographyProps?: ISANTypographyProps
 }
 
 const SANGenericError = ({
     message,
     dark,
+    TypographyProps,
     ...props
 }: ISANGenericErrorProps) => {
     const {
@@ -37,6 +39,7 @@ const SANGenericError = ({
                 variant='body1'
                 type={dark ? 'light' : 'default'}
                 textAlign='center'
+                {...TypographyProps}
             >
                 {message || t('genericError.message')}
             </SANTypography>

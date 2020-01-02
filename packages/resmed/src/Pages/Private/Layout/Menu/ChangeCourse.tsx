@@ -1,4 +1,4 @@
-import React, { Suspense, memo, useCallback, useMemo } from 'react'
+import React, { memo, useCallback, useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -12,7 +12,9 @@ import {
     SANButton,
     SANTypography,
     SANScroll,
-    SANChangeCourse
+    SANChangeCourse,
+    SANErrorBoundary,
+    SANGenericError
 } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
@@ -87,26 +89,28 @@ const Courses = withRouter(({ history }) => {
 const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
     const { activeCourse } = useAuthContext()
-    const { setMenuTab } = useLayoutContext()
+    const { setMenuTab, suggestedClass } = useLayoutContext()
 
     const goToClassroom = () => {
-        const {
-            lastAccessed: {
-                specialtyId,
-                subSpecialtyId,
-                resource,
-                collectionId,
-                lesson
+        if (!!suggestedClass.data) {
+            const {
+                accessContent: {
+                    specialtyId,
+                    subSpecialtyId,
+                    resource,
+                    collectionId,
+                    lesson
+                }
+            } = suggestedClass.data
+            const type = resource.type.toLocaleLowerCase()
+            const path = subSpecialtyId
+                ? `${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}`
+                : `${specialtyId}/${lesson.id}/${collectionId}`
+            if (type === 'quiz') {
+                history.push(`/inicio/sala-aula/${path}/quiz/${resource.id}/0`)
+            } else {
+                history.push(`/inicio/sala-aula/${path}/video/${resource.id}`)
             }
-        } = activeCourse
-        const type = resource.type.toLocaleLowerCase()
-        const path = subSpecialtyId
-            ? `${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}`
-            : `${specialtyId}/${lesson.id}/${collectionId}`
-        if (type === 'quiz') {
-            history.push(`/inicio/sala-aula/${path}/quiz/${resource.id}/0`)
-        } else {
-            history.push(`/inicio/sala-aula/${path}/video/${resource.id}`)
         }
     }
 
@@ -136,9 +140,11 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                     ContinueProps={{
                         onClick: goToClassroom,
                         title: t('mainMenu.changeCourse.continue', {
-                            index: activeCourse.lastAccessed.lesson.index
+                            index: suggestedClass.data!.accessContent.lesson
+                                .index
                         }),
-                        subtitle: activeCourse.lastAccessed.lesson.name
+                        subtitle: suggestedClass.data!.title,
+                        loading: suggestedClass.loading
                     }}
                 />
             )}
@@ -147,9 +153,18 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                 <SANTypography fontSize='xl' color='grey.7' my='md'>
                     {t('mainMenu.changeCourse.subtitle')}
                 </SANTypography>
-                <Suspense fallback={<div>loading</div>}>
+                <SANErrorBoundary
+                    component={
+                        <SANGenericError
+                            TypographyProps={{
+                                color: 'grey.5',
+                                fontSize: 'sm'
+                            }}
+                        />
+                    }
+                >
                     <Courses />
-                </Suspense>
+                </SANErrorBoundary>
             </SANBox>
         </SANScroll>
     )

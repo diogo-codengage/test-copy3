@@ -58,6 +58,7 @@ interface IContinue {
     onClick: () => void
     title: string
     subtitle: string
+    loading?: boolean
 }
 
 export interface ISANChangeCourseProps {
@@ -172,9 +173,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
                         )} ${date}`}</SANTypography>
                     </SANBox>
                 </SANSkeleton>
-                {!!ContinueProps && (
-                    <SANContinue loading={loading} {...ContinueProps} />
-                )}
+                {!!ContinueProps && <SANContinue {...ContinueProps} />}
             </SANBox>
             <SANBox
                 display='flex '
