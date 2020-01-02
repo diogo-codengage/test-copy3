@@ -145,7 +145,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
             backgroundSize='cover'
             backgroundImage={`url(${coverPicture})`}
             borderRadius={hasActive ? '0px' : 'base'}
-            hasPointer={hasActive}
+            hasPointer={!ContinueProps}
             {...props}
         >
             <SANBox

@@ -14,7 +14,8 @@ import {
     SANScroll,
     SANChangeCourse,
     SANErrorBoundary,
-    SANGenericError
+    SANGenericError,
+    SANSpin
 } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
@@ -33,7 +34,7 @@ const formatExpireDate = (date: string) => format(new Date(date), 'DD/MM/YYYY')
 const Courses = withRouter(({ history }) => {
     const { setActiveCourse, activeCourse } = useAuthContext()
     const { loading, data } = useQuery<ICourseQuery>(GET_COURSES)
-    const [changeCourse] = useMutation<
+    const [changeCourse, { loading: loadingMutation }] = useMutation<
         IUpdateActiveCourseResponse,
         IUpdateActiveCourseVariables
     >(UPDATE_ACTIVE_COURSE, {
@@ -43,11 +44,11 @@ const Courses = withRouter(({ history }) => {
         }
     })
     const { setMenuTab, onCloseMenu } = useLayoutContext()
-
     const handleChange = courseId => {
-        changeCourse({ variables: { courseId } })
-        onCloseMenu()
-        setMenuTab(0)
+        changeCourse({ variables: { courseId } }).finally(() => {
+            onCloseMenu()
+            setMenuTab(0)
+        })
     }
 
     const getProps = useCallback(
@@ -83,7 +84,11 @@ const Courses = withRouter(({ history }) => {
         }
     }, [activeCourse, data])
 
-    return <>{courses.map(renderCourse)}</>
+    return (
+        <SANSpin spinning={loadingMutation}>
+            {courses.map(renderCourse)}
+        </SANSpin>
+    )
 })
 
 const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
