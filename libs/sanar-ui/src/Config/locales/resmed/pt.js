@@ -100,7 +100,7 @@ export default {
         changeCourse: {
             title: 'Estou estudando',
             subtitle: 'Trocar de curso',
-            continue: 'Continuar na aula {{index}}'
+            dayClass: 'Aula do Dia'
         }
     },
     logout: {
