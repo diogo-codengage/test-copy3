@@ -3,13 +3,14 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import styled, { css } from 'styled-components'
 import { theme, ifProp } from 'styled-tools'
-import { space, SpaceProps } from 'styled-system'
 
 import { SANTypography } from '../../Atoms/Typography'
 import { SANProgress } from '../../Atoms/Progress'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
 import { SANSkeleton } from '../../Atoms/Skeleton'
 import { SANBox } from '../../Atoms/Box'
+
+import { transparentize } from 'polished'
 
 interface IWrapper extends React.HTMLProps<HTMLDivElement> {
     hasPointer?: boolean
@@ -18,17 +19,17 @@ interface IWrapper extends React.HTMLProps<HTMLDivElement> {
 const Wrapper = styled(SANBox)<IWrapper>`
     overflow: hidden;
 
-    &::before {
+    &:before {
         content: '';
         position: absolute;
         width: 100%;
         height: 100%;
         background-image: linear-gradient(
             270deg,
-            #099e7666,
-            #099e7666,
-            #099e76,
-            #099e76
+            ${({ theme }) => transparentize('0.4', theme.colors.primary)},
+            ${({ theme }) => transparentize('0.4', theme.colors.primary)},
+            ${theme('colors.primary')},
+            ${theme('colors.primary')}
         );
     }
     ${ifProp(
