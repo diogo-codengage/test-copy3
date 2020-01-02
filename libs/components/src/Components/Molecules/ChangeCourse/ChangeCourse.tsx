@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled, { css } from 'styled-components'
-import { theme, prop, ifProp } from 'styled-tools'
+import { theme, ifProp } from 'styled-tools'
+import { space, SpaceProps } from 'styled-system'
 
 import { SANTypography } from '../../Atoms/Typography'
 import { SANProgress } from '../../Atoms/Progress'
@@ -92,7 +93,7 @@ const SANContinue: React.FC<ISANContinueProps> = ({
     >
         <SANSkeleton
             active
-            paragraph={{ rows: 1, width: '90%' }}
+            paragraph={false}
             title={{ width: '80%' }}
             loading={loading}
         >
@@ -123,7 +124,8 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
     coverPicture,
     onChange,
     ContinueProps,
-    loading
+    loading,
+    ...props
 }) => {
     const { t } = useTranslation('components')
     const onClick = e => {
@@ -141,6 +143,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
             backgroundImage={`url(${coverPicture})`}
             borderRadius={!!ContinueProps ? '0px' : 'base'}
             hasPointer={!ContinueProps}
+            {...props}
         >
             <SANBox
                 px={!!ContinueProps ? 'md' : 'sm'}
@@ -149,7 +152,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
                 position='inherit'
             >
                 <SANSkeleton
-                    paragraph={{ rows: 1, width: '80%' }}
+                    paragraph={false}
                     title={{ width: '90%' }}
                     active
                     dark
@@ -191,7 +194,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
                 {!ContinueProps && (
                     <SANEvaIcon
                         ml='xs'
-                        size='large'
+                        size='medium'
                         name='arrow-forward-outline'
                         color='white.7'
                     />

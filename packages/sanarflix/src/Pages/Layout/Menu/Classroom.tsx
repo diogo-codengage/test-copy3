@@ -32,7 +32,7 @@ const initialState = {
 
 const reducer = (state, action) => {
     switch (action.type) {
-        case 'updateTheme':
+        case 'updateTheme':            
             return {
                 ...state,
                 theme: action.payload
@@ -80,14 +80,14 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
             id: urlParams.themeId,
             index: 1
         }
-    })
+    })    
 
     const { data } = useQuery(GET_THEME, {
         variables: {
-            id: state.theme.id,
+            id: urlParams.themeId,
             courseId: urlParams.courseId
         },
-        skip: !state.theme.id || !urlParams.courseId
+        skip: !urlParams.themeId || !urlParams.courseId
     })
 
     const configureThemeContentsIcon = (resourceType, type) => {
@@ -222,12 +222,6 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.themes])
 
-    useEffect(() => {
-        !!state.themes.length &&
-            urlParams.themeId &&
-            getThemeContents({ id: urlParams.themeId })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [urlParams.themeId])
 
     useEffect(() => {
         dispatch({
@@ -267,7 +261,7 @@ const FLXClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
         }
         loadThemes(urlParams.courseId)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [urlParams])
 
     return (
         <SANClassroomMenu

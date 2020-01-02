@@ -1,30 +1,18 @@
 import gql from 'graphql-tag'
 
-import { ILastAccessed } from 'Apollo/Subspecialties/Queries/lessons'
+import { ICourse } from '../Queries/active-course'
 
-export interface ICourse {
-    id: string | undefined
-    name: string | undefined
-    progress: number
-    infos?: IInfo[]
-    accessed: boolean
-    expireDate: string
-    images: IImages
-    lastAccessed: ILastAccessed
+export interface IUpdateActiveCourseResponse {
+    updateActiveCourse: ICourse
 }
 
-interface IInfo {
-    title: string
-    body: string
+export interface IUpdateActiveCourseVariables {
+    courseId: string
 }
 
-interface IImages {
-    original: string
-}
-
-export const GET_ACTIVE_COURSE = gql`
-    {
-        activeCourse {
+export const UPDATE_ACTIVE_COURSE = gql`
+    mutation UpdateActiveCourse($courseId: ID!) {
+        updateActiveCourse(data: { courseId: $courseId }) {
             id
             name
             progress

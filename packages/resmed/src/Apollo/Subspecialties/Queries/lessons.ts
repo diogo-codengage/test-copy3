@@ -8,6 +8,7 @@ interface ILastAccessedResource {
 
 interface ILessonLastAccessed {
     id: string
+    name: string
     index: number
 }
 export interface ILastAccessed {

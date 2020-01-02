@@ -21,7 +21,26 @@ const initialCourse: ICourse = {
     name: '',
     progress: 0,
     infos: [],
-    accessed: false
+    accessed: false,
+    expireDate: '',
+    images: {
+        original: ''
+    },
+    lastAccessed: {
+        specialtyId: '',
+        subSpecialtyId: '',
+        lesson: {
+            id: '',
+            name: '',
+            index: 0
+        },
+        collectionId: '',
+        resource: {
+            id: '',
+            type: 'Video',
+            title: ''
+        }
+    }
 }
 
 export const RMAuthProvider: React.FC = ({ children }) => {
