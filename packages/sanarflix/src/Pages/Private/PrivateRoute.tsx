@@ -11,6 +11,7 @@ import { useAuthContext } from 'Hooks/auth'
 import { getInstance } from 'Config/AWSCognito'
 import { GET_ME } from 'Apollo/User/Queries/me'
 import * as Sentry from '@sentry/browser';
+declare var Conpass: any;
 
 interface FLXPrivateRouteProps extends RouteComponentProps {
     component: React.ElementType
@@ -48,14 +49,21 @@ const FLXPrivateRoute: React.FC<FLXPrivateRouteProps> = ({
             } else {
                 setMe(me)
 
-                if (window["Conpass"]) {
-                    window["Conpass"].init({
-                        name: 'Marissol Ivo Braz' || 'anônimo',
-                        email: 'marissolbraz@hotmail.com' || 'anonimo@sanarflix.com.br',
-                    })
+                // if (window["Conpass"]) {
+                //     window["Conpass"].init({
+                //         name: 'Kati' || 'anônimo',
+                //         email: 'kati.zolin@gmail.com' || 'anonimo@sanarflix.com.br',
+                //     })
 
-                    window["Conpass"].debug()
-                }
+                //     window["Conpass"].debug()
+                // }
+
+                Conpass.init({
+                    name: 'Kati' || 'anônimo',
+                    email: 'kati.zolin@gmail.com' || 'anonimo@sanarflix.com.br',
+                });
+
+                Conpass.debug()
 
                 Sentry.configureScope((scope) => {
                     scope.setUser(
