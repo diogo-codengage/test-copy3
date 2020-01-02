@@ -1,7 +1,8 @@
 declare module 'config' {
     global {
         interface Window {
-            analytics: any
+            analytics: any,
+            Conpass: any
         }
     }
 }

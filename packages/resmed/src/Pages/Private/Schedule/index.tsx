@@ -7,6 +7,7 @@ import { theme } from 'styled-tools'
 import { useApolloClient } from '@apollo/react-hooks'
 import { format, isEqual } from 'date-fns'
 import { compose } from 'ramda'
+import { useAuthContext } from 'Hooks/auth'
 
 import {
     SANPage,
@@ -17,7 +18,9 @@ import {
     SANTypography,
     SANBox,
     SANLayoutContainer,
-    useSnackbarContext
+    useSnackbarContext,
+    SANEvaIcon,
+    SANButton
 } from '@sanar/components'
 import { IEvent } from '@sanar/components/dist/Components/Organisms/BigCalendar'
 import { getUTCDate } from '@sanar/utils/dist/Date'
@@ -116,6 +119,7 @@ interface ISchedule {
 
 const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
+    const { me, activeCourse } = useAuthContext()
     const { fetchSuggestedClass } = useLayoutContext()
     const createSnackbar = useSnackbarContext()
     const calendarRef = useRef<SANBigCalendar>()
@@ -146,6 +150,48 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
         date: new Date(),
         options: []
     })
+
+    const pdfDownload = async () => {
+        if (!me.id || !activeCourse.id || !currentRange.start) {
+            createSnackbar({
+                message: t('schedule.pdfDownloadFail'),
+                theme: 'error'
+            })
+        } else {
+            const monthAbbr = dateString => {
+                const splitedDate = dateString.split('-')
+                let month = 0
+                if (splitedDate[2] !== '01' && splitedDate[1] !== '12') {
+                    month = Number(splitedDate[1]) + 1
+                }
+                return month
+            }
+
+            const url = `${process.env.REACT_APP_URL_PDF}?userId=${
+                me.id
+            }&courseId=${activeCourse.id}&startDate=${format(
+                currentRange.start,
+                'YYYY-MM-DD'
+            )}&filename=Cronograma-${t(
+                `schedule.monthAbbr.${monthAbbr(
+                    format(currentRange.start, 'YYYY-MM-DD')
+                )}`
+            )}-${activeCourse.name!.split(' ').join('')}`
+
+            fetch(url, { method: 'GET' }).then(response => {
+                if (response.status === 201) {
+                    const link = document.createElement('a')
+                    link.href = url
+                    link.click()
+                } else {
+                    createSnackbar({
+                        message: t('schedule.pdfDownloadFail'),
+                        theme: 'error'
+                    })
+                }
+            })
+        }
+    }
 
     const handleChangeMonth = dates => {
         if (
@@ -378,7 +424,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                             mt={{ md: '8', _: 'lg' }}
                             display='flex'
                             alignItems='center'
-                            justifyContent='start'
+                            justifyContent='space-between'
                         >
                             <Suggestion
                                 display={{ md: 'flex', _: 'none' }}
@@ -386,16 +432,17 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                                 checked={modalSuggestion.checked}
                                 loading={loading}
                             />
-                            {/* <SANButton
+                            <SANButton
                                 size='small'
                                 variant='outlined'
                                 bold
                                 blockOnlyMobile
                                 loading={loading}
+                                onClick={() => pdfDownload()}
                             >
                                 <SANEvaIcon name='download-outline' mr='xs' />
                                 {t('schedule.pdfDownload')}
-                            </SANButton> */}
+                            </SANButton>
                         </SANBox>
                     </SANLayoutContainer>
                 </SANBox>
