@@ -138,7 +138,7 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                         title: t('mainMenu.changeCourse.continue', {
                             index: activeCourse.lastAccessed.lesson.index
                         }),
-                        subtitle: activeCourse.lastAccessed.resource.title
+                        subtitle: activeCourse.lastAccessed.lesson.name
                     }}
                 />
             )}

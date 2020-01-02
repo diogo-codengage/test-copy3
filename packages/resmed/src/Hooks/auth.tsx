@@ -31,6 +31,7 @@ const initialCourse: ICourse = {
         subSpecialtyId: '',
         lesson: {
             id: '',
+            name: '',
             index: 0
         },
         collectionId: '',

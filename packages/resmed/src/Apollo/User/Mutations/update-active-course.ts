@@ -31,6 +31,7 @@ export const UPDATE_ACTIVE_COURSE = gql`
                 collectionId
                 lesson {
                     id
+                    name
                     index
                 }
                 resource {

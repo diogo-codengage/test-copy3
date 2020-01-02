@@ -43,6 +43,7 @@ export const GET_ACTIVE_COURSE = gql`
                 collectionId
                 lesson {
                     id
+                    name
                     index
                 }
                 resource {
