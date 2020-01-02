@@ -40,6 +40,13 @@ const Courses = withRouter(({ history }) => {
             history.push('/inicio/curso')
         }
     })
+    const { setMenuTab, onCloseMenu } = useLayoutContext()
+
+    const handleChange = courseId => {
+        changeCourse({ variables: { courseId } })
+        onCloseMenu()
+        setMenuTab(0)
+    }
 
     const getProps = useCallback(
         course =>
@@ -51,8 +58,7 @@ const Courses = withRouter(({ history }) => {
                       date: formatExpireDate(course.expireDate),
                       percent: course.progress,
                       coverPicture: course.images.original,
-                      onChange: () =>
-                          changeCourse({ variables: { courseId: course.id } })
+                      onChange: () => handleChange(course.id)
                   }
                 : {},
         // eslint-disable-next-line react-hooks/exhaustive-deps
