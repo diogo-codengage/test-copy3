@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { useApolloClient } from '@apollo/react-hooks'
-import { format, isEqual } from 'date-fns'
+import { format, isEqual, getMonth } from 'date-fns'
 import { compose } from 'ramda'
 import { useAuthContext } from 'Hooks/auth'
 
@@ -119,7 +119,10 @@ interface ISchedule {
 
 const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
-    const { me, activeCourse } = useAuthContext()
+    const {
+        me: { id: userId },
+        activeCourse: { id: courseId, name: courseName }
+    } = useAuthContext()
     const { fetchSuggestedClass } = useLayoutContext()
     const createSnackbar = useSnackbarContext()
     const calendarRef = useRef<SANBigCalendar>()
@@ -153,25 +156,11 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     })
 
     const pdfDownload = async () => {
-        const monthAbbr = dateString => {
-            const splitedDate = dateString.split('-')
-            let month = 0
-            if (splitedDate[2] !== '01' && splitedDate[1] !== '12') {
-                month = Number(splitedDate[1]) + 1
-            }
-            return month
-        }
-
-        const url = `${process.env.REACT_APP_URL_PDF}?userId=${
-            me.id
-        }&courseId=${activeCourse.id}&startDate=${format(
-            currentRange.currentMonth,
-            'YYYY-MM-DD'
-        )}&filename=Cronograma-${t(
-            `schedule.monthAbbr.${monthAbbr(
-                format(currentRange.currentMonth, 'YYYY-MM-DD')
-            )}`
-        )}-${activeCourse.name!.split(' ').join('')}`
+        const startDate = format(currentRange.currentMonth, 'YYYY-MM-DD')
+        const filename = `Cronograma-${t(
+            `schedule.monthAbbr.${getMonth(currentRange.currentMonth)}`
+        )}-${courseName!.split(' ').join('')}`
+        const url = `${process.env.REACT_APP_URL_PDF}?userId=${userId}&courseId=${courseId}&startDate=${startDate}&filename=${filename}`
 
         fetch(url, { method: 'GET' }).then(response => {
             if (response.status === 201) {
