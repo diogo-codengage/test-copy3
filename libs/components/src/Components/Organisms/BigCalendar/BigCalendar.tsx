@@ -63,7 +63,11 @@ export interface ISANBigCalendarProps {
     loading?: boolean
     events: IEvent[]
     validRange?: IDateRangeInput
-    onChangeMonth?: (arg: { start: Date; end: Date }) => void
+    onChangeMonth?: (arg: {
+        start: Date
+        end: Date
+        currentMonth: Date
+    }) => void
     eventLimitClick?: (arg: {
         date: Date
         allDay: boolean
@@ -296,7 +300,8 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
         !!onChangeMonth &&
             onChangeMonth({
                 start: arg.view.activeStart,
-                end: arg.view.activeEnd
+                end: arg.view.activeEnd,
+                currentMonth
             })
     }
 

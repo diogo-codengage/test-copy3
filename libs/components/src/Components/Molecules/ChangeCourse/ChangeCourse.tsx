@@ -3,13 +3,14 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import styled, { css } from 'styled-components'
 import { theme, ifProp } from 'styled-tools'
-import { space, SpaceProps } from 'styled-system'
 
 import { SANTypography } from '../../Atoms/Typography'
 import { SANProgress } from '../../Atoms/Progress'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
 import { SANSkeleton } from '../../Atoms/Skeleton'
 import { SANBox } from '../../Atoms/Box'
+
+import { transparentize } from 'polished'
 
 interface IWrapper extends React.HTMLProps<HTMLDivElement> {
     hasPointer?: boolean
@@ -18,17 +19,17 @@ interface IWrapper extends React.HTMLProps<HTMLDivElement> {
 const Wrapper = styled(SANBox)<IWrapper>`
     overflow: hidden;
 
-    &::before {
+    &:before {
         content: '';
         position: absolute;
         width: 100%;
         height: 100%;
         background-image: linear-gradient(
             270deg,
-            #099e7666,
-            #099e7666,
-            #099e76,
-            #099e76
+            ${({ theme }) => transparentize('0.4', theme.colors.primary)},
+            ${({ theme }) => transparentize('0.4', theme.colors.primary)},
+            ${theme('colors.primary')},
+            ${theme('colors.primary')}
         );
     }
     ${ifProp(
@@ -58,6 +59,7 @@ interface IContinue {
     onClick: () => void
     title: string
     subtitle: string
+    loading?: boolean
 }
 
 export interface ISANChangeCourseProps {
@@ -69,6 +71,7 @@ export interface ISANChangeCourseProps {
     coverPicture: string
     onChange: (id: string) => void
     ContinueProps?: IContinue
+    hasActive?: boolean
 }
 
 export interface ISANContinueProps extends IContinue {
@@ -125,6 +128,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
     onChange,
     ContinueProps,
     loading,
+    hasActive,
     ...props
 }) => {
     const { t } = useTranslation('components')
@@ -141,12 +145,12 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
             backgroundPosition='center'
             backgroundSize='cover'
             backgroundImage={`url(${coverPicture})`}
-            borderRadius={!!ContinueProps ? '0px' : 'base'}
+            borderRadius={hasActive ? '0px' : 'base'}
             hasPointer={!ContinueProps}
             {...props}
         >
             <SANBox
-                px={!!ContinueProps ? 'md' : 'sm'}
+                px={hasActive ? 'md' : 'sm'}
                 pt={!!ContinueProps ? 'xl' : 'md'}
                 pb={!!ContinueProps ? 'xxl' : 'md'}
                 position='inherit'
@@ -172,9 +176,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
                         )} ${date}`}</SANTypography>
                     </SANBox>
                 </SANSkeleton>
-                {!!ContinueProps && (
-                    <SANContinue loading={loading} {...ContinueProps} />
-                )}
+                {!!ContinueProps && <SANContinue {...ContinueProps} />}
             </SANBox>
             <SANBox
                 display='flex '
@@ -191,7 +193,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
                     InfoProps={{ color: 'warning' }}
                     height={4}
                 />
-                {!ContinueProps && (
+                {!hasActive && (
                     <SANEvaIcon
                         ml='xs'
                         size='medium'

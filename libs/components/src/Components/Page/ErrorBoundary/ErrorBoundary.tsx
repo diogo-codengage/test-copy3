@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 
 import { SANError500, ISANError500Props } from '../Error500'
 
-export interface ISANErrorBoundaryProps extends ISANError500Props {}
+export interface ISANErrorBoundaryProps extends ISANError500Props {
+    component?: React.ReactNode
+}
 
 class SANErrorBoundary extends Component<
     ISANErrorBoundaryProps,
@@ -23,9 +25,17 @@ class SANErrorBoundary extends Component<
 
     render() {
         const { hasError } = this.state
-        const { children, ...props } = this.props
+        const { children, component, ...props } = this.props
 
-        return hasError ? <SANError500 {...props} /> : children
+        return hasError ? (
+            component ? (
+                component
+            ) : (
+                <SANError500 {...props} />
+            )
+        ) : (
+            children
+        )
     }
 }
 

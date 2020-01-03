@@ -5,8 +5,9 @@ import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { useApolloClient } from '@apollo/react-hooks'
-import { format, isEqual } from 'date-fns'
+import { format, isEqual, getMonth } from 'date-fns'
 import { compose } from 'ramda'
+import { useAuthContext } from 'Hooks/auth'
 
 import {
     SANPage,
@@ -17,7 +18,9 @@ import {
     SANTypography,
     SANBox,
     SANLayoutContainer,
-    useSnackbarContext
+    useSnackbarContext,
+    SANEvaIcon,
+    SANButton
 } from '@sanar/components'
 import { IEvent } from '@sanar/components/dist/Components/Organisms/BigCalendar'
 import { getUTCDate } from '@sanar/utils/dist/Date'
@@ -116,6 +119,10 @@ interface ISchedule {
 
 const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
+    const {
+        me: { id: userId },
+        activeCourse: { id: courseId, name: courseName }
+    } = useAuthContext()
     const { fetchSuggestedClass } = useLayoutContext()
     const createSnackbar = useSnackbarContext()
     const calendarRef = useRef<SANBigCalendar>()
@@ -128,10 +135,12 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     } = useScheduleContext()
     const [firstLoad, setFirstLoad] = useState(true)
     const [loading, setLoading] = useState(false)
+    const [downloading, setDownloading] = useState(false)
     const [trigger, setTrigger] = useState()
     const [currentRange, setCurrentRange] = useState({
         start: '',
-        end: ''
+        end: '',
+        currentMonth: ''
     })
     const [modalSuggestion, setModalSuggestion] = useState({
         visible: false,
@@ -139,11 +148,37 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     })
     const [modalMore, setModalMore] = useState<{
         visible: boolean
+        date: Date
         options: IOption[] | []
     }>({
         visible: false,
+        date: new Date(),
         options: []
     })
+
+    const pdfDownload = async () => {
+        setDownloading(true)
+        
+        const startDate = format(currentRange.currentMonth, 'YYYY-MM-DD')
+        const filename = `Cronograma-${t(
+            `schedule.monthAbbr.${getMonth(currentRange.currentMonth)}`
+        )}-${courseName!.split(' ').join('')}`
+        const url = `${process.env.REACT_APP_URL_PDF}?userId=${userId}&courseId=${courseId}&startDate=${startDate}&filename=${filename}`
+
+        fetch(url, { method: 'GET' }).then(response => {
+            setDownloading(false)
+            if (response.status === 201) {
+                const link = document.createElement('a')
+                link.href = url
+                link.click()
+            } else {
+                createSnackbar({
+                    message: t('schedule.pdfDownloadFail'),
+                    theme: 'error'
+                })
+            }
+        })
+    }
 
     const handleChangeMonth = dates => {
         if (
@@ -157,6 +192,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     const handleEventLimitClick = e => {
         setModalMore({
             visible: true,
+            date: e.date,
             options: e.segs
                 .filter(seg => !!seg.eventRange.def.extendedProps.id)
                 .map(seg => seg.eventRange.def.extendedProps)
@@ -311,7 +347,13 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
         <>
             <RMModalMore
                 {...modalMore}
-                onCancel={() => setModalMore({ options: [], visible: false })}
+                onCancel={() =>
+                    setModalMore(old => ({
+                        ...old,
+                        options: [],
+                        visible: false
+                    }))
+                }
             />
             <RMModalSchedule
                 visible={modalSchedule.visible}
@@ -369,7 +411,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                             mt={{ md: '8', _: 'lg' }}
                             display='flex'
                             alignItems='center'
-                            justifyContent='start'
+                            justifyContent='space-between'
                         >
                             <Suggestion
                                 display={{ md: 'flex', _: 'none' }}
@@ -377,16 +419,19 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                                 checked={modalSuggestion.checked}
                                 loading={loading}
                             />
-                            {/* <SANButton
-                                size='small'
-                                variant='outlined'
-                                bold
-                                blockOnlyMobile
-                                loading={loading}
-                            >
-                                <SANEvaIcon name='download-outline' mr='xs' />
-                                {t('schedule.pdfDownload')}
-                            </SANButton> */}
+                            {!!(schedule.items && schedule.items.length) &&
+                                <SANButton
+                                    size='small'
+                                    variant='outlined'
+                                    bold
+                                    blockOnlyMobile
+                                    loading={loading || downloading}
+                                    onClick={() => pdfDownload()}
+                                >
+                                    <SANEvaIcon name='download-outline' mr='xs' />
+                                    {t('schedule.pdfDownload')}
+                                </SANButton>
+                            }
                         </SANBox>
                     </SANLayoutContainer>
                 </SANBox>

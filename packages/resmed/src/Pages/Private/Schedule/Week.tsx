@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { useApolloClient } from '@apollo/react-hooks'
-import { format } from 'date-fns'
+import { format, addDays } from 'date-fns'
 
 import {
     SANTypography,
@@ -30,9 +30,19 @@ const getWeekend = () => {
     const first = curr.getDate() - curr.getDay()
     const last = first + 6
 
+    let end = new Date(addDays(curr.getDay(), last))
+    end = new Date(
+        new Date().getFullYear(),
+        end.getMonth(),
+        end.getDate(),
+        end.getHours(),
+        end.getMinutes(),
+        end.getSeconds()
+    )
+
     return {
         sunday: format(new Date(curr.setDate(first)), 'YYYY-MM-DD'),
-        saturday: format(new Date(curr.setDate(last)), 'YYYY-MM-DD')
+        saturday: format(end, 'YYYY-MM-DD')
     }
 }
 

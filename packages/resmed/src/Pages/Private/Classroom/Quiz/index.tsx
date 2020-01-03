@@ -22,8 +22,9 @@ import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomContext } from '../Context'
 import { withClassroomProvider, useClassroomQuizContext } from './Context'
 import RMClassRoomQuizQuestion from './Question'
+import { IParams } from '../'
 
-const RMClassRoomQuiz = memo<RouteComponentProps>(props => {
+const RMClassRoomQuiz = memo<RouteComponentProps<IParams>>(props => {
     const {
         match: { url, params: paramsProp }
     } = props
@@ -36,17 +37,19 @@ const RMClassRoomQuiz = memo<RouteComponentProps>(props => {
     }
 
     useEffect(() => {
-        setParams(old => ({ ...old, ...paramsProp }))
+        if (paramsProp.contentId !== params.contentId) {
+            setParams(old => ({ ...old, ...paramsProp }))
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [paramsProp])
 
     return (
         <SANQuery
             query={GET_QUIZ}
             options={{
-                variables: { id: params.contentId },
+                variables: { id: paramsProp.contentId },
                 onCompleted: setQuestionContext,
-                skip: !params.contentId
+                skip: !paramsProp.contentId
             }}
             loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
             errorProps={{ dark: true }}

@@ -41,7 +41,7 @@ const RMClassroom = memo<RouteComponentProps<IParams>>(
         useEffect(() => {
             setParams(old => ({ ...old, ...params }))
             // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [params])
+        }, [])
 
         return (
             <RMClassroomProvider>

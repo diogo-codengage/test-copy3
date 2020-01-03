@@ -26,6 +26,7 @@ export const GET_SUGGESTED_CLASS = gql`
                 collectionId
                 lesson {
                     id
+                    index
                 }
                 resource {
                     id

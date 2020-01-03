@@ -1,4 +1,4 @@
-import React, { Suspense, memo, useCallback, useMemo } from 'react'
+import React, { memo, useCallback, useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -12,7 +12,10 @@ import {
     SANButton,
     SANTypography,
     SANScroll,
-    SANChangeCourse
+    SANChangeCourse,
+    SANErrorBoundary,
+    SANGenericError,
+    SANSpin
 } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
@@ -31,7 +34,7 @@ const formatExpireDate = (date: string) => format(new Date(date), 'DD/MM/YYYY')
 const Courses = withRouter(({ history }) => {
     const { setActiveCourse, activeCourse } = useAuthContext()
     const { loading, data } = useQuery<ICourseQuery>(GET_COURSES)
-    const [changeCourse] = useMutation<
+    const [changeCourse, { loading: loadingMutation }] = useMutation<
         IUpdateActiveCourseResponse,
         IUpdateActiveCourseVariables
     >(UPDATE_ACTIVE_COURSE, {
@@ -41,11 +44,11 @@ const Courses = withRouter(({ history }) => {
         }
     })
     const { setMenuTab, onCloseMenu } = useLayoutContext()
-
     const handleChange = courseId => {
-        changeCourse({ variables: { courseId } })
-        onCloseMenu()
-        setMenuTab(0)
+        changeCourse({ variables: { courseId } }).finally(() => {
+            onCloseMenu()
+            setMenuTab(0)
+        })
     }
 
     const getProps = useCallback(
@@ -81,32 +84,38 @@ const Courses = withRouter(({ history }) => {
         }
     }, [activeCourse, data])
 
-    return <>{courses.map(renderCourse)}</>
+    return (
+        <SANSpin spinning={loadingMutation}>
+            {courses.map(renderCourse)}
+        </SANSpin>
+    )
 })
 
 const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
     const { activeCourse } = useAuthContext()
-    const { setMenuTab } = useLayoutContext()
+    const { setMenuTab, suggestedClass } = useLayoutContext()
 
     const goToClassroom = () => {
-        const {
-            lastAccessed: {
-                specialtyId,
-                subSpecialtyId,
-                resource,
-                collectionId,
-                lesson
+        if (!!suggestedClass.data) {
+            const {
+                accessContent: {
+                    specialtyId,
+                    subSpecialtyId,
+                    resource,
+                    collectionId,
+                    lesson
+                }
+            } = suggestedClass.data
+            const type = resource.type.toLocaleLowerCase()
+            const path = subSpecialtyId
+                ? `${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}`
+                : `${specialtyId}/${lesson.id}/${collectionId}`
+            if (type === 'quiz') {
+                history.push(`/inicio/sala-aula/${path}/quiz/${resource.id}/0`)
+            } else {
+                history.push(`/inicio/sala-aula/${path}/video/${resource.id}`)
             }
-        } = activeCourse
-        const type = resource.type.toLocaleLowerCase()
-        const path = subSpecialtyId
-            ? `${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}`
-            : `${specialtyId}/${lesson.id}/${collectionId}`
-        if (type === 'quiz') {
-            history.push(`/inicio/sala-aula/${path}/quiz/${resource.id}/0`)
-        } else {
-            history.push(`/inicio/sala-aula/${path}/video/${resource.id}`)
         }
     }
 
@@ -133,13 +142,17 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                     date={formatExpireDate(activeCourse.expireDate)}
                     percent={activeCourse.progress}
                     coverPicture={activeCourse.images.original}
-                    ContinueProps={{
-                        onClick: goToClassroom,
-                        title: t('mainMenu.changeCourse.continue', {
-                            index: activeCourse.lastAccessed.lesson.index
-                        }),
-                        subtitle: activeCourse.lastAccessed.lesson.name
-                    }}
+                    hasActive
+                    ContinueProps={
+                        !!suggestedClass.data
+                            ? {
+                                  onClick: goToClassroom,
+                                  title: t('mainMenu.changeCourse.suggestedClass'),
+                                  subtitle: suggestedClass.data!.title,
+                                  loading: suggestedClass.loading
+                              }
+                            : null
+                    }
                 />
             )}
 
@@ -147,9 +160,18 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                 <SANTypography fontSize='xl' color='grey.7' my='md'>
                     {t('mainMenu.changeCourse.subtitle')}
                 </SANTypography>
-                <Suspense fallback={<div>loading</div>}>
+                <SANErrorBoundary
+                    component={
+                        <SANGenericError
+                            TypographyProps={{
+                                color: 'grey.5',
+                                fontSize: 'sm'
+                            }}
+                        />
+                    }
+                >
                     <Courses />
-                </Suspense>
+                </SANErrorBoundary>
             </SANBox>
         </SANScroll>
     )

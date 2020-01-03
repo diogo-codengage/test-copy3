@@ -77,9 +77,10 @@ const Wrapper = styled(SANBox)<{ status: IStatus }>`
 
 interface IRMModalMore extends IModalProps {
     options: IOption[]
+    date: Date
 }
 
-export const RMModalMore = ({ options = [], ...props }: IRMModalMore) => {
+export const RMModalMore = ({ options = [], date, ...props }: IRMModalMore) => {
     const { t } = useTranslation('resmed')
 
     const renderItem = useCallback(
@@ -117,7 +118,7 @@ export const RMModalMore = ({ options = [], ...props }: IRMModalMore) => {
     return (
         <SANModal
             width={360}
-            title={`${t('schedule.modal.day')} ${new Date().getDay()}`}
+            title={`${t('schedule.modal.day')} ${date.getDate()}`}
             centered
             {...props}
         >
