@@ -23,6 +23,7 @@ export interface IMe {
     id: string
     name: string
     profilePicture: string
+    countCourses: number
     hasActiveSubscription: boolean
     profile: IProfile
 }
@@ -34,6 +35,7 @@ export const GET_ME = gql`
             name
             profilePicture
             hasActiveSubscription
+            countCourses
             profile {
                 id
                 graduationStep
