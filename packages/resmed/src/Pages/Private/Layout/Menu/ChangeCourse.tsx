@@ -147,7 +147,7 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                         !!suggestedClass.data
                             ? {
                                   onClick: goToClassroom,
-                                  title: t('mainMenu.changeCourse.dayClass'),
+                                  title: t('mainMenu.changeCourse.suggestedClass'),
                                   subtitle: suggestedClass.data!.title,
                                   loading: suggestedClass.loading
                               }
