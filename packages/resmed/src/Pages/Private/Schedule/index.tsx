@@ -152,45 +152,38 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     })
 
     const pdfDownload = async () => {
-        if (!me.id || !activeCourse.id || !currentRange.start) {
-            createSnackbar({
-                message: t('schedule.pdfDownloadFail'),
-                theme: 'error'
-            })
-        } else {
-            const monthAbbr = dateString => {
-                const splitedDate = dateString.split('-')
-                let month = 0
-                if (splitedDate[2] !== '01' && splitedDate[1] !== '12') {
-                    month = Number(splitedDate[1]) + 1
-                }
-                return month
+        const monthAbbr = dateString => {
+            const splitedDate = dateString.split('-')
+            let month = 0
+            if (splitedDate[2] !== '01' && splitedDate[1] !== '12') {
+                month = Number(splitedDate[1]) + 1
             }
-
-            const url = `${process.env.REACT_APP_URL_PDF}?userId=${
-                me.id
-            }&courseId=${activeCourse.id}&startDate=${format(
-                currentRange.start,
-                'YYYY-MM-DD'
-            )}&filename=Cronograma-${t(
-                `schedule.monthAbbr.${monthAbbr(
-                    format(currentRange.start, 'YYYY-MM-DD')
-                )}`
-            )}-${activeCourse.name!.split(' ').join('')}`
-
-            fetch(url, { method: 'GET' }).then(response => {
-                if (response.status === 201) {
-                    const link = document.createElement('a')
-                    link.href = url
-                    link.click()
-                } else {
-                    createSnackbar({
-                        message: t('schedule.pdfDownloadFail'),
-                        theme: 'error'
-                    })
-                }
-            })
+            return month
         }
+
+        const url = `${process.env.REACT_APP_URL_PDF}?userId=${
+            me.id
+        }&courseId=${activeCourse.id}&startDate=${format(
+            currentRange.start,
+            'YYYY-MM-DD'
+        )}&filename=Cronograma-${t(
+            `schedule.monthAbbr.${monthAbbr(
+                format(currentRange.start, 'YYYY-MM-DD')
+            )}`
+        )}-${activeCourse.name!.split(' ').join('')}`
+
+        fetch(url, { method: 'GET' }).then(response => {
+            if (response.status === 201) {
+                const link = document.createElement('a')
+                link.href = url
+                link.click()
+            } else {
+                createSnackbar({
+                    message: t('schedule.pdfDownloadFail'),
+                    theme: 'error'
+                })
+            }
+        })
     }
 
     const handleChangeMonth = dates => {
