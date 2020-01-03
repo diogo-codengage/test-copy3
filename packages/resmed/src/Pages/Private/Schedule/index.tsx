@@ -177,7 +177,8 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     const handleChangeMonth = dates => {
         if (
             !isEqual(dates.start, currentRange.start) ||
-            !isEqual(dates.end, currentRange.end)
+            !isEqual(dates.end, currentRange.end) ||
+            !isEqual(dates.currentMonth, currentRange.currentMonth)
         ) {
             setCurrentRange(dates)
         }
