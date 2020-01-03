@@ -415,17 +415,19 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                                 checked={modalSuggestion.checked}
                                 loading={loading}
                             />
-                            <SANButton
-                                size='small'
-                                variant='outlined'
-                                bold
-                                blockOnlyMobile
-                                loading={loading}
-                                onClick={() => pdfDownload()}
-                            >
-                                <SANEvaIcon name='download-outline' mr='xs' />
-                                {t('schedule.pdfDownload')}
-                            </SANButton>
+                            {!!(schedule.items && schedule.items.length) &&
+                                <SANButton
+                                    size='small'
+                                    variant='outlined'
+                                    bold
+                                    blockOnlyMobile
+                                    loading={loading}
+                                    onClick={() => pdfDownload()}
+                                >
+                                    <SANEvaIcon name='download-outline' mr='xs' />
+                                    {t('schedule.pdfDownload')}
+                                </SANButton>
+                            }
                         </SANBox>
                     </SANLayoutContainer>
                 </SANBox>
