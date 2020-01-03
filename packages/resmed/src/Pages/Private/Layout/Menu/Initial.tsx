@@ -12,6 +12,7 @@ import {
     SANLeftOffError
 } from '@sanar/components'
 
+import { useAuthContext } from 'Hooks/auth'
 import { useLayoutContext } from '../Context'
 
 const formatMinutes = minutes =>
@@ -72,6 +73,7 @@ const RMSuggestedClass = withRouter(({ history }) => {
 
 const RMMenuInitial = memo(() => {
     const { t } = useTranslation('resmed')
+    const { me } = useAuthContext()
     const { onCloseMenu, setMenuTab } = useLayoutContext()
 
     return (
@@ -113,12 +115,16 @@ const RMMenuInitial = memo(() => {
                     dataTestid='rm-menu__go-to--lives'
                     title={t('mainMenu.initial.lives')}
                 />
-                <SANNavigationListItem
-                    dataTestid='rm-menu__go-to--change-course'
-                    onClick={() => setMenuTab(3)}
-                    icon={<SANEvaIcon name='swap-outline' color='default' />}
-                    title={t('mainMenu.initial.changeCourse')}
-                />
+                {me.countCourses > 1 && (
+                    <SANNavigationListItem
+                        dataTestid='rm-menu__go-to--change-course'
+                        onClick={() => setMenuTab(3)}
+                        icon={
+                            <SANEvaIcon name='swap-outline' color='default' />
+                        }
+                        title={t('mainMenu.initial.changeCourse')}
+                    />
+                )}
                 <SANNavigationListItem
                     icon={<SANEvaIcon name='person-outline' color='default' />}
                     onClick={() => setMenuTab(1)}
