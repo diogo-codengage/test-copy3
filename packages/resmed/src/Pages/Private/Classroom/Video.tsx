@@ -135,9 +135,11 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
         }
 
         useEffect(() => {
-            setParams(old => ({ ...old, ...paramsProp }))
+            if (paramsProp.contentId !== params.contentId) {
+                setParams(old => ({ ...old, ...paramsProp }))
+            }
             // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [])
+        }, [paramsProp])
 
         const wrapper = useMemo(
             () =>
@@ -165,9 +167,8 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
             <SANQuery
                 query={GET_VIDEO}
                 options={{
-                    variables: { id: params.contentId },
-                    fetchPolicy: 'network-only',
-                    skip: !params.contentId
+                    variables: { id: paramsProp.contentId },
+                    skip: !paramsProp.contentId
                 }}
                 loaderProps={{ minHeight: '100vh', flex: true, dark: true }}
                 errorProps={{ dark: true }}
