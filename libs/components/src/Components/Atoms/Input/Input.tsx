@@ -15,7 +15,7 @@ const Input = styled.input`
     box-shadow: 0 1px 2px ${theme('colors.grey.1')};
     outline: none;
     color: ${theme('colors.grey-solid.7')};
-    background-color: transparent;
+    background-color: ${theme('colors.white.10')};
     font-weight: ${theme('fontWeights.medium')};
     font-size: ${theme('fontSizes.md')};
     transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
