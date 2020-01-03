@@ -135,7 +135,8 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     const [trigger, setTrigger] = useState()
     const [currentRange, setCurrentRange] = useState({
         start: '',
-        end: ''
+        end: '',
+        currentMonth: ''
     })
     const [modalSuggestion, setModalSuggestion] = useState({
         visible: false,
@@ -164,11 +165,11 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
         const url = `${process.env.REACT_APP_URL_PDF}?userId=${
             me.id
         }&courseId=${activeCourse.id}&startDate=${format(
-            currentRange.start,
+            currentRange.currentMonth,
             'YYYY-MM-DD'
         )}&filename=Cronograma-${t(
             `schedule.monthAbbr.${monthAbbr(
-                format(currentRange.start, 'YYYY-MM-DD')
+                format(currentRange.currentMonth, 'YYYY-MM-DD')
             )}`
         )}-${activeCourse.name!.split(' ').join('')}`
 
