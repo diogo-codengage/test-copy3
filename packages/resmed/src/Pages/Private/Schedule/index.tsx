@@ -135,6 +135,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     } = useScheduleContext()
     const [firstLoad, setFirstLoad] = useState(true)
     const [loading, setLoading] = useState(false)
+    const [downloading, setDownloading] = useState(false)
     const [trigger, setTrigger] = useState()
     const [currentRange, setCurrentRange] = useState({
         start: '',
@@ -156,6 +157,8 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     })
 
     const pdfDownload = async () => {
+        setDownloading(true)
+        
         const startDate = format(currentRange.currentMonth, 'YYYY-MM-DD')
         const filename = `Cronograma-${t(
             `schedule.monthAbbr.${getMonth(currentRange.currentMonth)}`
@@ -163,6 +166,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
         const url = `${process.env.REACT_APP_URL_PDF}?userId=${userId}&courseId=${courseId}&startDate=${startDate}&filename=${filename}`
 
         fetch(url, { method: 'GET' }).then(response => {
+            setDownloading(false)
             if (response.status === 201) {
                 const link = document.createElement('a')
                 link.href = url
@@ -421,7 +425,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                                     variant='outlined'
                                     bold
                                     blockOnlyMobile
-                                    loading={loading}
+                                    loading={loading || downloading}
                                     onClick={() => pdfDownload()}
                                 >
                                     <SANEvaIcon name='download-outline' mr='xs' />
