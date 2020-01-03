@@ -335,13 +335,13 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     }, [currentRange])
 
     const validRange = useMemo(() => {
-        return {
-            start: !!schedule.interval.start
-                ? format(new Date(schedule.interval.start), 'YYYY-MM-DD')
-                : format(new Date(), 'YYYY-MM-DD'),
-            end: !!schedule.interval.end
-                ? format(new Date(schedule.interval.end), 'YYYY-MM-DD')
-                : format(new Date(), 'YYYY-MM-DD')
+        if (!!schedule.interval.start && !!schedule.interval.end) {
+            return {
+                start: format(new Date(schedule.interval.start), 'YYYY-MM-DD'),
+                end: format(new Date(schedule.interval.end), 'YYYY-MM-DD')
+            }
+        } else {
+            return null
         }
     }, [schedule.interval])
 
