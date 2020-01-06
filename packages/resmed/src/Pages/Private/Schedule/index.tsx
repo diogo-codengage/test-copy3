@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -24,6 +24,7 @@ import {
 } from '@sanar/components'
 import { IEvent } from '@sanar/components/dist/Components/Organisms/BigCalendar'
 import { getUTCDate } from '@sanar/utils/dist/Date'
+import { createDebounce } from '@sanar/utils/dist/Debounce'
 
 import {
     GET_APPOINTMENTS,
@@ -243,7 +244,20 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
         setLoading(false)
     }
 
+    const handleSuggestedClass = useCallback(event => {
+        setTimeout(() => {
+            setTrigger(new Date().getTime())
+            if (!!event.extendedProps) {
+                event.extendedProps.status === 'unseen' && fetchSuggestedClass()
+            }
+        }, 500)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const debounceCallback = createDebounce(handleSuggestedClass, 1000)
+
     const handleEventDrop = e => {
+        e.jsEvent.preventDefault()
         const { event } = e
         const date = new Date(new Date(event.start).toUTCString()).toISOString()
         client
@@ -254,15 +268,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                     date
                 }
             })
-            .then(() => {
-                setTimeout(() => {
-                    setTrigger(new Date().getTime())
-                    if (!!event.extendedProps) {
-                        event.extendedProps.status === 'unseen' &&
-                            fetchSuggestedClass()
-                    }
-                }, 500)
-            })
+            .then(() => debounceCallback(event))
             .catch(err => {
                 e.revert()
                 if (!!err.graphQLErrors.length) {
@@ -334,13 +340,13 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     }, [currentRange])
 
     const validRange = useMemo(() => {
-        return {
-            start: !!schedule.interval.start
-                ? format(new Date(schedule.interval.start), 'YYYY-MM-DD')
-                : format(new Date(), 'YYYY-MM-DD'),
-            end: !!schedule.interval.end
-                ? format(new Date(schedule.interval.end), 'YYYY-MM-DD')
-                : format(new Date(), 'YYYY-MM-DD')
+        if (!!schedule.interval.start && !!schedule.interval.end) {
+            return {
+                start: format(new Date(schedule.interval.start), 'YYYY-MM-DD'),
+                end: format(new Date(schedule.interval.end), 'YYYY-MM-DD')
+            }
+        } else {
+            return null
         }
     }, [schedule.interval])
 
@@ -420,7 +426,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                                 checked={modalSuggestion.checked}
                                 loading={loading}
                             />
-                            {!!(schedule.items && schedule.items.length) &&
+                            {!!(schedule.items && schedule.items.length) && (
                                 <SANButton
                                     size='small'
                                     variant='outlined'
@@ -429,10 +435,13 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                                     loading={loading || downloading}
                                     onClick={() => pdfDownload()}
                                 >
-                                    <SANEvaIcon name='download-outline' mr='xs' />
+                                    <SANEvaIcon
+                                        name='download-outline'
+                                        mr='xs'
+                                    />
                                     {t('schedule.pdfDownload')}
                                 </SANButton>
-                            }
+                            )}
                         </SANBox>
                     </SANLayoutContainer>
                 </SANBox>
