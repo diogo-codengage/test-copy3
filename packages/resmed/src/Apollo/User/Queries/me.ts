@@ -15,6 +15,7 @@ export interface IProfile {
     testExperience: 'none' | 'one' | 'many'
     preparatoryCourseStatus: 'inProgress' | 'completed' | 'missing'
     preparatoryCourseName?: string
+    objective: 'college' | 'residence' | 'revalidate'
     userId: string
     courseId?: string
 }
@@ -44,6 +45,7 @@ export const GET_ME = gql`
                 testExperience
                 preparatoryCourseStatus
                 preparatoryCourseName
+                objective
             }
         }
     }
