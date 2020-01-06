@@ -71,8 +71,8 @@ const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
 
     if (loading) return <RMSplashLoader />
 
-    if (!!activeCourse && !activeCourse.accessed) {
-        return <RMComplementaryRegisterModal />
+    if (!!me && !me.hasActiveSubscription) {
+        return <RMComplementaryRegisterModal closable={false} />
     }
 
     const value = {
