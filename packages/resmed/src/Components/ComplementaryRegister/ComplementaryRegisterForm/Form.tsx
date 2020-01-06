@@ -167,14 +167,6 @@ const RMForm = ({
                             initialValue={
                                 !!profile ? profile.institutionIds : undefined
                             }
-                            rules={[
-                                {
-                                    required: true,
-                                    message: tComponents(
-                                        'formValidateMessages.required'
-                                    )
-                                }
-                            ]}
                             hasError={!!form.getFieldError('institutionIds')}
                         >
                             <SANSelectFilter
@@ -197,14 +189,6 @@ const RMForm = ({
                             initialValue={
                                 !!profile ? profile.specialtyIds : undefined
                             }
-                            rules={[
-                                {
-                                    required: true,
-                                    message: tComponents(
-                                        'formValidateMessages.required'
-                                    )
-                                }
-                            ]}
                             hasError={!!form.getFieldError('specialtyIds')}
                         >
                             <SANSelectFilter
