@@ -354,11 +354,18 @@ export default {
         },
         institutions: 'Quais instituições quer fazer prova?',
         specialties: 'Quais especialidades quer seguir?',
+        notDecided: 'Ainda não decidi',
         testExperiences: {
             label: 'Selecione sua experiência com provas',
             none: 'Nunca fiz',
             one: 'Já fiz uma vez',
             many: 'Já fiz mais de uma vez'
+        },
+        objective: {
+            label: 'Qual o seu principal objetivo de estudo?',
+            college: 'Faculdade',
+            residence: 'Residência Médica',
+            revalidate: 'Revalida'
         },
         preparatoryCourse: {
             label: 'Fez/Faz algum outro curso preparatório?',

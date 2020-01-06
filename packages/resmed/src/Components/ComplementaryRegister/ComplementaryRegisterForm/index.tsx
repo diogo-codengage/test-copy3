@@ -28,6 +28,7 @@ export interface IFormDataProps {
     testExperience: string
     preparatoryCourseStatus: string
     preparatoryCourseName?: string
+    objective: string
 }
 interface IFormProps {
     form: any
@@ -150,7 +151,9 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
                 data: { supplementarySpecialties }
             } = await client.query({ query: GET_SUPPLEMENTARY_SPECIALTIES })
 
-            setSupplementarySpecialties(supplementarySpecialties)
+            const defaultSpecialty = { value: null, label: t('userProfile.notDecided'), __typename: 'SupplementarySpecialties' }
+
+            setSupplementarySpecialties([defaultSpecialty, ...supplementarySpecialties])
         } catch (err) {
             snackbar({
                 message: t('userProfile.loadError.specialties'),
@@ -165,7 +168,9 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
                 data: { institutions }
             } = await client.query({ query: GET_INSTITUTIONS })
 
-            setInstitutions(institutions)
+            const defaultInstitution = { value: null, label: t('userProfile.notDecided'), __typename: 'Institution' }
+
+            setInstitutions([defaultInstitution, ...institutions])
         } catch (err) {
             snackbar({
                 message: t('userProfile.loadError.institutions'),

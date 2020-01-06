@@ -27,15 +27,9 @@ const SANCourseStatusFormItem = styled(SANFormItem)<{ rcn?: boolean }>`
             css`
                 margin-bottom: 5px !important;
             `,
-            ifProp(
-                'rcn',
-                css`
-                    margin-bottom: ${theme('space.md')};
-                `,
-                css`
-                    margin-bottom: ${theme('space.xxl')};
-                `
-            )
+            css`
+                margin-bottom: ${theme('space.xxl')};
+            `
         )}
     }
 `
@@ -105,6 +99,8 @@ const graduatedSteps = [
 ]
 
 const testExperiences = ['none', 'one', 'many']
+
+const objectives = ['college', 'residence', 'revalidate']
 
 const preparatoryCourseStatus = ['missing', 'inProgress', 'completed']
 
@@ -315,6 +311,44 @@ const RMForm = ({
                         </SANCol>
                     </SANRow>
                 )}
+                <SANRow gutter={24}>
+                    <SANCol>
+                        <SANStyledFormItem
+                            name='objective'
+                            label={t('userProfile.objective.label')}
+                            initialValue={
+                                !!profile ? profile.objective : undefined
+                            }
+                            rules={[
+                                {
+                                    required: true,
+                                    message: tComponents(
+                                        'formValidateMessages.required'
+                                    )
+                                }
+                            ]}
+                            hasError={!!form.getFieldError('objective')}
+                        >
+                            <SANStyledRadioGroup
+                                mt='16px'
+                                value={testValue}
+                                onChange={e => setTestValue(e.target.value)}
+                            >
+                                {objectives.map(item => (
+                                    <SANStyledRadio
+                                        key={item}
+                                        nd={item === objectives[1]}
+                                        value={item}
+                                    >
+                                        {t(
+                                            `userProfile.objective.${item}`
+                                        )}
+                                    </SANStyledRadio>
+                                ))}
+                            </SANStyledRadioGroup>
+                        </SANStyledFormItem>
+                    </SANCol>
+                </SANRow>
                 <SANRow gutter={24}>
                     <SANCol>
                         <SANSTyledButtonFormItem name='submitButton'>
