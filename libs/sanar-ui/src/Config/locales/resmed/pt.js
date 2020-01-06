@@ -360,6 +360,12 @@ export default {
             one: 'Já fiz uma vez',
             many: 'Já fiz mais de uma vez'
         },
+        objective: {
+            label: 'Qual o seu principal objetivo de estudo?',
+            college: 'Faculdade',
+            residence: 'Residência Médica',
+            revalidate: 'Revalida'
+        },
         preparatoryCourse: {
             label: 'Fez/Faz algum outro curso preparatório?',
             missing: 'Não',

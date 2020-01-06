@@ -28,6 +28,7 @@ export interface IFormDataProps {
     testExperience: string
     preparatoryCourseStatus: string
     preparatoryCourseName?: string
+    objective: string
 }
 interface IFormProps {
     form: any
