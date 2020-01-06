@@ -15,6 +15,7 @@ export const CREATE_PROFILE_MUTATION = gql`
                 testExperience
                 preparatoryCourseStatus
                 preparatoryCourseName
+                objective
             }
         }
     }
@@ -35,6 +36,7 @@ export const UPDATE_PROFILE_MUTATION = gql`
                 testExperience
                 preparatoryCourseStatus
                 preparatoryCourseName
+                objective
             }
         }
     }

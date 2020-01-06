@@ -28,6 +28,7 @@ export interface IFormDataProps {
     testExperience: string
     preparatoryCourseStatus: string
     preparatoryCourseName?: string
+    objective: string
 }
 interface IFormProps {
     form: any
@@ -68,8 +69,8 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
 
     const makePayload = (profile: IFormDataProps) => ({
         ...profile,
-        institutionIds: profile.institutionIds.map(({ value }) => value),
-        specialtyIds: profile.specialtyIds.map(({ value }) => value),
+        institutionIds: profile.institutionIds.length ? profile.institutionIds.map(({ value }) => value) : null,
+        specialtyIds: profile.specialtyIds.length ? profile.specialtyIds.map(({ value }) => value) : null,
         preparatoryCourseName:
             profile.preparatoryCourseStatus === 'missing'
                 ? null
@@ -186,10 +187,10 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
             return {
                 ...me.profile,
                 institutionIds: institutions.filter(({ value }) =>
-                    me.profile.institutionIds.find(itt => value === itt)
+                    me.profile.institutionIds && me.profile.institutionIds.find(itt => value === itt)
                 ),
                 specialtyIds: supplementarySpecialties.filter(({ value }) =>
-                    me.profile.specialtyIds.find(sp => value === sp)
+                    me.profile.specialtyIds && me.profile.specialtyIds.find(sp => value === sp)
                 )
             }
         }

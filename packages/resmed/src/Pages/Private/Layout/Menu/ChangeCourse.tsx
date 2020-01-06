@@ -91,6 +91,20 @@ const Courses = withRouter(({ history }) => {
     )
 })
 
+const Error = props => (
+    <SANErrorBoundary
+        {...props}
+        component={
+            <SANGenericError
+                TypographyProps={{
+                    color: 'grey.5',
+                    fontSize: 'sm'
+                }}
+            />
+        }
+    />
+)
+
 const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
     const { activeCourse } = useAuthContext()
@@ -136,42 +150,41 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                 </SANButton>
             </SANBox>
             {!!activeCourse && (
-                <SANChangeCourse
-                    id={activeCourse.id}
-                    title={activeCourse.name}
-                    date={formatExpireDate(activeCourse.expireDate)}
-                    percent={activeCourse.progress}
-                    coverPicture={activeCourse.images.original}
-                    hasActive
-                    ContinueProps={
-                        !!suggestedClass.data
-                            ? {
-                                  onClick: goToClassroom,
-                                  title: t('mainMenu.changeCourse.suggestedClass'),
-                                  subtitle: suggestedClass.data!.title,
-                                  loading: suggestedClass.loading
-                              }
-                            : null
-                    }
-                />
+                <Error>
+                    <SANChangeCourse
+                        id={activeCourse.id}
+                        title={activeCourse.name}
+                        date={formatExpireDate(activeCourse.expireDate)}
+                        percent={activeCourse.progress}
+                        coverPicture={
+                            !!activeCourse.images &&
+                            !!activeCourse.images.original &&
+                            activeCourse.images.original
+                        }
+                        hasActive
+                        ContinueProps={
+                            !!suggestedClass.data
+                                ? {
+                                      onClick: goToClassroom,
+                                      title: t(
+                                          'mainMenu.changeCourse.suggestedClass'
+                                      ),
+                                      subtitle: suggestedClass.data!.title,
+                                      loading: suggestedClass.loading
+                                  }
+                                : null
+                        }
+                    />
+                </Error>
             )}
 
             <SANBox px='md'>
                 <SANTypography fontSize='xl' color='grey.7' my='md'>
                     {t('mainMenu.changeCourse.subtitle')}
                 </SANTypography>
-                <SANErrorBoundary
-                    component={
-                        <SANGenericError
-                            TypographyProps={{
-                                color: 'grey.5',
-                                fontSize: 'sm'
-                            }}
-                        />
-                    }
-                >
+                <Error>
                     <Courses />
-                </SANErrorBoundary>
+                </Error>
             </SANBox>
         </SANScroll>
     )

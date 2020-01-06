@@ -10,11 +10,12 @@ export interface IProfile {
         | 'fifthYear'
         | 'sixthYear'
         | 'formed'
-    institutionIds: string[]
-    specialtyIds: string[]
+    institutionIds?: string[]
+    specialtyIds?: string[]
     testExperience: 'none' | 'one' | 'many'
     preparatoryCourseStatus: 'inProgress' | 'completed' | 'missing'
     preparatoryCourseName?: string
+    objective: 'college' | 'residence' | 'revalidate'
     userId: string
     courseId?: string
 }
@@ -44,6 +45,7 @@ export const GET_ME = gql`
                 testExperience
                 preparatoryCourseStatus
                 preparatoryCourseName
+                objective
             }
         }
     }
