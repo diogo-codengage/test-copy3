@@ -354,7 +354,6 @@ export default {
         },
         institutions: 'Quais instituições quer fazer prova?',
         specialties: 'Quais especialidades quer seguir?',
-        notDecided: 'Ainda não decidi',
         testExperiences: {
             label: 'Selecione sua experiência com provas',
             none: 'Nunca fiz',

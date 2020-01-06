@@ -151,9 +151,7 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
                 data: { supplementarySpecialties }
             } = await client.query({ query: GET_SUPPLEMENTARY_SPECIALTIES })
 
-            const defaultSpecialty = { value: null, label: t('userProfile.notDecided'), __typename: 'SupplementarySpecialties' }
-
-            setSupplementarySpecialties([defaultSpecialty, ...supplementarySpecialties])
+            setSupplementarySpecialties(supplementarySpecialties)
         } catch (err) {
             snackbar({
                 message: t('userProfile.loadError.specialties'),
@@ -168,9 +166,7 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
                 data: { institutions }
             } = await client.query({ query: GET_INSTITUTIONS })
 
-            const defaultInstitution = { value: null, label: t('userProfile.notDecided'), __typename: 'Institution' }
-
-            setInstitutions([defaultInstitution, ...institutions])
+            setInstitutions(institutions)
         } catch (err) {
             snackbar({
                 message: t('userProfile.loadError.institutions'),
