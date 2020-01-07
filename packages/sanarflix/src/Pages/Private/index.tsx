@@ -12,6 +12,8 @@ import FLXSplashLoader from 'Components/SplashLoader'
 import FLXLayoutProvider from 'Pages/Layout/Context'
 import FLXActiveAccountRoute from './ActiveAccountRoute'
 
+import * as Sentry from '@sentry/browser';
+
 const FLXHome = React.lazy(() => import('./Home'))
 const FLXCourses = React.lazy(() => import('./Courses'))
 const FLXCourse = React.lazy(() => import('./Course'))
@@ -36,8 +38,15 @@ const FLXPrivatePages: React.FC<RouteComponentProps<FLXPrivatePages>> = ({
         window.location.reload()
     }
 
+    const handleOnError = (error, errorInfo) => {
+        Sentry.withScope((scope) => {
+            scope.setExtras(errorInfo);
+            Sentry.captureException(error);
+        });
+    }
+
     return (
-        <SANErrorBoundary onClick={reload} text={t('global.backStart')}>
+        <SANErrorBoundary onClick={reload} text={t('global.backStart')} onError={handleOnError}>
             <LastLocationProvider>
                 <FLXLayoutProvider>
                     <FLXLayout>
