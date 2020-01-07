@@ -12,7 +12,6 @@ import { useTranslation } from 'react-i18next'
 
 import { useSnackbarContext } from '@sanar/components'
 
-import { RMComplementaryRegisterModal } from 'Components/ComplementaryRegister'
 import RMSplashLoader from 'Components/SplashLoader'
 
 import { segmentTrack } from 'Config/Segment/track'
@@ -70,10 +69,6 @@ const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
     }, [])
 
     if (loading) return <RMSplashLoader />
-
-    if (!!me && !me.hasActiveSubscription) {
-        return <RMComplementaryRegisterModal closable={false} />
-    }
 
     const value = {
         getCurrentEnrollment,

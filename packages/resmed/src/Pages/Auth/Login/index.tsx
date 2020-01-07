@@ -22,8 +22,6 @@ import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 import { segmentTrack } from 'Config/Segment/track'
 import { IEvents, IOptions } from 'Config/Segment'
 
-declare var Conpass: any;
-
 const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
     const [keepMeLoggedIn, setKeepMeLoggedIn] = useState(false)
@@ -45,7 +43,7 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
         } else {
             history.push('/inicio/curso')
         }
-        
+
         if (window.Conpass) {
             window.Conpass.init({
                 name: response.idToken.payload.name,
