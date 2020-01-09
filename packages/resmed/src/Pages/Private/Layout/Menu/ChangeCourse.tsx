@@ -52,18 +52,15 @@ const Courses = withRouter(({ history }) => {
     }
 
     const getProps = useCallback(
-        course =>
-            !loading && !!course
-                ? {
-                      key: course.id,
-                      id: course.id,
-                      title: course.name,
-                      date: formatExpireDate(course.expireDate),
-                      percent: course.progress,
-                      coverPicture: course.images.original,
-                      onChange: () => handleChange(course.id)
-                  }
-                : {},
+        course => ({
+            key: course.id,
+            id: course.id,
+            title: course.name,
+            date: formatExpireDate(course.expireDate),
+            percent: course.progress,
+            coverPicture: course.images.original,
+            onChange: () => handleChange(course.id)
+        }),
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [loading, data]
     )
@@ -85,7 +82,7 @@ const Courses = withRouter(({ history }) => {
     }, [activeCourse, data])
 
     return (
-        <SANSpin spinning={loadingMutation}>
+        <SANSpin spinning={loadingMutation || loading}>
             {courses.map(renderCourse)}
         </SANSpin>
     )
@@ -152,14 +149,15 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
             {!!activeCourse && (
                 <Error>
                     <SANChangeCourse
-                        id={activeCourse.id}
-                        title={activeCourse.name}
+                        id={!!activeCourse.id ? activeCourse.id : ''}
+                        title={!!activeCourse.name ? activeCourse.name : ''}
                         date={formatExpireDate(activeCourse.expireDate)}
                         percent={activeCourse.progress}
                         coverPicture={
                             !!activeCourse.images &&
-                            !!activeCourse.images.original &&
-                            activeCourse.images.original
+                            !!activeCourse.images.original
+                                ? activeCourse.images.original
+                                : ''
                         }
                         hasActive
                         ContinueProps={
@@ -172,7 +170,7 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                                       subtitle: suggestedClass.data!.title,
                                       loading: suggestedClass.loading
                                   }
-                                : null
+                                : undefined
                         }
                     />
                 </Error>

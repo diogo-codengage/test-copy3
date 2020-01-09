@@ -117,7 +117,7 @@ const RMClassroomMenu: React.FC<RouteComponentProps> = ({ history }) => {
         <SANClassroomMenu
             course={{
                 knowledgeArea: specialtyName,
-                name: activeCourse.name,
+                name: !!activeCourse.name ? activeCourse.name : '',
                 progress: activeCourse.progress
             }}
             PlaylistProps={{

@@ -3,7 +3,11 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useApolloClient } from '@apollo/react-hooks'
 
-import { withSANForm, useSnackbarContext } from '@sanar/components'
+import {
+    withSANForm,
+    useSnackbarContext,
+    ISANFormComponentProps
+} from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
 import {
@@ -30,10 +34,6 @@ export interface IFormDataProps {
     preparatoryCourseName?: string
     objective: string
 }
-interface IFormProps {
-    form: any
-}
-
 const updateActiveCourseCache = store => {
     try {
         const data = store.readQuery({
@@ -54,7 +54,15 @@ const updateActiveCourseCache = store => {
     }
 }
 
-const RMComplementaryRegisterForm = ({ form, closeModal }) => {
+interface IProps extends ISANFormComponentProps {
+    closeModal?: () => void
+    form: any
+}
+
+const RMComplementaryRegisterForm: React.FC<IProps> = ({
+    form,
+    closeModal
+}) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
     const [rcn, setRcn] = useState('missing')
@@ -69,8 +77,12 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
 
     const makePayload = (profile: IFormDataProps) => ({
         ...profile,
-        institutionIds: profile.institutionIds.length ? profile.institutionIds.map(({ value }) => value) : null,
-        specialtyIds: profile.specialtyIds.length ? profile.specialtyIds.map(({ value }) => value) : null,
+        institutionIds: profile.institutionIds.length
+            ? profile.institutionIds.map(({ value }) => value)
+            : null,
+        specialtyIds: profile.specialtyIds.length
+            ? profile.specialtyIds.map(({ value }) => value)
+            : null,
         preparatoryCourseName:
             profile.preparatoryCourseStatus === 'missing'
                 ? null
@@ -186,11 +198,15 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
             setRcn(me.profile.preparatoryCourseStatus)
             return {
                 ...me.profile,
-                institutionIds: institutions.filter(({ value }) =>
-                    me.profile.institutionIds && me.profile.institutionIds.find(itt => value === itt)
+                institutionIds: institutions.filter(
+                    ({ value }) =>
+                        me.profile.institutionIds &&
+                        me.profile.institutionIds.find(itt => value === itt)
                 ),
-                specialtyIds: supplementarySpecialties.filter(({ value }) =>
-                    me.profile.specialtyIds && me.profile.specialtyIds.find(sp => value === sp)
+                specialtyIds: supplementarySpecialties.filter(
+                    ({ value }) =>
+                        me.profile.specialtyIds &&
+                        me.profile.specialtyIds.find(sp => value === sp)
                 )
             }
         }
@@ -214,4 +230,4 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
     )
 }
 
-export default withSANForm<IFormProps>(RMComplementaryRegisterForm)
+export default withSANForm<IProps>(RMComplementaryRegisterForm)

@@ -87,7 +87,9 @@ export const RMModalMore = ({ options = [], date, ...props }: IRMModalMore) => {
         (option, index) => (
             <Wrapper
                 key={index}
-                borderBottom={index < options.length - 1 && '1px solid'}
+                borderBottom={
+                    index < options.length - 1 ? '1px solid' : undefined
+                }
                 borderColor='grey.1'
                 display='flex'
                 alignItems='center'

@@ -63,13 +63,13 @@ const TitleProgress = props => (
     />
 )
 
-const SANCardSpecialty = ({
+const SANCardSpecialty: React.FC<ISANCardSpecialtyProps> = ({
     image,
     title,
     progress,
     disabled,
     onClick
-}: ISANCardSpecialtyProps) => {
+}) => {
     const { t } = useTranslation('components')
     return (
         <SANCardSpecialtyStyled

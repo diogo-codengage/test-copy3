@@ -340,9 +340,7 @@ const RMForm = ({
                                         nd={item === objectives[1]}
                                         value={item}
                                     >
-                                        {t(
-                                            `userProfile.objective.${item}`
-                                        )}
+                                        {t(`userProfile.objective.${item}`)}
                                     </SANStyledRadio>
                                 ))}
                             </SANStyledRadioGroup>
