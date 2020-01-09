@@ -6,7 +6,11 @@ import { prop, omit } from 'ramda'
 import { format } from 'date-fns'
 import moment from 'moment'
 
-import { withSANForm, useSnackbarContext } from '@sanar/components'
+import {
+    withSANForm,
+    useSnackbarContext,
+    ISANFormComponentProps
+} from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
 

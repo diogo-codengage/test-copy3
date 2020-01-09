@@ -10,7 +10,7 @@ import { SANTypography } from '../../Atoms/Typography'
 import { SANProgress } from '../../Atoms/Progress'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
 import { SANSkeleton } from '../../Atoms/Skeleton'
-import { SANBox } from '../../Atoms/Box'
+import { SANBox, ISANBoxProps } from '../../Atoms/Box'
 
 import { transparentize } from 'polished'
 
@@ -66,14 +66,15 @@ interface IContinue {
     loading?: boolean
 }
 
-export interface ISANChangeCourseProps {
+export interface ISANChangeCourseProps
+    extends Omit<ISANBoxProps, 'onChange' | 'title' | 'id'> {
     id: string
     title: string
     date: string
     loading?: boolean
     percent: number
     coverPicture: string
-    onChange: (id: string) => void
+    onChange?: (id: string) => void
     ContinueProps?: IContinue
     hasActive?: boolean
     expired?: boolean

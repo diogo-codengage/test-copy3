@@ -95,7 +95,7 @@ const Courses = withRouter(({ history }) => {
     }, [activeCourse, data])
 
     return (
-        <SANSpin spinning={loadingMutation}>
+        <SANSpin spinning={loadingMutation || loading}>
             {courses.map(renderCourse)}
         </SANSpin>
     )
@@ -170,8 +170,9 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                         percent={activeCourse.progress}
                         coverPicture={
                             !!activeCourse.images &&
-                            !!activeCourse.images.original &&
-                            activeCourse.images.original
+                            !!activeCourse.images.original
+                                ? activeCourse.images.original
+                                : ''
                         }
                         hasActive
                         ContinueProps={
@@ -184,7 +185,7 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                                       subtitle: suggestedClass.data!.title,
                                       loading: suggestedClass.loading
                                   }
-                                : null
+                                : undefined
                         }
                     />
                 </Error>
