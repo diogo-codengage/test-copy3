@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { space, SpaceProps } from 'styled-system'
 
-import { SANStyled, SANElement } from '../../../Theme/createTheme'
+import { SANStyled } from '../../../Theme/createTheme'
 import ESCardCourseModule from 'sanar-ui/dist/Components/Molecules/CardCourseModule'
 import { useThemeContext } from '@sanar/utils/dist/Hooks'
 
@@ -10,7 +10,7 @@ interface IProps
     extends PropTypes.InferProps<typeof ESCardCourseModule['propTypes']>,
         SpaceProps {
     image?: string
-    resourceType?: 'Document' | 'Video' | 'Question' | 'Quiz'
+    resourceType: 'Document' | 'Video' | 'Question' | 'Quiz'
     type?: string
 }
 

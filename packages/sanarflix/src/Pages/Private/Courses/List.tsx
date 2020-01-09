@@ -54,6 +54,7 @@ const renderCourse = history => (course: ICourse) => (
             progress={round(course.progress_percentage)}
             actionName={i18n.t('sanarflix:courses.viewCourse')}
             onClick={() => history.push(`/portal/curso/${course.id}`)}
+            resourceType='Video'
         />
     </SANCol>
 )
