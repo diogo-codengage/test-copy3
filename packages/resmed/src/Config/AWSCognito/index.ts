@@ -13,8 +13,35 @@ const config: ICognitoUserPoolData = {
     ClientId: process.env.REACT_APP_AWS_COGNITO_USER_POOL_WEB_CLIENT_ID || ''
 }
 
-let sessionUserAttributes
-let cognitoUserSingleton
+let sessionUserAttributes: CognitoUserSession
+let cognitoUserSingleton: CognitoUser
+
+function userHasSubscription(token: string): boolean {
+  try {
+    const userData = JSON.parse(atob(token.split('.')[1]));
+    const products = JSON.parse(userData['custom:products']) || [];
+    return products.includes('resmed');
+  } catch (error) {
+    // TODO: setup sentry
+    // Sentry.captureException(error);
+    return false;
+  }
+}
+
+type SuccessCallback = (session: CognitoUserSession) => void;
+const onSuccess = (resolve: SuccessCallback, reject: any) => {
+    return (session: CognitoUserSession) => {
+           if (userHasSubscription(session.getIdToken().getJwtToken())) {
+               resolve(session)
+           } else {
+               reject({
+                   code: 'UserLambdaValidationException',
+                   message: 'Ops! Você não possui nenhum curso ativo' 
+               })
+           }
+
+    };
+};
 
 const onFailure = reject => (err: any) => {
     switch (err.code) {
@@ -151,7 +178,7 @@ const login = (email: string, password: string) => {
 
     return new Promise((resolve, reject) => {
         user.authenticateUser(authenticationDetails, {
-            onSuccess: resolve,
+            onSuccess: onSuccess(resolve, reject),
             onFailure: onFailure(reject),
             newPasswordRequired: userAttributes => {
                 delete userAttributes.email_verified
