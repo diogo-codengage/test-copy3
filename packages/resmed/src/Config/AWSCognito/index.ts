@@ -34,6 +34,7 @@ const onSuccess = (resolve: SuccessCallback, reject: any) => {
            if (userHasSubscription(session.getIdToken().getJwtToken())) {
                resolve(session)
            } else {
+               cognitoUserSingleton.signOut();
                reject({
                    code: 'UserLambdaValidationException',
                    message: 'Ops! Você não possui nenhum curso ativo' 
