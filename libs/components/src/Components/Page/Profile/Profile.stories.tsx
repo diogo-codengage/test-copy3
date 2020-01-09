@@ -12,7 +12,7 @@ const user = {
     email: 'diogo@codengage.com',
     phone_number: '46999375562',
     college: 'UNISEP',
-    period: 1,
+    period: '1',
     address: {
         postal_code: '85660000',
         address: 'R. Estevão Skorek, 111',
