@@ -1,4 +1,4 @@
-import React, { Suspense, memo } from 'react'
+import React, { Suspense, memo, useState, useEffect } from 'react'
 
 import { RouteComponentProps, Switch, Route, Redirect } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -6,9 +6,12 @@ import { useTranslation } from 'react-i18next'
 import { SANErrorBoundary } from '@sanar/components'
 
 import RMSplashLoader from 'Components/SplashLoader'
+import { RMComplementaryRegisterModal } from 'Components/ComplementaryRegister'
 import RMLayoutProvider from 'Pages/Private/Layout/Context'
 import RMMainProvider from 'Pages/Private/Context'
 import RMLayout from 'Pages/Private/Layout'
+
+import { useAuthContext } from 'Hooks/auth'
 
 const RMHome = React.lazy(() => import('Pages/Private/Home'))
 const RMSpecialty = React.lazy(() => import('Pages/Private/Specialty'))
@@ -23,11 +26,17 @@ const RMLives = React.lazy(() => import('Pages/Private/Lives'))
 const RMPrivatePages = memo<RouteComponentProps>(
     ({ history, match: { url } }) => {
         const { t } = useTranslation('resmed')
+        const { activeCourse } = useAuthContext()
+        const [visible, setVisible] = useState(false)
 
         const reload = () => {
             history.push('/inicio/curso')
             window.location.reload()
         }
+
+        useEffect(() => {
+            setVisible(!!activeCourse && !activeCourse.accessed)
+        }, [activeCourse])
 
         return (
             <SANErrorBoundary onClick={reload} text={t('global.backStart')}>
@@ -37,6 +46,11 @@ const RMPrivatePages = memo<RouteComponentProps>(
                             <Suspense
                                 fallback={<RMSplashLoader size='flexible' />}
                             >
+                                <RMComplementaryRegisterModal
+                                    closable
+                                    visible={visible}
+                                    onCancel={() => setVisible(false)}
+                                />
                                 <Switch>
                                     <Route
                                         path={`${url}/curso`}

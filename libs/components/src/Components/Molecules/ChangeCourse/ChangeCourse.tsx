@@ -44,6 +44,10 @@ const Wrapper = styled(SANBox)<IWrapper>`
             cursor: default;
         `
     )};
+
+    ${theme('mediaQueries.down.sm')} {
+        background-size: 100% calc(100% - 1px);
+    }
 `
 
 const WrapperContinue = styled(SANBox)`

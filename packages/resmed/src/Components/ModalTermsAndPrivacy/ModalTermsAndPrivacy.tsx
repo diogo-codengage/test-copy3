@@ -8,7 +8,8 @@ import { useSnackbarContext, SANModalTabs } from '@sanar/components'
 import { useAuthContext } from 'Hooks/auth'
 import { IMe } from 'Apollo/User/Queries/me'
 import { ACCEPT_TERMS_USE_MUTATION } from 'Apollo/User/Mutations/accept-terms-use'
-import { useMainContext } from 'Pages/Private/Context'
+import { segmentTrack } from 'Config/Segment/track'
+import { IOptions } from 'Config/Segment'
 
 import logo from 'Assets/images/brand/logo.svg'
 
@@ -24,8 +25,7 @@ const SANModalTermsAndPrivacy = ({
     const { t } = useTranslation('resmed')
     const createSnackbar = useSnackbarContext()
     const client = useApolloClient()
-    const { handleTrack } = useMainContext()
-    const { setMe } = useAuthContext()
+    const { setMe, me } = useAuthContext()
     const [activeKey, setActiveKey] = useState(defaultActiveKey)
     const [signed, setSigned] = useState<number[]>([])
     const [loading, setLoading] = useState(false)
@@ -34,16 +34,27 @@ const SANModalTermsAndPrivacy = ({
         setActiveKey(defaultActiveKey)
     }, [defaultActiveKey])
 
+    const handleTrack = () => {
+        try {
+            const data: IOptions = {
+                'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
+                'User ID': me.id
+            }
+
+            segmentTrack('Terms acepted', data)
+        } catch (err) {
+            console.error('Track:[Terms acepted] error:', err)
+        }
+    }
+
     const handleAccept = async () => {
         setLoading(true)
         try {
-            handleTrack('Terms acepted')
-            const {
-                data: { acceptTermsUse }
-            } = await client.mutate<IMe>({
+            handleTrack()
+            await client.mutate<IMe>({
                 mutation: ACCEPT_TERMS_USE_MUTATION
             })
-            setMe(acceptTermsUse)
+            setMe(old => ({ ...old, hasActiveSubscription: true } as IMe))
         } catch (error) {
             createSnackbar({
                 message: error.message,

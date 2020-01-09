@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
+import { useMutation } from '@apollo/react-hooks'
 
 import {
     SANBox,
@@ -11,12 +12,14 @@ import {
     SANTypography,
     SANScroll
 } from '@sanar/components'
+import { ISANModalProps } from '@sanar/components/dist/Components/Molecules/Modal'
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
-
-import { RMComplementaryRegisterForm } from '../'
 
 import logo from 'Assets/images/brand/logo.svg'
 import { useAuthContext } from 'Hooks/auth'
+import { UPDATE_PROFILE_MUTATION } from 'Apollo/User/Mutations/profile'
+
+import { RMComplementaryRegisterForm } from '../'
 
 const SANStyledModal = styled(SANModal)`
     &&& {
@@ -64,25 +67,27 @@ const styleToModalBody = {
     padding: 0
 }
 
-const RMComplementaryRegisterModal = () => {
+const RMComplementaryRegisterModal: React.FC<ISANModalProps> = ({
+    onCancel,
+    ...props
+}) => {
     const { t } = useTranslation('resmed')
     const { width } = useWindowSize()
-    const { me } = useAuthContext()
-    const [modalOpen, setModalOpen] = useState(true)
+    const { me, activeCourse } = useAuthContext()
+    const [changeCourse] = useMutation(UPDATE_PROFILE_MUTATION)
 
-    const handleModalVisible = () => {
-        if (!!me && !!me.profile && !!me.profile.id) {
-            setModalOpen(old => !old)
-        }
+    const handleCancel = () => {
+        changeCourse({ variables: { data: { id: activeCourse.id } } })
+        !!onCancel && onCancel()
     }
 
     return (
         <SANStyledModal
-            visible={modalOpen}
             centered={width >= 480}
-            closable={false}
             maxWidth={{ _: '100%', sm: '744px' }}
             bodyStyle={width < 576 ? styleToModalBodyMobile : styleToModalBody}
+            onCancel={handleCancel}
+            {...props}
         >
             <SANImageBox textAlign='center'>
                 <SANBox
@@ -117,9 +122,7 @@ const RMComplementaryRegisterModal = () => {
                         )}
                     </SANTypography>
                     <SANDivider my='xl' mx='auto' bg='grey.2' />
-                    <RMComplementaryRegisterForm
-                        closeModal={handleModalVisible}
-                    />
+                    <RMComplementaryRegisterForm closeModal={onCancel} />
                 </SANBox>
             </SANScroll>
         </SANStyledModal>
