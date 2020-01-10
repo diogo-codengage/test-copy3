@@ -2,10 +2,10 @@ import React, { useCallback, useRef, useEffect, useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
+import { theme } from 'styled-tools'
 
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
-import { SANTextArea } from '../../Atoms/TextArea'
 import { SANButton } from '../../Atoms/Button'
 import { SANBox, ISANBoxProps } from '../../Atoms/Box'
 import { SANAvatar } from '../../Atoms/Avatar'
@@ -18,10 +18,46 @@ import {
 } from '../../Atoms/InfiniteScroll'
 import { SANSkeleton } from 'Components/Atoms/Skeleton'
 
-const SANTextAreaStyled = styled(SANTextArea)`
+const SANInputStyled = styled.div`
     border: none;
     box-shadow: none;
     padding: 0;
+    overflow-y: auto;
+    max-height: 84px;
+
+    &:focus {
+        outline: none;
+    }
+
+    &[placeholder]:empty:before {
+        content: attr(placeholder);
+        color: #555;
+    }
+
+    [placeholder]:empty:focus::before {
+        content: '';
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        border-radius: 3px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #aaa;
+        border-radius: 3px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #999;
+    }
 `
 
 interface IParams {
@@ -92,21 +128,23 @@ const SANChat: React.FC<ISANChatProps> = ({
     const { width } = useWindowSize()
     const [submitting, setSubmitting] = useState(false)
     const [hasButton, setHasButton] = useState(false)
-    const [rows, setRows] = useState(width < 768 ? 2 : 1)
+    const [inputHeight, setInputHeight] = useState(width > 768 ? 21 : 42)
     const scrollRef = useRef<any>()
     const inputRef = useRef<any>()
 
     const handleSend = () => {
         setSubmitting(true)
-        !!onSend && onSend(inputRef.current.value, { setSubmitting })
+        !!onSend && onSend(inputRef.current.textContent, { setSubmitting })
         if (!!inputRef && !!inputRef.current) {
-            inputRef.current.value = ''
+            inputRef.current.textContent = undefined
             inputRef.current.focus()
+            setInputHeight(21)
         }
     }
 
     const handleKeyPress = e => {
         if (e.charCode === 13) {
+            e.preventDefault()
             handleSend()
         }
     }
@@ -117,19 +155,17 @@ const SANChat: React.FC<ISANChatProps> = ({
         }
     }
 
-    const handleScrollInput = e => {
+    const handleScroll = () => {
         if (!!inputRef && !!inputRef.current) {
-        }
-    }
-
-    const handleChange = () => {
-        if (!!inputRef && !!inputRef.current) {
-            console.log(inputRef.current.scrollHeight)
-            // if (inputRef.current.scrollHeight === 42) {
-            //     setRows(old => old + 1)
-            // } else {
-            //     setRows(old => old - 1)
-            // }
+            if (
+                inputRef.current.scrollHeight <= 84 &&
+                !!inputRef.current.textContent
+            ) {
+                setInputHeight(inputRef.current.scrollHeight)
+            }
+            if (!inputRef.current.textContent) {
+                setInputHeight(21)
+            }
         }
     }
 
@@ -215,14 +251,14 @@ const SANChat: React.FC<ISANChatProps> = ({
                     bg='white.10'
                 >
                     <SANAvatar src={image} size={28} borderRadius={14} />
-                    <SANBox flex='1' mx='sm'>
-                        <SANTextAreaStyled
+                    <SANBox mx='sm' width='calc(100% - 78px)'>
+                        <SANInputStyled
                             placeholder='Escrever algo'
-                            rows={rows}
+                            contentEditable
                             ref={inputRef}
                             onKeyPress={handleKeyPress}
-                            onScroll={handleScrollInput}
-                            onChange={handleChange}
+                            onScroll={handleScroll}
+                            style={{ height: inputHeight }}
                         />
                     </SANBox>
                     <SANButton
