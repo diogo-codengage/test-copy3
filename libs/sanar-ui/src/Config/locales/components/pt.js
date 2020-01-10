@@ -258,6 +258,7 @@ export default {
         close: 'Fechar'
     },
     changeCourse: {
-        ends: 'Termina em:'
+        ends: 'Termina em:',
+        finished: 'Terminou em:'
     }
 }

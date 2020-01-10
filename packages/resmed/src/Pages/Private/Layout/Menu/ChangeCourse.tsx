@@ -3,7 +3,7 @@ import React, { memo, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/react-hooks'
-import { format } from 'date-fns'
+import { format, isBefore } from 'date-fns'
 import { filter, path, sortBy } from 'ramda'
 
 import {
@@ -61,6 +61,7 @@ const Courses = withRouter(({ history }) => {
                       date: formatExpireDate(course.expireDate),
                       percent: course.progress,
                       coverPicture: course.images.original,
+                      expired: isBefore(course.expireDate, new Date()),
                       onChange: () => handleChange(course.id)
                   }
                 : {},
