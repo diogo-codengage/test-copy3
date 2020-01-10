@@ -23,16 +23,22 @@ export interface ILesson {
     id: string
     name: string
     status: 'active' | 'inactive' | 'construction'
-    lastAccessed: ILastAccessed
+    completed: boolean
 }
 
-export const GET_LESSONS = gql`
-    query Lessons($parentId: ID!) {
-        lessons(where: { parentId: $parentId }) {
-            id
-            name
-            status
-            completed
+export interface ILessonsQuery {
+    lessons: ILesson[]
+}
+
+export interface ILessonLastAccessedQuery {
+    lesson: {
+        lastAccessed: ILastAccessed
+    }
+}
+
+export const GET_LESSON_LAST_ACCESSED = gql`
+    query LessonLastAccessed($parentId: ID!) {
+        lesson(where: { id: $parentId }) {
             lastAccessed {
                 specialtyId
                 subSpecialtyId
@@ -47,6 +53,17 @@ export const GET_LESSONS = gql`
                     title
                 }
             }
+        }
+    }
+`
+
+export const GET_LESSONS = gql`
+    query Lessons($parentId: ID!) {
+        lessons(where: { parentId: $parentId }) {
+            id
+            name
+            status
+            completed
         }
     }
 `
