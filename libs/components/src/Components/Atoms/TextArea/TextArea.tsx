@@ -11,8 +11,13 @@ const TextArea = styled('textarea')`
     height: auto;
     resize: none;
 `
-const SANTextArea = (props, ref) => (
-    <SANInput ref={ref} as={TextArea} {...props} />
-)
+interface ISANTextAreaProps {
+    [x: string]: any
+}
+
+const SANTextArea: React.RefForwardingComponent<
+    typeof SANInput,
+    ISANTextAreaProps
+> = (props, ref) => <SANInput ref={ref} as={TextArea} {...props} />
 
 export default forwardRef(SANTextArea)
