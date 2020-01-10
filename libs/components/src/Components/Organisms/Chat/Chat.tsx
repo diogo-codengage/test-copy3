@@ -2,7 +2,6 @@ import React, { useCallback, useRef, useEffect, useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
-import { theme } from 'styled-tools'
 
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
@@ -23,6 +22,7 @@ const SANInputStyled = styled.div`
     box-shadow: none;
     padding: 0;
     overflow-y: auto;
+    overflow-x: hidden;
     max-height: 84px;
 
     &:focus {
@@ -115,6 +115,14 @@ export const SANChatItemSkeleton: React.FC<ISANBoxProps> = props => (
 
 const skeletons = new Array(3).fill(0).map((_, i) => i)
 const renderSkeleton = index => <SANChatItemSkeleton key={index} />
+
+const letterCount = text =>
+    text
+        ? text
+              .trim()
+              .replace(/&nbsp;/gi, ' ')
+              .replace(/<[^<|>]+?>/gi, '').length
+        : 0
 
 const SANChat: React.FC<ISANChatProps> = ({
     image,
@@ -247,11 +255,13 @@ const SANChat: React.FC<ISANChatProps> = ({
                     borderColor='grey.2'
                     borderRadius='base'
                     px='md'
-                    py='sm'
+                    pt='sm'
+                    pb='lg'
                     bg='white.10'
+                    position='relative'
                 >
                     <SANAvatar src={image} size={28} borderRadius={14} />
-                    <SANBox mx='sm' width='calc(100% - 78px)'>
+                    <SANBox mx='xs' width='calc(100% - 68px)'>
                         <SANInputStyled
                             placeholder='Escrever algo'
                             contentEditable
@@ -270,6 +280,15 @@ const SANChat: React.FC<ISANChatProps> = ({
                     >
                         <SANEvaIcon name='paper-plane-outline' />
                     </SANButton>
+                    <SANBox position='absolute' bottom='0' right='48px'>
+                        <SANTypography
+                            fontWeight='bold'
+                            fontSize='xs'
+                            color='grey.6'
+                        >
+                            0/400
+                        </SANTypography>
+                    </SANBox>
                 </SANBox>
             )}
         </SANBox>
