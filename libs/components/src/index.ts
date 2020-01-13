@@ -115,6 +115,7 @@ import { SANCardLive } from 'Components/Molecules/CardLives'
 
 import { SANSelectFilter } from 'Components/Molecules/SelectFilter'
 import { SANChangeCourse } from 'Components/Molecules/ChangeCourse'
+import { SANChat } from 'Components/Organisms/Chat'
 
 export {
     SANCommonBadge,
@@ -234,5 +235,6 @@ export {
     SANCardEvent,
     SANCardLive,
     SANSelectFilter,
-    SANChangeCourse
+    SANChangeCourse,
+    SANChat
 }

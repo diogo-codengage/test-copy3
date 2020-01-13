@@ -313,7 +313,7 @@ export default {
             8: 'Set',
             9: 'Out',
             10: 'Nov',
-            11: 'Dez',
+            11: 'Dez'
         }
     },
     lives: {
@@ -332,7 +332,9 @@ export default {
         previous: {
             title: 'Assistir live anterior',
             back: 'Voltar para lives'
-        }
+        },
+        chat: 'Chat',
+        liveChat: 'Chat ao vivo'
     },
     userProfile: {
         title: 'Cadastro complementar',

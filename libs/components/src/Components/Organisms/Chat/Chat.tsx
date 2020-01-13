@@ -224,7 +224,7 @@ const SANChat: React.FC<ISANChatProps> = ({
     }, [messages])
 
     return (
-        <SANBox display='flex' flexDirection='column'>
+        <SANBox display='flex' flexDirection='column' minWidth={232}>
             <SANBox
                 bg='grey-solid.1'
                 flex='1'
