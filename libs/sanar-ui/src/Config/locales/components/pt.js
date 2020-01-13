@@ -259,5 +259,9 @@ export default {
     },
     changeCourse: {
         ends: 'Termina em:'
+    },
+    chat: {
+        blocked: 'O chat está desativado.',
+        writeSomething: 'Escrever algo'
     }
 }
