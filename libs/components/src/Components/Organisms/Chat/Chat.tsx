@@ -1,9 +1,10 @@
-import React, { useCallback, useRef, useEffect, useState } from 'react'
+import React, { useCallback, useRef, useEffect, useState, useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
+import { createDebounce } from '@sanar/utils/dist/Debounce'
 
 import { SANButton } from '../../Atoms/Button'
 import { SANBox, ISANBoxProps } from '../../Atoms/Box'
@@ -115,14 +116,7 @@ export const SANChatItemSkeleton: React.FC<ISANBoxProps> = props => (
 
 const skeletons = new Array(3).fill(0).map((_, i) => i)
 const renderSkeleton = index => <SANChatItemSkeleton key={index} />
-
-const letterCount = text =>
-    text
-        ? text
-              .trim()
-              .replace(/&nbsp;/gi, ' ')
-              .replace(/<[^<|>]+?>/gi, '').length
-        : 0
+const maxLetters = 400
 
 const SANChat: React.FC<ISANChatProps> = ({
     image,
@@ -137,10 +131,12 @@ const SANChat: React.FC<ISANChatProps> = ({
     const [submitting, setSubmitting] = useState(false)
     const [hasButton, setHasButton] = useState(false)
     const [inputHeight, setInputHeight] = useState(width > 768 ? 21 : 42)
+    const [letterCount, setLetterCount] = useState(0)
     const scrollRef = useRef<any>()
     const inputRef = useRef<any>()
 
     const handleSend = () => {
+        if (letterCount >= maxLetters) return
         setSubmitting(true)
         !!onSend && onSend(inputRef.current.textContent, { setSubmitting })
         if (!!inputRef && !!inputRef.current) {
@@ -177,6 +173,15 @@ const SANChat: React.FC<ISANChatProps> = ({
         }
     }
 
+    const handleLetterCount = useCallback(() => {
+        if (!!inputRef && !!inputRef.current) {
+            setLetterCount(inputRef.current.innerText.length)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const debounceCountLetter = createDebounce(handleLetterCount, 500)
+
     const renderMessage = useCallback(
         (message, index) => (
             <SANChatItem
@@ -188,8 +193,34 @@ const SANChat: React.FC<ISANChatProps> = ({
         []
     )
 
+    const colorCount = useMemo(() => {
+        if (letterCount <= 300) {
+            return 'grey.6'
+        } else if (letterCount > 300 && letterCount <= 350) {
+            return 'yellow.1'
+        } else if (letterCount > 350 && letterCount <= 400) {
+            return 'yellow.2'
+        } else {
+            return 'error'
+        }
+    }, [letterCount])
+
     useEffect(() => {
         goScrollBottom()
+    }, [messages])
+
+    useEffect(() => {
+        if (!!inputRef && !!inputRef.current) {
+            inputRef.current.addEventListener('input', debounceCountLetter)
+        }
+        return () => {
+            if (!!inputRef && !!inputRef.current) {
+                inputRef.current.removeEventListener(
+                    'input',
+                    debounceCountLetter
+                )
+            }
+        }
     }, [messages])
 
     return (
@@ -276,7 +307,9 @@ const SANChat: React.FC<ISANChatProps> = ({
                         variant='text'
                         size='xsmall'
                         onClick={handleSend}
-                        disabled={loading || submitting}
+                        disabled={
+                            loading || submitting || letterCount >= maxLetters
+                        }
                     >
                         <SANEvaIcon name='paper-plane-outline' />
                     </SANButton>
@@ -284,9 +317,9 @@ const SANChat: React.FC<ISANChatProps> = ({
                         <SANTypography
                             fontWeight='bold'
                             fontSize='xs'
-                            color='grey.6'
+                            color={colorCount}
                         >
-                            0/400
+                            {letterCount}/{maxLetters}
                         </SANTypography>
                     </SANBox>
                 </SANBox>
