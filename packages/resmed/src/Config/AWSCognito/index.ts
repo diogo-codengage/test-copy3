@@ -37,7 +37,7 @@ const onSuccess = (resolve: SuccessCallback, reject: any) => {
                cognitoUserSingleton.signOut();
                reject({
                    code: 'UserLambdaValidationException',
-                   message: 'Ops! Você não possui nenhum curso ativo' 
+                   message: i18n.t('sanarui:authMessages.hasNoSubscription')
                })
            }
 
