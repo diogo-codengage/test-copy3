@@ -45,6 +45,10 @@ export interface ISANBoxProps
     as?: keyof JSX.IntrinsicElements | React.ComponentType<any>
     src?: string
     alt?: string
+    borderBottomRightRadius?: string
+    borderBottomLeftRadius?: string
+    borderTopRightRadius?: string
+    borderTopLeftRadius?: string
 }
 
 const SANBox = SANStyled('div')`
