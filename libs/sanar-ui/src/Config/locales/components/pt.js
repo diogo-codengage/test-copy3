@@ -261,6 +261,7 @@ export default {
         ends: 'Termina em:'
     },
     chat: {
-        blocked: 'O chat está desativado.'
+        blocked: 'O chat está desativado.',
+        writeSomething: 'Escrever algo'
     }
 }

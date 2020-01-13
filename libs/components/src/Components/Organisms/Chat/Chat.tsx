@@ -90,7 +90,7 @@ export const SANChatItem: React.FC<ISANChatItemProps> = ({
 }) => (
     <SANBox display='flex' alignItems='end' px='md' mb='md' {...props}>
         <SANAvatar src={image} size={32} borderRadius={16} />
-        <SANBox ml='md'>
+        <SANBox ml='md' width='calc(100% - 48px)'>
             <SANTypography fontWeight='bold' fontSize='sm' color='grey.6'>
                 {name}
             </SANTypography>
@@ -294,7 +294,7 @@ const SANChat: React.FC<ISANChatProps> = ({
                     <SANAvatar src={image} size={28} borderRadius={14} />
                     <SANBox mx='xs' width='calc(100% - 68px)'>
                         <SANInputStyled
-                            placeholder='Escrever algo'
+                            placeholder={t('chat.writeSomething')}
                             contentEditable
                             ref={inputRef}
                             onKeyPress={handleKeyPress}
