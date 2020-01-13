@@ -13,7 +13,6 @@ export default {
         expert: 'Especialista'
     },
     auth: {
-        hasNoSubscription: 'Ops! Você não possui nenhum curso ativo',
         accessAccount: 'Acessar conta',
         hello: 'Olá, futuro residente!',
         signInDescription:
@@ -313,7 +312,7 @@ export default {
             8: 'Set',
             9: 'Out',
             10: 'Nov',
-            11: 'Dez',
+            11: 'Dez'
         }
     },
     lives: {
