@@ -98,6 +98,7 @@ export default {
         signInWith: 'Entrar com {{social}}'
     },
     authMessages: {
+        hasNoSubscription: 'Ops! Você não possui nenhum curso ativo',
         generic: 'Ocorreu um erro. Tente novamente mais tarde.',
         notAuthorizedException:
             'Desculpe, essa combinação inserida de e-mail e senha está incorreta. Verifique seus dados e tente novamente!',
