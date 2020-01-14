@@ -1,38 +1,76 @@
-import React, { memo, useState, useEffect } from 'react'
+import React, { memo, useMemo } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useApolloClient } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
 
 import { SANBox, SANPage, SANButton } from '@sanar/components'
 
 import RMLive from 'Components/Live'
-import { GET_LIVE, ILiveQuery } from 'Apollo/Lives/Queries/live'
+import { GET_LIVE, ILiveQuery, ILiveVariables } from 'Apollo/Lives/Queries/live'
+import {
+    GET_LIVE_MESSAGES,
+    ILiveMessagesQuery,
+    ILiveMessagesVariables
+} from 'Apollo/Lives/Queries/live-messages'
+
+interface IOptions {
+    fetchMoreResult?: ILiveMessagesQuery
+}
+
+const updateCacheMessages = (prev: ILiveMessagesQuery, options: IOptions) => {
+    const { fetchMoreResult } = options
+    if (!fetchMoreResult) return prev
+
+    console.log({ prev, fetchMoreResult })
+
+    return Object.assign({}, prev, {
+        liveMessages: {
+            ...prev.liveMessages,
+            items: [
+                ...prev.liveMessages.items,
+                ...fetchMoreResult.liveMessages.items
+            ]
+        }
+    })
+}
 
 const RMPreviousLive = memo<RouteComponentProps<{ previousId: string }>>(
-    ({ history, match }) => {
+    ({ history, match: { params } }) => {
         const { t } = useTranslation('resmed')
-        const client = useApolloClient()
-        const [loading, setLoading] = useState(false)
-        const [live, setLive] = useState()
 
-        useEffect(() => {
-            const fetchLive = async () => {
-                setLoading(true)
-                try {
-                    const {
-                        data: { live }
-                    } = await client.query<ILiveQuery>({
-                        query: GET_LIVE,
-                        variables: { id: match.params.previousId }
-                    })
-                    setLive(live)
-                } catch {}
-                setLoading(false)
+        const { loading: loadingLive, data: dataLive } = useQuery<
+            ILiveQuery,
+            ILiveVariables
+        >(GET_LIVE, { variables: { id: params.previousId } })
+
+        const {
+            loading: loadingMessages,
+            data: dataMessages,
+            fetchMore
+        } = useQuery<ILiveMessagesQuery, ILiveMessagesVariables>(
+            GET_LIVE_MESSAGES,
+            { variables: { liveId: params.previousId, limit: 5 } }
+        )
+
+        const messages = useMemo(() => {
+            if (
+                !loadingMessages &&
+                dataMessages &&
+                dataMessages.liveMessages &&
+                dataMessages.liveMessages.items
+            ) {
+                return {
+                    items: dataMessages.liveMessages.items,
+                    total: dataMessages.liveMessages.totalCount
+                }
+            } else {
+                return {
+                    items: [],
+                    total: 0
+                }
             }
-            !!match.params.previousId && fetchLive()
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [match.params.previousId])
+        }, [dataMessages, loadingMessages])
 
         return (
             <SANPage
@@ -67,7 +105,26 @@ const RMPreviousLive = memo<RouteComponentProps<{ previousId: string }>>(
                 }}
             >
                 <SANBox pt={{ md: '8', _: '0' }} pb={{ md: '8', _: 'md' }}>
-                    <RMLive live={live} loading={loading} hasLive={false} />
+                    <RMLive
+                        live={dataLive && dataLive.live}
+                        loadingLive={loadingLive}
+                        hasLive={false}
+                        chat={{
+                            messages: messages.items,
+                            blocked: true,
+                            loading: loadingMessages,
+                            InfiniteProps: {
+                                useWindow: true,
+                                hasMore: messages.total < messages.items.length,
+                                loadMore: console.log
+                                // loadMore: () =>
+                                //     fetchMore({
+                                //         variables: { skip: 20 },
+                                //         updateQuery: updateCacheMessages
+                                //     })
+                            }
+                        }}
+                    />
                 </SANBox>
             </SANPage>
         )

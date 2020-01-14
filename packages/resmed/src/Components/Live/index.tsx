@@ -13,6 +13,7 @@ import {
     SANSkeleton,
     SANChat
 } from '@sanar/components'
+import { ISANChatProps } from '@sanar/components/dist/Components/Organisms/Chat'
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import { ILive } from 'Apollo/Lives/Queries/lives'
@@ -79,13 +80,20 @@ const youtubeId = process.env.REACT_APP_YOUTUBE_ID
 
 interface IRMLiveProps {
     hasLive?: boolean
-    loading?: boolean
+    loadingLive?: boolean
     hasOnline?: boolean
     live?: ILive
+    chat?: ISANChatProps
 }
 
 const RMLive = memo<IRMLiveProps>(
-    ({ live, loading = false, hasLive = true, hasOnline = false }) => {
+    ({
+        live,
+        loadingLive = false,
+        hasLive = true,
+        hasOnline = false,
+        chat
+    }) => {
         const { t } = useTranslation('resmed')
         const { me } = useAuthContext()
         const [hasLoadedVideo, setLoadedVideo] = useState(false)
@@ -107,7 +115,9 @@ const RMLive = memo<IRMLiveProps>(
                         flexDirection={{ lg: 'row', _: 'column' }}
                     >
                         <VideoWrapper>
-                            {(!hasLoadedVideo || loading) && <SkeletonVideo />}
+                            {(!hasLoadedVideo || loadingLive) && (
+                                <SkeletonVideo />
+                            )}
                             <Content
                                 src={videoPath}
                                 allowFullScreen
@@ -128,18 +138,15 @@ const RMLive = memo<IRMLiveProps>(
                                     : t('lives.chat')}
                             </SANTypography>
                             <SANChat
+                                {...chat}
                                 image={me.profilePicture}
-                                InfiniteProps={{}}
-                                messages={[]}
-                                onSend={console.log}
                                 blocked={!hasOnline}
-                                loading={false}
                             />
                         </SANBox>
                     </SANBox>
                 </SANLayoutContainer>
                 <SANLayoutContainer>
-                    {!loading && !!live ? (
+                    {!loadingLive && !!live ? (
                         <>
                             <SANTypography
                                 color='grey.7'
