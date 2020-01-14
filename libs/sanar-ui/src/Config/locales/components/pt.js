@@ -259,7 +259,8 @@ export default {
     },
     changeCourse: {
         ends: 'Termina em:',
-        finished: 'Terminou em:'
+        finished: 'Terminou em:',
+        notStarted: 'Libera em:'
     },
     chat: {
         blocked: 'O chat está desativado.',
