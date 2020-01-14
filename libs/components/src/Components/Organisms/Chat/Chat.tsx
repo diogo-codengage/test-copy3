@@ -13,8 +13,8 @@ import { SANEvaIcon } from '../../Atoms/EvaIcon'
 import { SANScroll } from '../../Atoms/Scroll'
 import { SANTypography } from '../../Atoms/Typography'
 import {
-    SANInfiniteScroll,
-    ISANInfiniteScrollProps
+    ISANInfiniteScrollProps,
+    SANInfiniteScrollLoader
 } from '../../Atoms/InfiniteScroll'
 
 import SANChatEmpty from './Empty'
@@ -68,9 +68,10 @@ interface IParams {
 }
 
 export interface ISANChatProps {
+    hasMore: boolean
+    loadMore: () => void
     image?: string
     messages: any[]
-    InfiniteProps?: ISANInfiniteScrollProps
     onSend?: (value: string, params: IParams) => void
     blocked?: boolean
     loading?: boolean
@@ -80,7 +81,8 @@ const maxLetters = 400
 
 const SANChat: React.FC<ISANChatProps> = ({
     image,
-    InfiniteProps,
+    hasMore,
+    loadMore,
     messages,
     onSend,
     blocked,
@@ -133,6 +135,20 @@ const SANChat: React.FC<ISANChatProps> = ({
         }
     }
 
+    function handleScrollUp(obj) {
+        console.log({ hasMore })
+        if (
+            !!scrollRef &&
+            !!scrollRef.current &&
+            scrollRef.current.scrollTop <= 60 &&
+            hasMore
+        ) {
+            loadMore()
+        }
+
+        !hasButton && setHasButton(true)
+    }
+
     const handleLetterCount = useCallback(() => {
         if (!!inputRef && !!inputRef.current) {
             setLetterCount(inputRef.current.innerText.length)
@@ -181,7 +197,7 @@ const SANChat: React.FC<ISANChatProps> = ({
                 )
             }
         }
-    }, [messages])
+    }, [inputRef.current])
 
     const content = useMemo(() => {
         if (loading) {
@@ -205,15 +221,12 @@ const SANChat: React.FC<ISANChatProps> = ({
                 <SANScroll
                     containerRef={ref => (scrollRef.current = ref)}
                     onYReachEnd={() => setHasButton(false)}
-                    onScrollUp={() => !hasButton && setHasButton(true)}
+                    onScrollUp={() =>
+                        handleScrollUp.call(this, { hasMore, loadMore })
+                    }
                 >
-                    <SANInfiniteScroll
-                        isReverse
-                        threshold={54}
-                        {...InfiniteProps}
-                    >
-                        {content}
-                    </SANInfiniteScroll>
+                    {hasMore && <SANInfiniteScrollLoader key='chat-loader' />}
+                    {content}
                 </SANScroll>
                 {hasButton && (
                     <SANBox

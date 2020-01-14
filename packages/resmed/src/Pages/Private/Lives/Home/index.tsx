@@ -59,6 +59,13 @@ const RMSpecialty = memo<RouteComponentProps>(({ history }) => {
                         live={data.activeLive}
                         hasOnline={status.hasOnline}
                         hasLive={status.hasLive}
+                        chat={{
+                            messages: [],
+                            blocked: false,
+                            loading: false,
+                            hasMore: false,
+                            loadMore: () => {}
+                        }}
                     />
                 ) : (
                     <SANEmpty title={t('lives.empty')} />

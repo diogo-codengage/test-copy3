@@ -60,11 +60,8 @@ const Example = () => {
             loading={boolean('Loading', false)}
             messages={messages}
             onSend={handleSetValue}
-            InfiniteProps={{
-                loadMore: loadMore,
-                hasMore: false,
-                isReverse: true
-            }}
+            loadMore={loadMore}
+            hasMore={false}
         />
     )
 }

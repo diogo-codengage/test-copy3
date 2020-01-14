@@ -83,17 +83,11 @@ interface IRMLiveProps {
     loadingLive?: boolean
     hasOnline?: boolean
     live?: ILive
-    chat?: ISANChatProps
+    chat: ISANChatProps
 }
 
 const RMLive = memo<IRMLiveProps>(
-    ({
-        live,
-        loadingLive = false,
-        hasLive = true,
-        hasOnline = false,
-        chat
-    }) => {
+    ({ live, loadingLive = false, hasLive = true, chat }) => {
         const { t } = useTranslation('resmed')
         const { me } = useAuthContext()
         const [hasLoadedVideo, setLoadedVideo] = useState(false)
@@ -133,14 +127,18 @@ const RMLive = memo<IRMLiveProps>(
                                 mb='sm'
                                 ml={{ lg: '0', _: 'md' }}
                             >
-                                {hasOnline
+                                {!chat || !chat.blocked
                                     ? t('lives.liveChat')
                                     : t('lives.chat')}
                             </SANTypography>
                             <SANChat
-                                {...chat}
+                                hasMore={chat.hasMore}
+                                loadMore={chat.loadMore}
+                                messages={chat.messages}
+                                onSend={chat.onSend}
+                                blocked={chat.blocked}
+                                loading={chat.loading}
                                 image={me.profilePicture}
-                                blocked={!hasOnline}
                             />
                         </SANBox>
                     </SANBox>
