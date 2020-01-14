@@ -77,6 +77,7 @@ export interface ISANChangeCourseProps {
     ContinueProps?: IContinue
     hasActive?: boolean
     expired?: boolean
+    notStarted?: boolean
 }
 
 export interface ISANContinueProps extends IContinue {
@@ -131,20 +132,15 @@ const Blocked = () => {
         }
     } = useThemeContext()
 
-    const flexProps = useMemo(
-        () => ({
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'absolute',
-            width: '100%',
-            bottom: 0
-        }),
-        []
-    )
-
     return (
-        <SANBox {...flexProps}>
+        <SANBox
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
+            position='absolute'
+            width='100%'
+            bottom='0'
+        >
             <SANBox
                 as='img'
                 src={blocked}
@@ -168,13 +164,14 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
     loading,
     hasActive,
     expired,
+    notStarted,
     ...props
 }) => {
     const { t } = useTranslation('components')
 
     const onClick = e => {
         e.stopPropagation()
-        if (expired) return
+        if (expired || notStarted) return
         !!onChange && onChange(id)
     }
 
@@ -187,15 +184,19 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
             backgroundSize='cover'
             backgroundImage={`url(${coverPicture})`}
             borderRadius={hasActive ? '0px' : 'base'}
-            opacity={expired ? 0.7 : 1}
+            opacity={expired || notStarted ? 0.7 : 1}
             hasHover={!ContinueProps}
             cursor={
-                expired ? 'not-allowed' : !ContinueProps ? 'pointer' : 'default'
+                expired || notStarted
+                    ? 'not-allowed'
+                    : !ContinueProps
+                    ? 'pointer'
+                    : 'default'
             }
-            height={expired ? 106 : 'auto'}
+            height={expired || notStarted ? 106 : 'auto'}
             {...props}
         >
-            {expired && <Blocked />}
+            {(expired || notStarted) && <Blocked />}
             <SANBox
                 px={hasActive ? 'md' : 'sm'}
                 pt={!!ContinueProps ? 'xl' : 'md'}
@@ -221,13 +222,15 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
                         <SANTypography color='white.6' fontSize='sm'>{`${
                             expired
                                 ? t('changeCourse.finished')
+                                : notStarted
+                                ? t('changeCourse.notStarted')
                                 : t('changeCourse.ends')
                         } ${date}`}</SANTypography>
                     </SANBox>
                 </SANSkeleton>
                 {!!ContinueProps && <SANContinue {...ContinueProps} />}
             </SANBox>
-            {!expired && (
+            {!expired && !notStarted && (
                 <SANBox
                     display='flex '
                     alignItems='center'
