@@ -23,7 +23,7 @@ export interface ILesson {
     id: string
     name: string
     status: 'active' | 'inactive' | 'construction'
-    completed: boolean
+    completed?: boolean
 }
 
 export interface ILessonsQuery {
@@ -58,6 +58,16 @@ export const GET_LESSON_LAST_ACCESSED = gql`
 `
 
 export const GET_LESSONS = gql`
+    query Lessons($parentId: ID!) {
+        lessons(where: { parentId: $parentId }) {
+            id
+            name
+            status
+        }
+    }
+`
+
+export const GET_LESSONS_COMPLETED = gql`
     query Lessons($parentId: ID!) {
         lessons(where: { parentId: $parentId }) {
             id
