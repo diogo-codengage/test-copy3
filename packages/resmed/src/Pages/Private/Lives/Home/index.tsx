@@ -5,7 +5,13 @@ import { useTranslation } from 'react-i18next'
 import { useQuery } from '@apollo/react-hooks'
 import { isAfter, isBefore, isToday } from 'date-fns'
 
-import { SANBox, SANPage, SANEmpty } from '@sanar/components'
+import {
+    SANBox,
+    SANPage,
+    SANEmpty,
+    SANErrorBoundary,
+    SANGenericError
+} from '@sanar/components'
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import RMLive from 'Components/Live'
@@ -16,6 +22,19 @@ import {
 
 import RMNexts from './Nexts'
 import RMPrevious from './Previous'
+
+const ErrorBoundary = props => (
+    <SANErrorBoundary
+        {...props}
+        component={
+            <SANGenericError
+                TypographyProps={{
+                    color: 'grey.5'
+                }}
+            />
+        }
+    />
+)
 
 const RMSpecialty = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
@@ -69,8 +88,12 @@ const RMSpecialty = memo<RouteComponentProps>(({ history }) => {
                     <SANEmpty title={t('lives.empty')} />
                 )}
             </SANBox>
-            <RMNexts />
-            <RMPrevious />
+            <ErrorBoundary>
+                <RMNexts />
+            </ErrorBoundary>
+            <ErrorBoundary>
+                <RMPrevious />
+            </ErrorBoundary>
         </SANPage>
     )
 })

@@ -223,7 +223,7 @@ const SANChat: React.FC<ISANChatProps> = ({
             <SANBox
                 bg='grey-solid.1'
                 flex='1'
-                height='314px'
+                height='305px'
                 borderRadius='base'
                 position='relative'
             >

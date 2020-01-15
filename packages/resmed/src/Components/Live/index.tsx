@@ -119,7 +119,10 @@ const RMLive = memo<IRMLiveProps>(
                                 onLoad={() => setLoadedVideo(true)}
                             />
                         </VideoWrapper>
-                        <SANBox mb={{ lg: '0', _: 'xl' }}>
+                        <SANBox
+                            mb={{ lg: '0', _: 'xl' }}
+                            width={{ lg: '24%', _: '100%' }}
+                        >
                             <SANTypography
                                 color='grey.7'
                                 fontWeight='bold'
