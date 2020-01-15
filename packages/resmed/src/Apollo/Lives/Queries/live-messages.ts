@@ -24,7 +24,7 @@ export interface ILiveMessagesVariables {
 export const GET_LIVE_MESSAGES = gql`
     query LiveMessages($limit: Int, $skip: Int, $liveId: ID!) {
         liveMessages(
-            order: ASC
+            order: DESC
             limit: $limit
             skip: $skip
             where: { liveId: $liveId }

@@ -12,10 +12,7 @@ import { SANAvatar } from '../../Atoms/Avatar'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
 import { SANScroll } from '../../Atoms/Scroll'
 import { SANTypography } from '../../Atoms/Typography'
-import {
-    ISANInfiniteScrollProps,
-    SANInfiniteScrollLoader
-} from '../../Atoms/InfiniteScroll'
+import { SANInfiniteScrollLoader } from '../../Atoms/InfiniteScroll'
 
 import SANChatEmpty from './Empty'
 import { SANChatItem, renderSkeleton, skeletons } from './Item'
@@ -135,14 +132,8 @@ const SANChat: React.FC<ISANChatProps> = ({
         }
     }
 
-    function handleScrollUp(obj) {
-        console.log({ hasMore })
-        if (
-            !!scrollRef &&
-            !!scrollRef.current &&
-            scrollRef.current.scrollTop <= 60 &&
-            hasMore
-        ) {
+    const handleScrollMessages = () => {
+        if (scrollRef.current.scrollTop <= 60 && hasMore) {
             loadMore()
         }
 
@@ -183,7 +174,18 @@ const SANChat: React.FC<ISANChatProps> = ({
 
     useEffect(() => {
         goScrollBottom()
-    }, [messages])
+        if (!!scrollRef && !!scrollRef.current) {
+            scrollRef.current.addEventListener('scroll', handleScrollMessages)
+        }
+        return () => {
+            if (!!scrollRef && !!scrollRef.current) {
+                scrollRef.current.removeEventListener(
+                    'scroll',
+                    handleScrollMessages
+                )
+            }
+        }
+    }, [loading])
 
     useEffect(() => {
         if (!!inputRef && !!inputRef.current) {
@@ -221,9 +223,6 @@ const SANChat: React.FC<ISANChatProps> = ({
                 <SANScroll
                     containerRef={ref => (scrollRef.current = ref)}
                     onYReachEnd={() => setHasButton(false)}
-                    onScrollUp={() =>
-                        handleScrollUp.call(this, { hasMore, loadMore })
-                    }
                 >
                     {hasMore && <SANInfiniteScrollLoader key='chat-loader' />}
                     {content}

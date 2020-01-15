@@ -74,15 +74,6 @@ const RMPreviousLive: React.FC<RouteComponentProps<{ previousId: string }>> = ({
         }
     }, [dataMessages, loadingMessages])
 
-    const handleLoadMore = () => {
-        fetchMore({
-            variables: {
-                skip: messages.items.length
-            },
-            updateQuery: updateCacheMessages
-        })
-    }
-
     return (
         <SANPage
             BoxProps={{
@@ -119,11 +110,17 @@ const RMPreviousLive: React.FC<RouteComponentProps<{ previousId: string }>> = ({
                     loadingLive={loadingLive}
                     hasLive={false}
                     chat={{
-                        messages: messages.items,
+                        messages: messages.items.reverse(),
                         blocked: true,
                         loading: loadingMessages,
                         hasMore: messages.total > messages.items.length,
-                        loadMore: handleLoadMore
+                        loadMore: () =>
+                            fetchMore({
+                                variables: {
+                                    skip: messages.items.length
+                                },
+                                updateQuery: updateCacheMessages
+                            })
                     }}
                 />
             </SANBox>
