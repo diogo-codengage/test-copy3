@@ -9,6 +9,7 @@ export interface ICourse {
     infos?: IInfo[]
     accessed: boolean
     expireDate: string
+    startDate: string
     images: IImages
     lastAccessed: ILastAccessed
 }
@@ -32,6 +33,7 @@ export const GET_ACTIVE_COURSE = gql`
                 title
                 body
             }
+            startDate
             expireDate
             accessed
             images {

@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import { SANSpin } from '../Spin'
 
-interface IProps {
+export interface ISANInfiniteScrollProps {
     element?: string
     hasMore?: boolean
     initialLoad?: boolean
@@ -30,7 +30,7 @@ const SANSpinStyled = styled(SANSpin)`
     }
 `
 
-const SANButton: React.FC<IProps> = props => {
+const SANInfiniteScroll: React.FC<ISANInfiniteScrollProps> = props => {
     const customProps = useMemo(
         () => ({
             loader: !props.loader ? <SANSpinStyled /> : props.loader,
@@ -42,4 +42,4 @@ const SANButton: React.FC<IProps> = props => {
     return <InfiniteScroll {...customProps} />
 }
 
-export default SANButton
+export default SANInfiniteScroll

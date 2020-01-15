@@ -258,6 +258,12 @@ export default {
         close: 'Fechar'
     },
     changeCourse: {
-        ends: 'Termina em:'
+        ends: 'Termina em:',
+        finished: 'Terminou em:',
+        notStarted: 'Libera em:'
+    },
+    chat: {
+        blocked: 'O chat está desativado.',
+        writeSomething: 'Escrever algo'
     }
 }

@@ -23,6 +23,7 @@ const initialCourse: ICourse = {
     infos: [],
     accessed: false,
     expireDate: '',
+    startDate: '',
     images: {
         original: ''
     },

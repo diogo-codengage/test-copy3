@@ -10,7 +10,9 @@ import {
     SANPage,
     SANProgress,
     SANTypography,
-    SANIcon
+    SANIcon,
+    SANErrorBoundary,
+    SANGenericError
 } from '@sanar/components'
 
 import {
@@ -69,51 +71,57 @@ const RMSpecialty = ({
     )
 
     return (
-        <>
-            <SANPage
-                hasContainer
-                ContainerProps={{
-                    flex: 1,
-                    display: 'flex',
-                    flexDirection: 'column'
-                }}
-                BoxProps={{
-                    bg: 'grey-solid.1',
-                    py: { xs: '8', _: 'xl' },
-                    display: 'flex',
-                    flexDirection: 'column'
-                }}
-                HeaderProps={{
-                    onBack: () => {
-                        history.push('/inicio/curso')
-                        handleTrack('Voltar button clicked')
-                    },
-                    SessionTitleProps: {
-                        title:
-                            !loading && data ? (
-                                data.specialty.name
-                            ) : (
-                                <SANIcon type='loading' />
-                            )
-                    },
-                    ExtraProps: {
-                        md: 7
-                    },
-                    extra: (
-                        <Progress
-                            loading={loading}
-                            percent={
-                                !loading && !!data
-                                    ? data.specialty.progress.me
-                                    : 0
-                            }
-                        />
-                    )
-                }}
+        <SANPage
+            hasContainer
+            ContainerProps={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column'
+            }}
+            BoxProps={{
+                bg: 'grey-solid.1',
+                py: { xs: '8', _: 'xl' },
+                display: 'flex',
+                flexDirection: 'column'
+            }}
+            HeaderProps={{
+                onBack: () => {
+                    history.push('/inicio/curso')
+                    handleTrack('Voltar button clicked')
+                },
+                SessionTitleProps: {
+                    title:
+                        !loading && data ? (
+                            data.specialty.name
+                        ) : (
+                            <SANIcon type='loading' />
+                        )
+                },
+                ExtraProps: {
+                    md: 7
+                },
+                extra: (
+                    <Progress
+                        loading={loading}
+                        percent={
+                            !loading && !!data ? data.specialty.progress.me : 0
+                        }
+                    />
+                )
+            }}
+        >
+            <SANErrorBoundary
+                component={
+                    <SANGenericError
+                        TypographyProps={{
+                            color: 'grey.5'
+                        }}
+                    />
+                }
             >
                 <RMSubspecialties />
-            </SANPage>
-        </>
+            </SANErrorBoundary>
+        </SANPage>
     )
 }
 

@@ -1,1 +1,1 @@
-export { default as SANScroll } from './Scroll'
+export { default as SANScroll, ISANScrollProps } from './Scroll'
