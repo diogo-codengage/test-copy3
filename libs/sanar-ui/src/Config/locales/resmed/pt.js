@@ -334,7 +334,8 @@ export default {
             back: 'Voltar para lives'
         },
         chat: 'Chat',
-        liveChat: 'Chat ao vivo'
+        liveChat: 'Chat ao vivo',
+        sendMessageError: 'Ocorreu um erro ao enviar sua mensagem'
     },
     userProfile: {
         title: 'Cadastro complementar',
