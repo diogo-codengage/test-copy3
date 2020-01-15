@@ -39,4 +39,29 @@
             }
         }
     }
+
+    &__full-bar {
+        & .ant-tabs {
+            background-color: #ffffff !important;
+        }
+        & .ant-tabs-bar {
+            border: none;
+        }
+        & .ant-tabs-nav {
+            width: 100% !important;
+
+            & > div {
+                display: flex;
+
+                & .ant-tabs-tab-active {
+                    border-color: transparent !important;
+                    background-color: transparent !important;
+                }
+                & .ant-tabs-tab {
+                    flex: 1;
+                    text-align: center;
+                }
+            }
+        }
+    }
 }
