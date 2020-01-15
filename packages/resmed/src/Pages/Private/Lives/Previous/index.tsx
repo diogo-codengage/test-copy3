@@ -19,7 +19,10 @@ interface IOptions {
     fetchMoreResult?: ILiveMessagesQuery
 }
 
-const updateCacheMessages = (prev: ILiveMessagesQuery, options: IOptions) => {
+export const updateCacheMessages = (
+    prev: ILiveMessagesQuery,
+    options: IOptions
+) => {
     const { fetchMoreResult } = options
     if (!fetchMoreResult) return prev
 
@@ -52,7 +55,7 @@ const RMPreviousLive: React.FC<RouteComponentProps<{ previousId: string }>> = ({
     } = useQuery<ILiveMessagesQuery, ILiveMessagesVariables>(
         GET_LIVE_MESSAGES,
         {
-            variables: { liveId: params.previousId, limit: 5 }
+            variables: { liveId: params.previousId, limit: 25 }
         }
     )
 

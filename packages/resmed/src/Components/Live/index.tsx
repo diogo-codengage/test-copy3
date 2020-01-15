@@ -1,4 +1,4 @@
-import React, { useState, useMemo, memo } from 'react'
+import React, { useState, useMemo, forwardRef } from 'react'
 
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
@@ -13,7 +13,7 @@ import {
     SANSkeleton,
     SANChat
 } from '@sanar/components'
-import { ISANChatProps } from '@sanar/components/dist/Components/Organisms/Chat'
+import { ISANChatProps, ISANChatRef } from '@sanar/components/dist/Components/Organisms/Chat'
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import { ILive } from 'Apollo/Lives/Queries/lives'
@@ -86,8 +86,8 @@ interface IRMLiveProps {
     chat: ISANChatProps
 }
 
-const RMLive = memo<IRMLiveProps>(
-    ({ live, loadingLive = false, hasLive = true, chat }) => {
+const RMLive = forwardRef<ISANChatRef, IRMLiveProps>(
+    ({ live, loadingLive = false, hasLive = true, chat }, ref) => {
         const { t } = useTranslation('resmed')
         const { me } = useAuthContext()
         const [hasLoadedVideo, setLoadedVideo] = useState(false)
@@ -135,6 +135,7 @@ const RMLive = memo<IRMLiveProps>(
                                     : t('lives.chat')}
                             </SANTypography>
                             <SANChat
+                                ref={ref}
                                 hasMore={chat.hasMore}
                                 loadMore={chat.loadMore}
                                 messages={chat.messages}

@@ -1,4 +1,12 @@
-import React, { useCallback, useRef, useEffect, useState, useMemo } from 'react'
+import React, {
+    useCallback,
+    useRef,
+    useEffect,
+    useState,
+    useMemo,
+    useImperativeHandle,
+    forwardRef
+} from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
@@ -74,249 +82,261 @@ export interface ISANChatProps {
     loading?: boolean
 }
 
+export interface ISANChatRef {
+    goScrollBottom: (pos?: number) => void
+}
+
 const maxLetters = 400
 
-const SANChat: React.FC<ISANChatProps> = ({
-    image,
-    hasMore,
-    loadMore,
-    messages,
-    onSend,
-    blocked,
-    loading
-}) => {
-    const { t } = useTranslation('components')
-    const { width } = useWindowSize()
-    const [submitting, setSubmitting] = useState(false)
-    const [hasButton, setHasButton] = useState(false)
-    const [inputHeight, setInputHeight] = useState(width > 768 ? 21 : 42)
-    const [letterCount, setLetterCount] = useState(0)
-    const scrollRef = useRef<any>()
-    const inputRef = useRef<any>()
+const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
+    ({ image, hasMore, loadMore, messages, onSend, blocked, loading }, ref) => {
+        const { t } = useTranslation('components')
+        const { width } = useWindowSize()
+        const [submitting, setSubmitting] = useState(false)
+        const [hasButton, setHasButton] = useState(false)
+        const [inputHeight, setInputHeight] = useState(width > 768 ? 21 : 42)
+        const [letterCount, setLetterCount] = useState(0)
+        const scrollRef = useRef<any>()
+        const inputRef = useRef<any>()
 
-    const handleSend = () => {
-        if (letterCount >= maxLetters) return
-        setSubmitting(true)
-        !!onSend && onSend(inputRef.current.textContent, { setSubmitting })
-        if (!!inputRef && !!inputRef.current) {
-            inputRef.current.textContent = undefined
-            inputRef.current.focus()
-            setInputHeight(21)
-        }
-    }
-
-    const handleKeyPress = e => {
-        if (e.charCode === 13) {
-            e.preventDefault()
-            handleSend()
-        }
-    }
-
-    const goScrollBottom = (pos?: number) => {
-        if (!!scrollRef && !!scrollRef.current) {
-            scrollRef.current.scrollTo(
-                0,
-                Number(pos) || scrollRef.current.scrollHeight
-            )
-        }
-    }
-
-    const handleScroll = () => {
-        if (!!inputRef && !!inputRef.current) {
-            if (
-                inputRef.current.scrollHeight <= 84 &&
-                !!inputRef.current.textContent
-            ) {
-                setInputHeight(inputRef.current.scrollHeight)
-            }
-            if (!inputRef.current.textContent) {
+        const handleSend = () => {
+            if (letterCount >= maxLetters) return
+            setSubmitting(true)
+            !!onSend &&
+                onSend(inputRef.current.textContent, {
+                    setSubmitting
+                })
+            if (!!inputRef && !!inputRef.current) {
+                inputRef.current.textContent = undefined
+                inputRef.current.focus()
                 setInputHeight(21)
             }
         }
-    }
 
-    const handleScrollMessages = () => {
-        if (scrollRef.current.scrollTop <= 60 && hasMore) {
-            const position = scrollRef.current.scrollHeight
-            loadMore().finally(() => goScrollBottom(position))
+        const handleKeyPress = e => {
+            if (e.charCode === 13) {
+                e.preventDefault()
+                handleSend()
+            }
         }
 
-        !hasButton && setHasButton(true)
-    }
-
-    const handleLetterCount = useCallback(() => {
-        if (!!inputRef && !!inputRef.current) {
-            setLetterCount(inputRef.current.innerText.length)
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    const debounceCountLetter = createDebounce(handleLetterCount, 500)
-
-    const renderMessage = useCallback(
-        (message, index) => (
-            <SANChatItem
-                {...message}
-                key={index}
-                mt={index === 0 ? 'md' : '0px'}
-            />
-        ),
-        [messages]
-    )
-
-    const colorCount = useMemo(() => {
-        if (letterCount <= 300) {
-            return 'grey.6'
-        } else if (letterCount > 300 && letterCount <= 350) {
-            return 'yellow.1'
-        } else if (letterCount > 350 && letterCount <= 400) {
-            return 'yellow.2'
-        } else {
-            return 'error'
-        }
-    }, [letterCount])
-
-    useEffect(() => {
-        goScrollBottom()
-    }, [loading])
-
-    useEffect(() => {
-        if (!!scrollRef && !!scrollRef.current) {
-            scrollRef.current.addEventListener('scroll', handleScrollMessages)
-        }
-        return () => {
+        const goScrollBottom = (pos?: number) => {
             if (!!scrollRef && !!scrollRef.current) {
-                scrollRef.current.removeEventListener(
+                scrollRef.current.scrollTo(
+                    0,
+                    Number(pos) || scrollRef.current.scrollHeight
+                )
+            }
+        }
+
+        const handleScroll = () => {
+            if (!!inputRef && !!inputRef.current) {
+                if (
+                    inputRef.current.scrollHeight <= 84 &&
+                    !!inputRef.current.textContent
+                ) {
+                    setInputHeight(inputRef.current.scrollHeight)
+                }
+                if (!inputRef.current.textContent) {
+                    setInputHeight(21)
+                }
+            }
+        }
+
+        const handleScrollMessages = () => {
+            if (scrollRef.current.scrollTop <= 60 && hasMore) {
+                const position = scrollRef.current.scrollHeight
+                loadMore().finally(() => goScrollBottom(position))
+            }
+
+            !hasButton && setHasButton(true)
+        }
+
+        const handleLetterCount = useCallback(() => {
+            if (!!inputRef && !!inputRef.current) {
+                setLetterCount(inputRef.current.innerText.length)
+            }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [])
+
+        const debounceCountLetter = createDebounce(handleLetterCount, 500)
+
+        const renderMessage = useCallback(
+            (message, index) => (
+                <SANChatItem
+                    {...message}
+                    key={index}
+                    mt={index === 0 ? 'md' : '0px'}
+                />
+            ),
+            [messages]
+        )
+
+        const colorCount = useMemo(() => {
+            if (letterCount <= 300) {
+                return 'grey.6'
+            } else if (letterCount > 300 && letterCount <= 350) {
+                return 'yellow.1'
+            } else if (letterCount > 350 && letterCount <= 400) {
+                return 'yellow.2'
+            } else {
+                return 'error'
+            }
+        }, [letterCount])
+
+        useEffect(() => {
+            goScrollBottom()
+        }, [loading])
+
+        useEffect(() => {
+            if (!!scrollRef && !!scrollRef.current) {
+                scrollRef.current.addEventListener(
                     'scroll',
                     handleScrollMessages
                 )
             }
-        }
-    }, [scrollRef, messages, hasButton])
-
-    useEffect(() => {
-        if (!!inputRef && !!inputRef.current) {
-            inputRef.current.addEventListener('input', debounceCountLetter)
-        }
-        return () => {
-            if (!!inputRef && !!inputRef.current) {
-                inputRef.current.removeEventListener(
-                    'input',
-                    debounceCountLetter
-                )
+            return () => {
+                if (!!scrollRef && !!scrollRef.current) {
+                    scrollRef.current.removeEventListener(
+                        'scroll',
+                        handleScrollMessages
+                    )
+                }
             }
-        }
-    }, [inputRef.current])
+        }, [scrollRef, messages, hasButton])
 
-    const content = useMemo(() => {
-        if (loading) {
-            return skeletons.map(renderSkeleton)
-        } else if (!loading && !!messages && !!messages.length) {
-            return messages.map(renderMessage)
-        } else {
-            return <SANChatEmpty />
-        }
-    }, [loading, messages])
+        useEffect(() => {
+            if (!!inputRef && !!inputRef.current) {
+                inputRef.current.addEventListener('input', debounceCountLetter)
+            }
+            return () => {
+                if (!!inputRef && !!inputRef.current) {
+                    inputRef.current.removeEventListener(
+                        'input',
+                        debounceCountLetter
+                    )
+                }
+            }
+        }, [inputRef.current])
 
-    return (
-        <SANBox display='flex' flexDirection='column' minWidth={232}>
-            <SANBox
-                bg='grey-solid.1'
-                flex='1'
-                height='305px'
-                borderRadius='base'
-                position='relative'
-            >
-                <SANScroll
-                    containerRef={ref => (scrollRef.current = ref)}
-                    onYReachEnd={() => setHasButton(false)}
+        const content = useMemo(() => {
+            if (loading) {
+                return skeletons.map(renderSkeleton)
+            } else if (!loading && !!messages && !!messages.length) {
+                return messages.map(renderMessage)
+            } else {
+                return <SANChatEmpty />
+            }
+        }, [loading, messages])
+
+        useImperativeHandle(ref, () => ({
+            goScrollBottom: () => goScrollBottom()
+        }))
+
+        return (
+            <SANBox display='flex' flexDirection='column' minWidth={232}>
+                <SANBox
+                    bg='grey-solid.1'
+                    flex='1'
+                    height='305px'
+                    borderRadius='base'
+                    position='relative'
                 >
-                    {hasMore && <SANInfiniteScrollLoader key='chat-loader' />}
-                    {content}
-                </SANScroll>
-                {hasButton && (
-                    <SANBox
-                        position='absolute'
-                        bottom='xs'
-                        left='calc(50% - 16px)'
+                    <SANScroll
+                        containerRef={ref => (scrollRef.current = ref)}
+                        onYReachEnd={() => setHasButton(false)}
                     >
+                        {hasMore && (
+                            <SANInfiniteScrollLoader key='chat-loader' />
+                        )}
+                        {content}
+                    </SANScroll>
+                    {hasButton && (
+                        <SANBox
+                            position='absolute'
+                            bottom='xs'
+                            left='calc(50% - 16px)'
+                        >
+                            <SANButton
+                                circle
+                                variant='solid'
+                                color='primary'
+                                size='small'
+                                onClick={goScrollBottom}
+                            >
+                                <SANEvaIcon name='arrow-downward-outline' />
+                            </SANButton>
+                        </SANBox>
+                    )}
+                </SANBox>
+                {blocked ? (
+                    <SANBox
+                        display='flex'
+                        alignItems='center'
+                        justifyContent='center'
+                        border='1px solid'
+                        borderColor='grey.2'
+                        borderBottomRightRadius='base'
+                        borderBottomLeftRadius='base'
+                        bg='grey-solid.1'
+                        py='md'
+                    >
+                        <SANTypography fontSize='md' color='grey.6'>
+                            {t('chat.blocked')}
+                        </SANTypography>
+                    </SANBox>
+                ) : (
+                    <SANBox
+                        display='flex'
+                        alignItems='center'
+                        justifyContent='space-between'
+                        border='1px solid'
+                        borderColor='grey.2'
+                        borderRadius='base'
+                        px='md'
+                        pt='sm'
+                        pb='lg'
+                        bg='white.10'
+                        position='relative'
+                    >
+                        <SANAvatar src={image} size={28} borderRadius={14} />
+                        <SANBox mx='xs' width='calc(100% - 68px)'>
+                            <SANInputStyled
+                                placeholder={t('chat.writeSomething')}
+                                contentEditable
+                                ref={inputRef}
+                                onKeyPress={handleKeyPress}
+                                onScroll={handleScroll}
+                                style={{ height: inputHeight }}
+                            />
+                        </SANBox>
                         <SANButton
                             circle
-                            variant='solid'
-                            color='primary'
-                            size='small'
-                            onClick={goScrollBottom}
+                            variant='text'
+                            size='xsmall'
+                            onClick={handleSend}
+                            disabled={
+                                loading ||
+                                submitting ||
+                                letterCount >= maxLetters
+                            }
                         >
-                            <SANEvaIcon name='arrow-downward-outline' />
+                            <SANEvaIcon name='paper-plane-outline' />
                         </SANButton>
+                        <SANBox position='absolute' bottom='0' right='48px'>
+                            <SANTypography
+                                fontWeight='bold'
+                                fontSize='xs'
+                                color={colorCount}
+                            >
+                                {letterCount}/{maxLetters}
+                            </SANTypography>
+                        </SANBox>
                     </SANBox>
                 )}
             </SANBox>
-            {blocked ? (
-                <SANBox
-                    display='flex'
-                    alignItems='center'
-                    justifyContent='center'
-                    border='1px solid'
-                    borderColor='grey.2'
-                    borderBottomRightRadius='base'
-                    borderBottomLeftRadius='base'
-                    bg='grey-solid.1'
-                    py='md'
-                >
-                    <SANTypography fontSize='md' color='grey.6'>
-                        {t('chat.blocked')}
-                    </SANTypography>
-                </SANBox>
-            ) : (
-                <SANBox
-                    display='flex'
-                    alignItems='center'
-                    justifyContent='space-between'
-                    border='1px solid'
-                    borderColor='grey.2'
-                    borderRadius='base'
-                    px='md'
-                    pt='sm'
-                    pb='lg'
-                    bg='white.10'
-                    position='relative'
-                >
-                    <SANAvatar src={image} size={28} borderRadius={14} />
-                    <SANBox mx='xs' width='calc(100% - 68px)'>
-                        <SANInputStyled
-                            placeholder={t('chat.writeSomething')}
-                            contentEditable
-                            ref={inputRef}
-                            onKeyPress={handleKeyPress}
-                            onScroll={handleScroll}
-                            style={{ height: inputHeight }}
-                        />
-                    </SANBox>
-                    <SANButton
-                        circle
-                        variant='text'
-                        size='xsmall'
-                        onClick={handleSend}
-                        disabled={
-                            loading || submitting || letterCount >= maxLetters
-                        }
-                    >
-                        <SANEvaIcon name='paper-plane-outline' />
-                    </SANButton>
-                    <SANBox position='absolute' bottom='0' right='48px'>
-                        <SANTypography
-                            fontWeight='bold'
-                            fontSize='xs'
-                            color={colorCount}
-                        >
-                            {letterCount}/{maxLetters}
-                        </SANTypography>
-                    </SANBox>
-                </SANBox>
-            )}
-        </SANBox>
-    )
-}
+        )
+    }
+)
 
 export default SANChat

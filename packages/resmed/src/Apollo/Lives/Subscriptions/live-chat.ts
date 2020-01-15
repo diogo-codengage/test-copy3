@@ -11,7 +11,7 @@ export interface ILiveChatVariables {
 }
 
 export const SUBSCRIPTION_LIVE_CHAT = gql`
-    subscription CiveChat($liveId: ID!) {
+    subscription LiveChat($liveId: ID!) {
         liveChat(where: { liveId: $liveId }) {
             id
             message

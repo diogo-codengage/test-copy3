@@ -52,8 +52,11 @@ const wsLink = new WebSocketLink({
     options: {
         reconnect: true,
         timeout: 5000,
-        connectionParams: {
-            authorization: async () => await getAccessToken()
+        connectionParams: async () => {
+            const token = await getAccessToken()
+            return {
+                authorization: token
+            }
         }
     }
 })
@@ -74,11 +77,9 @@ const client = new ApolloClient({
     link: ApolloLink.from([
         onError(({ graphQLErrors, forward, operation, networkError }) => {
             if (graphQLErrors) {
-                graphQLErrors.forEach(({ message, locations, path }) => {
-                    console.log(
-                        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-                    )
-                    if (message.statusCode === 401) {
+                graphQLErrors.forEach(error => {
+                    console.error('[Grapqhl error]: %o', error)
+                    if (error.message.statusCode === 401) {
                         logout({})
                         localStorage.clear()
                         window.location.hash = '/#/auth/entrar'
@@ -87,7 +88,7 @@ const client = new ApolloClient({
                 return forward(operation)
             }
             if (networkError) {
-                console.log(`[Network error]: ${networkError}`)
+                console.log(`[Network error]: %o`, networkError)
                 window.location.hash = '/#/inicio/erro'
             }
         }),
