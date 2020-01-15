@@ -3,6 +3,7 @@ import React, { useMemo } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@apollo/react-hooks'
+import { sortBy, path } from 'ramda'
 
 import { SANBox, SANPage, SANButton } from '@sanar/components'
 
@@ -110,7 +111,7 @@ const RMPreviousLive: React.FC<RouteComponentProps<{ previousId: string }>> = ({
                     loadingLive={loadingLive}
                     hasLive={false}
                     chat={{
-                        messages: messages.items.reverse(),
+                        messages: sortBy(path(['time']))(messages.items),
                         blocked: true,
                         loading: loadingMessages,
                         hasMore: messages.total > messages.items.length,

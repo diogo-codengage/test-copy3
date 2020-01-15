@@ -65,8 +65,8 @@ interface IParams {
 }
 
 export interface ISANChatProps {
-    hasMore: boolean
-    loadMore: () => void
+    hasMore?: boolean
+    loadMore?: () => Promise<any>
     image?: string
     messages: any[]
     onSend?: (value: string, params: IParams) => void
@@ -112,9 +112,12 @@ const SANChat: React.FC<ISANChatProps> = ({
         }
     }
 
-    const goScrollBottom = () => {
+    const goScrollBottom = (pos?: number) => {
         if (!!scrollRef && !!scrollRef.current) {
-            scrollRef.current.scrollTo(0, scrollRef.current.scrollHeight)
+            scrollRef.current.scrollTo(
+                0,
+                Number(pos) || scrollRef.current.scrollHeight
+            )
         }
     }
 
@@ -134,7 +137,8 @@ const SANChat: React.FC<ISANChatProps> = ({
 
     const handleScrollMessages = () => {
         if (scrollRef.current.scrollTop <= 60 && hasMore) {
-            loadMore()
+            const position = scrollRef.current.scrollHeight
+            loadMore().finally(() => goScrollBottom(position))
         }
 
         !hasButton && setHasButton(true)
@@ -174,6 +178,9 @@ const SANChat: React.FC<ISANChatProps> = ({
 
     useEffect(() => {
         goScrollBottom()
+    }, [loading])
+
+    useEffect(() => {
         if (!!scrollRef && !!scrollRef.current) {
             scrollRef.current.addEventListener('scroll', handleScrollMessages)
         }
@@ -185,7 +192,7 @@ const SANChat: React.FC<ISANChatProps> = ({
                 )
             }
         }
-    }, [loading])
+    }, [scrollRef, messages, hasButton])
 
     useEffect(() => {
         if (!!inputRef && !!inputRef.current) {

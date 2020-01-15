@@ -62,9 +62,7 @@ const RMSpecialty = memo<RouteComponentProps>(({ history }) => {
                         chat={{
                             messages: [],
                             blocked: false,
-                            loading: false,
-                            hasMore: false,
-                            loadMore: () => {}
+                            loading: false
                         }}
                     />
                 ) : (
