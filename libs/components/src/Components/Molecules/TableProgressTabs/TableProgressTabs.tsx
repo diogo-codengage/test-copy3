@@ -76,10 +76,10 @@ const SANBoxSecundaryButton = styled(SANBox)`
 const ContentProgress = ({ last, title, percentBars, notPercent }) => (
     <SANBox
         px={{ _: 'md', sm: 'xl' }}
-        flexDirection='row'
+        flexDirection={{ _: 'column', sm: 'row' }}
         displayFlex
         minHeight='64px'
-        py='md'
+        py={{ _: 'lg', sm: 'md' }}
         bg={!!notPercent ? 'grey-solid.1' : 'transparent'}
         borderBottom={last ? 'none' : '1px solid'}
         borderColor='grey.2'
@@ -87,24 +87,29 @@ const ContentProgress = ({ last, title, percentBars, notPercent }) => (
         <SANTypography
             my='auto'
             color={!!percentBars ? 'grey.6' : 'grey-solid.4'}
-            width='55%'
+            width={{ _: '100%', sm: '55%' }}
             display='flex'
             float='left'
             fontSize='md'
             fontWeight='bold'
+            mb={{ _: 'sm', sm: 'auto' }}
         >
             {title}
         </SANTypography>
-        <SANContainerProgress width='45%' display='flex'>
+        <SANContainerProgress width={{ _: '100%', sm: '45%' }} display='flex'>
             {!!percentBars ? (
                 percentBars.map(({ percent, barColor }, index) => (
                     <SANBoxProgress
                         height={{ _: '100%' }}
-                        pt='10px'
+                        pt={{ _: '5px', sm: '10px' }}
+                        pb={{ _: '5px', sm: '10px' }}
                         flex='1'
-                        pl='md'
+                        pl={{ _: index === 0 ? 0 : 'md', sm: 'md' }}
                         pr={index === percentBars.length - 1 ? 0 : 'md'}
-                        borderLeft='1px solid'
+                        borderLeft={{
+                            _: index === 0 ? 'none' : '1px solid',
+                            sm: '1px solid'
+                        }}
                     >
                         <SANProgress
                             backdrop='grey.1'
@@ -126,7 +131,7 @@ const ContentProgress = ({ last, title, percentBars, notPercent }) => (
                 <SANTypography
                     my='auto'
                     color='grey.5'
-                    textAlign='center'
+                    textAlign={{ _: 'left', sm: 'center' }}
                     fontSize='md'
                     fontWeight='bold'
                 >
@@ -237,7 +242,7 @@ const SANTableProgressTabs: React.FC<ISANTableProgressTabsProps> = ({
                         }
                         key={key}
                     >
-                        <SANBox pt={{ _: 'xxs', sm: 'xs' }}>
+                        <SANBox pt={{ _: 0, sm: 'xs' }}>
                             {rows.map(
                                 ({ title, percentBars, notPercent }, index) => (
                                     <ContentProgress
