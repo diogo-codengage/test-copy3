@@ -1,1 +1,4 @@
-export { default as SANTableTabs, ISANTableTabsProps } from './TableTabs'
+export {
+    default as SANTableProgressTabs,
+    ISANTableProgressTabsProps
+} from './TableProgressTabs'
