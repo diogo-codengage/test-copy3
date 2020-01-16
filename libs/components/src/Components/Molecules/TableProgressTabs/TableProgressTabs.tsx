@@ -177,7 +177,10 @@ const ButtonsContainer = ({
                     bold
                     onClick={onSecundaryButtonClick}
                 >
-                    <SANTypography fontSize='sm' color={secundaryButtonColor}>
+                    <SANTypography
+                        fontSize='sm'
+                        color={secundaryButtonColor || 'grey.5'}
+                    >
                         {secundaryButtonTitle}
                     </SANTypography>
                 </SANButton>
@@ -218,7 +221,6 @@ const SANTableProgressTabs: React.FC<ISANTableProgressTabsProps> = ({
             >
                 {tabs.map(({ key, title, rows }) => (
                     <SANTabPane
-                        bg='#ff0000'
                         tab={
                             <SANTypography
                                 fontWeight='bold'
