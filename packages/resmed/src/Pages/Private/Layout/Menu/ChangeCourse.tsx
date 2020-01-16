@@ -21,6 +21,7 @@ import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import { useAuthContext } from 'Hooks/auth'
 import { GET_COURSES, ICourseQuery } from 'Apollo/User/Queries/courses'
+import { GET_ME } from 'Apollo/User/Queries/me'
 import {
     UPDATE_ACTIVE_COURSE,
     IUpdateActiveCourseResponse,
@@ -42,7 +43,8 @@ const Courses = withRouter(({ history }) => {
         onCompleted({ updateActiveCourse }) {
             setActiveCourse(updateActiveCourse)
             history.push('/inicio/curso')
-        }
+        },
+        refetchQueries: [{ query: GET_ME }]
     })
     const { setMenuTab, onCloseMenu } = useLayoutContext()
     const handleChange = courseId => {
@@ -66,8 +68,8 @@ const Courses = withRouter(({ history }) => {
                       ),
                       percent: course.progress,
                       coverPicture: course.images.original,
-                      expired: isBefore(end, new Date()),
-                      notStarted: isAfter(start, new Date()),
+                        expired: isBefore(end, new Date()),
+                        notStarted: isAfter(start, new Date()),
                       onChange: () => handleChange(course.id)
                   }
                 : {}
