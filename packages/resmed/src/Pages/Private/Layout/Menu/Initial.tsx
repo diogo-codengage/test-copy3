@@ -94,7 +94,7 @@ const RMMenuInitial = memo(() => {
                     dataTestid='rm-menu__go-to--practiceArea'
                     title={t('mainMenu.initial.practiceArea')}
                 />
-                {me.hasSchedule && (
+                {!!me && me.hasSchedule && (
                     <SANNavigationListItem
                         to='/inicio/cronograma'
                         icon={
@@ -108,7 +108,7 @@ const RMMenuInitial = memo(() => {
                         title={t('mainMenu.initial.schedule')}
                     />
                 )}
-                {me.hasLives && (
+                {!!me && me.hasLives && (
                     <SANNavigationListItem
                         to='/inicio/lives'
                         icon={
@@ -122,7 +122,7 @@ const RMMenuInitial = memo(() => {
                         title={t('mainMenu.initial.lives')}
                     />
                 )}
-                {me.countCourses > 1 && (
+                {!!me && me.countCourses > 1 && (
                     <SANNavigationListItem
                         dataTestid='rm-menu__go-to--change-course'
                         onClick={() => setMenuTab(3)}
