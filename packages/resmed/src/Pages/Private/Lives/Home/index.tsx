@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react'
+import React, { memo, useMemo, useState } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -19,9 +19,7 @@ import RMPrevious from './Previous'
 
 const RMSpecialty = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
-    const { loading, data } = useQuery<IActiveLiveQuery>(GET_ACTIVE_LIVE, {
-        pollInterval: 60000
-    })
+    const { loading, data } = useQuery<IActiveLiveQuery>(GET_ACTIVE_LIVE)
 
     const status = useMemo(() => {
         if (!loading && !!data) {
