@@ -37,7 +37,10 @@ export const GET_ME = gql`
             id
             name
             profilePicture
+            hasActiveSubscription
             countCourses
+            hasSchedule
+            hasLives
             profile {
                 id
                 graduationStep

@@ -245,7 +245,11 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
                             >
                                 <SANDatePicker
                                     placeholder={t(
-                                        'practicalArea.filter.advanced.year.placeholder'
+                                        'practicalArea.filter.advanced.year.placeholder',
+                                        {
+                                            min: 2009,
+                                            max: new Date().getFullYear() - 1
+                                        }
                                     )}
                                     mode='year'
                                     size='large'
