@@ -171,6 +171,7 @@ const RMForm: React.FC<IFormProps> = ({
                             <SANSelect
                                 placeholder={t('userProfile.placeholder')}
                                 size='large'
+                                allowClear
                             >
                                 {medUniversities.map(item => (
                                     <SANSelectOption
