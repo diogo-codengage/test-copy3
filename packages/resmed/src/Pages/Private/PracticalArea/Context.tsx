@@ -70,7 +70,9 @@ const getFilters = (filter: IFilter) => {
         ...(!!filter.state && {
             state: filter.state
         }),
-        ...(!!filter.year && { year: Number(filter.year.format('YYYY')) }),
+        ...(!!filter.year && {
+            year: filter.year
+        }),
         withImage: filter.onlyHasImages,
         isCommentedByExpert: filter.onlyComments
     }
