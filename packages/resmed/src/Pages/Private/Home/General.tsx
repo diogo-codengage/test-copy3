@@ -12,7 +12,8 @@ import {
     SANRow,
     SANCol,
     SANTypography,
-    SANQuery
+    SANQuery,
+    SANGenericError
 } from '@sanar/components'
 import { SANButton } from '@sanar/components/dist/Components/Atoms/Button'
 
@@ -30,7 +31,9 @@ import { useMainContext } from 'Pages/Private/Context'
 
 const RMSpecialties = withRouter<RouteComponentProps>(
     ({ history }: RouteComponentProps) => {
+        const { t } = useTranslation('resmed')
         const { activeCourse } = useAuthContext()
+        const { errorLoadActiveCourse } = useMainContext()
 
         const courseId = useMemo(() => !!activeCourse && activeCourse.id, [
             activeCourse
@@ -104,6 +107,11 @@ const RMSpecialties = withRouter<RouteComponentProps>(
                     data: { specialties: ISpecialties[] }
                 }) => (
                     <SANRow gutter={24} type='flex' flexWrap='wrap'>
+                        {errorLoadActiveCourse && (
+                            <SANGenericError
+                                message={t('main.errorLoadActiveCourse')}
+                            />
+                        )}
                         {specialties.map(renderSpecialty)}
                     </SANRow>
                 )}

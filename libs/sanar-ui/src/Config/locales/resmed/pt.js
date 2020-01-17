@@ -360,29 +360,19 @@ export default {
             label: 'Fez/Faz algum outro curso preparatório?',
             no: 'Não',
             yes: 'Sim',
-            whatt: 'Qual?'
+            what: 'Qual?'
         },
         graduatedStep: {
             label: 'Etapa da formação',
             year: 'Ano',
             semester: 'Semestre'
         },
+        medUniversity: 'Universidade',
         placeholder: 'Selecione',
         mutations: {
-            create: {
-                success: 'Sucesso, seus dados foram salvos corretamente!',
-                error: 'Erro, ocorreu um erro e seus dados não foram salvos!'
-            },
-            update: {
-                success: 'Sucesso, seus dados foram atualizados corretamente!',
-                error:
-                    'Erro, ocorreu um erro e seus dados não foram atualzados!'
-            }
+            success: 'Sucesso, seus dados foram salvos corretamente!',
+            error: 'Erro, ocorreu um erro e seus dados não foram salvos!'
         },
-        loadError: {
-            specialties: 'Erro, não foi possivel carregar as Especialidades!',
-            institutions: 'Erro, não foi possivel carregar as Instituições!',
-            profileData: 'Erro, não foi possivel carregar os seus dados!'
-        }
+        loadError: 'Erro, não foi possivel carregar os dados'
     }
 }

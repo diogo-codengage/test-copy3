@@ -1,54 +1,29 @@
 import gql from 'graphql-tag'
 
-export interface IMedProfile {
-    id: string
-    examIntentionCategoryId: string
-    previousResidencyCourse: IOwner
-    hasPreviousResidencyExam: 'none' | 'one' | 'many'
-}
+import { IMe } from '../Queries/me'
 
-export interface IOwner {
-    id: string
-    name: string
-}
+export interface ISuplemmentaryMutation extends IMe {}
 
-export interface IUserMedUniversity {
-    id: string
-    medUniversity: IOwner
+export interface ISuplemmentaryOptions {
+    medUniversityId: string
     ingressYear: string
     ingressSemester: string
+    hasPreviousResidencyExam: 'none' | 'one' | 'many'
+    previousResidencyCourseId: string
+    examIntentionCategoryId: string
+    medProfissionalSpecialtyIds: string[]
+    medInstitutionIds: string[]
 }
 
-export interface IUserMedInstitution {
-    id: string
-    medInstitution: IOwner
+export interface ISuplemmentaryVariables {
+    data: ISuplemmentaryOptions
 }
 
-export interface IUserMedSpecialtyIntention {
-    id
-    medProfessionalSpecialty: IOwner
-}
-
-export interface IMe {
-    id: string
-    name: string
-    profilePicture: string
-    countCourses: number
-    hasActiveSubscription: boolean
-    medProfile: IMedProfile
-    userMedUniversity: IUserMedUniversity
-    userMedInstitutions: IUserMedInstitution[]
-    userMedSpecialtyIntentions: IUserMedSpecialtyIntention[]
-}
-
-export const GET_ME = gql`
-    {
-        me {
+export const SUPPLEMENTARY_DATA = gql`
+    mutation SupplementaryData($data: SupplementaryDataInput!) {
+        supplementaryData(data: $data) {
             id
             name
-            profilePicture
-            hasActiveSubscription
-            countCourses
             medProfile {
                 id
                 examIntentionCategoryId

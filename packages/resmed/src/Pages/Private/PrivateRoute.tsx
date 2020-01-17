@@ -85,7 +85,7 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
             )
         }
 
-        if (!!me && !me.profile) {
+        if (!!me && !me.userMedUniversity) {
             return <RMComplementaryRegisterModal visible />
         }
 

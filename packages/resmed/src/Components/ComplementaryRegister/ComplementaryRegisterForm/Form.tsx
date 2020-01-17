@@ -21,6 +21,8 @@ import {
 } from '@sanar/components'
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
+import { IOwner } from 'Apollo/User/Queries/supplementary-items'
+
 const SANStyledFormItem = styled(SANFormItem)<{ hasError?: boolean }>`
     &&& {
         ${ifProp(
@@ -62,13 +64,28 @@ const testExperiences = ['none', 'one', 'many']
 
 const preparatoryCourseStatus = ['yes', 'no']
 
-const RMForm = ({
+interface IFormProps {
+    form: any
+    submitting: boolean
+    handleSubmit: (e: React.FormEvent) => void
+    profile: any
+    institutions?: IOwner[]
+    questionCategories?: IOwner[]
+    medResidencyCourses?: IOwner[]
+    medProfessionalSpecialties?: IOwner[]
+    medUniversities?: IOwner[]
+}
+
+const RMForm: React.FC<IFormProps> = ({
     form,
     submitting,
     handleSubmit,
     profile,
-    institutions,
-    supplementarySpecialties
+    institutions = [],
+    questionCategories = [],
+    medResidencyCourses = [],
+    medProfessionalSpecialties = [],
+    medUniversities = []
 }) => {
     const { t } = useTranslation('resmed')
     const { t: tComponents } = useTranslation('components')
@@ -85,8 +102,10 @@ const RMForm = ({
                     </SANCol>
                     <SANCol xs={24} sm={12}>
                         <SANStyledFormItem
-                            name='year'
-                            initialValue={!!profile ? profile.year : undefined}
+                            name='ingressYear'
+                            initialValue={
+                                !!profile ? profile.ingressYear : undefined
+                            }
                             rules={[
                                 {
                                     required: true,
@@ -96,7 +115,7 @@ const RMForm = ({
                                 }
                             ]}
                             trigger={'onPanelChange'}
-                            hasError={!!form.getFieldError('year')}
+                            hasError={!!form.getFieldError('ingressYear')}
                         >
                             <SANDatePicker
                                 placeholder={t(
@@ -110,9 +129,9 @@ const RMForm = ({
                     </SANCol>
                     <SANCol xs={24} sm={12}>
                         <SANStyledFormItem
-                            name='semester'
+                            name='ingressSemester'
                             initialValue={
-                                !!profile ? profile.semester : undefined
+                                !!profile ? profile.ingressSemester : undefined
                             }
                             rules={[
                                 {
@@ -122,7 +141,7 @@ const RMForm = ({
                                     )
                                 }
                             ]}
-                            hasError={!!form.getFieldError('semester')}
+                            hasError={!!form.getFieldError('ingressSemester')}
                         >
                             <SANSelect
                                 placeholder={t(
@@ -142,18 +161,44 @@ const RMForm = ({
                 <SANRow gutter={24}>
                     <SANCol>
                         <SANStyledFormItem
-                            name='institutionIds'
+                            name='medUniversityId'
+                            label={t('userProfile.medUniversity')}
+                            initialValue={
+                                !!profile ? profile.medUniversityId : undefined
+                            }
+                            hasError={!!form.getFieldError('medUniversityId')}
+                        >
+                            <SANSelect
+                                placeholder={t('userProfile.placeholder')}
+                                size='large'
+                            >
+                                {medUniversities.map(item => (
+                                    <SANSelectOption
+                                        key={item.value}
+                                        value={item.value}
+                                    >
+                                        {item.label}
+                                    </SANSelectOption>
+                                ))}
+                            </SANSelect>
+                        </SANStyledFormItem>
+                    </SANCol>
+                    <SANCol>
+                        <SANStyledFormItem
+                            name='medInstitutionIds'
                             label={t('userProfile.institutions')}
                             initialValue={
-                                !!profile ? profile.institutionIds : undefined
+                                !!profile
+                                    ? profile.medInstitutionIds
+                                    : undefined
                             }
-                            hasError={!!form.getFieldError('institutionIds')}
+                            hasError={!!form.getFieldError('medInstitutionIds')}
                         >
                             <SANSelectFilter
                                 placeholder={t('userProfile.placeholder')}
                                 items={institutions}
                                 hasError={
-                                    !!form.getFieldError('institutionIds')
+                                    !!form.getFieldError('medInstitutionIds')
                                 }
                                 InputProps={{ size: 'large' }}
                                 mt='md'
@@ -162,17 +207,27 @@ const RMForm = ({
                     </SANCol>
                     <SANCol>
                         <SANStyledFormItem
-                            name='specialtyIds'
+                            name='medProfissionalSpecialtyIds'
                             label={t('userProfile.specialties')}
                             initialValue={
-                                !!profile ? profile.specialtyIds : undefined
+                                !!profile
+                                    ? profile.medProfissionalSpecialtyIds
+                                    : undefined
                             }
-                            hasError={!!form.getFieldError('specialtyIds')}
+                            hasError={
+                                !!form.getFieldError(
+                                    'medProfissionalSpecialtyIds'
+                                )
+                            }
                         >
                             <SANSelectFilter
                                 placeholder={t('userProfile.placeholder')}
-                                items={supplementarySpecialties}
-                                hasError={!!form.getFieldError('specialtyIds')}
+                                items={medProfessionalSpecialties}
+                                hasError={
+                                    !!form.getFieldError(
+                                        'medProfissionalSpecialtyIds'
+                                    )
+                                }
                                 InputProps={{ size: 'large' }}
                                 mt='md'
                             />
@@ -180,10 +235,12 @@ const RMForm = ({
                     </SANCol>
                     <SANCol>
                         <SANStyledFormItem
-                            name='testExperience'
+                            name='hasPreviousResidencyExam'
                             label={t('userProfile.testExperiences.label')}
                             initialValue={
-                                !!profile ? profile.testExperience : undefined
+                                !!profile
+                                    ? profile.hasPreviousResidencyExam
+                                    : undefined
                             }
                             rules={[
                                 {
@@ -193,7 +250,9 @@ const RMForm = ({
                                     )
                                 }
                             ]}
-                            hasError={!!form.getFieldError('testExperience')}
+                            hasError={
+                                !!form.getFieldError('hasPreviousResidencyExam')
+                            }
                         >
                             <SANStyledRadioGroup mt='16px'>
                                 {testExperiences.map(item => (
@@ -210,6 +269,11 @@ const RMForm = ({
                         <SANStyledFormItem
                             name='preparatoryCourseStatus'
                             label={t('userProfile.preparatoryCourse.label')}
+                            initialValue={
+                                !!profile
+                                    ? profile.preparatoryCourseStatus
+                                    : undefined
+                            }
                             rules={[
                                 {
                                     required: true,
@@ -241,10 +305,10 @@ const RMForm = ({
                             'yes' && (
                             <SANCol>
                                 <SANStyledFormItem
-                                    name='preparatoryCourseId'
+                                    name='previousResidencyCourseId'
                                     initialValue={
                                         !!profile
-                                            ? profile.preparatoryCourseId
+                                            ? profile.previousResidencyCourseId
                                             : undefined
                                     }
                                     rules={[
@@ -263,16 +327,16 @@ const RMForm = ({
                                 >
                                     <SANSelect
                                         placeholder={t(
-                                            'userProfile.preparatoryCourse.whatt'
+                                            'userProfile.preparatoryCourse.what'
                                         )}
                                         size='large'
                                     >
-                                        {[0, 1, 2, 3].map(item => (
+                                        {medResidencyCourses.map(item => (
                                             <SANSelectOption
-                                                key={item}
-                                                value={item}
+                                                key={item.value}
+                                                value={item.value}
                                             >
-                                                items
+                                                {item.label}
                                             </SANSelectOption>
                                         ))}
                                     </SANSelect>
@@ -281,10 +345,12 @@ const RMForm = ({
                         )}
                     <SANCol>
                         <SANStyledFormItem
-                            name='objective'
+                            name='examIntentionCategoryId'
                             label={t('userProfile.objective.label')}
                             initialValue={
-                                !!profile ? profile.objective : undefined
+                                !!profile
+                                    ? profile.examIntentionCategoryId
+                                    : undefined
                             }
                             rules={[
                                 {
@@ -294,15 +360,20 @@ const RMForm = ({
                                     )
                                 }
                             ]}
-                            hasError={!!form.getFieldError('objective')}
+                            hasError={
+                                !!form.getFieldError('examIntentionCategoryId')
+                            }
                         >
                             <SANStyledSelect
                                 placeholder={t('userProfile.placeholder')}
                                 size='large'
                             >
-                                {[0, 1, 2, 3].map(item => (
-                                    <SANSelectOption key={item} value={item}>
-                                        items
+                                {questionCategories.map(item => (
+                                    <SANSelectOption
+                                        key={item.value}
+                                        value={item.value}
+                                    >
+                                        {item.label}
                                     </SANSelectOption>
                                 ))}
                             </SANStyledSelect>
@@ -311,7 +382,7 @@ const RMForm = ({
                 </SANRow>
                 <SANRow gutter={24}>
                     <SANCol>
-                        <SANFormItem name='submitButton' mb='0'>
+                        <SANFormItem mb='0'>
                             <SANButton
                                 mt='md'
                                 mx='auto'
