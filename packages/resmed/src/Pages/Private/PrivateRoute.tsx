@@ -31,6 +31,9 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
             onCompleted({ me }) {
                 segmentTrack('Session started')
                 setMe(me)
+            },
+            onError() {
+                onLogout()
             }
         })
         const { setMe, me } = useAuthContext()
