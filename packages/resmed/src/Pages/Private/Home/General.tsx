@@ -35,9 +35,10 @@ const RMSpecialties = withRouter<RouteComponentProps>(
         const { activeCourse } = useAuthContext()
         const { errorLoadActiveCourse } = useMainContext()
 
-        const courseId = useMemo(() => !!activeCourse && activeCourse.id, [
-            activeCourse
-        ])
+        const courseId = useMemo(
+            () => !!activeCourse && !!activeCourse.id && activeCourse.id,
+            [activeCourse]
+        )
 
         const goToSubspecialties = (specialtyId: string) => {
             history.push(`/inicio/subespecialidades/${specialtyId}`)
