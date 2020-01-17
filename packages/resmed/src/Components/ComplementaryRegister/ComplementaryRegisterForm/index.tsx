@@ -104,9 +104,10 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
                 ...(!!me.medProfile && {
                     hasPreviousResidencyExam:
                         me.medProfile.hasPreviousResidencyExam,
-                    previousResidencyCourseId:
-                        !!me.medProfile.previousResidencyCourse &&
-                        me.medProfile.previousResidencyCourse.id,
+                    previousResidencyCourseId: !!me.medProfile
+                        .previousResidencyCourse
+                        ? me.medProfile.previousResidencyCourse.id
+                        : undefined,
                     examIntentionCategoryId:
                         me.medProfile.examIntentionCategoryId,
                     preparatoryCourseStatus: !!me.medProfile

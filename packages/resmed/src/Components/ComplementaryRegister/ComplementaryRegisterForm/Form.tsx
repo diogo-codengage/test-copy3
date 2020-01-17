@@ -307,6 +307,9 @@ const RMForm: React.FC<IFormProps> = ({
                             <SANCol>
                                 <SANStyledFormItem
                                     name='previousResidencyCourseId'
+                                    label={t(
+                                        'userProfile.previousResidencyCourse.label'
+                                    )}
                                     initialValue={
                                         !!profile
                                             ? profile.previousResidencyCourseId
@@ -326,9 +329,9 @@ const RMForm: React.FC<IFormProps> = ({
                                         )
                                     }
                                 >
-                                    <SANSelect
+                                    <SANStyledSelect
                                         placeholder={t(
-                                            'userProfile.preparatoryCourse.what'
+                                            'userProfile.placeholder'
                                         )}
                                         size='large'
                                     >
@@ -340,7 +343,7 @@ const RMForm: React.FC<IFormProps> = ({
                                                 {item.label}
                                             </SANSelectOption>
                                         ))}
-                                    </SANSelect>
+                                    </SANStyledSelect>
                                 </SANStyledFormItem>
                             </SANCol>
                         )}
