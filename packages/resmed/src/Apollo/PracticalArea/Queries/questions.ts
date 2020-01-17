@@ -69,7 +69,7 @@ export const GET_QUESTIONS = gql`
                 categoriesIds: $categoriesIds
                 specialtiesIds: $specialtiesIds
                 subSpecialtiesIds: $subSpecialtiesIds
-                lessonsIds: $tagsIds
+                tagIds: $tagsIds
                 institutionId: $institutionId
                 year: $year
                 isCommentedByExpert: $isCommentedByExpert
