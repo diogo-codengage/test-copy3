@@ -24,8 +24,9 @@ export const useMainContext = () => useContext(Context)
 
 const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
     const { loading, error } = useQuery<IActiveCourseQuery>(GET_ACTIVE_COURSE, {
-        onCompleted({ activeCourse }) {
-            setActiveCourse(activeCourse)
+        onCompleted(response) {
+            if (!!response && !!response.activeCourse)
+                setActiveCourse(response.activeCourse)
         }
     })
 
