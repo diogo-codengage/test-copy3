@@ -199,7 +199,7 @@ export default {
                 },
                 year: {
                     title: 'Ano',
-                    placeholder: 'Escolher o ano'
+                    placeholder: 'Escolher o ano. (Min: {{min}}, máx: {{max}})'
                 },
                 state: {
                     title: 'Estado',

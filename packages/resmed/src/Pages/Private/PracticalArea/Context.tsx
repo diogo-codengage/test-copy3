@@ -138,7 +138,7 @@ const RMPracticalProvider = memo<RouteComponentProps>(
                     }
                 })
                 dispatch({
-                    type: 'success',
+                    type: load ? 'success-new' : 'success',
                     questions: questions.items,
                     count: questions.totalCount
                 })
