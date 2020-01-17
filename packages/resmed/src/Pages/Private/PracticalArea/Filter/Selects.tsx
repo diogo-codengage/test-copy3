@@ -262,7 +262,7 @@ const Tags = memo<IProps>(({ initialValue }) => {
                     items: tags
                 }))
             } catch {
-                setData({ loading: false, error: false, items: [{label: "teste", value: "5c37902db23666001d58d9c4"}] })
+                setData({ loading: false, error: false, items: [] })
             }
         }
         fetchData()
