@@ -33,7 +33,7 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
                 setMe(me)
             },
             onError() {
-                onLogout()
+                logout({ callback: onLogout })
             }
         })
         const { setMe, me } = useAuthContext()
