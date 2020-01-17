@@ -31,6 +31,9 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
             onCompleted({ me }) {
                 segmentTrack('Session started')
                 setMe(me)
+            },
+            onError() {
+                logout({ callback: onLogout })
             }
         })
         const { setMe, me } = useAuthContext()
@@ -82,7 +85,7 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
             )
         }
 
-        if (!!me && !me.profile) {
+        if (!!me && !me.userMedUniversity) {
             return <RMComplementaryRegisterModal visible />
         }
 

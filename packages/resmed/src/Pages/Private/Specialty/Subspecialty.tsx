@@ -122,21 +122,21 @@ const RMSubspecialties: React.FC<IRMSubspecialtiesProps> = ({
     }
 
     const fetchCompletedProperty = async (parentId: string) => {
-        try {
-            const {
-                data: { lessons }
-            } = await client.query<ILessonsQuery>({
+        client
+            .query<ILessonsQuery>({
                 query: GET_LESSONS_COMPLETED,
                 variables: { parentId }
             })
-
-            setLessons(lessons)
-        } catch {
-            createSnackbar({
-                message: t('subspecialties.errorLoadLessons'),
-                theme: 'error'
+            .then(({ data }) => {
+                const { lessons } = data
+                setLessons(lessons)
             })
-        }
+            .catch(() =>
+                createSnackbar({
+                    message: t('subspecialties.errorLoadLessons'),
+                    theme: 'error'
+                })
+            )
     }
 
     const renderSubspecialty = useCallback(
