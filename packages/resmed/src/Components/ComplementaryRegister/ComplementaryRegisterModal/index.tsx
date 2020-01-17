@@ -77,7 +77,7 @@ const RMComplementaryRegisterModal: React.FC<ISANModalProps> = ({
     const [changeCourse] = useMutation(SUPPLEMENTARY_DATA)
 
     const handleCancel = () => {
-        changeCourse()
+        changeCourse({ variables: { data: {} } })
         !!onCancel && onCancel()
     }
 
