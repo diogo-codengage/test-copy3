@@ -34,7 +34,7 @@ export interface IFilter {
     categories?: IOwner[]
     specialties?: IOwner[]
     subspecialties?: IOwner[]
-    lessons?: IOwner[]
+    tags?: IOwner[]
     institution?: IOwner
     year?: any
     state?: ICountryState
