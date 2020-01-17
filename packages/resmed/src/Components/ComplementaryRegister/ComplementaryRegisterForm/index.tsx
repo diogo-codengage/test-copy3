@@ -32,6 +32,11 @@ interface IFormValues extends ISuplemmentaryOptions {
     preparatoryCourseStatus: 'yes' | 'no'
 }
 
+const toLowerCase = v => ({
+    ...v,
+    label: v.label.toLowerCase()
+})
+
 const RMComplementaryRegisterForm = ({ form, closeModal }) => {
     const { t } = useTranslation('resmed')
 
@@ -40,7 +45,6 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
         ISuplemmentaryVariables
     >(SUPPLEMENTARY_DATA, {
         onCompleted(response) {
-            console.log({ response })
             setMe(old => ({ ...old, ...response }))
             !!closeModal && closeModal()
         },
@@ -131,11 +135,17 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
             handleSubmit={handleSubmit}
             profile={profile}
             {...(!!data && {
-                institutions: data.institutions,
-                medUniversities: data.medUniversities,
-                questionCategories: data.questionCategories,
-                medResidencyCourses: data.medResidencyCourses,
-                medProfessionalSpecialties: data.medProfessionalSpecialties
+                institutions: (data.institutions || []).map(toLowerCase),
+                medUniversities: (data.medUniversities || []).map(toLowerCase),
+                questionCategories: (data.questionCategories || []).map(
+                    toLowerCase
+                ),
+                medResidencyCourses: (data.medResidencyCourses || []).map(
+                    toLowerCase
+                ),
+                medProfessionalSpecialties: (
+                    data.medProfessionalSpecialties || []
+                ).map(toLowerCase)
             })}
         />
     )
