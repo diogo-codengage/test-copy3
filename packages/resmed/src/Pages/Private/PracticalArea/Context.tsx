@@ -64,14 +64,14 @@ const getFilters = (filter: IFilter) => {
         ...(!!filter.lessons && {
             lessonsIds: filter.lessons.map(mapItem)
         }),
-        ...(!!filter.institution && {
-            institutionId: filter.institution
+        ...(!!filter.institutions && {
+            institutionIds: filter.institutions
         }),
         ...(!!filter.state && {
             state: filter.state
         }),
-        ...(!!filter.year && {
-            year: filter.year
+        ...(!!filter.years && {
+            years: filter.years
         }),
         withImage: filter.onlyHasImages,
         isCommentedByExpert: filter.onlyComments

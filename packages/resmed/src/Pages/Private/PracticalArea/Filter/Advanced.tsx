@@ -126,7 +126,7 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
             while (startYear < currentYear) {
                 years.push(startYear++)
             }
-            setYears(years);
+            setYears(years.reverse());
         }
         createYearsList()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -236,7 +236,7 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
                                 label={t(
                                     'practicalArea.filter.advanced.institution.title'
                                 )}
-                                initialValue={!!filter && filter.institution}
+                                initialValue={!!filter && filter.institutions}
                             >
                                 <SANSelect
                                     mode={'multiple'}
@@ -257,7 +257,7 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
                                 label={t(
                                     'practicalArea.filter.advanced.year.title'
                                 )}
-                                initialValue={!!filter && filter.year}
+                                initialValue={!!filter && filter.years}
                             >
                                 <SANSelect
                                     mode={'multiple'}
