@@ -101,7 +101,7 @@ const RMPrevious = memo<RouteComponentProps>(({ history }) => {
                 data: ILivesQuery
                 fetchMore: (data: any) => Object
             }) => {
-                if (!lives.items.length) return null
+                if (!lives || !lives.items.length) return null
 
                 return (
                     <SANBox py={{ xs: '8', _: 'md' }}>

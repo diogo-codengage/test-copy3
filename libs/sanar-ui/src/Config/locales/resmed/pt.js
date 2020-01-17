@@ -359,8 +359,10 @@ export default {
         preparatoryCourse: {
             label: 'Fez/Faz algum outro curso preparatório?',
             no: 'Não',
-            yes: 'Sim',
-            what: 'Qual?'
+            yes: 'Sim'
+        },
+        previousResidencyCourse: {
+            label: 'Qual curso preparatório'
         },
         graduatedStep: {
             label: 'Etapa da formação',

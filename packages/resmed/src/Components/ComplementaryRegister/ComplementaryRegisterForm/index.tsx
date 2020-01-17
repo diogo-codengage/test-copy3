@@ -32,6 +32,11 @@ interface IFormValues extends ISuplemmentaryOptions {
     preparatoryCourseStatus: 'yes' | 'no'
 }
 
+const toLowerCase = v => ({
+    ...v,
+    label: v.label.toLowerCase()
+})
+
 const RMComplementaryRegisterForm = ({ form, closeModal }) => {
     const { t } = useTranslation('resmed')
 
@@ -40,9 +45,18 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
         ISuplemmentaryVariables
     >(SUPPLEMENTARY_DATA, {
         onCompleted(response) {
-            console.log({ response })
             setMe(old => ({ ...old, ...response }))
+            snackbar({
+                message: t('userProfile.mutations.success'),
+                theme: 'success'
+            })
             !!closeModal && closeModal()
+        },
+        onError() {
+            snackbar({
+                message: t('userProfile.mutations.error'),
+                theme: 'success'
+            })
         },
         refetchQueries: [{ query: GET_ACTIVE_COURSE }]
     })
@@ -100,9 +114,10 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
                 ...(!!me.medProfile && {
                     hasPreviousResidencyExam:
                         me.medProfile.hasPreviousResidencyExam,
-                    previousResidencyCourseId:
-                        !!me.medProfile.previousResidencyCourse &&
-                        me.medProfile.previousResidencyCourse.id,
+                    previousResidencyCourseId: !!me.medProfile
+                        .previousResidencyCourse
+                        ? me.medProfile.previousResidencyCourse.id
+                        : undefined,
                     examIntentionCategoryId:
                         me.medProfile.examIntentionCategoryId,
                     preparatoryCourseStatus: !!me.medProfile
@@ -131,11 +146,17 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
             handleSubmit={handleSubmit}
             profile={profile}
             {...(!!data && {
-                institutions: data.institutions,
-                medUniversities: data.medUniversities,
-                questionCategories: data.questionCategories,
-                medResidencyCourses: data.medResidencyCourses,
-                medProfessionalSpecialties: data.medProfessionalSpecialties
+                institutions: (data.institutions || []).map(toLowerCase),
+                medUniversities: (data.medUniversities || []).map(toLowerCase),
+                questionCategories: (data.questionCategories || []).map(
+                    toLowerCase
+                ),
+                medResidencyCourses: (data.medResidencyCourses || []).map(
+                    toLowerCase
+                ),
+                medProfessionalSpecialties: (
+                    data.medProfessionalSpecialties || []
+                ).map(toLowerCase)
             })}
         />
     )
