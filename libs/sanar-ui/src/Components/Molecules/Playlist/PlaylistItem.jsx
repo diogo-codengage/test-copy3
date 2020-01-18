@@ -45,7 +45,7 @@ const ESPlaylistItem = memo(({ className, index, item, current, onClick }) => {
     }, [item])
 
     return (
-        <Tooltip title={title} placement="topLeft">
+        <Tooltip title={title} placement="topLeft" mouseEnterDelay={0.3}>
             <div className={classes} onClick={() => onClick(item)}>
                 <div className='d-flex align-items-center w-100'>
                     <ESTypography
