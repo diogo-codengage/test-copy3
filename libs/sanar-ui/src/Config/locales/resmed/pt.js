@@ -288,7 +288,8 @@ export default {
             },
             live: {
                 title: 'Live',
-                button: 'Assistir live'
+                button: 'Assistir live',
+                comingSoon: 'Em breve',
             },
             suggestion: {
                 title: 'Sugestão do professor',
