@@ -365,11 +365,11 @@ export default {
             label: 'Qual curso preparatório'
         },
         graduatedStep: {
-            label: 'Etapa da formação',
+            label: 'Quando você entrou na faculdade?',
             year: 'Ano',
             semester: 'Semestre'
         },
-        medUniversity: 'Universidade',
+        medUniversity: 'Qual faculdade você cursa/cursou?',
         placeholder: 'Selecione',
         mutations: {
             success: 'Sucesso, seus dados foram salvos corretamente!',
