@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { compose } from 'ramda'
 import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { isBefore, isAfter } from 'date-fns'
 
 import {
     SANPage,
@@ -39,6 +40,17 @@ const RMFilter = ({ form, history }) => {
         reset()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    if (
+        !!form &&
+        (isBefore(new Date(form.getFieldValue('year')), new Date(2009, 1)) ||
+            isAfter(
+                new Date(form.getFieldValue('year')),
+                new Date(new Date().getFullYear() - 1, 1)
+            ))
+    ) {
+        form.setFieldsValue({ year: '' })
+    }
 
     return (
         <SANForm form={form} onSubmit={handleSubmit}>

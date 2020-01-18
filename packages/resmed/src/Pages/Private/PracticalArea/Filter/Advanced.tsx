@@ -262,7 +262,11 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
                                 <SANSelect
                                     mode={'multiple'}
                                     placeholder={t(
-                                        'practicalArea.filter.advanced.year.placeholder'
+                                        'practicalArea.filter.advanced.year.placeholder',
+                                        {
+                                            min: 2009,
+                                            max: new Date().getFullYear() - 1
+                                        }
                                     )}
                                     allowClear
                                     size='large'

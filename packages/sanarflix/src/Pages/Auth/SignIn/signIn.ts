@@ -1,6 +1,7 @@
 import { AuthenticationDetails, CognitoUserSession } from 'amazon-cognito-identity-js'
 import { getInstance } from 'Config/AWSCognito'
 import i18n from 'sanar-ui/dist/Config/i18n'
+import * as Sentry from '@sentry/browser';
 
 function userHasSubscription(token: string): boolean {
   try {
@@ -8,10 +9,18 @@ function userHasSubscription(token: string): boolean {
     const products = JSON.parse(userData['custom:products']) || [];
     return products.includes('sanarflix');
   } catch (error) {
-    // TODO: setup sentry
-    // Sentry.captureException(error);
+    Sentry.captureException(error);
     return false;
   }
+}
+
+function signOut() {
+    try {
+        const user = getInstance().userPool.getCurrentUser()
+        !!user && user.signOut()
+    } catch (error) {
+        Sentry.captureException(error);
+    }
 }
 
 // TODO: Create custom type to return errors
@@ -31,6 +40,7 @@ const signInByEmail = (email, password): Promise<any> => {
                 if (userHasSubscription(result.getIdToken().getJwtToken())) {
                     resolve(result)
                 } else {
+                    signOut()
                     reject({
                         code: 'UserLambdaValidationException',
                         message: i18n.t('sanarui:authMessages.noEnrollment')

@@ -31,7 +31,8 @@ const ESSignInForm = ({
     facebookKey,
     googleKey,
     form,
-    track = null
+    track = null,
+    forgotPasswordLink
 }) => {
     const { t } = useTranslation('sanarui')
     const classes = classNames('es-sign-in-form', className)
@@ -171,7 +172,9 @@ const ESSignInForm = ({
                         </ESCol>
                         <ESCol>
                             <ESButton
-                                href='/#/auth/recuperar-senha'
+                                {...(!!forgotPasswordLink
+                                    ? { onClick: forgotPasswordLink }
+                                    : { href: '/#/auth/recuperar-senha' })}
                                 variant='text'
                                 bold
                                 color='primary'

@@ -10,6 +10,7 @@ export type IAction =
     | { type: 'loaded' }
     | { type: 'stats'; stats: Partial<IStats> }
     | { type: 'success'; questions: IQuestion[]; count: number }
+    | { type: 'success-new'; questions: IQuestion[]; count: number }
     | { type: 'next' }
     | { type: 'error'; error: any }
     | { type: 'bookmark'; bookmarked: boolean }
@@ -33,7 +34,7 @@ export interface IFilter {
     categories?: IOwner[]
     specialties?: IOwner[]
     subspecialties?: IOwner[]
-    lessons?: IOwner[]
+    tags?: IOwner[]
     institutions?: IOwner[]
     years?: Number[]
     state?: ICountryState
@@ -92,6 +93,17 @@ export const reducer: React.Reducer<IState, IAction> = (state, action) => {
                 error: false,
                 loading: false,
                 questions: [...state.questions, ...action.questions],
+                stats: {
+                    ...state.stats,
+                    total: action.count
+                }
+            }
+        case 'success-new':
+            return {
+                ...state,
+                error: false,
+                loading: false,
+                questions: action.questions,
                 stats: {
                     ...state.stats,
                     total: action.count

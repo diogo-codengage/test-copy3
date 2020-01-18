@@ -56,7 +56,7 @@ export const GET_QUESTIONS = gql`
         $categoriesIds: [ID!]
         $specialtiesIds: [ID!]
         $subSpecialtiesIds: [ID!]
-        $lessonsIds: [ID!]
+        $tagsIds: [ID!]
         $institutionIds: [ID!]
         $years: [Int]
         $isCommentedByExpert: Boolean
@@ -69,7 +69,7 @@ export const GET_QUESTIONS = gql`
                 categoriesIds: $categoriesIds
                 specialtiesIds: $specialtiesIds
                 subSpecialtiesIds: $subSpecialtiesIds
-                lessonsIds: $lessonsIds
+                tagIds: $tagsIds
                 institutionIds: $institutionIds
                 years: $years
                 isCommentedByExpert: $isCommentedByExpert
