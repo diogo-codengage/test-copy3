@@ -28,6 +28,7 @@ const RMFilter = ({ form, history }) => {
     const handleSubmit = e => {
         e.preventDefault()
         form.validateFieldsAndScroll((err, values) => {
+            console.log('values ', values)
             if (!err) {
                 handleTrackFilter(values)
                 dispatch({ type: 'filter', filter: values })
