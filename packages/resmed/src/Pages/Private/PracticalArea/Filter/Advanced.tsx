@@ -232,7 +232,7 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
                         </SANCol>
                         <SANCol xs={24} sm={12}>
                             <SANFormItem
-                                name='institution'
+                                name='institutions'
                                 label={t(
                                     'practicalArea.filter.advanced.institution.title'
                                 )}
@@ -253,7 +253,7 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
                         </SANCol>
                         <SANCol xs={24} sm={12}>
                             <SANFormItem
-                                name='year'
+                                name='years'
                                 label={t(
                                     'practicalArea.filter.advanced.year.title'
                                 )}
