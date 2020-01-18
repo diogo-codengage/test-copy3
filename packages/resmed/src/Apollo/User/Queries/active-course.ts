@@ -23,6 +23,10 @@ interface IImages {
     original: string
 }
 
+export interface IActiveCourseQuery {
+    activeCourse: ICourse
+}
+
 export const GET_ACTIVE_COURSE = gql`
     {
         activeCourse {

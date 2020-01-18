@@ -61,8 +61,8 @@ const getFilters = (filter: IFilter) => {
         ...(!!filter.subspecialties && {
             subSpecialtiesIds: filter.subspecialties.map(mapItem)
         }),
-        ...(!!filter.lessons && {
-            lessonsIds: filter.lessons.map(mapItem)
+        ...(!!filter.tags && {
+            tagsIds: filter.tags.map(mapItem)
         }),
         ...(!!filter.institution && {
             institutionId: filter.institution
@@ -95,7 +95,7 @@ const RMPracticalProvider = memo<RouteComponentProps>(
                     'Specialty ID': (values.specialties || []).map(
                         v => v.value
                     ),
-                    'Tag ID': (values.lessons || []).map(v => v.value),
+                    'Tag ID': (values.tags || []).map(v => v.value),
                     'Institution ID': values.institution,
                     'State ID': values.state,
                     'Commented by Expert': values.onlyComments || false
@@ -138,7 +138,7 @@ const RMPracticalProvider = memo<RouteComponentProps>(
                     }
                 })
                 dispatch({
-                    type: 'success',
+                    type: load ? 'success-new' : 'success',
                     questions: questions.items,
                     count: questions.totalCount
                 })

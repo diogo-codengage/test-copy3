@@ -93,6 +93,7 @@ const Header = () => {
 
 const RMHome = memo(() => {
     const { t } = useTranslation('resmed')
+    const { activeCourse } = useAuthContext()
     const { handleTrack } = useMainContext()
 
     useEffect(() => {
@@ -117,19 +118,23 @@ const RMHome = memo(() => {
                 >
                     <RMGeneral />
                 </SANTabPane>
-                <SANTabPane
-                    tab={
-                        <SANTypography
-                            fontWeight='bold'
-                            fontSize={{ xs: 'lg', _: 'md' }}
+                {!!activeCourse &&
+                    !!activeCourse.infos &&
+                    !!activeCourse.infos.length && (
+                        <SANTabPane
+                            tab={
+                                <SANTypography
+                                    fontWeight='bold'
+                                    fontSize={{ xs: 'lg', _: 'md' }}
+                                >
+                                    {t('home.about.title')}
+                                </SANTypography>
+                            }
+                            key='2'
                         >
-                            {t('home.about.title')}
-                        </SANTypography>
-                    }
-                    key='2'
-                >
-                    <RMAbout />
-                </SANTabPane>
+                            <RMAbout />
+                        </SANTabPane>
+                    )}
             </SANTabs>
         </SANBox>
     )
