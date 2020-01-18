@@ -288,7 +288,8 @@ export default {
             },
             live: {
                 title: 'Live',
-                button: 'Assistir live'
+                button: 'Assistir live',
+                comingSoon: 'Em breve',
             },
             suggestion: {
                 title: 'Sugestão do professor',
@@ -362,14 +363,14 @@ export default {
             yes: 'Sim'
         },
         previousResidencyCourse: {
-            label: 'Qual curso preparatório'
+            label: 'Qual curso preparatório?'
         },
         graduatedStep: {
-            label: 'Etapa da formação',
+            label: 'Quando você entrou na faculdade?',
             year: 'Ano',
             semester: 'Semestre'
         },
-        medUniversity: 'Universidade',
+        medUniversity: 'Qual faculdade você cursa/cursou?',
         placeholder: 'Selecione',
         mutations: {
             success: 'Sucesso, seus dados foram salvos corretamente!',

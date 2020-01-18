@@ -64,13 +64,15 @@ const getFilters = (filter: IFilter) => {
         ...(!!filter.tags && {
             tagsIds: filter.tags.map(mapItem)
         }),
-        ...(!!filter.institution && {
-            institutionId: filter.institution
+        ...(!!filter.institutions && {
+            institutionIds: filter.institutions
         }),
         ...(!!filter.state && {
             state: filter.state
         }),
-        ...(!!filter.year && { year: Number(filter.year.format('YYYY')) }),
+        ...(!!filter.years && {
+            years: filter.years
+        }),
         withImage: filter.onlyHasImages,
         isCommentedByExpert: filter.onlyComments
     }

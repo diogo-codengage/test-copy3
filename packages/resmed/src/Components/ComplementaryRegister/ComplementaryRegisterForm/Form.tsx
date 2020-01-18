@@ -168,7 +168,7 @@ const RMForm: React.FC<IFormProps> = ({
                             }
                             hasError={!!form.getFieldError('medUniversityId')}
                         >
-                            <SANSelect
+                            <SANStyledSelect
                                 placeholder={t('userProfile.placeholder')}
                                 size='large'
                                 allowClear
@@ -181,7 +181,7 @@ const RMForm: React.FC<IFormProps> = ({
                                         {item.label}
                                     </SANSelectOption>
                                 ))}
-                            </SANSelect>
+                            </SANStyledSelect>
                         </SANStyledFormItem>
                     </SANCol>
                     <SANCol>

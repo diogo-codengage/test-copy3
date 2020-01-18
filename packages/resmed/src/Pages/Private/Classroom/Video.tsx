@@ -136,7 +136,7 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
 
         useEffect(() => {
             if (paramsProp.contentId !== params.contentId) {
-                setParams(old => ({ ...old, ...paramsProp }))
+                setParams(old => ({ ...old, subspecialtyId: "", ...paramsProp }))
             }
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [paramsProp])
