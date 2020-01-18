@@ -246,6 +246,9 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
                                     )}
                                     allowClear
                                     size='large'
+                                    filterOption={(input, option) =>
+                                        option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                    }
                                 >
                                     {institutions.map(renderInstitution)}
                                 </SANSelect>
