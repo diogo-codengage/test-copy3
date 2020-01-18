@@ -12,7 +12,6 @@ import {
     SANCol,
     SANSelect,
     SANSelectOption,
-    SANDatePicker,
     SANSwitch,
     SANBox,
     SANCollapse,
@@ -40,8 +39,8 @@ const Title: React.FC = props => (
         justifyContent='center'
         color='grey.6'
     >
-        <SANEvaIcon name='options-2-outline' mr='sm' />
-        <SANTypography {...props} fontWeight='bold' />
+        <SANEvaIcon name='options-2-outline' mr='sm'/>
+        <SANTypography {...props} fontWeight='bold'/>
     </SANBox>
 )
 
@@ -108,35 +107,51 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
     } = useQuestionsContext()
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState({
-        intitutions: false,
+        institutions: false,
         categories: false,
         specialties: false,
         subspecialties: false,
         themes: false,
         states: false
     })
-    const [intitutions, setIntitutions] = useState<IInstitution[]>([])
+    const [institutions, setInstitutions] = useState<IInstitution[]>([])
     const [states, setStates] = useState<IState[]>([])
+    const [years, setYears] = useState<Number[]>([])
 
     useEffect(() => {
-        const fetchIntitutions = async () => {
-            setLoading(old => ({ ...old, intitutions: true }))
+        const createYearsList = () => {
+            const currentYear = new Date().getFullYear()
+            let startYear = 2009
+            const years: Number[] = []
+            while (startYear < currentYear) {
+                years.push(startYear++)
+            }
+            setYears(years.reverse());
+        }
+        createYearsList()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        const fetchInstitutions = async () => {
+            setLoading(old => ({ ...old, institutions: true }))
             try {
                 const {
                     data: { institutions }
                 } = await client.query<IInstitutionsQuery>({
                     query: GET_INSTITUTIONS
                 })
-                setIntitutions(
+                setInstitutions(
                     institutions.map(v => ({
                         ...v,
                         label: v.label.toLowerCase()
                     }))
                 )
-            } catch {}
-            setLoading(old => ({ ...old, intitutions: false }))
+            } catch {
+            }
+            setLoading(old => ({ ...old, institutions: false }))
         }
-        fetchIntitutions()
+        fetchInstitutions()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -150,7 +165,8 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
                     query: GET_STATES
                 })
                 setStates(states)
-            } catch {}
+            } catch {
+            }
             setLoading(old => ({ ...old, states: false }))
         }
         fetchStates()
@@ -158,18 +174,18 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
     }, [])
 
     const renderInstitution = useCallback(
-        intitution => (
-            <SANSelectOption value={intitution.value} key={intitution.value}>
-                {intitution.label}
+        institution => (
+            <SANSelectOption value={institution.value} key={institution.value}>
+                {institution.label}
             </SANSelectOption>
         ),
         []
     )
 
-    const renderState = useCallback(
-        state => (
-            <SANSelectOption value={state} key={state}>
-                {state}
+    const renderOption = useCallback(
+        option => (
+            <SANSelectOption value={option} key={option}>
+                {option}
             </SANSelectOption>
         ),
         []
@@ -203,14 +219,14 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
                                 initialValue={!!filter && filter.state}
                             >
                                 <SANSelect
-                                    loading={loading.intitutions}
+                                    loading={loading.states}
                                     placeholder={t(
                                         'practicalArea.filter.advanced.state.placeholder'
                                     )}
                                     allowClear
                                     size='large'
                                 >
-                                    {states.map(renderState)}
+                                    {states.map(renderOption)}
                                 </SANSelect>
                             </SANFormItem>
                         </SANCol>
@@ -220,17 +236,18 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
                                 label={t(
                                     'practicalArea.filter.advanced.institution.title'
                                 )}
-                                initialValue={!!filter && filter.institution}
+                                initialValue={!!filter && filter.institutions}
                             >
                                 <SANSelect
-                                    loading={loading.intitutions}
+                                    mode={'multiple'}
+                                    loading={loading.institutions}
                                     placeholder={t(
                                         'practicalArea.filter.advanced.institution.placeholder'
                                     )}
                                     allowClear
                                     size='large'
                                 >
-                                    {intitutions.map(renderInstitution)}
+                                    {institutions.map(renderInstitution)}
                                 </SANSelect>
                             </SANFormItem>
                         </SANCol>
@@ -240,10 +257,10 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
                                 label={t(
                                     'practicalArea.filter.advanced.year.title'
                                 )}
-                                trigger={'onPanelChange'}
-                                initialValue={!!filter && filter.year}
+                                initialValue={!!filter && filter.years}
                             >
-                                <SANDatePicker
+                                <SANSelect
+                                    mode={'multiple'}
                                     placeholder={t(
                                         'practicalArea.filter.advanced.year.placeholder',
                                         {
@@ -251,10 +268,11 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
                                             max: new Date().getFullYear() - 1
                                         }
                                     )}
-                                    mode='year'
+                                    allowClear
                                     size='large'
-                                    format='YYYY'
-                                />
+                                >
+                                    {years.map(renderOption)}
+                                </SANSelect>
                             </SANFormItem>
                         </SANCol>
                         <SANCol xs={24} sm={12}>
@@ -267,7 +285,7 @@ const RMFilterAdvanced = memo<IRMFilterAdvancedProps>(({ defaultOpen }) => {
                                 )}
                                 valuePropName='checked'
                             >
-                                <SANSwitch />
+                                <SANSwitch/>
                             </SwitchStyled>
                         </SANCol>
                     </SANRow>

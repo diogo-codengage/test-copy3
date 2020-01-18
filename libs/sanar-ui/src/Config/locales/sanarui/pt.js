@@ -113,8 +113,6 @@ export default {
             'O link de redefinição da senha expirou. Solicite um novo.',
         codeMismatchException:
             'O link de redefinição da senha é inválido. Solicite um novo.',
-        limitExceededException:
-            'Você excedeu o límite de tentativas. Tente novamente mais tarde.',
         passwordWasReseted: 'Senha alterada com sucesso!',
         noEnrollment: 'Não há matrículas para o usuário informado.',
         changePassword: {
