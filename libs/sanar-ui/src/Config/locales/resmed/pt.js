@@ -362,7 +362,7 @@ export default {
             yes: 'Sim'
         },
         previousResidencyCourse: {
-            label: 'Qual curso preparatório'
+            label: 'Qual curso preparatório?'
         },
         graduatedStep: {
             label: 'Quando você entrou na faculdade?',
