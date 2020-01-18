@@ -44,19 +44,19 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
         ISuplemmentaryMutation,
         ISuplemmentaryVariables
     >(SUPPLEMENTARY_DATA, {
-        onCompleted(response) {
-            setMe(old => ({ ...old, ...response }))
-            snackbar({
-                message: t('userProfile.mutations.success'),
-                theme: 'success'
-            })
-            !!closeModal && closeModal()
-        },
         onError() {
             snackbar({
                 message: t('userProfile.mutations.error'),
                 theme: 'success'
             })
+        },
+        onCompleted(response) {
+            setMe(old => ({ ...old, ...response }))
+            snackbar({
+                message: t('userProfile.mutations.success'),
+                theme: 'error'
+            })
+            !!closeModal && closeModal()
         },
         refetchQueries: [{ query: GET_ACTIVE_COURSE }]
     })
