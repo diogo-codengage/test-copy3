@@ -337,7 +337,7 @@ const SANCollection = memo<ISANCollectionProps>(
         }, [index])
 
         return (
-            <SANBox position='relative' height='100vh'>
+            <SANBox position='relative' height={vertical ? '100vh' : 'auto'}>
                 {vertical && (
                     <>
                         <SANBox
