@@ -103,7 +103,7 @@ const RMHome = memo<RouteComponentProps>(({ history }) => {
     }, [])
 
     useEffect(() => {
-        if (!!me && !!me.hasActiveSubscription && !!me.hasActiveSubscription) {
+        if (!!me && !!me.hasActiveSubscription && !!me.userMedUniversity) {
             history.push('/inicio/curso')
         }
     }, [me])
