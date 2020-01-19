@@ -41,7 +41,7 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
         if (response.newPasswordRequired) {
             history.push('/auth/nova-senha')
         } else {
-            history.push('/inicio/curso')
+            history.push('/inicio/curso?ready=false')
         }
 
         if (window.Conpass) {
