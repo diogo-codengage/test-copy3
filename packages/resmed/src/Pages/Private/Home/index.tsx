@@ -3,6 +3,7 @@ import React, { useEffect, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
     SANBox,
@@ -91,15 +92,21 @@ const Header = () => {
     )
 }
 
-const RMHome = memo(() => {
+const RMHome = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
-    const { activeCourse } = useAuthContext()
+    const { activeCourse, me } = useAuthContext()
     const { handleTrack } = useMainContext()
 
     useEffect(() => {
         handleTrack('Course Homepage viewed')
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        if (!!me && !!me.hasActiveSubscription && !!me.userMedUniversity) {
+            history.push('/inicio/curso')
+        }
+    }, [me])
 
     return (
         <SANBox flex='1' display='flex' flexDirection='column'>
@@ -140,4 +147,4 @@ const RMHome = memo(() => {
     )
 })
 
-export default RMHome
+export default withRouter(RMHome)
