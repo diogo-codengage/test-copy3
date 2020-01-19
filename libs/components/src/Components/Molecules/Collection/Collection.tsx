@@ -230,7 +230,7 @@ const SANCollectionItem = ({ item, index, onChange, value }: any) => {
                         />
                     )}
                 </SANBox>
-                <Tooltip title={name} placement="topLeft" mouseEnterDelay={0.3}>
+                <Tooltip title={name} placement='topLeft' mouseEnterDelay={0.3}>
                     <SANTypography
                         fontSize='md'
                         fontWeight='bold'
@@ -261,7 +261,7 @@ const SANCollection = memo<ISANCollectionProps>(
     ({ items, vertical, onChange, value, loading = false }) => {
         const { width } = useWindowSize()
         const [isDragging, setIsDragging] = useState(false)
-        const [curretSlide, setCurrentSlide] = useState(1)
+        const [curretSlide, setCurrentSlide] = useState(0)
         const sliderRef = useRef<any>()
 
         const handlePrev = () => {
@@ -304,7 +304,7 @@ const SANCollection = memo<ISANCollectionProps>(
                 dots: false,
                 infinite: false,
                 beforeChange: () => setIsDragging(true),
-                afterChange: current => {
+                afterChange: (current, ...props) => {
                     setIsDragging(false)
                     setCurrentSlide(current)
                 },
@@ -349,7 +349,7 @@ const SANCollection = memo<ISANCollectionProps>(
                             top='12px'
                         >
                             <PrevArrow
-                                disabled={curretSlide === 1}
+                                disabled={curretSlide === 0}
                                 icon='arrow-upward-outline'
                                 onClick={handlePrev}
                             />
