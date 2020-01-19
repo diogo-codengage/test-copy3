@@ -200,7 +200,7 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                                     plataform='resmed'
                                 />
                             </Header>
-                            <SANBox display='flex' {...wrapper}>
+                            <SANBox display='flex' bg='grey.9' {...wrapper}>
                                 <SANBox flex='1'>
                                     <SANJwPlayer
                                         plataform='resmed'
@@ -243,16 +243,27 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                                         }}
                                     />
                                 </SANBox>
-                                <RMCollection
-                                    parentId={params.lessonId}
-                                    value={params.collectionId}
-                                    vertical={width > 884}
-                                    onChange={onChangeCollection}
-                                    onCompleted={collection =>
-                                        setClickerName(collection.name)
-                                    }
-                                    ref={collectionRef}
-                                />
+                                <SANBox
+                                    {...(width <= 884
+                                        ? {
+                                              px: 'lg',
+                                              mx: 'sm'
+                                          }
+                                        : {
+                                              //   py: 'lg'
+                                          })}
+                                >
+                                    <RMCollection
+                                        parentId={params.lessonId}
+                                        value={params.collectionId}
+                                        vertical={width > 884}
+                                        onChange={onChangeCollection}
+                                        onCompleted={collection =>
+                                            setClickerName(collection.name)
+                                        }
+                                        ref={collectionRef}
+                                    />
+                                </SANBox>
                             </SANBox>
                         </SANBox>
                     )
