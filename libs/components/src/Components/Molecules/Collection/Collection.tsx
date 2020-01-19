@@ -15,6 +15,8 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { Tooltip } from 'antd'
 
+import { useWindowSize } from '@sanar/utils/dist/Hooks'
+
 import { SANButton } from '../../Atoms/Button'
 import { SANBox } from '../../Atoms/Box'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
@@ -50,25 +52,29 @@ const Skeleton = () => (
 
 const renderSkeleton = (_, index) => <Skeleton key={index} />
 
-const NextArrow = ({ onClick, className }: any) => (
+const NextArrow = ({ onClick, className, icon, disabled }: any) => (
     <ButtonArrowStyled
         onClick={onClick}
         circle
         variant='text'
+        size='xsmall'
         className={className}
+        disabled={disabled}
     >
-        <SANEvaIcon name='arrow-forward-outline' />
+        <SANEvaIcon name={!!icon ? icon : 'arrow-forward-outline'} />
     </ButtonArrowStyled>
 )
 
-const PrevArrow = ({ onClick, className }: any) => (
+const PrevArrow = ({ onClick, className, icon, disabled }: any) => (
     <ButtonArrowStyled
         onClick={onClick}
         circle
         variant='text'
+        size='xsmall'
         className={className}
+        disabled={disabled}
     >
-        <SANEvaIcon name='arrow-back-outline' />
+        <SANEvaIcon name={!!icon ? icon : 'arrow-back-outline'} />
     </ButtonArrowStyled>
 )
 
@@ -79,8 +85,10 @@ const ButtonArrowStyled = styled(SANButton)`
         color: ${theme('colors.grey.6')};
         z-index: 1;
 
-        &.slick-disabled {
-            opacity: 0.4;
+        &.es-button__variant--text[disabled],
+        &.es-button__variant--text[disabled]:hover {
+            background-color: ${theme('colors.white.10')} !important;
+            opacity: 0.4 !important;
         }
 
         &.slick-prev {
@@ -251,8 +259,22 @@ const SANCollectionItem = ({ item, index, onChange, value }: any) => {
 
 const SANCollection = memo<ISANCollectionProps>(
     ({ items, vertical, onChange, value, loading = false }) => {
+        const { width } = useWindowSize()
         const [isDragging, setIsDragging] = useState(false)
+        const [curretSlide, setCurrentSlide] = useState(1)
         const sliderRef = useRef<any>()
+
+        const handlePrev = () => {
+            if (!!sliderRef && !!sliderRef.current) {
+                sliderRef.current.slickPrev()
+            }
+        }
+
+        const handleNext = () => {
+            if (!!sliderRef && !!sliderRef.current) {
+                sliderRef.current.slickNext()
+            }
+        }
 
         const renderItem = useCallback(
             (item, index) => (
@@ -280,15 +302,17 @@ const SANCollection = memo<ISANCollectionProps>(
                 swipeToSlide: true,
                 draggable: true,
                 dots: false,
-                infinite: items.length >= 5,
+                infinite: false,
                 beforeChange: () => setIsDragging(true),
-                afterChange: () => setIsDragging(false),
+                afterChange: current => {
+                    setIsDragging(false)
+                    setCurrentSlide(current)
+                },
                 slidesToScroll: 1,
                 nextArrow: <NextArrow />,
                 prevArrow: <PrevArrow />,
                 verticalSwiping: vertical,
                 arrows: !vertical,
-                slidesToShow: vertical ? 6 : 5,
                 vertical,
                 responsive: vertical ? responsiveVertical : responsiveHorizontal
             }),
@@ -299,18 +323,56 @@ const SANCollection = memo<ISANCollectionProps>(
             vertical
         ])
 
+        const disabledNext = useMemo(() => {
+            if (!vertical) return
+            if (width <= 1366) {
+                return curretSlide + 3 === items.length
+            } else {
+                return curretSlide + 5 === items.length
+            }
+        }, [curretSlide, width, items])
+
         useEffect(() => {
             if (!!sliderRef && !!sliderRef.current && index > 0) {
                 sliderRef.current.slickGoTo(index)
+                setCurrentSlide(index)
             }
         }, [index])
 
         return (
-            <SliderStyled ref={sliderRef} key={key} {...settings}>
-                {loading
-                    ? arrLoading.map(renderSkeleton)
-                    : items.map(renderItem)}
-            </SliderStyled>
+            <SANBox position='relative' height={vertical ? '100vh' : 'auto'}>
+                {vertical && (
+                    <>
+                        <SANBox
+                            position='absolute'
+                            left='calc(50% - 16px)'
+                            top='12px'
+                        >
+                            <PrevArrow
+                                disabled={curretSlide === 1}
+                                icon='arrow-upward-outline'
+                                onClick={handlePrev}
+                            />
+                        </SANBox>
+                        <SANBox
+                            position='absolute'
+                            left='calc(50% - 16px)'
+                            bottom='34px'
+                        >
+                            <NextArrow
+                                disabled={disabledNext}
+                                icon='arrow-downward-outline'
+                                onClick={handleNext}
+                            />
+                        </SANBox>
+                    </>
+                )}
+                <SliderStyled ref={sliderRef} key={key} {...settings}>
+                    {loading
+                        ? arrLoading.map(renderSkeleton)
+                        : items.map(renderItem)}
+                </SliderStyled>
+            </SANBox>
         )
     }
 )

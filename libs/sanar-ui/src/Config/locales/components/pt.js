@@ -228,7 +228,8 @@ export default {
         good: 'Boa',
         awesome: 'Incrível',
         next: 'Próximo',
-        send: 'Enviar'
+        send: 'Enviar',
+        callback: 'Obrigado pelo seu feedback'
     },
     lessonResult: {
         titleSuccess: 'Você foi muito bem!',

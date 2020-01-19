@@ -21,6 +21,8 @@ interface IRMClassroomProviderValue {
     specialty: ISpecialty
     clickerName: string
     setClickerName: React.Dispatch<React.SetStateAction<string>>
+    hasQuestions: boolean
+    setHasQuestions: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface IDataProgress {
@@ -44,6 +46,7 @@ const RMClassroomProvider: React.FC = ({ children }) => {
         title: ''
     })
     const [clickerName, setClickerName] = useState('')
+    const [hasQuestions, setHasQuestions] = useState(false)
     const { setMenuTab, params, fetchSuggestedClass } = useLayoutContext()
 
     const handleProgress = (data: IDataProgress) =>
@@ -85,6 +88,7 @@ const RMClassroomProvider: React.FC = ({ children }) => {
             } catch {}
         }
         !!params.lessonId && fetchLesson()
+        setHasQuestions(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.lessonId])
 
@@ -106,7 +110,9 @@ const RMClassroomProvider: React.FC = ({ children }) => {
         lesson,
         specialty,
         clickerName,
-        setClickerName
+        setClickerName,
+        setHasQuestions,
+        hasQuestions
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>
