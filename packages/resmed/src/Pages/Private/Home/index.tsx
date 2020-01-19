@@ -106,6 +106,7 @@ const RMHome = memo<RouteComponentProps>(({ history }) => {
         if (!!me && !!me.hasActiveSubscription && !!me.userMedUniversity) {
             history.push('/inicio/curso')
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [me])
 
     return (
