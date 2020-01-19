@@ -36,7 +36,7 @@ const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
         const data = {
             'User ID': !!me && me.id,
             'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
-            'Course ID': activeCourse.id,
+            'Course ID': !!activeCourse && activeCourse.id,
             ...attrs
         }
 
