@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 
 import { useApolloClient } from '@apollo/react-hooks'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -20,9 +20,10 @@ import { IParams } from './'
 const RMClassroomRating = memo<RouteComponentProps<IParams>>(
     ({ history, match: { params: paramsProp } }) => {
         const client = useApolloClient()
+        const [onCompleted, setCompleted] = useState(false)
         const { params, onOpenMenu, setParams } = useLayoutContext()
         const { handleTrack } = useMainContext()
-        const { lesson, specialty } = useClassroomContext()
+        const { lesson, specialty, hasQuestions } = useClassroomContext()
 
         const handleRating = async (value, { setSubmitting }) => {
             handleTrack('Video rated', {
@@ -41,11 +42,18 @@ const RMClassroomRating = memo<RouteComponentProps<IParams>>(
                     }
                 })
             } catch {}
+            setCompleted(true)
             setSubmitting(false)
             handleNext()
         }
 
-        const handleNext = () => history.push('./feedback')
+        const handleNext = () => {
+            if (hasQuestions) {
+                history.push('./feedback')
+            } else {
+                setCompleted(true)
+            }
+        }
 
         useEffect(() => {
             setParams(old => ({ ...old, ...paramsProp }))
@@ -69,6 +77,7 @@ const RMClassroomRating = memo<RouteComponentProps<IParams>>(
                     <SANLessonFeedback
                         onSend={handleRating}
                         onNext={handleNext}
+                        hasCallback={onCompleted && !hasQuestions}
                     />
                 </SANLayoutContainer>
             </SANBox>

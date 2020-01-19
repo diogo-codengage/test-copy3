@@ -117,7 +117,12 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
         const goNextConteent = () => {
             const current = collectionRef.current.getCurrent()
             // if have quiz on this clicker go to quiz
-            if (!!current && !!current.content.quiz) {
+            if (
+                !!current.content &&
+                !!current.content.quiz &&
+                !!current.content.quiz.questions &&
+                !!current.content.quiz.questions.length
+            ) {
                 history.push(
                     `../../${current.id}/quiz/${current.content.quiz.id}/0`
                 )
@@ -136,7 +141,11 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
 
         useEffect(() => {
             if (paramsProp.contentId !== params.contentId) {
-                setParams(old => ({ ...old, subspecialtyId: "", ...paramsProp }))
+                setParams(old => ({
+                    ...old,
+                    subspecialtyId: '',
+                    ...paramsProp
+                }))
             }
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [paramsProp])
