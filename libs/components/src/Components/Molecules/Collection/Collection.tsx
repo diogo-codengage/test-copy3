@@ -13,6 +13,7 @@ import { theme, ifNotProp, ifProp } from 'styled-tools'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import { Tooltip } from 'antd'
 
 import { SANButton } from '../../Atoms/Button'
 import { SANBox } from '../../Atoms/Box'
@@ -221,16 +222,18 @@ const SANCollectionItem = ({ item, index, onChange, value }: any) => {
                         />
                     )}
                 </SANBox>
-                <SANTypography
-                    fontSize='md'
-                    fontWeight='bold'
-                    ellipsis
-                    color='white.10'
-                    onClick={handleChange}
-                    style={{ cursor: 'pointer' }}
-                >
-                    {name}
-                </SANTypography>
+                <Tooltip title={name} placement="topLeft" mouseEnterDelay={0.3}>
+                    <SANTypography
+                        fontSize='md'
+                        fontWeight='bold'
+                        ellipsis
+                        color='white.10'
+                        onClick={handleChange}
+                        style={{ cursor: 'pointer' }}
+                    >
+                        {name}
+                    </SANTypography>
+                </Tooltip>
             </SANBox>
             {value === id && (
                 <SANBox
