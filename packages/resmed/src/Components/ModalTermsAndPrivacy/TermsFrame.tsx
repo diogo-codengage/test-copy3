@@ -10,6 +10,7 @@ import { useMainContext } from 'Pages/Private/Context'
 const SANIframeBox = styled(SANBox)`
     width: 100%;
     flex: 1;
+    max-height: calc( 100vh - 286px );
 `
 const SANCheckboxContainer = styled(SANBox)`
     @media (min-width: 992px) {

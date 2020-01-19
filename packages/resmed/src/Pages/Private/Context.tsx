@@ -34,9 +34,9 @@ const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
 
     const handleTrack = (event: IEvents, attrs?: IOptions) => {
         const data = {
-            'User ID': me.id,
+            'User ID': !!me && me.id,
             'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
-            'Course ID': activeCourse.id,
+            'Course ID': !!activeCourse && activeCourse.id,
             ...attrs
         }
 

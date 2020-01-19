@@ -5,6 +5,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
+import * as Sentry from '@sentry/browser'
 
 import { HashRouter as BrowserRouter } from 'react-router-dom'
 import { LastLocationProvider } from 'react-router-last-location'
@@ -36,5 +37,6 @@ const RMApp: React.FC = () => (
     </RMGraphQLProvider>
 )
 
+if (process.env.NODE_ENV === 'production') Sentry.init({ dsn: `${process.env.REACT_APP_SENTRY_DSN}` })
 ReactDOM.render(<RMApp />, document.getElementById('root'))
 serviceWorker.register()

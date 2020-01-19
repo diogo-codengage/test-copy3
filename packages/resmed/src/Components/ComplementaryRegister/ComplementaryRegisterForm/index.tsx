@@ -47,14 +47,14 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
         onError() {
             snackbar({
                 message: t('userProfile.mutations.error'),
-                theme: 'success'
+                theme: 'error'
             })
         },
         onCompleted(response) {
             setMe(old => ({ ...old, ...response }))
             snackbar({
                 message: t('userProfile.mutations.success'),
-                theme: 'error'
+                theme: 'success'
             })
             !!closeModal && closeModal()
         },
