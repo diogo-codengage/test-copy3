@@ -41,7 +41,7 @@ const RMNewPassword: React.FC<IProps> = ({ history, form }) => {
                         message: t('auth.newPasswordChallenge.success'),
                         theme: 'success'
                     })
-                    history.push('/inicio/curso')
+                    history.push('/inicio/curso?ready=false')
                 } catch (error) {
                     if (error.message) {
                         createSnackbar({
