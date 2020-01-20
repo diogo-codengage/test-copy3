@@ -1,6 +1,6 @@
 export const responsiveHorizontal = [
     {
-        breakpoint: 1000,
+        breakpoint: 10328,
         settings: {
             slidesToShow: 5
         }
@@ -33,9 +33,16 @@ export const responsiveHorizontal = [
 
 export const responsiveVertical = [
     {
-        breakpoint: 9999,
+        breakpoint: 10328,
         settings: {
             slidesToShow: 5,
+            verticalSwiping: true
+        }
+    },
+    {
+        breakpoint: 1920,
+        settings: {
+            slidesToShow: 4,
             verticalSwiping: true
         }
     },

@@ -244,14 +244,10 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                                     />
                                 </SANBox>
                                 <SANBox
-                                    {...(width <= 884
-                                        ? {
-                                              px: 'lg',
-                                              mx: 'sm'
-                                          }
-                                        : {
-                                              //   py: 'lg'
-                                          })}
+                                    {...(width <= 884 && {
+                                        px: 'lg',
+                                        mx: 'sm'
+                                    })}
                                 >
                                     <RMCollection
                                         parentId={params.lessonId}
