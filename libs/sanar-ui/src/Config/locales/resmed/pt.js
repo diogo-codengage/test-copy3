@@ -26,7 +26,7 @@ export default {
         messageChangeSuccess: 'Senha alterada com sucesso!',
         marketing: {
             title:
-                'Tenha uma experiência de excêlencia nos seus estudos e na sua carreira',
+                'Tenha uma experiência de excelência nos seus estudos e na sua carreira',
             description:
                 'Acompanhe seu desempenho, tenha acesso a questões, conteúdos exclusivos e diversos conteúdos que vão te ajudar a conseguir alcançar seus objetivos',
             action: 'Conheça nosso cursos'
@@ -289,7 +289,7 @@ export default {
             live: {
                 title: 'Live',
                 button: 'Assistir live',
-                comingSoon: 'Em breve',
+                comingSoon: 'Em breve'
             },
             suggestion: {
                 title: 'Sugestão do professor',
