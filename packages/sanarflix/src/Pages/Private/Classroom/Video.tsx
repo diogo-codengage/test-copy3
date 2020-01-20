@@ -45,6 +45,7 @@ const Header = styled.div`
 `
 
 const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
+    const thumbnailDefault = 'https://cdn-sanar.s3.amazonaws.com/thumbnail-sanarflix.png'
     const client = useApolloClient()
     const { t } = useTranslation('sanarflix')
     const {
@@ -181,7 +182,9 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                 const playlist = [
                     {
                         file: file && file.files.smil.url,
-                        image: resource.video.thumbnails && resource.video.thumbnails.large
+                        image: resource.video.thumbnails
+                            ? resource.video.thumbnails.large
+                            : thumbnailDefault
                     }
                 ]
 
