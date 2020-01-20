@@ -44,7 +44,7 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
             history.push('/inicio/curso?ready=false')
         }
 
-        if (window.Conpass) {
+        if (window.Conpass && !!response && !!response.idToken) {
             window.Conpass.init({
                 name: response.idToken.payload.name,
                 email: response.idToken.payload.email

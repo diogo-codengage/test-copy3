@@ -87,6 +87,7 @@ const RMComplementaryRegisterModal: React.FC<ISANModalProps> = ({
             maxWidth={{ _: '100%', sm: '744px' }}
             bodyStyle={width < 576 ? styleToModalBodyMobile : styleToModalBody}
             onCancel={handleCancel}
+            closable={!!me && !!me.userMedUniversity}
             {...props}
         >
             <SANImageBox textAlign='center'>

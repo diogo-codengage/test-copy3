@@ -69,7 +69,7 @@ const RMClassRoomQuiz = memo<RouteComponentProps<IParams>>(props => {
                         plataform='resmed'
                     />
                     <SANLayoutContainer
-                        pb='8'
+                        pb={{ lg: '8', _: '0' }}
                         pt={{ xs: '8', _: 'xl' }}
                         px={{ lg: 'md', _: '0' }}
                     >

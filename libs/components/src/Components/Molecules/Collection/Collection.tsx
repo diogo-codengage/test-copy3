@@ -85,10 +85,12 @@ const ButtonArrowStyled = styled(SANButton)`
         color: ${theme('colors.grey.6')};
         z-index: 1;
 
+        &.slick-disabled,
         &.es-button__variant--text[disabled],
         &.es-button__variant--text[disabled]:hover {
             background-color: ${theme('colors.white.10')} !important;
             opacity: 0.4 !important;
+            cursor: not-allowed;
         }
 
         &.slick-prev {
@@ -163,7 +165,7 @@ const SliderStyled = styled(Slider)`
             'vertical',
             css`
                 width: 192px;
-                max-height: 100vh;
+                max-height: 100%;
                 overflow: hidden;
             `,
             css`
@@ -304,7 +306,7 @@ const SANCollection = memo<ISANCollectionProps>(
                 dots: false,
                 infinite: false,
                 beforeChange: () => setIsDragging(true),
-                afterChange: (current, ...props) => {
+                afterChange: current => {
                     setIsDragging(false)
                     setCurrentSlide(current)
                 },
@@ -340,7 +342,7 @@ const SANCollection = memo<ISANCollectionProps>(
         }, [index])
 
         return (
-            <SANBox position='relative' height={vertical ? '100vh' : 'auto'}>
+            <SANBox position='relative' height={vertical ? '100%' : 'auto'}>
                 {vertical && (
                     <>
                         <SANBox
