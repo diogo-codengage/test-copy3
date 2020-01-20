@@ -89,7 +89,7 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
             title: t('auth.marketing.title'),
             description: t('auth.marketing.description'),
             linkDescription: t('auth.marketing.action'),
-            link: 'https://www.editorasanar.com.br/'
+            link: 'https://www.sanarmed.com/residenciamedica/cursos/'
         }),
         [t]
     )
