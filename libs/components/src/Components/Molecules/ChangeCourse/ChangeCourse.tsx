@@ -14,7 +14,7 @@ import { SANBox, ISANBoxProps } from '../../Atoms/Box'
 
 import { transparentize } from 'polished'
 
-interface IWrapper extends React.HTMLProps<HTMLDivElement> {
+interface IWrapper {
     hasHover?: boolean
     cursor?: 'not-allowed' | 'pointer' | 'default'
 }
@@ -66,8 +66,7 @@ interface IContinue {
     loading?: boolean
 }
 
-export interface ISANChangeCourseProps
-    extends Omit<ISANBoxProps, 'onChange' | 'title' | 'id'> {
+export interface ISANChangeCourseProps {
     id: string
     title: string
     date: string
@@ -79,6 +78,7 @@ export interface ISANChangeCourseProps
     hasActive?: boolean
     expired?: boolean
     notStarted?: boolean
+    BoxProps?: ISANBoxProps
 }
 
 export interface ISANContinueProps extends IContinue {
@@ -166,7 +166,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
     hasActive,
     expired,
     notStarted,
-    ...props
+    BoxProps
 }) => {
     const { t } = useTranslation('components')
 
@@ -194,8 +194,8 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
                     ? 'pointer'
                     : 'default'
             }
-            height={expired || notStarted ? 106 : 'auto'}
-            {...props}
+            height={expired || notStarted ? '106px' : 'auto'}
+            {...BoxProps}
         >
             {(expired || notStarted) && <Blocked />}
             <SANBox

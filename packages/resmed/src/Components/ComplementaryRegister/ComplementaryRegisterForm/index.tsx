@@ -32,12 +32,20 @@ interface IFormValues extends ISuplemmentaryOptions {
     preparatoryCourseStatus: 'yes' | 'no'
 }
 
+interface IRMComplementaryRegisterFormProps extends ISANFormComponentProps {
+    form: any
+    closeModal?: () => void
+}
+
 const toLowerCase = v => ({
     ...v,
     label: v.label.toLowerCase()
 })
 
-const RMComplementaryRegisterForm = ({ form, closeModal }) => {
+const RMComplementaryRegisterForm: React.FC<IRMComplementaryRegisterFormProps> = ({
+    form,
+    closeModal
+}) => {
     const { t } = useTranslation('resmed')
 
     const [mutation, { loading: loadingMutation }] = useMutation<
@@ -162,4 +170,6 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
     )
 }
 
-export default withSANForm(RMComplementaryRegisterForm)
+export default withSANForm<IRMComplementaryRegisterFormProps>(
+    RMComplementaryRegisterForm
+)

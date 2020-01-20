@@ -58,28 +58,30 @@ const Courses = withRouter(({ history }) => {
         course => {
             const start = getUTCDate(course.startDate)
             const end = getUTCDate(course.expireDate)
-            return !loading && !!course
-                ? {
-                      key: course.id,
-                      id: course.id,
-                      title: course.name,
-                      date: formatExpireDate(
-                          isAfter(start, new Date()) ? start : end
-                      ),
-                      percent: course.progress,
-                      coverPicture: course.images.original,
-                      expired: isBefore(end, new Date()),
-                      notStarted: isAfter(start, new Date()),
-                      onChange: () => handleChange(course.id)
-                  }
-                : {}
+            return {
+                key: course.id,
+                id: course.id,
+                title: course.name,
+                date: formatExpireDate(
+                    isAfter(start, new Date()) ? start : end
+                ),
+                percent: course.progress,
+                coverPicture: course.images.original,
+                expired: isBefore(end, new Date()),
+                notStarted: isAfter(start, new Date()),
+                onChange: () => handleChange(course.id)
+            }
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [loading, data]
     )
 
     const renderCourse = course => (
-        <SANChangeCourse mb='md' loading={loading} {...getProps(course)} />
+        <SANChangeCourse
+            BoxProps={{ mb: 'md' }}
+            loading={loading}
+            {...getProps(course)}
+        />
     )
 
     const courses = useMemo(() => {
