@@ -3,7 +3,7 @@ import React, { memo, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/react-hooks'
-import { format } from 'date-fns'
+import { format, isBefore, isAfter } from 'date-fns'
 import { filter, path, sortBy } from 'ramda'
 
 import {
@@ -17,31 +17,34 @@ import {
     SANGenericError,
     SANSpin
 } from '@sanar/components'
+import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import { useAuthContext } from 'Hooks/auth'
 import { GET_COURSES, ICourseQuery } from 'Apollo/User/Queries/courses'
+import { GET_ME } from 'Apollo/User/Queries/me'
 import {
     UPDATE_ACTIVE_COURSE,
     IUpdateActiveCourseResponse,
     IUpdateActiveCourseVariables
 } from 'Apollo/User/Mutations/update-active-course'
+import { GET_ACTIVE_COURSE } from 'Apollo/User/Queries/active-course'
 
 import { useLayoutContext } from '../Context'
 
 const arr = new Array(3).fill(0).map((_, index) => index)
-const formatExpireDate = (date: string) => format(new Date(date), 'DD/MM/YYYY')
+const formatExpireDate = (date: Date) => format(date, 'DD/MM/YYYY')
 
 const Courses = withRouter(({ history }) => {
-    const { setActiveCourse, activeCourse } = useAuthContext()
+    const { activeCourse } = useAuthContext()
     const { loading, data } = useQuery<ICourseQuery>(GET_COURSES)
     const [changeCourse, { loading: loadingMutation }] = useMutation<
         IUpdateActiveCourseResponse,
         IUpdateActiveCourseVariables
     >(UPDATE_ACTIVE_COURSE, {
-        onCompleted({ updateActiveCourse }) {
-            setActiveCourse(updateActiveCourse)
+        onCompleted() {
             history.push('/inicio/curso')
-        }
+        },
+        refetchQueries: [{ query: GET_ME }, { query: GET_ACTIVE_COURSE }]
     })
     const { setMenuTab, onCloseMenu } = useLayoutContext()
     const handleChange = courseId => {
@@ -52,15 +55,25 @@ const Courses = withRouter(({ history }) => {
     }
 
     const getProps = useCallback(
-        course => ({
-            key: course.id,
-            id: course.id,
-            title: course.name,
-            date: formatExpireDate(course.expireDate),
-            percent: course.progress,
-            coverPicture: course.images.original,
-            onChange: () => handleChange(course.id)
-        }),
+        course => {
+            const start = getUTCDate(course.startDate)
+            const end = getUTCDate(course.expireDate)
+            return !loading && !!course
+                ? {
+                      key: course.id,
+                      id: course.id,
+                      title: course.name,
+                      date: formatExpireDate(
+                          isAfter(start, new Date()) ? start : end
+                      ),
+                      percent: course.progress,
+                      coverPicture: course.images.original,
+                      expired: isBefore(end, new Date()),
+                      notStarted: isAfter(start, new Date()),
+                      onChange: () => handleChange(course.id)
+                  }
+                : {}
+        },
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [loading, data]
     )
@@ -149,9 +162,11 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
             {!!activeCourse && (
                 <Error>
                     <SANChangeCourse
-                        id={!!activeCourse.id ? activeCourse.id : ''}
-                        title={!!activeCourse.name ? activeCourse.name : ''}
-                        date={formatExpireDate(activeCourse.expireDate)}
+                        id={activeCourse.id}
+                        title={activeCourse.name}
+                        date={formatExpireDate(
+                            getUTCDate(activeCourse.expireDate)
+                        )}
                         percent={activeCourse.progress}
                         coverPicture={
                             !!activeCourse.images &&

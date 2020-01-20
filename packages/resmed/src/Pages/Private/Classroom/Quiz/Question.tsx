@@ -235,7 +235,8 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                 </SANBox>
                 <SANBox
                     mt={{ lg: 'xl', _: '0' }}
-                    px={width > 884 ? 18 : undefined}
+                    px={width > 884 ? 18 : 32}
+                    bg={{ lg: 'transparent', _: 'grey.9' }}
                 >
                     <RMCollection
                         parentId={paramsLayout.lessonId}

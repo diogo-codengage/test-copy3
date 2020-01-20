@@ -76,7 +76,7 @@ const SANClassroomMenu: React.FC<IProps> = ({
                         </SANBox>
                     </SANBox>
                     <SANDivider mt={5} mb={5} backgroundColor='grey.4' />
-                    {!!currentThemeIndex && totalThemes && (
+                    {!!currentThemeIndex && totalThemes > 0 && (
                         <SANBox
                             displayFlex
                             alignItems='center'

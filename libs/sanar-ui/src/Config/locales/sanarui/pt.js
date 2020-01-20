@@ -98,6 +98,7 @@ export default {
         signInWith: 'Entrar com {{social}}'
     },
     authMessages: {
+        hasNoSubscription: 'Ops! Você não possui nenhum curso ativo',
         generic: 'Ocorreu um erro. Tente novamente mais tarde.',
         notAuthorizedException:
             'Desculpe, essa combinação inserida de e-mail e senha está incorreta. Verifique seus dados e tente novamente!',
@@ -112,8 +113,6 @@ export default {
             'O link de redefinição da senha expirou. Solicite um novo.',
         codeMismatchException:
             'O link de redefinição da senha é inválido. Solicite um novo.',
-        limitExceededException:
-            'Você excedeu o límite de tentativas. Tente novamente mais tarde.',
         passwordWasReseted: 'Senha alterada com sucesso!',
         noEnrollment: 'Não há matrículas para o usuário informado.',
         changePassword: {

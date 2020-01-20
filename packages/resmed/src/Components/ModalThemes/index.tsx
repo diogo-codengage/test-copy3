@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
 import styled, { css } from 'styled-components'
 import { theme, ifProp } from 'styled-tools'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router'
+import { useLazyQuery } from '@apollo/react-hooks'
 
 import {
     SANButton,
@@ -17,7 +18,10 @@ import {
 } from '@sanar/components'
 
 import { ISANModalProps } from '@sanar/components/dist/Components/Molecules/Modal'
-import { ILastAccessed } from 'Apollo/Subspecialties/Queries/lessons'
+import {
+    ILessonLastAccessedQuery,
+    GET_LESSON_LAST_ACCESSED
+} from 'Apollo/Subspecialties/Queries/lessons'
 
 import { useMainContext } from 'Pages/Private/Context'
 
@@ -94,54 +98,64 @@ interface IRMModalThemesProps extends ISANModalProps, RouteComponentProps {
     onContinue: () => void
 }
 
-const renderTheme = (theme, index, onClick) => {
-    return (
-        <Item
-            {...theme}
-            index={index + 1}
-            key={index}
-            onClick={() => onClick(theme.lastAccessed)}
-        />
-    )
-}
-
-const RMModalThemes = ({
+const RMModalThemes: React.FC<IRMModalThemesProps> = ({
     onContinue,
     themes,
     loading,
     history,
     ...props
-}: IRMModalThemesProps) => {
+}) => {
     const { t } = useTranslation('resmed')
     const { handleTrack } = useMainContext()
-
-    const onClickItem = (lastAccessed: ILastAccessed) => {
-        const {
-            specialtyId,
-            subSpecialtyId,
-            lesson,
-            collectionId,
-            resource
-        } = lastAccessed
-
-        handleTrack('Lesson clicked', {
-            'Specialty ID': specialtyId,
-            'Subspecialty ID': subSpecialtyId,
-            'Lesson ID': lesson.id,
-            'Clicker ID': collectionId
-        })
-
-        const type = resource.type.toLocaleLowerCase()
-        if (type === 'quiz') {
-            history.push(
-                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}/quiz/${resource.id}/0`
-            )
-        } else {
-            history.push(
-                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}/video/${resource.id}`
-            )
+    const [getLastAccessed] = useLazyQuery<ILessonLastAccessedQuery>(
+        GET_LESSON_LAST_ACCESSED,
+        {
+            onCompleted: ({ lesson }) => goToClassroom(lesson)
         }
+    )
+
+    const goToClassroom = lessonProp => {
+        try {
+            const {
+                specialtyId,
+                subSpecialtyId,
+                lesson,
+                collectionId,
+                resource
+            } = lessonProp.lastAccessed
+            handleTrack('Lesson clicked', {
+                'Specialty ID': specialtyId,
+                'Subspecialty ID': subSpecialtyId,
+                'Lesson ID': lesson.id,
+                'Clicker ID': collectionId
+            })
+            const type = resource.type.toLocaleLowerCase()
+            if (type === 'quiz') {
+                history.push(
+                    `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}/quiz/${resource.id}/0`
+                )
+            } else {
+                history.push(
+                    `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}/video/${resource.id}`
+                )
+            }
+        } catch {}
     }
+
+    const renderTheme = useCallback(
+        (theme, index) => (
+            <Item
+                {...theme}
+                index={index + 1}
+                key={index}
+                onClick={() =>
+                    getLastAccessed({ variables: { parentId: theme.id } })
+                }
+            />
+        ),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        []
+    )
 
     return (
         <SANModal
@@ -152,11 +166,7 @@ const RMModalThemes = ({
         >
             <SANSpin spinning={loading}>
                 <SANBox margin='-24px' mb='lg' py='sm' height={345}>
-                    <SANScroll>
-                        {themes.map((theme, index) =>
-                            renderTheme(theme, index, onClickItem)
-                        )}
-                    </SANScroll>
+                    <SANScroll>{themes.map(renderTheme)}</SANScroll>
                 </SANBox>
                 <SANModalFooter
                     justifyContent='center'

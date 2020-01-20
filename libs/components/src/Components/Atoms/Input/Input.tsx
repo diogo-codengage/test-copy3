@@ -137,13 +137,13 @@ export interface ISANInputProps
     size?: 'large' | 'medium' | 'small'
     iconRight?: string
     iconLeft?: string
-    as?: React.ElementType
+    as?: React.ElementType | any
     uppercase?: boolean
     rightClick?: () => void
     leftClick?: () => void
 }
 
-const SANInput: React.FC<ISANInputProps> = (
+const SANInput: React.RefForwardingComponent<any, ISANInputProps> = (
     {
         placeholder,
         iconRight,
@@ -187,4 +187,4 @@ const SANInput: React.FC<ISANInputProps> = (
     )
 }
 
-export default forwardRef<typeof SANInput, ISANInputProps>(SANInput)
+export default forwardRef(SANInput)

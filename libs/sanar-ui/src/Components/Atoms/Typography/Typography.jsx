@@ -114,7 +114,6 @@ ESTypography.propTypes = {
         'overline'
     ]),
     transform: PropTypes.oneOf(['initial', 'uppercase']),
-    className: PropTypes.string,
     regular: PropTypes.bool,
     delete: PropTypes.bool,
     disabled: PropTypes.bool,

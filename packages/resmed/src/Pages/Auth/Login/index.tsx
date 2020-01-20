@@ -41,7 +41,7 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
         if (response.newPasswordRequired) {
             history.push('/auth/nova-senha')
         } else {
-            history.push('/inicio/curso')
+            history.push('/inicio/curso?ready=false')
         }
 
         if (window.Conpass) {
@@ -106,6 +106,9 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
                     <ESSignInForm
                         keepMeLoggedIn={t('auth.keepMeLoggedIn')}
                         forgotPassword={t('auth.forgotPassword')}
+                        forgotPasswordLink={() =>
+                            history.push('/auth/recuperar-senha')
+                        }
                         login={t('auth.login')}
                         action={action}
                         isKeepMeLoggedChecked={keepMeLoggedIn}

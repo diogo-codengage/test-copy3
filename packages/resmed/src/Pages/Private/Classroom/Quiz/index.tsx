@@ -30,7 +30,7 @@ const RMClassRoomQuiz = memo<RouteComponentProps<IParams>>(props => {
     } = props
     const { onOpenMenu, params, setParams } = useLayoutContext()
     const { setQuestions } = useClassroomQuizContext()
-    const { specialty, clickerName } = useClassroomContext()
+    const { specialty, clickerName, setHasQuestions } = useClassroomContext()
 
     const setQuestionContext = ({ quiz }) => {
         setQuestions(quiz.questions)
@@ -42,6 +42,11 @@ const RMClassRoomQuiz = memo<RouteComponentProps<IParams>>(props => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [paramsProp])
+
+    useEffect(() => {
+        setHasQuestions(true)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <SANQuery
@@ -64,7 +69,7 @@ const RMClassRoomQuiz = memo<RouteComponentProps<IParams>>(props => {
                         plataform='resmed'
                     />
                     <SANLayoutContainer
-                        pb='8'
+                        pb={{ lg: '8', _: '0' }}
                         pt={{ xs: '8', _: 'xl' }}
                         px={{ lg: 'md', _: '0' }}
                     >

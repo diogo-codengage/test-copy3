@@ -1,1 +1,4 @@
-export { default as SANInfiniteScroll } from './InfiniteScroll'
+export {
+    default as SANInfiniteScroll,
+    ISANInfiniteScrollProps
+} from './InfiniteScroll'

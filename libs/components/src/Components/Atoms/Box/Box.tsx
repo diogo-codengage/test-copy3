@@ -58,6 +58,10 @@ export interface ISANBoxProps
     color?: string
     src?: string
     alt?: string
+    borderBottomRightRadius?: string
+    borderBottomLeftRadius?: string
+    borderTopRightRadius?: string
+    borderTopLeftRadius?: string
 }
 
 const SANBox = styled('div')<ISANBoxProps>`

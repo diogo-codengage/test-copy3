@@ -132,7 +132,7 @@ const RMNexts = memo(() => {
             loaderProps={{ minHeight: '200px', flex: true }}
         >
             {({ data: { lives } }: { data: ILivesQuery }) => {
-                if (!lives.items.length) return null
+                if (!lives || !lives.items.length) return null
 
                 return (
                     <SANBoxStyled bg='grey-solid.1' py={{ xs: '8', _: 'md' }}>

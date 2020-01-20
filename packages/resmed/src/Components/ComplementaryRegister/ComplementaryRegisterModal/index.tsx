@@ -17,7 +17,7 @@ import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
 import logo from 'Assets/images/brand/logo.svg'
 import { useAuthContext } from 'Hooks/auth'
-import { UPDATE_PROFILE_MUTATION } from 'Apollo/User/Mutations/profile'
+import { SUPPLEMENTARY_DATA } from 'Apollo/User/Mutations/supplementary-data'
 
 import { RMComplementaryRegisterForm } from '../'
 
@@ -73,11 +73,11 @@ const RMComplementaryRegisterModal: React.FC<ISANModalProps> = ({
 }) => {
     const { t } = useTranslation('resmed')
     const { width } = useWindowSize()
-    const { me, activeCourse } = useAuthContext()
-    const [changeCourse] = useMutation(UPDATE_PROFILE_MUTATION)
+    const { me } = useAuthContext()
+    const [changeCourse] = useMutation(SUPPLEMENTARY_DATA)
 
     const handleCancel = () => {
-        changeCourse({ variables: { data: { id: activeCourse.id } } })
+        changeCourse({ variables: { data: {} } })
         !!onCancel && onCancel()
     }
 
@@ -87,6 +87,7 @@ const RMComplementaryRegisterModal: React.FC<ISANModalProps> = ({
             maxWidth={{ _: '100%', sm: '744px' }}
             bodyStyle={width < 576 ? styleToModalBodyMobile : styleToModalBody}
             onCancel={handleCancel}
+            closable={!!me && !!me.userMedUniversity}
             {...props}
         >
             <SANImageBox textAlign='center'>
@@ -115,7 +116,7 @@ const RMComplementaryRegisterModal: React.FC<ISANModalProps> = ({
                     <SANTypography fontSize='md' color='grey.6'>
                         {t(
                             `userProfile.${
-                                !!me && !!me.profile && !!me.profile.id
+                                !!me && !!me.userMedUniversity
                                     ? 'pageSubtitle'
                                     : 'modalSubtitle'
                             }`

@@ -3,6 +3,7 @@ import React, { useEffect, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 import {
     SANBox,
@@ -91,14 +92,24 @@ const Header = () => {
     )
 }
 
-const RMHome = memo(() => {
+const RMHome = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
+    const { activeCourse, me } = useAuthContext()
     const { handleTrack } = useMainContext()
 
     useEffect(() => {
         handleTrack('Course Homepage viewed')
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        if (!!me && !!me.hasActiveSubscription && !!me.userMedUniversity) {
+            history.push('/inicio/curso')
+        } else {
+            history.push('/inicio/curso?ready=false')
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [me])
 
     return (
         <SANBox flex='1' display='flex' flexDirection='column'>
@@ -117,22 +128,26 @@ const RMHome = memo(() => {
                 >
                     <RMGeneral />
                 </SANTabPane>
-                <SANTabPane
-                    tab={
-                        <SANTypography
-                            fontWeight='bold'
-                            fontSize={{ xs: 'lg', _: 'md' }}
+                {!!activeCourse &&
+                    !!activeCourse.infos &&
+                    !!activeCourse.infos.length && (
+                        <SANTabPane
+                            tab={
+                                <SANTypography
+                                    fontWeight='bold'
+                                    fontSize={{ xs: 'lg', _: 'md' }}
+                                >
+                                    {t('home.about.title')}
+                                </SANTypography>
+                            }
+                            key='2'
                         >
-                            {t('home.about.title')}
-                        </SANTypography>
-                    }
-                    key='2'
-                >
-                    <RMAbout />
-                </SANTabPane>
+                            <RMAbout />
+                        </SANTabPane>
+                    )}
             </SANTabs>
         </SANBox>
     )
 })
 
-export default RMHome
+export default withRouter(RMHome)

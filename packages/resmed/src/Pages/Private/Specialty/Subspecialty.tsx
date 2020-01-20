@@ -22,7 +22,12 @@ import {
     ISubspecialtyItems,
     ILastAccessed
 } from 'Apollo/Subspecialties/Queries/subspecialties'
-import { GET_LESSONS, ILesson } from 'Apollo/Subspecialties/Queries/lessons'
+import {
+    GET_LESSONS,
+    ILesson,
+    ILessonsQuery,
+    GET_LESSONS_COMPLETED
+} from 'Apollo/Subspecialties/Queries/lessons'
 
 import RMModalThemes from 'Components/ModalThemes'
 
@@ -32,10 +37,10 @@ interface IRouteProps {
 
 interface IRMSubspecialtiesProps extends RouteComponentProps<IRouteProps> {}
 
-const RMSubspecialties = ({
+const RMSubspecialties: React.FC<IRMSubspecialtiesProps> = ({
     match: { params },
     history
-}: IRMSubspecialtiesProps) => {
+}) => {
     const { handleTrack } = useMainContext()
     const client = useApolloClient()
     const createSnackbar = useSnackbarContext()
@@ -100,12 +105,13 @@ const RMSubspecialties = ({
         try {
             const {
                 data: { lessons }
-            } = await client.query({
+            } = await client.query<ILessonsQuery>({
                 query: GET_LESSONS,
                 variables: { parentId: subspecialty.id }
             })
 
             setLessons(lessons)
+            fetchCompletedProperty(subspecialty.id)
         } catch (error) {
             createSnackbar({
                 message: t('subspecialties.errorLoadLessons'),
@@ -113,6 +119,24 @@ const RMSubspecialties = ({
             })
         }
         setLoading(false)
+    }
+
+    const fetchCompletedProperty = async (parentId: string) => {
+        client
+            .query<ILessonsQuery>({
+                query: GET_LESSONS_COMPLETED,
+                variables: { parentId }
+            })
+            .then(({ data }) => {
+                const { lessons } = data
+                setLessons(lessons)
+            })
+            .catch(() =>
+                createSnackbar({
+                    message: t('subspecialties.errorLoadLessons'),
+                    theme: 'error'
+                })
+            )
     }
 
     const renderSubspecialty = useCallback(
@@ -244,4 +268,4 @@ const RMSubspecialties = ({
     )
 }
 
-export default withRouter<IRMSubspecialtiesProps>(RMSubspecialties)
+export default withRouter(RMSubspecialties)

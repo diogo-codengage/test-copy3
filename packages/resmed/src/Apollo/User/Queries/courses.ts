@@ -17,9 +17,9 @@ export const GET_COURSES = gql`
         courses {
             id
             name
+            startDate
             expireDate
             progress
-            accessed
             images {
                 original
             }

@@ -208,8 +208,6 @@ export default {
             invites: 'Indique e ganhe',
             account: 'Minha conta',
             questions: 'Banco de questões',
-            account: 'Minha conta',
-            added: 'Adicionados'
         },
         account: {
             title: 'Minha Conta',
@@ -316,7 +314,6 @@ export default {
         email: 'Escreva aqui o seu e-mail pessoal',
         nameLabel: 'Nome completo',
         name: 'Escreva aqui o seu nome completo',
-        selectPeriod: 'Selecione aqui o período',
         selectReason: 'Selecione o motivo',
         writeReasonLabel: 'Qual o motivo você escolheu a nota acima?',
         writeReason: 'Escreva seu motivo aqui',

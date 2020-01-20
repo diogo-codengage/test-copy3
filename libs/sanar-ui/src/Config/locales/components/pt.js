@@ -228,7 +228,8 @@ export default {
         good: 'Boa',
         awesome: 'Incrível',
         next: 'Próximo',
-        send: 'Enviar'
+        send: 'Enviar',
+        callback: 'Obrigado pelo seu feedback'
     },
     lessonResult: {
         titleSuccess: 'Você foi muito bem!',
@@ -258,6 +259,12 @@ export default {
         close: 'Fechar'
     },
     changeCourse: {
-        ends: 'Termina em:'
+        ends: 'Termina em:',
+        finished: 'Terminou em:',
+        notStarted: 'Libera em:'
+    },
+    chat: {
+        blocked: 'O chat está desativado.',
+        writeSomething: 'Escrever algo'
     }
 }

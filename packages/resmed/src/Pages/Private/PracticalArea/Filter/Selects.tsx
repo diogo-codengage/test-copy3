@@ -31,10 +31,10 @@ import {
     ISubspecialty
 } from 'Apollo/PracticalArea/Queries/subspecialties'
 import {
-    GET_LESSONS,
-    ILessonsQuery,
-    ILesson
-} from 'Apollo/PracticalArea/Queries/lessons'
+    GET_TAGS,
+    ITagsQuery,
+    ITag
+} from 'Apollo/PracticalArea/Queries/tags'
 
 import { useAuthContext } from 'Hooks/auth'
 
@@ -233,14 +233,14 @@ const Subspecialties = memo<IProps>(({ initialValue }) => {
     )
 })
 
-interface ILessonState extends ILoading {
-    items: ILesson[]
+interface ITagState extends ILoading {
+    items: ITag[]
 }
 
-const Lessons = memo<IProps>(({ initialValue }) => {
+const Tags = memo<IProps>(({ initialValue }) => {
     const client = useApolloClient()
     const { t } = useTranslation('resmed')
-    const [data, setData] = useState<ILessonState>({
+    const [data, setData] = useState<ITagState>({
         loading: false,
         error: false,
         items: []
@@ -254,12 +254,12 @@ const Lessons = memo<IProps>(({ initialValue }) => {
                     loading: true
                 }))
                 const {
-                    data: { lessons }
-                } = await client.query<ILessonsQuery>({ query: GET_LESSONS })
+                    data: { tags }
+                } = await client.query<ITagsQuery>({ query: GET_TAGS })
                 setData(old => ({
                     ...old,
                     loading: false,
-                    items: lessons
+                    items: tags
                 }))
             } catch {
                 setData({ loading: false, error: false, items: [] })
@@ -271,7 +271,7 @@ const Lessons = memo<IProps>(({ initialValue }) => {
 
     return (
         <SANFormItem
-            name='lessons'
+            name='tags'
             mb={{ xs: 'xl', _: 'md' }}
             initialValue={initialValue}
         >
@@ -306,7 +306,7 @@ const RMFilterSelects = memo(() => {
                 <Subspecialties initialValue={filter.subspecialties} />
             </SANCol>
             <SANCol xs={24} sm={24} md={12}>
-                <Lessons initialValue={filter.lessons} />
+                <Tags initialValue={filter.tags} />
             </SANCol>
         </SANRow>
     )

@@ -5,7 +5,7 @@ import {
     withRouter,
     RouteComponentProps
 } from 'react-router-dom'
-import { useApolloClient } from '@apollo/react-hooks'
+import { useLazyQuery } from '@apollo/react-hooks'
 
 import { CognitoUserSession } from 'amazon-cognito-identity-js'
 
@@ -27,10 +27,17 @@ interface RMPrivateRouteProps extends RouteComponentProps {
 
 const RMPrivateRoute = memo<RMPrivateRouteProps>(
     ({ component: Component, history, ...rest }) => {
-        const client = useApolloClient()
+        const [getMe, { loading }] = useLazyQuery(GET_ME, {
+            onCompleted({ me }) {
+                segmentTrack('Session started')
+                setMe(me)
+            },
+            onError() {
+                logout({ callback: onLogout })
+            }
+        })
         const { setMe, me } = useAuthContext()
         const [logged, setLogged] = useState(true)
-        const [loading, setLoading] = useState(true)
 
         const onLogout = () => {
             setMe(undefined)
@@ -38,17 +45,11 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
         }
 
         const fetchMe = async () => {
-            setLoading(true)
             try {
-                const {
-                    data: { me }
-                } = await client.query({ query: GET_ME })
-                segmentTrack('Session started')
-                setMe(me)
+                getMe()
             } catch {
                 logout({ callback: onLogout })
             }
-            setLoading(false)
         }
 
         useEffect(() => {
@@ -66,7 +67,6 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
                 )
             } else {
                 onLogout()
-                setLoading(false)
             }
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
@@ -85,7 +85,7 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
             )
         }
 
-        if (!!me && !me.profile) {
+        if (!!me && !me.userMedUniversity) {
             return <RMComplementaryRegisterModal visible />
         }
 

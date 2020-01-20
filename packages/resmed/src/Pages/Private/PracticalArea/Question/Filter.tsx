@@ -67,7 +67,7 @@ const RMFilter = ({ history, form }: IProps) => {
                 </SANBox>
             </RMSubheader>
             <RMFilterSelects />
-            <RMFilterAdvanced />
+            <RMFilterAdvanced defaultOpen />
             <Performace
                 display={{ _: 'flex', lg: 'none' }}
                 justifyContent='space-around'
