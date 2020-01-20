@@ -14,14 +14,9 @@ import { SANBox, ISANBoxProps } from '../../Atoms/Box'
 
 import { transparentize } from 'polished'
 
-<<<<<<< HEAD
-interface IWrapper {
-    hasPointer?: boolean
-=======
 interface IWrapper extends React.HTMLProps<HTMLDivElement> {
     hasHover?: boolean
     cursor?: 'not-allowed' | 'pointer' | 'default'
->>>>>>> c8d6de3aae47e9d922394c7c4c2eaefdd6657290
 }
 
 const Wrapper = styled(SANBox)<IWrapper>`
