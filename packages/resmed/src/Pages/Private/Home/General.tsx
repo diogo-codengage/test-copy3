@@ -96,6 +96,10 @@ const RMSpecialties = withRouter<RouteComponentProps>(
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
 
+        if (errorLoadActiveCourse) {
+            return <SANGenericError message={t('main.errorLoadActiveCourse')} />
+        }
+
         return (
             <SANQuery
                 query={GET_SPECIALTIES}
@@ -108,11 +112,6 @@ const RMSpecialties = withRouter<RouteComponentProps>(
                     data: { specialties: ISpecialties[] }
                 }) => (
                     <SANRow gutter={24} type='flex' flexWrap='wrap'>
-                        {errorLoadActiveCourse && (
-                            <SANGenericError
-                                message={t('main.errorLoadActiveCourse')}
-                            />
-                        )}
                         {specialties.map(renderSpecialty)}
                     </SANRow>
                 )}
@@ -121,13 +120,10 @@ const RMSpecialties = withRouter<RouteComponentProps>(
     }
 )
 
-const SpecialtiesStyled = styled(SANBox)`
-    min-height: 429px;
-`
-
 const RMGeneral = memo(() => {
     const { t } = useTranslation('resmed')
     const { handleTrack } = useMainContext()
+
     const handleAppClicked = OS => {
         handleTrack('App Banner Clicked', {
             'OS Type': OS
@@ -137,7 +133,8 @@ const RMGeneral = memo(() => {
 
     return (
         <>
-            <SpecialtiesStyled
+            <SANBox
+                minHeight={429}
                 bg='grey-solid.1'
                 pt={{ xs: '8', _: 'xl' }}
                 pb={{ xs: 'xl', _: '0' }}
@@ -149,7 +146,7 @@ const RMGeneral = memo(() => {
                     />
                     <RMSpecialties />
                 </SANLayoutContainer>
-            </SpecialtiesStyled>
+            </SANBox>
             <SANBox mt={8} mb={9}>
                 <SANLayoutContainer>
                     <SANBox
