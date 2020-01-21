@@ -71,6 +71,18 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
 
+        useEffect(() => {
+            if (!!me) {
+                window.Conpass.init({
+                    name: me.name || 'anônimo',
+                    email: me.email || 'anonimo@resmed.com.br'
+                })
+
+                window.Conpass.debug()
+            }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [me])
+
         if (loading) return <RMSplashLoader />
 
         if (!!me && !me.hasActiveSubscription) {
