@@ -25,7 +25,7 @@
         "typescript": "^3.5.3"
     },
     "scripts": {
-        "start": "env-cmd -f ./environments/.env.production react-app-rewired start",
+        "start": "env-cmd -f ./environments/.env.development react-app-rewired start",
         "build:development": "env-cmd -f ./environments/.env.development react-app-rewired build",
         "build:staging": "env-cmd -f ./environments/.env.development react-app-rewired build",
         "build:production": "env-cmd -f ./environments/.env.production react-app-rewired build",
