@@ -32,6 +32,7 @@ export interface IUserMedSpecialtyIntention {
 export interface IMe {
     id: string
     name: string
+    email: string
     profilePicture: string
     countCourses: number
     hasSchedule: boolean
@@ -48,6 +49,7 @@ export const GET_ME = gql`
         me {
             id
             name
+            email
             profilePicture
             hasActiveSubscription
             hasSchedule
