@@ -400,7 +400,7 @@ const RMForm: React.FC<IFormProps> = ({
                             >
                                 {t(
                                     `userProfile.${
-                                        !!profile && !!profile.id
+                                        !!profile && !!profile.userMedUniversity
                                             ? 'pageSubmit'
                                             : 'modalSubmit'
                                     }`
