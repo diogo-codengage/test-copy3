@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled, { css } from 'styled-components'
-import { theme, ifProp } from 'styled-tools'
+import { theme, ifProp, prop } from 'styled-tools'
+
+import { useThemeContext } from '@sanar/utils/dist/Hooks'
 
 import { SANTypography } from '../../Atoms/Typography'
 import { SANProgress } from '../../Atoms/Progress'
@@ -13,7 +15,8 @@ import { SANBox } from '../../Atoms/Box'
 import { transparentize } from 'polished'
 
 interface IWrapper extends React.HTMLProps<HTMLDivElement> {
-    hasPointer?: boolean
+    hasHover?: boolean
+    cursor?: 'not-allowed' | 'pointer' | 'default'
 }
 
 const Wrapper = styled(SANBox)<IWrapper>`
@@ -32,16 +35,13 @@ const Wrapper = styled(SANBox)<IWrapper>`
             ${theme('colors.primary')}
         );
     }
+    cursor: ${prop('cursor')};
     ${ifProp(
-        'hasPointer',
+        'hasHover',
         css`
-            cursor: pointer;
             &:hover {
                 background-color: ${theme('colors.primary')};
             }
-        `,
-        css`
-            cursor: default;
         `
     )};
 
@@ -76,6 +76,8 @@ export interface ISANChangeCourseProps {
     onChange: (id: string) => void
     ContinueProps?: IContinue
     hasActive?: boolean
+    expired?: boolean
+    notStarted?: boolean
 }
 
 export interface ISANContinueProps extends IContinue {
@@ -123,6 +125,34 @@ const SANContinue: React.FC<ISANContinueProps> = ({
     </WrapperContinue>
 )
 
+const Blocked = () => {
+    const {
+        assets: {
+            cardSubSpecialty: { blocked }
+        }
+    } = useThemeContext()
+
+    return (
+        <SANBox
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
+            position='absolute'
+            width='100%'
+            bottom='0'
+        >
+            <SANBox
+                as='img'
+                src={blocked}
+                mb='xs'
+                zIndex={3}
+                width={30}
+                height={30}
+            />
+        </SANBox>
+    )
+}
+
 const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
     title,
     id,
@@ -133,12 +163,16 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
     ContinueProps,
     loading,
     hasActive,
+    expired,
+    notStarted,
     ...props
 }) => {
     const { t } = useTranslation('components')
+
     const onClick = e => {
         e.stopPropagation()
-        onChange && onChange(id)
+        if (expired || notStarted) return
+        !!onChange && onChange(id)
     }
 
     return (
@@ -150,9 +184,19 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
             backgroundSize='cover'
             backgroundImage={`url(${coverPicture})`}
             borderRadius={hasActive ? '0px' : 'base'}
-            hasPointer={!ContinueProps}
+            opacity={expired || notStarted ? 0.7 : 1}
+            hasHover={!ContinueProps}
+            cursor={
+                expired || notStarted
+                    ? 'not-allowed'
+                    : !ContinueProps
+                    ? 'pointer'
+                    : 'default'
+            }
+            height={expired || notStarted ? 106 : 'auto'}
             {...props}
         >
+            {(expired || notStarted) && <Blocked />}
             <SANBox
                 px={hasActive ? 'md' : 'sm'}
                 pt={!!ContinueProps ? 'xl' : 'md'}
@@ -175,37 +219,43 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
                         >
                             {title}
                         </SANTypography>
-                        <SANTypography color='white.6' fontSize='sm'>{`${t(
-                            'changeCourse.ends'
-                        )} ${date}`}</SANTypography>
+                        <SANTypography color='white.6' fontSize='sm'>{`${
+                            expired
+                                ? t('changeCourse.finished')
+                                : notStarted
+                                ? t('changeCourse.notStarted')
+                                : t('changeCourse.ends')
+                        } ${date}`}</SANTypography>
                     </SANBox>
                 </SANSkeleton>
                 {!!ContinueProps && <SANContinue {...ContinueProps} />}
             </SANBox>
-            <SANBox
-                display='flex '
-                alignItems='center'
-                px='md'
-                py='xs'
-                bg='grey.5'
-                position='inherit'
-            >
-                <SANProgress
-                    showInfo
-                    color='warning'
-                    percent={percent}
-                    InfoProps={{ color: 'warning' }}
-                    height={4}
-                />
-                {!hasActive && (
-                    <SANEvaIcon
-                        ml='xs'
-                        size='medium'
-                        name='arrow-forward-outline'
-                        color='white.7'
+            {!expired && !notStarted && (
+                <SANBox
+                    display='flex '
+                    alignItems='center'
+                    px='md'
+                    py='xs'
+                    bg='grey.5'
+                    position='inherit'
+                >
+                    <SANProgress
+                        showInfo
+                        color='warning'
+                        percent={percent}
+                        InfoProps={{ color: 'warning' }}
+                        height={4}
                     />
-                )}
-            </SANBox>
+                    {!hasActive && (
+                        <SANEvaIcon
+                            ml='xs'
+                            size='medium'
+                            name='arrow-forward-outline'
+                            color='white.7'
+                        />
+                    )}
+                </SANBox>
+            )}
         </Wrapper>
     )
 }

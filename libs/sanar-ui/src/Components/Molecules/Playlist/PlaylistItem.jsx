@@ -1,6 +1,7 @@
 import React, { useMemo, memo } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
+import { Tooltip } from 'antd'
 
 import ESTypography from '../../Atoms/Typography'
 import ESEvaIcon from '../../Atoms/EvaIcon'
@@ -44,34 +45,36 @@ const ESPlaylistItem = memo(({ className, index, item, current, onClick }) => {
     }, [item])
 
     return (
-        <div className={classes} onClick={() => onClick(item)}>
-            <div className='d-flex align-items-center w-100'>
-                <ESTypography
-                    variant='overline'
-                    className={classNames('index', {
-                        'no-type': !item.hasType
-                    })}
-                >
-                    {index + 1}
-                </ESTypography>
-                {icon}
-                <ESTypography
-                    ellipsis
-                    variant='subtitle2'
-                    className={classNames('description', {
-                        'description--time': durationInSeconds || item.extra
-                    })}
-                >
-                    {title}
-                </ESTypography>
+        <Tooltip title={title} placement="topLeft" mouseEnterDelay={0.3}>
+            <div className={classes} onClick={() => onClick(item)}>
+                <div className='d-flex align-items-center w-100'>
+                    <ESTypography
+                        variant='overline'
+                        className={classNames('index', {
+                            'no-type': !item.hasType
+                        })}
+                    >
+                        {index + 1}
+                    </ESTypography>
+                    {icon}
+                    <ESTypography
+                        ellipsis
+                        variant='subtitle2'
+                        className={classNames('description', {
+                            'description--time': durationInSeconds || item.extra
+                        })}
+                    >
+                        {title}
+                    </ESTypography>
+                </div>
+                {durationInSeconds && (
+                    <ESTypography variant='overline' className='time'>
+                        {esUtilConvertSecondsToTime(durationInSeconds)}
+                    </ESTypography>
+                )}
+                {!!item.extra && <span className='time'>{item.extra}</span>}
             </div>
-            {durationInSeconds && (
-                <ESTypography variant='overline' className='time'>
-                    {esUtilConvertSecondsToTime(durationInSeconds)}
-                </ESTypography>
-            )}
-            {!!item.extra && <span className='time'>{item.extra}</span>}
-        </div>
+        </Tooltip>
     )
 })
 

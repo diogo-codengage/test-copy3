@@ -1,215 +1,168 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
-import { useApolloClient } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
+import { prop, omit } from 'ramda'
+import { format } from 'date-fns'
+import moment from 'moment'
 
 import { withSANForm, useSnackbarContext } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
-import {
-    CREATE_PROFILE_MUTATION,
-    UPDATE_PROFILE_MUTATION
-} from 'Apollo/User/Mutations/profile'
-import { GET_SUPPLEMENTARY_SPECIALTIES } from 'Apollo/User/Queries/supplementary-specialties'
-import { GET_INSTITUTIONS } from 'Apollo/PracticalArea/Queries/institutions'
+
 import { GET_ACTIVE_COURSE } from 'Apollo/User/Queries/active-course'
+import {
+    GET_SUPPLEMENTARY_ITEMS,
+    ISupplementaryItemsQuery
+} from 'Apollo/User/Queries/supplementary-items'
+import {
+    SUPPLEMENTARY_DATA,
+    ISuplemmentaryMutation,
+    ISuplemmentaryVariables,
+    ISuplemmentaryOptions
+} from 'Apollo/User/Mutations/supplementary-data'
 
 import RMForm from './Form'
 
-interface IOwner {
-    label: string
-    value: string
-}
-export interface IFormDataProps {
-    id?: string
-    graduationStep: string
-    institutionIds: IOwner[]
-    specialtyIds: IOwner[]
-    testExperience: string
-    preparatoryCourseStatus: string
-    preparatoryCourseName?: string
-    objective: string
-}
 interface IFormProps {
     form: any
 }
 
-const updateActiveCourseCache = store => {
-    try {
-        const data = store.readQuery({
-            query: GET_ACTIVE_COURSE
-        })
-
-        data.activeCourse = {
-            ...data.activeCourse,
-            accessed: true
-        }
-
-        store.writeQuery({
-            query: GET_ACTIVE_COURSE,
-            data
-        })
-    } catch (err) {
-        console.error(err.message)
-    }
+interface IFormValues extends ISuplemmentaryOptions {
+    preparatoryCourseStatus: 'yes' | 'no'
 }
 
-const RMComplementaryRegisterForm = ({ form, closeModal }) => {
-    const client = useApolloClient()
-    const { t } = useTranslation('resmed')
-    const [rcn, setRcn] = useState('missing')
-    const [submitting, setSubmitting] = useState(false)
-    const [testValue, setTestValue] = useState('none')
-    const [institutions, setInstitutions] = useState<IOwner[]>([])
-    const [supplementarySpecialties, setSupplementarySpecialties] = useState<
-        IOwner[]
-    >([])
-    const snackbar = useSnackbarContext()
-    const { me, setMe, setActiveCourse } = useAuthContext()
+const toLowerCase = v => ({
+    ...v,
+    label: v.label.toLowerCase()
+})
 
-    const makePayload = (profile: IFormDataProps) => ({
-        ...profile,
-        institutionIds: profile.institutionIds.length ? profile.institutionIds.map(({ value }) => value) : null,
-        specialtyIds: profile.specialtyIds.length ? profile.specialtyIds.map(({ value }) => value) : null,
-        preparatoryCourseName:
-            profile.preparatoryCourseStatus === 'missing'
-                ? null
-                : profile.preparatoryCourseName
+const RMComplementaryRegisterForm = ({ form, closeModal }) => {
+    const { t } = useTranslation('resmed')
+
+    const [mutation, { loading: loadingMutation }] = useMutation<
+        ISuplemmentaryMutation,
+        ISuplemmentaryVariables
+    >(SUPPLEMENTARY_DATA, {
+        onError() {
+            snackbar({
+                message: t('userProfile.mutations.error'),
+                theme: 'error'
+            })
+        },
+        onCompleted(response) {
+            setMe(old => ({ ...old, ...response }))
+            snackbar({
+                message: t('userProfile.mutations.success'),
+                theme: 'success'
+            })
+            !!closeModal && closeModal()
+        },
+        refetchQueries: [{ query: GET_ACTIVE_COURSE }]
     })
 
-    const createProfile = async profile => {
-        try {
-            const {
-                data: { createProfile }
-            } = await client.mutate({
-                mutation: CREATE_PROFILE_MUTATION,
-                variables: {
-                    data: makePayload(profile)
-                },
-                update: updateActiveCourseCache
-            })
-            setMe(old => ({ ...old, ...createProfile }))
-            snackbar({
-                message: t('userProfile.mutations.create.success'),
-                theme: 'success'
-            })
-        } catch {
-            snackbar({
-                message: t('userProfile.mutations.create.error'),
-                theme: 'error'
-            })
-        }
-        setSubmitting(false)
-    }
+    const { loading: loadingQuery, data, error } = useQuery<
+        ISupplementaryItemsQuery
+    >(GET_SUPPLEMENTARY_ITEMS)
 
-    const updateProfile = async profile => {
-        try {
-            const {
-                data: { updateProfile }
-            } = await client.mutate({
-                mutation: UPDATE_PROFILE_MUTATION,
-                variables: {
-                    data: makePayload(profile)
-                },
-                update: updateActiveCourseCache
-            })
-            setMe(old => ({ ...old, ...updateProfile }))
-            snackbar({
-                message: t('userProfile.mutations.update.success'),
-                theme: 'success'
-            })
-        } catch {
-            snackbar({
-                message: t('userProfile.mutations.update.error'),
-                theme: 'error'
-            })
+    const snackbar = useSnackbarContext()
+    const { me, setMe } = useAuthContext()
+
+    const makePayload = (profile: IFormValues): IFormValues => {
+        const data = {
+            ...profile,
+            medInstitutionIds: profile.medInstitutionIds.map(prop('value')),
+            medProfissionalSpecialtyIds: profile.medProfissionalSpecialtyIds.map(
+                prop('value')
+            ),
+            ingressYear: format(new Date(profile.ingressYear)),
+            ingressSemester: String(profile.ingressSemester),
+            ...(profile.preparatoryCourseStatus === 'no' && {
+                previousResidencyCourseId: null
+            }),
+            medUniversityId: !profile.medUniversityId
+                ? null
+                : profile.medUniversityId
         }
-        setSubmitting(false)
-        !!closeModal && closeModal()
+        return omit(['preparatoryCourseStatus'])(data)
     }
 
     const handleSubmit = e => {
         e.preventDefault()
-        setSubmitting(true)
         form.validateFields((err, values) => {
             if (!err) {
-                if (!!me.profile && !!me.profile.id) {
-                    updateProfile({ id: me.profile.id, ...values })
-                } else {
-                    createProfile(values)
-                }
-                setActiveCourse(old => ({ ...old, accessed: true }))
-            } else {
-                setSubmitting(false)
+                mutation({ variables: { data: makePayload(values) } })
             }
         })
     }
 
-    const fetchSpecialties = async () => {
-        try {
-            const {
-                data: { supplementarySpecialties }
-            } = await client.query({ query: GET_SUPPLEMENTARY_SPECIALTIES })
-
-            setSupplementarySpecialties(supplementarySpecialties)
-        } catch (err) {
-            snackbar({
-                message: t('userProfile.loadError.specialties'),
-                theme: 'error'
-            })
-        }
+    if (!loadingQuery && error) {
+        snackbar({
+            message: t('userProfile.loadError'),
+            theme: 'error'
+        })
     }
-
-    const fetchInstitutions = async () => {
-        try {
-            const {
-                data: { institutions }
-            } = await client.query({ query: GET_INSTITUTIONS })
-
-            setInstitutions(institutions)
-        } catch (err) {
-            snackbar({
-                message: t('userProfile.loadError.institutions'),
-                theme: 'error'
-            })
-        }
-    }
-
-    useEffect(() => {
-        fetchSpecialties()
-        fetchInstitutions()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     const profile = useMemo(() => {
-        if (!!me && !!me.profile) {
-            setRcn(me.profile.preparatoryCourseStatus)
+        if (!!me) {
             return {
-                ...me.profile,
-                institutionIds: institutions.filter(({ value }) =>
-                    me.profile.institutionIds && me.profile.institutionIds.find(itt => value === itt)
-                ),
-                specialtyIds: supplementarySpecialties.filter(({ value }) =>
-                    me.profile.specialtyIds && me.profile.specialtyIds.find(sp => value === sp)
-                )
+                ...(!!me.userMedUniversity && {
+                    medUniversityId: me.userMedUniversity.medUniversity
+                        ? me.userMedUniversity.medUniversity.id
+                        : undefined,
+                    ingressYear: moment(
+                        me.userMedUniversity.ingressYear,
+                        'YYYY-MM-DD'
+                    ),
+                    ingressSemester: me.userMedUniversity.ingressSemester
+                }),
+                ...(!!me.medProfile && {
+                    hasPreviousResidencyExam:
+                        me.medProfile.hasPreviousResidencyExam,
+                    previousResidencyCourseId: !!me.medProfile
+                        .previousResidencyCourse
+                        ? me.medProfile.previousResidencyCourse.id
+                        : undefined,
+                    examIntentionCategoryId:
+                        me.medProfile.examIntentionCategoryId,
+                    preparatoryCourseStatus: !!me.medProfile
+                        .previousResidencyCourse
+                        ? 'yes'
+                        : 'no'
+                }),
+                medProfissionalSpecialtyIds: (
+                    me.userMedSpecialtyIntentions || []
+                ).map(e => ({
+                    value: e.medProfessionalSpecialty.id,
+                    label: e.medProfessionalSpecialty.name
+                })),
+                medInstitutionIds: (me.userMedInstitutions || []).map(e => ({
+                    value: e.medInstitution.id,
+                    label: e.medInstitution.name
+                }))
             }
         }
-    }, [me, institutions, supplementarySpecialties])
+    }, [me])
 
     return (
         <RMForm
-            {...{
-                form,
-                submitting,
-                handleSubmit,
-                profile,
-                institutions,
-                supplementarySpecialties,
-                testValue,
-                setTestValue,
-                rcn,
-                setRcn
-            }}
+            form={form}
+            submitting={loadingMutation || loadingQuery}
+            handleSubmit={handleSubmit}
+            profile={profile}
+            {...(!!data && {
+                institutions: (data.institutions || []).map(toLowerCase),
+                medUniversities: (data.medUniversities || []).map(toLowerCase),
+                questionCategories: (data.questionCategories || []).map(
+                    toLowerCase
+                ),
+                medResidencyCourses: (data.medResidencyCourses || []).map(
+                    toLowerCase
+                ),
+                medProfessionalSpecialties: (
+                    data.medProfessionalSpecialties || []
+                ).map(toLowerCase)
+            })}
         />
     )
 }

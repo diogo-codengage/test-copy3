@@ -21,8 +21,9 @@ const initialCourse: ICourse = {
     name: '',
     progress: 0,
     infos: [],
-    accessed: false,
+    accessed: true,
     expireDate: '',
+    startDate: '',
     images: {
         original: ''
     },

@@ -186,7 +186,7 @@ interface IRMModalSchedule extends IModalProps, RouteComponentProps {
     options: IOption
 }
 
-const types = ['viewed', 'unseen', 'live']
+const types = ['viewed', 'unseen', 'live', 'exams']
 
 export const RMModalSchedule = withRouter(
     ({ options = defaultOption, history, ...props }: IRMModalSchedule) => {
@@ -234,15 +234,20 @@ export const RMModalSchedule = withRouter(
         }, [options])
 
         const button = useMemo(() => {
+            const disable = false
             switch (options.status) {
                 case 'viewed':
-                    return t('schedule.modal.lesson.watched')
+                    return {disable, label: t('schedule.modal.lesson.watched')}
                 case 'unseen':
-                    return t('schedule.modal.lesson.watch')
+                    return {disable, label: t('schedule.modal.lesson.watch')}
                 case 'live':
-                    return t('schedule.modal.live.button')
+                    const currentDate = new Date().getTime();
+                    const startDate = new Date(options.start!).getTime();
+                    return startDate > currentDate
+                        ? {disable: true, label: t('schedule.modal.live.comingSoon')}
+                        : {disable, label: t('schedule.modal.live.button')}
                 default:
-                    return t('schedule.modal.lesson.watch')
+                    return {disable, label: t('schedule.modal.lesson.watch')}
             }
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [options])
@@ -271,35 +276,38 @@ export const RMModalSchedule = withRouter(
                         </SANScroll>
                     </SANBox>
                 </SANBox>
-                <SANBox
-                    borderTop='1px solid'
-                    borderColor='grey.1'
-                    display='flex'
-                    alignItems='center'
-                    justifyContent='center'
-                    p='md'
-                    mt='xl'
-                    mb='-24px'
-                    mx='-24px'
-                >
-                    <SANButton
-                        onClick={handleClick}
-                        size='xsmall'
-                        variant='text'
-                        color='primary'
-                        uppercase
-                        bold
+                {options.status !== 'exams' && (
+                    <SANBox
+                        borderTop='1px solid'
+                        borderColor='grey.1'
+                        display='flex'
+                        alignItems='center'
+                        justifyContent='center'
+                        p='md'
+                        mt='xl'
+                        mb='-24px'
+                        mx='-24px'
                     >
-                        {options.status === 'viewed' && (
-                            <SANEvaIcon
-                                name='checkmark-circle-2'
-                                mr='xs'
-                                size='large'
-                            />
-                        )}
-                        {button}
-                    </SANButton>
-                </SANBox>
+                        <SANButton
+                            onClick={handleClick}
+                            size='xsmall'
+                            variant='text'
+                            color='primary'
+                            uppercase
+                            bold
+                            disabled={button.disable}
+                        >
+                            {options.status === 'viewed' && (
+                                <SANEvaIcon
+                                    name='checkmark-circle-2'
+                                    mr='xs'
+                                    size='large'
+                                />
+                            )}
+                            {button.label}
+                        </SANButton>
+                    </SANBox>
+                )}
             </SANModal>
         )
     }

@@ -1,6 +1,5 @@
 import React, { useMemo, useCallback, memo } from 'react'
 
-import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
@@ -12,7 +11,8 @@ import {
     SANRow,
     SANCol,
     SANTypography,
-    SANQuery
+    SANQuery,
+    SANGenericError
 } from '@sanar/components'
 import { SANButton } from '@sanar/components/dist/Components/Atoms/Button'
 
@@ -30,11 +30,14 @@ import { useMainContext } from 'Pages/Private/Context'
 
 const RMSpecialties = withRouter<RouteComponentProps>(
     ({ history }: RouteComponentProps) => {
+        const { t } = useTranslation('resmed')
         const { activeCourse } = useAuthContext()
+        const { errorLoadActiveCourse } = useMainContext()
 
-        const courseId = useMemo(() => !!activeCourse && activeCourse.id, [
-            activeCourse
-        ])
+        const courseId = useMemo(
+            () => !!activeCourse && !!activeCourse.id && activeCourse.id,
+            [activeCourse]
+        )
 
         const goToSubspecialties = (specialtyId: string) => {
             history.push(`/inicio/subespecialidades/${specialtyId}`)
@@ -92,6 +95,10 @@ const RMSpecialties = withRouter<RouteComponentProps>(
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
 
+        if (errorLoadActiveCourse) {
+            return <SANGenericError message={t('main.errorLoadActiveCourse')} />
+        }
+
         return (
             <SANQuery
                 query={GET_SPECIALTIES}
@@ -112,13 +119,10 @@ const RMSpecialties = withRouter<RouteComponentProps>(
     }
 )
 
-const SpecialtiesStyled = styled(SANBox)`
-    min-height: 429px;
-`
-
 const RMGeneral = memo(() => {
     const { t } = useTranslation('resmed')
     const { handleTrack } = useMainContext()
+
     const handleAppClicked = OS => {
         handleTrack('App Banner Clicked', {
             'OS Type': OS
@@ -128,7 +132,8 @@ const RMGeneral = memo(() => {
 
     return (
         <>
-            <SpecialtiesStyled
+            <SANBox
+                minHeight={429}
                 bg='grey-solid.1'
                 pt={{ xs: '8', _: 'xl' }}
                 pb={{ xs: 'xl', _: '0' }}
@@ -140,7 +145,7 @@ const RMGeneral = memo(() => {
                     />
                     <RMSpecialties />
                 </SANLayoutContainer>
-            </SpecialtiesStyled>
+            </SANBox>
             <SANBox mt={8} mb={9}>
                 <SANLayoutContainer>
                     <SANBox

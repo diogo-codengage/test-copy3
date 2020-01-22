@@ -233,7 +233,11 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                         labelMonitor={t('global.expert')}
                     />
                 </SANBox>
-                <SANBox mt={{ lg: 'xl', _: '0' }} px={width > 884 && 18}>
+                <SANBox
+                    mt={{ lg: 'xl', _: '0' }}
+                    px={width > 884 ? 18 : 32}
+                    bg={{ lg: 'transparent', _: 'grey.9' }}
+                >
                     <RMCollection
                         parentId={paramsLayout.lessonId}
                         value={paramsLayout.collectionId}

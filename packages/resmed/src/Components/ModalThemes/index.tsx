@@ -98,13 +98,13 @@ interface IRMModalThemesProps extends ISANModalProps, RouteComponentProps {
     onContinue: () => void
 }
 
-const RMModalThemes = ({
+const RMModalThemes: React.FC<IRMModalThemesProps> = ({
     onContinue,
     themes,
     loading,
     history,
     ...props
-}: IRMModalThemesProps) => {
+}) => {
     const { t } = useTranslation('resmed')
     const { handleTrack } = useMainContext()
     const [getLastAccessed] = useLazyQuery<ILessonLastAccessedQuery>(

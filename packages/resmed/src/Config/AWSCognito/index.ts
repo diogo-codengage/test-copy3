@@ -5,6 +5,7 @@ import {
     AuthenticationDetails,
     ICognitoUserPoolData
 } from 'amazon-cognito-identity-js'
+import * as Sentry from '@sentry/browser'
 
 import i18n from 'sanar-ui/dist/Config/i18n'
 
@@ -17,32 +18,44 @@ let sessionUserAttributes: CognitoUserSession
 let cognitoUserSingleton: CognitoUser
 
 function userHasSubscription(token: string): boolean {
-  try {
-    const userData = JSON.parse(atob(token.split('.')[1]));
-    const products = JSON.parse(userData['custom:products']) || [];
-    return products.includes('resmed');
-  } catch (error) {
-    // TODO: setup sentry
-    // Sentry.captureException(error);
-    return false;
-  }
+    try {
+        const base64Url = token.split('.')[1]
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+        const jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+                })
+                .join('')
+        )
+
+        const userData = JSON.parse(jsonPayload)
+        const products = JSON.parse(userData['custom:products']) || []
+        return products.includes('resmed')
+    } catch (error) {
+        Sentry.configureScope(scope => {
+            scope.setExtra('jwt_token', token)
+        })
+        Sentry.captureException(error)
+        return false
+    }
 }
 
-type SuccessCallback = (session: CognitoUserSession) => void;
+type SuccessCallback = (session: CognitoUserSession) => void
 const onSuccess = (resolve: SuccessCallback, reject: any) => {
     return (session: CognitoUserSession) => {
-           if (userHasSubscription(session.getIdToken().getJwtToken())) {
-               resolve(session)
-           } else {
-               cognitoUserSingleton.signOut();
-               reject({
-                   code: 'UserLambdaValidationException',
-                   message: i18n.t('sanarui:authMessages.hasNoSubscription')
-               })
-           }
-
-    };
-};
+        if (userHasSubscription(session.getIdToken().getJwtToken())) {
+            resolve(session)
+        } else {
+            cognitoUserSingleton.signOut()
+            reject({
+                code: 'UserLambdaValidationException',
+                message: i18n.t('sanarui:authMessages.hasNoSubscription')
+            })
+        }
+    }
+}
 
 const onFailure = reject => (err: any) => {
     switch (err.code) {
@@ -165,13 +178,14 @@ const logout = ({ callback }: { callback?: Function }) => {
 }
 
 const login = (email: string, password: string) => {
+    const emailLowerCase = email.trim().toLowerCase()
     const authenticationDetails = new AuthenticationDetails({
-        Username: email,
+        Username: emailLowerCase,
         Password: password
     })
 
     const user = new CognitoUser({
-        Username: email,
+        Username: emailLowerCase,
         Pool: getUserPool()
     })
 
@@ -219,7 +233,7 @@ const changePassword = ({
 
 const forgotPassword = (email: string) => {
     const cognitoUser = new CognitoUser({
-        Username: email,
+        Username: email.trim().toLowerCase(),
         Pool: getUserPool()
     })
 

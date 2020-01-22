@@ -157,7 +157,7 @@ const RMResetPasswordPage: React.FC<IProps> = ({ history, location, form }) => {
                             {t('global.send')}
                         </SANButton>
                         <SANButton
-                            onClick={() => history.push('/')}
+                            onClick={() => history.push('/auth/entrar')}
                             uppercase
                             block
                             bold

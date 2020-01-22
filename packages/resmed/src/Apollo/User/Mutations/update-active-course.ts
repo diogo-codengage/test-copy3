@@ -20,6 +20,7 @@ export const UPDATE_ACTIVE_COURSE = gql`
                 title
                 body
             }
+            startDate
             expireDate
             accessed
             images {

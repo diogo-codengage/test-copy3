@@ -13,7 +13,6 @@ export default {
         expert: 'Especialista'
     },
     auth: {
-        hasNoSubscription: 'Ops! Você não possui nenhum curso ativo',
         accessAccount: 'Acessar conta',
         hello: 'Olá, futuro residente!',
         signInDescription:
@@ -27,7 +26,7 @@ export default {
         messageChangeSuccess: 'Senha alterada com sucesso!',
         marketing: {
             title:
-                'Tenha uma experiência de excêlencia nos seus estudos e na sua carreira',
+                'Tenha uma experiência de excelência nos seus estudos e na sua carreira',
             description:
                 'Acompanhe seu desempenho, tenha acesso a questões, conteúdos exclusivos e diversos conteúdos que vão te ajudar a conseguir alcançar seus objetivos',
             action: 'Conheça nosso cursos'
@@ -200,7 +199,7 @@ export default {
                 },
                 year: {
                     title: 'Ano',
-                    placeholder: 'Escolher o ano'
+                    placeholder: 'Escolher o ano. (Min: {{min}}, máx: {{max}})'
                 },
                 state: {
                     title: 'Estado',
@@ -289,7 +288,8 @@ export default {
             },
             live: {
                 title: 'Live',
-                button: 'Assistir live'
+                button: 'Assistir live',
+                comingSoon: 'Em breve'
             },
             suggestion: {
                 title: 'Sugestão do professor',
@@ -346,16 +346,6 @@ export default {
         pagePresentation:
             'Olá futuro residente! Conta pra gente um pouco mais sobre você para traçarmos juntos uma trilha pra sua aprovação :)',
         inputPlaceholder: 'Selecione',
-        graduatedStep: {
-            label: 'Etapa da formação',
-            firstYear: '1º ano',
-            secondYear: '2º ano',
-            thirdYear: '3º ano',
-            fourthYear: '4º ano',
-            fifthYear: '5º ano',
-            sixthYear: '6º ano',
-            formed: 'Formado'
-        },
         institutions: 'Quais instituições quer fazer prova?',
         specialties: 'Quais especialidades quer seguir?',
         testExperiences: {
@@ -372,27 +362,23 @@ export default {
         },
         preparatoryCourse: {
             label: 'Fez/Faz algum outro curso preparatório?',
-            missing: 'Não',
-            inProgress: 'Sim, faço',
-            completed: 'Sim, Já fiz',
-            inputLabel: 'Qual?'
+            no: 'Não',
+            yes: 'Sim'
         },
+        previousResidencyCourse: {
+            label: 'Qual curso preparatório?'
+        },
+        graduatedStep: {
+            label: 'Quando você entrou na faculdade?',
+            year: 'Ano',
+            semester: 'Semestre'
+        },
+        medUniversity: 'Qual faculdade você cursa/cursou?',
         placeholder: 'Selecione',
         mutations: {
-            create: {
-                success: 'Sucesso, seus dados foram salvos corretamente!',
-                error: 'Erro, ocorreu um erro e seus dados não foram salvos!'
-            },
-            update: {
-                success: 'Sucesso, seus dados foram atualizados corretamente!',
-                error:
-                    'Erro, ocorreu um erro e seus dados não foram atualzados!'
-            }
+            success: 'Sucesso, seus dados foram salvos corretamente!',
+            error: 'Erro, ocorreu um erro e seus dados não foram salvos!'
         },
-        loadError: {
-            specialties: 'Erro, não foi possivel carregar as Especialidades!',
-            institutions: 'Erro, não foi possivel carregar as Instituições!',
-            profileData: 'Erro, não foi possivel carregar os seus dados!'
-        }
+        loadError: 'Erro, não foi possivel carregar os dados'
     }
 }

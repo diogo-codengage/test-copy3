@@ -22,8 +22,6 @@ import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 import { segmentTrack } from 'Config/Segment/track'
 import { IEvents, IOptions } from 'Config/Segment'
 
-declare var Conpass: any;
-
 const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
     const [keepMeLoggedIn, setKeepMeLoggedIn] = useState(false)
@@ -43,14 +41,7 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
         if (response.newPasswordRequired) {
             history.push('/auth/nova-senha')
         } else {
-            history.push('/inicio/curso')
-        }
-
-        if (window.Conpass) {
-            window.Conpass.init({
-                name: response.idToken.payload.name,
-                email: response.idToken.payload.email
-            })
+            history.push('/inicio/curso?ready=false')
         }
     }
 
@@ -91,7 +82,7 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
             title: t('auth.marketing.title'),
             description: t('auth.marketing.description'),
             linkDescription: t('auth.marketing.action'),
-            link: 'https://www.editorasanar.com.br/'
+            link: 'https://www.sanarmed.com/residenciamedica/cursos/'
         }),
         [t]
     )
@@ -108,6 +99,9 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
                     <ESSignInForm
                         keepMeLoggedIn={t('auth.keepMeLoggedIn')}
                         forgotPassword={t('auth.forgotPassword')}
+                        forgotPasswordLink={() =>
+                            history.push('/auth/recuperar-senha')
+                        }
                         login={t('auth.login')}
                         action={action}
                         isKeepMeLoggedChecked={keepMeLoggedIn}
