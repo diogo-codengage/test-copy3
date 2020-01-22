@@ -19,20 +19,25 @@ let cognitoUserSingleton: CognitoUser
 
 function userHasSubscription(token: string): boolean {
     try {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
+        const base64Url = token.split('.')[1]
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+        const jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+                })
+                .join('')
+        )
 
-        const userData = JSON.parse(jsonPayload);
+        const userData = JSON.parse(jsonPayload)
         const products = JSON.parse(userData['custom:products']) || []
         return products.includes('resmed')
     } catch (error) {
-        Sentry.configureScope((scope) => {
-            scope.setExtra("jwt_token", token);
-        });
-        Sentry.captureException(error);
+        Sentry.configureScope(scope => {
+            scope.setExtra('jwt_token', token)
+        })
+        Sentry.captureException(error)
         return false
     }
 }
@@ -228,7 +233,7 @@ const changePassword = ({
 
 const forgotPassword = (email: string) => {
     const cognitoUser = new CognitoUser({
-        Username: email,
+        Username: email.trim().toLowerCase(),
         Pool: getUserPool()
     })
 
