@@ -332,6 +332,8 @@ export default {
                 back: 'Voltar'
             }
         },
+        errorGoClass:
+            'Ocorreu um erro ao tentar acessar essa aula. Tente novamente mais tarde.',
         monthAbbr: {
             0: 'Jan',
             1: 'Fev',
