@@ -52,6 +52,7 @@ const wsLink = new WebSocketLink({
     options: {
         reconnect: true,
         timeout: 5000,
+        lazy: true,
         connectionParams: async () => {
             const token = await getAccessToken()
             return {
@@ -100,6 +101,6 @@ const client = new ApolloClient({
 
 export const RMGraphQLProvider: React.FC<{
     children: React.ReactNode
-}> = props => <ApolloProvider client={client} {...props} />
+}> = props => <ApolloProvider client={client as any} {...props} />
 
 RMGraphQLProvider.displayName = 'GraphQLServiceApolloClient'

@@ -221,7 +221,7 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
 
         const content = useMemo(() => {
             if (loading) {
-                return skeletons.map(renderSkeleton)
+                return <SANBox mt='lg'>{skeletons.map(renderSkeleton)}</SANBox>
             } else if (!loading && !!messages && !!messages.length) {
                 return messages.map(renderMessage)
             } else {

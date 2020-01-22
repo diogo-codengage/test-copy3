@@ -24,18 +24,21 @@ const Example = () => {
     }
 
     const loadMore = () => {
-        setTimeout(() => {
-            setMessages(old => [
-                ...old,
-                {
-                    image:
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSISZm1NCFyz4kHQXUqcgbX4MuA0XTmY1Avl1UhJBAONLZEwyRB',
-                    name: 'Fetch people',
-                    message: 'Carregamento',
-                    time: `${new Date().getHours()}:${new Date().getMinutes()}`
-                }
-            ])
-        }, 100)
+        return new Promise(resolve => {
+            setTimeout(() => {
+                setMessages(old => [
+                    ...old,
+                    {
+                        image:
+                            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSISZm1NCFyz4kHQXUqcgbX4MuA0XTmY1Avl1UhJBAONLZEwyRB',
+                        name: 'Fetch people',
+                        message: 'Carregamento',
+                        time: `${new Date().getHours()}:${new Date().getMinutes()}`
+                    }
+                ])
+                resolve()
+            }, 100)
+        })
     }
 
     useEffect(() => {

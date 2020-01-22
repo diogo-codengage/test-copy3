@@ -98,28 +98,30 @@ const RMLivesHome = memo<RouteComponentProps>(({ history }) => {
     }
 
     useEffect(() => {
-        subscribeToMore({
-            document: SUBSCRIPTION_LIVE_CHAT,
-            variables: { liveId: activeLiveId },
-            updateQuery: (prev, { subscriptionData }) => {
-                if (!subscriptionData.data) return prev
-                const newMessage = subscriptionData.data['liveChat']
+        if (!!activeLiveId) {
+            subscribeToMore({
+                document: SUBSCRIPTION_LIVE_CHAT,
+                variables: { liveId: activeLiveId },
+                updateQuery: (prev, { subscriptionData }) => {
+                    if (!subscriptionData.data) return prev
+                    const newMessage = subscriptionData.data['liveChat']
 
-                if (!!chatRef && !!chatRef.current) {
-                    chatRef.current.goScrollBottom()
-                }
-
-                return Object.assign({}, prev, {
-                    liveMessages: {
-                        ...prev.liveMessages,
-                        items: uniqBy(prop('id'), [
-                            newMessage,
-                            ...prev.liveMessages.items
-                        ])
+                    if (!!chatRef && !!chatRef.current) {
+                        chatRef.current.goScrollBottom()
                     }
-                })
-            }
-        })
+
+                    return Object.assign({}, prev, {
+                        liveMessages: {
+                            ...prev.liveMessages,
+                            items: uniqBy(prop('id'), [
+                                newMessage,
+                                ...prev.liveMessages.items
+                            ])
+                        }
+                    })
+                }
+            })
+        }
     }, [activeLiveId, subscribeToMore])
 
     const status = useMemo(() => {

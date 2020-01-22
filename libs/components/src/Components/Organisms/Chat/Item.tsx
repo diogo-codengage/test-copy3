@@ -16,7 +16,7 @@ export interface ISANChatItemProps extends ISANBoxProps {
     message: string
 }
 
-export const skeletons = new Array(3).fill(0).map((_, i) => i)
+export const skeletons = new Array(2).fill(0).map((_, i) => i)
 export const renderSkeleton = index => <SANChatItemSkeleton key={index} />
 
 export const SANChatItem: React.FC<ISANChatItemProps> = ({
@@ -33,7 +33,7 @@ export const SANChatItem: React.FC<ISANChatItemProps> = ({
                 {name}
             </SANTypography>
             <SANTypography fontSize='xs' color='grey.6'>
-                {format(getUTCDate(time), 'HH:mm')}
+                {format(new Date(time), 'HH:mm')}
             </SANTypography>
             <SANTypography fontSize='md' color='grey.8'>
                 {message}
