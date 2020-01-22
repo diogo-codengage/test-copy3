@@ -51,55 +51,68 @@ const onSuccess = (resolve: SuccessCallback, reject: any) => {
             cognitoUserSingleton.signOut()
             reject({
                 code: 'UserLambdaValidationException',
-                message: i18n.t('sanarui:authMessages.hasNoSubscription')
+                message: i18n.t('resmed:authMessages.hasNoSubscription')
             })
         }
     }
 }
 
-const onFailure = reject => (err: any) => {
+const onFailure = (reject, context?: string) => (err: any) => {
+    const contextLink = !!context ? `${context}.` : ''
     switch (err.code) {
         case 'LimitExceededException':
             return reject({
                 code: err.code,
-                message: i18n.t('sanarui:authMessages.limitExceededException')
+                message: i18n.t(
+                    `resmed:authMessages.${contextLink}limitExceededException`
+                )
             })
         case 'ExpiredCodeException':
             return reject({
                 code: 'ExpiredCodeException',
-                message: i18n.t('sanarui:authMessages.expiredCodeException')
+                message: i18n.t(
+                    `resmed:authMessages.${contextLink}expiredCodeException`
+                )
             })
         case 'CodeMismatchException':
             return reject({
                 code: 'CodeMismatchException',
-                message: i18n.t('sanarui:authMessages.codeMismatchException')
+                message: i18n.t(
+                    `resmed:authMessages.${contextLink}codeMismatchException`
+                )
             })
         case 'UserNotFoundException':
             return reject({
                 code: err.code,
-                message: i18n.t('sanarui:authMessages.userNotFoundException')
+                message: i18n.t(
+                    `resmed:authMessages.${contextLink}userNotFoundException`
+                )
             })
         case 'InvalidParameterException':
             return reject({
                 code: err.code,
                 message: i18n.t(
-                    'sanarui:authMessages.invalidParameterException'
+                    `resmed:authMessages.${contextLink}invalidParameterException`
                 )
             })
         case 'NotAuthorizedException':
             return reject({
                 code: err.code,
-                message: i18n.t('sanarui:authMessages.notAuthorizedException')
+                message: i18n.t(
+                    `resmed:authMessages.${contextLink}notAuthorizedException`
+                )
             })
         case 'UserLambdaValidationException':
             return reject({
                 code: err.code,
-                message: i18n.t('sanarui:authMessages.noEnrollment')
+                message: i18n.t(
+                    `resmed:authMessages.${contextLink}noEnrollment`
+                )
             })
         default:
             return reject({
                 code: err.code,
-                message: i18n.t('sanarui:authMessages.generic')
+                message: i18n.t(`resmed:authMessages.${contextLink}generic`)
             })
     }
 }
@@ -240,7 +253,7 @@ const forgotPassword = (email: string) => {
     return new Promise((resolve, reject) => {
         cognitoUser.forgotPassword({
             onSuccess: resolve,
-            onFailure: onFailure(reject)
+            onFailure: onFailure(reject, 'forgot')
         })
     })
 }
