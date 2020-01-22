@@ -31,7 +31,7 @@ const FLXSendPasswordRecoveryPage: React.FC<any> = ({ form, history }) => {
 
         try {
             await form.validateFields()
-            await forgotPassword(email)
+            await forgotPassword(email.trim().toLowerCase())
 
             history.push({
                 pathname: 'recuperar-senha/sucesso',
