@@ -115,7 +115,6 @@ import { SANCardLive } from 'Components/Molecules/CardLives'
 
 import { SANSelectFilter } from 'Components/Molecules/SelectFilter'
 import { SANChangeCourse } from 'Components/Molecules/ChangeCourse'
-import { SANTableProgressTabs } from 'Components/Molecules/TableProgressTabs'
 
 export {
     SANCommonBadge,
@@ -235,6 +234,5 @@ export {
     SANCardEvent,
     SANCardLive,
     SANSelectFilter,
-    SANChangeCourse,
-    SANTableProgressTabs
+    SANChangeCourse
 }

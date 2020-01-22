@@ -3,13 +3,12 @@ import PropTypes from 'prop-types'
 import Tabs from 'antd/lib/tabs'
 import classNames from 'classnames'
 
-const ESTabs = ({ className, center, dark, fullBar, ...props }) => {
+const ESTabs = ({ className, center, dark, ...props }) => {
     const classes = classNames(
         'es-tabs',
         {
             'es-tabs__center': center,
-            'es-tabs__dark': dark,
-            'es-tabs__full-bar': fullBar
+            'es-tabs__dark': dark
         },
         className
     )

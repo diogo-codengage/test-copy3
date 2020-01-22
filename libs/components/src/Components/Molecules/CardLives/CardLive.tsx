@@ -17,7 +17,7 @@ export interface ISANCardLiveProps {
     onClick: () => void
 }
 
-const SANImageBox = SANStyled(SANBox)<{ hasList?: boolean }>`
+const SANImageBox = SANStyled(SANBox)<{ hasList: boolean }>`
     &&& {
         max-height: 100%;
         max-width: 100%;
