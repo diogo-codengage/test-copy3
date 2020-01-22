@@ -1,6 +1,5 @@
 import React, { useMemo, useCallback, memo } from 'react'
 
-import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
