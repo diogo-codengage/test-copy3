@@ -95,7 +95,9 @@ export default {
             expiredCodeException:
                 'O link de redefinição da senha expirou. Solicite um novo.',
             codeMismatchException:
-                'O link de redefinição da senha é inválido. Solicite um novo.'
+                'O link de redefinição da senha é inválido. Solicite um novo.',
+            userNotFoundException:
+                'Desculpe, não encontramos nenhuma conta associada ao e-mail inserido. Por favor tente novamente.'
         }
     },
     mainMenu: {
