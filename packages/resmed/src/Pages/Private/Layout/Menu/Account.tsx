@@ -124,7 +124,7 @@ const RMMenuAccount = memo<RouteComponentProps>(({ history }) => {
                 />
                 <SANNavigationListItem
                     onClick={() => setVisibleLogout(true)}
-                    data-testid='rm_menu_my-account__go_to--leave-account'
+                    dataTestid='rm_menu_my-account__go_to--leave-account'
                     title={t('mainMenu.account.signOut')}
                 />
             </SANNavigationList>

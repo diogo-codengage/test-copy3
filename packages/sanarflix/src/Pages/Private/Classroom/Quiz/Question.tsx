@@ -248,7 +248,6 @@ const FLXClassRoomQuizQuestion = ({
                                     color='secondary'
                                     fontSize='lg'
                                     mr='xs'
-                                    bold
                                 />
                             ) : (
                                 <SANEvaIcon
@@ -256,7 +255,6 @@ const FLXClassRoomQuizQuestion = ({
                                     key='not-bookmarked'
                                     fontSize='lg'
                                     mr='xs'
-                                    bold
                                 />
                             )}
                             {t('classroom.quiz.bookmark')}

@@ -39,7 +39,7 @@ export interface ISearch {
     timeInSeconds: number
     type: IType
     isNew: boolean
-    themeId: number
+    themeId: string
     course?: IOwner
     image?: IPicture
     professorName?: string

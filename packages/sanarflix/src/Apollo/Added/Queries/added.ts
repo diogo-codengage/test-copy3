@@ -7,15 +7,7 @@ interface ITheme {
     }
 }
 
-type ResourceType =
-    | 'Book'
-    | 'Course'
-    | 'Content'
-    | 'Question'
-    | 'Quiz'
-    | 'Video'
-    | 'Document'
-    | 'Download'
+type ResourceType = 'Document' | 'Video' | 'Question' | 'Quiz'
 
 export interface ILastAddedContent {
     id: string

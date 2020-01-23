@@ -59,7 +59,8 @@ const RMSendPasswordRecoveryPage: React.FC<IProps> = ({ form, history }) => {
             if (error.message) {
                 createSnackbar({
                     message: error.message,
-                    theme: 'error'
+                    theme: 'error',
+                    timeout: 8000
                 })
             }
         }

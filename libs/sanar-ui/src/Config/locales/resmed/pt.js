@@ -69,6 +69,37 @@ export default {
             success: 'Senha criada com sucesso!'
         }
     },
+    authMessages: {
+        hasNoSubscription: 'Ops! Você não possui nenhum curso ativo',
+        generic: 'Ocorreu um erro. Tente novamente mais tarde.',
+        notAuthorizedException:
+            'Desculpe, essa combinação inserida de e-mail e senha está incorreta. Verifique seus dados e tente novamente!',
+        limitExceededException:
+            'Você excedeu o limite de tentativas. Tente novamente mais tarde.',
+        userNotFoundException:
+            'Desculpe, não encontramos nenhuma conta associada ao e-mail inserido. Por favor tente novamente.',
+        invalidParameterException:
+            'Você ainda não possui um e-mail ou telefone confirmado para esta conta.',
+        expiredCodeException:
+            'O link de redefinição da senha expirou. Solicite um novo.',
+        codeMismatchException:
+            'O link de redefinição da senha é inválido. Solicite um novo.',
+        passwordWasReseted: 'Senha alterada com sucesso!',
+        noEnrollment: 'Não há matrículas para o usuário informado.',
+        forgot: {
+            notAuthorizedException:
+                'Desculpe, não é possível recuperar sua senha. Verifique seu email e logue com sua senha temporária! ou entre em contato com o nosso suporte.',
+            limitExceededException:
+                'Você excedeu o limite de tentativas. Tente novamente mais tarde.',
+            generic: 'Ocorreu um erro. Tente novamente mais tarde.',
+            expiredCodeException:
+                'O link de redefinição da senha expirou. Solicite um novo.',
+            codeMismatchException:
+                'O link de redefinição da senha é inválido. Solicite um novo.',
+            userNotFoundException:
+                'Desculpe, não encontramos nenhuma conta associada ao e-mail inserido. Por favor tente novamente.'
+        }
+    },
     mainMenu: {
         back: 'Voltar ao menu principal',
         initial: {
@@ -301,6 +332,8 @@ export default {
                 back: 'Voltar'
             }
         },
+        errorGoClass:
+            'Ocorreu um erro ao tentar acessar essa aula. Tente novamente mais tarde.',
         monthAbbr: {
             0: 'Jan',
             1: 'Fev',
