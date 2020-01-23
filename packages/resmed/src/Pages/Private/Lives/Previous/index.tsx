@@ -1,77 +1,135 @@
-import React, { memo, useState, useEffect } from 'react'
+import React, { useMemo } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useApolloClient } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
+import { sortBy, path } from 'ramda'
 
 import { SANBox, SANPage, SANButton } from '@sanar/components'
 
 import RMLive from 'Components/Live'
-import { GET_LIVE, ILiveQuery } from 'Apollo/Lives/Queries/live'
+import { GET_LIVE, ILiveQuery, ILiveVariables } from 'Apollo/Lives/Queries/live'
+import {
+    GET_LIVE_MESSAGES,
+    ILiveMessagesQuery,
+    ILiveMessagesVariables
+} from 'Apollo/Lives/Queries/live-messages'
 
-const RMPreviousLive = memo<RouteComponentProps<{ previousId: string }>>(
-    ({ history, match }) => {
-        const { t } = useTranslation('resmed')
-        const client = useApolloClient()
-        const [loading, setLoading] = useState(false)
-        const [live, setLive] = useState()
+interface IOptions {
+    fetchMoreResult?: ILiveMessagesQuery
+}
 
-        useEffect(() => {
-            const fetchLive = async () => {
-                setLoading(true)
-                try {
-                    const {
-                        data: { live }
-                    } = await client.query<ILiveQuery>({
-                        query: GET_LIVE,
-                        variables: { id: match.params.previousId }
-                    })
-                    setLive(live)
-                } catch {}
-                setLoading(false)
+export const updateCacheMessages = (
+    prev: ILiveMessagesQuery,
+    options: IOptions
+) => {
+    const { fetchMoreResult } = options
+    if (!fetchMoreResult) return prev
+
+    return Object.assign({}, prev, {
+        liveMessages: {
+            ...prev.liveMessages,
+            items: [
+                ...prev.liveMessages.items,
+                ...fetchMoreResult.liveMessages.items
+            ]
+        }
+    })
+}
+
+const RMPreviousLive: React.FC<RouteComponentProps<{ previousId: string }>> = ({
+    history,
+    match: { params }
+}) => {
+    const { t } = useTranslation('resmed')
+
+    const { loading: loadingLive, data: dataLive } = useQuery<
+        ILiveQuery,
+        ILiveVariables
+    >(GET_LIVE, { variables: { id: params.previousId } })
+
+    const {
+        loading: loadingMessages,
+        data: dataMessages,
+        fetchMore
+    } = useQuery<ILiveMessagesQuery, ILiveMessagesVariables>(
+        GET_LIVE_MESSAGES,
+        {
+            variables: { liveId: params.previousId, limit: 25 }
+        }
+    )
+
+    const messages = useMemo(() => {
+        if (
+            !loadingMessages &&
+            dataMessages &&
+            dataMessages.liveMessages &&
+            dataMessages.liveMessages.items
+        ) {
+            return {
+                items: dataMessages.liveMessages.items,
+                total: dataMessages.liveMessages.totalCount
             }
-            !!match.params.previousId && fetchLive()
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [match.params.previousId])
+        } else {
+            return {
+                items: [],
+                total: 0
+            }
+        }
+    }, [dataMessages, loadingMessages])
 
-        return (
-            <SANPage
-                BoxProps={{
-                    p: '0'
-                }}
-                HeaderProps={{
-                    SessionTitleProps: {
-                        title: t('lives.previous.title')
-                    },
-                    ExtraProps: {
-                        sm: 9,
-                        md: 7,
-                        lg: 5
-                    },
-                    extra: (
-                        <SANBox display='flex' flex='1'>
-                            <SANButton
-                                size='small'
-                                variant='outlined'
-                                uppercase
-                                bold
-                                block
-                                onClick={() =>
-                                    history.push('/inicio/lives/atual')
-                                }
-                            >
-                                {t('lives.previous.back')}
-                            </SANButton>
-                        </SANBox>
-                    )
-                }}
-            >
-                <SANBox pt={{ md: '8', _: '0' }} pb={{ md: '8', _: 'md' }}>
-                    <RMLive live={live} loading={loading} hasLive={false} />
-                </SANBox>
-            </SANPage>
-        )
-    }
-)
+    return (
+        <SANPage
+            BoxProps={{
+                p: '0'
+            }}
+            HeaderProps={{
+                SessionTitleProps: {
+                    title: t('lives.previous.title')
+                },
+                ExtraProps: {
+                    sm: 9,
+                    md: 7,
+                    lg: 5
+                },
+                extra: (
+                    <SANBox display='flex' flex='1'>
+                        <SANButton
+                            size='small'
+                            variant='outlined'
+                            uppercase
+                            bold
+                            block
+                            onClick={() => history.push('/inicio/lives/atual')}
+                        >
+                            {t('lives.previous.back')}
+                        </SANButton>
+                    </SANBox>
+                )
+            }}
+        >
+            <SANBox pt={{ md: '8', _: '0' }} pb={{ md: '8', _: 'md' }}>
+                <RMLive
+                    live={dataLive && dataLive.live}
+                    loadingLive={loadingLive}
+                    hasLive={false}
+                    chat={{
+                        messages: sortBy(path(['time']))(messages.items),
+                        blocked: true,
+                        loading: loadingMessages,
+                        hasMore: messages.total > messages.items.length,
+                        loadMore: () =>
+                            fetchMore({
+                                variables: {
+                                    skip: messages.items.length
+                                },
+                                updateQuery: updateCacheMessages
+                            })
+                    }}
+                />
+            </SANBox>
+        </SANPage>
+    )
+}
 
 export default withRouter(RMPreviousLive)
