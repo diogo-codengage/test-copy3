@@ -186,7 +186,6 @@ const RMLivesHome = memo<RouteComponentProps>(({ history }) => {
             }}
         >
             <SANBox pt={{ md: '8', _: '0' }} pb={{ md: '8', _: 'md' }}>
-                {console.log({ hasOnline })}
                 {!!data ? (
                     <RMLive
                         ref={chatRef}
