@@ -372,7 +372,7 @@ export const createTheme = ({
     }
 }
 
-type Theme = {
+export type Theme = {
     name: string
     colors: typeof defaultColors | any
     breakpoints: typeof defaultBreakpoints

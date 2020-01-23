@@ -20,9 +20,9 @@ interface ICourse {
 
 interface IProps {
     course: ICourse
-    currentThemeIndex: number
-    totalThemes: number
-    DisciplineDropdownProps: ISANDisciplineDropdownProps
+    currentThemeIndex?: number
+    totalThemes?: number
+    DisciplineDropdownProps?: ISANDisciplineDropdownProps
     PlaylistProps: ISANPlaylistProps
 }
 

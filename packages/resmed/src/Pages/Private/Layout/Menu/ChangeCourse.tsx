@@ -58,28 +58,30 @@ const Courses = withRouter(({ history }) => {
         course => {
             const start = getUTCDate(course.startDate)
             const end = getUTCDate(course.expireDate)
-            return !loading && !!course
-                ? {
-                      key: course.id,
-                      id: course.id,
-                      title: course.name,
-                      date: formatExpireDate(
-                          isAfter(start, new Date()) ? start : end
-                      ),
-                      percent: course.progress,
-                      coverPicture: course.images.original,
-                      expired: isBefore(end, new Date()),
-                      notStarted: isAfter(start, new Date()),
-                      onChange: () => handleChange(course.id)
-                  }
-                : {}
+            return {
+                key: course.id,
+                id: course.id,
+                title: course.name,
+                date: formatExpireDate(
+                    isAfter(start, new Date()) ? start : end
+                ),
+                percent: course.progress,
+                coverPicture: course.images.original,
+                expired: isBefore(end, new Date()),
+                notStarted: isAfter(start, new Date()),
+                onChange: () => handleChange(course.id)
+            }
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [loading, data]
     )
 
     const renderCourse = course => (
-        <SANChangeCourse mb='md' loading={loading} {...getProps(course)} />
+        <SANChangeCourse
+            BoxProps={{ mb: 'md' }}
+            loading={loading}
+            {...getProps(course)}
+        />
     )
 
     const courses = useMemo(() => {
@@ -95,7 +97,7 @@ const Courses = withRouter(({ history }) => {
     }, [activeCourse, data])
 
     return (
-        <SANSpin spinning={loadingMutation}>
+        <SANSpin spinning={loadingMutation || loading}>
             {courses.map(renderCourse)}
         </SANSpin>
     )
@@ -170,8 +172,9 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                         percent={activeCourse.progress}
                         coverPicture={
                             !!activeCourse.images &&
-                            !!activeCourse.images.original &&
-                            activeCourse.images.original
+                            !!activeCourse.images.original
+                                ? activeCourse.images.original
+                                : ''
                         }
                         hasActive
                         ContinueProps={
@@ -184,7 +187,7 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                                       subtitle: suggestedClass.data!.title,
                                       loading: suggestedClass.loading
                                   }
-                                : null
+                                : undefined
                         }
                     />
                 </Error>

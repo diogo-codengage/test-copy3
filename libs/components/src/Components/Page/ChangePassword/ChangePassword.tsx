@@ -9,7 +9,12 @@ import { SANTypography } from '../../Atoms/Typography'
 import { SANBox } from '../../Atoms/Box'
 import { SANInputPassword } from '../../Atoms/InputPassword'
 import { SANButton } from '../../Atoms/Button'
-import { SANForm, SANFormItem, withSANForm } from '../../Molecules/Form'
+import {
+    SANForm,
+    SANFormItem,
+    withSANForm,
+    ISANFormComponentProps
+} from '../../Molecules/Form'
 
 import { useThemeContext } from '@sanar/utils/dist/Hooks'
 
@@ -23,8 +28,8 @@ interface IOptions {
     setSubmitting: (submitting: boolean) => any
 }
 
-export interface ISANChangePasswordProps {
-    onSubmit?: (values: IFormValues, options: IOptions) => IFormValues
+export interface ISANChangePasswordProps extends ISANFormComponentProps {
+    onSubmit?: (values: IFormValues, options: IOptions) => void
     onForgot?: () => void
     form: any
 }
