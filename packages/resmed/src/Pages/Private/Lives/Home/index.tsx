@@ -149,9 +149,9 @@ const RMLivesHome = memo<RouteComponentProps>(({ history }) => {
                 10000
             )
         }
-        return () => clearInterval(interval)
+        return () => !!interval && clearInterval(interval)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data, loading])
+    }, [data, loading, hasLive, hasOnline])
 
     const messages = useMemo(() => {
         if (
@@ -186,6 +186,7 @@ const RMLivesHome = memo<RouteComponentProps>(({ history }) => {
             }}
         >
             <SANBox pt={{ md: '8', _: '0' }} pb={{ md: '8', _: 'md' }}>
+                {console.log({ hasOnline })}
                 {!!data ? (
                     <RMLive
                         ref={chatRef}
