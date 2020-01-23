@@ -61,7 +61,9 @@ const RMLivesHome = memo<RouteComponentProps>(({ history }) => {
         ISendMessageMutation,
         ISendMessageVariables
     >(SEND_MESSAGE)
-    const { loading, data } = useQuery<IActiveLiveQuery>(GET_ACTIVE_LIVE)
+    const { loading, data } = useQuery<IActiveLiveQuery>(GET_ACTIVE_LIVE, {
+        fetchPolicy: 'network-only'
+    })
 
     const activeLiveId = useMemo(
         () => (!!data && !!data.activeLive ? data.activeLive.id : undefined),
