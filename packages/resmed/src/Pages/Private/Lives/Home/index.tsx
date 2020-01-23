@@ -194,7 +194,7 @@ const RMLivesHome = memo<RouteComponentProps>(({ history }) => {
                         hasLive={hasLive}
                         chat={{
                             messages: sortBy(path(['time']))(messages.items),
-                            blocked: !hasOnline,
+                            // blocked: !hasOnline,
                             onSend: handleSend,
                             loading: loadingMessages,
                             hasMore: messages.total > messages.items.length,

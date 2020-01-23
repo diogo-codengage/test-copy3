@@ -100,12 +100,13 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
         const inputRef = useRef<any>()
 
         const handleSend = () => {
-            if (letterCount >= maxLetters) return
+            if (letterCount >= maxLetters || letterCount === 0) return
             setSubmitting(true)
             !!onSend &&
                 onSend(inputRef.current.textContent, {
                     setSubmitting
                 })
+            setLetterCount(0)
             if (!!inputRef && !!inputRef.current) {
                 inputRef.current.textContent = undefined
                 inputRef.current.focus()
@@ -318,12 +319,13 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
                             disabled={
                                 loading ||
                                 submitting ||
-                                letterCount >= maxLetters
+                                letterCount >= maxLetters ||
+                                letterCount === 0
                             }
                         >
                             <SANEvaIcon name='paper-plane-outline' />
                         </SANButton>
-                        <SANBox position='absolute' bottom='0' right='48px'>
+                        <SANBox position='absolute' bottom='0' right='14px'>
                             <SANTypography
                                 fontWeight='bold'
                                 fontSize='xs'
