@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useEffect, useRef } from 'react'
+import React, { memo, useMemo, useEffect, useRef, useState } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -55,6 +55,8 @@ const RMLivesHome = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
     const chatRef = useRef<any>()
     const snackbar = useSnackbarContext()
+    const [hasOnline, setOnline] = useState(false)
+    const [hasLive, setLive] = useState(false)
     const [sendMessage] = useMutation<
         ISendMessageMutation,
         ISendMessageVariables
@@ -97,6 +99,18 @@ const RMLivesHome = memo<RouteComponentProps>(({ history }) => {
         }
     }
 
+    const calculateStartLive = activeLive => {
+        const start = getUTCDate(activeLive.startDate)
+        const end = getUTCDate(activeLive.endDate)
+        const now = new Date()
+
+        const online = isAfter(now, start) && isBefore(now, end)
+        const live = isToday(start)
+
+        online !== hasOnline && setOnline(online)
+        live !== hasLive && setLive(live)
+    }
+
     useEffect(() => {
         if (!!activeLiveId) {
             subscribeToMore({
@@ -124,20 +138,17 @@ const RMLivesHome = memo<RouteComponentProps>(({ history }) => {
         }
     }, [activeLiveId, subscribeToMore])
 
-    const status = useMemo(() => {
+    useEffect(() => {
+        let interval
         if (!loading && !!data) {
-            const start = getUTCDate(data.activeLive.startDate)
-            const end = getUTCDate(data.activeLive.endDate)
-            const now = new Date()
-            return {
-                hasOnline: isAfter(now, start) && isBefore(now, end),
-                hasLive: isToday(start)
-            }
+            calculateStartLive(data.activeLive)
+            interval = setInterval(
+                () => calculateStartLive(data.activeLive),
+                10000
+            )
         }
-        return {
-            hasOnline: false,
-            hasLive: false
-        }
+        return () => clearInterval(interval)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, loading])
 
     const messages = useMemo(() => {
@@ -178,11 +189,10 @@ const RMLivesHome = memo<RouteComponentProps>(({ history }) => {
                         ref={chatRef}
                         loadingLive={loading}
                         live={data.activeLive}
-                        hasOnline={status.hasOnline}
-                        hasLive={status.hasLive}
+                        hasLive={hasLive}
                         chat={{
                             messages: sortBy(path(['time']))(messages.items),
-                            blocked: false,
+                            blocked: !hasOnline,
                             onSend: handleSend,
                             loading: loadingMessages,
                             hasMore: messages.total > messages.items.length,

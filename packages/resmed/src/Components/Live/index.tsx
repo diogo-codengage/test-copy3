@@ -13,7 +13,10 @@ import {
     SANSkeleton,
     SANChat
 } from '@sanar/components'
-import { ISANChatProps, ISANChatRef } from '@sanar/components/dist/Components/Organisms/Chat'
+import {
+    ISANChatProps,
+    ISANChatRef
+} from '@sanar/components/dist/Components/Organisms/Chat'
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import { ILive } from 'Apollo/Lives/Queries/lives'
@@ -81,7 +84,6 @@ const youtubeId = process.env.REACT_APP_YOUTUBE_ID
 interface IRMLiveProps {
     hasLive?: boolean
     loadingLive?: boolean
-    hasOnline?: boolean
     live?: ILive
     chat: ISANChatProps
 }
