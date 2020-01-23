@@ -187,6 +187,7 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                     willStart &&
                         video &&
                         video.timeInSeconds &&
+                        video.timeInSeconds > 3 &&
                         video.progress < 100 &&
                         getStartTime(video.timeInSeconds)
 

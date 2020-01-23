@@ -5,6 +5,7 @@ import {
     AuthenticationDetails,
     ICognitoUserPoolData
 } from 'amazon-cognito-identity-js'
+import * as Sentry from '@sentry/browser'
 
 import i18n from 'sanar-ui/dist/Config/i18n'
 
@@ -17,76 +18,101 @@ let sessionUserAttributes: CognitoUserSession
 let cognitoUserSingleton: CognitoUser
 
 function userHasSubscription(token: string): boolean {
-  try {
-    const userData = JSON.parse(atob(token.split('.')[1]));
-    const products = JSON.parse(userData['custom:products']) || [];
-    return products.includes('resmed');
-  } catch (error) {
-    // TODO: setup sentry
-    // Sentry.captureException(error);
-    return false;
-  }
+    try {
+        const base64Url = token.split('.')[1]
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+        const jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+                })
+                .join('')
+        )
+
+        const userData = JSON.parse(jsonPayload)
+        const products = JSON.parse(userData['custom:products']) || []
+        return products.includes('resmed')
+    } catch (error) {
+        Sentry.configureScope(scope => {
+            scope.setExtra('jwt_token', token)
+        })
+        Sentry.captureException(error)
+        return false
+    }
 }
 
-type SuccessCallback = (session: CognitoUserSession) => void;
+type SuccessCallback = (session: CognitoUserSession) => void
 const onSuccess = (resolve: SuccessCallback, reject: any) => {
     return (session: CognitoUserSession) => {
-           if (userHasSubscription(session.getIdToken().getJwtToken())) {
-               resolve(session)
-           } else {
-               cognitoUserSingleton.signOut();
-               reject({
-                   code: 'UserLambdaValidationException',
-                   message: i18n.t('sanarui:authMessages.hasNoSubscription')
-               })
-           }
+        if (userHasSubscription(session.getIdToken().getJwtToken())) {
+            resolve(session)
+        } else {
+            cognitoUserSingleton.signOut()
+            reject({
+                code: 'UserLambdaValidationException',
+                message: i18n.t('resmed:authMessages.hasNoSubscription')
+            })
+        }
+    }
+}
 
-    };
-};
-
-const onFailure = reject => (err: any) => {
+const onFailure = (reject, context?: string) => (err: any) => {
+    const contextLink = !!context ? `${context}.` : ''
     switch (err.code) {
         case 'LimitExceededException':
             return reject({
                 code: err.code,
-                message: i18n.t('sanarui:authMessages.limitExceededException')
+                message: i18n.t(
+                    `resmed:authMessages.${contextLink}limitExceededException`
+                )
             })
         case 'ExpiredCodeException':
             return reject({
                 code: 'ExpiredCodeException',
-                message: i18n.t('sanarui:authMessages.expiredCodeException')
+                message: i18n.t(
+                    `resmed:authMessages.${contextLink}expiredCodeException`
+                )
             })
         case 'CodeMismatchException':
             return reject({
                 code: 'CodeMismatchException',
-                message: i18n.t('sanarui:authMessages.codeMismatchException')
+                message: i18n.t(
+                    `resmed:authMessages.${contextLink}codeMismatchException`
+                )
             })
         case 'UserNotFoundException':
             return reject({
                 code: err.code,
-                message: i18n.t('sanarui:authMessages.userNotFoundException')
+                message: i18n.t(
+                    `resmed:authMessages.${contextLink}userNotFoundException`
+                )
             })
         case 'InvalidParameterException':
             return reject({
                 code: err.code,
                 message: i18n.t(
-                    'sanarui:authMessages.invalidParameterException'
+                    `resmed:authMessages.${contextLink}invalidParameterException`
                 )
             })
         case 'NotAuthorizedException':
             return reject({
                 code: err.code,
-                message: i18n.t('sanarui:authMessages.notAuthorizedException')
+                message: i18n.t(
+                    `resmed:authMessages.${contextLink}notAuthorizedException`
+                )
             })
         case 'UserLambdaValidationException':
             return reject({
                 code: err.code,
-                message: i18n.t('sanarui:authMessages.noEnrollment')
+                message: i18n.t(
+                    `resmed:authMessages.${contextLink}noEnrollment`
+                )
             })
         default:
             return reject({
                 code: err.code,
-                message: i18n.t('sanarui:authMessages.generic')
+                message: i18n.t(`resmed:authMessages.${contextLink}generic`)
             })
     }
 }
@@ -165,13 +191,14 @@ const logout = ({ callback }: { callback?: Function }) => {
 }
 
 const login = (email: string, password: string) => {
+    const emailLowerCase = email.trim().toLowerCase()
     const authenticationDetails = new AuthenticationDetails({
-        Username: email,
+        Username: emailLowerCase,
         Password: password
     })
 
     const user = new CognitoUser({
-        Username: email,
+        Username: emailLowerCase,
         Pool: getUserPool()
     })
 
@@ -219,14 +246,14 @@ const changePassword = ({
 
 const forgotPassword = (email: string) => {
     const cognitoUser = new CognitoUser({
-        Username: email,
+        Username: email.trim().toLowerCase(),
         Pool: getUserPool()
     })
 
     return new Promise((resolve, reject) => {
         cognitoUser.forgotPassword({
             onSuccess: resolve,
-            onFailure: onFailure(reject)
+            onFailure: onFailure(reject, 'forgot')
         })
     })
 }

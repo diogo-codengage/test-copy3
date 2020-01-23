@@ -28,7 +28,7 @@ const SANQuery: React.FC<any> = ({
 
     if (loading && props.networkStatus !== 3)
         return loaderComp ? loaderComp : <SANSpin {...loaderProps} />
-    if (error)
+    if (error && !data)
         return errorComp ? (
             errorComp
         ) : (

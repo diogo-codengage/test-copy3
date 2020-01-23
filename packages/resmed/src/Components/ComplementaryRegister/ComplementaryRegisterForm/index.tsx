@@ -87,7 +87,10 @@ const RMComplementaryRegisterForm: React.FC<IRMComplementaryRegisterFormProps> =
             ingressSemester: String(profile.ingressSemester),
             ...(profile.preparatoryCourseStatus === 'no' && {
                 previousResidencyCourseId: null
-            })
+            }),
+            medUniversityId: !profile.medUniversityId
+                ? null
+                : profile.medUniversityId
         }
         return omit(['preparatoryCourseStatus'])(data)
     }
@@ -112,7 +115,9 @@ const RMComplementaryRegisterForm: React.FC<IRMComplementaryRegisterFormProps> =
         if (!!me) {
             return {
                 ...(!!me.userMedUniversity && {
-                    medUniversityId: me.userMedUniversity.medUniversity.id,
+                    medUniversityId: me.userMedUniversity.medUniversity
+                        ? me.userMedUniversity.medUniversity.id
+                        : undefined,
                     ingressYear: moment(
                         me.userMedUniversity.ingressYear,
                         'YYYY-MM-DD'
