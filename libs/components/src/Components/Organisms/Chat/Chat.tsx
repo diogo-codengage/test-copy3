@@ -25,6 +25,10 @@ import { SANInfiniteScrollLoader } from '../../Atoms/InfiniteScroll'
 import SANChatEmpty from './Empty'
 import { SANChatItem, renderSkeleton, skeletons } from './Item'
 
+const FloatButton = styled(SANBox)`
+    transition: all 0.3s linear;
+`
+
 const SANInputStyled = styled.div`
     border: none;
     box-shadow: none;
@@ -100,7 +104,7 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
         const inputRef = useRef<any>()
 
         const handleSend = () => {
-            if (letterCount >= maxLetters || letterCount === 0) return
+            if (letterCount > maxLetters || letterCount === 0) return
             setSubmitting(true)
             !!onSend &&
                 onSend(inputRef.current.textContent, {
@@ -252,23 +256,22 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
                         )}
                         {content}
                     </SANScroll>
-                    {hasButton && (
-                        <SANBox
-                            position='absolute'
-                            bottom='xs'
-                            left='calc(50% - 16px)'
+                    <FloatButton
+                        position='absolute'
+                        bottom='xs'
+                        left='calc(50% - 16px)'
+                        opacity={hasButton ? 1 : 0}
+                    >
+                        <SANButton
+                            circle
+                            variant='solid'
+                            color='primary'
+                            size='small'
+                            onClick={goScrollBottom}
                         >
-                            <SANButton
-                                circle
-                                variant='solid'
-                                color='primary'
-                                size='small'
-                                onClick={goScrollBottom}
-                            >
-                                <SANEvaIcon name='arrow-downward-outline' />
-                            </SANButton>
-                        </SANBox>
-                    )}
+                            <SANEvaIcon name='arrow-downward-outline' />
+                        </SANButton>
+                    </FloatButton>
                 </SANBox>
                 {blocked ? (
                     <SANBox
@@ -280,7 +283,7 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
                         borderBottomRightRadius='base'
                         borderBottomLeftRadius='base'
                         bg='grey-solid.1'
-                        py='md'
+                        py='19.5px'
                     >
                         <SANTypography fontSize='md' color='grey.6'>
                             {t('chat.blocked')}
