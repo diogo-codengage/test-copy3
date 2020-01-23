@@ -149,7 +149,9 @@ const RMLivesHome = memo<RouteComponentProps>(({ history }) => {
                 10000
             )
         }
-        return () => !!interval && clearInterval(interval)
+        return () => {
+            !!interval && clearInterval(interval)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, loading, hasLive, hasOnline])
 
