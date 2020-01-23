@@ -66,7 +66,10 @@ const Courses = withRouter(({ history }) => {
                     isAfter(start, new Date()) ? start : end
                 ),
                 percent: course.progress,
-                coverPicture: course.images.original,
+                coverPicture:
+                    !!course.images && !!course.images.original
+                        ? course.images.original
+                        : '',
                 expired: isBefore(end, new Date()),
                 notStarted: isAfter(start, new Date()),
                 onChange: () => handleChange(course.id)
