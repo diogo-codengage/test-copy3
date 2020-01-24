@@ -28,6 +28,10 @@ const RMPrivacyAndPolicyFrame = ({ onAccept, tosRequired }) => {
         console.log('-------privacy and policy frame manipule loading-------')
         setLoading(false)
     }
+
+    const catchLoadError = (e) => {
+        console.log('-----privacy and policy ERROR-----', e)
+    }
     return (
         <SANBox display='flex' flexDirection='column' height='100%'>
             <SANSpin flex spinning={loading} minHeight='100%' />
@@ -35,6 +39,7 @@ const RMPrivacyAndPolicyFrame = ({ onAccept, tosRequired }) => {
                 <iframe
                     title='privacy-and-policy-frame'
                     onLoad={manipuleLoading}
+                    onError={catchLoadError}
                     src='https://docs.google.com/document/d/e/2PACX-1vTX6EgYlGttEFq459aSW6pUZBa1CSzo0zZnLKDYqexGphW76OG_jWEz4pZf6-MSu9qWBGDvBp9wGbGt/pub?embedded=true'
                 />
             </SANIframeBox>
