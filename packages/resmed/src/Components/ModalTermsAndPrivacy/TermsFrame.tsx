@@ -21,7 +21,7 @@ const SANCheckboxContainer = styled(SANBox)`
     }
 `
 
-const RMTermsFrame = ({ onAccept, tosRequired }) => {
+const RMTermsFrame = ({ onAccept, tosRequired, hideLoad }) => {
     const { t } = useTranslation('resmed')
     const { handleTrack } = useMainContext()
     const [loading, setLoading] = useState(true)
@@ -34,6 +34,13 @@ const RMTermsFrame = ({ onAccept, tosRequired }) => {
 
     useEffect(() => {
         !!handleTrack && handleTrack('Terms viewed')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        if (hideLoad) {
+            setLoading(false)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
