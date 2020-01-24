@@ -1,6 +1,5 @@
 export * from './Layout'
 export * from './MainMenu'
-export * from './ClassroomMenu'
 export * from './PracticeCompleted'
 export * from './Support'
 export * from './SearchResult'
