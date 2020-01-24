@@ -131,7 +131,9 @@ export default {
         changeCourse: {
             title: 'Estou estudando',
             subtitle: 'Trocar de curso',
-            suggestedClass: 'Aula sugerida'
+            suggestedClass: 'Aula sugerida',
+            errorGoClass:
+                'Ocorreu um erro ao tentar acessar essa aula. Tente novamente mais tarde.'
         }
     },
     logout: {
