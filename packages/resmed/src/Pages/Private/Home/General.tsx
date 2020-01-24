@@ -12,7 +12,8 @@ import {
     SANCol,
     SANTypography,
     SANQuery,
-    SANGenericError
+    SANGenericError,
+    SANCardSpecialtySkeleton
 } from '@sanar/components'
 import { SANButton } from '@sanar/components/dist/Components/Atoms/Button'
 
@@ -27,6 +28,18 @@ import appleSvg from 'Assets/images/app-logos/apple.svg'
 import googlePlaySvg from 'Assets/images/app-logos/google-play.svg'
 
 import { useMainContext } from 'Pages/Private/Context'
+
+const skeletons = new Array(5).fill(1)
+const renderSkeleton = (_, index) => (
+    <SANCol
+        key={index}
+        mb='xl'
+        flex='1 0 25% !important'
+        minWidth='300px !important'
+    >
+        <SANCardSpecialtySkeleton />
+    </SANCol>
+)
 
 const RMSpecialties = withRouter<RouteComponentProps>(
     ({ history }: RouteComponentProps) => {
@@ -107,7 +120,11 @@ const RMSpecialties = withRouter<RouteComponentProps>(
             <SANQuery
                 query={GET_SPECIALTIES}
                 options={{ variables: { courseId }, skip: !courseId }}
-                loaderProps={{ minHeight: '250px', flex: true }}
+                loaderComp={
+                    <SANRow gutter={24} type='flex' flexWrap='wrap'>
+                        {skeletons.map(renderSkeleton)}
+                    </SANRow>
+                }
             >
                 {({
                     data: { specialties }

@@ -131,7 +131,9 @@ export default {
         changeCourse: {
             title: 'Estou estudando',
             subtitle: 'Trocar de curso',
-            suggestedClass: 'Aula sugerida'
+            suggestedClass: 'Aula sugerida',
+            errorGoClass:
+                'Ocorreu um erro ao tentar acessar essa aula. Tente novamente mais tarde.'
         }
     },
     logout: {
@@ -176,7 +178,9 @@ export default {
         errorLoadLessons: 'Ocorreu um erro ao carregar suas aulas'
     },
     modalThemes: {
-        continue: 'Continuar de onde parei'
+        continue: 'Continuar de onde parei',
+        errorGoClass:
+            'Ocorreu um erro ao tentar acessar essa aula. Tente novamente mais tarde.'
     },
     main: {
         errorLoadActiveCourse: 'Ocorreu um erro ao carregar seu curso ativo'

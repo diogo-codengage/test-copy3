@@ -15,7 +15,8 @@ import {
     SANChangeCourse,
     SANErrorBoundary,
     SANGenericError,
-    SANSpin
+    SANSpin,
+    useSnackbarContext
 } from '@sanar/components'
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
@@ -122,29 +123,42 @@ const Error = props => (
 
 const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
+    const createSnackbar = useSnackbarContext()
     const { activeCourse } = useAuthContext()
     const { setMenuTab, suggestedClass } = useLayoutContext()
 
     const goToClassroom = () => {
-        if (!!suggestedClass.data) {
-            const {
-                accessContent: {
-                    specialtyId,
-                    subSpecialtyId,
-                    resource,
-                    collectionId,
-                    lesson
+        try {
+            if (!!suggestedClass.data) {
+                const {
+                    accessContent: {
+                        specialtyId,
+                        subSpecialtyId,
+                        resource,
+                        collectionId,
+                        lesson
+                    }
+                } = suggestedClass.data
+                const type = resource.type.toLocaleLowerCase()
+                const path = subSpecialtyId
+                    ? `${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}`
+                    : `${specialtyId}/${lesson.id}/${collectionId}`
+                if (type === 'quiz') {
+                    history.push(
+                        `/inicio/sala-aula/${path}/quiz/${resource.id}/0`
+                    )
+                } else {
+                    history.push(
+                        `/inicio/sala-aula/${path}/video/${resource.id}`
+                    )
                 }
-            } = suggestedClass.data
-            const type = resource.type.toLocaleLowerCase()
-            const path = subSpecialtyId
-                ? `${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}`
-                : `${specialtyId}/${lesson.id}/${collectionId}`
-            if (type === 'quiz') {
-                history.push(`/inicio/sala-aula/${path}/quiz/${resource.id}/0`)
-            } else {
-                history.push(`/inicio/sala-aula/${path}/video/${resource.id}`)
             }
+        } catch (error) {
+            console.error('[RMMenuChangeCourse]:goToClassroom', error)
+            createSnackbar({
+                message: t('mainMenu.changeCourse.errorGoClass'),
+                theme: 'error'
+            })
         }
     }
 
