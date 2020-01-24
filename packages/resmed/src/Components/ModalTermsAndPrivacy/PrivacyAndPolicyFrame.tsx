@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { SANSpin, SANButton, SANBox, SANCheckbox } from '@sanar/components'
+import { SANButton, SANBox, SANCheckbox } from '@sanar/components'
 import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
@@ -21,15 +21,14 @@ const SANCheckboxContainer = styled(SANBox)`
 
 const RMPrivacyAndPolicyFrame = ({ onAccept, tosRequired }) => {
     const { t } = useTranslation('resmed')
-    const [loading, setLoading] = useState(true)
     const [checked, setChecked] = useState(false)
 
     const manipuleLoading = () => {
-        setLoading(false)
+        console.log('-------privacy and policy frame loaded-------')
     }
+
     return (
         <SANBox display='flex' flexDirection='column' height='100%'>
-            <SANSpin flex spinning={loading} minHeight='100%' />
             <SANIframeBox mb={{ _: 'xs', lg: '0' }}>
                 <iframe
                     title='privacy-and-policy-frame'
