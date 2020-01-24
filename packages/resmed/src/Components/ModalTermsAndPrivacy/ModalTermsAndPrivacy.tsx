@@ -29,7 +29,6 @@ const SANModalTermsAndPrivacy = ({
     const [activeKey, setActiveKey] = useState(defaultActiveKey)
     const [signed, setSigned] = useState<number[]>([])
     const [loading, setLoading] = useState(false)
-    const [hideLoad, setHideLoad] = useState(false)
 
     useEffect(() => {
         setActiveKey(defaultActiveKey)
@@ -72,29 +71,24 @@ const SANModalTermsAndPrivacy = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [signed])
 
-    const handleActiveKey = key => {
-        if (key) {
-            setHideLoad(true)
-        }
+    const onTabChange = key => {
         setActiveKey(key)
     }
 
-    const handleButton = key => {
+    const handleActiveKey = key => {
         setSigned(old => [...old, key])
-        handleActiveKey(key)
+        setActiveKey(key)
     }
-
     const modalContent = [
         {
             title: t('global.termsOfUse'),
             content: (
                 <RMTermsFrame
                     tosRequired={tosRequired}
-                    hideLoad={hideLoad}
                     onAccept={
                         !signed.includes(1) &&
                         tosRequired &&
-                        (() => handleButton(1))
+                        (() => handleActiveKey(1))
                     }
                 />
             )
@@ -107,7 +101,7 @@ const SANModalTermsAndPrivacy = ({
                     onAccept={
                         !signed.includes(0) &&
                         tosRequired &&
-                        (() => handleButton(0))
+                        (() => handleActiveKey(0))
                     }
                 />
             )
@@ -123,7 +117,7 @@ const SANModalTermsAndPrivacy = ({
             defaultActiveKey={defaultActiveKey}
             content={modalContent}
             loading={loading}
-            onTabChange={handleActiveKey}
+            onTabChange={onTabChange}
             {...props}
         />
     )
