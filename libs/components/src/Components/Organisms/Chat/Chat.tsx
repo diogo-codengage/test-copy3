@@ -211,6 +211,7 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
         }, [scrollRef, messages, hasButton])
 
         useEffect(() => {
+            console.log(inputRef)
             if (!!inputRef && !!inputRef.current) {
                 inputRef.current.addEventListener('input', debounceCountLetter)
             }
@@ -273,72 +274,69 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
                         </SANButton>
                     </FloatButton>
                 </SANBox>
-                {blocked ? (
-                    <SANBox
-                        display='flex'
-                        alignItems='center'
-                        justifyContent='center'
-                        border='1px solid'
-                        borderColor='grey.2'
-                        borderBottomRightRadius='base'
-                        borderBottomLeftRadius='base'
-                        bg='grey-solid.1'
-                        py='19.5px'
+                <SANBox
+                    display={blocked ? 'flex' : 'none'}
+                    alignItems='center'
+                    justifyContent='center'
+                    border='1px solid'
+                    borderColor='grey.2'
+                    borderBottomRightRadius='base'
+                    borderBottomLeftRadius='base'
+                    bg='grey-solid.1'
+                    py='19.5px'
+                >
+                    <SANTypography fontSize='md' color='grey.6'>
+                        {t('chat.blocked')}
+                    </SANTypography>
+                </SANBox>
+                <SANBox
+                    display={!blocked ? 'flex' : 'none'}
+                    alignItems='center'
+                    justifyContent='space-between'
+                    border='1px solid'
+                    borderColor='grey.2'
+                    borderRadius='base'
+                    px='md'
+                    pt='sm'
+                    pb='lg'
+                    bg='white.10'
+                    position='relative'
+                >
+                    <SANAvatar src={image} size={28} borderRadius={14} />
+                    <SANBox mx='xs' width='calc(100% - 68px)'>
+                        <SANInputStyled
+                            placeholder={t('chat.writeSomething')}
+                            contentEditable
+                            ref={inputRef}
+                            onKeyPress={handleKeyPress}
+                            onScroll={handleScroll}
+                            style={{ height: inputHeight }}
+                        />
+                    </SANBox>
+                    <SANButton
+                        circle
+                        variant='text'
+                        size='xsmall'
+                        onClick={handleSend}
+                        disabled={
+                            loading ||
+                            submitting ||
+                            letterCount >= maxLetters ||
+                            letterCount === 0
+                        }
                     >
-                        <SANTypography fontSize='md' color='grey.6'>
-                            {t('chat.blocked')}
+                        <SANEvaIcon name='paper-plane-outline' />
+                    </SANButton>
+                    <SANBox position='absolute' bottom='0' right='14px'>
+                        <SANTypography
+                            fontWeight='bold'
+                            fontSize='xs'
+                            color={colorCount}
+                        >
+                            {letterCount}/{maxLetters}
                         </SANTypography>
                     </SANBox>
-                ) : (
-                    <SANBox
-                        display='flex'
-                        alignItems='center'
-                        justifyContent='space-between'
-                        border='1px solid'
-                        borderColor='grey.2'
-                        borderRadius='base'
-                        px='md'
-                        pt='sm'
-                        pb='lg'
-                        bg='white.10'
-                        position='relative'
-                    >
-                        <SANAvatar src={image} size={28} borderRadius={14} />
-                        <SANBox mx='xs' width='calc(100% - 68px)'>
-                            <SANInputStyled
-                                placeholder={t('chat.writeSomething')}
-                                contentEditable
-                                ref={inputRef}
-                                onKeyPress={handleKeyPress}
-                                onScroll={handleScroll}
-                                style={{ height: inputHeight }}
-                            />
-                        </SANBox>
-                        <SANButton
-                            circle
-                            variant='text'
-                            size='xsmall'
-                            onClick={handleSend}
-                            disabled={
-                                loading ||
-                                submitting ||
-                                letterCount >= maxLetters ||
-                                letterCount === 0
-                            }
-                        >
-                            <SANEvaIcon name='paper-plane-outline' />
-                        </SANButton>
-                        <SANBox position='absolute' bottom='0' right='14px'>
-                            <SANTypography
-                                fontWeight='bold'
-                                fontSize='xs'
-                                color={colorCount}
-                            >
-                                {letterCount}/{maxLetters}
-                            </SANTypography>
-                        </SANBox>
-                    </SANBox>
-                )}
+                </SANBox>
             </SANBox>
         )
     }
