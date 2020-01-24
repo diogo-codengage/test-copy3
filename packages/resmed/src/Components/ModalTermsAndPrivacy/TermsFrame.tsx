@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { SANSpin, SANButton, SANBox, SANCheckbox } from '@sanar/components'
+import { SANButton, SANBox, SANCheckbox } from '@sanar/components'
 import { useTranslation } from 'react-i18next'
 
 import styled from 'styled-components'
@@ -24,12 +24,10 @@ const SANCheckboxContainer = styled(SANBox)`
 const RMTermsFrame = ({ onAccept, tosRequired }) => {
     const { t } = useTranslation('resmed')
     const { handleTrack } = useMainContext()
-    const [loading, setLoading] = useState(true)
     const [checked, setChecked] = useState(false)
 
     const manipuleLoading = () => {
-        console.log('-------terms frame loaded-------')
-        setLoading(false)
+        console.log('---------terms frame loaded---------')
     }
 
     useEffect(() => {
@@ -39,7 +37,6 @@ const RMTermsFrame = ({ onAccept, tosRequired }) => {
 
     return (
         <SANBox display='flex' flexDirection='column' height='100%'>
-            <SANSpin flex spinning={loading} minHeight='100%' />
             <SANIframeBox mb={{ _: 'xs', lg: '0' }}>
                 <iframe
                     title='terms-frame'
