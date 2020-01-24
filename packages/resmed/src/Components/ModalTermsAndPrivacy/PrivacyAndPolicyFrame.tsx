@@ -25,6 +25,7 @@ const RMPrivacyAndPolicyFrame = ({ onAccept, tosRequired }) => {
     const [checked, setChecked] = useState(false)
 
     const manipuleLoading = () => {
+        console.log('-------privacy and policy frame manipule loading-------')
         setLoading(false)
     }
     return (

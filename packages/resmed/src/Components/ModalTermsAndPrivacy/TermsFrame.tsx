@@ -28,6 +28,7 @@ const RMTermsFrame = ({ onAccept, tosRequired }) => {
     const [checked, setChecked] = useState(false)
 
     const manipuleLoading = () => {
+        console.log('---------terms frame manipule loading---------')
         setLoading(false)
     }
 
