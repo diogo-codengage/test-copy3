@@ -55,7 +55,8 @@ const RMClassroomFeedback = memo<RouteComponentProps<IParams>>(
                         query: GET_LESSON_PERFORMANCE,
                         variables: {
                             lessonId: params.lessonId
-                        }
+                        },
+                        fetchPolicy: 'no-cache'
                     })
                     setQuestions(lessonPerformance)
                 } catch {}
