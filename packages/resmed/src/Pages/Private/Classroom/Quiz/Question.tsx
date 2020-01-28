@@ -20,6 +20,7 @@ import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
 import RMCollection from 'Components/Collection'
 import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
+import { SKIP_MUTATION } from 'Apollo/Classroom/Mutations/skip'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomQuizContext } from './Context'
 import { useClassroomContext } from '../Context'
@@ -63,7 +64,7 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
         const { params: paramsLayout } = useLayoutContext()
         const [visible, setVisible] = useState(false)
         const [loading, setLoading] = useState(false)
-        const [skipped, seSkipped] = useState(0)
+        const [skipped, setSkipped] = useState(0)
         const [responses, setResponses] = useState<any[]>([])
         const { handleTrack } = useMainContext()
 
@@ -85,8 +86,19 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
             }
         }
 
-        const handleJump = () => {
-            seSkipped(old => old + 1)
+        const handleJump = async () => {
+            setHasQuestions(true)
+            setLoading(true)
+            try {
+                await client.mutate({
+                    mutation: SKIP_MUTATION,
+                    variables: {
+                        questionId: questions[questionIndex].id
+                    }
+                })
+            } catch {}
+            setSkipped(old => old + 1)
+            setLoading(false)
             goToNext()
         }
 
