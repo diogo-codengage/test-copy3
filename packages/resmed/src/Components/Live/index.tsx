@@ -21,7 +21,6 @@ import {
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import { ILive } from 'Apollo/Lives/Queries/lives'
-import { useAuthContext } from 'Hooks/auth'
 
 const skeletonProps: ISANBoxProps = {
     bg: 'grey.8',
@@ -92,7 +91,6 @@ interface IRMLiveProps {
 const RMLive = forwardRef<ISANChatRef, IRMLiveProps>(
     ({ live, loadingLive = false, hasLive = true, chat }, ref) => {
         const { t } = useTranslation('resmed')
-        const { me } = useAuthContext()
         const [hasLoadedVideo, setLoadedVideo] = useState(false)
 
         const videoPath = useMemo(() => {
@@ -145,7 +143,6 @@ const RMLive = forwardRef<ISANChatRef, IRMLiveProps>(
                                 onSend={chat.onSend}
                                 blocked={chat.blocked}
                                 loading={chat.loading}
-                                image={me.profilePicture}
                             />
                         </SANBox>
                     </SANBox>
