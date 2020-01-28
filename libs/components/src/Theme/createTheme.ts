@@ -117,7 +117,7 @@ export const defaultColors = {
     skeleton: '#f2f2f2'
 }
 
-const defaultBreakpoints: any = [
+export const defaultBreakpoints: any = [
     '480px',
     '576px',
     '768px',

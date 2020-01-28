@@ -16,7 +16,6 @@ import { createDebounce } from '@sanar/utils/dist/Debounce'
 
 import { SANButton } from '../../Atoms/Button'
 import { SANBox } from '../../Atoms/Box'
-import { SANAvatar } from '../../Atoms/Avatar'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
 import { SANScroll } from '../../Atoms/Scroll'
 import { SANTypography } from '../../Atoms/Typography'
@@ -79,7 +78,6 @@ interface IParams {
 export interface ISANChatProps {
     hasMore?: boolean
     loadMore?: () => Promise<any>
-    image?: string
     messages: any[]
     onSend?: (value: string, params: IParams) => void
     blocked?: boolean
@@ -93,12 +91,12 @@ export interface ISANChatRef {
 const maxLetters = 400
 
 const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
-    ({ image, hasMore, loadMore, messages, onSend, blocked, loading }, ref) => {
+    ({ hasMore, loadMore, messages, onSend, blocked, loading }, ref) => {
         const { t } = useTranslation('components')
         const { width } = useWindowSize()
         const [submitting, setSubmitting] = useState(false)
         const [hasButton, setHasButton] = useState(false)
-        const [inputHeight, setInputHeight] = useState(width > 768 ? 21 : 42)
+        const [inputHeight, setInputHeight] = useState(42)
         const [letterCount, setLetterCount] = useState(0)
         const scrollRef = useRef<any>()
         const inputRef = useRef<any>()
@@ -134,16 +132,17 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
             }
         }
 
-        const handleScroll = () => {
+        const handleScrollInput = () => {
             if (!!inputRef && !!inputRef.current) {
                 if (
                     inputRef.current.scrollHeight <= 84 &&
-                    !!inputRef.current.textContent
+                    !!inputRef.current.textContent &&
+                    width < 992
                 ) {
                     setInputHeight(inputRef.current.scrollHeight)
                 }
                 if (!inputRef.current.textContent) {
-                    setInputHeight(21)
+                    setInputHeight(42)
                 }
             }
         }
@@ -160,6 +159,8 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
         const handleLetterCount = useCallback(() => {
             if (!!inputRef && !!inputRef.current) {
                 setLetterCount(inputRef.current.innerText.length)
+
+                !inputRef.current.innerText && setInputHeight(42)
             }
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
@@ -172,6 +173,7 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
                     {...message}
                     key={index}
                     mt={index === 0 ? 'md' : '0px'}
+                    hasDivider={index < messages.length - 1}
                 />
             ),
             [messages]
@@ -211,7 +213,6 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
         }, [scrollRef, messages, hasButton])
 
         useEffect(() => {
-            console.log(inputRef)
             if (!!inputRef && !!inputRef.current) {
                 inputRef.current.addEventListener('input', debounceCountLetter)
             }
@@ -296,20 +297,19 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
                     border='1px solid'
                     borderColor='grey.2'
                     borderRadius='base'
-                    px='md'
-                    pt='sm'
-                    pb='lg'
+                    px='sm'
+                    pt='xs'
+                    pb='10px'
                     bg='white.10'
                     position='relative'
                 >
-                    <SANAvatar src={image} size={28} borderRadius={14} />
-                    <SANBox mx='xs' width='calc(100% - 68px)'>
+                    <SANBox width='calc(100% - 35px)'>
                         <SANInputStyled
                             placeholder={t('chat.writeSomething')}
                             contentEditable
                             ref={inputRef}
                             onKeyPress={handleKeyPress}
-                            onScroll={handleScroll}
+                            onScroll={handleScrollInput}
                             style={{ height: inputHeight }}
                         />
                     </SANBox>
@@ -327,7 +327,7 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
                     >
                         <SANEvaIcon name='paper-plane-outline' />
                     </SANButton>
-                    <SANBox position='absolute' bottom='0' right='14px'>
+                    <SANBox position='absolute' bottom='0' right='6px'>
                         <SANTypography
                             fontWeight='bold'
                             fontSize='xs'
