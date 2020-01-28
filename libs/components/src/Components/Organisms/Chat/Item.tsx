@@ -38,7 +38,11 @@ export const SANChatItem: React.FC<ISANChatItemProps> = ({
         <SANTypography fontSize='xs' color='grey.6'>
             {format(new Date(time), 'HH:mm')}
         </SANTypography>
-        <SANTypography fontSize='md' color='grey.8'>
+        <SANTypography
+            fontSize='md'
+            color='grey.8'
+            style={{ wordBreak: 'break-word' }}
+        >
             {message}
         </SANTypography>
         {hasDivider && <SANDivider bg='grey.1' width='100%' mb='0' />}
