@@ -59,7 +59,7 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
             questionsMap,
             setQuestionsMap
         } = useClassroomQuizContext()
-        const { handleProgress, setClickerName } = useClassroomContext()
+        const { handleProgress, setClickerName, setHasQuestions } = useClassroomContext()
         const { params: paramsLayout } = useLayoutContext()
         const [visible, setVisible] = useState(false)
         const [loading, setLoading] = useState(false)
@@ -93,6 +93,7 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
         const handleNext = () => goToNext()
 
         const handleConfirm = async alternativeId => {
+            setHasQuestions(true)
             setLoading(true)
             const current = Number(questionIndex) + 1 - skipped
             handleProgress({
