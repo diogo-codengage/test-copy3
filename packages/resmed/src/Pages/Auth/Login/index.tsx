@@ -21,12 +21,15 @@ import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 
 import { segmentTrack } from 'Config/Segment/track'
 import { IEvents, IOptions } from 'Config/Segment'
+import { trySetTokenAutoLoginFromLocationSearch } from './autoLoginSetToken'
 
-const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
+const RMLogin: React.FC<RouteComponentProps> = ({ history, location }) => {
     const { t } = useTranslation('resmed')
     const [keepMeLoggedIn, setKeepMeLoggedIn] = useState(false)
     const [showModalTerms, setShowModalTerms] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
+
+    trySetTokenAutoLoginFromLocationSearch(location.search)
 
     const handleTrack = (event: IEvents, attrs?: IOptions) => {
         const data = {
