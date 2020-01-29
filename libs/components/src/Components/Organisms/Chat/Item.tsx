@@ -2,43 +2,50 @@ import React from 'react'
 
 import { format } from 'date-fns'
 
-import { getUTCDate } from '@sanar/utils/dist/Date'
-
 import { SANBox, ISANBoxProps } from '../../Atoms/Box'
-import { SANAvatar } from '../../Atoms/Avatar'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANSkeleton } from 'Components/Atoms/Skeleton'
+import { SANDivider } from '../../Atoms/Divider'
 
 export interface ISANChatItemProps extends ISANBoxProps {
-    image?: string
     name: string
     time: string
     message: string
+    hasDivider?: boolean
 }
 
 export const skeletons = new Array(2).fill(0).map((_, i) => i)
 export const renderSkeleton = index => <SANChatItemSkeleton key={index} />
 
 export const SANChatItem: React.FC<ISANChatItemProps> = ({
-    image,
     name,
     time,
     message,
+    hasDivider,
     ...props
 }) => (
-    <SANBox display='flex' alignItems='end' px='md' mb='md' {...props}>
-        <SANAvatar src={image} size={32} borderRadius={16} />
-        <SANBox ml='md' width='calc(100% - 48px)'>
-            <SANTypography fontWeight='bold' fontSize='sm' color='grey.6'>
-                {name}
-            </SANTypography>
-            <SANTypography fontSize='xs' color='grey.6'>
-                {format(new Date(time), 'HH:mm')}
-            </SANTypography>
-            <SANTypography fontSize='md' color='grey.8'>
-                {message}
-            </SANTypography>
-        </SANBox>
+    <SANBox
+        display='flex'
+        flexDirection='column'
+        alignItems='end'
+        px='md'
+        mb='xs'
+        {...props}
+    >
+        <SANTypography fontWeight='bold' fontSize='sm' color='grey.6'>
+            {name}
+        </SANTypography>
+        <SANTypography fontSize='xs' color='grey.6'>
+            {format(new Date(time), 'HH:mm')}
+        </SANTypography>
+        <SANTypography
+            fontSize='md'
+            color='grey.8'
+            style={{ wordBreak: 'break-word' }}
+        >
+            {message}
+        </SANTypography>
+        {hasDivider && <SANDivider bg='grey.1' width='100%' mb='0' />}
     </SANBox>
 )
 
