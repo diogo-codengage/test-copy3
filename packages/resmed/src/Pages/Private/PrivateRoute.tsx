@@ -9,6 +9,7 @@ import { useLazyQuery } from '@apollo/react-hooks'
 
 import { CognitoUserSession } from 'amazon-cognito-identity-js'
 import { startOfDay, endOfDay, isAfter, format } from 'date-fns'
+import * as Sentry from '@sentry/browser'
 
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
@@ -44,6 +45,13 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
             onCompleted({ me }) {
                 segmentTrack('Session started')
                 setMe(me)
+                Sentry.configureScope(scope => {
+                    scope.setUser({
+                        id: me.id,
+                        name: me.name,
+                        email: me.email
+                    })
+                })
             },
             onError() {
                 logout({ callback: onLogout })
