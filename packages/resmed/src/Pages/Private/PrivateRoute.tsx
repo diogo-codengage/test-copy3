@@ -72,13 +72,14 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
         }, [])
 
         useEffect(() => {
-            if (!!me) {
-                window.Conpass.init({
+            if (!!me && !!window.Conpass) {
+                const { Conpass } = window
+                Conpass.init({
                     name: me.name || 'anônimo',
                     email: me.email || 'anonimo@resmed.com.br'
                 })
 
-                window.Conpass.debug()
+                Conpass.debug()
             }
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [me])
