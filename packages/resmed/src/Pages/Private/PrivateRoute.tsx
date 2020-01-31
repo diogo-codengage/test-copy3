@@ -9,7 +9,7 @@ import { useLazyQuery } from '@apollo/react-hooks'
 
 import { CognitoUserSession } from 'amazon-cognito-identity-js'
 import * as Sentry from '@sentry/browser'
-import { startOfDay, endOfDay, isAfter, format } from 'date-fns'
+import { startOfDay, endOfDay, isBefore, isAfter, format } from 'date-fns'
 
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
@@ -30,13 +30,15 @@ interface RMPrivateRouteProps extends RouteComponentProps {
     path: string
 }
 
-const getInactivePack = packs =>
+const getPack = (packs: any[], status: 'active' | 'inactive') =>
     packs.find(pack => {
-        if (!pack.startAt) return false
+        if (!pack.startAt) return true
 
         const startDate = startOfDay(new Date(pack.startAt))
         const currentDate = endOfDay(new Date())
-        return isAfter(startDate, currentDate)
+        return status === 'active'
+            ? isBefore(startDate, currentDate)
+            : isAfter(startDate, currentDate)
     })
 
 const RMPrivateRoute = memo<RMPrivateRouteProps>(
@@ -108,9 +110,10 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
         if (loading) return <RMSplashLoader />
 
         if (!!me && !!me.packs) {
-            const pack = getInactivePack(me.packs)
-            if (!!pack) {
-                const date = getUTCDate(pack.startAt)
+            const activePack = getPack(me.packs, 'active')
+            if (!activePack) {
+                const inactivePack = getPack(me.packs, 'inactive')
+                const date = getUTCDate(inactivePack.startAt)
                 return (
                     <RMModalInactivePacks date={format(date, 'DD/MM/YYYY')} />
                 )
