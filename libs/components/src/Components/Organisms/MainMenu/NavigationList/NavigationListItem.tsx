@@ -37,9 +37,7 @@ const SANNavigationListStyled = styled.span`
     }
 `
 
-type IProps = PropTypes.InferProps<typeof propTypes> & {
-    dataTestid?: string
-}
+type IProps = PropTypes.InferProps<typeof propTypes>
 
 const SANNavigationList: React.FC<IProps> = ({ dataTestid, ...props }) => {
     return (

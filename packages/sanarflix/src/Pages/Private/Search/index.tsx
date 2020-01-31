@@ -178,18 +178,7 @@ const FLXSearchPage = ({ location, history }: RouteComponentProps) => {
                                                 <SANSearchResultItem
                                                     key={item.resourceId}
                                                     item={item}
-                                                    onClick={item =>
-                                                        goToResource({
-                                                            resourceId:
-                                                                item.resourceId,
-                                                            type: item.type,
-                                                            resourceType:
-                                                                item.resourceType,
-                                                            course: item.course,
-                                                            themeId:
-                                                                item.themeId
-                                                        })
-                                                    }
+                                                    onClick={goToResource}
                                                 />
                                             )}
                                         />

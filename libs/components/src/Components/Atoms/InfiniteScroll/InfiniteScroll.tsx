@@ -20,7 +20,7 @@ export interface ISANInfiniteScrollProps {
     getScrollParent?(): any
 }
 
-export const SANInfiniteScrollLoader = styled(SANSpin)`
+const SANSpinStyled = styled(SANSpin)`
     && {
         display: flex;
         align-items: center;
@@ -33,11 +33,7 @@ export const SANInfiniteScrollLoader = styled(SANSpin)`
 const SANInfiniteScroll: React.FC<ISANInfiniteScrollProps> = props => {
     const customProps = useMemo(
         () => ({
-            loader: !props.loader ? (
-                <SANInfiniteScrollLoader key={new Date().getTime()} />
-            ) : (
-                props.loader
-            ),
+            loader: !props.loader ? <SANSpinStyled /> : props.loader,
             ...props
         }),
         [props]

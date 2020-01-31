@@ -8,7 +8,15 @@ type Type =
     | 'lesson'
     | 'question'
 
-type ResourceType = 'Document' | 'Video' | 'Question' | 'Quiz'
+type ResourceType =
+    | 'Book'
+    | 'Course'
+    | 'Content'
+    | 'Question'
+    | 'Quiz'
+    | 'Video'
+    | 'Document'
+    | 'Download'
 
 interface Theme {
     id: string
