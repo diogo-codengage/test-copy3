@@ -157,6 +157,27 @@ export default {
             }
         }
     },
+    exams: {
+        title: 'Provas',
+        subtitle: 'Acesse à provas completas e comentadas de diversas universidades do Brasil',
+        onBoarding: {
+            first: {
+                title: 'Passe na prova da sua faculdade!',
+                text: 'Aqui você tem acesso às provas da sua faculdade e de diversas universidades do país. Fique por dentro de como são cobrados todos os assuntos da graduação e saia preparado(a) para tirar nota 10!',
+                bottom: 'Encontre a prova ideal para seu estudo por faculdade, disciplina, temas, ano, semestre e metodologia.'
+            },
+            second: {
+                title: 'Encontre as provas já realizadas na sua faculdade!',
+                text: 'Para encontrar a prova que mais se encaixa nas suas necessidades, informe a sua faculdade, o semestre em que você ingressou e sua metodologia de aprendizado.'
+            },
+            form: {
+                button: 'Começar',
+                selectCollegeLabel: 'Informe a sua faculdade',
+                selectSemesterLabel: 'Informe o seu semestre de ingresso',
+                selectMethodologyLabel: 'Informe a sua metodologia',
+            }
+        }
+    },
     courses: {
         title: 'Todos os Cursos',
         subtitle: 'Encontre aqui todos os cursos',

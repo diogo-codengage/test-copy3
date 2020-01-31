@@ -421,7 +421,6 @@ const FLXCancelOrPauseForm: React.FC<IProps> = withSANForm(
                         alignItems='center'
                         justifyContent='center'
                         pt={4}
-                        mb={5}
                     >
                         <SANButton
                             htmlType='submit'
