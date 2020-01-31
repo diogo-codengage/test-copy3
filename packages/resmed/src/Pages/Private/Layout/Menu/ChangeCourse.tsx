@@ -15,7 +15,8 @@ import {
     SANChangeCourse,
     SANErrorBoundary,
     SANGenericError,
-    SANSpin
+    SANSpin,
+    useSnackbarContext
 } from '@sanar/components'
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
@@ -58,28 +59,33 @@ const Courses = withRouter(({ history }) => {
         course => {
             const start = getUTCDate(course.startDate)
             const end = getUTCDate(course.expireDate)
-            return !loading && !!course
-                ? {
-                      key: course.id,
-                      id: course.id,
-                      title: course.name,
-                      date: formatExpireDate(
-                          isAfter(start, new Date()) ? start : end
-                      ),
-                      percent: course.progress,
-                      coverPicture: course.images.original,
-                      expired: isBefore(end, new Date()),
-                      notStarted: isAfter(start, new Date()),
-                      onChange: () => handleChange(course.id)
-                  }
-                : {}
+            return {
+                key: course.id,
+                id: course.id,
+                title: course.name,
+                date: formatExpireDate(
+                    isAfter(start, new Date()) ? start : end
+                ),
+                percent: course.progress,
+                coverPicture:
+                    !!course.images && !!course.images.original
+                        ? course.images.original
+                        : '',
+                expired: isBefore(end, new Date()),
+                notStarted: isAfter(start, new Date()),
+                onChange: () => handleChange(course.id)
+            }
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [loading, data]
     )
 
     const renderCourse = course => (
-        <SANChangeCourse mb='md' loading={loading} {...getProps(course)} />
+        <SANChangeCourse
+            BoxProps={{ mb: 'md' }}
+            loading={loading}
+            {...getProps(course)}
+        />
     )
 
     const courses = useMemo(() => {
@@ -95,7 +101,7 @@ const Courses = withRouter(({ history }) => {
     }, [activeCourse, data])
 
     return (
-        <SANSpin spinning={loadingMutation}>
+        <SANSpin spinning={loadingMutation || loading}>
             {courses.map(renderCourse)}
         </SANSpin>
     )
@@ -117,29 +123,42 @@ const Error = props => (
 
 const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
+    const createSnackbar = useSnackbarContext()
     const { activeCourse } = useAuthContext()
     const { setMenuTab, suggestedClass } = useLayoutContext()
 
     const goToClassroom = () => {
-        if (!!suggestedClass.data) {
-            const {
-                accessContent: {
-                    specialtyId,
-                    subSpecialtyId,
-                    resource,
-                    collectionId,
-                    lesson
+        try {
+            if (!!suggestedClass.data) {
+                const {
+                    accessContent: {
+                        specialtyId,
+                        subSpecialtyId,
+                        resource,
+                        collectionId,
+                        lesson
+                    }
+                } = suggestedClass.data
+                const type = resource.type.toLocaleLowerCase()
+                const path = subSpecialtyId
+                    ? `${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}`
+                    : `${specialtyId}/${lesson.id}/${collectionId}`
+                if (type === 'quiz') {
+                    history.push(
+                        `/inicio/sala-aula/${path}/quiz/${resource.id}/0`
+                    )
+                } else {
+                    history.push(
+                        `/inicio/sala-aula/${path}/video/${resource.id}`
+                    )
                 }
-            } = suggestedClass.data
-            const type = resource.type.toLocaleLowerCase()
-            const path = subSpecialtyId
-                ? `${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}`
-                : `${specialtyId}/${lesson.id}/${collectionId}`
-            if (type === 'quiz') {
-                history.push(`/inicio/sala-aula/${path}/quiz/${resource.id}/0`)
-            } else {
-                history.push(`/inicio/sala-aula/${path}/video/${resource.id}`)
             }
+        } catch (error) {
+            console.error('[RMMenuChangeCourse]:goToClassroom', error)
+            createSnackbar({
+                message: t('mainMenu.changeCourse.errorGoClass'),
+                theme: 'error'
+            })
         }
     }
 
@@ -170,8 +189,9 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                         percent={activeCourse.progress}
                         coverPicture={
                             !!activeCourse.images &&
-                            !!activeCourse.images.original &&
-                            activeCourse.images.original
+                            !!activeCourse.images.original
+                                ? activeCourse.images.original
+                                : ''
                         }
                         hasActive
                         ContinueProps={
@@ -184,7 +204,7 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                                       subtitle: suggestedClass.data!.title,
                                       loading: suggestedClass.loading
                                   }
-                                : null
+                                : undefined
                         }
                     />
                 </Error>

@@ -8,6 +8,7 @@ import { SANButton } from '../../Atoms/Button'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANBox } from '../../Atoms/Box'
 import { SANProgress } from '../../Atoms/Progress'
+import { SANSkeleton } from '../../Atoms/Skeleton'
 
 interface IProgress {
     me: number
@@ -49,10 +50,6 @@ const SANCardSpecialtyStyled = styled(SANBox)<IStyled>`
     }
 `
 
-const TitleStyled = styled(SANTypography)`
-    white-space: nowrap;
-`
-
 const TitleProgress = props => (
     <SANTypography
         fontSize='xs'
@@ -63,13 +60,35 @@ const TitleProgress = props => (
     />
 )
 
-const SANCardSpecialty = ({
+export const SANCardSpecialtySkeleton = () => (
+    <SANBox
+        display='flex'
+        flexDirection='column'
+        alignItems='center'
+        justifyContent='space-between'
+        borderRadius='base'
+        bg='grey.1'
+        px='lg'
+        pb={{ xs: 'xl', _: 'md' }}
+        pt={{ xs: 8, _: 'md' }}
+    >
+        <SANBox width='70%'>
+            <SANSkeleton paragraph={false} />
+        </SANBox>
+        <SANBox mb='xl' mt={8} width='100%'>
+            <SANSkeleton title={false} paragraph={{ rows: 2, width: '100%' }} />
+        </SANBox>
+        <SANBox borderRadius='base' width={91} height={32} bg='skeleton' />
+    </SANBox>
+)
+
+const SANCardSpecialty: React.FC<ISANCardSpecialtyProps> = ({
     image,
     title,
     progress,
     disabled,
     onClick
-}: ISANCardSpecialtyProps) => {
+}) => {
     const { t } = useTranslation('components')
     return (
         <SANCardSpecialtyStyled

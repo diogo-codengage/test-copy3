@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react'
 
 import { useTranslation } from 'react-i18next'
+import styled, { css } from 'styled-components'
+import { theme, ifProp } from 'styled-tools'
 
 import useOnClickOutside from '@sanar/utils/dist/Hooks/useOnClickOutside'
 
-import { SANBox } from '../../Atoms/Box'
+import { SANBox, ISANBoxProps } from '../../Atoms/Box'
 import { SANInput, ISANInputProps } from '../../Atoms/Input'
 import { SANCheckbox } from '../../Atoms/Checkbox'
 import { SANButton } from '../../Atoms/Button'
@@ -13,10 +15,11 @@ import { SANDropdown } from '../../Atoms/Dropdown'
 import { SANScroll } from '../../Atoms/Scroll'
 import { SANEmpty } from '../../Atoms/Empty'
 
-import styled, { css } from 'styled-components'
-import { theme, ifProp } from 'styled-tools'
+interface ISANStyledInputProps {
+    hasError?: boolean
+}
 
-const SANStyledInput = styled(SANInput)`
+const SANStyledInput = styled(SANInput)<ISANStyledInputProps>`
     && {
         text-overflow: ellipsis;
         background-color: ${theme('colors.white.10')};
@@ -50,11 +53,7 @@ const SANStyledCheckbox = styled(SANCheckbox)`
         }
     }
 `
-const SANStyledButton = styled(SANButton)`
-    && {
-        color: ${theme('colors.grey.3')};
-    }
-`
+
 const SANCloseButtonBox = styled(SANBox)`
     && {
         border-bottom-right-radius: ${theme('radii.base')};
@@ -67,13 +66,14 @@ interface IItem {
     value: string
 }
 
-export interface ISANSelectFilterProps {
+export interface ISANSelectFilterProps
+    extends Omit<ISANBoxProps, 'onChange' | 'color'> {
     placeholder?: string
     items: IItem[]
     value?: IItem[]
     onOpen?: (visible: boolean) => void
-    onClose?: () => void
-    onChange: (list: IItem[], item: IItem) => void
+    onClose?: (e?: any) => void
+    onChange?: (list: IItem[], item?: IItem) => void
     onSelectAll?: (list: IItem[]) => void
     onClear?: () => void
     onSelectItem?: (item: IItem) => void
@@ -92,7 +92,7 @@ const makeLabel = value =>
         )
         .join(', ')
 
-const SANSelectFilter = ({
+const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
     placeholder,
     items,
     value = [],
@@ -126,13 +126,13 @@ const SANSelectFilter = ({
 
     const handleSelectAll = values => e => {
         if (value.length === items.length) return
-        onSelectAll && onSelectAll(values, e)
-        onChange && onChange(values, e)
+        onSelectAll && onSelectAll(values)
+        onChange && onChange(values)
     }
 
     const handleClear = e => {
-        onClear && onClear([], e)
-        onChange && onChange([], e)
+        onClear && onClear()
+        onChange && onChange([])
         setLabelSelecteds('')
     }
 
@@ -243,7 +243,7 @@ const SANSelectFilter = ({
                                 >
                                     {t('selectFilter.selectAll')}
                                 </SANButton>
-                                <SANStyledButton
+                                <SANButton
                                     onClick={handleClear}
                                     bold
                                     variant='text'
@@ -251,7 +251,7 @@ const SANSelectFilter = ({
                                     disabled={!value.length}
                                 >
                                     {t('selectFilter.clearSelect')}
-                                </SANStyledButton>
+                                </SANButton>
                             </SANBox>
                             <SANDivider
                                 my='0'
@@ -260,8 +260,12 @@ const SANSelectFilter = ({
                                 bg='grey.2'
                             />
                             <SANStyledScroll>
-                                <SANBox py='xxs'>
-                                    {rows.length ? rows : <SANEmpty />}
+                                <SANBox py='xs'>
+                                    {rows.length ? (
+                                        rows
+                                    ) : (
+                                        <SANEmpty height={139} />
+                                    )}
                                 </SANBox>
                             </SANStyledScroll>
                             <SANCloseButtonBox

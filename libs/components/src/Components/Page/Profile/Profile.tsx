@@ -18,7 +18,7 @@ export interface IUser {
     email?: string
     phone_number?: string
     college?: string
-    period?: number
+    period?: string
     address?: {
         id?: string
         postal_code?: string
@@ -35,10 +35,14 @@ export interface IState {
     name: string
 }
 
+interface IParams {
+    setSubmitting: React.Dispatch<React.SetStateAction<boolean>>
+}
+
 export interface ISANProfileProps extends Pick<ISANHeaderProps, 'onBack'> {
     states: IState[]
     user?: IUser
-    onSubmit?: (user: IUser) => void
+    onSubmit?: (user: IUser, params: IParams) => void | Promise<void>
 }
 
 const PageStyled = styled(SANPage)`
