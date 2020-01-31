@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback, memo } from 'react'
 
+import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
@@ -12,8 +13,7 @@ import {
     SANCol,
     SANTypography,
     SANQuery,
-    SANGenericError,
-    SANCardSpecialtySkeleton
+    SANGenericError
 } from '@sanar/components'
 import { SANButton } from '@sanar/components/dist/Components/Atoms/Button'
 
@@ -28,18 +28,6 @@ import appleSvg from 'Assets/images/app-logos/apple.svg'
 import googlePlaySvg from 'Assets/images/app-logos/google-play.svg'
 
 import { useMainContext } from 'Pages/Private/Context'
-
-const skeletons = new Array(5).fill(1)
-const renderSkeleton = (_, index) => (
-    <SANCol
-        key={index}
-        mb='xl'
-        flex='1 0 25% !important'
-        minWidth='300px !important'
-    >
-        <SANCardSpecialtySkeleton />
-    </SANCol>
-)
 
 const RMSpecialties = withRouter<RouteComponentProps>(
     ({ history }: RouteComponentProps) => {
@@ -91,11 +79,7 @@ const RMSpecialties = withRouter<RouteComponentProps>(
                     minWidth='300px !important'
                 >
                     <SANCardSpecialty
-                        image={
-                            !!specialty.images && !!specialty.images.large
-                                ? specialty.images.large
-                                : ''
-                        }
+                        image={specialty.images.large}
                         title={specialty.name}
                         progress={{
                             me: specialty.progress.me,
@@ -112,19 +96,11 @@ const RMSpecialties = withRouter<RouteComponentProps>(
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
 
-        if (errorLoadActiveCourse) {
-            return <SANGenericError message={t('main.errorLoadActiveCourse')} />
-        }
-
         return (
             <SANQuery
                 query={GET_SPECIALTIES}
                 options={{ variables: { courseId }, skip: !courseId }}
-                loaderComp={
-                    <SANRow gutter={24} type='flex' flexWrap='wrap'>
-                        {skeletons.map(renderSkeleton)}
-                    </SANRow>
-                }
+                loaderProps={{ minHeight: '250px', flex: true }}
             >
                 {({
                     data: { specialties }
@@ -132,6 +108,11 @@ const RMSpecialties = withRouter<RouteComponentProps>(
                     data: { specialties: ISpecialties[] }
                 }) => (
                     <SANRow gutter={24} type='flex' flexWrap='wrap'>
+                        {errorLoadActiveCourse && (
+                            <SANGenericError
+                                message={t('main.errorLoadActiveCourse')}
+                            />
+                        )}
                         {specialties.map(renderSpecialty)}
                     </SANRow>
                 )}
@@ -140,10 +121,13 @@ const RMSpecialties = withRouter<RouteComponentProps>(
     }
 )
 
+const SpecialtiesStyled = styled(SANBox)`
+    min-height: 429px;
+`
+
 const RMGeneral = memo(() => {
     const { t } = useTranslation('resmed')
     const { handleTrack } = useMainContext()
-
     const handleAppClicked = OS => {
         handleTrack('App Banner Clicked', {
             'OS Type': OS
@@ -153,8 +137,7 @@ const RMGeneral = memo(() => {
 
     return (
         <>
-            <SANBox
-                minHeight={429}
+            <SpecialtiesStyled
                 bg='grey-solid.1'
                 pt={{ xs: '8', _: 'xl' }}
                 pb={{ xs: 'xl', _: '0' }}
@@ -166,7 +149,7 @@ const RMGeneral = memo(() => {
                     />
                     <RMSpecialties />
                 </SANLayoutContainer>
-            </SANBox>
+            </SpecialtiesStyled>
             <SANBox mt={8} mb={9}>
                 <SANLayoutContainer>
                     <SANBox

@@ -55,8 +55,8 @@ export interface IEvent {
 
 type DateInput = Date | string
 export interface IDateRangeInput {
-    start: string
-    end: string
+    start?: DateInput
+    end?: DateInput
 }
 
 export interface ISANBigCalendarProps {

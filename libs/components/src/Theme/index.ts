@@ -1,5 +1,1 @@
-export {
-    createTheme as SANThemeCreateTheme,
-    SANStyled,
-    SANElement
-} from './createTheme'
+export { createTheme, SANStyled, SANElement } from './createTheme'

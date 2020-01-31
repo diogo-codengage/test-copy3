@@ -14,8 +14,7 @@ import {
     SANBox,
     SANEvaIcon,
     SANScroll,
-    SANSpin,
-    useSnackbarContext
+    SANSpin
 } from '@sanar/components'
 
 import { ISANModalProps } from '@sanar/components/dist/Components/Molecules/Modal'
@@ -107,7 +106,6 @@ const RMModalThemes: React.FC<IRMModalThemesProps> = ({
     ...props
 }) => {
     const { t } = useTranslation('resmed')
-    const createSnackbar = useSnackbarContext()
     const { handleTrack } = useMainContext()
     const [getLastAccessed] = useLazyQuery<ILessonLastAccessedQuery>(
         GET_LESSON_LAST_ACCESSED,
@@ -141,13 +139,7 @@ const RMModalThemes: React.FC<IRMModalThemesProps> = ({
                     `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}/video/${resource.id}`
                 )
             }
-        } catch (error) {
-            console.error('[RMModalThemes]:goToClassroom', error)
-            createSnackbar({
-                message: t('modalThemes.errorGoClass'),
-                theme: 'error'
-            })
-        }
+        } catch {}
     }
 
     const renderTheme = useCallback(

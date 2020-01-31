@@ -29,11 +29,6 @@ export interface IUserMedSpecialtyIntention {
     medProfessionalSpecialty: IOwner
 }
 
-export interface IPack {
-    id: string
-    startAt: string
-}
-
 export interface IMe {
     id: string
     name: string
@@ -43,7 +38,6 @@ export interface IMe {
     hasSchedule: boolean
     hasLives: boolean
     hasActiveSubscription: boolean
-    packs: IPack[]
     medProfile: IMedProfile
     userMedUniversity: IUserMedUniversity
     userMedInstitutions: IUserMedInstitution[]
@@ -61,10 +55,6 @@ export const GET_ME = gql`
             hasSchedule
             hasLives
             countCourses
-            packs {
-                id
-                startAt
-            }
             medProfile {
                 id
                 examIntentionCategoryId

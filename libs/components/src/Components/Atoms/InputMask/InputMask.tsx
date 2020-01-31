@@ -26,7 +26,6 @@ export interface ISANInputMaskProps extends Pick<ISANInputProps, IInput> {
     alwaysShowMask?: boolean
     maskChar?: string
     formatChars?: object
-    customRequired?: boolean
 }
 
 const masks = {

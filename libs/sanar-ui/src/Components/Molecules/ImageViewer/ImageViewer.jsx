@@ -24,8 +24,8 @@ const ESImageViewer = ({ className, images, alt }) => {
     const imageToZoom = images.large
         ? images.large.url
         : images.medium
-        ? images.medium.url
-        : images.small.url
+            ? images.medium.url
+            : images.small.url
 
     useEffect(() => setMobile(width <= 992), [width, open])
 
