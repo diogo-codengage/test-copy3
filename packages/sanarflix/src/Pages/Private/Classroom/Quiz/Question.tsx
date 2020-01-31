@@ -107,7 +107,7 @@ const FLXClassRoomQuizQuestion = ({
                         }
                     }
                 }
-            } = await client.mutate<any>({
+            } = await client.mutate({
                 mutation: ANSWER_MUTATION,
                 variables: {
                     questionId: questions[index].id,

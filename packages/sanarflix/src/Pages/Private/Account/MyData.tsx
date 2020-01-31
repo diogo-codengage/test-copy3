@@ -7,6 +7,7 @@ import { useApolloClient } from '@apollo/react-hooks'
 import { SANProfile, useSnackbarContext } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
+import { IMe } from 'Apollo/User/Queries/me'
 import { GET_STATES, IState } from 'Apollo/User/Queries/states'
 import { EDIT_USER_MUTATION } from 'Apollo/User/Mutations/edit-user'
 
@@ -42,7 +43,7 @@ const FLXMyData = ({ history }: RouteComponentProps) => {
         try {
             const {
                 data: { editUser }
-            } = await client.mutate<any>({
+            } = await client.mutate<IMe>({
                 mutation: EDIT_USER_MUTATION,
                 variables: values
             })

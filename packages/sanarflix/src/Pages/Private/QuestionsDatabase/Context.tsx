@@ -283,4 +283,4 @@ const FLXQuestionsProvider: React.FC<RouteComponentProps> = ({
     return <Context.Provider value={value}>{children}</Context.Provider>
 }
 
-export default withRouter(FLXQuestionsProvider)
+export default withRouter<RouteComponentProps>(FLXQuestionsProvider)

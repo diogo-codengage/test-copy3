@@ -53,7 +53,7 @@ const FLXPractice = ({ history }: RouteComponentProps) => {
                         }
                     }
                 }
-            } = await client.mutate<any>({
+            } = await client.mutate({
                 mutation: ANSWER_MUTATION,
                 variables: {
                     questionId: state.questions[state.currentIndex]['id'],
