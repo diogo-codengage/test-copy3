@@ -408,10 +408,5 @@ export default {
             error: 'Erro, ocorreu um erro e seus dados não foram salvos!'
         },
         loadError: 'Erro, não foi possivel carregar os dados'
-    },
-    modalInactivePacks: {
-        message:
-            'Ops, seu curso só será liberado em {{date}}. Guarda a ansiedade, tá?',
-        action: 'Retornar a tela de login'
     }
 }
