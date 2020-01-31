@@ -8,6 +8,7 @@ import {
 import { useLazyQuery } from '@apollo/react-hooks'
 
 import { CognitoUserSession } from 'amazon-cognito-identity-js'
+import * as Sentry from '@sentry/browser'
 
 import { GET_ME } from 'Apollo/User/Queries/me'
 import { useAuthContext } from 'Hooks/auth'
@@ -31,6 +32,13 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
             onCompleted({ me }) {
                 segmentTrack('Session started')
                 setMe(me)
+                Sentry.configureScope(scope => {
+                    scope.setUser({
+                        id: me.id,
+                        name: me.name,
+                        email: me.email
+                    })
+                })
             },
             onError() {
                 logout({ callback: onLogout })
