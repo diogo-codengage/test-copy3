@@ -29,7 +29,7 @@ import googlePlaySvg from 'Assets/images/app-logos/google-play.svg'
 
 import { useMainContext } from 'Pages/Private/Context'
 
-const RMSpecialties = withRouter<RouteComponentProps>(
+const RMSpecialties = withRouter<RouteComponentProps, any>(
     ({ history }: RouteComponentProps) => {
         const { t } = useTranslation('resmed')
         const { activeCourse } = useAuthContext()
@@ -214,4 +214,4 @@ const RMGeneral = memo(() => {
     )
 })
 
-export default withRouter<RouteComponentProps>(RMGeneral)
+export default RMGeneral

@@ -14,7 +14,7 @@ const onError = ({
     if (graphQLErrors) {
         graphQLErrors.forEach(error => {
             console.error('[Grapqhl error]: %o', error)
-            if (error.message.statusCode === 401) {
+            if (error.message['statusCode'] === 401) {
                 logout({})
                 localStorage.clear()
                 window.location.hash = '/#/auth/entrar'

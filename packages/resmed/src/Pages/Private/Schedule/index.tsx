@@ -35,7 +35,7 @@ import {
     UPDATE_APPOINTMENT,
     IUpdateAppointment
 } from 'Apollo/Schedule/Mutations/update-appointment'
-import { RESET_SCHEDULE, IResetSchedule } from 'Apollo/Schedule/Mutations/reset'
+import { RESET_SCHEDULE } from 'Apollo/Schedule/Mutations/reset'
 
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 
@@ -216,7 +216,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
             }))
             const {
                 data: { resetSchedule }
-            } = await client.mutate<IResetSchedule>({
+            } = await client.mutate<any>({
                 mutation: RESET_SCHEDULE,
                 variables: {
                     start: format(currentRange.start, 'YYYY-MM-DD'),
