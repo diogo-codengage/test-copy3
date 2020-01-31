@@ -203,6 +203,7 @@ export default {
             begin: 'Início',
             allCourses: 'Todos os cursos',
             added: 'Adicionados',
+            exams: 'Provas',
             questionBase: 'Banco de questões',
             bookmarks: 'Favoritos',
             invites: 'Indique e ganhe',
