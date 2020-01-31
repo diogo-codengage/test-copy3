@@ -55,7 +55,7 @@ const RMPractice = memo<RouteComponentProps>(({ history }) => {
                         stats
                     }
                 }
-            } = await client.mutate({
+            } = await client.mutate<any>({
                 mutation: ANSWER_MUTATION,
                 variables: {
                     questionId: state.questions[state.currentIndex]['id'],

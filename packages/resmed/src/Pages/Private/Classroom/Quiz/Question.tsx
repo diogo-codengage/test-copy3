@@ -112,7 +112,7 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                             stats
                         }
                     }
-                } = await client.mutate({
+                } = await client.mutate<any>({
                     mutation: ANSWER_MUTATION,
                     variables: {
                         questionId: questions[questionIndex].id,
