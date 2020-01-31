@@ -131,9 +131,7 @@ export default {
         changeCourse: {
             title: 'Estou estudando',
             subtitle: 'Trocar de curso',
-            suggestedClass: 'Aula sugerida',
-            errorGoClass:
-                'Ocorreu um erro ao tentar acessar essa aula. Tente novamente mais tarde.'
+            suggestedClass: 'Aula sugerida'
         }
     },
     logout: {
@@ -178,9 +176,7 @@ export default {
         errorLoadLessons: 'Ocorreu um erro ao carregar suas aulas'
     },
     modalThemes: {
-        continue: 'Continuar de onde parei',
-        errorGoClass:
-            'Ocorreu um erro ao tentar acessar essa aula. Tente novamente mais tarde.'
+        continue: 'Continuar de onde parei'
     },
     main: {
         errorLoadActiveCourse: 'Ocorreu um erro ao carregar seu curso ativo'
@@ -336,8 +332,6 @@ export default {
                 back: 'Voltar'
             }
         },
-        errorGoClass:
-            'Ocorreu um erro ao tentar acessar essa aula. Tente novamente mais tarde.',
         monthAbbr: {
             0: 'Jan',
             1: 'Fev',
@@ -369,10 +363,7 @@ export default {
         previous: {
             title: 'Assistir live anterior',
             back: 'Voltar para lives'
-        },
-        chat: 'Chat',
-        liveChat: 'Chat ao vivo',
-        sendMessageError: 'Ocorreu um erro ao enviar sua mensagem'
+        }
     },
     userProfile: {
         title: 'Cadastro complementar',

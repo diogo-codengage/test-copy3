@@ -18,14 +18,10 @@ import { SANForm, SANFormItem, withSANForm } from '../../Molecules/Form'
 
 import { IUser, IState } from './Profile'
 
-interface IParams {
-    setSubmitting: React.Dispatch<React.SetStateAction<boolean>>
-}
-
 export interface ProfileTabProps {
     states: IState[]
     user?: IUser
-    onSubmit?: (user: IUser, params: IParams) => void
+    onSubmit?: (user: IUser) => void
     form: any
 }
 

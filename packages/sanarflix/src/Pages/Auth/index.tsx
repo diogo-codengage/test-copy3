@@ -18,8 +18,7 @@ const FLXAuth: React.FC<RouteComponentProps<FLXAuthProps>> = ({
                     component={FLXPasswordRecovery}
                 />
                 <Route
-                    exact
-                    path={[`${url}/`, `${url}`]}
+                    path='*'
                     render={() => <Redirect to={`${url}/signin`} />}
                 />
             </Switch>

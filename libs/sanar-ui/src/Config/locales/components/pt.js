@@ -265,7 +265,6 @@ export default {
     },
     chat: {
         blocked: 'O chat está desativado.',
-        writeSomething: 'Escrever algo',
-        empty: 'Não há nenhuma mensagem'
+        writeSomething: 'Escrever algo'
     }
 }

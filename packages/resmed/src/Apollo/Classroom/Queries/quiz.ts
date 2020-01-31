@@ -70,6 +70,7 @@ export const GET_QUIZ = gql`
                     data {
                         id
                         sized_images: sizedImages {
+                            id
                             small {
                                 url
                             }

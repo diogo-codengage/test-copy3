@@ -2,7 +2,6 @@ import React, { Suspense, memo, useState, useEffect } from 'react'
 
 import { RouteComponentProps, Switch, Route, Redirect } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import * as Sentry from '@sentry/browser'
 
 import { SANErrorBoundary } from '@sanar/components'
 
@@ -35,23 +34,12 @@ const RMPrivatePages = memo<RouteComponentProps>(
             window.location.reload()
         }
 
-        const handleOnError = (error, errorInfo) => {
-            Sentry.withScope(scope => {
-                scope.setExtras(errorInfo)
-                Sentry.captureException(error)
-            })
-        }
-
         useEffect(() => {
             setVisible(!!activeCourse && !activeCourse.accessed)
         }, [activeCourse])
 
         return (
-            <SANErrorBoundary
-                onClick={reload}
-                text={t('global.backStart')}
-                onError={handleOnError}
-            >
+            <SANErrorBoundary onClick={reload} text={t('global.backStart')}>
                 <RMMainProvider>
                     <RMLayoutProvider>
                         <RMLayout>

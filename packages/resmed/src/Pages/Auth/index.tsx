@@ -64,8 +64,7 @@ const RMAuth = memo<RouteComponentProps>(({ match: { url } }) => {
                     component={RMPasswordRecovery}
                 />
                 <Route
-                    exact
-                    path={[`${url}/`, `${url}`]}
+                    path='*'
                     render={() => <Redirect to={`${url}/entrar`} />}
                 />
             </Switch>

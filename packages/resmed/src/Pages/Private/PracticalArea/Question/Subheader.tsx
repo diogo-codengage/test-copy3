@@ -22,7 +22,7 @@ const Indicator = ({
     <SANBox
         display='flex'
         alignItems='center'
-        mr={!vertical ? 'xl' : undefined}
+        mr={!vertical && 'xl'}
         flexDirection={vertical ? 'column' : 'row'}
     >
         <SANTypography

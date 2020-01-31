@@ -1,6 +1,0 @@
-export * from './ErrorBoundary'
-export * from './Profile'
-export * from './Error404'
-export * from './Error500'
-export * from './HelpCenter'
-export * from './ChangePassword'

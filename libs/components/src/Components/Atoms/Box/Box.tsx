@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styled, { css } from 'styled-components'
+import { css } from 'styled-components'
 import {
     SpaceProps,
     space,
@@ -22,27 +22,15 @@ import {
     ShadowProps,
     compose,
     typography,
-    TypographyProps,
-    OverflowProps
+    TypographyProps
 } from 'styled-system'
 
 import { ifProp } from 'styled-tools'
 
-interface AnchorHTMLAttributes {
-    download?: any
-    href?: string
-    hrefLang?: string
-    media?: string
-    ping?: string
-    rel?: string
-    target?: string
-    type?: string
-    referrerPolicy?: string
-}
+import { SANStyled, SANElement } from '../../../Theme/createTheme'
 
 export interface ISANBoxProps
-    extends React.HTMLAttributes<HTMLImageElement | HTMLDivElement>,
-        AnchorHTMLAttributes,
+    extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'>,
         SpaceProps,
         FlexboxProps,
         ColorProps,
@@ -52,10 +40,9 @@ export interface ISANBoxProps
         BackgroundProps,
         PositionProps,
         TypographyProps,
-        ShadowProps,
-        OverflowProps {
+        ShadowProps {
     displayFlex?: boolean
-    color?: string
+    as?: keyof JSX.IntrinsicElements | React.ComponentType<any>
     src?: string
     alt?: string
     borderBottomRightRadius?: string
@@ -64,7 +51,7 @@ export interface ISANBoxProps
     borderTopLeftRadius?: string
 }
 
-const SANBox = styled('div')<ISANBoxProps>`
+const SANBox = SANStyled('div')`
     ${compose(
         space,
         flexbox,
@@ -86,4 +73,4 @@ const SANBox = styled('div')<ISANBoxProps>`
     )}
 `
 
-export default SANBox
+export default SANBox as SANElement<ISANBoxProps>

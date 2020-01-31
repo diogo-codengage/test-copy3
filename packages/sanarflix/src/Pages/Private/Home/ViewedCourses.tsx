@@ -67,7 +67,6 @@ const renderCourse = history => (course: ICourse) => (
             }
             onClick={() => history.push(`/portal/curso/${course.id}`)}
             size='small'
-            resourceType='Video'
         />
     </div>
 )
