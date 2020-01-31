@@ -39,7 +39,6 @@ const getPack = (packs: any[], status: 'active' | 'inactive') =>
         return status === 'active'
             ? isBefore(startDate, currentDate)
             : isAfter(startDate, currentDate)
-    })
 
 const RMPrivateRoute = memo<RMPrivateRouteProps>(
     ({ component: Component, history, ...rest }) => {
