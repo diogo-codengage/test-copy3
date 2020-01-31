@@ -60,10 +60,22 @@
 @badge-dot-size: 8px;
 
 .typography-title-5() {
-    .typography-title(@heading-5-size, 1.25);
+    .typography-title(
+        @heading-5-size,
+        @typography-title-font-weight,
+        1.25,
+        @heading-color,
+        0
+    );
 }
 .typography-title-6() {
-    .typography-title(@heading-6-size, 1.25);
+    .typography-title(
+        @heading-6-size,
+        @typography-title-font-weight,
+        1.25,
+        @heading-color,
+        0
+    );
 }
 
 h1&,
