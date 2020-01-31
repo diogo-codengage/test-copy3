@@ -229,4 +229,4 @@ const RMPracticalProvider = memo<RouteComponentProps>(
     }
 )
 
-export default withRouter<RouteComponentProps>(RMPracticalProvider)
+export default withRouter(RMPracticalProvider)

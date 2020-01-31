@@ -55,7 +55,7 @@ interface IRouteProps {
     specialtyId: string
 }
 
-const RMSpecialty = ({
+const RMSpecialty: React.FC<RouteComponentProps<IRouteProps>> = ({
     history,
     match: { params }
 }: RouteComponentProps<IRouteProps>) => {
@@ -125,4 +125,4 @@ const RMSpecialty = ({
     )
 }
 
-export default withRouter<RouteComponentProps<IRouteProps>>(RMSpecialty)
+export default withRouter(RMSpecialty)
