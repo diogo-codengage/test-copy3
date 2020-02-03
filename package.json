@@ -1,6 +1,6 @@
 {
     "name": "sanar-monorepo",
-    "version": "1.0.4",
+    "version": "1.0.2",
     "main": "index.js",
     "license": "MIT",
     "private": true,
@@ -65,12 +65,10 @@
         "webpack": "4.29.6"
     },
     "scripts": {
-        "release-major": "yarn version --major && yarn release-major-apps && git push origin --tags",
-        "release-minor": "yarn version --minor && yarn release-minor-apps && git push origin --tags",
-        "release-patch": "yarn version --patch && yarn release-patch-apps && git push origin --tags",
-        "release-major-apps": "yarn workspace resmed release-major && yarn workspace e-sanar release-major && yarn workspace sanarflix release-major && yarn workspace sanar-rm-questions release-major && yarn workspace @sanar/components release-major && yarn workspace sanar-ui release-major && yarn workspace @sanar/utils release-major",
-        "release-minor-apps": "yarn workspace resmed release-minor && yarn workspace e-sanar release-minor && yarn workspace sanarflix release-minor && yarn workspace sanar-rm-questions release-minor && yarn workspace @sanar/components release-minor && yarn workspace sanar-ui release-minor && yarn workspace @sanar/utils release-minor",
-        "release-patch-apps": "yarn workspace resmed release-patch && yarn workspace e-sanar release-patch && yarn workspace sanarflix release-patch && yarn workspace sanar-rm-questions release-patch && yarn workspace @sanar/components release-patch && yarn workspace sanar-ui release-patch && yarn workspace @sanar/utils release-patch",
+        "postreleas": "git push origin --tags",
+        "release": "yarn version",
+        "release-apps": "yarn workspace resmed release",
+        "release-all-apps": "yarn workspace resmed release-patch && yarn workspace e-sanar release-patch && yarn workspace sanarflix release-patch && yarn workspace sanar-rm-questions release-patch && yarn workspace @sanar/components release-patch && yarn workspace sanar-ui release-patch && yarn workspace @sanar/utils release-patch",
         "commit": "git-cz",
         "sanarui:build": "yarn workspace sanar-ui build",
         "sanarui:cli": "yarn workspace sanar-ui cli",
