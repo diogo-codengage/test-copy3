@@ -1,6 +1,6 @@
 {
     "name": "sanar-monorepo",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "main": "index.js",
     "license": "MIT",
     "private": true,
@@ -65,6 +65,12 @@
         "webpack": "4.29.6"
     },
     "scripts": {
+        "release-major": "yarn version --major && release-major-apps && git push origin --tags",
+        "release-minor": "yarn version --minor && release-minor-apps && git push origin --tags",
+        "release-patch": "yarn version --patch && release-patch-apps && git push origin --tags",
+        "release-major-apps": "yarn workspace resmed release-major",
+        "release-minor-apps": "yarn workspace resmed release-minor",
+        "release-patch-apps": "yarn workspace resmed release-patch",
         "commit": "git-cz",
         "sanarui:build": "yarn workspace sanar-ui build",
         "sanarui:cli": "yarn workspace sanar-ui cli",
