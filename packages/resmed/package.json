@@ -1,6 +1,6 @@
 {
     "name": "resmed",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "private": true,
     "dependencies": {
         "@apollo/react-hooks": "^0.1.0-beta.10",
@@ -24,6 +24,9 @@
         "typescript": "^3.5.3"
     },
     "scripts": {
+        "release-major": "yarn version --major --no-git-tag-version",
+        "release-minor": "yarn version --minor --no-git-tag-version",
+        "release-patch": "yarn version --patch --no-git-tag-version",
         "start": "env-cmd -f ./environments/.env.development react-app-rewired start",
         "build:development": "env-cmd -f ./environments/.env.development react-app-rewired build",
         "build:staging": "env-cmd -f ./environments/.env.development react-app-rewired build",

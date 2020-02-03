@@ -9,6 +9,9 @@
         "react-router-last-location": "^2.0.1"
     },
     "scripts": {
+        "release-major": "yarn version --major --no-git-tag-version",
+        "release-minor": "yarn version --minor --no-git-tag-version",
+        "release-patch": "yarn version --patch --no-git-tag-version",
         "start": "env-cmd -f ./environments/.env.production react-app-rewired start",
         "build:development": "env-cmd -f ./environments/.env.staging react-app-rewired build",
         "build:staging": "env-cmd -f ./environments/.env.staging react-app-rewired build",

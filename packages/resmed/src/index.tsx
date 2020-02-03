@@ -13,6 +13,7 @@ import { LastLocationProvider } from 'react-router-last-location'
 import 'sanar-ui/dist/Config/i18n'
 
 import { SANSnackbarProvider } from '@sanar/components'
+import { version } from 'Config/Version'
 import { RMGraphQLProvider } from './Apollo/GraphQLService'
 import { RMThemeProvider } from './Components/Theme'
 import { RMAuthProvider } from './Hooks/auth'
@@ -37,6 +38,10 @@ const RMApp: React.FC = () => (
     </RMGraphQLProvider>
 )
 
-if (process.env.NODE_ENV === 'production') Sentry.init({ dsn: `${process.env.REACT_APP_SENTRY_DSN}` })
+if (process.env.NODE_ENV === 'production')
+    Sentry.init({
+        dsn: `${process.env.REACT_APP_SENTRY_DSN}`,
+        release: version
+    })
 ReactDOM.render(<RMApp />, document.getElementById('root'))
 serviceWorker.register()
