@@ -16,21 +16,21 @@ import { theme } from 'styled-tools'
 const Image = SANStyled.img`
     width: 450px;
     margin-bottom: ${theme('space.xxl')};
-    margin-top: -65px;
+    margin-top: -30px;
 `
 
 const OnBoardingTop = () => {
     const { t } = useTranslation('sanarflix')
     return (
-        <SANLayoutContainer pt={8}>
+        <SANLayoutContainer pt={8} pb={7}>
             <SANRow gutter={16}>
                 <SANCol xs={24} md={12}>
                     <SANTypography
-                        fontSize={{ md: 5 }}
+                        fontSize={{ md: 6 }}
                         color='grey.7'
                         strong
                         textAlign='left'
-                        style={{marginBottom: 10}}
+                        mb={10}
                     >
                         {t('exams.onBoarding.first.title')}
                     </SANTypography>
@@ -38,7 +38,7 @@ const OnBoardingTop = () => {
                         fontSize={{ md: 2 }}
                         color='grey.7'
                         textAlign='left'
-                        style={{marginBottom: 10}}
+                        mb={10}
                     >
                         {t('exams.onBoarding.first.text')}
                     </SANTypography>
@@ -46,6 +46,7 @@ const OnBoardingTop = () => {
                         fontSize={{ md: 2 }}
                         color='#600F30'
                         textAlign='left'
+                        mb={20}
                     >
                         {t('exams.onBoarding.first.bottom')}
                     </SANTypography>
