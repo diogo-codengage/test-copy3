@@ -1,13 +1,11 @@
 {
     "name": "sanar-ui",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "main": "dist/bundle.js",
     "style": "dist/bundle.less",
     "scripts": {
-        "release-major": "yarn version --major --no-git-tag-version",
-        "release-minor": "yarn version --minor --no-git-tag-version",
-        "release-patch": "yarn version --patch --no-git-tag-version",
+        "release": "yarn version --no-git-tag-version",
         "build": "cross-env BABEL_ENV=build babel src -d dist --source-maps --delete-dir-on-start --config-file ./babel.config.js --no-comments --copy-files",
         "build:storybook": "build-storybook",
         "cli": "hygen sanar-ui",

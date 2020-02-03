@@ -1,7 +1,7 @@
 {
     "name": "sanar-rm-questions",
     "homepage": "/questoes/",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "private": true,
     "dependencies": {
         "@types/react-dom": "^16.8.4",
@@ -11,9 +11,7 @@
         "typescript": "^3.5.1"
     },
     "scripts": {
-        "release-major": "yarn version --major --no-git-tag-version",
-        "release-minor": "yarn version --minor --no-git-tag-version",
-        "release-patch": "yarn version --patch --no-git-tag-version",
+        "release": "yarn version --no-git-tag-version",
         "start": "react-app-rewired start",
         "build": "react-app-rewired build",
         "lint": "eslint --max-warnings 0 --ext js,ts,tsx src",
