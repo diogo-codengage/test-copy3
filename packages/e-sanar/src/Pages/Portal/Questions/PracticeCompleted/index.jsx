@@ -14,7 +14,6 @@ const SANPracticeCompletedPage = ({ history }) => {
     const {
         calcPercent,
         totalAnsweredQuestions,
-        stopwatchRef,
         reset,
         time
     } = useQuestionsContext()
