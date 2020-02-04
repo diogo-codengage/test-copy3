@@ -152,7 +152,7 @@ const SANClassPlaylist = ({ history }) => {
         return (
             <ESPlaylist
                 loading={loading}
-                items={playlist}
+                items={playlist.map(item => ({ ...item, hasType: true }))}
                 currentIndex={currentResource && currentResource.index}
                 goToResource={goToResource}
             />
