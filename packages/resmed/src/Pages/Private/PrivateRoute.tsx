@@ -21,7 +21,6 @@ import { segmentTrack } from 'Config/Segment/track'
 
 import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 import RMSplashLoader from 'Components/SplashLoader'
-import RMModalInactivePacks from 'Components/ModalInactivePacks'
 
 import { RMComplementaryRegisterModal } from 'Components/ComplementaryRegister'
 
