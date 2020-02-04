@@ -47,7 +47,7 @@ export const GET_QUESTIONS = gql`
                 images {
                     data {
                         id
-                        sized_images {
+                        sized_images: sizedImages {
                             id
                             small {
                                 id
