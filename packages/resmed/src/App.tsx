@@ -34,8 +34,17 @@ const RMApp = memo<RouteComponentProps>(({ history, location }) => {
                     setMe(undefined)
                     window.localStorage.clear()
                 } else {
-                    const { pathname } = location
-                    pathname.includes('auth/entrar') && history.push('/inicio')
+                    const params = new URLSearchParams(location.search)
+                    if (
+                        !!params.get('idToken') &&
+                        !!params.get('refreshToken')
+                    ) {
+                        cognitoUser.signOut()
+                    } else {
+                        const { pathname } = location
+                        pathname.includes('auth/entrar') &&
+                            history.push('/inicio')
+                    }
                 }
                 setLoading(false)
             })
