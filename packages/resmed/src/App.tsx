@@ -28,7 +28,6 @@ const RMApp = memo<RouteComponentProps>(({ history, location }) => {
     useEffect(() => {
         const cognitoUser = getCognitoUser()
 
-        // console.log('cognitoUser', cognitoUser)
         if (!!cognitoUser) {
             cognitoUser.getSession((_: any, session: CognitoUserSession) => {
                 if (!session) {
@@ -36,7 +35,6 @@ const RMApp = memo<RouteComponentProps>(({ history, location }) => {
                     window.localStorage.clear()
                 } else {
                     const params = new URLSearchParams(location.search)
-                    // console.log('paramsRMApp', params)
                     if (
                         !!params.get('idToken') &&
                         !!params.get('refreshToken')
