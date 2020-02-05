@@ -1,19 +1,18 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
-
-import ESTabs, { ESTabPane } from 'sanar-ui/dist/Components/Atoms/Tabs'
 
 import SANCourseHeader from './Header'
-import SANCourseTabGeneral from './TabGeneral'
 import SANCourseTabContent from './TabContent'
 
-const SANCoursePage = () => {
-    const { t } = useTranslation('esanar')
-
-    return (
-        <div className='course'>
-            <SANCourseHeader />
-            <ESTabs center defaultActiveKey='1' tabBarGutter={0}>
+const SANCoursePage = () => (
+    <div className='course'>
+        <SANCourseHeader />
+        <SANCourseTabContent />
+        {/* 
+                Diogo Biz - 05/02/2020
+                Removido tab de visão geral e movido seção de professores para tab de conteudo.
+                A tab de pergutnas e respostas ja estava oculta desde o inicio, pois a feature nunca foi finalizada.
+            */}
+        {/* <ESTabs center defaultActiveKey='1' tabBarGutter={0}>
                 <ESTabPane
                     data-testid='san-portal__tab-content'
                     tab={t('courseDetails.tabContent.title')}
@@ -28,12 +27,11 @@ const SANCoursePage = () => {
                 >
                     <SANCourseTabGeneral />
                 </ESTabPane>
-                {/*FIXME: <ESTabPane tab={t('courseDetails.tabQuestions.title')} key='3'>
+                <ESTabPane tab={t('courseDetails.tabQuestions.title')} key='3'>
                     <SANCourseTabQuestions />
-                </ESTabPane> */}
-            </ESTabs>
-        </div>
-    )
-}
+                </ESTabPane>
+            </ESTabs> */}
+    </div>
+)
 
 export default SANCoursePage
