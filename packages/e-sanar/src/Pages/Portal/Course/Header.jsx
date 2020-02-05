@@ -118,13 +118,9 @@ const SANCourseHeader = () => {
                                         variant='outlined'
                                         icon='download'
                                         size='small'
-                                        href={certificate && certificate.link}
+                                        href={certificate}
                                         target='_blank'
-                                        disabled={
-                                            certificate && certificate.available
-                                                ? false
-                                                : true
-                                        }
+                                        disabled={!certificate}
                                     >
                                         {t('courseDetails.certified')}
                                     </ESButton>
