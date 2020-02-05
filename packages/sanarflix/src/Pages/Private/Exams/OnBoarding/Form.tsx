@@ -33,6 +33,17 @@ const OnBoardingForm = ({ form }) => {
     const [institutions, setInstitutions] = useState<IInstitution[]>([])
     const [semesters, setSemesters] = useState<string[]>([])
     const [otherMethodology, setOtherMethodology] = useState<boolean>(false)
+    const [disable, setDisable] = useState<boolean>(true)
+
+    useEffect (() => {
+        const disableSubmit = () => {
+            const values = form.getFieldsValue()
+            Object.keys(values).length === 0
+                ? setDisable(true)
+                : setDisable(Object.keys(values).some(field => values[field] === undefined))
+        }
+        disableSubmit()
+    }, [form])
 
     useEffect(() => {
         const createSemestersList = () => {
@@ -72,6 +83,13 @@ const OnBoardingForm = ({ form }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    useEffect(() => {
+        const pageOpened = () => {
+            window.analytics.track('ExamsOnBoardingPageViewed')
+        }
+        pageOpened()
+    }, [])
+
     const methodologies = [
         'Tradicional',
         'PBL - Problem Based Learning',
@@ -86,6 +104,7 @@ const OnBoardingForm = ({ form }) => {
         setLoading(old => ({ ...old, submit: true }))
         try {
             await form.validateFields()
+            window.analytics.track('ExamsOnBoardingFormSubmitted')
             //TODO send request
         } catch (e) {
             if (!!e.message) {
@@ -113,7 +132,7 @@ const OnBoardingForm = ({ form }) => {
             backgroundColor='#FFE6F0'
             py={{ lg: 5, _: 'md' }}
             px={{ lg: 5, _: 'md' }}
-            m={{ _: '0 -16px -60px -16px', lg: 0 }}
+            mb={5}
         >
             <SANDivider
                 display={{ lg: 'none', _: 'block' }}
@@ -209,6 +228,7 @@ const OnBoardingForm = ({ form }) => {
                 </SANFormItem>
                 {otherMethodology ? (
                     <SANFormItem
+                        mb={2}
                         name='new-methodology'
                         rules={[
                             {
@@ -241,6 +261,7 @@ const OnBoardingForm = ({ form }) => {
                         loading={loading.submit}
                         blockOnlyMobile
                         style={{ width: '100%' }}
+                        disabled={disable}
                     >
                         {t('exams.onBoarding.form.button')}
                     </SANButton>
