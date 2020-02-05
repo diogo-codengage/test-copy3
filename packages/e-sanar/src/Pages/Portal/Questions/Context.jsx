@@ -36,6 +36,7 @@ const QuestionsProvider = ({ children, location: { pathname }, history }) => {
     const [totalQuestions, setTotalQuestions] = useState(0)
     const [currentIndex, setCurrentIndex] = useState(0)
     const [loadedItems, setLoadedItems] = useState(0)
+    const [time, setTime] = useState(0)
     const [error, setError] = useState(false)
 
     const totalAnsweredQuestions = useMemo(
@@ -157,7 +158,9 @@ const QuestionsProvider = ({ children, location: { pathname }, history }) => {
         setQuestions,
         firstLoad,
         fetchQuestions,
-        error
+        error,
+        time,
+        setTime
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>
