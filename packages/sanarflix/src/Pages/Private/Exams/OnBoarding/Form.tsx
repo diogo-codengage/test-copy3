@@ -17,20 +17,23 @@ import {
 } from '@sanar/components'
 
 import {
-    GET_INSTITUTIONS,
-    IInstitutionsQuery,
-    IInstitution
-} from 'Apollo/Exams/Queries/institutions'
+    GET_MED_UNIVERSITIES,
+    IMedUniversityQuery,
+    IMedUniversity
+} from 'Apollo/Exams/Queries/medUniversities'
+import {
+    SAVE_USER_MED_UNIVERSITY_MUTATION
+} from 'Apollo/Exams/Mutations/medUniversity'
 
 const OnBoardingForm = ({ form }) => {
     const client = useApolloClient()
     const { t } = useTranslation('sanarflix')
     const createSnackbar = useSnackbarContext()
     const [loading, setLoading] = useState({
-        institutions: false,
+        medUniversities: false,
         submit: false,
     })
-    const [institutions, setInstitutions] = useState<IInstitution[]>([])
+    const [medUniversities, setMedUniversities] = useState<IMedUniversity[]>([])
     const [semesters, setSemesters] = useState<string[]>([])
     const [otherMethodology, setOtherMethodology] = useState<boolean>(false)
     const [disable, setDisable] = useState<boolean>(true)
@@ -61,25 +64,25 @@ const OnBoardingForm = ({ form }) => {
     }, [])
 
     useEffect(() => {
-        const fetchInstitutions = async () => {
-            setLoading(old => ({ ...old, institutions: true }))
+        const fetchMedUniversities = async () => {
+            setLoading(old => ({ ...old, medUniversities: true }))
             try {
                 const {
-                    data: { institutions }
-                } = await client.query<IInstitutionsQuery>({
-                    query: GET_INSTITUTIONS
+                    data: { medUniversities }
+                } = await client.query<IMedUniversityQuery>({
+                    query: GET_MED_UNIVERSITIES
                 })
-                setInstitutions(
-                    institutions.map(v => ({
+                setMedUniversities(
+                    medUniversities.map(v => ({
                         ...v,
                         label: v.label.toLowerCase()
                     }))
                 )
             } catch {
             }
-            setLoading(old => ({ ...old, institutions: false }))
+            setLoading(old => ({ ...old, medUniversities: false }))
         }
-        fetchInstitutions()
+        fetchMedUniversities()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -90,12 +93,12 @@ const OnBoardingForm = ({ form }) => {
         pageOpened()
     }, [])
 
-    const methodologies = [
+    const methodologies = Object.freeze([
         'Tradicional',
         'PBL - Problem Based Learning',
         'TBL - Team Based Learning',
         'Outra'
-    ]
+    ])
 
     const onChangeMethodology = (value) => setOtherMethodology(value === 'Outra')
 
@@ -104,8 +107,24 @@ const OnBoardingForm = ({ form }) => {
         setLoading(old => ({ ...old, submit: true }))
         try {
             await form.validateFields()
+            const {
+                medUniversityId,
+                ingressSemester,
+                methodology,
+                newMethodology
+            } = form.getFieldsValue()
+            console.log(medUniversityId, ingressSemester, methodology, newMethodology)
+
+            await client.mutate({
+                mutation: SAVE_USER_MED_UNIVERSITY_MUTATION,
+                variables: {
+                    medUniversityId,
+                    ingressSemester,
+                    methodology: newMethodology ? newMethodology : methodology
+                }
+            })
+
             window.analytics.track('ExamsOnBoardingFormSubmitted')
-            //TODO send request
         } catch (e) {
             if (!!e.message) {
                 createSnackbar({
@@ -134,15 +153,9 @@ const OnBoardingForm = ({ form }) => {
             px={{ lg: 5, _: 'md' }}
             mb={5}
         >
-            <SANDivider
-                display={{ lg: 'none', _: 'block' }}
-                bg='grey.2'
-                mb='xl'
-                mx='-16px'
-            />
             <SANForm form={form} onSubmit={onSubmit}>
                 <SANFormItem
-                    name='institution'
+                    name='medUniversityId'
                     rules={[
                         {
                             required: true,
@@ -156,15 +169,15 @@ const OnBoardingForm = ({ form }) => {
                     <SANSelect
                         showSearch
                         optionFilterProp="children"
-                        loading={loading.institutions}
+                        loading={loading.medUniversities}
                         size='large'
                         placeholder={createLabel('medicine-box', 'exams.onBoarding.form.selectCollegeLabel')}
                     >
-                        {institutions &&
-                        institutions.map((item, index) => (
+                        {medUniversities &&
+                        medUniversities.map((item, index) => (
                             <SANSelectOption
                                 key={index}
-                                value={item.value}
+                                value={item.id}
                             >
                                 {item.label}
                             </SANSelectOption>
@@ -172,7 +185,7 @@ const OnBoardingForm = ({ form }) => {
                     </SANSelect>
                 </SANFormItem>
                 <SANFormItem
-                    name='semester'
+                    name='ingressSemester'
                     rules={[
                         {
                             required: true,
@@ -229,7 +242,7 @@ const OnBoardingForm = ({ form }) => {
                 {otherMethodology ? (
                     <SANFormItem
                         mb={2}
-                        name='new-methodology'
+                        name='newMethodology'
                         rules={[
                             {
                                 required: true,

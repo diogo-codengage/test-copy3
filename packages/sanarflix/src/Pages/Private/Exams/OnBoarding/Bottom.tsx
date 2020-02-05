@@ -17,6 +17,11 @@ const Image = SANStyled.img`
     width: 450px;
     margin-bottom: ${theme('space.xxl')};
     margin-top: -10px;
+    
+    ${theme('mediaQueries.down.md')} {
+        width: 330px;
+        margin-top: 0;
+    }
 `
 
 const OnBoardingBottom = () => {

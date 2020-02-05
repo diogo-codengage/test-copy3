@@ -27,6 +27,17 @@ export interface ICreditCard {
     card_cvv: number
 }
 
+export interface IMedUniversity {
+    id: string
+    name: string
+}
+
+export interface IUserMedUniversity {
+    medUniversity: IMedUniversity
+    ingressSemester: string
+    methodology: string
+}
+
 export interface IMe {
     id: string
     name: string
@@ -40,7 +51,19 @@ export interface IMe {
     address: IAddress
     plan: IPlan
     card: ICreditCard
+    userMedUniversity: IMedUniversity
 }
+
+// TODO add those lines on the query below:
+
+// userMedUniversity {
+//     medUniversity {
+//         id
+//         name
+//     }
+//     ingressSemester
+//     methodology
+// }
 
 export const GET_ME = gql`
     {

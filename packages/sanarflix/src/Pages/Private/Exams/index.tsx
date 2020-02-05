@@ -9,9 +9,13 @@ import {
 
 import { events } from 'Config/Segment'
 import OnBoarding from './OnBoarding'
+import { useAuthContext } from '../../../Hooks/auth'
 
 const FLXExams = ({ history }) => {
     const { t } = useTranslation('sanarflix')
+    const { me } = useAuthContext()
+
+    const showOnBoarding = !me.userMedUniversity || Object.keys(me.userMedUniversity).length === 0
 
     useEffect(() => {
         window.analytics.page(
@@ -29,7 +33,9 @@ const FLXExams = ({ history }) => {
                     subtitle: t('exams.subtitle')
                 }}
             />
-            <OnBoarding />
+            { showOnBoarding && (
+                <OnBoarding />
+            )}
         </SANBox>
     )
 }
