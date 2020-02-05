@@ -1,6 +1,6 @@
 interface IdTokenPayload {
-    aud: string,
-    sub: string,
+    aud: string
+    sub: string
 }
 
 const getIdTokenPayload = (idToken: string): IdTokenPayload => {
@@ -10,26 +10,44 @@ const getIdTokenPayload = (idToken: string): IdTokenPayload => {
 }
 
 interface IAutoLoginParams {
-    idToken: string,
+    idToken: string
     refreshToken: string
 }
 
-export const autoLoginSetToken = ({ idToken, refreshToken }: IAutoLoginParams) => {
+export const autoLoginSetToken = ({
+    idToken,
+    refreshToken
+}: IAutoLoginParams) => {
     const idTokenPayload = getIdTokenPayload(idToken)
 
-    localStorage.setItem(`CognitoIdentityServiceProvider.${idTokenPayload.aud}.LastAuthUser`, idTokenPayload.sub)
-    localStorage.setItem(`CognitoIdentityServiceProvider.${idTokenPayload.aud}.${idTokenPayload.sub}.idToken`, idToken)
-    localStorage.setItem(`CognitoIdentityServiceProvider.${idTokenPayload.aud}.${idTokenPayload.sub}.refreshToken`, refreshToken)
+    localStorage.setItem(
+        `CognitoIdentityServiceProvider.${idTokenPayload.aud}.LastAuthUser`,
+        idTokenPayload.sub
+    )
+    localStorage.setItem(
+        `CognitoIdentityServiceProvider.${idTokenPayload.aud}.${idTokenPayload.sub}.idToken`,
+        idToken
+    )
+    localStorage.setItem(
+        `CognitoIdentityServiceProvider.${idTokenPayload.aud}.${idTokenPayload.sub}.refreshToken`,
+        refreshToken
+    )
 }
 
-export const trySetTokenAutoLoginFromLocationSearch = (locationSearch) => {
-    const params: any = new URLSearchParams(locationSearch)
-    const idToken = params.get('idToken')
-    const refreshToken = params.get('refreshToken')
-    if (idToken && refreshToken) {
-        localStorage.clear()
-        autoLoginSetToken({ idToken, refreshToken })
-    }
+export const trySetTokenAutoLoginFromLocationSearch = params => {
+    return new Promise((resolve, reject) => {
+        try {
+            const idToken = params.get('idToken')
+            const refreshToken = params.get('refreshToken')
+            if (idToken && refreshToken) {
+                // console.log('localStorage-if', localStorage)
+                localStorage.clear()
+                // console.log('localStorage-after-clear', localStorage)
+                autoLoginSetToken({ idToken, refreshToken })
+            }
+            resolve()
+        } catch (e) {
+            reject(e)
+        }
+    })
 }
-
-

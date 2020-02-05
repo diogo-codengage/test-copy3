@@ -29,8 +29,6 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history, location }) => {
     const [showModalTerms, setShowModalTerms] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
 
-    trySetTokenAutoLoginFromLocationSearch(location.search)
-
     const handleTrack = (event: IEvents, attrs?: IOptions) => {
         const data = {
             'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
