@@ -20,8 +20,7 @@ import {
     SANLayoutContainer,
     useSnackbarContext,
     SANEvaIcon,
-    SANButton,
-    ISANBoxProps
+    SANButton
 } from '@sanar/components'
 import { IEvent } from '@sanar/components/dist/Components/Organisms/BigCalendar'
 import { getUTCDate } from '@sanar/utils/dist/Date'
@@ -36,7 +35,7 @@ import {
     UPDATE_APPOINTMENT,
     IUpdateAppointment
 } from 'Apollo/Schedule/Mutations/update-appointment'
-import { RESET_SCHEDULE, IResetSchedule } from 'Apollo/Schedule/Mutations/reset'
+import { RESET_SCHEDULE } from 'Apollo/Schedule/Mutations/reset'
 
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 
@@ -76,7 +75,7 @@ const Suggestion = ({ onChange, checked, loading, ...props }) => {
     )
 }
 
-const boxProps: ISANBoxProps = {
+const boxProps = {
     py: { md: '8', _: 'xl' },
     display: 'flex',
     flexDirection: 'column'
@@ -127,7 +126,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     } = useAuthContext()
     const { fetchSuggestedClass } = useLayoutContext()
     const createSnackbar = useSnackbarContext()
-    const calendarRef = useRef<typeof SANBigCalendar>()
+    const calendarRef = useRef<SANBigCalendar>()
     const client = useApolloClient()
     const {
         modalSchedule,
@@ -160,7 +159,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
 
     const pdfDownload = async () => {
         setDownloading(true)
-
+        
         const startDate = format(currentRange.currentMonth, 'YYYY-MM-DD')
         const filename = `Cronograma-${t(
             `schedule.monthAbbr.${getMonth(currentRange.currentMonth)}`
@@ -170,16 +169,9 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
         fetch(url, { method: 'GET' }).then(response => {
             setDownloading(false)
             if (response.status === 201) {
-                // Edge fix download
-                if (navigator.msSaveOrOpenBlob) {
-                    response.blob().then(blob => {
-                        navigator.msSaveOrOpenBlob(blob, `${filename}.pdf`)
-                    })
-                } else {
-                    const link = document.createElement('a')
-                    link.href = url
-                    link.click()
-                }
+                const link = document.createElement('a')
+                link.href = url
+                link.click()
             } else {
                 createSnackbar({
                     message: t('schedule.pdfDownloadFail'),
@@ -224,7 +216,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
             }))
             const {
                 data: { resetSchedule }
-            } = await client.mutate<IResetSchedule>({
+            } = await client.mutate<any>({
                 mutation: RESET_SCHEDULE,
                 variables: {
                     start: format(currentRange.start, 'YYYY-MM-DD'),
@@ -354,7 +346,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                 end: format(new Date(schedule.interval.end), 'YYYY-MM-DD')
             }
         } else {
-            return undefined
+            return null
         }
     }, [schedule.interval])
 

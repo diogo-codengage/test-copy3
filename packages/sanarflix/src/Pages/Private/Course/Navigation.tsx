@@ -26,9 +26,7 @@ const resources = {
     Quiz: 'questoes'
 }
 
-const FLXCourseNavigation: React.FC<RouteComponentProps<{
-    courseId: string
-}>> = ({
+const FLXCourseNavigation: React.FC<RouteComponentProps<{ courseId: string }>> = ({
     history,
     match: {
         params: { courseId }
@@ -89,7 +87,7 @@ const FLXCourseNavigation: React.FC<RouteComponentProps<{
             pb={8}
             pt={8}
             borderBottom='1px solid'
-            borderColor='grey.0'
+            borderBottomColor='grey.0'
             backgroundColor='grey.0'
         >
             <SANLayoutContainer>

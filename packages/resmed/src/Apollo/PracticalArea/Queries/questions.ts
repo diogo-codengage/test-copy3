@@ -98,6 +98,7 @@ export const GET_QUESTIONS = gql`
                     data {
                         id
                         sized_images: sizedImages {
+                            id
                             small {
                                 url
                             }

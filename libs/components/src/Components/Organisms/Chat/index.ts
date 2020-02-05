@@ -1,2 +1,6 @@
-export { default as SANChat, ISANChatProps, ISANChatRef } from './Chat'
-export { ISANChatItemProps, SANChatItem } from './Item'
+export {
+    default as SANChat,
+    ISANChatProps,
+    ISANChatItemProps,
+    SANChatItem
+} from './Chat'

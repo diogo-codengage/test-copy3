@@ -93,7 +93,6 @@ const RMPrevious = memo<RouteComponentProps>(({ history }) => {
                 }
             }}
             loaderProps={{ minHeight: '200px', flex: true }}
-            errorProps={{ mt: 'xl', ImageProps: { height: 150 } }}
         >
             {({
                 data: { lives },
@@ -109,8 +108,8 @@ const RMPrevious = memo<RouteComponentProps>(({ history }) => {
                         <SANLayoutContainer>
                             <SANBox
                                 display='flex'
-                                alignItems='center'
-                                justifyContent='space-between'
+                                alignItem='center'
+                                justifyConten='space-between'
                                 mb='md'
                             >
                                 <SANBox flex='1'>

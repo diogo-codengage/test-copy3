@@ -23,16 +23,12 @@ const Context = createContext<RMMainContext>({} as RMMainContext)
 export const useMainContext = () => useContext(Context)
 
 const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
-    const { loading, error, networkStatus } = useQuery<IActiveCourseQuery>(
-        GET_ACTIVE_COURSE,
-        {
-            notifyOnNetworkStatusChange: true,
-            onCompleted(response) {
-                if (!!response && !!response.activeCourse)
-                    setActiveCourse(response.activeCourse)
-            }
+    const { loading, error } = useQuery<IActiveCourseQuery>(GET_ACTIVE_COURSE, {
+        onCompleted(response) {
+            if (!!response && !!response.activeCourse)
+                setActiveCourse(response.activeCourse)
         }
-    )
+    })
 
     const { setActiveCourse, me, activeCourse } = useAuthContext()
 
@@ -51,7 +47,7 @@ const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
 
     const value = {
         handleTrack,
-        errorLoadActiveCourse: !!error || networkStatus === 8
+        errorLoadActiveCourse: !!error
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

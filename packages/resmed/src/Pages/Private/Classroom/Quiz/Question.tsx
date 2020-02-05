@@ -20,7 +20,6 @@ import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
 import RMCollection from 'Components/Collection'
 import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
-import { SKIP_MUTATION } from 'Apollo/Classroom/Mutations/skip'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomQuizContext } from './Context'
 import { useClassroomContext } from '../Context'
@@ -60,11 +59,11 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
             questionsMap,
             setQuestionsMap
         } = useClassroomQuizContext()
-        const { handleProgress, setClickerName, setHasQuestions } = useClassroomContext()
+        const { handleProgress, setClickerName } = useClassroomContext()
         const { params: paramsLayout } = useLayoutContext()
         const [visible, setVisible] = useState(false)
         const [loading, setLoading] = useState(false)
-        const [skipped, setSkipped] = useState(0)
+        const [skipped, seSkipped] = useState(0)
         const [responses, setResponses] = useState<any[]>([])
         const { handleTrack } = useMainContext()
 
@@ -86,26 +85,14 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
             }
         }
 
-        const handleJump = async () => {
-            setHasQuestions(true)
-            setLoading(true)
-            try {
-                await client.mutate({
-                    mutation: SKIP_MUTATION,
-                    variables: {
-                        questionId: questions[questionIndex].id
-                    }
-                })
-            } catch {}
-            setSkipped(old => old + 1)
-            setLoading(false)
+        const handleJump = () => {
+            seSkipped(old => old + 1)
             goToNext()
         }
 
         const handleNext = () => goToNext()
 
         const handleConfirm = async alternativeId => {
-            setHasQuestions(true)
             setLoading(true)
             const current = Number(questionIndex) + 1 - skipped
             handleProgress({
@@ -125,7 +112,7 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                             stats
                         }
                     }
-                } = await client.mutate({
+                } = await client.mutate<any>({
                     mutation: ANSWER_MUTATION,
                     variables: {
                         questionId: questions[questionIndex].id,
