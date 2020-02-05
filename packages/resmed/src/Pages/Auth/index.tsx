@@ -17,16 +17,13 @@ const RMAuth = memo<RouteComponentProps>(({ match: { url }, location }) => {
         isValid: false,
         loading: true
     })
-    const params = new URLSearchParams(location.search)
+    const params = !!location.search && new URLSearchParams(location.search)
 
     useEffect(() => {
         const verifyRedirecting = async () => {
-            // console.log('login')
-            await trySetTokenAutoLoginFromLocationSearch(params)
+            !!params && (await trySetTokenAutoLoginFromLocationSearch(params))
 
-            // console.log('localStorage-autoLoginSetToken', localStorage)
             const cognitoUser = getCognitoUser()
-            // console.log('logincognitoUser', cognitoUser)
 
             if (!!cognitoUser) {
                 cognitoUser.getSession(async (_, session) => {

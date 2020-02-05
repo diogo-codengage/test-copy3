@@ -40,9 +40,7 @@ export const trySetTokenAutoLoginFromLocationSearch = params => {
             const idToken = params.get('idToken')
             const refreshToken = params.get('refreshToken')
             if (idToken && refreshToken) {
-                // console.log('localStorage-if', localStorage)
                 localStorage.clear()
-                // console.log('localStorage-after-clear', localStorage)
                 autoLoginSetToken({ idToken, refreshToken })
             }
             resolve()
