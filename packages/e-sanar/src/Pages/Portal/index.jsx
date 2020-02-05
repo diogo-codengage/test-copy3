@@ -11,7 +11,6 @@ import { useApolloContext } from 'Hooks/apollo'
 import SANPortalLayout from './Layout'
 import { SANPortalProvider } from './Context'
 import ESDefaultError from '../Portal/Errors/Default'
-import SANBookmarkRouter from './Bookmark'
 
 const SANCoursePage = React.lazy(() => import('./Course'))
 const SANQuestionsPage = React.lazy(() => import('./Questions'))
@@ -69,10 +68,14 @@ const SANPortalRoutes = ({ match: { url } }) => {
                                                 path={`${url}/banco-questoes`}
                                                 component={SANQuestionsPage}
                                             />
-                                            <Route
+                                            {/*
+                                                Diogo Biz - 05/02/2020 FD-1024
+                                                Remover favoritos
+                                            */}
+                                            {/* <Route
                                                 path={`${url}/favoritos`}
                                                 component={SANBookmarkRouter}
-                                            />
+                                            /> */}
                                             <Route
                                                 path={`${url}/minha-conta`}
                                                 component={

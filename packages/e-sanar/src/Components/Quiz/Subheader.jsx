@@ -13,18 +13,7 @@ import { ESRow, ESCol } from 'sanar-ui/dist/Components/Atoms/Grid'
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
 const SANSubheader = forwardRef(
-    (
-        {
-            total,
-            index,
-            questions,
-            mock,
-            stopwatch,
-            bookmarked,
-            handleBookmark
-        },
-        ref
-    ) => {
+    ({ total, index, questions, mock, stopwatch }, ref) => {
         const { t } = useTranslation('esanar')
         const [visible, setVisible] = useState(false)
 
@@ -35,7 +24,6 @@ const SANSubheader = forwardRef(
                 <ESRow type='flex' justify='space-between' className='w-100'>
                     <ESCol
                         xs={24}
-                        // sm={7}
                         md={8}
                         className='video-quiz__subheader--left'
                     >
@@ -48,7 +36,6 @@ const SANSubheader = forwardRef(
                     </ESCol>
                     <ESCol
                         xs={24}
-                        // sm={8}
                         md={8}
                         className='video-quiz__subheader--center'
                     >
@@ -78,11 +65,14 @@ const SANSubheader = forwardRef(
                     </ESCol>
                     <ESCol
                         xs={24}
-                        // sm={9}
                         md={8}
                         className='video-quiz__subheader--right'
                     >
-                        <ESButton
+                        {/*
+                            Diogo Biz - 05/02/2020 FD-1024
+                            Remover favoritos
+                        */}
+                        {/* <ESButton
                             size='small'
                             variant='text'
                             color='white'
@@ -102,7 +92,7 @@ const SANSubheader = forwardRef(
                                 />
                             )}
                             {t('classroom.favoriteQuestion')}
-                        </ESButton>
+                        </ESButton> */}
                         <ESButton
                             circle
                             size='small'
