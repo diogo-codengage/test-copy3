@@ -64,17 +64,12 @@ const SANQuestionsFilter = ({ form, history }) => {
 
     return (
         <ESForm form={form} onSubmit={handleSubmit}>
-            <SANQuestionsFilterHeader
-                goHistory={() => history.push('./historico')}
-            />
+            <SANQuestionsFilterHeader />
             <SANQuestionsFilterSelects />
         </ESForm>
     )
 }
 
-const enhance = compose(
-    withESForm,
-    withRouter
-)
+const enhance = compose(withESForm, withRouter)
 
 export default enhance(SANQuestionsFilter)
