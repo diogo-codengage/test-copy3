@@ -3,6 +3,7 @@ import SANCourseContinue from './Continue'
 import SANCourseModules from './Modules'
 import SANLives from './Lives'
 import SANNextLives from './NextLives'
+import SANProfessors from './Professors'
 
 const SANCourseTabContent = () => (
     <div className='san-tab-course-content'>
@@ -10,6 +11,7 @@ const SANCourseTabContent = () => (
         <SANCourseModules />
         <SANLives />
         <SANNextLives />
+        <SANProfessors />
     </div>
 )
 
