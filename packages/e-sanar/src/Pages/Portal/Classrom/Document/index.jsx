@@ -22,12 +22,7 @@ const SANClassRoomDocument = () => {
         onNavigation,
         state: { currentModule }
     } = usePortalContext()
-    const {
-        handleBookmark,
-        bookmarked,
-        handleProgress,
-        openMenu
-    } = useClassroomContext()
+    const { handleProgress, openMenu } = useClassroomContext()
 
     useEffect(() => {
         if (currentResource) {
@@ -51,8 +46,6 @@ const SANClassRoomDocument = () => {
             ) : (
                 <div className='classroom__document'>
                     <ESLessonHeader
-                        bookmarked={bookmarked}
-                        onBookmarked={handleBookmark}
                         leftChildren={
                             <ESLessonHeaderLeft
                                 title={currentResource.document.title}
@@ -73,8 +66,6 @@ const SANClassRoomDocument = () => {
                                 onPrev={onNavigation('prev')}
                                 onNext={onNavigation('next')}
                                 bookmarkLabel={t('classroom.bookmarkDocument')}
-                                bookmarked={bookmarked}
-                                onBookmarked={handleBookmark}
                             />
                         }
                     />
