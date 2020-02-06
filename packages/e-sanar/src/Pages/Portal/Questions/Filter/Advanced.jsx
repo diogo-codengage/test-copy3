@@ -5,19 +5,13 @@ import classNames from 'classnames'
 
 import { ESCol, ESRow } from 'sanar-ui/dist/Components/Atoms/Grid'
 import ESSwitch from 'sanar-ui/dist/Components/Atoms/Switch'
-import ESCheckbox, {
-    ESCheckboxGroup
-} from 'sanar-ui/dist/Components/Atoms/Checkbox'
 import ESRadio, { ESRadioGroup } from 'sanar-ui/dist/Components/Atoms/Radio'
 import ESCollapse, {
     ESCollapsePanel
 } from 'sanar-ui/dist/Components/Atoms/Collapse'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
-import ESDatePicker from 'sanar-ui/dist/Components/Atoms/DatePicker'
 import { ESFormItem } from 'sanar-ui/dist/Components/Molecules/Form'
-
-import useOnClickOutside from 'sanar-ui/dist/Hooks/useOnClickOutside'
 
 import { useQuestionsContext } from '../Context'
 
@@ -87,34 +81,6 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
                                 </ESFormItem>
                             </span>
                         </ESCol>
-                        <ESCol xs={24} lg={10}>
-                            <ESFormItem
-                                name='difficulty'
-                                label={t(`${intlPath}difficulty.label`)}
-                                className='no-margin'
-                                initialValue={formState && formState.difficulty}
-                            >
-                                <ESCheckboxGroup
-                                    className='checkbox disabled'
-                                    disabled
-                                >
-                                    <ESCheckbox value='easy'>
-                                        {t(
-                                            `${intlPath}difficulty.options.easy`
-                                        )}
-                                    </ESCheckbox>
-                                    <ESCheckbox value='intermediate'>
-                                        {t(
-                                            `${intlPath}difficulty.options.intermediate`
-                                        )}
-                                    </ESCheckbox>
-                                    <ESCheckbox value='hard'>
-                                        {t(
-                                            `${intlPath}difficulty.options.hard`
-                                        )}
-                                    </ESCheckbox>
-                                </ESCheckboxGroup>
-                            </ESFormItem>
                         </ESCol>
                     </ESRow>
                     <ESRow gutter={44}>
