@@ -108,8 +108,6 @@ const style = {
     overflow: 'hidden'
 }
 
-const youtubeId = process.env.REACT_APP_YOUTUBE_ID
-
 interface IRMLiveProps {
     hasLive?: boolean
     loading?: boolean
