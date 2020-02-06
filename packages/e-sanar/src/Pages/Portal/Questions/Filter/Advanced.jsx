@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 
 import { ESCol, ESRow } from 'sanar-ui/dist/Components/Atoms/Grid'
-import ESSelect, { ESOption } from 'sanar-ui/dist/Components/Atoms/Select'
 import ESSwitch from 'sanar-ui/dist/Components/Atoms/Switch'
 import ESCheckbox, {
     ESCheckboxGroup
@@ -87,23 +86,6 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
                                     />
                                 </ESFormItem>
                             </span>
-                        </ESCol>
-                        <ESCol xs={24} lg={7}>
-                            <ESFormItem
-                                name='state'
-                                label={t(`${intlPath}state.label`)}
-                            >
-                                <ESSelect
-                                    disabled
-                                    placeholder={t(
-                                        `${intlPath}state.placeholder`
-                                    )}
-                                    showArrow
-                                    size='large'
-                                >
-                                    <ESOption value='jack'>Jack</ESOption>
-                                </ESSelect>
-                            </ESFormItem>
                         </ESCol>
                         <ESCol xs={24} lg={10}>
                             <ESFormItem
