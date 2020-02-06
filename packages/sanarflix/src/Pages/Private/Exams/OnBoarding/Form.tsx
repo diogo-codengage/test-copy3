@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useApolloClient } from '@apollo/react-hooks'
 
-import ESIcon from 'sanar-ui/dist/Components/Atoms/Icon'
 import {
     SANForm,
     SANFormItem,
@@ -12,7 +11,7 @@ import {
     SANBox,
     SANButton,
     useSnackbarContext,
-    SANDivider,
+    SANEvaIcon,
     withSANForm,
 } from '@sanar/components'
 
@@ -139,8 +138,9 @@ const OnBoardingForm = ({ form }) => {
 
     const createLabel = (icon: string, label: string) => {
         return (
-            <span>
-                <ESIcon type={icon} style={{ marginRight: 3 }}/>{t(label)}
+            <span style={{ display: 'flex' }}>
+                <SANEvaIcon name={icon} style={{ marginRight: '6px' }}/>
+                {t(label)}
             </span>
         )
     }
@@ -171,7 +171,7 @@ const OnBoardingForm = ({ form }) => {
                         optionFilterProp="children"
                         loading={loading.medUniversities}
                         size='large'
-                        placeholder={createLabel('medicine-box', 'exams.onBoarding.form.selectCollegeLabel')}
+                        placeholder={createLabel('award-outline', 'exams.onBoarding.form.selectCollegeLabel')}
                     >
                         {medUniversities &&
                         medUniversities.map((item, index) => (
@@ -198,7 +198,7 @@ const OnBoardingForm = ({ form }) => {
                 >
                     <SANSelect
                         size='large'
-                        placeholder={createLabel('calendar', 'exams.onBoarding.form.selectSemesterLabel')}
+                        placeholder={createLabel('calendar-outline', 'exams.onBoarding.form.selectSemesterLabel')}
                     >
                         {semesters &&
                         semesters.map((item, index) => (
@@ -226,7 +226,7 @@ const OnBoardingForm = ({ form }) => {
                     <SANSelect
                         onChange={onChangeMethodology}
                         size='large'
-                        placeholder={createLabel('form', 'exams.onBoarding.form.selectMethodologyLabel')}
+                        placeholder={createLabel('book-open-outline', 'exams.onBoarding.form.selectMethodologyLabel')}
                     >
                         {methodologies &&
                         methodologies.map((item, index) => (
