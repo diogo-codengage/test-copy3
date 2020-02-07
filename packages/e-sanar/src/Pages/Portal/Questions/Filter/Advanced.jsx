@@ -85,7 +85,7 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
             >
                 <div className='questions-filter__advanced__content'>
                     <ESRow gutter={32} className='mb-md mt-lg'>
-                        <ESCol xs={24} sm={12} md={10} lg={8}>
+                        <ESCol xs={24} sm={12} md={10} lg={10}>
                             <ESFormItem
                                 name='years'
                                 label={t(`${intlPath}year.label`)}
@@ -108,7 +108,7 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
                                 </ESSelect>
                             </ESFormItem>
                         </ESCol>
-                        <ESCol xs={24} sm={12} md={14} lg={16}>
+                        <ESCol xs={24} sm={12} md={14} lg={14}>
                             <ESFormItem
                                 name='isCommentedByExpert'
                                 label={t(`${intlPath}justCommented`)}
