@@ -36,8 +36,6 @@
             @media (max-width: @screen-md) {
                 height: auto;
                 width: 100%;
-                margin-top: 0;
-                flex-direction: column;
                 & .ant-form-item-label {
                     flex: 1;
                     text-align: left;
@@ -45,6 +43,10 @@
                 & .ant-form-item-control-wrapper {
                     width: auto;
                 }
+            }
+            @media (max-width: 700px) {
+                margin-top: 0;
+                flex-direction: column;
             }
             @media (max-width: @screen-sm) {
                 flex-direction: row;
