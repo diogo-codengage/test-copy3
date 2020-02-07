@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 export const SAVE_USER_MED_UNIVERSITY_MUTATION = gql`
     mutation SaveUserMedUniversity(
         $medUniversityId: String!
+        $ingressYear: String!
         $ingressSemester: String!
         $methodology: String!
     ) {
@@ -10,6 +11,7 @@ export const SAVE_USER_MED_UNIVERSITY_MUTATION = gql`
             input: {
                 medUniversityId: $medUniversityId
                 ingressSemester: $ingressSemester
+                ingressYear: $ingressYear
                 methodology: $methodology
             }
         ) 

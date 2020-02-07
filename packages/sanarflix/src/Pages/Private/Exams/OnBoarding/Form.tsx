@@ -22,7 +22,7 @@ import {
 } from 'Apollo/Exams/Queries/medUniversities'
 import {
     SAVE_USER_MED_UNIVERSITY_MUTATION
-} from 'Apollo/Exams/Mutations/medUniversity'
+} from 'Apollo/Exams/Mutations/userMedUniversity'
 
 const OnBoardingForm = ({ form }) => {
     const client = useApolloClient()
@@ -108,17 +108,18 @@ const OnBoardingForm = ({ form }) => {
             await form.validateFields()
             const {
                 medUniversityId,
-                ingressSemester,
+                ingressSemesterComplete,
                 methodology,
                 newMethodology
             } = form.getFieldsValue()
-            console.log(medUniversityId, ingressSemester, methodology, newMethodology)
+            const arrPeriod = ingressSemesterComplete.split('.')
 
             await client.mutate({
                 mutation: SAVE_USER_MED_UNIVERSITY_MUTATION,
                 variables: {
                     medUniversityId,
-                    ingressSemester,
+                    ingressYear: arrPeriod[0],
+                    ingressSemester: arrPeriod[1],
                     methodology: newMethodology ? newMethodology : methodology
                 }
             })
@@ -185,7 +186,7 @@ const OnBoardingForm = ({ form }) => {
                     </SANSelect>
                 </SANFormItem>
                 <SANFormItem
-                    name='ingressSemester'
+                    name='ingressSemesterComplete'
                     rules={[
                         {
                             required: true,
