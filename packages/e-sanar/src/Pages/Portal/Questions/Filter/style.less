@@ -26,18 +26,30 @@
             background-color: @grey-solid-2;
             border: 1px solid @grey-2;
             border-radius: @border-radius-base;
-            display: flex;
-            flex-direction: column;
+            display: inline-flex;
             align-items: center;
             white-space: nowrap;
-            @media (max-width: @screen-sm) {
-                padding: 5px @padding-md;
-                flex-direction: row;
-                align-items: flex-end;
-
+            flex-direction: row;
+            margin-top: @margin-lg;
+            height: 40px;
+            float: right;
+            @media (max-width: @screen-md) {
+                height: auto;
+                width: 100%;
+                margin-top: 0;
+                flex-direction: column;
+                & .ant-form-item-label {
+                    flex: 1;
+                    text-align: left;
+                }
                 & .ant-form-item-control-wrapper {
                     width: auto;
                 }
+            }
+            @media (max-width: @screen-sm) {
+                flex-direction: row;
+                padding: 5px @padding-md;
+                align-items: flex-end;
             }
         }
 

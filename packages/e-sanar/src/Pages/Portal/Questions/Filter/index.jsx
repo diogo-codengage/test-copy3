@@ -15,8 +15,8 @@ export const makeFilter = (values, userId) => {
         throw Error('Argument userId is required in function makeFilter')
     }
     return {
-        ...(values.year && {
-            years: [Number(values.year.format('YYYY'))]
+        ...(values.years && {
+            years: values.years.map(y => Number(y))
         }),
         ...(values.tags && { tagIds: values.tags.map(mapItem) }),
         ...(values.levels && {
