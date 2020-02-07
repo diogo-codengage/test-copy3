@@ -5,14 +5,14 @@ import { select } from '@storybook/addon-knobs'
 import SANTooltip from './Tooltip'
 import { SANButton } from '../Button'
 
-const placeOptions = {
+const placeOptions: any = {
     Top: 'top',
     Right: 'right',
     Bottom: 'bottom',
     Beft: 'left'
 }
 
-const typeOptions = {
+const typeOptions: any = {
     Success: 'success',
     Warning: 'warning',
     Error: 'error',
@@ -20,7 +20,7 @@ const typeOptions = {
     Light: 'light'
 }
 
-const effectOptions = {
+const effectOptions: any = {
     Float: 'float',
     Solid: 'solid'
 }

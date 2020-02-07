@@ -44,7 +44,7 @@ const SANError404: React.FC<ISANError404Props> = ({ children, onClick }) => {
                 <SANBox
                     src={error404}
                     as='img'
-                    width={{ xs: '530px', _: '240px' }}
+                    width={{ xs: '530px', _: '240px' } as any}
                     mb='xxl'
                 />
                 <SANTypography

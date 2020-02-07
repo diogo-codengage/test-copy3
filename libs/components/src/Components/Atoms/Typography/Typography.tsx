@@ -16,9 +16,9 @@ import {
     TypographyProps,
     compose
 } from 'styled-system'
+import styled from 'styled-components'
 
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
-import { SANStyled, SANElement } from '../../../Theme/createTheme'
 
 export type ISANTypographyProps = PropTypes.InferProps<
     typeof ESTypography['propTypes']
@@ -30,17 +30,9 @@ export type ISANTypographyProps = PropTypes.InferProps<
     TypographyProps &
     PositionProps
 
-const SANTypography: SANElement<ISANTypographyProps> = SANStyled(ESTypography)`
+const SANTypography = styled(ESTypography)<ISANTypographyProps>`
     &&& {
-        ${compose(
-            space,
-            flexbox,
-            border,
-            color,
-            typography,
-            position,
-            layout
-        )}
+        ${compose(space, flexbox, border, color, typography, position, layout)}
     }
 `
 
