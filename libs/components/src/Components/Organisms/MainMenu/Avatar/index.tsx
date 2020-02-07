@@ -1,7 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { ESAvatarMenu } from 'sanar-ui/dist/Components/Organisms/MainMenu'
 
-const SANAvatarMenu: React.FC = props => <ESAvatarMenu {...props} />
+export type ISANAvatarMenuProps = PropTypes.InferProps<
+    typeof ESAvatarMenu['propTypes']
+>
+
+const SANAvatarMenu: React.FC<ISANAvatarMenuProps> = props => (
+    <ESAvatarMenu {...props} />
+)
 
 export default SANAvatarMenu

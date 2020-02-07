@@ -18,7 +18,7 @@ export interface ISANClassroomHeaderProps {
     title: string
     subtitle: string
     actions?: boolean
-    onOpenMenu?: () => {}
+    onOpenMenu?: () => void
     ButtonPreviousProps?: ISANButtonProps
     ButtonNextProps?: ISANButtonProps
     ButtonBookmarkProps?: ISANButtonProps
