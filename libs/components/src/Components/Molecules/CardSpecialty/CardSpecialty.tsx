@@ -60,9 +60,6 @@ const TitleProgress = props => (
     />
 )
 
-<<<<<<< HEAD
-const SANCardSpecialty = ({
-=======
 export const SANCardSpecialtySkeleton = () => (
     <SANBox
         display='flex'
@@ -86,7 +83,6 @@ export const SANCardSpecialtySkeleton = () => (
 )
 
 const SANCardSpecialty: React.FC<ISANCardSpecialtyProps> = ({
->>>>>>> 41ccb2b6... feat(components / resmed): add skeleton on specialties home
     image,
     title,
     progress,
