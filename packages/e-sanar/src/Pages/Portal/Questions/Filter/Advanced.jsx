@@ -29,12 +29,6 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
     const { formState } = useQuestionsContext()
     const [open, setOpen] = useState(false)
     const [years, setYears] = useState([])
-    const [selectedYears, setSelectedYears] = useState([])
-
-    const onYearsChange = (years, year) =>
-        years.find(y => y === year)
-            ? years.filter(y => y !== year)
-            : [...years, year].sort()
 
     useEffect(() => {
         const createYearsList = () => {
@@ -52,13 +46,7 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
 
     const renderOption = useCallback(
         option => (
-            <ESOption
-                value={option}
-                key={option}
-                onClick={() =>
-                    setSelectedYears(old => onYearsChange(old, option))
-                }
-            >
+            <ESOption value={option} key={option}>
                 {option}
             </ESOption>
         ),
@@ -89,10 +77,9 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
                             <ESFormItem
                                 name='years'
                                 label={t(`${intlPath}year.label`)}
-                                initialValue={formState && formState.year}
+                                initialValue={!!formState && formState.years}
                             >
                                 <ESSelect
-                                    value={selectedYears}
                                     mode={'multiple'}
                                     placeholder={t(
                                         `${intlPath}year.placeholder`,
@@ -115,7 +102,7 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
                                 className='switch'
                                 valuePropName='checked'
                                 initialValue={
-                                    formState && formState.isCommentedByExpert
+                                    !!formState && formState.isCommentedByExpert
                                 }
                             >
                                 <ESSwitch />
@@ -128,7 +115,7 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
                                 name='progress'
                                 label={t(`${intlPath}progress.label`)}
                                 className='no-margin'
-                                initialValue={formState && formState.progress}
+                                initialValue={!!formState && formState.progress}
                             >
                                 <ESRadioGroup>
                                     <ESRow>
