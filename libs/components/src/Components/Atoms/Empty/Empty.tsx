@@ -15,6 +15,7 @@ export interface ISANEmptyProps extends SpaceProps {
     image?: string
     children?: React.ReactNode
     BoxProps?: ISANBoxProps
+    ImageProps?: React.ImgHTMLAttributes<any>
     hasTitle?: boolean
 }
 
@@ -33,6 +34,7 @@ const SANEmpty = ({
     image,
     hasTitle = true,
     BoxProps,
+    ImageProps,
     children,
     ...props
 }: ISANEmptyProps) => {
@@ -47,7 +49,7 @@ const SANEmpty = ({
             alignItems='center'
             {...props}
         >
-            <ImgStyled src={image || empty} alt='' />
+            <ImgStyled src={image || empty} alt='' {...ImageProps} />
             {hasTitle && (
                 <SANBox {...BoxProps}>
                     <SANTypography variant='subtitle2' strong>

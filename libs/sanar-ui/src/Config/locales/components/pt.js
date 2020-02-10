@@ -266,5 +266,9 @@ export default {
     chat: {
         blocked: 'O chat está desativado.',
         writeSomething: 'Escrever algo'
+    },
+    selectList: {
+        selectAll: 'Selecionar todos',
+        deselectAll: 'Desselecionar todos'
     }
 }
