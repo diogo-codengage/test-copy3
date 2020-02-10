@@ -112,7 +112,9 @@ export const defaultColors = {
         'rgba(255, 255, 255, 0.85)', // 8
         'rgba(255, 255, 255, 0.95)', // 9
         'rgb(255, 255, 255)' // 10
-    ]
+    ],
+
+    skeleton: '#f2f2f2'
 }
 
 const defaultBreakpoints: any = [
