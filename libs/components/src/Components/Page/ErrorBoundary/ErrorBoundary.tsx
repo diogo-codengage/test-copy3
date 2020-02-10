@@ -4,7 +4,7 @@ import { SANError500, ISANError500Props } from '../Error500'
 
 export interface ISANErrorBoundaryProps extends ISANError500Props {
     component?: React.ReactNode
-    onError?: (error:any, errorInfo:any) => {}
+    onError?: (error: any, errorInfo: any) => void
 }
 
 class SANErrorBoundary extends Component<
@@ -23,7 +23,7 @@ class SANErrorBoundary extends Component<
             message: !!error.message ? error.message : error
         })
 
-        !!this.props.onError && this.props.onError(error, errorInfo)        
+        !!this.props.onError && this.props.onError(error, errorInfo)
     }
 
     render() {
