@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 
 import {
     SANBox,
+    ISANBoxProps,
     SANTypography,
     SANAvatar,
     SANLayoutContainer,
@@ -17,7 +18,7 @@ import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import { ILive } from 'Apollo/Lives/Queries/lives'
 
-const skeletonProps = {
+const skeletonProps: ISANBoxProps = {
     bg: 'grey.8',
     position: 'absolute',
     width: '100%',
@@ -101,7 +102,7 @@ const ChatWrapper = styled(SANBox)`
     }
 `
 
-const style = {
+const style: ISANBoxProps = {
     position: 'relative',
     pb: '41.25%',
     height: 0,

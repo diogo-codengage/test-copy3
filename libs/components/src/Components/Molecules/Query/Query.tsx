@@ -6,7 +6,7 @@ import { SANSpin } from '../../Atoms/Spin'
 import { SANGenericError, ISANGenericErrorProps } from '../GenericError'
 
 export interface ISANQueryProps {
-    children: (data: any) => React.ReactElement
+    children: (data: any) => React.ReactNode
     query: DocumentNode
     options?: Object
     loaderComp?: React.ReactElement
@@ -15,7 +15,7 @@ export interface ISANQueryProps {
     errorProps?: ISANGenericErrorProps
 }
 
-const SANQuery = ({
+const SANQuery: React.FC<any> = ({
     children,
     query,
     options,
@@ -23,7 +23,7 @@ const SANQuery = ({
     errorComp,
     loaderProps,
     errorProps
-}: ISANQueryProps) => {
+}) => {
     const { data, loading, error, ...props } = useQuery(query, options)
 
     if (loading && props.networkStatus !== 3)
