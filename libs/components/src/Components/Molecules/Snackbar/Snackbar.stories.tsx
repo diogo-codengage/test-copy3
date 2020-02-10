@@ -4,7 +4,7 @@ import { select, text, number } from '@storybook/addon-knobs'
 
 import SANSnackbarProvider, { useSnackbarContext } from './Provider'
 
-const themeOptions = {
+const themeOptions: any = {
     Default: 'default',
     Success: 'success',
     Error: 'error'
@@ -32,7 +32,7 @@ storiesOf('Molecules.Snackbar', module).add('Simple', () => {
         <SANSnackbarProvider>
             <Example
                 message={text('Message', 'Message to show')}
-                theme={select('Theme', themeOptions)}
+                theme={select('Theme', themeOptions, themeOptions.Success)}
                 timeout={number('Time to show', 2000)}
             />
         </SANSnackbarProvider>

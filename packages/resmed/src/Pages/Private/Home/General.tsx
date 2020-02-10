@@ -91,7 +91,11 @@ const RMSpecialties = withRouter<RouteComponentProps, any>(({ history }) => {
                 minWidth='300px !important'
             >
                 <SANCardSpecialty
-                    image={specialty.images.large}
+                    image={
+                        !!specialty.images && !!specialty.images.large
+                            ? specialty.images.large
+                            : ''
+                    }
                     title={specialty.name}
                     progress={{
                         me: specialty.progress.me,

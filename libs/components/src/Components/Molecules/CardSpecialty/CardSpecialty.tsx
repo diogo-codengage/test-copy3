@@ -88,7 +88,7 @@ const SANCardSpecialty: React.FC<ISANCardSpecialtyProps> = ({
     progress,
     disabled,
     onClick
-}: ISANCardSpecialtyProps) => {
+}) => {
     const { t } = useTranslation('components')
     return (
         <SANCardSpecialtyStyled

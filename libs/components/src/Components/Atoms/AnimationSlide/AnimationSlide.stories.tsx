@@ -7,11 +7,13 @@ import SANAnimationSlide, { AnimationSlideDirections } from './AnimationSlide'
 
 storiesOf('Atoms.AnimationSlide', module).add('Simple', () => (
     <SANAnimationSlide
-        direction={select(
-            'direction',
-            Object.keys(AnimationSlideDirections),
-            'leftToRight'
-        )}
+        direction={
+            select(
+                'direction',
+                Object.keys(AnimationSlideDirections),
+                'leftToRight'
+            ) as any
+        }
         timeout={300}
         in={boolean('show', false)}
         appear
