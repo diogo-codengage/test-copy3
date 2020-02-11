@@ -24,6 +24,7 @@ export interface IAppointment {
     description: string
     start: string
     end: string
+    resourceId?: string
     resourceType: 'Live' | 'Level' | 'Exam'
     fixed: boolean
     seen: boolean
@@ -60,6 +61,7 @@ export const GET_APPOINTMENTS = gql`
                 description
                 start: date
                 end: endDate
+                resourceId
                 resourceType
                 fixed
                 seen
