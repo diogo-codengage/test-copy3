@@ -27,15 +27,21 @@ const App: React.FC<RouteComponentProps> = ({ history, location }) => {
     const path = useMemo(() => (!!me ? '/portal/inicio' : '/auth/signin'), [me])
 
     useEffect(() => {
-        getInstance().user.getSession((_, result) => {
+        const cognitoUser = getInstance().user
+        cognitoUser.getSession((_, result) => {
             if (!result) {
                 setMe(undefined)
-                window.localStorage.clear();
+                window.localStorage.clear()
             } else {
-                window.sanarflix_user_email = result.idToken.payload.email;
-                window.sanarflix_user_name = result.idToken.payload.name;
-                const { pathname } = location
-                pathname.includes('auth') && history.push('/portal/inicio')
+                const params = new URLSearchParams(location.search)
+                if (!!params.get('idToken') && !!params.get('refreshToken')) {
+                    cognitoUser.signOut()
+                } else {
+                    window.sanarflix_user_email = result.idToken.payload.email
+                    window.sanarflix_user_name = result.idToken.payload.name
+                    const { pathname } = location
+                    pathname.includes('auth') && history.push('/portal/inicio')
+                }
             }
             setLoading(false)
         })

@@ -13,9 +13,9 @@ import {
     SANTypography,
     SANQuery,
     SANGenericError,
-    SANCardSpecialtySkeleton
+    SANCardSpecialtySkeleton,
+    SANButton
 } from '@sanar/components'
-import { SANButton } from '@sanar/components/dist/Components/Atoms/Button'
 
 import {
     GET_SPECIALTIES,
@@ -145,7 +145,6 @@ const RMGeneral = memo(() => {
         handleTrack('App Banner Clicked', {
             'OS Type': OS
         })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }
 
     return (

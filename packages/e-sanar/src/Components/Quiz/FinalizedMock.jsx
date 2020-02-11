@@ -11,7 +11,10 @@ import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 const SANQuizFinalized = ({ correct, wrong, skipped, total, time }) => {
     const getAverageTime = time =>
         esUtilConvertSecondsToTime(
-            (esConvertFormattedTimeToSeconds(time) / total).toFixed(0)
+            (time && total
+                ? esConvertFormattedTimeToSeconds(time) / total
+                : 0
+            ).toFixed(0)
         )
 
     const summary = {

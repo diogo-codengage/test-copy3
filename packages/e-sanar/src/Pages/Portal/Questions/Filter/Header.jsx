@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
 
@@ -13,7 +12,7 @@ import SANPortalPagesContainer from 'Pages/Portal/Layout/Container'
 const intlQuestionsPath = 'questionBase.'
 const intlQuestionsFilterPath = `${intlQuestionsPath}filter.`
 
-const SANQuestionsFilterHeader = ({ goHistory }) => {
+const SANQuestionsFilterHeader = () => {
     const { t } = useTranslation('esanar')
 
     return (
@@ -28,7 +27,11 @@ const SANQuestionsFilterHeader = ({ goHistory }) => {
                     subtitle={t(`${intlQuestionsFilterPath}subtitle`)}
                     extra={
                         <div className='d-flex align-items-center'>
-                            <ESButton
+                            {/*
+                                Marcos venicius - 06/02/2020 FD-988
+                                Remover histórico de questões
+                            */}
+                            {/* <ESButton
                                 variant='text'
                                 uppercase
                                 bold
@@ -37,7 +40,7 @@ const SANQuestionsFilterHeader = ({ goHistory }) => {
                                 onClick={goHistory}
                             >
                                 {t(`${intlQuestionsPath}hitoricButton`)}
-                            </ESButton>
+                            </ESButton> */}
                             <ESFormItem>
                                 <ESButton
                                     variant='solid'
@@ -58,10 +61,6 @@ const SANQuestionsFilterHeader = ({ goHistory }) => {
             </SANPortalPagesContainer>
         </div>
     )
-}
-
-SANQuestionsFilterHeader.propTypes = {
-    goHistory: PropTypes.func.isRequired
 }
 
 export default SANQuestionsFilterHeader

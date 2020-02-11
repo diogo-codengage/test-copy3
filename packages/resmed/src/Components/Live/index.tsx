@@ -79,8 +79,6 @@ const VideoWrapper = styled(SANBox)`
     }
 `
 
-const youtubeId = process.env.REACT_APP_YOUTUBE_ID
-
 interface IRMLiveProps {
     hasLive?: boolean
     loadingLive?: boolean
@@ -93,13 +91,11 @@ const RMLive = forwardRef<ISANChatRef, IRMLiveProps>(
         const { t } = useTranslation('resmed')
         const [hasLoadedVideo, setLoadedVideo] = useState(false)
 
-        const videoPath = useMemo(() => {
-            if (hasLive) {
-                return `https://www.youtube.com/embed/live_stream?channel=${youtubeId}`
-            } else if (!!live) {
-                return `https://www.youtube.com/embed/${live.youtubeId}`
-            }
-        }, [hasLive, live])
+        const videoPath = useMemo(
+            () =>
+                !!live ? `https://www.youtube.com/embed/${live.youtubeId}` : '',
+            [live]
+        )
 
         return (
             <>

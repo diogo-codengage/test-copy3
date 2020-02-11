@@ -81,7 +81,9 @@ const SelectFilter = () => {
             onSelectItem={onSelectItem}
             onDeselectItem={onDeselectItem}
             hasError={false}
-            InputProps={{ size: select('Size to input', inputSizes, 'medium') }}
+            InputProps={{
+                size: select('Size to input', inputSizes, 'medium') as any
+            }}
         />
     )
 }

@@ -4,7 +4,7 @@ import { boolean, text, select } from '@storybook/addon-knobs'
 
 import SANInput from './Input'
 
-const sizeSOptions = {
+const sizeSOptions: any = {
     Large: 'large',
     Medium: 'medium',
     Small: 'small'
@@ -16,7 +16,7 @@ storiesOf('Atoms.Input', module).add('Simple', () => (
         placeholder={text('Placeholder', 'Placeholder')}
         iconLeft='alert-circle-outline'
         iconRight='alert-circle-outline'
-        size={select('Size', sizeSOptions, 'large')}
+        size={select('Size', sizeSOptions, sizeSOptions.Large)}
         required={boolean('Required', false)}
         round={boolean('Round', false)}
     />

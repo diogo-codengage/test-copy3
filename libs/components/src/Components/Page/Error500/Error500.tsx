@@ -50,7 +50,7 @@ const SANError500: React.FC<ISANError500Props> = ({
                 <SANBox
                     src={error500}
                     as='img'
-                    width={{ xs: '380px', _: '220px' }}
+                    width={{ xs: '380px', _: '220px' } as any}
                     mb='xxl'
                 />
                 <SANTypography

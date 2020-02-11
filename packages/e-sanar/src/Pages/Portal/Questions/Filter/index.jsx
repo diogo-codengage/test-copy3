@@ -15,8 +15,8 @@ export const makeFilter = (values, userId) => {
         throw Error('Argument userId is required in function makeFilter')
     }
     return {
-        ...(values.year && {
-            years: [Number(values.year.format('YYYY'))]
+        ...(values.years && {
+            years: values.years.map(y => Number(y))
         }),
         ...(values.tags && { tagIds: values.tags.map(mapItem) }),
         ...(values.levels && {
@@ -64,17 +64,12 @@ const SANQuestionsFilter = ({ form, history }) => {
 
     return (
         <ESForm form={form} onSubmit={handleSubmit}>
-            <SANQuestionsFilterHeader
-                goHistory={() => history.push('./historico')}
-            />
+            <SANQuestionsFilterHeader />
             <SANQuestionsFilterSelects />
         </ESForm>
     )
 }
 
-const enhance = compose(
-    withESForm,
-    withRouter
-)
+const enhance = compose(withESForm, withRouter)
 
 export default enhance(SANQuestionsFilter)
