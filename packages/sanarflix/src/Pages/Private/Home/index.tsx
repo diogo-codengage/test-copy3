@@ -17,6 +17,8 @@ import baseQuestions from 'Assets/images/banners/base-questions.png'
 import indicate from 'Assets/images/banners/indicate.png'
 import indicateMobile from 'Assets/images/banners/indicate-mobile.png'
 
+import FLXExamFilter from 'Components/ExamFilter'
+
 const intl = 'home.banners'
 
 const FLXHome = ({ history }: RouteComponentProps) => {
@@ -32,6 +34,7 @@ const FLXHome = ({ history }: RouteComponentProps) => {
     return (
         <SANBox bg='grey-solid.1' flex='1'>
             <FLXHomeSearch />
+            <FLXExamFilter />
             <SANLayoutContainer pt={8}>
                 <SANRow gutter={16}>
                     <SANCol xs={24} md={12}>
