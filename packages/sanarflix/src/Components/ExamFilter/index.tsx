@@ -13,8 +13,35 @@ import {
 
 import { withFLXExamFilterProvider, useClassroomContext } from './Context'
 import FLXFilterCollege from './College'
+import FLXFilterSubject from './Subject'
 
 interface IFLXExamFilterProps {}
+
+export const NextButton = ({ onClick }) => (
+    <SANButton
+        variant='outlined'
+        color='primary'
+        size='small'
+        uppercase
+        bold
+        onClick={onClick}
+    >
+        Próximo
+    </SANButton>
+)
+
+export const PrevButton = ({ onClick }) => (
+    <SANButton
+        variant='outlined'
+        color='default'
+        size='small'
+        uppercase
+        bold
+        onClick={onClick}
+    >
+        Voltar
+    </SANButton>
+)
 
 const FLXExamFilter: React.FC<IFLXExamFilterProps> = ({}) => {
     const { currentTab, setCurrentTab } = useClassroomContext()
@@ -45,7 +72,9 @@ const FLXExamFilter: React.FC<IFLXExamFilterProps> = ({}) => {
                             </SANTypography>
                         }
                         key='subject'
-                    ></SANTabPane>
+                    >
+                        <FLXFilterSubject />
+                    </SANTabPane>
                     <SANTabPane
                         tab={
                             <SANTypography fontWeight='bold' fontSize='lg'>

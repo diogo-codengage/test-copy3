@@ -16,6 +16,7 @@ import {
 import collegeImg from 'Assets/images/exam-filter/college.png'
 
 import { useClassroomContext } from './Context'
+import { NextButton } from './'
 
 interface IFLXFilterCollegeProps {}
 
@@ -90,16 +91,7 @@ const FLXFilterCollege: React.FC<IFLXFilterCollegeProps> = () => {
                         justifyContent='flex-end'
                         mt={{ sm: 0, _: 'lg' }}
                     >
-                        <SANButton
-                            variant='outlined'
-                            color='primary'
-                            size='small'
-                            uppercase
-                            bold
-                            onClick={() => setCurrentTab('subject')}
-                        >
-                            Próximo
-                        </SANButton>
+                        <NextButton onClick={() => setCurrentTab('subject')} />
                     </SANBox>
                 </SANCol>
             </SANRow>
