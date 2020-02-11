@@ -35,6 +35,7 @@ export interface IMedUniversity {
 export interface IUserMedUniversity {
     medUniversity: IMedUniversity
     ingressSemester: string
+    ingressYear: string
     methodology: string
 }
 
@@ -62,6 +63,7 @@ export interface IMe {
 //         name
 //     }
 //     ingressSemester
+//     ingressYear
 //     methodology
 // }
 
