@@ -55,7 +55,8 @@ const RMClassroomFeedback = memo<RouteComponentProps<IParams>>(
                         query: GET_LESSON_PERFORMANCE,
                         variables: {
                             lessonId: params.lessonId
-                        }
+                        },
+                        fetchPolicy: 'no-cache'
                     })
                     setQuestions(lessonPerformance)
                 } catch {}
@@ -91,7 +92,10 @@ const RMClassroomFeedback = memo<RouteComponentProps<IParams>>(
                         loading={loading}
                     />
 
-                    <SANBox mt={{ lg: 'xl', _: '0' }} px={width > 884 && 18}>
+                    <SANBox
+                        mt={{ lg: 'xl', _: '0' }}
+                        px={width > 884 ? 18 : undefined}
+                    >
                         <RMCollection
                             parentId={params.lessonId}
                             value={params.collectionId}

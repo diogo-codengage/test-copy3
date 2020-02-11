@@ -11,6 +11,7 @@ import { SANTypography } from '../../Atoms/Typography'
 import { SANBox } from '../../Atoms/Box'
 import { SANDivider } from '../../Atoms/Divider'
 import { SANProgress } from '../../Atoms/Progress'
+import { SANSkeleton } from '../../Atoms/Skeleton'
 
 interface IProgress {
     me: number
@@ -31,6 +32,28 @@ export interface ISANCardSubSpecialtyProps {
     continue: IContinue
     onClick: () => void
 }
+
+export const SANCardSubSpecialtySkeleton = () => (
+    <SANBox
+        boxShadow='1'
+        borderRadius='base'
+        bg='grey.1'
+        border='0.5px solid'
+        borderColor='grey.2'
+        display='flex'
+        flexDirection='column'
+        justifyContent='end'
+        alignItems='center'
+        p='md'
+        height={259}
+    >
+        <SANSkeleton paragraph={false} avatar={{ size: 32, shape: 'circle' }} />
+        <SANBox my='md' width='100%'>
+            <SANSkeleton title={false} paragraph={{ rows: 2, width: '100%' }} />
+        </SANBox>
+        <SANSkeleton paragraph={false} avatar={{ size: 36, shape: 'square' }} />
+    </SANBox>
+)
 
 const FooterStyled = styled(SANBox)<{ blocked?: boolean }>`
     border-top: 1px solid ${theme('colors.grey.2')};

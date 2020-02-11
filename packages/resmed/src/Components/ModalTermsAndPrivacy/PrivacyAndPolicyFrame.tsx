@@ -8,7 +8,7 @@ import styled from 'styled-components'
 const SANIframeBox = styled(SANBox)`
     width: 100%;
     flex: 1;
-    max-height: calc( 100vh - 286px );
+    max-height: calc(100vh - 286px);
 `
 const SANCheckboxContainer = styled(SANBox)`
     @media (min-width: 992px) {
@@ -24,7 +24,7 @@ const RMPrivacyAndPolicyFrame = ({ onAccept, tosRequired }) => {
     const [checked, setChecked] = useState(false)
 
     const manipuleLoading = () => {
-        console.log('-------privacy and policy frame loaded-------')
+        console.log('-------privacy and policy frame manipule loading-------')
     }
 
     return (
