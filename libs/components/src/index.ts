@@ -56,7 +56,7 @@ import {
 } from 'Components/Molecules/CollapseTheme'
 import { SANEmpty } from 'Components/Atoms/Empty'
 import { SANDivider } from 'Components/Atoms/Divider'
-import { SANPdfReader } from 'Components/Atoms/PdfReader'
+// import { SANPdfReader } from 'Components/Atoms/PdfReader'
 import { SANRate } from 'Components/Atoms/Rate'
 import { SANStopwatch } from 'Components/Atoms/Stopwatch'
 import { SANAnimationSlide } from 'Components/Atoms/AnimationSlide'
@@ -115,6 +115,7 @@ import { SANCardLive } from 'Components/Molecules/CardLives'
 
 import { SANSelectFilter } from 'Components/Molecules/SelectFilter'
 import { SANChangeCourse } from 'Components/Molecules/ChangeCourse'
+import { SANPdfReader } from 'Components/Molecules/PdfReader'
 
 export {
     SANCommonBadge,
@@ -168,7 +169,7 @@ export {
     SANClassroomMenuHeader,
     SANThemeProvider,
     SANJwPlayer,
-    SANPdfReader,
+    // SANPdfReader,
     SANClassroomHeader,
     SANRate,
     SANScrollTop,
@@ -234,5 +235,6 @@ export {
     SANCardEvent,
     SANCardLive,
     SANSelectFilter,
-    SANChangeCourse
+    SANChangeCourse,
+    SANPdfReader
 }

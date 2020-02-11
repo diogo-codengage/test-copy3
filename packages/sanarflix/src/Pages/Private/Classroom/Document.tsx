@@ -28,7 +28,7 @@ interface IParams {
 
 const PdfReader = styled(SANPdfReader)`
     && {
-        ${theme('mediaQueries.ip.md')} {
+        ${theme('mediaQueries.up.md')} {
             min-height: calc(100vh - 99px);
         }
         ${theme('mediaQueries.down.md')} {

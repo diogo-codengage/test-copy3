@@ -6,7 +6,7 @@ import ESLessonHeader, {
     ESLessonHeaderExtra,
     ESLessonHeaderLeft
 } from 'sanar-ui/dist/Components/Molecules/LessonHeader'
-import ESPdfReader from 'sanar-ui/dist/Components/Atoms/PdfReader'
+import { SANPdfReader } from '@sanar/components'
 
 import { usePortalContext } from 'Pages/Portal/Context'
 import { useClassroomContext } from '../Context'
@@ -78,7 +78,7 @@ const SANClassRoomDocument = () => {
                             />
                         }
                     />
-                    <ESPdfReader
+                    <SANPdfReader
                         url={
                             currentResource &&
                             currentResource.document &&
