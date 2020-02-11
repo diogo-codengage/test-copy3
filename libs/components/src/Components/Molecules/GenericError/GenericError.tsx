@@ -10,12 +10,14 @@ export interface ISANGenericErrorProps extends ISANBoxProps {
     message?: React.ReactNode | string
     dark?: boolean
     TypographyProps?: ISANTypographyProps
+    ImageProps?: ISANBoxProps
 }
 
 const SANGenericError = ({
     message,
     dark,
     TypographyProps,
+    ImageProps,
     ...props
 }: ISANGenericErrorProps) => {
     const {
@@ -32,9 +34,10 @@ const SANGenericError = ({
             display='flex'
             flexDirection='column'
             justifyContent='center'
+            m='0 auto'
             {...props}
         >
-            <SANBox as='img' src={errorGeneric} mb='lg' />
+            <SANBox as='img' src={errorGeneric} mb='lg' {...ImageProps} />
             <SANTypography
                 variant='body1'
                 type={dark ? 'light' : 'default'}

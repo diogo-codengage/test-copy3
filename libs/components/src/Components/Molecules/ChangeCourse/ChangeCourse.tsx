@@ -14,7 +14,7 @@ import { SANBox, ISANBoxProps } from '../../Atoms/Box'
 
 import { transparentize } from 'polished'
 
-interface IWrapper extends React.HTMLProps<HTMLDivElement> {
+interface IWrapper {
     hasHover?: boolean
     cursor?: 'not-allowed' | 'pointer' | 'default'
 }
@@ -78,6 +78,7 @@ export interface ISANChangeCourseProps extends Pick<ISANBoxProps, 'mb'> {
     hasActive?: boolean
     expired?: boolean
     notStarted?: boolean
+    BoxProps?: ISANBoxProps
 }
 
 export interface ISANContinueProps extends IContinue {
@@ -165,7 +166,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
     hasActive,
     expired,
     notStarted,
-    ...props
+    BoxProps
 }) => {
     const { t } = useTranslation('components')
 

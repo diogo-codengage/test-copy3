@@ -9,7 +9,8 @@ import {
     SANEvaIcon,
     SANLeftOff,
     SANLeftOffLoading,
-    SANLeftOffError
+    SANLeftOffError,
+    useSnackbarContext
 } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
@@ -20,30 +21,39 @@ const formatMinutes = minutes =>
 
 const RMSuggestedClass = withRouter(({ history }) => {
     const { t } = useTranslation('resmed')
+    const createSnackbar = useSnackbarContext()
     const { suggestedClass } = useLayoutContext()
 
     const goToResource = () => {
-        if (!!suggestedClass && !!suggestedClass.data) {
-            const {
-                specialtyId,
-                subSpecialtyId,
-                lesson,
-                collectionId,
-                resource
-            } = suggestedClass.data.accessContent
+        try {
+            if (!!suggestedClass && !!suggestedClass.data) {
+                const {
+                    specialtyId,
+                    subSpecialtyId,
+                    lesson,
+                    collectionId,
+                    resource
+                } = suggestedClass.data.accessContent
 
-            const final = `${
-                lesson.id
-            }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-                resource.id
-            }`
-            if (!!subSpecialtyId) {
-                history.push(
-                    `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${final}`
-                )
-            } else {
-                history.push(`/inicio/sala-aula/${specialtyId}/${final}`)
+                const final = `${
+                    lesson.id
+                }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                    resource.id
+                }`
+                if (!!subSpecialtyId) {
+                    history.push(
+                        `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${final}`
+                    )
+                } else {
+                    history.push(`/inicio/sala-aula/${specialtyId}/${final}`)
+                }
             }
+        } catch (error) {
+            console.error('[RMSuggestedClass]:goToResource', error)
+            createSnackbar({
+                message: t('schedule.errorGoClass'),
+                theme: 'error'
+            })
         }
     }
 
