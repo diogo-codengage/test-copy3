@@ -6,7 +6,7 @@ import SANList from './List'
 import SANDefaultListItem from './DefaulItem'
 import SANListItem from './Item'
 
-const typeOptions = {
+const typeOptions: any = {
     Video: 'video',
     Mentalmap: 'mentalmap',
     Flowchart: 'flowchart',
@@ -30,7 +30,7 @@ storiesOf('Atoms.List', module)
             <SANDefaultListItem
                 onClick={console.log}
                 title={text('Title', 'Lorem ipsum dolor sit amet.')}
-                type={select('Type', typeOptions)}
+                type={select('Type', typeOptions, typeOptions.Video)}
                 hasIcon={boolean('Has icon', true)}
             />
         </SANList>

@@ -5,12 +5,15 @@ import { SANEvaIcon } from 'Components/Atoms/EvaIcon'
 import { SANTypography } from 'Components/Atoms/Typography'
 import { useTranslation } from 'react-i18next'
 
-interface IProps {
+export interface ISANClassroomMenuHeaderProps {
     onBack: () => void
     onClose: () => void
 }
 
-const SANClassroomMenuHeader: React.FC<IProps> = ({ onBack, onClose }) => {
+const SANClassroomMenuHeader: React.FC<ISANClassroomMenuHeaderProps> = ({
+    onBack,
+    onClose
+}) => {
     const { t } = useTranslation('components')
     return (
         <SANBox

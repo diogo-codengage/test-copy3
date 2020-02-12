@@ -340,7 +340,7 @@ export default {
                 },
                 year: {
                     label: 'Ano',
-                    placeholder: 'Escolher o ano'
+                    placeholder: 'Escolher o ano. (Min: {{min}}, máx: {{max}})'
                 },
                 difficulty: {
                     label: 'Dificuldade',

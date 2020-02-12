@@ -49,13 +49,13 @@ const LeftOffExample = ({ resourceType, type }) => {
     )
 }
 
-const resourceTypeOptions = {
+const resourceTypeOptions: any = {
     Video: 'Video',
     Document: 'Document',
     Question: 'Question'
 }
 
-const typeOptions = {
+const typeOptions: any = {
     Resume: 'resume',
     Mentalmap: 'mentalmap',
     Flowchart: 'flowchart',
@@ -69,8 +69,12 @@ storiesOf('Organisms.MainMenu', module).add(
     () => {
         return (
             <LeftOffExample
-                resourceType={select('Resource Type', resourceTypeOptions)}
-                type={select('Type', typeOptions)}
+                resourceType={select(
+                    'Resource Type',
+                    resourceTypeOptions,
+                    resourceTypeOptions.Question
+                )}
+                type={select('Type', typeOptions, typeOptions.Question)}
             />
         )
     },

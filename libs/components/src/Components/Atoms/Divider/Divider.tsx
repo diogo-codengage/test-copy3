@@ -25,8 +25,8 @@ const SANDivider = SANStyled.hr<ISANDividerProps>`
     ${layout}
     
     background-color: ${props =>
-        theme(`colors.${props.backgroundColor}`) ||
-        theme(`colors.${props.bg}`) ||
+        theme(`colors.${props.backgroundColor as any}`) ||
+        theme(`colors.${props.bg as any}`) ||
         theme('colors.grey.2')};
 
     height: 1px;
