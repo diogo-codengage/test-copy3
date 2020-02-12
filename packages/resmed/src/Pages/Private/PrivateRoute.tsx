@@ -10,6 +10,11 @@ import { useLazyQuery } from '@apollo/react-hooks'
 import { CognitoUserSession } from 'amazon-cognito-identity-js'
 import * as Sentry from '@sentry/browser'
 import { startOfDay, endOfDay, isAfter, isBefore, format } from 'date-fns'
+<<<<<<< HEAD
+=======
+
+import { getUTCDate } from '@sanar/utils/dist/Date'
+>>>>>>> 9c5ba972... Merge pull request #452 from sanar/fix/FD-1056
 
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
