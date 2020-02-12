@@ -14,6 +14,7 @@ import { withFLXExamFilterProvider, useClassroomContext } from './Context'
 import FLXFilterCollege from './College'
 import FLXFilterSubject from './Subject'
 import FLXFilterTheme from './Theme'
+import FLXFilterSemester from './Semester'
 
 interface IFLXExamFilterProps {}
 
@@ -101,7 +102,9 @@ const FLXExamFilter: React.FC<IFLXExamFilterProps> = () => {
                                 </SANTypography>
                             }
                             key='semester'
-                        ></SANTabPane>
+                        >
+                            <FLXFilterSemester />
+                        </SANTabPane>
                     </SANTabs>
                     <SANBox
                         borderTop='1px solid'
