@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { useTranslation } from 'react-i18next'
 import {
     SANTypography,
     SANBox,
@@ -16,7 +17,8 @@ import { NextButton, PrevButton } from './'
 interface IFLXFilterThemeProps {}
 
 const FLXFilterTheme: React.FC<IFLXFilterThemeProps> = () => {
-    const { setCurrentTab } = useClassroomContext()
+    const { t } = useTranslation('sanarflix')
+    const { setCurrentTab, theme, setTheme } = useClassroomContext()
     return (
         <SANBox
             px={{ md: '8', _: 'md' }}
@@ -29,7 +31,7 @@ const FLXFilterTheme: React.FC<IFLXFilterThemeProps> = () => {
                         color='grey.6'
                         fontSize={{ md: 'xl', _: 'lg' }}
                     >
-                        Selecione os temas que mais correspondem com sua busca
+                        {t('examFilter.theme.description')}
                     </SANTypography>
                     <SANBox
                         as='img'
@@ -42,10 +44,10 @@ const FLXFilterTheme: React.FC<IFLXFilterThemeProps> = () => {
                 </SANCol>
                 <SANCol xs={24} sm={12} md={12}>
                     <SANSelectList
-                        placeholder='Buscar tema'
-                        onChange={console.log}
+                        placeholder={t('examFilter.theme.select')}
+                        onChange={setTheme}
                         items={[{ value: '1', label: 'Tema 1' }]}
-                        value={[]}
+                        value={theme || []}
                     />
                 </SANCol>
             </SANRow>

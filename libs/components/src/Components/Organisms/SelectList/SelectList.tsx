@@ -36,7 +36,7 @@ interface IOnChange {
 interface IRowItem extends IItem {
     onChange: (e: IOnChange) => void
     checked: boolean
-    TypographyProps: ISANTypographyProps
+    TypographyProps?: ISANTypographyProps
 }
 
 const InputStyled = styled(SANInput)`
@@ -69,6 +69,7 @@ const RowItem: React.FC<IRowItem> = ({
     TypographyProps
 }) => {
     const handleChange = () => {
+        console.log('ewqeq')
         onChange({
             value,
             checked: !checked
@@ -85,6 +86,7 @@ const RowItem: React.FC<IRowItem> = ({
         >
             <SANCheckbox value={value} checked={checked}>
                 <SANTypography
+                    onClick={e => e.stopPropagation()}
                     fontWeight='bold'
                     fontSize='md'
                     as='span'

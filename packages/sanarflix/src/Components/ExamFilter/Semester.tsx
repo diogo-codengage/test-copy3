@@ -1,13 +1,12 @@
 import React from 'react'
 
-import styled from 'styled-components'
-import { theme } from 'styled-tools'
+import { useTranslation } from 'react-i18next'
+
 import {
     SANTypography,
     SANBox,
     SANSelect,
     SANSelectOption,
-    SANCheckbox,
     SANRow,
     SANCol
 } from '@sanar/components'
@@ -19,23 +18,35 @@ import { PrevButton } from './'
 
 interface IFLXFilterSemesterProps {}
 
-const TextCol = styled(SANCol)`
-    ${theme('mediaQueries.down.sm')} {
-        order: 2;
-    }
-`
+const Image = props => (
+    <SANBox
+        as='img'
+        src={semesterImg}
+        alt='Semestre'
+        width='100%'
+        height={{ sm: 252, _: 108 } as any}
+        {...props}
+    />
+)
 
 const FLXFilterSemester: React.FC<IFLXFilterSemesterProps> = () => {
-    const { setCurrentTab } = useClassroomContext()
+    const { t } = useTranslation('sanarflix')
+    const { setCurrentTab, semester, setSemester } = useClassroomContext()
     return (
         <SANBox
             px={{ md: '8', _: 'md' }}
             pb={{ md: 'xxl', _: 'xl' }}
             pt={{ md: '8', _: 'md' }}
         >
-            <SANRow align='top' justify='space-between' type='flex' gutter={24}>
-                <SANCol xs={24} sm={12}>
+            <SANRow
+                align='stretch'
+                justify='space-between'
+                type='flex'
+                gutter={24}
+            >
+                <SANCol xs={24} sm={11}>
                     <SANBox
+                        height='100%'
                         display='flex'
                         flexDirection='column'
                         alignItems='flex-start'
@@ -44,32 +55,40 @@ const FLXFilterSemester: React.FC<IFLXFilterSemesterProps> = () => {
                         <SANTypography
                             color='grey.6'
                             fontSize={{ md: 'xl', _: 'lg' }}
-                            mb={{ sm: '0', _: 'md' }}
                         >
-                            Selecione o ano e semestre da prova que deseja
-                            estudar
+                            {t('examFilter.college.description')}
                         </SANTypography>
 
-                        <SANSelect
-                            allowClear
-                            placeholder='Selecionar o ano/semestre'
-                            size='large'
-                        >
-                            <SANSelectOption value='1'>2020.1</SANSelectOption>
-                            <SANSelectOption value='1'>2019.2</SANSelectOption>
-                            <SANSelectOption value='1'>2019.1</SANSelectOption>
-                        </SANSelect>
+                        <SANBox display={{ xs: 'none', _: 'block' }}>
+                            <Image height={161} />
+                        </SANBox>
+
+                        <SANBox width={{ md: 300, _: '100%' }} mb='xl'>
+                            <SANSelect
+                                style={{ width: '100%' }}
+                                allowClear
+                                placeholder={t('examFilter.college.select')}
+                                mode='multiple'
+                                size='large'
+                                onChange={setSemester}
+                                value={semester}
+                            >
+                                <SANSelectOption value='1'>
+                                    2020.1
+                                </SANSelectOption>
+                                <SANSelectOption value='2'>
+                                    2019.2
+                                </SANSelectOption>
+                                <SANSelectOption value='3'>
+                                    2019.1
+                                </SANSelectOption>
+                            </SANSelect>
+                        </SANBox>
                         <PrevButton onClick={() => setCurrentTab('theme')} />
                     </SANBox>
                 </SANCol>
-                <SANCol xs={24} sm={12}>
-                    <SANBox
-                        as='img'
-                        src={semesterImg}
-                        alt='Semestre'
-                        width='100%'
-                        height={{ sm: 252, _: 108 } as any}
-                    />
+                <SANCol xs={0} sm={13}>
+                    <Image />
                 </SANCol>
             </SANRow>
         </SANBox>

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { useTranslation } from 'react-i18next'
+
 import {
     SANTabs,
     SANTabPane,
@@ -7,7 +9,8 @@ import {
     SANBox,
     SANButton,
     SANLayoutContainer,
-    SANSessionTitle
+    SANSessionTitle,
+    SANDivider
 } from '@sanar/components'
 
 import { withFLXExamFilterProvider, useClassroomContext } from './Context'
@@ -18,40 +21,51 @@ import FLXFilterSemester from './Semester'
 
 interface IFLXExamFilterProps {}
 
-export const NextButton = ({ onClick }) => (
-    <SANButton
-        variant='outlined'
-        color='primary'
-        size='small'
-        uppercase
-        bold
-        onClick={onClick}
-    >
-        Próximo
-    </SANButton>
+const Title = props => (
+    <SANTypography fontWeight='bold' fontSize='lg' {...props} />
 )
 
-export const PrevButton = ({ onClick }) => (
-    <SANButton
-        variant='outlined'
-        color='default'
-        size='small'
-        uppercase
-        bold
-        onClick={onClick}
-    >
-        Voltar
-    </SANButton>
-)
+export const NextButton = ({ onClick }) => {
+    const { t } = useTranslation('sanarflix')
+    return (
+        <SANButton
+            variant='outlined'
+            color='primary'
+            size='small'
+            uppercase
+            bold
+            onClick={onClick}
+        >
+            {t('examFilter.next')}
+        </SANButton>
+    )
+}
+
+export const PrevButton = ({ onClick }) => {
+    const { t } = useTranslation('sanarflix')
+    return (
+        <SANButton
+            variant='outlined'
+            color='default'
+            size='small'
+            uppercase
+            bold
+            onClick={onClick}
+        >
+            {t('examFilter.back')}
+        </SANButton>
+    )
+}
 
 const FLXExamFilter: React.FC<IFLXExamFilterProps> = () => {
-    const { currentTab, setCurrentTab } = useClassroomContext()
+    const { t } = useTranslation('sanarflix')
+    const { currentTab, setCurrentTab, handleSubmit } = useClassroomContext()
     return (
         <SANBox pb={{ md: '8', _: '0' }} pt={{ md: '8', _: 'xxl' }}>
             <SANLayoutContainer fullMobile>
                 <SANSessionTitle
-                    title='Filtros avançados'
-                    subtitle='Encontre outras provas utilizando os filtros avançados'
+                    title={t('examFilter.title')}
+                    subtitle={t('examFilter.subtitle')}
                 />
                 <SANBox
                     borderRadius={{ md: 'base', _: 0 }}
@@ -66,49 +80,34 @@ const FLXExamFilter: React.FC<IFLXExamFilterProps> = () => {
                         onChange={setCurrentTab}
                     >
                         <SANTabPane
-                            tab={
-                                <SANTypography fontWeight='bold' fontSize='lg'>
-                                    Faculdade
-                                </SANTypography>
-                            }
+                            tab={<Title>{t('examFilter.college.title')}</Title>}
                             key='college'
                         >
                             <FLXFilterCollege />
                         </SANTabPane>
                         <SANTabPane
-                            tab={
-                                <SANTypography fontWeight='bold' fontSize='lg'>
-                                    Disciplina
-                                </SANTypography>
-                            }
+                            tab={<Title>{t('examFilter.subject.title')}</Title>}
                             key='subject'
                         >
                             <FLXFilterSubject />
                         </SANTabPane>
                         <SANTabPane
-                            tab={
-                                <SANTypography fontWeight='bold' fontSize='lg'>
-                                    Tema
-                                </SANTypography>
-                            }
+                            tab={<Title>{t('examFilter.theme.title')}</Title>}
                             key='theme'
                         >
                             <FLXFilterTheme />
                         </SANTabPane>
                         <SANTabPane
                             tab={
-                                <SANTypography fontWeight='bold' fontSize='lg'>
-                                    Semestre
-                                </SANTypography>
+                                <Title>{t('examFilter.semester.title')}</Title>
                             }
                             key='semester'
                         >
                             <FLXFilterSemester />
                         </SANTabPane>
                     </SANTabs>
+                    <SANDivider bg='grey.1' width='100%' m='0' />
                     <SANBox
-                        borderTop='1px solid'
-                        borderColor='grey.1'
                         display='flex'
                         alignItems='center'
                         justifyContent='center'
@@ -121,8 +120,9 @@ const FLXExamFilter: React.FC<IFLXExamFilterProps> = () => {
                             color='primary'
                             bold
                             blockOnlyMobile
+                            onClick={handleSubmit}
                         >
-                            Buscar prova
+                            {t('examFilter.submit')}
                         </SANButton>
                     </SANBox>
                 </SANBox>

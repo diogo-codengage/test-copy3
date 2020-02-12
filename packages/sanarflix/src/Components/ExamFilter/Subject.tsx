@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { useTranslation } from 'react-i18next'
 import {
     SANTypography,
     SANBox,
@@ -16,7 +17,8 @@ import { NextButton, PrevButton } from './'
 interface IFLXFilterSubjectProps {}
 
 const FLXFilterSubject: React.FC<IFLXFilterSubjectProps> = () => {
-    const { setCurrentTab } = useClassroomContext()
+    const { t } = useTranslation('sanarflix')
+    const { setCurrentTab, subject, setSubject } = useClassroomContext()
     return (
         <SANBox
             px={{ md: '8', _: 'md' }}
@@ -29,7 +31,7 @@ const FLXFilterSubject: React.FC<IFLXFilterSubjectProps> = () => {
                         color='grey.6'
                         fontSize={{ md: 'xl', _: 'lg' }}
                     >
-                        Escolha as disciplinas que deseja se aprofundar
+                        {t('examFilter.subject.description')}
                     </SANTypography>
                     <SANBox
                         as='img'
@@ -42,10 +44,13 @@ const FLXFilterSubject: React.FC<IFLXFilterSubjectProps> = () => {
                 </SANCol>
                 <SANCol xs={24} sm={12} md={12}>
                     <SANSelectList
-                        placeholder='Buscar disciplina'
-                        onChange={console.log}
-                        items={[{ value: '1', label: 'Disciplina 1' }]}
-                        value={[]}
+                        placeholder={t('examFilter.subject.select')}
+                        onChange={setSubject}
+                        items={[
+                            { value: '1', label: 'Disciplina 1' },
+                            { value: '2', label: 'Disciplina 2' }
+                        ]}
+                        value={subject || []}
                     />
                 </SANCol>
             </SANRow>

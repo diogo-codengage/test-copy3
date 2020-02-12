@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
 import {
@@ -26,7 +27,8 @@ const TextCol = styled(SANCol)`
 `
 
 const FLXFilterCollege: React.FC<IFLXFilterCollegeProps> = () => {
-    const { setCurrentTab } = useClassroomContext()
+    const { t } = useTranslation('sanarflix')
+    const { setCurrentTab, college, setCollege } = useClassroomContext()
     return (
         <SANBox px={{ md: '8', _: 'md' }} pb={{ md: 'xxl', _: 'xl' }}>
             <SANRow
@@ -41,7 +43,7 @@ const FLXFilterCollege: React.FC<IFLXFilterCollegeProps> = () => {
                         fontSize={{ md: 'xl', _: 'lg' }}
                         mb={{ sm: '0', _: 'md' }}
                     >
-                        Busque pela faculdade das provas que você quer treinar.
+                        {t('examFilter.college.description')}
                     </SANTypography>
                 </TextCol>
                 <SANCol xs={24} sm={14} md={15}>
@@ -71,16 +73,20 @@ const FLXFilterCollege: React.FC<IFLXFilterCollegeProps> = () => {
                                     as='span'
                                     color='grey.6'
                                 >
-                                    Usar minha faculdade
+                                    {t('examFilter.college.checkbox')}
                                 </SANTypography>
                             </SANCheckbox>
                         </SANBox>
                         <SANSelect
                             allowClear
-                            placeholder='Buscar outra faculdade'
+                            placeholder={t('examFilter.college.select')}
                             size='large'
+                            value={college}
+                            onChange={setCollege}
                         >
                             <SANSelectOption value='1'>1</SANSelectOption>
+                            <SANSelectOption value='2'>2</SANSelectOption>
+                            <SANSelectOption value='3'>3</SANSelectOption>
                         </SANSelect>
                     </SANBox>
                 </SANCol>
