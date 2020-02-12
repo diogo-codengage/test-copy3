@@ -3,7 +3,12 @@ import { FormComponentProps } from 'antd/lib/form'
 
 import i18n from 'sanar-ui/dist/Config/i18n'
 
-function withSANForm<T extends FormComponentProps>(component, options = {}) {
+export interface ISANFormComponentProps extends FormComponentProps {}
+
+function withSANForm<T extends ISANFormComponentProps>(
+    component,
+    options = {}
+) {
     const defaultOptions = {
         validateMessages: i18n.t('components:formValidateMessages', {
             returnObjects: true

@@ -8,7 +8,8 @@ import {
     SANJwPlayer,
     SANQuery,
     SANClassroomHeader,
-    SANBox
+    SANBox,
+    ISANBoxProps
 } from '@sanar/components'
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
 import { createDebounce } from '@sanar/utils/dist/Debounce'
@@ -150,7 +151,7 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [paramsProp])
 
-        const wrapper = useMemo(
+        const wrapper: ISANBoxProps = useMemo(
             () =>
                 width > 884
                     ? {

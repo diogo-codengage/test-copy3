@@ -13,7 +13,7 @@ import { normalize } from '@sanar/utils/dist/Normalize'
 import dataHelper from './data'
 
 export interface ISANHelpCenterProps {
-    data: any
+    data?: any
     onBack: () => void
 }
 
