@@ -1,7 +1,5 @@
 import React from 'react'
 
-import styled from 'styled-components'
-import { theme } from 'styled-tools'
 import {
     SANTypography,
     SANBox,
@@ -20,7 +18,11 @@ interface IFLXFilterSubjectProps {}
 const FLXFilterSubject: React.FC<IFLXFilterSubjectProps> = () => {
     const { setCurrentTab } = useClassroomContext()
     return (
-        <SANBox px={{ md: '9', _: 'md' }} pb={{ md: 'xxl', _: 'xl' }} pt='8'>
+        <SANBox
+            px={{ md: '8', _: 'md' }}
+            pb={{ md: 'xxl', _: 'xl' }}
+            pt={{ md: '8', _: 'md' }}
+        >
             <SANRow align='top' justify='space-between' type='flex' gutter={24}>
                 <SANCol xs={24} sm={12} md={12}>
                     <SANTypography
@@ -34,18 +36,24 @@ const FLXFilterSubject: React.FC<IFLXFilterSubjectProps> = () => {
                         src={subjectImg}
                         alt='Disciplina'
                         width='100%'
-                        height={{ sm: 'auto', _: 124 } as any}
+                        height={{ sm: 250, _: 124 } as any}
+                        mb={{ xs: '0', _: 'md' }}
                     />
                 </SANCol>
                 <SANCol xs={24} sm={12} md={12}>
-                    <SANSelectList placeholder='Buscar disciplina' />
+                    <SANSelectList
+                        placeholder='Buscar disciplina'
+                        onChange={console.log}
+                        items={[{ value: '1', label: 'Item 1' }]}
+                        value={[]}
+                    />
                 </SANCol>
             </SANRow>
             <SANBox
                 display='flex'
                 justifyContent='space-between'
                 alignItems='center'
-                mt='xxl'
+                mt={{ md: 'xxl', _: 'xl' }}
             >
                 <PrevButton onClick={() => setCurrentTab('college')} />
                 <NextButton onClick={() => setCurrentTab('theme')} />

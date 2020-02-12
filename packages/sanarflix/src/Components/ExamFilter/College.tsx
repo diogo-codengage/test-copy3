@@ -5,7 +5,6 @@ import { theme } from 'styled-tools'
 import {
     SANTypography,
     SANBox,
-    SANButton,
     SANSelect,
     SANSelectOption,
     SANCheckbox,
@@ -29,7 +28,7 @@ const TextCol = styled(SANCol)`
 const FLXFilterCollege: React.FC<IFLXFilterCollegeProps> = () => {
     const { setCurrentTab } = useClassroomContext()
     return (
-        <SANBox px={{ md: '9', _: 'md' }} pb={{ md: 'xxl', _: 'xl' }}>
+        <SANBox px={{ md: '8', _: 'md' }} pb={{ md: 'xxl', _: 'xl' }}>
             <SANRow
                 align='middle'
                 justify='space-between'
