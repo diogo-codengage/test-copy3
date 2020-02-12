@@ -14,9 +14,9 @@ import {
     SANCol,
     SANQuery,
     useSnackbarContext,
+    SANCardSubSpecialtySkeleton,
     SANSkeleton
 } from '@sanar/components'
-import { SANCardSubSpecialtySkeleton } from '@sanar/components/dist/Components/Molecules/CardSubSpecialty'
 
 import {
     GET_SUBSPECIALTIES,

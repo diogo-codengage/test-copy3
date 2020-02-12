@@ -1,6 +1,5 @@
 import React, { useMemo, useCallback, memo } from 'react'
 
-import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
@@ -14,9 +13,9 @@ import {
     SANTypography,
     SANQuery,
     SANGenericError,
+    SANCardSpecialtySkeleton,
     SANButton
 } from '@sanar/components'
-import { SANCardSpecialtySkeleton } from '@sanar/components/dist/Components/Molecules/CardSpecialty'
 
 import {
     GET_SPECIALTIES,
@@ -138,10 +137,6 @@ const RMSpecialties = withRouter<RouteComponentProps, any>(({ history }) => {
     )
 })
 
-const SpecialtiesStyled = styled(SANBox)`
-    min-height: 429px;
-`
-
 const RMGeneral = memo(() => {
     const { t } = useTranslation('resmed')
     const { handleTrack } = useMainContext()
@@ -154,7 +149,8 @@ const RMGeneral = memo(() => {
 
     return (
         <>
-            <SpecialtiesStyled
+            <SANBox
+                minHeight={429}
                 bg='grey-solid.1'
                 pt={{ xs: '8', _: 'xl' }}
                 pb={{ xs: 'xl', _: '0' }}
@@ -166,7 +162,7 @@ const RMGeneral = memo(() => {
                     />
                     <RMSpecialties />
                 </SANLayoutContainer>
-            </SpecialtiesStyled>
+            </SANBox>
             <SANBox mt={8} mb={9}>
                 <SANLayoutContainer>
                     <SANBox
