@@ -8,11 +8,8 @@ import {
 import { useLazyQuery } from '@apollo/react-hooks'
 
 import { CognitoUserSession } from 'amazon-cognito-identity-js'
-import { startOfDay, endOfDay, isBefore, isAfter, format } from 'date-fns'
 import * as Sentry from '@sentry/browser'
 import { startOfDay, endOfDay, isAfter, isBefore, format } from 'date-fns'
-
-import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import { getUTCDate } from '@sanar/utils/dist/Date'
 
