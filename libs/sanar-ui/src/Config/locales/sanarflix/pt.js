@@ -176,6 +176,14 @@ export default {
                 selectSemesterLabel: 'Informe o seu semestre de ingresso',
                 selectMethodologyLabel: 'Informe a sua metodologia',
             }
+        },
+        list: {
+            title: 'Provas da ',
+            subtitle: 'Estas são as provas disponíveis da sua faculdade:',
+            train: 'Treinar',
+            exams: ' provas',
+            questions: ' questões',
+            loadMore: 'Carregar mais',
         }
     },
     courses: {

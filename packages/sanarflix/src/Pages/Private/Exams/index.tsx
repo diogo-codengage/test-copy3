@@ -9,13 +9,15 @@ import {
 
 import { events } from 'Config/Segment'
 import OnBoarding from './OnBoarding'
+import List from './List'
 import { useAuthContext } from '../../../Hooks/auth'
 
 const FLXExams = ({ history }) => {
     const { t } = useTranslation('sanarflix')
     const { me } = useAuthContext()
+    const { userMedUniversity } = me
 
-    const showOnBoarding = !me.userMedUniversity || Object.keys(me.userMedUniversity).length === 0
+    const showOnBoarding = !userMedUniversity || Object.keys(userMedUniversity).length === 0
 
     useEffect(() => {
         window.analytics.page(
@@ -33,9 +35,10 @@ const FLXExams = ({ history }) => {
                     subtitle: t('exams.subtitle')
                 }}
             />
-            { showOnBoarding && (
-                <OnBoarding />
-            )}
+            {!showOnBoarding
+                ? (<OnBoarding />)
+                : (<List medUniversity={{id:'teste1', label:'Faculdade 1'}} />)
+            }
         </SANBox>
     )
 }

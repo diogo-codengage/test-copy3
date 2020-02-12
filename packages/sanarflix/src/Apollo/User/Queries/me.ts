@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import { IMedUniversity } from '../../Exams/Queries/medUniversities'
 
 interface IAddress {
     id: string
@@ -27,11 +28,6 @@ export interface ICreditCard {
     card_cvv: number
 }
 
-export interface IMedUniversity {
-    id: string
-    name: string
-}
-
 export interface IUserMedUniversity {
     medUniversity: IMedUniversity
     ingressSemester: string
@@ -52,7 +48,7 @@ export interface IMe {
     address: IAddress
     plan: IPlan
     card: ICreditCard
-    userMedUniversity: IMedUniversity
+    userMedUniversity: IUserMedUniversity
 }
 
 // TODO add those lines on the query below:
