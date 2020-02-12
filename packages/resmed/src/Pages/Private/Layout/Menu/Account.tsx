@@ -20,7 +20,6 @@ import RMLogout from 'Components/ModalLogout'
 import { useLayoutContext } from '../Context'
 import { useMainContext } from 'Pages/Private/Context'
 import { version } from 'Config/Version'
-
 import { logout } from 'Config/AWSCognito'
 
 import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
