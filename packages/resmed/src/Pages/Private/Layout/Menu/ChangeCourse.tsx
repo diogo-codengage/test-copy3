@@ -5,6 +5,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { format, isBefore, isAfter } from 'date-fns'
 import { filter, path, sortBy } from 'ramda'
+import * as Sentry from '@sentry/browser'
 
 import {
     SANEvaIcon,
@@ -19,6 +20,7 @@ import {
     useSnackbarContext
 } from '@sanar/components'
 import { getUTCDate } from '@sanar/utils/dist/Date'
+import { useTryToCrash } from '@sanar/utils/dist/Hooks'
 
 import { useAuthContext } from 'Hooks/auth'
 import { GET_COURSES, ICourseQuery } from 'Apollo/User/Queries/courses'
@@ -36,14 +38,25 @@ const arr = new Array(3).fill(0).map((_, index) => index)
 const formatExpireDate = (date: Date) => format(date, 'DD/MM/YYYY')
 
 const Courses = withRouter(({ history }) => {
+    const setCrash = useTryToCrash()
     const { activeCourse } = useAuthContext()
-    const { loading, data } = useQuery<ICourseQuery>(GET_COURSES)
+    const { loading, data, error } = useQuery<ICourseQuery>(GET_COURSES, {
+        onError(error) {
+            Sentry.captureException(error)
+        }
+    })
+
+    if (error) setCrash()
+
     const [changeCourse, { loading: loadingMutation }] = useMutation<
         IUpdateActiveCourseResponse,
         IUpdateActiveCourseVariables
     >(UPDATE_ACTIVE_COURSE, {
         onCompleted() {
             history.push('/inicio/curso')
+        },
+        onError(error) {
+            Sentry.captureException(error)
         },
         refetchQueries: [{ query: GET_ME }, { query: GET_ACTIVE_COURSE }]
     })
@@ -159,6 +172,7 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                 message: t('mainMenu.changeCourse.errorGoClass'),
                 theme: 'error'
             })
+            Sentry.captureException(error)
         }
     }
 
@@ -178,7 +192,7 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                     {t('mainMenu.back')}
                 </SANButton>
             </SANBox>
-            {!!activeCourse && (
+            {!!activeCourse && !!activeCourse.id && (
                 <Error>
                     <SANChangeCourse
                         id={activeCourse.id}
