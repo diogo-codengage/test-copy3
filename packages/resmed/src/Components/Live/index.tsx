@@ -109,8 +109,6 @@ const style: ISANBoxProps = {
     overflow: 'hidden'
 }
 
-const youtubeId = process.env.REACT_APP_YOUTUBE_ID
-
 interface IRMLiveProps {
     hasLive?: boolean
     loading?: boolean
@@ -141,13 +139,11 @@ const RMLive = memo<IRMLiveProps>(
             [loading, hasLoadedChat, live]
         )
 
-        const videoPath = useMemo(() => {
-            if (hasLive) {
-                return `https://www.youtube.com/embed/live_stream?channel=${youtubeId}`
-            } else if (!!live) {
-                return `https://www.youtube.com/embed/${live.youtubeId}`
-            }
-        }, [hasLive, live])
+        const videoPath = useMemo(
+            () =>
+                !!live ? `https://www.youtube.com/embed/${live.youtubeId}` : '',
+            [live]
+        )
 
         return (
             <>
