@@ -1,6 +1,6 @@
 {
     "name": "sanarflix",
-    "version": "0.1.0",
+    "version": "1.0.1",
     "private": true,
     "dependencies": {
         "@sentry/browser": "^5.10.2",
@@ -9,7 +9,8 @@
         "react-router-last-location": "^2.0.1"
     },
     "scripts": {
-        "start": "env-cmd -f ./environments/.env.development react-app-rewired start",
+        "release": "yarn version --no-git-tag-version",
+        "start": "env-cmd -f ./environments/.env.production react-app-rewired start",
         "build:development": "env-cmd -f ./environments/.env.staging react-app-rewired build",
         "build:staging": "env-cmd -f ./environments/.env.staging react-app-rewired build",
         "build:production": "env-cmd -f ./environments/.env.production react-app-rewired build",

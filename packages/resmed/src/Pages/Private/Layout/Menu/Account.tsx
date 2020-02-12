@@ -17,12 +17,12 @@ import {
 
 import { useAuthContext } from 'Hooks/auth'
 import RMLogout from 'Components/ModalLogout'
-import { useLayoutContext } from '../Context'
+import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 import { useMainContext } from 'Pages/Private/Context'
-
+import { version } from 'Config/Version'
 import { logout } from 'Config/AWSCognito'
 
-import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
+import { useLayoutContext } from '../Context'
 
 const RMMenuAccount = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
@@ -46,99 +46,115 @@ const RMMenuAccount = memo<RouteComponentProps>(({ history }) => {
     }
 
     return (
-        <SANScroll>
-            <RMLogout
-                visible={visibleLogout}
-                onLeave={signOut}
-                onCancel={() => setVisibleLogout(false)}
-            />
-            <SANBox px='md'>
-                <SANButton
-                    mb='md'
-                    size='xsmall'
-                    variant='outlined'
-                    color='white'
-                    block
-                    bold
-                    onClick={() => setMenuTab(0)}
-                >
-                    <SANEvaIcon name='arrow-back-outline' mr='xs' />
-                    {t('mainMenu.back')}
-                </SANButton>
-                <SANAvatarMenu
-                    loading={!me}
-                    src={!!me && me.profilePicture}
-                    title={!!me && me.name}
-                />
+        <>
+            <SANBox position='absolute' right='50%' bottom='md'>
+                <SANTypography fontSize='sm' color='white.5'>
+                    v{version}
+                </SANTypography>
             </SANBox>
-            <SANTypography variant='overline' px='md' pt='xl' color='white.5'>
-                {t('mainMenu.account.management')}
-            </SANTypography>
-            <SANNavigationList>
-                <SANNavigationListItem
-                    to='/inicio/minha-conta/alterar-senha'
-                    icon={<SANEvaIcon name='lock-outline' color='default' />}
-                    onClick={onCloseMenu}
-                    dataTestid='rm_menu_my-account__go_to--change-password'
-                    title={t('mainMenu.account.changePassword')}
+            <SANScroll>
+                <RMLogout
+                    visible={visibleLogout}
+                    onLeave={signOut}
+                    onCancel={() => setVisibleLogout(false)}
                 />
-            </SANNavigationList>
-            <SANNavigationList>
-                <SANNavigationListItem
-                    to='/inicio/minha-conta/dados-complementares'
-                    icon={<SANEvaIcon name='clipboard' color='default' />}
-                    onClick={onCloseMenu}
-                    dataTestid='rm_menu_my-account__go_to--complementary-register'
-                    title={t('mainMenu.account.complementaryRegister')}
-                />
-            </SANNavigationList>
-            <SANDivider mx='md' my='lg' bg='white.1' />
+                <SANBox px='md'>
+                    <SANButton
+                        mb='md'
+                        size='xsmall'
+                        variant='outlined'
+                        color='white'
+                        block
+                        bold
+                        onClick={() => setMenuTab(0)}
+                    >
+                        <SANEvaIcon name='arrow-back-outline' mr='xs' />
+                        {t('mainMenu.back')}
+                    </SANButton>
+                    <SANAvatarMenu
+                        loading={!me}
+                        src={!!me && me.profilePicture}
+                        title={!!me && me.name}
+                    />
+                </SANBox>
+                <SANTypography
+                    variant='overline'
+                    px='md'
+                    pt='xl'
+                    color='white.5'
+                >
+                    {t('mainMenu.account.management')}
+                </SANTypography>
+                <SANNavigationList>
+                    <SANNavigationListItem
+                        to='/inicio/minha-conta/alterar-senha'
+                        icon={
+                            <SANEvaIcon name='lock-outline' color='default' />
+                        }
+                        onClick={onCloseMenu}
+                        dataTestid='rm_menu_my-account__go_to--change-password'
+                        title={t('mainMenu.account.changePassword')}
+                    />
+                </SANNavigationList>
+                <SANNavigationList>
+                    <SANNavigationListItem
+                        to='/inicio/minha-conta/dados-complementares'
+                        icon={<SANEvaIcon name='clipboard' color='default' />}
+                        onClick={onCloseMenu}
+                        dataTestid='rm_menu_my-account__go_to--complementary-register'
+                        title={t('mainMenu.account.complementaryRegister')}
+                    />
+                </SANNavigationList>
+                <SANDivider mx='md' my='lg' bg='white.1' />
 
-            <SANTypography variant='overline' px='md' color='white.5'>
-                {t('mainMenu.account.help')}
-            </SANTypography>
-            <SANNavigationList>
-                <SANNavigationListItem
-                    dataTestid='rm_menu_my-menu-navigation__my-account__help-center'
-                    title={t('mainMenu.account.helpCenter')}
-                    icon={<SANEvaIcon name='lock-outline' color='default' />}
-                    onClick={onCloseMenu}
-                    to='/inicio/central-ajuda'
-                />
-            </SANNavigationList>
-            <SANDivider mx='md' my='lg' bg='white.1' />
+                <SANTypography variant='overline' px='md' color='white.5'>
+                    {t('mainMenu.account.help')}
+                </SANTypography>
+                <SANNavigationList>
+                    <SANNavigationListItem
+                        dataTestid='rm_menu_my-menu-navigation__my-account__help-center'
+                        title={t('mainMenu.account.helpCenter')}
+                        icon={
+                            <SANEvaIcon name='lock-outline' color='default' />
+                        }
+                        onClick={onCloseMenu}
+                        to='/inicio/central-ajuda'
+                    />
+                </SANNavigationList>
+                <SANDivider mx='md' my='lg' bg='white.1' />
 
-            <SANTypography variant='overline' px='md' color='white.5'>
-                {t('mainMenu.account.otherLinks')}
-            </SANTypography>
-            <SANNavigationList>
-                <SANNavigationListItem
-                    dataTestid='rm_menu_my-account__go_to--terms-of-use'
-                    title={t('mainMenu.account.termsOfUse')}
-                    onClick={() => modalTermsOpen('0')}
-                />
-                <SANNavigationListItem
-                    dataTestid='rm_menu_my-account__go_to--privacy-policy'
-                    title={t('mainMenu.account.privacyPolicy')}
-                    onClick={() => modalTermsOpen('1')}
-                />
-                <SANNavigationListItem
-                    onClick={() => setVisibleLogout(true)}
-                    dataTestid='rm_menu_my-account__go_to--leave-account'
-                    title={t('mainMenu.account.signOut')}
-                />
-            </SANNavigationList>
+                <SANTypography variant='overline' px='md' color='white.5'>
+                    {t('mainMenu.account.otherLinks')}
+                </SANTypography>
+                <SANNavigationList>
+                    <SANNavigationListItem
+                        dataTestid='rm_menu_my-account__go_to--terms-of-use'
+                        title={t('mainMenu.account.termsOfUse')}
+                        onClick={() => modalTermsOpen('0')}
+                    />
+                    <SANNavigationListItem
+                        dataTestid='rm_menu_my-account__go_to--privacy-policy'
+                        title={t('mainMenu.account.privacyPolicy')}
+                        onClick={() => modalTermsOpen('1')}
+                    />
+                    <SANNavigationListItem
+                        onClick={() => setVisibleLogout(true)}
+                        dataTestid='rm_menu_my-account__go_to--leave-account'
+                        title={t('mainMenu.account.signOut')}
+                    />
+                </SANNavigationList>
 
-            <RMModalTermsAndPrivacy
-                onCancel={() => {
-                    setShowModalTerms(false)
-                    setActiveKey(0)
-                }}
-                visible={showModalTerms}
-                defaultActiveKey={activeKey}
-                scrolling
-            />
-        </SANScroll>
+                <RMModalTermsAndPrivacy
+                    onCancel={() => {
+                        setShowModalTerms(false)
+                        setActiveKey(0)
+                    }}
+                    visible={showModalTerms}
+                    defaultActiveKey={activeKey}
+                    scrolling
+                />
+            </SANScroll>
+        </>
     )
 })
 
