@@ -11,7 +11,7 @@ export const useClassroomContext = () => useContext(Context)
 type ITab = 'college' | 'subject' | 'theme' | 'semester'
 
 const FLXExamFilterProvider: React.FC = ({ children }) => {
-    const [currentTab, setCurrentTab] = useState<ITab>('subject')
+    const [currentTab, setCurrentTab] = useState<ITab>('theme')
 
     const value: IFLXExamFilterProviderValue = {
         setCurrentTab,

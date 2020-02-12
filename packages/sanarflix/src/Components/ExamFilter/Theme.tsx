@@ -8,14 +8,14 @@ import {
     SANSelectList
 } from '@sanar/components'
 
-import subjectImg from 'Assets/images/exam-filter/subject-theme.svg'
+import themeImg from 'Assets/images/exam-filter/subject-theme.svg'
 
 import { useClassroomContext } from './Context'
 import { NextButton, PrevButton } from './'
 
-interface IFLXFilterSubjectProps {}
+interface IFLXFilterThemeProps {}
 
-const FLXFilterSubject: React.FC<IFLXFilterSubjectProps> = () => {
+const FLXFilterTheme: React.FC<IFLXFilterThemeProps> = () => {
     const { setCurrentTab } = useClassroomContext()
     return (
         <SANBox
@@ -29,22 +29,22 @@ const FLXFilterSubject: React.FC<IFLXFilterSubjectProps> = () => {
                         color='grey.6'
                         fontSize={{ md: 'xl', _: 'lg' }}
                     >
-                        Escolha as disciplinas que deseja se aprofundar
+                        Selecione os temas que mais correspondem com sua busca
                     </SANTypography>
                     <SANBox
                         as='img'
-                        src={subjectImg}
-                        alt='Disciplina'
+                        src={themeImg}
+                        alt='Tema'
                         width='100%'
-                        height={{ sm: 250, _: 124 } as any}
+                        height={{ sm: 220, _: 124 } as any}
                         mb={{ xs: '0', _: 'md' }}
                     />
                 </SANCol>
                 <SANCol xs={24} sm={12} md={12}>
                     <SANSelectList
-                        placeholder='Buscar disciplina'
+                        placeholder='Buscar tema'
                         onChange={console.log}
-                        items={[{ value: '1', label: 'Disciplina 1' }]}
+                        items={[{ value: '1', label: 'Tema 1' }]}
                         value={[]}
                     />
                 </SANCol>
@@ -55,11 +55,11 @@ const FLXFilterSubject: React.FC<IFLXFilterSubjectProps> = () => {
                 alignItems='center'
                 mt={{ md: 'xxl', _: 'xl' }}
             >
-                <PrevButton onClick={() => setCurrentTab('college')} />
-                <NextButton onClick={() => setCurrentTab('theme')} />
+                <PrevButton onClick={() => setCurrentTab('subject')} />
+                <NextButton onClick={() => setCurrentTab('semester')} />
             </SANBox>
         </SANBox>
     )
 }
 
-export default FLXFilterSubject
+export default FLXFilterTheme

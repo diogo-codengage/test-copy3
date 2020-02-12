@@ -13,6 +13,7 @@ import {
 import { withFLXExamFilterProvider, useClassroomContext } from './Context'
 import FLXFilterCollege from './College'
 import FLXFilterSubject from './Subject'
+import FLXFilterTheme from './Theme'
 
 interface IFLXExamFilterProps {}
 
@@ -90,7 +91,9 @@ const FLXExamFilter: React.FC<IFLXExamFilterProps> = () => {
                                 </SANTypography>
                             }
                             key='theme'
-                        ></SANTabPane>
+                        >
+                            <FLXFilterTheme />
+                        </SANTabPane>
                         <SANTabPane
                             tab={
                                 <SANTypography fontWeight='bold' fontSize='lg'>

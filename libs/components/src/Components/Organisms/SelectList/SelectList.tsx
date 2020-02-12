@@ -10,6 +10,7 @@ import {
     SANInput,
     SANCheckbox,
     SANTypography,
+    ISANTypographyProps,
     SANSkeleton,
     SANEmpty
 } from '../../Atoms'
@@ -35,6 +36,7 @@ interface IOnChange {
 interface IRowItem extends IItem {
     onChange: (e: IOnChange) => void
     checked: boolean
+    TypographyProps: ISANTypographyProps
 }
 
 const InputStyled = styled(SANInput)`
@@ -59,7 +61,13 @@ const RowItemStyled = styled(SANBox)`
     }
 `
 
-const RowItem: React.FC<IRowItem> = ({ label, value, onChange, checked }) => {
+const RowItem: React.FC<IRowItem> = ({
+    label,
+    value,
+    onChange,
+    checked,
+    TypographyProps
+}) => {
     const handleChange = () => {
         onChange({
             value,
@@ -76,7 +84,12 @@ const RowItem: React.FC<IRowItem> = ({ label, value, onChange, checked }) => {
             onClick={handleChange}
         >
             <SANCheckbox value={value} checked={checked}>
-                <SANTypography fontWeight='bold' fontSize='md' as='span'>
+                <SANTypography
+                    fontWeight='bold'
+                    fontSize='md'
+                    as='span'
+                    {...TypographyProps}
+                >
                     {label}
                 </SANTypography>
             </SANCheckbox>
@@ -177,6 +190,9 @@ const SANSelectList: React.FC<ISANSelectListProps> = ({
                 ) : filteredItems.length ? (
                     <>
                         <RowItem
+                            TypographyProps={{
+                                color: 'grey.4'
+                            }}
                             label={
                                 hasAllChecks
                                     ? t('selectList.deselectAll')
