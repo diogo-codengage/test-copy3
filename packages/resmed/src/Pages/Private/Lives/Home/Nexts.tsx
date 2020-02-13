@@ -113,7 +113,7 @@ const RMNexts = memo(() => {
                 title={live.title}
                 subtitle={format(
                     getUTCDate(live.startDate),
-                    `DD/MM/YYYY [${t('lives.nextsList.at')}] HH[h]`
+                    `DD/MM/YYYY [${t('lives.nextsList.at')}] HH[h] mm[m]`
                 )}
             />
         ),
@@ -126,7 +126,7 @@ const RMNexts = memo(() => {
             query={GET_LIVES}
             options={{
                 variables: {
-                    start: format(new Date(), 'YYYY-MM-DD')
+                    start: format(new Date(), 'YYYY-MM-DD HH:mm:ss')
                 }
             }}
             loaderProps={{ minHeight: '200px', flex: true }}
