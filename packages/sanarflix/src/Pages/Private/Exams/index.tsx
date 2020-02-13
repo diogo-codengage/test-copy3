@@ -9,7 +9,7 @@ import {
 
 import { events } from 'Config/Segment'
 import OnBoarding from './OnBoarding'
-import List from './List'
+import List from './InitialList'
 import { useAuthContext } from '../../../Hooks/auth'
 
 const FLXExams = ({ history }) => {

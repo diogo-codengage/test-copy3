@@ -76,6 +76,7 @@ const List = (props: IListProps) => {
     const [exams, setExams] = useState<IExam[]>([])
     const [examsTest, setExamsTest] = useState<IExam[]>([])
     const [examsCount, setExamsCount] = useState<number|null>(null)
+    const [loadMoreClicks, setLoadMoreClicks] = useState<number>(0)
 
     const fetchExamsList = async () => {
         try {
@@ -83,7 +84,10 @@ const List = (props: IListProps) => {
                 data: { exams }
             } = await client.query<IExamQuery>({
                 query: GET_EXAMS,
-                variables: { limit: 5, skip: 5 }
+                variables: {
+                    limit: 5,
+                    medUniversityId: medUniversity.id
+                }
             })
             setExams(exams)
         } catch {
@@ -151,6 +155,10 @@ const List = (props: IListProps) => {
     }, [examsTest])
 
     const onLoadMore = () => {
+        if (loadMoreClicks >= 1) {
+            console.log('redirect')
+            return
+        }
         setInitLoading(true)
         setLoading(true)
         setTimeout(() => {
@@ -199,7 +207,7 @@ const List = (props: IListProps) => {
             setInitLoading(false)
             setLoading(false)
         }, 2000)
-
+        setLoadMoreClicks(loadMoreClicks + 1)
         // setLoading(true)
         // fetchExamsList()
     }
@@ -228,19 +236,19 @@ const List = (props: IListProps) => {
                     >
                         {t('exams.list.title') + medUniversity.label}
                     </SANTypography>
-                    <SANTypography
-                        fontSize={{ md: 2 }}
-                        color='grey.7'
-                        textAlign='left'
-                        mb={15}
-                    >
-                        {t('exams.list.subtitle')}
-                        {examsCount && (
+                    {examsCount ? (
+                        <SANTypography
+                            fontSize={{ md: 2 }}
+                            color='grey.7'
+                            textAlign='left'
+                            mb={15}
+                        >
+                            {t('exams.list.subtitle')}
                             <ExamsCount color='grey.7'>
                                 <strong>{examsCount}</strong> {t('exams.list.exams')}
                             </ExamsCount>
-                        )}
-                    </SANTypography>
+                        </SANTypography>
+                    ) : null}
                     <SANList
                         dataSource={examsTest}
                         loading={initLoading}
