@@ -66,7 +66,7 @@ interface IContinue {
     loading?: boolean
 }
 
-export interface ISANChangeCourseProps extends Pick<ISANBoxProps, 'mb'> {
+export interface ISANChangeCourseProps {
     id: string
     title: string
     date: string
@@ -195,7 +195,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
                     : 'default'
             }
             height={(expired || notStarted ? 106 : 'auto') as any}
-            {...props}
+            {...BoxProps}
         >
             {(expired || notStarted) && <Blocked />}
             <SANBox
