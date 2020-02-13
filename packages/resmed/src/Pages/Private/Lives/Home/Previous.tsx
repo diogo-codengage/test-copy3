@@ -25,7 +25,7 @@ const updateCacheLives = (prev, { fetchMoreResult }) => {
     return Object.assign({}, prev, {
         lives: {
             ...prev.lives,
-            ...prev.lives
+            ...fetchMoreResult.lives
         }
     })
 }
