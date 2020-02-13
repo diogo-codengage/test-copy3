@@ -67,7 +67,7 @@ const FLXFilterSemester: React.FC<IFLXFilterSemesterProps> = () => {
                             <SANSelect
                                 style={{ width: '100%' }}
                                 allowClear
-                                placeholder={t('examFilter.college.select')}
+                                placeholder={t('examFilter.semester.select')}
                                 mode='multiple'
                                 size='large'
                                 onChange={setSemester}
