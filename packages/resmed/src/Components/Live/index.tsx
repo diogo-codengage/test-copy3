@@ -162,7 +162,9 @@ const RMLive = forwardRef<ISANChatRef, IRMLiveProps>(
                             >
                                 {format(
                                     getUTCDate(live.startDate),
-                                    'DD/MM/YYYY'
+                                    `DD/MM/YYYY [${t(
+                                        'lives.nextsList.at'
+                                    )}] HH[h] mm[m]`
                                 )}
                             </SANTypography>
                             {!!live.description && (

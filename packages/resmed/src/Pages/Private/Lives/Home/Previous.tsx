@@ -88,7 +88,7 @@ const RMPrevious = memo<RouteComponentProps>(({ history }) => {
             query={GET_LIVES}
             options={{
                 variables: {
-                    end: format(new Date(), 'YYYY-MM-DD'),
+                    end: format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
                     order: 'DESC'
                 }
             }}
