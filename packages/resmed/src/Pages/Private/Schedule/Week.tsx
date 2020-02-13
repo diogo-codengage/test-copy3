@@ -30,7 +30,7 @@ const getWeekend = () => {
     const first = curr.getDate() - curr.getDay()
     const last = first + 6
 
-    let end = new Date(addDays(curr.getDay(), last))
+    let end = new Date(addDays(curr.getDay(), last).setMonth(curr.getMonth()))
     end = new Date(
         new Date().getFullYear(),
         end.getMonth(),
