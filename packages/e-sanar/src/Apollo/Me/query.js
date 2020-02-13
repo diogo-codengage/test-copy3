@@ -15,7 +15,21 @@ export const GET_ME = gql`
                     id
                     icon
                     name
-                    cover_picture_url
+                    # cover_pictures {
+                    #   id
+                    #   small {
+                    #     url
+                    #   }
+                    #   medium {
+                    #     url
+                    #   }
+                    #   large {
+                    #     url
+                    #   }
+                    #   original {
+                    #     url
+                    #   }
+                    # }
                 }
             }
         }
