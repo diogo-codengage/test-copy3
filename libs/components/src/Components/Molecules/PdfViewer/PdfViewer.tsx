@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { isMobile } from 'react-device-detect'
-import { PDFReader, MobilePDFReader } from 'reactjs-pdf-reader'
+import { PdfViewer, MobilePdfViewer } from 'reactjs-pdf-reader'
 
 import { useTranslation } from 'react-i18next'
 
@@ -24,23 +24,26 @@ const SANStyledScroll = styled(SANScroll)`
     }
 `
 
-export interface ISANPdfReaderProps {
+export interface ISANPdfViewerProps {
     url: string
     hasDownload?: boolean
 }
-const SANPdfReader = ({ url, hasDownload = true }: ISANPdfReaderProps) => {
+const SANPdfViewer: React.FC<ISANPdfViewerProps> = ({
+    url,
+    hasDownload = true
+}) => {
     const { t } = useTranslation('sanarui')
 
     const openPdf = () => window.open(url)
 
     return (
-        <div>
+        <>
             <SANBox flex='1' displayFlex flexDirection='column' bg='#d1d1d1'>
                 <SANStyledScroll>
                     {isMobile ? (
-                        <MobilePDFReader showAllPage url={`${url}`} />
+                        <MobilePdfViewer showAllPage url={`${url}`} />
                     ) : (
-                        <PDFReader scale={1} showAllPage url={`${url}`} />
+                        <PdfViewer scale={1} showAllPage url={`${url}`} />
                     )}
                 </SANStyledScroll>
             </SANBox>
@@ -53,7 +56,7 @@ const SANPdfReader = ({ url, hasDownload = true }: ISANPdfReaderProps) => {
                     justifyContent='center'
                 >
                     <SANTypography type='light' variant='caption'>
-                        {t('pdfReader.problemRenderingPdf')}
+                        {t('PdfReader.problemRenderingPdf')}
                     </SANTypography>
                     <SANButton
                         variant='text'
@@ -62,12 +65,12 @@ const SANPdfReader = ({ url, hasDownload = true }: ISANPdfReaderProps) => {
                         onClick={openPdf}
                         bold
                     >
-                        {t('pdfReader.clickAndDownload')}
+                        {t('PdfReader.clickAndDownload')}
                     </SANButton>
                 </SANBox>
             )}
-        </div>
+        </>
     )
 }
 
-export default SANPdfReader
+export default SANPdfViewer
