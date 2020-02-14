@@ -125,7 +125,7 @@ const RMNexts = memo(() => {
             query={GET_LIVES}
             options={{
                 variables: {
-                    start: format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+                    start: new Date().toISOString()
                 }
             }}
             loaderProps={{ minHeight: '200px', flex: true }}
