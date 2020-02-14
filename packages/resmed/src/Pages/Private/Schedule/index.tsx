@@ -98,17 +98,31 @@ export const getStatus = event => {
 export const formatMinutes = minutes =>
     new Date(minutes * 60000).toISOString().substr(11, 5)
 
-export const makeEvent = (event: IAppointment, hasModified = false) => ({
-    extendedProps: {
-        ...event,
-        subtitle: formatMinutes(event.timeInMinutes)
-    },
-    id: event.id,
-    title: event.title,
-    start: getUTCDate(event.start),
-    startEditable: hasModified ? !event.fixed : false,
-    status: getStatus(event)
-})
+export const makeEvent = (event: IAppointment, hasModified = false) => {
+    const subtitle = () => {
+        if (event.resourceType === 'Live' && !!event.accessLive) {
+            const startDate = new Date(event.accessLive.startDate)
+            return format(
+                startDate,
+                startDate.getMinutes() ? 'HH[h] mm[m]' : 'HH[h]'
+            )
+        } else {
+            return formatMinutes(event.timeInMinutes)
+        }
+    }
+
+    return {
+        extendedProps: {
+            ...event,
+            subtitle: subtitle()
+        },
+        id: event.id,
+        title: event.title,
+        start: getUTCDate(event.start),
+        startEditable: hasModified ? !event.fixed : false,
+        status: getStatus(event)
+    }
+}
 
 interface ISchedule {
     hasModified: boolean
