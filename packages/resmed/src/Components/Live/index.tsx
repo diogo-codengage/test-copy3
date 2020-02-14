@@ -96,6 +96,15 @@ const RMLive = forwardRef<ISANChatRef, IRMLiveProps>(
             [live]
         )
 
+        const startDate = useMemo(
+            () => new Date(!!live ? live.startDate : ''),
+            [live]
+        )
+        const formatType = useMemo(
+            () => `DD/MM/YYYY [${t('lives.nextsList.at')}] HH[h]`,
+            [t]
+        )
+
         return (
             <>
                 <SANLayoutContainer px={{ md: 'md', _: '0' }}>
@@ -160,10 +169,10 @@ const RMLive = forwardRef<ISANChatRef, IRMLiveProps>(
                                 mb={{ md: 'lg', _: 'md' }}
                             >
                                 {format(
-                                    new Date(live.startDate),
-                                    `DD/MM/YYYY [${t(
-                                        'lives.nextsList.at'
-                                    )}] HH[h] mm[m]`
+                                    startDate,
+                                    startDate.getMinutes() > 0
+                                        ? `${formatType} mm[m]`
+                                        : formatType
                                 )}
                             </SANTypography>
                             {!!live.description && (
