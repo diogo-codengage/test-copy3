@@ -6,7 +6,6 @@ import { useQuery } from '@apollo/react-hooks'
 import { isAfter, isBefore, isToday } from 'date-fns'
 
 import { SANBox, SANPage, SANEmpty } from '@sanar/components'
-import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import RMLive from 'Components/Live'
 import {
@@ -23,8 +22,8 @@ const RMSpecialty = memo<RouteComponentProps>(({ history }) => {
 
     const status = useMemo(() => {
         if (!loading && !!data) {
-            const start = getUTCDate(data.activeLive.startDate)
-            const end = getUTCDate(data.activeLive.endDate)
+            const start = new Date(data.activeLive.startDate)
+            const end = new Date(data.activeLive.endDate)
             const now = new Date()
             return {
                 hasOnline: isAfter(now, start) && isBefore(now, end),

@@ -16,7 +16,6 @@ import {
     SANQuery
 } from '@sanar/components'
 import { useThemeContext, useWindowSize } from '@sanar/utils/dist/Hooks'
-import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import { GET_LIVES, ILivesQuery, ILive } from 'Apollo/Lives/Queries/lives'
 
@@ -70,7 +69,7 @@ const RMPrevious = memo<RouteComponentProps>(({ history }) => {
                 <SANCardLive
                     hasList={isList ? hasList : true}
                     title={live.title}
-                    date={format(getUTCDate(live.startDate), 'DD/MM/YYYY')}
+                    date={format(new Date(live.startDate), 'DD/MM/YYYY')}
                     description={live.description}
                     image={live.image}
                     onClick={() =>

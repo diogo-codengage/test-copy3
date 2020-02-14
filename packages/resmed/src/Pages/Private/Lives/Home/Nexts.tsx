@@ -13,7 +13,6 @@ import {
     SANCarousel,
     SANQuery
 } from '@sanar/components'
-import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import { GET_LIVES, ILivesQuery, ILive } from 'Apollo/Lives/Queries/lives'
 
@@ -112,7 +111,7 @@ const RMNexts = memo(() => {
                 key={live.id}
                 title={live.title}
                 subtitle={format(
-                    getUTCDate(live.startDate),
+                    new Date(live.startDate),
                     `DD/MM/YYYY [${t('lives.nextsList.at')}] HH[h] mm[m]`
                 )}
             />
