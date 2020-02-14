@@ -195,29 +195,47 @@ export const RMModalSchedule = withRouter(
         const { t } = useTranslation('resmed')
 
         const handleClick = () => {
-            if (!!options && !!options.accessContent) {
-                const {
-                    specialtyId,
-                    subSpecialtyId,
-                    lesson,
-                    collectionId,
-                    resource
-                } = options.accessContent
+            if (!!options) {
+                if (!!options.accessContent) {
+                    const {
+                        specialtyId,
+                        subSpecialtyId,
+                        lesson,
+                        collectionId,
+                        resource
+                    } = options.accessContent
 
-                if (options.resourceType === 'Level') {
-                    const final = `${
-                        lesson.id
-                    }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-                        resource.id
-                    }`
-                    if (!!subSpecialtyId) {
-                        history.push(
-                            `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${final}`
-                        )
-                    } else {
-                        history.push(
-                            `/inicio/sala-aula/${specialtyId}/${final}`
-                        )
+                    if (options.resourceType === 'Level') {
+                        const final = `${
+                            lesson.id
+                        }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                            resource.id
+                        }`
+                        if (!!subSpecialtyId) {
+                            history.push(
+                                `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${final}`
+                            )
+                        } else {
+                            history.push(
+                                `/inicio/sala-aula/${specialtyId}/${final}`
+                            )
+                        }
+                    }
+                } else if (!!options.accessLive) {
+                    if (options.resourceType === 'Live') {
+                        const { startDate, endDate, id } = options.accessLive
+                        const currentDate = new Date().getTime()
+                        const startLive = new Date(startDate).getTime()
+                        const endLive = new Date(endDate).getTime()
+
+                        if (
+                            currentDate >= startLive &&
+                            currentDate <= endLive
+                        ) {
+                            history.push('/inicio/lives/atual')
+                        } else if (currentDate > endLive) {
+                            history.push(`/inicio/lives/anterior/${id}`)
+                        }
                     }
                 }
             }
@@ -239,17 +257,23 @@ export const RMModalSchedule = withRouter(
             const disable = false
             switch (options.status) {
                 case 'viewed':
-                    return {disable, label: t('schedule.modal.lesson.watched')}
+                    return {
+                        disable,
+                        label: t('schedule.modal.lesson.watched')
+                    }
                 case 'unseen':
-                    return {disable, label: t('schedule.modal.lesson.watch')}
+                    return { disable, label: t('schedule.modal.lesson.watch') }
                 case 'live':
-                    const currentDate = new Date().getTime();
-                    const startDate = new Date(options.start!).getTime();
+                    const currentDate = new Date().getTime()
+                    const startDate = new Date(options.start!).getTime()
                     return startDate > currentDate
-                        ? {disable: true, label: t('schedule.modal.live.comingSoon')}
-                        : {disable, label: t('schedule.modal.live.button')}
+                        ? {
+                              disable: true,
+                              label: t('schedule.modal.live.comingSoon')
+                          }
+                        : { disable, label: t('schedule.modal.live.button') }
                 default:
-                    return {disable, label: t('schedule.modal.lesson.watch')}
+                    return { disable, label: t('schedule.modal.lesson.watch') }
             }
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [options])

@@ -98,10 +98,22 @@ export const getStatus = event => {
 export const formatMinutes = minutes =>
     new Date(minutes * 60000).toISOString().substr(11, 5)
 
+const getSubtitle = event => {
+    if (event.resourceType === 'Live' && !!event.accessLive) {
+        const startDate = new Date(event.accessLive.startDate)
+        return format(
+            startDate,
+            startDate.getMinutes() ? 'HH[h] mm[m]' : 'HH[h]'
+        )
+    } else {
+        return formatMinutes(event.timeInMinutes)
+    }
+}
+
 export const makeEvent = (event: IAppointment, hasModified = false) => ({
     extendedProps: {
         ...event,
-        subtitle: formatMinutes(event.timeInMinutes)
+        subtitle: getSubtitle(event)
     },
     id: event.id,
     title: event.title,
