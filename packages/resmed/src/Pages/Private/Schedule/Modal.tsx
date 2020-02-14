@@ -221,11 +221,22 @@ export const RMModalSchedule = withRouter(
                             )
                         }
                     }
-                } else if (
-                    options.resourceType === 'Live' &&
-                    options.resourceId
-                ) {
-                    history.push(`/inicio/lives/anterior/${options.resourceId}`)
+                } else if (!!options.accessLive) {
+                    if (options.resourceType === 'Live') {
+                        const { startDate, endDate, id } = options.accessLive
+                        const currentDate = new Date().getTime()
+                        const startLive = new Date(startDate).getTime()
+                        const endLive = new Date(endDate).getTime()
+
+                        if (
+                            currentDate >= startLive &&
+                            currentDate <= endLive
+                        ) {
+                            history.push('/inicio/lives/atual')
+                        } else if (currentDate > endLive) {
+                            history.push(`/inicio/lives/anterior/${id}`)
+                        }
+                    }
                 }
             }
         }

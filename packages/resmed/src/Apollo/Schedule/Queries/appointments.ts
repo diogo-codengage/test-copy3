@@ -1,5 +1,7 @@
 import gql from 'graphql-tag'
 
+import { ILive } from '../../Lives/Queries/lives'
+
 interface ILastAccessedResource {
     id: string
     type: 'Quiz' | 'Video'
@@ -30,6 +32,7 @@ export interface IAppointment {
     seen: boolean
     timeInMinutes: number
     accessContent: IAccessContent
+    accessLive: ILive
 }
 
 interface IInterval {
@@ -78,6 +81,13 @@ export const GET_APPOINTMENTS = gql`
                         id
                         type
                     }
+                }
+                accessLive {
+                    id
+                    title
+                    startDate
+                    endDate
+                    youtubeId
                 }
             }
         }
