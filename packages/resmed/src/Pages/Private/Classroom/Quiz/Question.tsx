@@ -5,6 +5,7 @@ import { theme } from 'styled-tools'
 import { useApolloClient } from '@apollo/react-hooks'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
+import * as Sentry from '@sentry/browser'
 
 import {
     SANRow,
@@ -60,7 +61,11 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
             questionsMap,
             setQuestionsMap
         } = useClassroomQuizContext()
-        const { handleProgress, setClickerName, setHasQuestions } = useClassroomContext()
+        const {
+            handleProgress,
+            setClickerName,
+            setHasQuestions
+        } = useClassroomContext()
         const { params: paramsLayout } = useLayoutContext()
         const [visible, setVisible] = useState(false)
         const [loading, setLoading] = useState(false)
@@ -96,10 +101,13 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                         questionId: questions[questionIndex].id
                     }
                 })
-            } catch {}
-            setSkipped(old => old + 1)
-            setLoading(false)
-            goToNext()
+            } catch (error) {
+                Sentry.captureException(error)
+            } finally {
+                setSkipped(old => old + 1)
+                setLoading(false)
+                goToNext()
+            }
         }
 
         const handleNext = () => goToNext()
@@ -167,8 +175,11 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                     'Question ID': questions[questionIndex].id,
                     Correct: correct.id === alternativeId
                 })
-            } catch (e) {}
-            setLoading(false)
+            } catch (error) {
+                Sentry.captureException(error)
+            } finally {
+                setLoading(false)
+            }
         }
 
         const toggleVisible = () => setVisible(oldVisible => !oldVisible)
