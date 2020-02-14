@@ -12,12 +12,10 @@ import {
     SANAvatar,
     SANLayoutContainer,
     SANSkeleton,
-    SANChat
-} from '@sanar/components'
-import {
+    SANChat,
     ISANChatProps,
     ISANChatRef
-} from '@sanar/components/dist/Components/Organisms/Chat'
+} from '@sanar/components'
 
 import { ILive } from 'Apollo/Lives/Queries/lives'
 

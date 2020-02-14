@@ -64,6 +64,22 @@ const SANCourseChange = ({ handleBack, history }) => {
         setLoading(false)
     }
 
+    const getCoverPicture = coverPictures => {
+        if (!!coverPictures) {
+            const { small, medium, large, original } = coverPictures
+            if (!!large) {
+                return large.url
+            } else if (!!medium) {
+                return medium.url
+            } else if (!!small) {
+                return small.url
+            } else if (!!original) {
+                return original.url
+            }
+        }
+        return
+    }
+
     const renderEnrollment = enrollment => (
         <ESChangeCourse
             loading={loading}
@@ -75,7 +91,7 @@ const SANCourseChange = ({ handleBack, history }) => {
                 format(enrollment.expires_at, 'DD/MM/YYYY')
             }
             percent={parseInt(enrollment.progress_percentage)}
-            coverPicture={enrollment.course.cover_picture_url}
+            coverPicture={getCoverPicture(enrollment.course.cover_pictures)}
             icon={enrollment.course.icon}
             module={moduleReference(lastAccessed)}
             description={lastAccessed.module_title}
@@ -117,7 +133,9 @@ const SANCourseChange = ({ handleBack, history }) => {
                         format(enrollment.expires_at, 'DD/MM/YYYY')
                     }
                     percent={parseInt(enrollment.progress_percentage)}
-                    coverPicture={enrollment.course.cover_picture_url}
+                    coverPicture={getCoverPicture(
+                        enrollment.course.cover_pictures
+                    )}
                     icon={enrollment.course.icon}
                     onContinue={goClassroom}
                     module={moduleReference(lastAccessed)}
