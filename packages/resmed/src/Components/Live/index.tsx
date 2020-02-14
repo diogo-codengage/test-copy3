@@ -14,7 +14,6 @@ import {
     SANLayoutContainer,
     SANSkeleton
 } from '@sanar/components'
-import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import { ILive } from 'Apollo/Lives/Queries/lives'
 
@@ -145,6 +144,15 @@ const RMLive = memo<IRMLiveProps>(
             [live]
         )
 
+        const startDate = useMemo(
+            () => new Date(!!live ? live.startDate : ''),
+            [live]
+        )
+        const formatType = useMemo(
+            () => `DD/MM/YYYY [${t('lives.nextsList.at')}] HH[h]`,
+            [t]
+        )
+
         return (
             <>
                 <SANLayoutContainer px={{ md: 'md', _: '0' }}>
@@ -183,8 +191,10 @@ const RMLive = memo<IRMLiveProps>(
                                 mb={{ md: 'lg', _: 'md' }}
                             >
                                 {format(
-                                    getUTCDate(live.startDate),
-                                    'DD/MM/YYYY'
+                                    startDate,
+                                    startDate.getMinutes() > 0
+                                        ? `${formatType} mm[m]`
+                                        : formatType
                                 )}
                             </SANTypography>
                             {!!live.description && (

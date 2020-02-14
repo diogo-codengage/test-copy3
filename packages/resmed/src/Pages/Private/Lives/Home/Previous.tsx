@@ -16,16 +16,17 @@ import {
     SANQuery
 } from '@sanar/components'
 import { useThemeContext, useWindowSize } from '@sanar/utils/dist/Hooks'
-import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import { GET_LIVES, ILivesQuery, ILive } from 'Apollo/Lives/Queries/lives'
 
 const updateCacheLives = (prev, { fetchMoreResult }) => {
     if (!fetchMoreResult) return prev
+
     return Object.assign({}, prev, {
         lives: {
             ...prev.lives,
-            ...prev.lives
+            ...fetchMoreResult.lives,
+            items: [...prev.lives.items, ...fetchMoreResult.lives.items]
         }
     })
 }
@@ -70,7 +71,7 @@ const RMPrevious = memo<RouteComponentProps>(({ history }) => {
                 <SANCardLive
                     hasList={isList ? hasList : true}
                     title={live.title}
-                    date={format(getUTCDate(live.startDate), 'DD/MM/YYYY')}
+                    date={format(new Date(live.startDate), 'DD/MM/YYYY')}
                     description={live.description}
                     image={live.image}
                     onClick={() =>
@@ -88,7 +89,7 @@ const RMPrevious = memo<RouteComponentProps>(({ history }) => {
             query={GET_LIVES}
             options={{
                 variables: {
-                    end: format(new Date(), 'YYYY-MM-DD'),
+                    end: new Date().toISOString(),
                     order: 'DESC'
                 }
             }}
