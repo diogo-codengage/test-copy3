@@ -2,6 +2,7 @@ import React, { memo, useEffect, useState } from 'react'
 
 import { useApolloClient } from '@apollo/react-hooks'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
+import * as Sentry from '@sentry/browser'
 
 import {
     SANBox,
@@ -41,10 +42,13 @@ const RMClassroomRating = memo<RouteComponentProps<IParams>>(
                         value
                     }
                 })
-            } catch {}
-            setCompleted(true)
-            setSubmitting(false)
-            handleNext()
+            } catch (error) {
+                Sentry.captureException(error)
+            } finally {
+                setCompleted(true)
+                setSubmitting(false)
+                handleNext()
+            }
         }
 
         const handleNext = () => {
