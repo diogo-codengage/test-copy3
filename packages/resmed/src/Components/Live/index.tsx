@@ -18,7 +18,6 @@ import {
     ISANChatProps,
     ISANChatRef
 } from '@sanar/components/dist/Components/Organisms/Chat'
-import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import { ILive } from 'Apollo/Lives/Queries/lives'
 
@@ -161,7 +160,7 @@ const RMLive = forwardRef<ISANChatRef, IRMLiveProps>(
                                 mb={{ md: 'lg', _: 'md' }}
                             >
                                 {format(
-                                    getUTCDate(live.startDate),
+                                    new Date(live.startDate),
                                     `DD/MM/YYYY [${t(
                                         'lives.nextsList.at'
                                     )}] HH[h] mm[m]`
