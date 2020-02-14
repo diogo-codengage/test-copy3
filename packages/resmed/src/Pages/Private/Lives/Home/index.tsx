@@ -14,7 +14,6 @@ import {
     SANGenericError,
     useSnackbarContext
 } from '@sanar/components'
-import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import RMLive from 'Components/Live'
 import {
@@ -102,8 +101,8 @@ const RMLivesHome = memo<RouteComponentProps>(({ history }) => {
     }
 
     const calculateStartLive = activeLive => {
-        const start = getUTCDate(activeLive.startDate)
-        const end = getUTCDate(activeLive.endDate)
+        const start = new Date(activeLive.startDate)
+        const end = new Date(activeLive.endDate)
         const now = new Date()
 
         const online = isAfter(now, start) && isBefore(now, end)
