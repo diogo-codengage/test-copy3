@@ -3,6 +3,7 @@ import React, { useRef, useState, useMemo, memo, useEffect } from 'react'
 import { theme } from 'styled-tools'
 import styled from 'styled-components'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
+import * as Sentry from '@sentry/browser'
 
 import {
     SANJwPlayer,
@@ -73,7 +74,10 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
 
         const handleComplete = () => handleTrack('Video completed', dataToTrack)
 
-        const handleVideoError = () => setVideoError(true)
+        const handleVideoError = e => {
+            setVideoError(true)
+            Sentry.captureException(e)
+        }
 
         const getStartTime = time => {
             if (videoReady && playerRef && playerRef.current) {
@@ -147,6 +151,7 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                     subspecialtyId: '',
                     ...paramsProp
                 }))
+                setWillStart(true)
             }
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [paramsProp])
@@ -163,13 +168,15 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
             [width]
         )
 
-        const pathScript = useMemo(
-            () =>
-                process.env.REACT_APP_ENV === 'production'
-                    ? '/residenciamedica/jwplayer/jwplayer.js'
-                    : '/jwplayer/jwplayer.js',
-            []
-        )
+        // const pathScript = useMemo(
+        //     () =>
+        //         process.env.REACT_APP_ENV === 'production'
+        //             ? '/residenciamedica/jwplayer/jwplayer.js'
+        //             : '/jwplayer/jwplayer.js',
+        //     []
+        // )
+
+        const pathScript = '/jwplayer/jwplayer.js'
 
         const debounceProgress = createDebounce(onProgress, 500)
 
@@ -184,13 +191,17 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                 errorProps={{ dark: true }}
             >
                 {({ data: { video } }: { data: IVideoQuery }) => {
-                    willStart &&
+                    if (
+                        willStart &&
                         video &&
                         video.timeInSeconds &&
                         video.timeInSeconds > 3 &&
-                        video.progress < 100 &&
+                        video.progress < 100
+                    ) {
                         getStartTime(video.timeInSeconds)
-
+                    } else {
+                        willStart && setWillStart(false)
+                    }
                     return (
                         <SANBox bg='grey-solid.8' position='relative'>
                             <Header>

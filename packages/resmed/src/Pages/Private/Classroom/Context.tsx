@@ -1,6 +1,7 @@
 import React, { useContext, createContext, useEffect, useState } from 'react'
 
 import { useApolloClient } from '@apollo/react-hooks'
+import * as Sentry from '@sentry/browser'
 
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { CREATE_PROGRESS } from 'Apollo/Classroom/Mutations/create-progress'
@@ -50,10 +51,12 @@ const RMClassroomProvider: React.FC = ({ children }) => {
     const { setMenuTab, params, fetchSuggestedClass } = useLayoutContext()
 
     const handleProgress = (data: IDataProgress) =>
-        client.mutate({
-            mutation: CREATE_PROGRESS,
-            variables: data
-        })
+        client
+            .mutate({
+                mutation: CREATE_PROGRESS,
+                variables: data
+            })
+            .catch(Sentry.captureException)
 
     useEffect(() => {
         const fetchSpecialtyId = async () => {
@@ -67,7 +70,9 @@ const RMClassroomProvider: React.FC = ({ children }) => {
                     }
                 })
                 setSpecialty(specialty)
-            } catch {}
+            } catch (error) {
+                Sentry.captureException(error)
+            }
         }
         !!params.specialtyId && fetchSpecialtyId()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,7 +90,9 @@ const RMClassroomProvider: React.FC = ({ children }) => {
                     }
                 })
                 setLesson(lesson)
-            } catch {}
+            } catch (error) {
+                Sentry.captureException(error)
+            }
         }
         !!params.lessonId && fetchLesson()
         setHasQuestions(false)
