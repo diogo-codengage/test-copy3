@@ -21,10 +21,12 @@ import { GET_LIVES, ILivesQuery, ILive } from 'Apollo/Lives/Queries/lives'
 
 const updateCacheLives = (prev, { fetchMoreResult }) => {
     if (!fetchMoreResult) return prev
+
     return Object.assign({}, prev, {
         lives: {
             ...prev.lives,
-            ...fetchMoreResult.lives
+            ...fetchMoreResult.lives,
+            items: [...prev.lives.items, ...fetchMoreResult.lives.items]
         }
     })
 }
