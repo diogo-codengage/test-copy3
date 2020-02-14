@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { isMobile } from 'react-device-detect'
-import { PdfViewer, MobilePdfViewer } from 'reactjs-pdf-reader'
+import { PDFReader, MobilePDFReader } from 'reactjs-pdf-reader'
 
 import { useTranslation } from 'react-i18next'
 
@@ -15,11 +15,14 @@ import styled from 'styled-components'
 const SANStyledScroll = styled(SANScroll)`
     &&& {
         @media (max-width: 1024px) {
+            min-height: calc(100vh - 172px);
             max-height: calc(100vh - 172px);
         }
         @media (max-width: 992px) {
+            min-height: calc(100vh - 238px);
             max-height: calc(100vh - 238px);
         }
+        min-height: calc(100vh - 128px);
         max-height: calc(100vh - 128px);
     }
 `
@@ -32,7 +35,7 @@ const SANPdfViewer: React.FC<ISANPdfViewerProps> = ({
     url,
     hasDownload = true
 }) => {
-    const { t } = useTranslation('sanarui')
+    const { t } = useTranslation('components')
 
     const openPdf = () => window.open(url)
 
@@ -41,9 +44,9 @@ const SANPdfViewer: React.FC<ISANPdfViewerProps> = ({
             <SANBox flex='1' displayFlex flexDirection='column' bg='#d1d1d1'>
                 <SANStyledScroll>
                     {isMobile ? (
-                        <MobilePdfViewer showAllPage url={`${url}`} />
+                        <MobilePDFReader showAllPage url={`${url}`} />
                     ) : (
-                        <PdfViewer scale={1} showAllPage url={`${url}`} />
+                        <PDFReader scale={1} showAllPage url={`${url}`} />
                     )}
                 </SANStyledScroll>
             </SANBox>
@@ -56,7 +59,7 @@ const SANPdfViewer: React.FC<ISANPdfViewerProps> = ({
                     justifyContent='center'
                 >
                     <SANTypography type='light' variant='caption'>
-                        {t('PdfReader.problemRenderingPdf')}
+                        {t('pdfReader.problemRenderingPdf')}
                     </SANTypography>
                     <SANButton
                         variant='text'
@@ -65,7 +68,7 @@ const SANPdfViewer: React.FC<ISANPdfViewerProps> = ({
                         onClick={openPdf}
                         bold
                     >
-                        {t('PdfReader.clickAndDownload')}
+                        {t('pdfReader.clickAndDownload')}
                     </SANButton>
                 </SANBox>
             )}
