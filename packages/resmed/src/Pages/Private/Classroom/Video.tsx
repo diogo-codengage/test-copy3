@@ -168,15 +168,13 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
             [width]
         )
 
-        // const pathScript = useMemo(
-        //     () =>
-        //         process.env.REACT_APP_ENV === 'production'
-        //             ? '/residenciamedica/jwplayer/jwplayer.js'
-        //             : '/jwplayer/jwplayer.js',
-        //     []
-        // )
-
-        const pathScript = '/jwplayer/jwplayer.js'
+        const pathScript = useMemo(
+            () =>
+                process.env.REACT_APP_ENV === 'production'
+                    ? '/residenciamedica/jwplayer/jwplayer.js'
+                    : '/jwplayer/jwplayer.js',
+            []
+        )
 
         const debounceProgress = createDebounce(onProgress, 500)
 
