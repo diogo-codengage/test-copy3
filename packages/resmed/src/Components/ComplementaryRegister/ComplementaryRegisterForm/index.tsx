@@ -6,7 +6,11 @@ import { prop, omit } from 'ramda'
 import { format } from 'date-fns'
 import moment from 'moment'
 
-import { withSANForm, useSnackbarContext } from '@sanar/components'
+import {
+    withSANForm,
+    useSnackbarContext,
+    ISANFormComponentProps
+} from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
 
@@ -24,12 +28,13 @@ import {
 
 import RMForm from './Form'
 
-interface IFormProps {
-    form: any
-}
-
 interface IFormValues extends ISuplemmentaryOptions {
     preparatoryCourseStatus: 'yes' | 'no'
+}
+
+interface IRMComplementaryRegisterFormProps extends ISANFormComponentProps {
+    form: any
+    closeModal?: () => void
 }
 
 const toLowerCase = v => ({
@@ -37,7 +42,10 @@ const toLowerCase = v => ({
     label: v.label.toLowerCase()
 })
 
-const RMComplementaryRegisterForm = ({ form, closeModal }) => {
+const RMComplementaryRegisterForm: React.FC<IRMComplementaryRegisterFormProps> = ({
+    form,
+    closeModal
+}) => {
     const { t } = useTranslation('resmed')
 
     const [mutation, { loading: loadingMutation }] = useMutation<
@@ -167,4 +175,6 @@ const RMComplementaryRegisterForm = ({ form, closeModal }) => {
     )
 }
 
-export default withSANForm<IFormProps>(RMComplementaryRegisterForm)
+export default withSANForm<IRMComplementaryRegisterFormProps>(
+    RMComplementaryRegisterForm
+)

@@ -1,8 +1,7 @@
-import React, { useState, useMemo, memo } from 'react'
+import React, { useState, useMemo, forwardRef } from 'react'
 
 import styled from 'styled-components'
-import { theme, ifProp, ifNotProp } from 'styled-tools'
-import { isBrowser } from 'react-device-detect'
+import { theme } from 'styled-tools'
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 
@@ -12,7 +11,10 @@ import {
     SANTypography,
     SANAvatar,
     SANLayoutContainer,
-    SANSkeleton
+    SANSkeleton,
+    SANChat,
+    ISANChatProps,
+    ISANChatRef
 } from '@sanar/components'
 
 import { ILive } from 'Apollo/Lives/Queries/lives'
@@ -36,23 +38,6 @@ const SkeletonVideo = () => (
     </SANBox>
 )
 
-const arr = new Array(7).fill(0).map((_, i) => i)
-const renderSkeleton = e => (
-    <SANSkeleton
-        key={e}
-        dark
-        avatar={{ size: 24, shape: 'circle' }}
-        active
-        paragraph={false}
-    />
-)
-
-const SkeletonChat = () => (
-    <SANBox {...skeletonProps} px='md' pt='8' pb='115px'>
-        {arr.map(renderSkeleton)}
-    </SANBox>
-)
-
 const SkeletonDescription = () => (
     <SANBox mt={{ md: '7', _: '0' }}>
         <SANSkeleton active paragraph={{ rows: 1, width: '10%' }} />
@@ -73,10 +58,13 @@ const Content = styled.iframe`
     border: 0;
 `
 
-const VideoWrapper = styled(SANBox)<{ hasLive: boolean }>`
+const VideoWrapper = styled(SANBox)`
     border-radius: ${theme('radii.base')};
-    width: ${ifProp('hasLive', '68%', '100%')};
-    padding-bottom: ${ifNotProp('hasLive', '55.25%')};
+    position: relative;
+    padding-bottom: 41.25%;
+    height: 0;
+    overflow: hidden;
+    width: 73%;
 
     ${theme('mediaQueries.down.lg')} {
         width: 100%;
@@ -88,55 +76,17 @@ const VideoWrapper = styled(SANBox)<{ hasLive: boolean }>`
     }
 `
 
-const ChatWrapper = styled(SANBox)`
-    border-radius: ${theme('radii.base')};
-    border: 1px solid ${theme('colors.grey.2')};
-    width: 30%;
-    ${theme('mediaQueries.down.lg')} {
-        width: 100%;
-        padding-bottom: 100%;
-    }
-    ${theme('mediaQueries.down.md')} {
-        border-radius: 0;
-    }
-`
-
-const style: ISANBoxProps = {
-    position: 'relative',
-    pb: '41.25%',
-    height: 0,
-    overflow: 'hidden'
-}
-
 interface IRMLiveProps {
     hasLive?: boolean
-    loading?: boolean
-    hasOnline?: boolean
+    loadingLive?: boolean
     live?: ILive
+    chat: ISANChatProps
 }
 
-const RMLive = memo<IRMLiveProps>(
-    ({ live, loading = false, hasLive = true, hasOnline = false }) => {
+const RMLive = forwardRef<ISANChatRef, IRMLiveProps>(
+    ({ live, loadingLive = false, hasLive = true, chat }, ref) => {
         const { t } = useTranslation('resmed')
         const [hasLoadedVideo, setLoadedVideo] = useState(false)
-        const [hasLoadedChat, setLoadedChat] = useState(false)
-
-        const chat = useMemo(
-            () => (
-                <ChatWrapper {...style}>
-                    {(!hasLoadedChat || loading) && <SkeletonChat />}
-                    {!loading && !!live && (
-                        <Content
-                            src={`https://www.youtube.com/live_chat?v=${live.youtubeId}&embed_domain=${window.location.hostname}`}
-                            allowFullScreen
-                            title='Chat'
-                            onLoad={() => setLoadedChat(true)}
-                        />
-                    )}
-                </ChatWrapper>
-            ),
-            [loading, hasLoadedChat, live]
-        )
 
         const videoPath = useMemo(
             () =>
@@ -161,8 +111,10 @@ const RMLive = memo<IRMLiveProps>(
                         justifyContent='space-between'
                         flexDirection={{ lg: 'row', _: 'column' }}
                     >
-                        <VideoWrapper hasLive={hasLive} {...style}>
-                            {(!hasLoadedVideo || loading) && <SkeletonVideo />}
+                        <VideoWrapper>
+                            {(!hasLoadedVideo || loadingLive) && (
+                                <SkeletonVideo />
+                            )}
                             <Content
                                 src={videoPath}
                                 allowFullScreen
@@ -170,11 +122,35 @@ const RMLive = memo<IRMLiveProps>(
                                 onLoad={() => setLoadedVideo(true)}
                             />
                         </VideoWrapper>
-                        {isBrowser && hasOnline && chat}
+                        <SANBox
+                            mb={{ lg: '0', _: 'xl' }}
+                            width={{ lg: '24%', _: '100%' }}
+                        >
+                            <SANTypography
+                                color='grey.7'
+                                fontWeight='bold'
+                                fontSize='lg'
+                                mb='sm'
+                                ml={{ lg: '0', _: 'md' }}
+                            >
+                                {!chat || !chat.blocked
+                                    ? t('lives.liveChat')
+                                    : t('lives.chat')}
+                            </SANTypography>
+                            <SANChat
+                                ref={ref}
+                                hasMore={chat.hasMore}
+                                loadMore={chat.loadMore}
+                                messages={chat.messages}
+                                onSend={chat.onSend}
+                                blocked={chat.blocked}
+                                loading={chat.loading}
+                            />
+                        </SANBox>
                     </SANBox>
                 </SANLayoutContainer>
                 <SANLayoutContainer>
-                    {!loading && !!live ? (
+                    {!loadingLive && !!live ? (
                         <>
                             <SANTypography
                                 color='grey.7'

@@ -53,11 +53,7 @@ const SANStyledCheckbox = styled(SANCheckbox)`
         }
     }
 `
-const SANStyledButton = styled(SANButton)`
-    && {
-        color: ${theme('colors.grey.3')};
-    }
-`
+
 const SANCloseButtonBox = styled(SANBox)`
     && {
         border-bottom-right-radius: ${theme('radii.base')};
@@ -247,7 +243,7 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
                                 >
                                     {t('selectFilter.selectAll')}
                                 </SANButton>
-                                <SANStyledButton
+                                <SANButton
                                     onClick={handleClear}
                                     bold
                                     variant='text'
@@ -255,7 +251,7 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
                                     disabled={!value.length}
                                 >
                                     {t('selectFilter.clearSelect')}
-                                </SANStyledButton>
+                                </SANButton>
                             </SANBox>
                             <SANDivider
                                 my='0'
@@ -264,8 +260,12 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
                                 bg='grey.2'
                             />
                             <SANStyledScroll>
-                                <SANBox py='xxs'>
-                                    {rows.length ? rows : <SANEmpty />}
+                                <SANBox py='xs'>
+                                    {rows.length ? (
+                                        rows
+                                    ) : (
+                                        <SANEmpty height={139} />
+                                    )}
                                 </SANBox>
                             </SANStyledScroll>
                             <SANCloseButtonBox

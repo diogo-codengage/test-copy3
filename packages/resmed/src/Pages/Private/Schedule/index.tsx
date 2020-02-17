@@ -182,9 +182,16 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
         fetch(url, { method: 'GET' }).then(response => {
             setDownloading(false)
             if (response.status === 201) {
-                const link = document.createElement('a')
-                link.href = url
-                link.click()
+                // Edge fix download
+                if (navigator.msSaveOrOpenBlob) {
+                    response.blob().then(blob => {
+                        navigator.msSaveOrOpenBlob(blob, `${filename}.pdf`)
+                    })
+                } else {
+                    const link = document.createElement('a')
+                    link.href = url
+                    link.click()
+                }
             } else {
                 createSnackbar({
                     message: t('schedule.pdfDownloadFail'),

@@ -51,12 +51,7 @@ const SANClassroomVideo = () => {
         state: { currentModule }
     } = usePortalContext()
 
-    const {
-        handleBookmark,
-        bookmarked,
-        handleProgress,
-        openMenu
-    } = useClassroomContext()
+    const { handleProgress, openMenu } = useClassroomContext()
 
     const [rate, setRate] = useState()
     const [playlistVideo, setPlaylistVideo] = useState()
@@ -239,8 +234,6 @@ const SANClassroomVideo = () => {
                 onChange={setActiveKey}
                 activeKey={activeKey}
                 renderTabBar={renderTabBar({
-                    bookmarked,
-                    handleBookmark,
                     onClick: openMenu,
                     nextResource: nextResource && nextResource.title,
                     prevResource: prevResource && prevResource.title,

@@ -265,6 +265,11 @@ export default {
     },
     chat: {
         blocked: 'O chat está desativado.',
-        writeSomething: 'Escrever algo'
+        writeSomething: 'Escrever algo',
+        empty: 'Não há nenhuma mensagem'
+    },
+    pdfReader: {
+        problemRenderingPdf: 'Problemas ao visualizar esse material?',
+        clickAndDownload: 'Clique aqui e faça o download.'
     }
 }

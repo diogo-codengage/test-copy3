@@ -1,24 +1,18 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 
 import { ESCol, ESRow } from 'sanar-ui/dist/Components/Atoms/Grid'
-import ESSelect, { ESOption } from 'sanar-ui/dist/Components/Atoms/Select'
 import ESSwitch from 'sanar-ui/dist/Components/Atoms/Switch'
-import ESCheckbox, {
-    ESCheckboxGroup
-} from 'sanar-ui/dist/Components/Atoms/Checkbox'
 import ESRadio, { ESRadioGroup } from 'sanar-ui/dist/Components/Atoms/Radio'
+import ESSelect, { ESOption } from 'sanar-ui/dist/Components/Atoms/Select'
 import ESCollapse, {
     ESCollapsePanel
 } from 'sanar-ui/dist/Components/Atoms/Collapse'
 import ESEvaIcon from 'sanar-ui/dist/Components/Atoms/EvaIcon'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
-import ESDatePicker from 'sanar-ui/dist/Components/Atoms/DatePicker'
 import { ESFormItem } from 'sanar-ui/dist/Components/Molecules/Form'
-
-import useOnClickOutside from 'sanar-ui/dist/Hooks/useOnClickOutside'
 
 import { useQuestionsContext } from '../Context'
 
@@ -31,16 +25,33 @@ const Title = props => (
 const intlPath = 'questionBase.filter.advanced.'
 
 const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
-    const itemPickerRef = useRef()
     const { t } = useTranslation('esanar')
     const { formState } = useQuestionsContext()
     const [open, setOpen] = useState(false)
-    const [openCalendar, setOpenCalendar] = useState(false)
+    const [years, setYears] = useState([])
 
-    useOnClickOutside([itemPickerRef], () => setOpenCalendar(false), [
-        itemPickerRef,
-        setOpenCalendar
-    ])
+    useEffect(() => {
+        const createYearsList = () => {
+            const currentYear = new Date().getFullYear()
+            let startYear = 2009
+            const years = []
+            while (startYear < currentYear) {
+                years.push(startYear++)
+            }
+            setYears(years.reverse())
+        }
+        createYearsList()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const renderOption = useCallback(
+        option => (
+            <ESOption value={option} key={option}>
+                {option}
+            </ESOption>
+        ),
+        []
+    )
 
     return (
         <ESCollapse
@@ -62,76 +73,39 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
             >
                 <div className='questions-filter__advanced__content'>
                     <ESRow gutter={32} className='mb-md mt-lg'>
-                        <ESCol xs={24} lg={7}>
-                            <span ref={itemPickerRef}>
-                                <ESFormItem
-                                    name='year'
-                                    label={t(`${intlPath}year.label`)}
-                                    trigger={'onPanelChange'}
-                                    initialValue={formState && formState.year}
-                                >
-                                    <ESDatePicker
-                                        placeholder={t(
-                                            `${intlPath}year.placeholder`
-                                        )}
-                                        mode='year'
-                                        size='large'
-                                        open={openCalendar}
-                                        format='YYYY'
-                                        onOpenChange={() =>
-                                            setOpenCalendar(true)
-                                        }
-                                        onPanelChange={() =>
-                                            setOpenCalendar(false)
-                                        }
-                                    />
-                                </ESFormItem>
-                            </span>
-                        </ESCol>
-                        <ESCol xs={24} lg={7}>
+                        <ESCol xs={24} sm={12} md={10} lg={10}>
                             <ESFormItem
-                                name='state'
-                                label={t(`${intlPath}state.label`)}
+                                name='years'
+                                label={t(`${intlPath}year.label`)}
+                                initialValue={!!formState && formState.years}
                             >
                                 <ESSelect
-                                    disabled
+                                    mode={'multiple'}
                                     placeholder={t(
-                                        `${intlPath}state.placeholder`
+                                        `${intlPath}year.placeholder`,
+                                        {
+                                            min: 2009,
+                                            max: new Date().getFullYear() - 1
+                                        }
                                     )}
-                                    showArrow
+                                    allowClear
                                     size='large'
                                 >
-                                    <ESOption value='jack'>Jack</ESOption>
+                                    {years.map(renderOption)}
                                 </ESSelect>
                             </ESFormItem>
                         </ESCol>
-                        <ESCol xs={24} lg={10}>
+                        <ESCol xs={24} sm={12} md={14} lg={14}>
                             <ESFormItem
-                                name='difficulty'
-                                label={t(`${intlPath}difficulty.label`)}
-                                className='no-margin'
-                                initialValue={formState && formState.difficulty}
+                                name='isCommentedByExpert'
+                                label={t(`${intlPath}justCommented`)}
+                                className='switch'
+                                valuePropName='checked'
+                                initialValue={
+                                    !!formState && formState.isCommentedByExpert
+                                }
                             >
-                                <ESCheckboxGroup
-                                    className='checkbox disabled'
-                                    disabled
-                                >
-                                    <ESCheckbox value='easy'>
-                                        {t(
-                                            `${intlPath}difficulty.options.easy`
-                                        )}
-                                    </ESCheckbox>
-                                    <ESCheckbox value='intermediate'>
-                                        {t(
-                                            `${intlPath}difficulty.options.intermediate`
-                                        )}
-                                    </ESCheckbox>
-                                    <ESCheckbox value='hard'>
-                                        {t(
-                                            `${intlPath}difficulty.options.hard`
-                                        )}
-                                    </ESCheckbox>
-                                </ESCheckboxGroup>
+                                <ESSwitch />
                             </ESFormItem>
                         </ESCol>
                     </ESRow>
@@ -141,7 +115,7 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
                                 name='progress'
                                 label={t(`${intlPath}progress.label`)}
                                 className='no-margin'
-                                initialValue={formState && formState.progress}
+                                initialValue={!!formState && formState.progress}
                             >
                                 <ESRadioGroup>
                                     <ESRow>
@@ -175,19 +149,6 @@ const SANQuestionsFilterAdvanced = ({ defaultOpen }) => {
                                         </ESCol>
                                     </ESRow>
                                 </ESRadioGroup>
-                            </ESFormItem>
-                        </ESCol>
-                        <ESCol xs={24} lg={6}>
-                            <ESFormItem
-                                name='isCommentedByExpert'
-                                label={t(`${intlPath}justCommented`)}
-                                className='switch'
-                                valuePropName='checked'
-                                initialValue={
-                                    formState && formState.isCommentedByExpert
-                                }
-                            >
-                                <ESSwitch />
                             </ESFormItem>
                         </ESCol>
                     </ESRow>

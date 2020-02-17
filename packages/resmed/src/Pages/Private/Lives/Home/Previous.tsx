@@ -94,6 +94,7 @@ const RMPrevious = memo<RouteComponentProps>(({ history }) => {
                 }
             }}
             loaderProps={{ minHeight: '200px', flex: true }}
+            errorProps={{ mt: 'xl', ImageProps: { height: 150 } }}
         >
             {({
                 data: { lives },

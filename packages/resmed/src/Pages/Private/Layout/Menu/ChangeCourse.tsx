@@ -5,6 +5,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { format, isBefore, isAfter } from 'date-fns'
 import { filter, path, sortBy } from 'ramda'
+import * as Sentry from '@sentry/browser'
 
 import {
     SANEvaIcon,
@@ -15,9 +16,11 @@ import {
     SANChangeCourse,
     SANErrorBoundary,
     SANGenericError,
-    SANSpin
+    SANSpin,
+    useSnackbarContext
 } from '@sanar/components'
 import { getUTCDate } from '@sanar/utils/dist/Date'
+import { useTryToCrash } from '@sanar/utils/dist/Hooks'
 
 import { useAuthContext } from 'Hooks/auth'
 import { GET_COURSES, ICourseQuery } from 'Apollo/User/Queries/courses'
@@ -35,14 +38,25 @@ const arr = new Array(3).fill(0).map((_, index) => index)
 const formatExpireDate = (date: Date) => format(date, 'DD/MM/YYYY')
 
 const Courses = withRouter(({ history }) => {
+    const setCrash = useTryToCrash()
     const { activeCourse } = useAuthContext()
-    const { loading, data } = useQuery<ICourseQuery>(GET_COURSES)
+    const { loading, data, error } = useQuery<ICourseQuery>(GET_COURSES, {
+        onError(error) {
+            Sentry.captureException(error)
+        }
+    })
+
+    if (error) setCrash()
+
     const [changeCourse, { loading: loadingMutation }] = useMutation<
         IUpdateActiveCourseResponse,
         IUpdateActiveCourseVariables
     >(UPDATE_ACTIVE_COURSE, {
         onCompleted() {
             history.push('/inicio/curso')
+        },
+        onError(error) {
+            Sentry.captureException(error)
         },
         refetchQueries: [{ query: GET_ME }, { query: GET_ACTIVE_COURSE }]
     })
@@ -58,28 +72,33 @@ const Courses = withRouter(({ history }) => {
         course => {
             const start = getUTCDate(course.startDate)
             const end = getUTCDate(course.expireDate)
-            return !loading && !!course
-                ? {
-                      key: course.id,
-                      id: course.id,
-                      title: course.name,
-                      date: formatExpireDate(
-                          isAfter(start, new Date()) ? start : end
-                      ),
-                      percent: course.progress,
-                      coverPicture: course.images.original,
-                      expired: isBefore(end, new Date()),
-                      notStarted: isAfter(start, new Date()),
-                      onChange: () => handleChange(course.id)
-                  }
-                : {}
+            return {
+                key: course.id,
+                id: course.id,
+                title: course.name,
+                date: formatExpireDate(
+                    isAfter(start, new Date()) ? start : end
+                ),
+                percent: course.progress,
+                coverPicture:
+                    !!course.images && !!course.images.original
+                        ? course.images.original
+                        : '',
+                expired: isBefore(end, new Date()),
+                notStarted: isAfter(start, new Date()),
+                onChange: () => handleChange(course.id)
+            }
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [loading, data]
     )
 
     const renderCourse = course => (
-        <SANChangeCourse mb='md' loading={loading} {...getProps(course)} />
+        <SANChangeCourse
+            BoxProps={{ mb: 'md' }}
+            loading={loading}
+            {...getProps(course)}
+        />
     )
 
     const courses = useMemo(() => {
@@ -117,29 +136,43 @@ const Error = props => (
 
 const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
+    const createSnackbar = useSnackbarContext()
     const { activeCourse } = useAuthContext()
     const { setMenuTab, suggestedClass } = useLayoutContext()
 
     const goToClassroom = () => {
-        if (!!suggestedClass.data) {
-            const {
-                accessContent: {
-                    specialtyId,
-                    subSpecialtyId,
-                    resource,
-                    collectionId,
-                    lesson
+        try {
+            if (!!suggestedClass.data) {
+                const {
+                    accessContent: {
+                        specialtyId,
+                        subSpecialtyId,
+                        resource,
+                        collectionId,
+                        lesson
+                    }
+                } = suggestedClass.data
+                const type = resource.type.toLocaleLowerCase()
+                const path = subSpecialtyId
+                    ? `${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}`
+                    : `${specialtyId}/${lesson.id}/${collectionId}`
+                if (type === 'quiz') {
+                    history.push(
+                        `/inicio/sala-aula/${path}/quiz/${resource.id}/0`
+                    )
+                } else {
+                    history.push(
+                        `/inicio/sala-aula/${path}/video/${resource.id}`
+                    )
                 }
-            } = suggestedClass.data
-            const type = resource.type.toLocaleLowerCase()
-            const path = subSpecialtyId
-                ? `${specialtyId}/${subSpecialtyId}/${lesson.id}/${collectionId}`
-                : `${specialtyId}/${lesson.id}/${collectionId}`
-            if (type === 'quiz') {
-                history.push(`/inicio/sala-aula/${path}/quiz/${resource.id}/0`)
-            } else {
-                history.push(`/inicio/sala-aula/${path}/video/${resource.id}`)
             }
+        } catch (error) {
+            console.error('[RMMenuChangeCourse]:goToClassroom', error)
+            createSnackbar({
+                message: t('mainMenu.changeCourse.errorGoClass'),
+                theme: 'error'
+            })
+            Sentry.captureException(error)
         }
     }
 
@@ -159,7 +192,7 @@ const RMMenuChangeCourse = memo<RouteComponentProps>(({ history }) => {
                     {t('mainMenu.back')}
                 </SANButton>
             </SANBox>
-            {!!activeCourse && (
+            {!!activeCourse && !!activeCourse.id && (
                 <Error>
                     <SANChangeCourse
                         id={activeCourse.id}

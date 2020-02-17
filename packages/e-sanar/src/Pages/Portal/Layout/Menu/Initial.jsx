@@ -85,41 +85,17 @@ const SANInitial = ({ setTab, history }) => {
                     onClick={() => menuOpenOrClose()}
                     to='/aluno/curso'
                 />
-                {/*FIXME: <ESNavigationListItem
-                    key={1}
-                    title={t(`${intlPath}notifications`)}
-                    icon={
-                        <ESBadge dot border={false} style={{ right: 10 }}>
-                            <ESEvaIcon name='bell-outline' color='default' />
-                        </ESBadge>
-                    }
-                />
-                <ESNavigationListItem
-                    key={2}
-                    title={t(`${intlPath}schedule`)}
-                    icon={<ESEvaIcon name='calendar-outline' color='default' />}
-                />
-                <ESNavigationListItem
-                key={4}
-                title={t(`${intlPath}performace`)}
-                icon={
-                    <ESEvaIcon name='pie-chart-outline' color='default' />
-                }
-            /> */}
-                <ESNavigationListItem
+                {/*
+                    Diogo Biz - 05/02/2020 FD-1024
+                    Remover favoritos
+                */}
+                {/* <ESNavigationListItem
                     data-testid='san-menu-navigation__bookmarks'
                     key={3}
                     title={t(`${intlPath}saved`)}
                     icon={<ESEvaIcon name='heart-outline' color='default' />}
                     onClick={() => menuOpenOrClose()}
                     to='/aluno/favoritos'
-                />
-                {/*FIXME: <ESNavigationListItem
-                    key={4}
-                    title={t(`${intlPath}performace`)}
-                    icon={
-                        <ESEvaIcon name='pie-chart-outline' color='default' />
-                    }
                 /> */}
                 <ESNavigationListItem
                     data-testid='san-menu-navigation__questions'

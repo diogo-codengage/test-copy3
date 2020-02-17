@@ -17,12 +17,12 @@ import {
 
 import { useAuthContext } from 'Hooks/auth'
 import RMLogout from 'Components/ModalLogout'
-import { useLayoutContext } from '../Context'
+import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 import { useMainContext } from 'Pages/Private/Context'
 import { version } from 'Config/Version'
 import { logout } from 'Config/AWSCognito'
 
-import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
+import { useLayoutContext } from '../Context'
 
 const RMMenuAccount = memo<RouteComponentProps>(({ history }) => {
     const { t } = useTranslation('resmed')
