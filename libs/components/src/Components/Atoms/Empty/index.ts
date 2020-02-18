@@ -1,1 +1,1 @@
-export { default as SANEmpty } from './Empty'
+export { default as SANEmpty, ISANEmptyProps } from './Empty'

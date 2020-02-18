@@ -13,7 +13,7 @@ import { SANButton } from '../../Atoms/Button'
 import { SANDivider } from '../../Atoms/Divider'
 import { SANDropdown } from '../../Atoms/Dropdown'
 import { SANScroll } from '../../Atoms/Scroll'
-import { SANEmpty } from '../../Atoms/Empty'
+import { SANEmpty, ISANEmptyProps } from '../../Atoms/Empty'
 
 interface ISANStyledInputProps {
     hasError?: boolean
@@ -32,11 +32,7 @@ const SANStyledInput = styled(SANInput)<ISANStyledInputProps>`
         )}
     }
 `
-const SANStyledScroll = styled(SANScroll)`
-    &&& {
-        max-height: 198px;
-    }
-`
+
 const SANStyledCheckbox = styled(SANCheckbox)`
     && {
         width: 100%;
@@ -84,6 +80,7 @@ export interface ISANSelectFilterProps
     onDeselectItem?: (item: IItem) => void
     hasError?: boolean
     InputProps?: ISANInputProps
+    EmptyProps?: ISANEmptyProps
 }
 
 const makeLabel = value =>
@@ -109,6 +106,7 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
     onDeselectItem,
     hasError,
     InputProps,
+    EmptyProps,
     ...props
 }) => {
     const dropdownRef = useRef<any>()
@@ -263,11 +261,15 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
                                 width='calc(100% - 24px)'
                                 bg='grey.2'
                             />
-                            <SANStyledScroll>
+                            <SANScroll>
                                 <SANBox py='xxs'>
-                                    {rows.length ? rows : <SANEmpty />}
+                                    {rows.length ? (
+                                        rows
+                                    ) : (
+                                        <SANEmpty {...EmptyProps} />
+                                    )}
                                 </SANBox>
-                            </SANStyledScroll>
+                            </SANScroll>
                             <SANCloseButtonBox
                                 displayFlex
                                 alignItems='center'

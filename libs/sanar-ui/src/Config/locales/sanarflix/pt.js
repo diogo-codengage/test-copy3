@@ -460,6 +460,14 @@ export default {
             description:
                 'Selecione o ano e semestre da prova que deseja estudar',
             select: 'Seleciona o ano/semestre'
+        },
+        simple: {
+            title: 'Filtros selecionados',
+            subtitle:
+                'Aqui você pode editar os filtros escolhidos anteriormente',
+            seeFilters: 'Ver filtros',
+            closeFilters: 'Fechar filtros',
+            saveFilter: 'Salvar filtros'
         }
     }
 }

@@ -61,7 +61,11 @@ const FLXExamFilter: React.FC<IFLXExamFilterProps> = () => {
     const { t } = useTranslation('sanarflix')
     const { currentTab, setCurrentTab, handleSubmit } = useClassroomContext()
     return (
-        <SANBox pb={{ md: '8', _: '0' }} pt={{ md: '8', _: 'xxl' }}>
+        <SANBox
+            pb={{ md: '8', _: '0' }}
+            pt={{ md: '8', _: 'xxl' }}
+            bg='white.10'
+        >
             <SANLayoutContainer fullMobile>
                 <SANSessionTitle
                     title={t('examFilter.title')}
