@@ -310,7 +310,10 @@ export const createTheme = ({
             },
             down: {
                 ...prev.down,
-                [key]: `@media screen and (max-width: ${val})`
+                [key]: `@media screen and (max-width: ${parseInt(
+                    val as string,
+                    10
+                ) - 1}px)`
             }
         }),
         {
