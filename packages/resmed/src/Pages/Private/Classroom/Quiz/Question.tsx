@@ -30,6 +30,7 @@ import { useMainContext } from 'Pages/Private/Context'
 const SANColFloat = styled(SANCol)`
     && {
         ${theme('mediaQueries.down.md')} {
+            width: 100%;
             position: fixed;
             bottom: 0;
             left: 0;
