@@ -15,6 +15,7 @@ import logo from 'Assets/images/brand/logo.svg'
 
 import RMPrivacyAndPolicyFrame from './PrivacyAndPolicyFrame'
 import RMTermsFrame from './TermsFrame'
+import ReactGA from 'react-ga'
 
 const SANModalTermsAndPrivacy = ({
     defaultActiveKey,
@@ -36,12 +37,17 @@ const SANModalTermsAndPrivacy = ({
 
     const handleTrack = () => {
         try {
+            const event = 'Terms acepted'
             const data: IOptions = {
                 'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
                 'User ID': me.id
             }
 
-            segmentTrack('Terms acepted', data)
+            ReactGA.event({
+                category: event,
+                action: event
+            })
+            segmentTrack(event, data)
         } catch (err) {
             console.error('Track:[Terms acepted] error:', err)
         }

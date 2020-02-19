@@ -24,7 +24,6 @@ import { RMGlobalStyle } from './Styles'
 const history = createBrowserHistory();
 
 history.listen(location => {
-    console.log('change location', location.hash)
     ReactGA.set({ page: location.hash })
     ReactGA.pageview(location.hash)
 });

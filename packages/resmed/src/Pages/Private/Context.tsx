@@ -1,4 +1,5 @@
 import React, { useContext, createContext, memo } from 'react'
+import ReactGA from 'react-ga'
 
 import { withRouter, RouteComponentProps } from 'react-router'
 import { useQuery } from '@apollo/react-hooks'
@@ -44,6 +45,10 @@ const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
             ...attrs
         }
 
+        ReactGA.event({
+            category: event,
+            action: event
+        })
         segmentTrack(event, data)
     }
 

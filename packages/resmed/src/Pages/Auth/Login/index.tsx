@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react'
+import ReactGA from 'react-ga'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -34,6 +35,10 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
             ...attrs
         }
 
+        ReactGA.event({
+            category: event,
+            action: event
+        })
         segmentTrack(event, data)
     }
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import ReactGA from 'react-ga'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router'
@@ -39,6 +40,10 @@ const RMSendPasswordRecoveryPage: React.FC<IProps> = ({ form, history }) => {
             'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
             ...attrs
         }
+        ReactGA.event({
+            category: event,
+            action: event
+        })
         segmentTrack(event, data)
     }
 
