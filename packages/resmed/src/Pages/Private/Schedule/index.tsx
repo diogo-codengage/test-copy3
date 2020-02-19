@@ -435,34 +435,32 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                         </SANBox>
 
                         <SANBox
-                            mt={{ _: 'lg', md: '8' }}
+                            mt={{ md: '8', _: 'lg' }}
                             display='flex'
                             alignItems='center'
                             justifyContent='space-between'
                         >
                             <Suggestion
-                                display={{ _: 'none', md: 'flex' }}
+                                display={{ md: 'flex', _: 'none' }}
                                 onChange={handleChangeSuggestion}
                                 checked={modalSuggestion.checked}
                                 loading={loading}
                             />
                             {!!(schedule.items && schedule.items.length) && (
-                                <SANBox flex={{ _: '1', md: '0' }}>
-                                    <SANButton
-                                        size='small'
-                                        variant='outlined'
-                                        bold
-                                        block
-                                        loading={loading || downloading}
-                                        onClick={() => pdfDownload()}
-                                    >
-                                        <SANEvaIcon
-                                            name='download-outline'
-                                            mr='xs'
-                                        />
-                                        {t('schedule.pdfDownload')}
-                                    </SANButton>
-                                </SANBox>
+                                <SANButton
+                                    size='small'
+                                    variant='outlined'
+                                    bold
+                                    blockOnlyMobile
+                                    loading={loading || downloading}
+                                    onClick={() => pdfDownload()}
+                                >
+                                    <SANEvaIcon
+                                        name='download-outline'
+                                        mr='xs'
+                                    />
+                                    {t('schedule.pdfDownload')}
+                                </SANButton>
                             )}
                         </SANBox>
                     </SANLayoutContainer>
