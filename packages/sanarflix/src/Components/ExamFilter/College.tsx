@@ -15,7 +15,7 @@ import {
 
 import collegeImg from 'Assets/images/exam-filter/college.png'
 
-import { useClassroomContext } from './Context'
+import { useExamFilterContext } from './Context'
 import { NextButton } from './'
 
 interface IFLXFilterCollegeProps {}
@@ -28,7 +28,8 @@ const TextCol = styled(SANCol)`
 
 const FLXFilterCollege: React.FC<IFLXFilterCollegeProps> = () => {
     const { t } = useTranslation('sanarflix')
-    const { setCurrentTab, college, setCollege } = useClassroomContext()
+    const { setCurrentTab, state, handleCollege } = useExamFilterContext()
+
     return (
         <SANBox px={{ md: '8', _: 'md' }} pb={{ md: 'xxl', _: 'xl' }}>
             <SANRow
@@ -81,8 +82,8 @@ const FLXFilterCollege: React.FC<IFLXFilterCollegeProps> = () => {
                             allowClear
                             placeholder={t('examFilter.college.select')}
                             size='large'
-                            value={college}
-                            onChange={setCollege}
+                            value={state.college}
+                            onChange={handleCollege}
                         >
                             <SANSelectOption value='1'>1</SANSelectOption>
                             <SANSelectOption value='2'>2</SANSelectOption>

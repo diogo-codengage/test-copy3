@@ -81,6 +81,7 @@ export interface ISANSelectFilterProps
     hasError?: boolean
     InputProps?: ISANInputProps
     EmptyProps?: ISANEmptyProps
+    disabled?: boolean
 }
 
 const makeLabel = value =>
@@ -107,6 +108,7 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
     hasError,
     InputProps,
     EmptyProps,
+    disabled,
     ...props
 }) => {
     const dropdownRef = useRef<any>()
@@ -300,6 +302,7 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
                         placeholder={
                             placeholder ? placeholder : t('selectFilter.select')
                         }
+                        disabled={disabled}
                         iconLeft='search-outline'
                         onChange={handleSearch}
                         value={open ? search : labelSelecteds}

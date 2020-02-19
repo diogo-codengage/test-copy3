@@ -1,6 +1,9 @@
 import React from 'react'
 
+import styled from 'styled-components'
+import { theme } from 'styled-tools'
 import { useTranslation } from 'react-i18next'
+
 import {
     SANBox,
     SANSelect,
@@ -19,10 +22,18 @@ import {
 } from '@sanar/components'
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
+import { withFLXExamFilterProvider, useExamFilterContext } from './Context'
+
 interface ISelectWrapperProps {
     label: string
     isLast?: boolean
 }
+
+const SelectStyled = styled(SANSelectFilter)`
+    & .es-checkbox:hover {
+        background-color: ${theme('colors.primary-10')};
+    }
+`
 
 const SelectWrapper: React.FC<ISelectWrapperProps> = ({
     label,
@@ -46,8 +57,18 @@ const Button: React.FC = ({ children, ...props }) => (
 
 interface IFLXExamFilterSimpleProps {}
 
+const getIds = arr => arr.map(item => item.value)
+
 const Fields: React.FC<{ hasLast?: boolean }> = ({ hasLast }) => {
     const { t } = useTranslation('sanarflix')
+    const {
+        state,
+        handleCollege,
+        handleSubject,
+        handleTheme,
+        handleSemester
+    } = useExamFilterContext()
+
     return (
         <>
             <SANCol xs={24} md={12} lg={6}>
@@ -57,6 +78,8 @@ const Fields: React.FC<{ hasLast?: boolean }> = ({ hasLast }) => {
                         placeholder={t('examFilter.college.select')}
                         size='large'
                         style={{ width: '100%' }}
+                        value={state.college}
+                        onChange={handleCollege}
                     >
                         <SANSelectOption value='1'>1</SANSelectOption>
                         <SANSelectOption value='2'>2</SANSelectOption>
@@ -66,10 +89,18 @@ const Fields: React.FC<{ hasLast?: boolean }> = ({ hasLast }) => {
             </SANCol>
             <SANCol xs={24} md={12} lg={6}>
                 <SelectWrapper label={t('examFilter.subject.title')}>
-                    <SANSelectFilter
+                    <SelectStyled
+                        disabled={!state.college}
+                        onChange={items => handleSubject(getIds(items))}
                         placeholder={t('examFilter.subject.select')}
                         InputProps={{ size: 'large' }}
-                        items={[]}
+                        items={[
+                            { value: '1', label: 'Disciplina 1' },
+                            { value: '2', label: 'Disciplina 2' },
+                            { value: '2', label: 'Disciplina 3' },
+                            { value: '2', label: 'Disciplina 4' },
+                            { value: '2', label: 'Disciplina 5' }
+                        ]}
                         EmptyProps={{
                             py: 'md',
                             ImageProps: {
@@ -84,10 +115,18 @@ const Fields: React.FC<{ hasLast?: boolean }> = ({ hasLast }) => {
             </SANCol>
             <SANCol xs={24} md={12} lg={6}>
                 <SelectWrapper label={t('examFilter.theme.title')}>
-                    <SANSelectFilter
+                    <SelectStyled
+                        disabled={!state.subject.length}
+                        onChange={items => handleTheme(getIds(items))}
                         placeholder={t('examFilter.theme.select')}
                         InputProps={{ size: 'large' }}
-                        items={[]}
+                        items={[
+                            { value: '1', label: 'Tema 1' },
+                            { value: '2', label: 'Tema 2' },
+                            { value: '2', label: 'Tema 3' },
+                            { value: '2', label: 'Tema 4' },
+                            { value: '2', label: 'Tema 5' }
+                        ]}
                         EmptyProps={{
                             py: 'md',
                             ImageProps: {
@@ -105,10 +144,17 @@ const Fields: React.FC<{ hasLast?: boolean }> = ({ hasLast }) => {
                     label={t('examFilter.semester.title')}
                     isLast={hasLast}
                 >
-                    <SANSelectFilter
+                    <SelectStyled
+                        disabled={!state.theme.length}
+                        onChange={items => handleSemester(getIds(items))}
                         placeholder={t('examFilter.semester.select')}
                         InputProps={{ size: 'large' }}
-                        items={[]}
+                        items={[
+                            { value: '1', label: '2020.1' },
+                            { value: '2', label: '2020.2' },
+                            { value: '1', label: '2019.1' },
+                            { value: '2', label: '2019.2' }
+                        ]}
                         EmptyProps={{
                             py: 'md',
                             ImageProps: {
@@ -196,4 +242,4 @@ const FLXExamFilterSimple: React.FC<IFLXExamFilterSimpleProps> = () => {
     )
 }
 
-export default FLXExamFilterSimple
+export default withFLXExamFilterProvider(FLXExamFilterSimple)

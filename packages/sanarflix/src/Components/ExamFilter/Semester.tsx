@@ -13,7 +13,7 @@ import {
 
 import semesterImg from 'Assets/images/exam-filter/semester.svg'
 
-import { useClassroomContext } from './Context'
+import { useExamFilterContext } from './Context'
 import { PrevButton } from './'
 
 interface IFLXFilterSemesterProps {}
@@ -31,7 +31,8 @@ const Image = props => (
 
 const FLXFilterSemester: React.FC<IFLXFilterSemesterProps> = () => {
     const { t } = useTranslation('sanarflix')
-    const { setCurrentTab, semester, setSemester } = useClassroomContext()
+    const { setCurrentTab, state, handleSemester } = useExamFilterContext()
+
     return (
         <SANBox
             px={{ md: '8', _: 'md' }}
@@ -70,8 +71,9 @@ const FLXFilterSemester: React.FC<IFLXFilterSemesterProps> = () => {
                                 placeholder={t('examFilter.semester.select')}
                                 mode='multiple'
                                 size='large'
-                                onChange={setSemester}
-                                value={semester}
+                                onChange={handleSemester}
+                                value={state.semester}
+                                disabled={!state.theme.length}
                             >
                                 <SANSelectOption value='1'>
                                     2020.1

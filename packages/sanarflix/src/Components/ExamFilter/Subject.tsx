@@ -11,14 +11,15 @@ import {
 
 import subjectImg from 'Assets/images/exam-filter/subject-theme.svg'
 
-import { useClassroomContext } from './Context'
+import { useExamFilterContext } from './Context'
 import { NextButton, PrevButton } from './'
 
 interface IFLXFilterSubjectProps {}
 
 const FLXFilterSubject: React.FC<IFLXFilterSubjectProps> = () => {
     const { t } = useTranslation('sanarflix')
-    const { setCurrentTab, subject, setSubject } = useClassroomContext()
+    const { setCurrentTab, state, handleSubject } = useExamFilterContext()
+
     return (
         <SANBox
             px={{ md: '8', _: 'md' }}
@@ -44,13 +45,14 @@ const FLXFilterSubject: React.FC<IFLXFilterSubjectProps> = () => {
                 </SANCol>
                 <SANCol xs={24} sm={12} md={12}>
                     <SANSelectList
+                        disabled={!state.college}
                         placeholder={t('examFilter.subject.select')}
-                        onChange={setSubject}
+                        onChange={handleSubject}
                         items={[
                             { value: '1', label: 'Disciplina 1' },
                             { value: '2', label: 'Disciplina 2' }
                         ]}
-                        value={subject || []}
+                        value={state.subject}
                     />
                 </SANCol>
             </SANRow>

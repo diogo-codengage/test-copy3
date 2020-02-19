@@ -13,7 +13,7 @@ import {
     SANDivider
 } from '@sanar/components'
 
-import { withFLXExamFilterProvider, useClassroomContext } from './Context'
+import { withFLXExamFilterProvider, useExamFilterContext } from './Context'
 import FLXFilterCollege from './College'
 import FLXFilterSubject from './Subject'
 import FLXFilterTheme from './Theme'
@@ -59,7 +59,7 @@ export const PrevButton = ({ onClick }) => {
 
 const FLXExamFilter: React.FC<IFLXExamFilterProps> = () => {
     const { t } = useTranslation('sanarflix')
-    const { currentTab, setCurrentTab, handleSubmit } = useClassroomContext()
+    const { currentTab, setCurrentTab, handleSubmit } = useExamFilterContext()
     return (
         <SANBox
             pb={{ md: '8', _: '0' }}

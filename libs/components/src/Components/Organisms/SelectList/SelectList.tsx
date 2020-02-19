@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
-import styled from 'styled-components'
-import { theme } from 'styled-tools'
+import styled, { css } from 'styled-components'
+import { theme, ifProp } from 'styled-tools'
 
 import {
     SANScroll,
@@ -26,6 +26,7 @@ export interface ISANSelectListProps {
     items: IItem[]
     placeholder: string
     loading?: boolean
+    disabled?: boolean
 }
 
 interface IOnChange {
@@ -36,6 +37,7 @@ interface IOnChange {
 interface IRowItem extends IItem {
     onChange: (e: IOnChange) => void
     checked: boolean
+    disabled?: boolean
     TypographyProps?: ISANTypographyProps
 }
 
@@ -54,11 +56,19 @@ const InputStyled = styled(SANInput)`
     }
 `
 
-const RowItemStyled = styled(SANBox)`
-    cursor: pointer;
-    &:hover {
-        background-color: ${theme('colors.grey.0')};
-    }
+const RowItemStyled = styled(SANBox)<{ disabled?: boolean }>`
+    ${ifProp(
+        'disabled',
+        css`
+            cursor: not-allowed;
+        `,
+        css`
+            cursor: pointer;
+            &:hover {
+                background-color: ${theme('colors.grey.0')};
+            }
+        `
+    )}
 `
 
 const RowItem: React.FC<IRowItem> = ({
@@ -66,10 +76,10 @@ const RowItem: React.FC<IRowItem> = ({
     value,
     onChange,
     checked,
+    disabled,
     TypographyProps
 }) => {
     const handleChange = () => {
-        console.log('ewqeq')
         onChange({
             value,
             checked: !checked
@@ -83,8 +93,9 @@ const RowItem: React.FC<IRowItem> = ({
             borderBottom='1px solid'
             borderColor='grey.2'
             onClick={handleChange}
+            disabled={disabled}
         >
-            <SANCheckbox value={value} checked={checked}>
+            <SANCheckbox value={value} checked={checked} disabled={disabled}>
                 <SANTypography
                     onClick={e => e.stopPropagation()}
                     fontWeight='bold'
@@ -124,7 +135,8 @@ const SANSelectList: React.FC<ISANSelectListProps> = ({
     value = [],
     onChange,
     placeholder,
-    loading
+    loading,
+    disabled
 }) => {
     const { t } = useTranslation('components')
     const [search, setSearch] = useState('')
@@ -135,6 +147,7 @@ const SANSelectList: React.FC<ISANSelectListProps> = ({
             key={item.value}
             onChange={handleChange}
             checked={!!value.find(v => v === item.value)}
+            disabled={disabled}
         />
     )
 
@@ -203,6 +216,7 @@ const SANSelectList: React.FC<ISANSelectListProps> = ({
                             value={ALL_CHECKS}
                             checked={hasAllChecks}
                             onChange={handleChange}
+                            disabled={disabled}
                         />
                         {filteredItems.map(renderItem)}
                     </>
