@@ -3,12 +3,14 @@ import 'react-app-polyfill/stable'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
+import ReactGA from 'react-ga'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import * as Sentry from '@sentry/browser'
 
 import { HashRouter as BrowserRouter } from 'react-router-dom'
 import { LastLocationProvider } from 'react-router-last-location'
+import { createBrowserHistory } from 'history'
 
 import 'sanar-ui/dist/Config/i18n'
 
@@ -18,6 +20,14 @@ import { RMGraphQLProvider } from './Apollo/GraphQLService'
 import { RMThemeProvider } from './Components/Theme'
 import { RMAuthProvider } from './Hooks/auth'
 import { RMGlobalStyle } from './Styles'
+
+const history = createBrowserHistory();
+
+history.listen(location => {
+    console.log('change location', location.pathname)
+    ReactGA.set({ page: location.pathname })
+    ReactGA.pageview(location.pathname)
+});
 
 const RMApp: React.FC = () => (
     <RMGraphQLProvider>
@@ -45,3 +55,4 @@ if (process.env.NODE_ENV === 'production')
     })
 ReactDOM.render(<RMApp />, document.getElementById('root'))
 serviceWorker.register()
+ReactGA.initialize(`${process.env.REACT_APP_GOOGLE_ANALYTICS}`)

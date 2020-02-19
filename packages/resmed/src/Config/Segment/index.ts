@@ -64,6 +64,7 @@ export interface IOptions {
     'Video ID'?: string
     'OS Type'?: 'IOS' | 'ANDROID'
     Rating?: string
+    'Question Type'?: 'Quiz' | 'Practical Area'
 }
 
 export const events = {
