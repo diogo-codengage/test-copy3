@@ -7,6 +7,10 @@ import { SANTypography } from '../../Atoms/Typography'
 import { SANSkeleton } from 'Components/Atoms/Skeleton'
 import { SANDivider } from '../../Atoms/Divider'
 
+import Linkify from 'react-linkify'
+import styled from 'styled-components'
+import { theme } from 'styled-tools'
+
 export interface ISANChatItemProps extends ISANBoxProps {
     name: string
     time: string
@@ -16,6 +20,12 @@ export interface ISANChatItemProps extends ISANBoxProps {
 
 export const skeletons = new Array(2).fill(0).map((_, i) => i)
 export const renderSkeleton = index => <SANChatItemSkeleton key={index} />
+
+const componentDecorator = (href, text, key) => (
+    <a href={href} key={key} target='_blank' color='primary'>
+        {text}
+    </a>
+)
 
 export const SANChatItem: React.FC<ISANChatItemProps> = ({
     name,
@@ -38,13 +48,15 @@ export const SANChatItem: React.FC<ISANChatItemProps> = ({
         <SANTypography fontSize='xs' color='grey.6'>
             {format(new Date(time), 'HH:mm')}
         </SANTypography>
-        <SANTypography
-            fontSize='md'
-            color='grey.8'
-            style={{ wordBreak: 'break-word' }}
-        >
-            {message}
-        </SANTypography>
+        <Linkify componentDecorator={componentDecorator}>
+            <SANTypography
+                fontSize='md'
+                color='grey.8'
+                style={{ wordBreak: 'break-word' }}
+            >
+                {message}
+            </SANTypography>
+        </Linkify>
         {hasDivider && <SANDivider bg='grey.1' width='100%' mb='0' />}
     </SANBox>
 )
