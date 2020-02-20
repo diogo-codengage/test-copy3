@@ -22,7 +22,7 @@ export const skeletons = new Array(2).fill(0).map((_, i) => i)
 export const renderSkeleton = index => <SANChatItemSkeleton key={index} />
 
 const componentDecorator = (href, text, key) => (
-    <a href={href} key={key} target='_blank' color='primary'>
+    <a href={href} key={key} target='_blank' color='primary' rel='noopener'>
         {text}
     </a>
 )

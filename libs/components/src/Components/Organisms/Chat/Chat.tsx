@@ -261,24 +261,23 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
                         )}
                         {content}
                     </SANScroll>
-                    {hasButton && (
-                        <FloatButton
-                            position='absolute'
-                            bottom='xs'
-                            left='calc(50% - 16px)'
-                            // opacity={hasButton ? 1 : 0}
+                    <FloatButton
+                        position='absolute'
+                        bottom='xs'
+                        left='calc(50% - 16px)'
+                        opacity={hasButton ? 1 : 0}
+                    >
+                        <SANButton
+                            circle
+                            variant='solid'
+                            color='primary'
+                            size='small'
+                            display={!hasButton ? 'none !important' : 'flex'}
+                            onClick={goScrollBottom}
                         >
-                            <SANButton
-                                circle
-                                variant='solid'
-                                color='primary'
-                                size='small'
-                                onClick={goScrollBottom}
-                            >
-                                <SANEvaIcon name='arrow-downward-outline' />
-                            </SANButton>
-                        </FloatButton>
-                    )}
+                            <SANEvaIcon name='arrow-downward-outline' />
+                        </SANButton>
+                    </FloatButton>
                 </SANBox>
                 <SANBox
                     display={blocked ? 'flex' : 'none'}
