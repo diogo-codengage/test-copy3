@@ -1,5 +1,7 @@
 import React from 'react'
 
+import * as Sentry from '@sentry/browser'
+
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { HttpLink } from 'apollo-link-http'
@@ -78,6 +80,7 @@ const client = new ApolloClient({
     link: ApolloLink.from([
         onError(({ graphQLErrors, forward, operation, networkError }) => {
             if (graphQLErrors) {
+                Sentry.captureException(graphQLErrors)
                 graphQLErrors.forEach(error => {
                     console.error('[Grapqhl error]: %o', error)
                     if (error.message['statusCode'] === 401) {
@@ -90,7 +93,7 @@ const client = new ApolloClient({
             }
             if (networkError) {
                 console.log(`[Network error]: %o`, networkError)
-                window.location.hash = '/#/inicio/erro'
+                Sentry.captureException(networkError)
             }
         }),
         requestLink,
