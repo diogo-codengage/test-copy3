@@ -33,6 +33,7 @@ import {
 import { GET_ACTIVE_COURSE } from 'Apollo/User/Queries/active-course'
 
 import { useLayoutContext } from '../Context'
+import { useMainContext } from '../../Context'
 
 const arr = new Array(3).fill(0).map((_, index) => index)
 const formatExpireDate = (date: Date) => format(date, 'DD/MM/YYYY')
@@ -40,6 +41,8 @@ const formatExpireDate = (date: Date) => format(date, 'DD/MM/YYYY')
 const Courses = withRouter(({ history }) => {
     const setCrash = useTryToCrash()
     const { activeCourse } = useAuthContext()
+    const { me } = useAuthContext()
+    const { handleTrack } = useMainContext()
     const { loading, data, error } = useQuery<ICourseQuery>(GET_COURSES, {
         onError(error) {
             Sentry.captureException(error)
@@ -62,6 +65,10 @@ const Courses = withRouter(({ history }) => {
     })
     const { setMenuTab, onCloseMenu } = useLayoutContext()
     const handleChange = courseId => {
+        handleTrack('Troca Curso Area', {
+            'Course new': courseId,
+            'User ID': me.id
+        })
         changeCourse({ variables: { courseId } }).finally(() => {
             onCloseMenu()
             setMenuTab(0)

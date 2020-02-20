@@ -27,6 +27,7 @@ import {
 } from 'Apollo/User/Mutations/supplementary-data'
 
 import RMForm from './Form'
+import { useMainContext } from '../../../Pages/Private/Context'
 
 interface IFormValues extends ISuplemmentaryOptions {
     preparatoryCourseStatus: 'yes' | 'no'
@@ -47,6 +48,7 @@ const RMComplementaryRegisterForm: React.FC<IRMComplementaryRegisterFormProps> =
     closeModal
 }) => {
     const { t } = useTranslation('resmed')
+    const { handleTrack } = useMainContext()
 
     const [mutation, { loading: loadingMutation }] = useMutation<
         ISuplemmentaryMutation,
@@ -100,6 +102,9 @@ const RMComplementaryRegisterForm: React.FC<IRMComplementaryRegisterFormProps> =
         form.validateFields((err, values) => {
             if (!err) {
                 mutation({ variables: { data: makePayload(values) } })
+                handleTrack('Ficha Complementar Area', {
+                    'User ID': me.id
+                })
             }
         })
     }

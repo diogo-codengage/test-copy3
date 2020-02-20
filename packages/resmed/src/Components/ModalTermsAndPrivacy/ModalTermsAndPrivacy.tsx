@@ -8,14 +8,13 @@ import { useSnackbarContext, SANModalTabs } from '@sanar/components'
 import { useAuthContext } from 'Hooks/auth'
 import { IMe } from 'Apollo/User/Queries/me'
 import { ACCEPT_TERMS_USE_MUTATION } from 'Apollo/User/Mutations/accept-terms-use'
-import { segmentTrack } from 'Config/Segment/track'
-import { IOptions } from 'Config/Segment'
+import { eventsTrack } from 'Config/Trackers/track'
+import { IOptions } from 'Config/Trackers'
 
 import logo from 'Assets/images/brand/logo.svg'
 
 import RMPrivacyAndPolicyFrame from './PrivacyAndPolicyFrame'
 import RMTermsFrame from './TermsFrame'
-import ReactGA from 'react-ga'
 
 const SANModalTermsAndPrivacy = ({
     defaultActiveKey,
@@ -42,12 +41,7 @@ const SANModalTermsAndPrivacy = ({
                 'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
                 'User ID': me.id
             }
-
-            ReactGA.event({
-                category: event,
-                action: event
-            })
-            segmentTrack(event, data)
+            eventsTrack(event, data)
         } catch (err) {
             console.error('Track:[Terms acepted] error:', err)
         }

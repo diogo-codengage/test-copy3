@@ -20,12 +20,14 @@ import { RMGraphQLProvider } from './Apollo/GraphQLService'
 import { RMThemeProvider } from './Components/Theme'
 import { RMAuthProvider } from './Hooks/auth'
 import { RMGlobalStyle } from './Styles'
+import { eventsTrack } from 'Config/Trackers/track'
 
-const history = createBrowserHistory();
+const history = createBrowserHistory()
 
 history.listen(location => {
-    ReactGA.set({ page: location.hash })
-    ReactGA.pageview(location.hash)
+    eventsTrack('Page Viewed', {
+        'Source URL': location.hash
+    })
 });
 
 const RMApp: React.FC = () => (

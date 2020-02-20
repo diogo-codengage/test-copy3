@@ -64,8 +64,10 @@ const RMFilter = ({ form, history }) => {
                 }}
                 HeaderProps={{
                     onBack: () => {
+                        handleTrack('Voltar button clicked', {
+                            'Source URL': history.location.pathname
+                        })
                         history.push('/inicio/curso')
-                        handleTrack('Voltar button clicked')
                     },
                     SessionTitleProps: {
                         title: t('practicalArea.filter.header.title'),

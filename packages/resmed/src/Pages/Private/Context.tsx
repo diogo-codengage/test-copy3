@@ -1,13 +1,12 @@
 import React, { useContext, createContext, memo } from 'react'
-import ReactGA from 'react-ga'
 
 import { withRouter, RouteComponentProps } from 'react-router'
 import { useQuery } from '@apollo/react-hooks'
 
 import RMSplashLoader from 'Components/SplashLoader'
 
-import { segmentTrack } from 'Config/Segment/track'
-import { IEvents, IOptions } from 'Config/Segment'
+import { eventsTrack } from 'Config/Trackers/track'
+import { IEvents, IOptions } from 'Config/Trackers'
 import { useAuthContext } from 'Hooks/auth'
 import {
     GET_ACTIVE_COURSE,
@@ -44,12 +43,7 @@ const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
             'Course ID': !!activeCourse && activeCourse.id,
             ...attrs
         }
-
-        ReactGA.event({
-            category: event,
-            action: event
-        })
-        segmentTrack(event, data)
+        eventsTrack(event, data)
     }
 
     if (loading) return <RMSplashLoader />

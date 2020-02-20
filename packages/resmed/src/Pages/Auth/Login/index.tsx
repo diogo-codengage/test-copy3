@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react'
-import ReactGA from 'react-ga'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
@@ -20,8 +19,8 @@ import { login } from 'Config/AWSCognito'
 
 import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 
-import { segmentTrack } from 'Config/Segment/track'
-import { IEvents, IOptions } from 'Config/Segment'
+import { eventsTrack } from 'Config/Trackers/track'
+import { IEvents, IOptions } from 'Config/Trackers'
 
 const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
@@ -34,12 +33,7 @@ const RMLogin: React.FC<RouteComponentProps> = ({ history }) => {
             'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
             ...attrs
         }
-
-        ReactGA.event({
-            category: event,
-            action: event
-        })
-        segmentTrack(event, data)
+        eventsTrack(event, data)
     }
 
     const action = response => {

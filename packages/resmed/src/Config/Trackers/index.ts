@@ -26,6 +26,14 @@ export type IEvents =
     | 'Ver aulas button clicked'
     | 'Video rated'
     | 'App Banner Clicked'
+    | 'Page Viewed'
+    | 'Cronograma Viewed'
+    | 'Lives Area Viewed'
+    | 'Ficha Complementar Area'
+    | 'Troca Curso Area'
+    | 'Live Viewed'
+    | 'Cronograma Adjust'
+    | 'Cronograma Used'
 
 export interface IOptions {
     ProductType?: 'ALL'
@@ -47,16 +55,18 @@ export interface IOptions {
         | 'Course Menu'
         | 'Rating'
         | 'App Banner'
+        | 'Cronograma'
+        | 'Account'
     'User ID'?: string
     Email?: string
     'Plataform ID'?: string
     'Question ID'?: string
     Correct?: boolean
     'Filter ID'?: 'Question'
-    'Specialty ID'?: string
-    'Subspecialty ID'?: string
-    'Tag ID'?: string
-    'Institution ID'?: string
+    'Specialty ID'?: string | string[]
+    'Subspecialty ID'?: string | string[]
+    'Tag ID'?: string | string[]
+    'Institution ID'?: string | string[]
     'State ID'?: string
     'Commented by Expert'?: boolean
     'Lesson ID'?: string
@@ -65,6 +75,20 @@ export interface IOptions {
     'OS Type'?: 'IOS' | 'ANDROID'
     Rating?: string
     'Question Type'?: 'Quiz' | 'Practical Area'
+    'Time in seconds'?: number
+    'Source URL'?: string
+    'Error code'?: string
+    'Error message'?: string
+    'Years'?: Number | Number[]
+    'Categories'?: string | string[]
+    'Only has images'?: boolean
+    'Live ID'?: string
+    'Live name'?: string
+    'Course new'?: string
+    'Course ID'?: string
+    'Course name'?: string
+    'Resource type'?: string
+    'Resource ID'?: string
 }
 
 export const events = {
@@ -282,6 +306,62 @@ export const events = {
             ProductType: 'ALL',
             Product: 'Residência Médica',
             Category: 'Navigation'
+        }
+    },
+    'Cronograma Viewed': {
+        event: 'Cronograma Viewed',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Cronograma'
+        }
+    },
+    'Cronograma Adjust': {
+        event: 'Cronograma Adjust',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Cronograma'
+        }
+    },
+    'Cronograma Used': {
+        event: 'Cronograma Used',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Cronograma'
+        }
+    },
+    'Lives Area Viewed': {
+        event: 'Lives Area Viewed',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Lives'
+        }
+    },
+    'Ficha Complementar Area': {
+        event: 'Ficha Complementar Area',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Account'
+        }
+    },
+    'Troca Curso Area': {
+        event: 'Troca Curso Area',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Account'
+        }
+    },
+    'Live Viewed': {
+        event: 'Live Viewed',
+        data: {
+            ProductType: 'ALL',
+            Product: 'Residência Médica',
+            Category: 'Lives'
         }
     }
 }

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import ReactGA from 'react-ga'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router'
@@ -23,8 +22,8 @@ import searching from 'Assets/images/forgot-password/searching.png'
 import RMFooter from 'Components/Footer'
 import { forgotPassword } from 'Config/AWSCognito'
 
-import { segmentTrack } from 'Config/Segment/track'
-import { IEvents, IOptions } from 'Config/Segment'
+import { eventsTrack } from 'Config/Trackers/track'
+import { IEvents, IOptions } from 'Config/Trackers'
 
 interface IProps extends RouteComponentProps {
     form: any
@@ -40,11 +39,7 @@ const RMSendPasswordRecoveryPage: React.FC<IProps> = ({ form, history }) => {
             'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
             ...attrs
         }
-        ReactGA.event({
-            category: event,
-            action: event
-        })
-        segmentTrack(event, data)
+        eventsTrack(event, data)
     }
 
     const onSubmit = async e => {
