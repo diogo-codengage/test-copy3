@@ -4,11 +4,17 @@ import { boolean } from '@storybook/addon-knobs'
 
 import SANChat from './Chat'
 
-const arr = new Array(100).fill(1).map(e => ({
-    name: 'Sandra Gibson',
-    message: 'Mauris imperdiet orci dapibus, commodo libero nec.',
-    time: '19:17'
-}))
+const arr = new Array(100).fill(1).map(e => {
+    let date = new Date()
+    date.setHours(19)
+    date.setMinutes(17)
+
+    return {
+        name: 'Sandra Gibson',
+        message: 'Mauris imperdiet orci dapibus, commodo libero nec.',
+        time: date.toString()
+    }
+})
 
 const Example = () => {
     const [messages, setMessages] = useState(arr)
@@ -29,7 +35,7 @@ const Example = () => {
                     {
                         name: 'Fetch people',
                         message: 'Carregamento',
-                        time: `${new Date().getHours()}:${new Date().getMinutes()}`
+                        time: new Date().toString()
                     }
                 ])
                 resolve()
@@ -44,7 +50,7 @@ const Example = () => {
                 {
                     name: 'Diogo Biz',
                     message: value,
-                    time: `${new Date().getHours()}:${new Date().getMinutes()}`
+                    time: new Date().toString()
                 }
             ])
         }
