@@ -9,6 +9,7 @@ import { onError } from 'apollo-link-error'
 import { ApolloLink, Observable, split } from 'apollo-link'
 import { getMainDefinition } from 'apollo-utilities'
 import { WebSocketLink } from 'apollo-link-ws'
+import { SubscriptionClient } from 'subscriptions-transport-ws'
 import { ApolloProvider } from '@apollo/react-hooks'
 
 import { getAccessToken, logout } from 'Config/AWSCognito'
@@ -49,9 +50,9 @@ const httpLink = new HttpLink({
     uri: REACT_APP_URL_API
 })
 
-const wsLink = new WebSocketLink({
-    uri: !!REACT_APP_URL_API_WSS ? REACT_APP_URL_API_WSS : '',
-    options: {
+export const clientSubscription = new SubscriptionClient(
+    !!REACT_APP_URL_API_WSS ? REACT_APP_URL_API_WSS : '',
+    {
         reconnect: true,
         timeout: 5000,
         lazy: true,
@@ -62,7 +63,9 @@ const wsLink = new WebSocketLink({
             }
         }
     }
-})
+)
+
+const wsLink = new WebSocketLink(clientSubscription)
 
 const link = split(
     ({ query }) => {
