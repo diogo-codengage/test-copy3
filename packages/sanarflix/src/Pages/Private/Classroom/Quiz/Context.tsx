@@ -70,7 +70,7 @@ const FLXClassroomQuizProvider: React.FC = ({ children }) => {
     }, [questions])
 
     useEffect(() => {
-        if (width <= 768) {
+        if (width < 768) {
             setFooterProps({
                 mb: 8
             })
