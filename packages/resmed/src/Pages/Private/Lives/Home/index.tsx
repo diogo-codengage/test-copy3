@@ -37,8 +37,6 @@ import RMPrevious from './Previous'
 
 import { updateCacheMessages } from '../Previous'
 
-import { clientSubscription } from 'Apollo/GraphQLService'
-
 const ErrorBoundary = props => (
     <SANErrorBoundary
         {...props}
@@ -155,10 +153,6 @@ const RMLivesHome = memo<RouteComponentProps>(({ history }) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, loading, hasLive, hasOnline])
-
-    useEffect(() => {
-        return () => clientSubscription.close()
-    }, [])
 
     const messages = useMemo(() => {
         if (
