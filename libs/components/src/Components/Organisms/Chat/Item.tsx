@@ -8,8 +8,6 @@ import { SANSkeleton } from 'Components/Atoms/Skeleton'
 import { SANDivider } from '../../Atoms/Divider'
 
 import Linkify from 'react-linkify'
-import styled from 'styled-components'
-import { theme } from 'styled-tools'
 
 export interface ISANChatItemProps extends ISANBoxProps {
     name: string
@@ -37,7 +35,7 @@ export const SANChatItem: React.FC<ISANChatItemProps> = ({
     <SANBox
         display='flex'
         flexDirection='column'
-        alignItems='end'
+        alignItems='start'
         px='md'
         mb='xs'
         {...props}
@@ -62,7 +60,7 @@ export const SANChatItem: React.FC<ISANChatItemProps> = ({
 )
 
 export const SANChatItemSkeleton: React.FC<ISANBoxProps> = props => (
-    <SANBox display='flex' alignItems='end' px='md' mb='md' {...props}>
+    <SANBox display='flex' alignItems='start' px='md' mb='md' {...props}>
         <SANSkeleton
             avatar={{ size: 32, shape: 'circle' }}
             paragraph={{ rows: 2 }}
