@@ -242,99 +242,101 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
 
         return (
             <SANBox display='flex' flexDirection='column' minWidth={232}>
-                <SANBox
-                    bg='grey-solid.1'
-                    flex='1'
-                    height='305px'
-                    borderRadius='base'
-                    position='relative'
-                >
-                    <SANScroll
-                        containerRef={ref => (scrollRef.current = ref)}
-                        onYReachEnd={() => setHasButton(false)}
+                <SANBox>
+                    <SANBox
+                        bg='grey-solid.1'
+                        flex='1'
+                        height='305px'
+                        borderRadius='base'
+                        position='relative'
                     >
-                        {hasMore && (
-                            <SANInfiniteScrollLoader key='chat-loader' />
-                        )}
-                        {content}
-                    </SANScroll>
-                    <FloatButton
-                        position='absolute'
-                        bottom='xs'
-                        left='calc(50% - 16px)'
-                        opacity={hasButton ? 1 : 0}
+                        <SANScroll
+                            containerRef={ref => (scrollRef.current = ref)}
+                            onYReachEnd={() => setHasButton(false)}
+                        >
+                            {hasMore && (
+                                <SANInfiniteScrollLoader key='chat-loader' />
+                            )}
+                            {content}
+                        </SANScroll>
+                        <FloatButton
+                            position='absolute'
+                            bottom='xs'
+                            left='calc(50% - 16px)'
+                            opacity={hasButton ? 1 : 0}
+                        >
+                            <SANButton
+                                circle
+                                variant='solid'
+                                color='primary'
+                                size='small'
+                                onClick={goScrollBottom}
+                            >
+                                <SANEvaIcon name='arrow-downward-outline' />
+                            </SANButton>
+                        </FloatButton>
+                    </SANBox>
+                    <SANBox
+                        display={blocked ? 'flex' : 'none'}
+                        alignItems='center'
+                        justifyContent='center'
+                        border='1px solid'
+                        borderColor='grey.2'
+                        borderBottomRightRadius='base'
+                        borderBottomLeftRadius='base'
+                        bg='grey-solid.1'
+                        py='19.5px'
                     >
+                        <SANTypography fontSize='md' color='grey.6'>
+                            {t('chat.blocked')}
+                        </SANTypography>
+                    </SANBox>
+                    <SANBox
+                        display={!blocked ? 'flex' : 'none'}
+                        alignItems='center'
+                        justifyContent='space-between'
+                        border='1px solid'
+                        borderColor='grey.2'
+                        borderRadius='base'
+                        px='sm'
+                        pt='xs'
+                        pb='10px'
+                        bg='white.10'
+                        position='relative'
+                    >
+                        <SANBox width='calc(100% - 35px)'>
+                            <SANInputStyled
+                                placeholder={t('chat.writeSomething')}
+                                contentEditable
+                                ref={inputRef}
+                                onKeyPress={handleKeyPress}
+                                onScroll={handleScrollInput}
+                                style={{ height: inputHeight }}
+                            />
+                        </SANBox>
                         <SANButton
                             circle
-                            variant='solid'
-                            color='primary'
-                            size='small'
-                            onClick={goScrollBottom}
+                            variant='text'
+                            size='xsmall'
+                            onClick={handleSend}
+                            disabled={
+                                loading ||
+                                submitting ||
+                                letterCount >= maxLetters ||
+                                letterCount === 0
+                            }
                         >
-                            <SANEvaIcon name='arrow-downward-outline' />
+                            <SANEvaIcon name='paper-plane-outline' />
                         </SANButton>
-                    </FloatButton>
-                </SANBox>
-                <SANBox
-                    display={blocked ? 'flex' : 'none'}
-                    alignItems='center'
-                    justifyContent='center'
-                    border='1px solid'
-                    borderColor='grey.2'
-                    borderBottomRightRadius='base'
-                    borderBottomLeftRadius='base'
-                    bg='grey-solid.1'
-                    py='19.5px'
-                >
-                    <SANTypography fontSize='md' color='grey.6'>
-                        {t('chat.blocked')}
-                    </SANTypography>
-                </SANBox>
-                <SANBox
-                    display={!blocked ? 'flex' : 'none'}
-                    alignItems='center'
-                    justifyContent='space-between'
-                    border='1px solid'
-                    borderColor='grey.2'
-                    borderRadius='base'
-                    px='sm'
-                    pt='xs'
-                    pb='10px'
-                    bg='white.10'
-                    position='relative'
-                >
-                    <SANBox width='calc(100% - 35px)'>
-                        <SANInputStyled
-                            placeholder={t('chat.writeSomething')}
-                            contentEditable
-                            ref={inputRef}
-                            onKeyPress={handleKeyPress}
-                            onScroll={handleScrollInput}
-                            style={{ height: inputHeight }}
-                        />
-                    </SANBox>
-                    <SANButton
-                        circle
-                        variant='text'
-                        size='xsmall'
-                        onClick={handleSend}
-                        disabled={
-                            loading ||
-                            submitting ||
-                            letterCount >= maxLetters ||
-                            letterCount === 0
-                        }
-                    >
-                        <SANEvaIcon name='paper-plane-outline' />
-                    </SANButton>
-                    <SANBox position='absolute' bottom='0' right='6px'>
-                        <SANTypography
-                            fontWeight='bold'
-                            fontSize='xs'
-                            color={colorCount}
-                        >
-                            {letterCount}/{maxLetters}
-                        </SANTypography>
+                        <SANBox position='absolute' bottom='0' right='6px'>
+                            <SANTypography
+                                fontWeight='bold'
+                                fontSize='xs'
+                                color={colorCount}
+                            >
+                                {letterCount}/{maxLetters}
+                            </SANTypography>
+                        </SANBox>
                     </SANBox>
                 </SANBox>
             </SANBox>
