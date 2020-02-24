@@ -1,5 +1,7 @@
 import React from 'react'
 
+import * as Sentry from '@sentry/browser'
+
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { HttpLink } from 'apollo-link-http'
@@ -7,6 +9,7 @@ import { onError } from 'apollo-link-error'
 import { ApolloLink, Observable, split } from 'apollo-link'
 import { getMainDefinition } from 'apollo-utilities'
 import { WebSocketLink } from 'apollo-link-ws'
+import { SubscriptionClient } from 'subscriptions-transport-ws'
 import { ApolloProvider } from '@apollo/react-hooks'
 
 import { getAccessToken, logout } from 'Config/AWSCognito'
@@ -47,9 +50,9 @@ const httpLink = new HttpLink({
     uri: REACT_APP_URL_API
 })
 
-const wsLink = new WebSocketLink({
-    uri: !!REACT_APP_URL_API_WSS ? REACT_APP_URL_API_WSS : '',
-    options: {
+export const clientSubscription = new SubscriptionClient(
+    !!REACT_APP_URL_API_WSS ? REACT_APP_URL_API_WSS : '',
+    {
         reconnect: true,
         timeout: 5000,
         lazy: true,
@@ -60,7 +63,9 @@ const wsLink = new WebSocketLink({
             }
         }
     }
-})
+)
+
+const wsLink = new WebSocketLink(clientSubscription)
 
 const link = split(
     ({ query }) => {
@@ -78,6 +83,7 @@ const client = new ApolloClient({
     link: ApolloLink.from([
         onError(({ graphQLErrors, forward, operation, networkError }) => {
             if (graphQLErrors) {
+                Sentry.captureException(graphQLErrors)
                 graphQLErrors.forEach(error => {
                     console.error('[Grapqhl error]: %o', error)
                     if (error.message['statusCode'] === 401) {
@@ -90,7 +96,7 @@ const client = new ApolloClient({
             }
             if (networkError) {
                 console.log(`[Network error]: %o`, networkError)
-                window.location.hash = '/#/inicio/erro'
+                Sentry.captureException(networkError)
             }
         }),
         requestLink,
