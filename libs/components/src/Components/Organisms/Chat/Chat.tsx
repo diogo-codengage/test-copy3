@@ -112,7 +112,7 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
             if (!!inputRef && !!inputRef.current) {
                 inputRef.current.textContent = undefined
                 inputRef.current.focus()
-                setInputHeight(21)
+                setInputHeight(42)
             }
         }
 
@@ -158,14 +158,17 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
 
         const handleLetterCount = useCallback(() => {
             if (!!inputRef && !!inputRef.current) {
-                setLetterCount(inputRef.current.innerText.length)
+                setLetterCount(inputRef.current.textContent.length)
 
-                !inputRef.current.innerText && setInputHeight(42)
+                if (!inputRef.current.textContent) {
+                    inputRef.current.textContent = undefined
+                    setInputHeight(42)
+                }
             }
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
 
-        const debounceCountLetter = createDebounce(handleLetterCount, 500)
+        const debounceCountLetter = createDebounce(handleLetterCount, 250)
 
         const renderMessage = useCallback(
             (message, index) => (
@@ -270,6 +273,9 @@ const SANChat = forwardRef<ISANChatRef, ISANChatProps>(
                                 variant='solid'
                                 color='primary'
                                 size='small'
+                                display={
+                                    !hasButton ? 'none !important' : 'flex'
+                                }
                                 onClick={goScrollBottom}
                             >
                                 <SANEvaIcon name='arrow-downward-outline' />

@@ -37,7 +37,12 @@ const SANGenericError = ({
             m='0 auto'
             {...props}
         >
-            <SANBox as='img' src={errorGeneric} mb='lg' {...ImageProps} />
+            <SANBox
+                as='img'
+                src={errorGeneric}
+                mb='lg'
+                {...(ImageProps as any)}
+            />
             <SANTypography
                 variant='body1'
                 type={dark ? 'light' : 'default'}
