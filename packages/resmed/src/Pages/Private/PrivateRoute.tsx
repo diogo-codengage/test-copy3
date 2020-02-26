@@ -17,7 +17,7 @@ import { GET_ME } from 'Apollo/User/Queries/me'
 import { useAuthContext } from 'Hooks/auth'
 import { logout, getCognitoUser } from 'Config/AWSCognito'
 
-import { segmentTrack } from 'Config/Segment/track'
+import { eventsTrack } from 'Config/Trackers/track'
 
 import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 import RMSplashLoader from 'Components/SplashLoader'
@@ -45,8 +45,13 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
     ({ component: Component, history, ...rest }) => {
         const [getMe, { loading }] = useLazyQuery(GET_ME, {
             onCompleted({ me }) {
-                segmentTrack('Session started')
                 setMe(me)
+                eventsTrack('Session started', {
+                    'User ID': me.id,
+                    'Email': me.email,
+                    'Course ID': activeCourse.id,
+                    'Course name': activeCourse.name,
+                })
                 Sentry.configureScope(scope => {
                     scope.setUser({
                         id: me.id,
@@ -60,6 +65,7 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
             }
         })
         const { setMe, me } = useAuthContext()
+        const { activeCourse } = useAuthContext()
         const [logged, setLogged] = useState(true)
 
         const onLogout = () => {

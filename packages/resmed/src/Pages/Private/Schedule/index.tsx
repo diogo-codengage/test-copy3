@@ -51,6 +51,7 @@ import { useScheduleContext, withScheduleContext } from './Context'
 
 import RMToday from './Today'
 import RMWeek from './Week'
+import { useMainContext } from '../Context'
 
 const SuggestionStyled = styled(SANBox)`
     align-items: center;
@@ -133,6 +134,7 @@ interface ISchedule {
 
 const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
+    const { handleTrack } = useMainContext()
     const {
         me: { id: userId },
         activeCourse: { id: courseId, name: courseName }
@@ -169,6 +171,16 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
         date: new Date(),
         options: []
     })
+
+    useEffect(() => {
+        const scheduleOpened = () => {
+            handleTrack('Cronograma Viewed', {
+                'User ID': userId
+            })
+        }
+        scheduleOpened()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId])
 
     const pdfDownload = async () => {
         setDownloading(true)
@@ -279,6 +291,10 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     const handleEventDrop = e => {
         e.jsEvent.preventDefault()
         const { event } = e
+        handleTrack('Cronograma Adjust', {
+            'Resource type': event.extendedProps.resourceType,
+            'Resource ID': event.extendedProps.id,
+        })
         const date = new Date(new Date(event.start).toUTCString()).toISOString()
         client
             .mutate<IUpdateAppointment>({

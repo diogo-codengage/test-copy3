@@ -86,8 +86,10 @@ const RMSpecialty: React.FC<RouteComponentProps<IRouteProps>> = ({
             }}
             HeaderProps={{
                 onBack: () => {
+                    handleTrack('Voltar button clicked', {
+                        'Source URL': history.location.pathname
+                    })
                     history.push('/inicio/curso')
-                    handleTrack('Voltar button clicked')
                 },
                 SessionTitleProps: {
                     title:

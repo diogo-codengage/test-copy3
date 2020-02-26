@@ -68,9 +68,15 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
 
         const handlePlay = () => handleTrack('Video started', dataToTrack)
 
-        const handleResume = () => handleTrack('Video resumed', dataToTrack)
+        const handleResume = () => {
+            const timeInSeconds = parseInt(playerRef.current.position(), 10)
+            handleTrack('Video resumed', {'Time in seconds': timeInSeconds, ...dataToTrack})
+        }
 
-        const handlePause = () => handleTrack('Video paused', dataToTrack)
+        const handlePause = () => {
+            const timeInSeconds = parseInt(playerRef.current.position(), 10)
+            handleTrack('Video paused', {'Time in seconds': timeInSeconds, ...dataToTrack})
+        }
 
         const handleComplete = () => handleTrack('Video completed', dataToTrack)
 

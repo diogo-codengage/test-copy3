@@ -66,6 +66,7 @@ const RMPractice = memo<RouteComponentProps>(({ history }) => {
             const correct = alternatives.data.find(getCorrect)
             handleTrack('Question answered', {
                 'Question ID': state.questions[state.currentIndex].id,
+                'Question Type': 'Practical Area',
                 Correct: correct.id === alternativeId
             })
             if (correct.id === alternativeId) {

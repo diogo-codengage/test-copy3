@@ -11,8 +11,10 @@ const RMHelpCenter = memo<RouteComponentProps>(({ history }) => {
     return (
         <SANHelpCenter
             onBack={() => {
+                handleTrack('Voltar button clicked', {
+                    'Source URL': history.location.pathname
+                })
                 history.goBack()
-                handleTrack('Voltar button clicked')
             }}
         />
     )

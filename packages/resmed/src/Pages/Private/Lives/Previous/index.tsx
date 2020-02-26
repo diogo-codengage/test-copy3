@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -14,6 +14,8 @@ import {
     ILiveMessagesQuery,
     ILiveMessagesVariables
 } from 'Apollo/Lives/Queries/live-messages'
+import { useMainContext } from '../../Context'
+import { useAuthContext } from '../../../../Hooks/auth'
 
 interface IOptions {
     fetchMoreResult?: ILiveMessagesQuery
@@ -42,11 +44,25 @@ const RMPreviousLive: React.FC<RouteComponentProps<{ previousId: string }>> = ({
     match: { params }
 }) => {
     const { t } = useTranslation('resmed')
+    const { handleTrack } = useMainContext()
+    const { me: { id: userId } } = useAuthContext()
 
     const { loading: loadingLive, data: dataLive } = useQuery<
         ILiveQuery,
         ILiveVariables
     >(GET_LIVE, { variables: { id: params.previousId } })
+
+    useEffect(() => {
+        const liveOpened = () => {
+            handleTrack('Live Viewed', {
+                'User ID': userId,
+                'Live ID': dataLive!.live.id,
+                'Live name': dataLive!.live.title,
+            })
+        }
+        dataLive && dataLive.live && liveOpened()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dataLive])
 
     const {
         loading: loadingMessages,

@@ -174,6 +174,7 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                     'Lesson ID': paramsLayout.lessonId,
                     'Clicker ID': paramsLayout.collectionId,
                     'Question ID': questions[questionIndex].id,
+                    'Question Type': 'Quiz',
                     Correct: correct.id === alternativeId
                 })
             } catch (error) {

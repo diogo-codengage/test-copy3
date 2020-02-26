@@ -5,8 +5,8 @@ import { useQuery } from '@apollo/react-hooks'
 
 import RMSplashLoader from 'Components/SplashLoader'
 
-import { segmentTrack } from 'Config/Segment/track'
-import { IEvents, IOptions } from 'Config/Segment'
+import { eventsTrack } from 'Config/Trackers/track'
+import { IEvents, IOptions } from 'Config/Trackers'
 import { useAuthContext } from 'Hooks/auth'
 import {
     GET_ACTIVE_COURSE,
@@ -43,8 +43,7 @@ const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
             'Course ID': !!activeCourse && activeCourse.id,
             ...attrs
         }
-
-        segmentTrack(event, data)
+        eventsTrack(event, data)
     }
 
     if (loading) return <RMSplashLoader />
