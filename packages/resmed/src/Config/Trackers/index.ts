@@ -30,7 +30,7 @@ export type IEvents =
     | 'Cronograma Viewed'
     | 'Lives Area Viewed'
     | 'Ficha Complementar Area'
-    | 'Troca Curso Area'
+    | 'Trocar Curso Area'
     | 'Live Viewed'
     | 'Cronograma Adjust'
     | 'Cronograma Used'
@@ -348,8 +348,8 @@ export const events = {
             Category: 'Account'
         }
     },
-    'Troca Curso Area': {
-        event: 'Troca Curso Area',
+    'Trocar Curso Area': {
+        event: 'Trocar Curso Area',
         data: {
             ProductType: 'ALL',
             Product: 'Residência Médica',

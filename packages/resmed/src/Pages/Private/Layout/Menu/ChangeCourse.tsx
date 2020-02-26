@@ -65,7 +65,7 @@ const Courses = withRouter(({ history }) => {
     })
     const { setMenuTab, onCloseMenu } = useLayoutContext()
     const handleChange = courseId => {
-        handleTrack('Troca Curso Area', {
+        handleTrack('Trocar Curso Area', {
             'Course new': courseId,
             'User ID': me.id
         })
