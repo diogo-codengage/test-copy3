@@ -325,12 +325,15 @@ const SANCollection = memo<ISANCollectionProps>(
             vertical
         ])
 
+        //Equals responsiveVertical slidesToShow for each resolution
         const disabledNext = useMemo(() => {
             if (!vertical) return
             if (width <= 1366) {
-                return curretSlide + 3 === items.length
+                return curretSlide + 3 >= items.length
+            } else if (width <= 1920) {
+                return curretSlide + 4 >= items.length
             } else {
-                return curretSlide + 5 === items.length
+                return curretSlide + 5 >= items.length
             }
         }, [curretSlide, width, items])
 
