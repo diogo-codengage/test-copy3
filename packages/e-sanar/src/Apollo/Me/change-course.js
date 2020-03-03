@@ -49,7 +49,21 @@ export const CHANGE_COURSE = gql`
                 icon
                 status
                 knowledge_area
-                cover_picture_url
+                cover_pictures {
+                    id
+                    small {
+                        url
+                    }
+                    medium {
+                        url
+                    }
+                    large {
+                        url
+                    }
+                    original {
+                        url
+                    }
+                }
                 professors {
                     id
                     name
