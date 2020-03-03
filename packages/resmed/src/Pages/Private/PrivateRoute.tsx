@@ -6,6 +6,7 @@ import {
     RouteComponentProps
 } from 'react-router-dom'
 import { useLazyQuery } from '@apollo/react-hooks'
+import ReactGA from 'react-ga'
 
 import { CognitoUserSession } from 'amazon-cognito-identity-js'
 import * as Sentry from '@sentry/browser'
@@ -52,6 +53,7 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
                     'Course ID': activeCourse.id,
                     'Course name': activeCourse.name,
                 })
+                ReactGA.set({userId: me.id})
                 Sentry.configureScope(scope => {
                     scope.setUser({
                         id: me.id,
