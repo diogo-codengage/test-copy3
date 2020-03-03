@@ -16,6 +16,7 @@ import {
 } from '@sanar/components'
 
 import { IAppointment } from 'Apollo/Schedule/Queries/appointments'
+import { useMainContext } from '../Context'
 
 type IStatus = 'viewed' | 'unseen' | 'live' | 'exams'
 
@@ -193,8 +194,13 @@ const types = ['viewed', 'unseen', 'live', 'exams']
 export const RMModalSchedule = withRouter(
     ({ options = defaultOption, history, ...props }: IRMModalSchedule) => {
         const { t } = useTranslation('resmed')
+        const { handleTrack } = useMainContext()
 
         const handleClick = () => {
+            handleTrack('Cronograma Used', {
+                'Resource type': options.resourceType === 'Level' ? 'Lesson' : options.resourceType,
+                'Resource ID': options.resourceId,
+            })
             if (!!options) {
                 if (!!options.accessContent) {
                     const {
