@@ -91,8 +91,8 @@ const SubtitleDot = styled.span<{ type: IType }>`
     display: inline-block;
     margin-top: 30px;
     box-shadow: 1px 3px 5px ${switchProp('type', { 
-        viewed: '#9EF0DA',
-        unseen: '#FFDBE7',
+        viewed: '#8eefd5',
+        unseen: '#f5b6cb',
         complementary: '#11131766',
     })};
 `
@@ -101,10 +101,10 @@ const SubtitleLabel = styled(SANTypography)`
     margin-left: 15px;
     margin-right: 30px;
 `
-const Subtitle = () => {
+const Subtitle = ({...props}) => {
     const { t } = useTranslation('resmed')
     return (
-        <SANBox>
+        <SANBox {...props}>
             <SubtitleDot type={'unseen'} /><SubtitleLabel>{t('schedule.subtitle.unseen')}</SubtitleLabel>
             <SubtitleDot type={'viewed'} /><SubtitleLabel>{t('schedule.subtitle.viewed')}</SubtitleLabel>
             <SubtitleDot type={'complementary'} /><SubtitleLabel>{t('schedule.subtitle.complementary')}</SubtitleLabel>
@@ -131,6 +131,13 @@ export const getStatus = event => {
     }
 }
 
+export const getEventType = event => {
+    if (!event.resourceType || event.resourceType === 'Exam') {
+        return 'complementary'
+    }
+    return event.seen ? 'viewed' : 'unseen'
+}
+
 export const formatMinutes = minutes =>
     new Date(minutes * 60000).toISOString().substr(11, 5)
 
@@ -155,7 +162,8 @@ export const makeEvent = (event: IAppointment, hasModified = false) => ({
     title: event.title,
     start: getUTCDate(event.start),
     startEditable: hasModified ? !event.fixed : false,
-    status: getStatus(event)
+    status: getStatus(event),
+    type: getEventType(event),
 })
 
 interface ISchedule {
@@ -381,7 +389,6 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                         end: format(currentRange.end, 'YYYY-MM-DD')
                     }
                 })
-
                 setSchedule({
                     ...appointments,
                     hasModified: firstLoad
@@ -484,10 +491,10 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                                 validRange={validRange}
                             />
                         </SANBox>
-                        <Subtitle/>
+                        <Subtitle display={{ _: 'none', md: 'block'}}/>
 
                         <SANBox
-                            mt={{ _: 'lg', md: '8' }}
+                            mt={{ _: 'lg', md: '5' }}
                             display='flex'
                             alignItems='center'
                             justifyContent='space-between'

@@ -48,6 +48,7 @@ export interface IEvent {
     start?: Date
     end?: Date
     status?: 'viewed' | 'unseen' | 'live' | 'exams'
+    type?: 'completed' | 'uncompleted' | 'complementary'
     rendering?: 'background' | 'inverse-background'
     startEditable?: boolean
     extendedProps?: object
@@ -343,21 +344,17 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
 
     const colors = useMemo(
         () => ({
-            viewed: {
+            completed: {
                 color: theme.colors['primary-2'],
                 textColor: theme.colors['primary-5']
             },
-            unseen: {
+            uncompleted: {
                 color: theme.colors.burgundy[0],
                 textColor: theme.colors.burgundy[2]
             },
-            live: {
+            complementary: {
                 color: theme.colors.grey[0],
                 textColor: theme.colors.grey[6]
-            },
-            exams: {
-                color: theme.colors.blue[0],
-                textColor: theme.colors.blue[3]
             }
         }),
         []
@@ -387,7 +384,7 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
         return [
             ...events.map(event => ({
                 ...event,
-                ...colors[event.status],
+                ...colors[event.type],
                 allDay: true,
                 classNames: (isBefore(startOfDay(event.start), previousMonth) ||
                     isAfter(endOfDay(event.start), nextMonth)) && [

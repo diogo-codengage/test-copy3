@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANBox, ISANBoxProps } from '../../Atoms/Box'
 
-type IType = 'viewed' | 'unseen' | 'live' | 'exams'
+type IType = 'viewed' | 'unseen' | 'complementary'
 export interface ISANCardEventProps extends ISANBoxProps {
     title: string
     date: string
@@ -19,16 +19,14 @@ const SANCardBox = styled(SANBox)<{ type: IType }>`
         border-color: ${switchProp('type', {
             viewed: theme('colors.primary-4'),
             unseen: theme('colors.burgundy.1'),
-            live: theme('colors.grey.4'),
-            exams: theme('colors.blue.2')
+            complementary: theme('colors.grey.4'),
         })};
 
         &:hover {
             background-color: ${switchProp('type', {
                 viewed: theme('colors.primary-1'),
                 unseen: theme('colors.burgundy.0'),
-                live: theme('colors.grey.0'),
-                exams: theme('colors.blue.0')
+                complementary: theme('colors.grey.0'),
             })};
         }
     }
