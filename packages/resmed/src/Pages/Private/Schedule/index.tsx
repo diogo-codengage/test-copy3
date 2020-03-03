@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
-import { theme } from 'styled-tools'
+import { theme, switchProp } from 'styled-tools'
 import { useApolloClient } from '@apollo/react-hooks'
 import { format, isEqual, getMonth } from 'date-fns'
 import { compose } from 'ramda'
@@ -74,6 +74,41 @@ const Suggestion = ({ onChange, checked, loading, ...props }) => {
                 loading={loading}
             />
         </SuggestionStyled>
+    )
+}
+
+type IType = 'viewed' | 'unseen' | 'complementary'
+
+const SubtitleDot = styled.span<{ type: IType }>`
+    height: 12px;
+    width: 12px;
+    background-color: ${switchProp('type', {
+        viewed: '#9EF0DA',
+        unseen: '#FFDBE7',
+        complementary: '#11131766',
+    })};
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 30px;
+    box-shadow: 1px 3px 5px ${switchProp('type', { 
+        viewed: '#9EF0DA',
+        unseen: '#FFDBE7',
+        complementary: '#11131766',
+    })};
+`
+const SubtitleLabel = styled(SANTypography)`
+    display: inline-block;
+    margin-left: 15px;
+    margin-right: 30px;
+`
+const Subtitle = () => {
+    const { t } = useTranslation('resmed')
+    return (
+        <SANBox>
+            <SubtitleDot type={'unseen'} /><SubtitleLabel>{t('schedule.subtitle.unseen')}</SubtitleLabel>
+            <SubtitleDot type={'viewed'} /><SubtitleLabel>{t('schedule.subtitle.viewed')}</SubtitleLabel>
+            <SubtitleDot type={'complementary'} /><SubtitleLabel>{t('schedule.subtitle.complementary')}</SubtitleLabel>
+        </SANBox>
     )
 }
 
@@ -160,7 +195,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     })
     const [modalSuggestion, setModalSuggestion] = useState({
         visible: false,
-        checked: true
+        checked: false
     })
     const [modalMore, setModalMore] = useState<{
         visible: boolean
@@ -260,7 +295,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                 ...resetSchedule,
                 hasModified: !old.hasModified,
                 items: resetSchedule.items.map(event =>
-                    makeEvent(event, !modalSuggestion.checked)
+                    makeEvent(event, modalSuggestion.checked)
                 ) as IEvent[]
             }))
         } catch {
@@ -269,7 +304,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                 theme: 'error'
             })
             setModalSuggestion({
-                checked: !schedule.hasModified,
+                checked: schedule.hasModified,
                 visible: false
             })
         }
@@ -351,7 +386,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                     ...appointments,
                     hasModified: firstLoad
                         ? appointments.hasModified
-                        : !modalSuggestion.checked,
+                        : modalSuggestion.checked,
                     items: appointments.items.map(event =>
                         makeEvent(event, appointments.hasModified)
                     ) as IEvent[]
@@ -359,7 +394,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                 setModalSuggestion(old => ({
                     ...old,
                     checked: firstLoad
-                        ? !appointments.hasModified
+                        ? appointments.hasModified
                         : modalSuggestion.checked
                 }))
                 firstLoad && setFirstLoad(false)
@@ -449,6 +484,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                                 validRange={validRange}
                             />
                         </SANBox>
+                        <Subtitle/>
 
                         <SANBox
                             mt={{ _: 'lg', md: '8' }}
