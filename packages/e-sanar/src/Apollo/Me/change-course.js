@@ -5,6 +5,7 @@ export const CHANGE_COURSE = gql`
         setLastEnrollmentAccessed(input: { enrollment_id: $enrollmentId }) {
             id
             contract
+            certificate
             ranking {
                 position
                 points
