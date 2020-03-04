@@ -78,7 +78,7 @@ const Copyright = ({ darkMode }) => {
 
 export const defaultFooterProps = (darkMode = false) => ({
     logo: logoFooter,
-    phone: '0800 327-0035',
+    phone: '0800 337-6262',
     email: 'atendimento@editorasanar.com.br',
     copyright: <Copyright darkMode={darkMode} />,
     attendance: 'Atendimento de Seg. a Sex. das 09h às 18h'

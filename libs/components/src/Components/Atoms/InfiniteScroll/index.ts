@@ -1,4 +1,5 @@
 export {
     default as SANInfiniteScroll,
-    ISANInfiniteScrollProps
+    ISANInfiniteScrollProps,
+    SANInfiniteScrollLoader
 } from './InfiniteScroll'

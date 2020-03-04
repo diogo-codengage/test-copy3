@@ -1,5 +1,4 @@
-import { SANStyled, SANElement } from '../../../Theme/createTheme'
-import { css } from 'styled-components'
+import styled, { css } from 'styled-components'
 import { theme, ifProp } from 'styled-tools'
 import {
     color,
@@ -15,7 +14,7 @@ import {
     BorderProps
 } from 'styled-system'
 
-const SANContainer: SANElement<ISANContainerProps> = SANStyled.div`
+const SANContainer = styled.div<ISANContainerProps>`
     width: 100%;
     max-width: 1008px;
     padding-right: ${theme('space.md')};

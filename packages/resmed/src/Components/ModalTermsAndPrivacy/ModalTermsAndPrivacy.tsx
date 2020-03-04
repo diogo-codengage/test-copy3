@@ -8,8 +8,8 @@ import { useSnackbarContext, SANModalTabs } from '@sanar/components'
 import { useAuthContext } from 'Hooks/auth'
 import { IMe } from 'Apollo/User/Queries/me'
 import { ACCEPT_TERMS_USE_MUTATION } from 'Apollo/User/Mutations/accept-terms-use'
-import { segmentTrack } from 'Config/Segment/track'
-import { IOptions } from 'Config/Segment'
+import { eventsTrack } from 'Config/Trackers/track'
+import { IOptions } from 'Config/Trackers'
 
 import logo from 'Assets/images/brand/logo.svg'
 
@@ -36,12 +36,12 @@ const SANModalTermsAndPrivacy = ({
 
     const handleTrack = () => {
         try {
+            const event = 'Terms acepted'
             const data: IOptions = {
                 'Plataform ID': process.env.REACT_APP_PLATFORM_ID,
                 'User ID': me.id
             }
-
-            segmentTrack('Terms acepted', data)
+            eventsTrack(event, data)
         } catch (err) {
             console.error('Track:[Terms acepted] error:', err)
         }

@@ -21,7 +21,7 @@ const RMClassroomQuizProvider: React.FC = ({ children }) => {
     const [questionsMap, setQuestionsMap] = useState<any[]>([])
 
     useEffect(() => {
-        if (width <= 768) {
+        if (width < 768) {
             setFooterProps({
                 mb: 8
             })

@@ -20,7 +20,8 @@ import {
     SANLayoutContainer,
     useSnackbarContext,
     SANEvaIcon,
-    SANButton
+    SANButton,
+    ISANBoxProps
 } from '@sanar/components'
 import { IEvent } from '@sanar/components/dist/Components/Organisms/BigCalendar'
 import { getUTCDate } from '@sanar/utils/dist/Date'
@@ -50,6 +51,7 @@ import { useScheduleContext, withScheduleContext } from './Context'
 
 import RMToday from './Today'
 import RMWeek from './Week'
+import { useMainContext } from '../Context'
 
 const SuggestionStyled = styled(SANBox)`
     align-items: center;
@@ -75,7 +77,7 @@ const Suggestion = ({ onChange, checked, loading, ...props }) => {
     )
 }
 
-const boxProps = {
+const boxProps: ISANBoxProps = {
     py: { md: '8', _: 'xl' },
     display: 'flex',
     flexDirection: 'column'
@@ -97,10 +99,22 @@ export const getStatus = event => {
 export const formatMinutes = minutes =>
     new Date(minutes * 60000).toISOString().substr(11, 5)
 
+const getSubtitle = event => {
+    if (event.resourceType === 'Live' && !!event.accessLive) {
+        const startDate = new Date(event.accessLive.startDate)
+        return format(
+            startDate,
+            startDate.getMinutes() ? 'HH[h] mm[m]' : 'HH[h]'
+        )
+    } else {
+        return formatMinutes(event.timeInMinutes)
+    }
+}
+
 export const makeEvent = (event: IAppointment, hasModified = false) => ({
     extendedProps: {
         ...event,
-        subtitle: formatMinutes(event.timeInMinutes)
+        subtitle: getSubtitle(event)
     },
     id: event.id,
     title: event.title,
@@ -120,13 +134,14 @@ interface ISchedule {
 
 const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
+    const { handleTrack } = useMainContext()
     const {
         me: { id: userId },
         activeCourse: { id: courseId, name: courseName }
     } = useAuthContext()
     const { fetchSuggestedClass } = useLayoutContext()
     const createSnackbar = useSnackbarContext()
-    const calendarRef = useRef<SANBigCalendar>()
+    const calendarRef = useRef<typeof SANBigCalendar>()
     const client = useApolloClient()
     const {
         modalSchedule,
@@ -157,9 +172,19 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
         options: []
     })
 
+    useEffect(() => {
+        const scheduleOpened = () => {
+            handleTrack('Cronograma Viewed', {
+                'User ID': userId
+            })
+        }
+        scheduleOpened()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId])
+
     const pdfDownload = async () => {
         setDownloading(true)
-        
+
         const startDate = format(currentRange.currentMonth, 'YYYY-MM-DD')
         const filename = `Cronograma-${t(
             `schedule.monthAbbr.${getMonth(currentRange.currentMonth)}`
@@ -169,9 +194,16 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
         fetch(url, { method: 'GET' }).then(response => {
             setDownloading(false)
             if (response.status === 201) {
-                const link = document.createElement('a')
-                link.href = url
-                link.click()
+                // Edge fix download
+                if (navigator.msSaveOrOpenBlob) {
+                    response.blob().then(blob => {
+                        navigator.msSaveOrOpenBlob(blob, `${filename}.pdf`)
+                    })
+                } else {
+                    const link = document.createElement('a')
+                    link.href = url
+                    link.click()
+                }
             } else {
                 createSnackbar({
                     message: t('schedule.pdfDownloadFail'),
@@ -259,6 +291,10 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     const handleEventDrop = e => {
         e.jsEvent.preventDefault()
         const { event } = e
+        handleTrack('Cronograma Adjust', {
+            'Resource type': event.extendedProps.resourceType,
+            'Resource ID': event.extendedProps.id,
+        })
         const date = new Date(new Date(event.start).toUTCString()).toISOString()
         client
             .mutate<IUpdateAppointment>({
@@ -346,7 +382,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                 end: format(new Date(schedule.interval.end), 'YYYY-MM-DD')
             }
         } else {
-            return null
+            return undefined
         }
     }, [schedule.interval])
 
@@ -415,32 +451,34 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                         </SANBox>
 
                         <SANBox
-                            mt={{ md: '8', _: 'lg' }}
+                            mt={{ _: 'lg', md: '8' }}
                             display='flex'
                             alignItems='center'
                             justifyContent='space-between'
                         >
                             <Suggestion
-                                display={{ md: 'flex', _: 'none' }}
+                                display={{ _: 'none', md: 'flex' }}
                                 onChange={handleChangeSuggestion}
                                 checked={modalSuggestion.checked}
                                 loading={loading}
                             />
                             {!!(schedule.items && schedule.items.length) && (
-                                <SANButton
-                                    size='small'
-                                    variant='outlined'
-                                    bold
-                                    blockOnlyMobile
-                                    loading={loading || downloading}
-                                    onClick={() => pdfDownload()}
-                                >
-                                    <SANEvaIcon
-                                        name='download-outline'
-                                        mr='xs'
-                                    />
-                                    {t('schedule.pdfDownload')}
-                                </SANButton>
+                                <SANBox flex={{ _: '1', md: '0' }}>
+                                    <SANButton
+                                        size='small'
+                                        variant='outlined'
+                                        bold
+                                        block
+                                        loading={loading || downloading}
+                                        onClick={() => pdfDownload()}
+                                    >
+                                        <SANEvaIcon
+                                            name='download-outline'
+                                            mr='xs'
+                                        />
+                                        {t('schedule.pdfDownload')}
+                                    </SANButton>
+                                </SANBox>
                             )}
                         </SANBox>
                     </SANLayoutContainer>

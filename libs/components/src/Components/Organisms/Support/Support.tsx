@@ -8,7 +8,12 @@ import { SANSpin } from '../../Atoms/Spin'
 import { SANCheckbox } from '../../Atoms/Checkbox'
 import { SANButton } from '../../Atoms/Button'
 import { SANModal, SANModalFooter, ISANModalProps } from '../../Molecules/Modal'
-import { SANForm, SANFormItem, withSANForm } from '../../Molecules/Form'
+import {
+    SANForm,
+    SANFormItem,
+    withSANForm,
+    ISANFormComponentProps
+} from '../../Molecules/Form'
 
 interface IForm {
     email?: string
@@ -16,14 +21,23 @@ interface IForm {
     check?: boolean
 }
 
-export interface ISANSupportProps {
+interface IParams {
+    setSubmitting: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export interface ISANSupportProps extends ISANFormComponentProps {
     ModalProps: ISANModalProps
-    onSubmit?: () => void
+    onSubmit?: (values: any, params: IParams) => void
     form: any
     data?: IForm
 }
 
-const SANSupport = ({ form, onSubmit, data = {} as IForm, ModalProps }) => {
+const SANSupport: React.FC<ISANSupportProps> = ({
+    form,
+    onSubmit,
+    data = {} as IForm,
+    ModalProps
+}) => {
     const { t } = useTranslation('components')
     const [submitting, setSubmitting] = useState(false)
 

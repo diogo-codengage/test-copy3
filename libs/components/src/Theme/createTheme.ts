@@ -112,10 +112,12 @@ export const defaultColors = {
         'rgba(255, 255, 255, 0.85)', // 8
         'rgba(255, 255, 255, 0.95)', // 9
         'rgb(255, 255, 255)' // 10
-    ]
+    ],
+
+    skeleton: '#f2f2f2'
 }
 
-const defaultBreakpoints: any = [
+export const defaultBreakpoints: any = [
     '480px',
     '576px',
     '768px',
@@ -308,7 +310,10 @@ export const createTheme = ({
             },
             down: {
                 ...prev.down,
-                [key]: `@media screen and (max-width: ${val})`
+                [key]: `@media screen and (max-width: ${parseInt(
+                    val as string,
+                    10
+                ) - 1}px)`
             }
         }),
         {
@@ -372,7 +377,7 @@ export const createTheme = ({
     }
 }
 
-type Theme = {
+export type Theme = {
     name: string
     colors: typeof defaultColors | any
     breakpoints: typeof defaultBreakpoints

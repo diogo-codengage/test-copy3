@@ -55,7 +55,9 @@ const ESSignInForm = ({
                     .catch(error => {
                         track &&
                             track('Login failed', {
-                                Email: email
+                                Email: email,
+                                'Error code': error.code,
+                                'Error message': error.message
                             })
                         setLoading(false)
                         message.error(error.message)

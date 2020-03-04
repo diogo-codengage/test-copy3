@@ -37,8 +37,9 @@ const SANPracticeCompletedPage = ({ history }) => {
 
     const getAverageTime = time =>
         esUtilConvertSecondsToTime(
-            (
-                esConvertFormattedTimeToSeconds(time) / totalAnsweredQuestions
+            (time && totalAnsweredQuestions
+                ? esConvertFormattedTimeToSeconds(time) / totalAnsweredQuestions
+                : 0
             ).toFixed(0)
         )
 

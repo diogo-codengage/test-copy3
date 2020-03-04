@@ -6,11 +6,12 @@ import ESLessonHeader, {
     ESLessonHeaderExtra,
     ESLessonHeaderLeft
 } from 'sanar-ui/dist/Components/Molecules/LessonHeader'
-import ESPdfReader from 'sanar-ui/dist/Components/Atoms/PdfReader'
 
 import { usePortalContext } from 'Pages/Portal/Context'
 import { useClassroomContext } from '../Context'
 import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
+
+import { SANPdfViewer } from '@sanar/components'
 
 const SANClassRoomDocument = () => {
     const { t } = useTranslation('esanar')
@@ -69,7 +70,7 @@ const SANClassRoomDocument = () => {
                             />
                         }
                     />
-                    <ESPdfReader
+                    <SANPdfViewer
                         url={
                             currentResource &&
                             currentResource.document &&

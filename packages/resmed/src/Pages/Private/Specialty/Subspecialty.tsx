@@ -13,7 +13,9 @@ import {
     SANRow,
     SANCol,
     SANQuery,
-    useSnackbarContext
+    useSnackbarContext,
+    SANCardSubSpecialtySkeleton,
+    SANSkeleton
 } from '@sanar/components'
 
 import {
@@ -36,6 +38,22 @@ interface IRouteProps {
 }
 
 interface IRMSubspecialtiesProps extends RouteComponentProps<IRouteProps> {}
+
+const skeletons = new Array(8).fill(1)
+const renderSkeleton = (_, index) => (
+    <SANCol key={index} xs={24} sm={12} md={8} lg={8} xl={6} mb='xl'>
+        <SANCardSubSpecialtySkeleton />
+    </SANCol>
+)
+
+const RMSubspecialtiesSkeleton = () => (
+    <>
+        <SANBox display='flex' alignItems='center' mb={{ xs: 'xxl', _: 'md' }}>
+            <SANSkeleton paragraph={false} title={{ width: '30%' }} />
+        </SANBox>
+        <SANRow gutter={24}>{skeletons.map(renderSkeleton)}</SANRow>
+    </>
+)
 
 const RMSubspecialties: React.FC<IRMSubspecialtiesProps> = ({
     match: { params },
@@ -184,9 +202,7 @@ const RMSubspecialties: React.FC<IRMSubspecialtiesProps> = ({
                             'Specialty ID':
                                 subspecialty.lastAccessed.specialtyId,
                             'Subspecialty ID':
-                                subspecialty.lastAccessed.subSpecialtyId,
-                            'Lesson ID': subspecialty.lastAccessed.lesson.id,
-                            'Clicker ID': subspecialty.lastAccessed.collectionId
+                                subspecialty.lastAccessed.subSpecialtyId
                         })
                     }}
                 />
@@ -231,8 +247,8 @@ const RMSubspecialties: React.FC<IRMSubspecialtiesProps> = ({
                     variables: { parentId: params.specialtyId },
                     skip: !params.specialtyId
                 }}
-                loaderProps={{ minHeight: '250px', flex: true }}
                 errorProps={{ flex: 1 }}
+                loaderComp={<RMSubspecialtiesSkeleton />}
             >
                 {({
                     data: {

@@ -94,7 +94,7 @@ const RMComplementaryRegisterModal: React.FC<ISANModalProps> = ({
                 <SANBox
                     as='img'
                     src={logo}
-                    height={{ _: '24px', xs: '32px' }}
+                    height={{ _: '24px', xs: '32px' } as any}
                     mx='auto'
                     my='sm'
                 />
