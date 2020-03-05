@@ -132,10 +132,10 @@ export const getStatus = event => {
 }
 
 export const getEventType = event => {
-    if (!event.resourceType || event.resourceType === 'Exam') {
+    if (!event.resourceType || event.resourceType === 'Exam' || event.resourceType === 'Live') {
         return 'complementary'
     }
-    return event.seen ? 'viewed' : 'unseen'
+    return event.seen ? 'completed' : 'uncompleted'
 }
 
 export const formatMinutes = minutes =>
