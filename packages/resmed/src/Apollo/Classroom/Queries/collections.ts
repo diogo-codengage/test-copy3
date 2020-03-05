@@ -38,6 +38,10 @@ export interface ICollectionsQuery {
     collections: ICollection[]
 }
 
+export interface ICollectionsVariables {
+    parentId: string
+}
+
 export const GET_COLLECTIONS = gql`
     query Collections($parentId: ID!) {
         collections(where: { parentId: $parentId }) {

@@ -1,12 +1,7 @@
-import React, {
-    useEffect,
-    useState,
-    useImperativeHandle,
-    forwardRef
-} from 'react'
+import React, { useState, useImperativeHandle, forwardRef } from 'react'
 
 import { useTranslation } from 'react-i18next'
-import { useApolloClient } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
 import * as Sentry from '@sentry/browser'
 
 import {
@@ -18,7 +13,8 @@ import {
 
 import {
     GET_COLLECTIONS,
-    ICollectionsQuery
+    ICollectionsQuery,
+    ICollectionsVariables
 } from 'Apollo/Classroom/Queries/collections'
 
 interface IRMCollectionProps
@@ -39,42 +35,34 @@ const RMCollection: React.FC<IRMCollectionProps> = (
     { parentId, value, vertical = true, onChange, onCompleted },
     ref
 ) => {
-    const client = useApolloClient()
-    const { t } = useTranslation('resmed')
-    const createSnackbar = useSnackbarContext()
-    const [loading, setLoading] = useState(false)
-    const [collections, setCollections] = useState<any>([])
-
-    const findCollection = collection => collection.id === value
-
-    useEffect(() => {
-        const fetchCollections = async () => {
-            setLoading(true)
-            try {
-                const {
-                    data: { collections }
-                } = await client.query<ICollectionsQuery>({
-                    query: GET_COLLECTIONS,
-                    variables: { parentId }
-                })
+    const { loading } = useQuery<ICollectionsQuery, ICollectionsVariables>(
+        GET_COLLECTIONS,
+        {
+            variables: {
+                parentId
+            },
+            onCompleted: ({ collections }) => {
                 const changedCollections = collections.map(makeCollection)
                 setCollections(changedCollections)
                 if (!!onCompleted) {
                     const collection = changedCollections.find(findCollection)
                     !!collection && onCompleted(collection)
                 }
-            } catch (error) {
+            },
+            onError: error => {
                 createSnackbar({
                     message: t('classroom.collection.error'),
                     theme: 'error'
                 })
                 Sentry.captureException(error)
             }
-            setLoading(false)
         }
-        fetchCollections()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [parentId])
+    )
+    const { t } = useTranslation('resmed')
+    const createSnackbar = useSnackbarContext()
+    const [collections, setCollections] = useState<any>([])
+
+    const findCollection = collection => collection.id === value
 
     const getIndex = () =>
         collections.findIndex(collection => collection.id === value)
