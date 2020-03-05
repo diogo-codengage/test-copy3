@@ -5,13 +5,16 @@ import React, {
     forwardRef
 } from 'react'
 
+import { useTranslation } from 'react-i18next'
 import { useApolloClient } from '@apollo/react-hooks'
+import * as Sentry from '@sentry/browser'
 
-import { SANCollection } from '@sanar/components'
 import {
+    SANCollection,
+    useSnackbarContext,
     ISANCollectionProps,
     ICollection
-} from '@sanar/components/dist/Components/Molecules/Collection'
+} from '@sanar/components'
 
 import {
     GET_COLLECTIONS,
@@ -24,13 +27,25 @@ interface IRMCollectionProps
     onCompleted?: (collection: ICollection) => void
 }
 
+const makeCollection = collection => ({
+    ...collection,
+    image: collection.content.video.image,
+    completed:
+        collection.content.video.progress === 100 &&
+        collection.content.quiz.progress === 100
+})
+
 const RMCollection: React.FC<IRMCollectionProps> = (
     { parentId, value, vertical = true, onChange, onCompleted },
     ref
 ) => {
     const client = useApolloClient()
+    const { t } = useTranslation('resmed')
+    const createSnackbar = useSnackbarContext()
     const [loading, setLoading] = useState(false)
     const [collections, setCollections] = useState<any>([])
+
+    const findCollection = collection => collection.id === value
 
     useEffect(() => {
         const fetchCollections = async () => {
@@ -42,19 +57,19 @@ const RMCollection: React.FC<IRMCollectionProps> = (
                     query: GET_COLLECTIONS,
                     variables: { parentId }
                 })
-                const makeCollections = collections.map(collection => ({
-                    ...collection,
-                    image: collection.content.video.image,
-                    completed: collection.content.video.progress === 100
-                }))
-                setCollections(makeCollections)
+                const changedCollections = collections.map(makeCollection)
+                setCollections(changedCollections)
                 if (!!onCompleted) {
-                    const collection = makeCollections.find(
-                        collection => collection.id === value
-                    )
+                    const collection = changedCollections.find(findCollection)
                     !!collection && onCompleted(collection)
                 }
-            } catch {}
+            } catch (error) {
+                createSnackbar({
+                    message: t('classroom.collection.error'),
+                    theme: 'error'
+                })
+                Sentry.captureException(error)
+            }
             setLoading(false)
         }
         fetchCollections()
