@@ -52,7 +52,7 @@ const SANCourseContinue = ({ history }) => {
         ...(lastAccessed && {
             moduleName: `${t(
                 'courseDetails.tabContent.discipline.discipline.key'
-            )} ${lastAccessed.module_order}`,
+            )} ${lastAccessed.module_order + 1}`,
             title: lastAccessed.module_title,
             badge: getBadge(lastAccessed, 'module_progress'),
             progress: percentProgressLast,
@@ -93,7 +93,7 @@ const SANCourseContinue = ({ history }) => {
                                 className='san-tab-course-content__continue--card'
                                 moduleName={`${t(
                                     'courseDetails.tabContent.discipline.discipline.key'
-                                )} ${next_module.index}`}
+                                )} ${next_module.index + 1}`}
                                 title={next_module.name}
                                 badge={getBadge(next_module, 'progress')}
                                 progress={percentProgressNext}
