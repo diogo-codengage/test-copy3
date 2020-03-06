@@ -146,6 +146,12 @@ const ESJwPlayer = forwardRef(
         }, [width])
 
         useEffect(() => {
+            return () => {
+                !!player && player.setFullscreen(false)
+            }
+        }, [player])
+
+        useEffect(() => {
             if (!!player) {
                 onNext &&
                     player.addButton(
