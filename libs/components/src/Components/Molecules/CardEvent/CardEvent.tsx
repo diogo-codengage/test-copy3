@@ -17,17 +17,16 @@ const SANCardBox = styled(SANBox)<{ type: IType }>`
     &&& {
         cursor: pointer;
         border-color: ${switchProp('type', {
-            completed: theme('colors.primary-4'),
-            uncompleted: theme('colors.burgundy.1'),
-            complementary: theme('colors.grey.4'),
-        })};
-
+        completed: theme('colors.primary-4'),
+        uncompleted: theme('colors.burgundy.1'),
+        complementary: theme('colors.grey.4'),
+    })};
         &:hover {
             background-color: ${switchProp('type', {
-                completed: theme('colors.primary-1'),
-                uncompleted: theme('colors.burgundy.0'),
-                complementary: theme('colors.grey.0'),
-            })};
+        completed: theme('colors.primary-1'),
+        uncompleted: theme('colors.burgundy.0'),
+        complementary: theme('colors.grey.0'),
+    })};
         }
     }
 `

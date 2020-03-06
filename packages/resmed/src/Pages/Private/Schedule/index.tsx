@@ -77,22 +77,22 @@ const Suggestion = ({ onChange, checked, loading, ...props }) => {
     )
 }
 
-type IType = 'viewed' | 'unseen' | 'complementary'
+type IType = 'completed' | 'uncompleted' | 'complementary'
 
 const SubtitleDot = styled.span<{ type: IType }>`
     height: 12px;
     width: 12px;
     background-color: ${switchProp('type', {
-        viewed: '#9EF0DA',
-        unseen: '#FFDBE7',
+        completed: '#9EF0DA',
+        uncompleted: '#FFDBE7',
         complementary: '#11131766',
     })};
     border-radius: 50%;
     display: inline-block;
     margin-top: 30px;
-    box-shadow: 1px 3px 5px ${switchProp('type', { 
-        viewed: '#8eefd5',
-        unseen: '#f5b6cb',
+    box-shadow: 1px 3px 5px ${switchProp('type', {
+        completed: '#8eefd5',
+        uncompleted: '#f5b6cb',
         complementary: '#11131766',
     })};
 `
@@ -105,8 +105,8 @@ const Subtitle = ({...props}) => {
     const { t } = useTranslation('resmed')
     return (
         <SANBox {...props}>
-            <SubtitleDot type={'unseen'} /><SubtitleLabel>{t('schedule.subtitle.unseen')}</SubtitleLabel>
-            <SubtitleDot type={'viewed'} /><SubtitleLabel>{t('schedule.subtitle.viewed')}</SubtitleLabel>
+            <SubtitleDot type={'completed'} /><SubtitleLabel>{t('schedule.subtitle.uncompleted')}</SubtitleLabel>
+            <SubtitleDot type={'uncompleted'} /><SubtitleLabel>{t('schedule.subtitle.completed')}</SubtitleLabel>
             <SubtitleDot type={'complementary'} /><SubtitleLabel>{t('schedule.subtitle.complementary')}</SubtitleLabel>
         </SANBox>
     )
@@ -163,7 +163,7 @@ export const makeEvent = (event: IAppointment, hasModified = false) => ({
     start: getUTCDate(event.start),
     startEditable: hasModified ? !event.fixed : false,
     status: getStatus(event),
-    type: getEventType(event),
+    type: getEventType(event)
 })
 
 interface ISchedule {
