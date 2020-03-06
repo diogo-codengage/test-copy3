@@ -108,6 +108,7 @@ export default {
             practiceArea: 'Área de Prática',
             performance: 'Desempenho',
             lives: 'Lives',
+            simulated: 'Simulado',
             schedule: 'Cronograma',
             account: 'Minha conta',
             changeCourse: 'Trocar de curso'

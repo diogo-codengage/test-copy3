@@ -83,8 +83,17 @@ const RMSuggestedClass = withRouter(({ history }) => {
 
 const RMMenuInitial = memo(() => {
     const { t } = useTranslation('resmed')
-    const { me } = useAuthContext()
+    const { me, activeCourse } = useAuthContext()
     const { onCloseMenu, setMenuTab } = useLayoutContext()
+
+    const canShowSimulatedLink = () => {
+        const notAllowed = (process.env.REACT_APP_SANAR_COURSES_ID!).split(', ')
+        return !notAllowed.includes(activeCourse.id)
+    }
+
+    const openSimulatedLink = () => {
+        window.open('http://sanar.link/simulado-residenciamedica')
+    }
 
     return (
         <>
@@ -130,6 +139,19 @@ const RMMenuInitial = memo(() => {
                         onClick={onCloseMenu}
                         dataTestid='rm-menu__go-to--lives'
                         title={t('mainMenu.initial.lives')}
+                    />
+                )}
+                {!!activeCourse && canShowSimulatedLink() && (
+                    <SANNavigationListItem
+                        icon={
+                            <SANEvaIcon
+                                name='checkmark-circle-outline'
+                                color='default'
+                            />
+                        }
+                        onClick={openSimulatedLink}
+                        dataTestid='rm-menu__go-to--simulated'
+                        title={t('mainMenu.initial.simulated')}
                     />
                 )}
                 {!!me && me.countCourses > 1 && (
