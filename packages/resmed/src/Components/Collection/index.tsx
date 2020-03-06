@@ -86,8 +86,6 @@ const RMCollection: React.FC<IRMCollectionProps> = (
         }
     }))
 
-    console.log({ collections })
-
     return (
         <SANCollection
             items={collections}

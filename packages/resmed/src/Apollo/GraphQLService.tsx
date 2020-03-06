@@ -47,7 +47,8 @@ const requestLink = new ApolloLink(
 )
 
 const httpLink = new HttpLink({
-    uri: REACT_APP_URL_API
+    // uri: REACT_APP_URL_API
+    uri: 'http://localhost:4002/graphql'
 })
 
 export const clientSubscription = new SubscriptionClient(
