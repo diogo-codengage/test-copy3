@@ -176,12 +176,14 @@ const SANCourseModules = ({ history }) => {
                                 dataSource={modules}
                                 renderItem={renderDiscipline}
                                 footer={
-                                    <ESPagination
-                                        pageSize={pageSize}
-                                        total={count}
-                                        current={current}
-                                        onChange={setCurrent}
-                                    />
+                                    modules.lenght > 12 && (
+                                        <ESPagination
+                                            pageSize={pageSize}
+                                            total={count}
+                                            current={current}
+                                            onChange={setCurrent}
+                                        />
+                                    )
                                 }
                             />
                             <ESDivider className='mt-xxl mb-md' />
