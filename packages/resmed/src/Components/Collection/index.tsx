@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle, forwardRef } from 'react'
+import React, { useMemo, useImperativeHandle, forwardRef } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@apollo/react-hooks'
@@ -8,13 +8,14 @@ import {
     SANCollection,
     useSnackbarContext,
     ISANCollectionProps,
-    ICollection
+    ICollection as ICollectionComp
 } from '@sanar/components'
 
 import {
     GET_COLLECTIONS,
     ICollectionsQuery,
-    ICollectionsVariables
+    ICollectionsVariables,
+    ICollection
 } from 'Apollo/Classroom/Queries/collections'
 
 interface IRMCollectionProps
@@ -23,7 +24,7 @@ interface IRMCollectionProps
     onCompleted?: (collection: ICollection) => void
 }
 
-const makeCollection = collection => ({
+const makeCollection = (collection: ICollection) => ({
     ...collection,
     image: collection.content.video.image,
     completed:
@@ -35,50 +36,57 @@ const RMCollection: React.FC<IRMCollectionProps> = (
     { parentId, value, vertical = true, onChange, onCompleted },
     ref
 ) => {
-    const { loading } = useQuery<ICollectionsQuery, ICollectionsVariables>(
-        GET_COLLECTIONS,
-        {
-            variables: {
-                parentId
-            },
-            onCompleted: ({ collections }) => {
-                const changedCollections = collections.map(makeCollection)
-                setCollections(changedCollections)
-                if (!!onCompleted) {
-                    const collection = changedCollections.find(findCollection)
-                    !!collection && onCompleted(collection)
-                }
-            },
-            onError: error => {
-                createSnackbar({
-                    message: t('classroom.collection.error'),
-                    theme: 'error'
-                })
-                Sentry.captureException(error)
+    const { loading, data } = useQuery<
+        ICollectionsQuery,
+        ICollectionsVariables
+    >(GET_COLLECTIONS, {
+        variables: {
+            parentId
+        },
+        onCompleted: ({ collections }) => {
+            if (!!onCompleted) {
+                const collection = collections.find(findCollection)
+                !!collection && onCompleted(collection)
             }
+        },
+        onError: error => {
+            createSnackbar({
+                message: t('classroom.collection.error'),
+                theme: 'error'
+            })
+            Sentry.captureException(error)
         }
-    )
+    })
     const { t } = useTranslation('resmed')
     const createSnackbar = useSnackbarContext()
-    const [collections, setCollections] = useState<any>([])
 
-    const findCollection = collection => collection.id === value
+    const findCollection = (collection: ICollectionComp | ICollection) =>
+        collection.id === value
 
-    const getIndex = () =>
-        collections.findIndex(collection => collection.id === value)
+    const getIndex = (arr: ICollectionComp[]) =>
+        arr.findIndex(collection => collection.id === value)
+
+    const collections = useMemo<ICollectionComp[]>(() => {
+        if (!!data && !!data.collections) {
+            const changedCollections = data.collections.map(makeCollection)
+            return changedCollections
+        }
+        return []
+    }, [data])
 
     useImperativeHandle(ref, () => ({
-        getCurrent: () =>
-            collections.find(collection => collection.id === value),
+        getCurrent: () => collections.find(findCollection),
         getNext: () => {
-            const index = getIndex()
+            const index = getIndex(collections)
             return collections[index + 1]
         },
         getPrevious: () => {
-            const index = getIndex()
+            const index = getIndex(collections)
             return collections[index - 1]
         }
     }))
+
+    console.log({ collections })
 
     return (
         <SANCollection
