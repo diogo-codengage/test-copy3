@@ -53,7 +53,8 @@ const ESMainMenu = forwardRef(
             context: contextProp,
             continueCourseProps,
             onToggle,
-            contentColor
+            contentColor,
+            onOpenOrClose
         },
         ref
     ) => {
@@ -124,6 +125,7 @@ const ESMainMenu = forwardRef(
         }
 
         const handleOpenOrClose = (action = !toggle) => {
+            onOpenOrClose(action)
             setToggle(action)
             !!onToggle && onToggle(action)
         }
@@ -220,7 +222,8 @@ ESMainMenu.propTypes = {
         description: PropTypes.string
     }),
     onToggle: PropTypes.func,
-    contentColor: PropTypes.oneOf(['primary', 'dark', 'light'])
+    contentColor: PropTypes.oneOf(['primary', 'dark', 'light']),
+    onOpenOrClose: PropTypes.func
 }
 ESMainMenu.defaultProps = {
     theme: 'primary',
