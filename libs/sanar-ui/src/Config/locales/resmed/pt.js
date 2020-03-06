@@ -301,7 +301,7 @@ export default {
             error: 'Ocorreu um erro ao mover aula - {{name}}',
             exceeded: 'Você excedeu o limite de aulas por dia'
         },
-        suggestion: 'Sugestão do professor',
+        suggestion: 'Habilitar Edição',
         pdfDownload: 'Baixar em .pdf',
         today: 'Hoje',
         thisWeek: {
@@ -328,11 +328,11 @@ export default {
                 comingSoon: 'Em breve'
             },
             suggestion: {
-                title: 'Sugestão do professor',
+                title: 'Habilitar Edição',
                 descriptionDisable:
-                    'Ao desabilitar essa opção, você poderá editar seu calendário movendo as aulas.',
+                    'Ao desabilitar essa opção, você perderá todas as alterações feitas no seu calendário.',
                 descriptionEnable:
-                    'Ao habilitar essa opção, você perderá todas as alterações feitas no seu calendário.',
+                    'Ao habilitar essa opção, você poderá editar seu calendário movendo as aulas.',
                 confirm: 'Confirmar',
                 back: 'Voltar'
             }
@@ -352,6 +352,11 @@ export default {
             9: 'Out',
             10: 'Nov',
             11: 'Dez'
+        },
+        subtitle: {
+            completed: 'Atividades Incompletas',
+            uncompleted: 'Atividade Completas',
+            complementary: 'Atividades Complementares'
         }
     },
     lives: {
