@@ -108,6 +108,7 @@ export default {
             practiceArea: 'Área de Prática',
             performance: 'Desempenho',
             lives: 'Lives',
+            simulated: 'Simulado',
             schedule: 'Cronograma',
             account: 'Minha conta',
             changeCourse: 'Trocar de curso'
@@ -286,6 +287,9 @@ export default {
         quiz: {
             question: 'Questão',
             questionMap: 'Mapa de questões'
+        },
+        collection: {
+            error: 'Ocorreu um erro ao carregar listagem de vídeos'
         }
     },
     schedule: {

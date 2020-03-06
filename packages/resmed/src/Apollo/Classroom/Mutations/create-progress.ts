@@ -66,6 +66,10 @@ export const CREATE_PROGRESS = gql`
                         progress
                         timeInSeconds
                     }
+                    quiz {
+                        id
+                        progress
+                    }
                 }  
             }
         }
