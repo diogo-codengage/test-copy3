@@ -174,7 +174,7 @@ const SANCourseModules = ({ history }) => {
                                 dataSource={modules}
                                 renderItem={renderDiscipline}
                                 footer={
-                                    modules.lenght > 12 && (
+                                    count > 12 && (
                                         <ESPagination
                                             pageSize={pageSize}
                                             total={count}
