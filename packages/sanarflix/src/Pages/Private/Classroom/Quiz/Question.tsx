@@ -107,7 +107,7 @@ const FLXClassRoomQuizQuestion = ({
                         }
                     }
                 }
-            } = await client.mutate({
+            } = await client.mutate<any>({
                 mutation: ANSWER_MUTATION,
                 variables: {
                     questionId: questions[index].id,
@@ -248,7 +248,6 @@ const FLXClassRoomQuizQuestion = ({
                                     color='secondary'
                                     fontSize='lg'
                                     mr='xs'
-                                    bold
                                 />
                             ) : (
                                 <SANEvaIcon
@@ -256,7 +255,6 @@ const FLXClassRoomQuizQuestion = ({
                                     key='not-bookmarked'
                                     fontSize='lg'
                                     mr='xs'
-                                    bold
                                 />
                             )}
                             {t('classroom.quiz.bookmark')}

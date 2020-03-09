@@ -55,7 +55,7 @@ const RMPractice = memo<RouteComponentProps>(({ history }) => {
                         stats
                     }
                 }
-            } = await client.mutate({
+            } = await client.mutate<any>({
                 mutation: ANSWER_MUTATION,
                 variables: {
                     questionId: state.questions[state.currentIndex]['id'],
@@ -66,6 +66,7 @@ const RMPractice = memo<RouteComponentProps>(({ history }) => {
             const correct = alternatives.data.find(getCorrect)
             handleTrack('Question answered', {
                 'Question ID': state.questions[state.currentIndex].id,
+                'Question Type': 'Practical Area',
                 Correct: correct.id === alternativeId
             })
             if (correct.id === alternativeId) {

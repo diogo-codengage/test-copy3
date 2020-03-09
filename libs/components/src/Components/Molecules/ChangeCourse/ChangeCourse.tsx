@@ -10,11 +10,11 @@ import { SANTypography } from '../../Atoms/Typography'
 import { SANProgress } from '../../Atoms/Progress'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
 import { SANSkeleton } from '../../Atoms/Skeleton'
-import { SANBox } from '../../Atoms/Box'
+import { SANBox, ISANBoxProps } from '../../Atoms/Box'
 
 import { transparentize } from 'polished'
 
-interface IWrapper extends React.HTMLProps<HTMLDivElement> {
+interface IWrapper {
     hasHover?: boolean
     cursor?: 'not-allowed' | 'pointer' | 'default'
 }
@@ -73,11 +73,12 @@ export interface ISANChangeCourseProps {
     loading?: boolean
     percent: number
     coverPicture: string
-    onChange: (id: string) => void
+    onChange?: (id: string) => void
     ContinueProps?: IContinue
     hasActive?: boolean
     expired?: boolean
     notStarted?: boolean
+    BoxProps?: ISANBoxProps
 }
 
 export interface ISANContinueProps extends IContinue {
@@ -165,7 +166,7 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
     hasActive,
     expired,
     notStarted,
-    ...props
+    BoxProps
 }) => {
     const { t } = useTranslation('components')
 
@@ -193,8 +194,8 @@ const SANChangeCourse: React.FC<ISANChangeCourseProps> = ({
                     ? 'pointer'
                     : 'default'
             }
-            height={expired || notStarted ? 106 : 'auto'}
-            {...props}
+            height={(expired || notStarted ? 106 : 'auto') as any}
+            {...BoxProps}
         >
             {(expired || notStarted) && <Blocked />}
             <SANBox

@@ -55,7 +55,7 @@ interface IRouteProps {
     specialtyId: string
 }
 
-const RMSpecialty = ({
+const RMSpecialty: React.FC<RouteComponentProps<IRouteProps>> = ({
     history,
     match: { params }
 }: RouteComponentProps<IRouteProps>) => {
@@ -86,8 +86,10 @@ const RMSpecialty = ({
             }}
             HeaderProps={{
                 onBack: () => {
+                    handleTrack('Voltar button clicked', {
+                        'Source URL': history.location.pathname
+                    })
                     history.push('/inicio/curso')
-                    handleTrack('Voltar button clicked')
                 },
                 SessionTitleProps: {
                     title:
@@ -125,4 +127,4 @@ const RMSpecialty = ({
     )
 }
 
-export default withRouter<RouteComponentProps<IRouteProps>>(RMSpecialty)
+export default withRouter(RMSpecialty)

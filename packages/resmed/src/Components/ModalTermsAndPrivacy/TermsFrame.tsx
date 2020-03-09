@@ -10,7 +10,7 @@ import { useMainContext } from 'Pages/Private/Context'
 const SANIframeBox = styled(SANBox)`
     width: 100%;
     flex: 1;
-    max-height: calc( 100vh - 286px );
+    max-height: calc(100vh - 286px);
 `
 const SANCheckboxContainer = styled(SANBox)`
     @media (min-width: 992px) {
@@ -27,7 +27,7 @@ const RMTermsFrame = ({ onAccept, tosRequired }) => {
     const [checked, setChecked] = useState(false)
 
     const manipuleLoading = () => {
-        console.log('---------terms frame loaded---------')
+        console.log('---------terms frame manipule loading---------')
     }
 
     useEffect(() => {

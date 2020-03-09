@@ -7,7 +7,7 @@ import { SANChangePassword, useSnackbarContext } from '@sanar/components'
 
 import { changePassword } from 'Config/AWSCognito'
 
-const RMChangePassword = ({ history }: RouteComponentProps) => {
+const RMChangePassword: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
     const createSnackbar = useSnackbarContext()
 
@@ -38,4 +38,4 @@ const RMChangePassword = ({ history }: RouteComponentProps) => {
     return <SANChangePassword onSubmit={handleSubmit} />
 }
 
-export default withRouter<RouteComponentProps>(RMChangePassword)
+export default withRouter(RMChangePassword)

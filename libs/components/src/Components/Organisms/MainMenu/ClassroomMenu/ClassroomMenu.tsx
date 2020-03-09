@@ -18,15 +18,15 @@ interface ICourse {
     progress: number
 }
 
-interface IProps {
+export interface ISANClassroomMenuProps {
     course: ICourse
-    currentThemeIndex: number
-    totalThemes: number
-    DisciplineDropdownProps: ISANDisciplineDropdownProps
+    currentThemeIndex?: number
+    totalThemes?: number
+    DisciplineDropdownProps?: ISANDisciplineDropdownProps
     PlaylistProps: ISANPlaylistProps
 }
 
-const SANClassroomMenu: React.FC<IProps> = ({
+const SANClassroomMenu: React.FC<ISANClassroomMenuProps> = ({
     course: { knowledgeArea, name, progress },
     currentThemeIndex,
     totalThemes,

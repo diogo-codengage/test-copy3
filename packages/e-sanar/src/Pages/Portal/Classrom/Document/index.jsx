@@ -12,6 +12,8 @@ import { usePortalContext } from 'Pages/Portal/Context'
 import { useClassroomContext } from '../Context'
 import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 
+// import { SANPdfViewer } from '@sanar/components'
+
 const SANClassRoomDocument = () => {
     const { t } = useTranslation('esanar')
     const {
@@ -22,12 +24,7 @@ const SANClassRoomDocument = () => {
         onNavigation,
         state: { currentModule }
     } = usePortalContext()
-    const {
-        handleBookmark,
-        bookmarked,
-        handleProgress,
-        openMenu
-    } = useClassroomContext()
+    const { handleProgress, openMenu } = useClassroomContext()
 
     useEffect(() => {
         if (currentResource) {
@@ -51,8 +48,6 @@ const SANClassRoomDocument = () => {
             ) : (
                 <div className='classroom__document'>
                     <ESLessonHeader
-                        bookmarked={bookmarked}
-                        onBookmarked={handleBookmark}
                         leftChildren={
                             <ESLessonHeaderLeft
                                 title={currentResource.document.title}
@@ -73,8 +68,6 @@ const SANClassRoomDocument = () => {
                                 onPrev={onNavigation('prev')}
                                 onNext={onNavigation('next')}
                                 bookmarkLabel={t('classroom.bookmarkDocument')}
-                                bookmarked={bookmarked}
-                                onBookmarked={handleBookmark}
                             />
                         }
                     />

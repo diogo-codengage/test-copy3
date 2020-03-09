@@ -16,12 +16,19 @@ import ESDivider from 'sanar-ui/dist/Components/Atoms/Divider'
 import ESTypography from 'sanar-ui/dist/Components/Atoms/Typography'
 import SANModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 
+import { version } from 'Config/Version'
 import { useAuthContext } from 'Hooks/auth'
 import SANLogout from 'Components/ModalLogout'
 import SANFeedback from 'Components/ModalFeedback'
 import { useLayoutContext } from '../Context'
 
 const intlPath = 'mainMenu.myAccount.'
+
+const versionStyle = {
+    position: 'absolute',
+    bottom: 16,
+    right: '50%'
+}
 
 const SANMyAccount = ({ handleBack, history }) => {
     const {
@@ -75,6 +82,11 @@ const SANMyAccount = ({ handleBack, history }) => {
 
     return (
         <>
+            <div style={versionStyle}>
+                <ESTypography variant='caption' className='text-white-6'>
+                    v{version}
+                </ESTypography>
+            </div>
             <SANLogout
                 visible={open}
                 onLeave={() => leaveAccount()}

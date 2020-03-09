@@ -3,8 +3,8 @@ import gql from 'graphql-tag'
 import { ILastAccessed } from 'Apollo/Subspecialties/Queries/lessons'
 
 export interface ICourse {
-    id: string | undefined
-    name: string | undefined
+    id: string
+    name: string
     progress: number
     infos?: IInfo[]
     accessed: boolean

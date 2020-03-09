@@ -4,13 +4,17 @@ import { boolean } from '@storybook/addon-knobs'
 
 import SANChat from './Chat'
 
-const arr = new Array(100).fill(1).map(e => ({
-    image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSISZm1NCFyz4kHQXUqcgbX4MuA0XTmY1Avl1UhJBAONLZEwyRB',
-    name: 'Sandra Gibson',
-    message: 'Mauris imperdiet orci dapibus, commodo libero nec.',
-    time: '19:17'
-}))
+const arr = new Array(100).fill(1).map(e => {
+    let date = new Date()
+    date.setHours(19)
+    date.setMinutes(17)
+
+    return {
+        name: 'Sandra Gibson',
+        message: 'Mauris imperdiet orci dapibus, commodo libero nec.',
+        time: date.toString()
+    }
+})
 
 const Example = () => {
     const [messages, setMessages] = useState(arr)
@@ -24,18 +28,19 @@ const Example = () => {
     }
 
     const loadMore = () => {
-        setTimeout(() => {
-            setMessages(old => [
-                ...old,
-                {
-                    image:
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSISZm1NCFyz4kHQXUqcgbX4MuA0XTmY1Avl1UhJBAONLZEwyRB',
-                    name: 'Fetch people',
-                    message: 'Carregamento',
-                    time: `${new Date().getHours()}:${new Date().getMinutes()}`
-                }
-            ])
-        }, 100)
+        return new Promise(resolve => {
+            setTimeout(() => {
+                setMessages(old => [
+                    ...old,
+                    {
+                        name: 'Fetch people',
+                        message: 'Carregamento',
+                        time: new Date().toString()
+                    }
+                ])
+                resolve()
+            }, 100)
+        })
     }
 
     useEffect(() => {
@@ -43,11 +48,9 @@ const Example = () => {
             setMessages(old => [
                 ...old,
                 {
-                    image:
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSISZm1NCFyz4kHQXUqcgbX4MuA0XTmY1Avl1UhJBAONLZEwyRB',
                     name: 'Diogo Biz',
                     message: value,
-                    time: `${new Date().getHours()}:${new Date().getMinutes()}`
+                    time: new Date().toString()
                 }
             ])
         }
@@ -55,16 +58,12 @@ const Example = () => {
 
     return (
         <SANChat
-            image='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTN3WWzzcbI90pPzhBkw5fdsK1LqluPp_6T-fPiGsn1rQjKFWFB'
             blocked={boolean('Blocked', false)}
             loading={boolean('Loading', false)}
             messages={messages}
             onSend={handleSetValue}
-            InfiniteProps={{
-                loadMore: loadMore,
-                hasMore: false,
-                isReverse: true
-            }}
+            loadMore={loadMore}
+            hasMore={false}
         />
     )
 }

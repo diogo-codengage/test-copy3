@@ -19,7 +19,7 @@ import {
     GET_QUESTIONS,
     IQuestionsQuery
 } from 'Apollo/PracticalArea/Queries/questions'
-import { reducer, initialStats, IAction, IState, IFilter } from './reducer'
+import { reducer, initialStats, IAction, IState, IFilter, IOwner } from './reducer'
 
 import { useMainContext } from 'Pages/Private/Context'
 
@@ -90,17 +90,22 @@ const RMPracticalProvider = memo<RouteComponentProps>(
         )
         const { handleTrack } = useMainContext()
 
-        const handleTrackFilter = values => {
+        const handleTrackFilter = (values: IFilter) => {
+            const createLabelArr = (arr: IOwner[]) => {
+                return arr.map(v => v.value)
+            }
             try {
                 handleTrack('Filter used', {
                     'Filter ID': 'Question',
-                    'Specialty ID': (values.specialties || []).map(
-                        v => v.value
-                    ),
-                    'Tag ID': (values.tags || []).map(v => v.value),
-                    'Institution ID': values.institution,
+                    'Specialty ID': createLabelArr(values.specialties || []),
+                    'Subspecialty ID': createLabelArr(values.subspecialties || []),
+                    'Tag ID': createLabelArr(values.tags || []),
+                    'Institution ID': createLabelArr(values.institutions || []),
+                    'Categories': createLabelArr(values.categories || []),
                     'State ID': values.state,
-                    'Commented by Expert': values.onlyComments || false
+                    'Commented by Expert': values.onlyComments || false,
+                    'Years': values.years || [],
+                    'Only has images': values.onlyHasImages || false
                 })
             } catch {}
         }
@@ -229,4 +234,4 @@ const RMPracticalProvider = memo<RouteComponentProps>(
     }
 )
 
-export default withRouter<RouteComponentProps>(RMPracticalProvider)
+export default withRouter(RMPracticalProvider)

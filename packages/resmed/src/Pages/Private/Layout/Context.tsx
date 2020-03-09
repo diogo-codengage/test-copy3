@@ -143,7 +143,9 @@ const RMLayoutProvider: React.FC<RouteComponentProps> = ({
     }
 
     const handleBackClassroom = () => {
-        handleTrack('Voltar button clicked')
+        handleTrack('Voltar button clicked', {
+            'Source URL': history.location.pathname
+        })
         if (!lastLocation) {
             history.push(`/inicio/curso`)
         } else if (!lastLocation.pathname.includes('sala-aula')) {

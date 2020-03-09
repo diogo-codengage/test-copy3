@@ -2,6 +2,7 @@ import React, { useEffect, useState, memo } from 'react'
 
 import { useApolloClient } from '@apollo/react-hooks'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
+import * as Sentry from '@sentry/browser'
 
 import {
     SANBox,
@@ -55,11 +56,15 @@ const RMClassroomFeedback = memo<RouteComponentProps<IParams>>(
                         query: GET_LESSON_PERFORMANCE,
                         variables: {
                             lessonId: params.lessonId
-                        }
+                        },
+                        fetchPolicy: 'no-cache'
                     })
                     setQuestions(lessonPerformance)
-                } catch {}
-                setLoading(false)
+                } catch (error) {
+                    Sentry.captureException(error)
+                } finally {
+                    setLoading(false)
+                }
             }
             !!params.lessonId && fetchResult()
             // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -91,7 +96,10 @@ const RMClassroomFeedback = memo<RouteComponentProps<IParams>>(
                         loading={loading}
                     />
 
-                    <SANBox mt={{ lg: 'xl', _: '0' }} px={width > 884 && 18}>
+                    <SANBox
+                        mt={{ lg: 'xl', _: '0' }}
+                        px={width > 884 ? 18 : undefined}
+                    >
                         <RMCollection
                             parentId={params.lessonId}
                             value={params.collectionId}

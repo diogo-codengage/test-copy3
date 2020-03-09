@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-import { message } from 'antd'
 import { Mutation } from 'react-apollo'
 import { useTranslation } from 'react-i18next'
 
@@ -12,7 +11,6 @@ import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
 import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
-import { CREATE_BOOKMARK } from 'Apollo/Classroom/mutations/bookmark'
 
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
@@ -20,8 +18,9 @@ import SANEmptyQuestions from './Empty'
 import SANSubheader from './Subheader'
 import { useQuestionsContext } from '../Context'
 import { useAuthContext } from 'Hooks/auth'
-import { useApolloContext } from 'Hooks/apollo'
 import { useLayoutContext } from '../../Layout/Context'
+
+import { htmlInterpreter } from 'Utils/htmlInterpreter'
 
 const initialState = {
     answer: null,
@@ -30,7 +29,6 @@ const initialState = {
 }
 
 const SANQuestionPage = ({ history }) => {
-    const client = useApolloContext()
     const {
         setSkippedQuestions,
         setWrongQuestions,
@@ -40,7 +38,6 @@ const SANQuestionPage = ({ history }) => {
         firstLoad,
         setQuestions,
         questions,
-        currentIndex,
         error
     } = useQuestionsContext()
 
@@ -51,7 +48,6 @@ const SANQuestionPage = ({ history }) => {
     const [isFull, setIsFull] = useState(width <= 992)
     const [response, setResponse] = useState(initialState)
     const [selected, setSelect] = useState()
-    const [bookmarked, setBookmark] = useState()
 
     const { me } = useAuthContext()
 
@@ -132,23 +128,6 @@ const SANQuestionPage = ({ history }) => {
         pauseStopwatch()
     }
 
-    const handleBookmark = async () => {
-        try {
-            const {
-                data: { createBookmarks }
-            } = await client.mutate({
-                mutation: CREATE_BOOKMARK,
-                variables: {
-                    resourceId: questions[0].id,
-                    resourceType: 'Question'
-                }
-            })
-            setBookmark(!!createBookmarks)
-        } catch {
-            message.error(t('questionBase.question.failHandleBookmark'))
-        }
-    }
-
     useEffect(() => {
         if (
             !firstLoad &&
@@ -164,13 +143,6 @@ const SANQuestionPage = ({ history }) => {
     useEffect(() => {
         setIsFull(width <= 992)
     }, [width])
-
-    useEffect(() => {
-        if (questions && questions.length) {
-            setBookmark(questions[0].bookmarked)
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentIndex, questions])
 
     if (!error && !firstLoad && (!questions || !questions.length)) {
         return <SANEmptyQuestions />
@@ -192,7 +164,11 @@ const SANQuestionPage = ({ history }) => {
                         <SANPortalPagesContainer className='without-padding'>
                             <SANSubheader>
                                 <div className='questions-question__subheader--actions'>
-                                    <ESButton
+                                    {/*
+                                        Diogo Biz - 05/02/2020 FD-1024
+                                        Remover favoritos
+                                    */}
+                                    {/* <ESButton
                                         size='small'
                                         variant='text'
                                         bold
@@ -213,7 +189,7 @@ const SANQuestionPage = ({ history }) => {
                                         {t(
                                             'questionBase.question.saveQuestion'
                                         )}
-                                    </ESButton>
+                                    </ESButton> */}
                                     <ESButton
                                         size='small'
                                         variant='text'
@@ -237,7 +213,9 @@ const SANQuestionPage = ({ history }) => {
                         <SANPortalPagesContainer className='without-padding'>
                             <ESQuestion
                                 full={isFull}
-                                question={questions && questions[0]}
+                                question={
+                                    questions && htmlInterpreter(questions[0])
+                                }
                                 onConfirm={handleConfirm(answerQuestion)}
                                 onJump={handleJump}
                                 onNext={handleNext}

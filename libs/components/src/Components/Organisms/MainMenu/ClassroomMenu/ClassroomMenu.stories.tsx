@@ -65,7 +65,7 @@ const playlistItems = [
     }
 ]
 
-storiesOf('Organisms.ClassroomMenu', module).add(
+storiesOf('Organisms.MainMenu.ClassroomMenu', module).add(
     'Default',
     () => (
         <div style={{ width: 320, height: '100vh' }}>

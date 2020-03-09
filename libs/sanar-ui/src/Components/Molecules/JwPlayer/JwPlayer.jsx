@@ -52,6 +52,7 @@ const ESJwPlayer = forwardRef(
             subtitle,
             BookmarkProps,
             plataform = 'sanarflix',
+            onError,
             ...props
         },
         ref
@@ -66,7 +67,10 @@ const ESJwPlayer = forwardRef(
         const [isPause, setIsPause] = useState(!props.autostart)
         const classes = classNames('es-jw-player', className)
 
-        const handleSetupError = () => setError(true)
+        const handleSetupError = e => {
+            setError(true)
+            !!onError && onError(e)
+        }
 
         const handleReady = e => {
             const instance = getPlayer(playerId)
@@ -83,7 +87,7 @@ const ESJwPlayer = forwardRef(
             )
 
             instance.on('error', function() {
-                setError(true)                
+                setError(true)
                 instance.load({
                     file:
                         '//content.jwplatform.com/videos/7RtXk3vl-52qL9xLP.mp4',
@@ -122,7 +126,7 @@ const ESJwPlayer = forwardRef(
                 play: () => player.play(),
                 pause: () => player.pause()
             })
-        }))        
+        }))
 
         const height = useMemo(
             () =>
@@ -140,6 +144,12 @@ const ESJwPlayer = forwardRef(
                 }
             }
         }, [width])
+
+        useEffect(() => {
+            return () => {
+                !!player && player.setFullscreen(false)
+            }
+        }, [player])
 
         useEffect(() => {
             if (!!player) {
@@ -166,7 +176,7 @@ const ESJwPlayer = forwardRef(
             }
         }, [isReady, onNext, onPrevious])
 
-        const state = !!player && player.getState && player.getState()        
+        const state = !!player && player.getState && player.getState()
 
         return (
             <div className={classes} ref={wrapperRef}>

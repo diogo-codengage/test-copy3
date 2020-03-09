@@ -5,8 +5,8 @@ import { useQuery } from '@apollo/react-hooks'
 
 import RMSplashLoader from 'Components/SplashLoader'
 
-import { segmentTrack } from 'Config/Segment/track'
-import { IEvents, IOptions } from 'Config/Segment'
+import { eventsTrack } from 'Config/Trackers/track'
+import { IEvents, IOptions } from 'Config/Trackers'
 import { useAuthContext } from 'Hooks/auth'
 import {
     GET_ACTIVE_COURSE,
@@ -23,12 +23,16 @@ const Context = createContext<RMMainContext>({} as RMMainContext)
 export const useMainContext = () => useContext(Context)
 
 const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
-    const { loading, error } = useQuery<IActiveCourseQuery>(GET_ACTIVE_COURSE, {
-        onCompleted(response) {
-            if (!!response && !!response.activeCourse)
-                setActiveCourse(response.activeCourse)
+    const { loading, error, networkStatus } = useQuery<IActiveCourseQuery>(
+        GET_ACTIVE_COURSE,
+        {
+            notifyOnNetworkStatusChange: true,
+            onCompleted(response) {
+                if (!!response && !!response.activeCourse)
+                    setActiveCourse(response.activeCourse)
+            }
         }
-    })
+    )
 
     const { setActiveCourse, me, activeCourse } = useAuthContext()
 
@@ -39,15 +43,14 @@ const RMMainProvider = memo<RouteComponentProps>(({ children }) => {
             'Course ID': !!activeCourse && activeCourse.id,
             ...attrs
         }
-
-        segmentTrack(event, data)
+        eventsTrack(event, data)
     }
 
     if (loading) return <RMSplashLoader />
 
     const value = {
         handleTrack,
-        errorLoadActiveCourse: !!error
+        errorLoadActiveCourse: !!error || networkStatus === 8
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

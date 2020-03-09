@@ -5,7 +5,6 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import { SANQuestionsProvider } from './Context'
 
 const SANQuestionsFilter = React.lazy(() => import('./Filter'))
-const SANQuestionsHistoric = React.lazy(() => import('./Historic'))
 const SANQuestionPage = React.lazy(() => import('./Question'))
 const SANPracticeCompletedPage = React.lazy(() => import('./PracticeCompleted'))
 
@@ -18,10 +17,14 @@ const SANQuestions = ({ match: { url } }) => {
                         path={`${url}/filtro`}
                         component={SANQuestionsFilter}
                     />
-                    <Route
+                    {/*
+                        Marcos venicius - 06/02/2020 FD-988
+                        Remover histórico de questões
+                    */}
+                    {/* <Route
                         path={`${url}/historico`}
                         component={SANQuestionsHistoric}
-                    />
+                    /> */}
                     <Route
                         path={`${url}/finalizado`}
                         component={SANPracticeCompletedPage}
