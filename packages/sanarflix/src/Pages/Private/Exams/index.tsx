@@ -17,6 +17,8 @@ const FLXExams = ({ history }) => {
     const { me } = useAuthContext()
     const { userMedUniversity } = me
 
+    console.log('ME >>>>> ', me)
+
     const showOnBoarding = !userMedUniversity || Object.keys(userMedUniversity).length === 0
 
     useEffect(() => {
@@ -35,7 +37,7 @@ const FLXExams = ({ history }) => {
                     subtitle: t('exams.subtitle')
                 }}
             />
-            {!showOnBoarding
+            {showOnBoarding
                 ? (<OnBoarding />)
                 : (<List medUniversity={{id:'teste1', label:'Faculdade 1'}} />)
             }
