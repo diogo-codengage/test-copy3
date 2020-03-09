@@ -65,7 +65,11 @@ const SANInitial = ({ setTab, history }) => {
             </div>
             <div className='pl-md pr-md'>
                 {!error ? (
-                    <ESLeftOff {...leftProps} />
+                    !!lastAccessed ? (
+                        <ESLeftOff {...leftProps} />
+                    ) : (
+                        <></>
+                    )
                 ) : (
                     <div className='san-portal-layout__error-card'>
                         <SANErrorPiece
