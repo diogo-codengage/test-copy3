@@ -247,7 +247,17 @@ export default {
         itemError: 'Precisa estudar'
     },
     collection: {
-        part: 'Parte'
+        part: 'Parte',
+        progress: {
+            video: {
+                completed: 'Vídeo completo',
+                incomplete: 'Vídeo incompleto'
+            },
+            quiz: {
+                completed: 'Quiz completo',
+                incomplete: 'Quiz incompleto'
+            }
+        }
     },
     bigCalendar: {
         more: 'Mais'

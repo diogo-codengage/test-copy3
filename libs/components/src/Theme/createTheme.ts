@@ -123,7 +123,8 @@ export const defaultBreakpoints: any = [
     '768px',
     '992px',
     '1200px',
-    '1600px'
+    '1600px',
+    '1024px',
 ]
 defaultBreakpoints.xs = defaultBreakpoints[0]
 defaultBreakpoints.sm = defaultBreakpoints[1]
@@ -131,6 +132,7 @@ defaultBreakpoints.md = defaultBreakpoints[2]
 defaultBreakpoints.lg = defaultBreakpoints[3]
 defaultBreakpoints.xl = defaultBreakpoints[4]
 defaultBreakpoints.xxl = defaultBreakpoints[5]
+defaultBreakpoints.classroom = defaultBreakpoints[6]
 
 const defaultBorderRadius: any = ['2px', '4px']
 defaultBorderRadius.sm = defaultBorderRadius[0]
