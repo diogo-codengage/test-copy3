@@ -71,12 +71,11 @@ const SANQuiz = ({
         }
     }
 
-    {
-        /*
+    /*
         Marlos Augusto - 06/03/2020 FD-1024
         Remover favoritos
     */
-    }
+
     // const handleBookmark = async () => {
     //     try {
     //         setBookmark(old => !old)
