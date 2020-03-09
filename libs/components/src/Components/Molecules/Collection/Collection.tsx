@@ -447,6 +447,7 @@ const SANCollection = memo<ISANCollectionProps>(
                           }
                         : 'auto'
                 }
+                {...style}
             >
                 {vertical && (
                     <>
