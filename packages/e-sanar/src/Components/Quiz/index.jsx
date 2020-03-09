@@ -11,9 +11,9 @@ import ESQuestion from 'sanar-ui/dist/Components/Molecules/Question'
 import useWindowSize from 'sanar-ui/dist/Hooks/useWindowSize'
 
 import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
-import { CREATE_BOOKMARK } from 'Apollo/Classroom/mutations/bookmark'
+// import { CREATE_BOOKMARK } from 'Apollo/Classroom/mutations/bookmark'
 import { ANSWER_MUTATION } from 'Apollo/Questions/mutations/answer'
-import { GET_BOOKMARK } from 'Apollo/Classroom/queries/bookmark'
+// import { GET_BOOKMARK } from 'Apollo/Classroom/queries/bookmark'
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 
 import { useApolloContext } from 'Hooks/apollo'
@@ -46,7 +46,7 @@ const SANQuiz = ({
     const [questions, setQuestions] = useState([])
     const [index, setIndex] = useState(0)
     const [selected, setSelect] = useState()
-    const [bookmarked, setBookmark] = useState()
+    // const [bookmarked, setBookmark] = useState()
     const [stats, setStats] = useState({
         correct: 0,
         wrong: 0,
@@ -71,20 +71,26 @@ const SANQuiz = ({
         }
     }
 
-    const handleBookmark = async () => {
-        try {
-            setBookmark(old => !old)
-            client.mutate({
-                mutation: CREATE_BOOKMARK,
-                variables: {
-                    resourceId: questions[index].id,
-                    resourceType: 'Question'
-                }
-            })
-        } catch {
-            message.error(t('classroom.failHandleBookmark'))
-        }
+    {
+        /*
+        Marlos Augusto - 06/03/2020 FD-1024
+        Remover favoritos
+    */
     }
+    // const handleBookmark = async () => {
+    //     try {
+    //         setBookmark(old => !old)
+    //         client.mutate({
+    //             mutation: CREATE_BOOKMARK,
+    //             variables: {
+    //                 resourceId: questions[index].id,
+    //                 resourceType: 'Question'
+    //             }
+    //         })
+    //     } catch {
+    //         message.error(t('classroom.failHandleBookmark'))
+    //     }
+    // }
 
     const handleConfirm = mutation => async alternative => {
         try {
@@ -229,29 +235,29 @@ const SANQuiz = ({
         }))
     }, [data])
 
-    useEffect(() => {
-        if (questions[index]) {
-            const fetchData = async () => {
-                try {
-                    const {
-                        data: { bookmark }
-                    } = await client.query({
-                        query: GET_BOOKMARK,
-                        fetchPolicy: 'network-only',
-                        variables: {
-                            resourceId: questions[index].id
-                        }
-                    })
+    // useEffect(() => {
+    //     if (questions[index]) {
+    //         const fetchData = async () => {
+    //             try {
+    //                 const {
+    //                     data: { bookmark }
+    //                 } = await client.query({
+    //                     query: GET_BOOKMARK,
+    //                     fetchPolicy: 'network-only',
+    //                     variables: {
+    //                         resourceId: questions[index].id
+    //                     }
+    //                 })
 
-                    setBookmark(!!bookmark)
-                } catch (err) {
-                    console.error(err)
-                }
-            }
-            fetchData()
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [index, questions])
+    //                 setBookmark(!!bookmark)
+    //             } catch (err) {
+    //                 console.error(err)
+    //             }
+    //         }
+    //         fetchData()
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [index, questions])
 
     const isFinish = useMemo(() => responses.length === questions.length, [
         responses,
@@ -292,8 +298,8 @@ const SANQuiz = ({
                             mock={mock}
                             stopwatch={!isFinish && mock}
                             ref={stopwatchRef}
-                            bookmarked={bookmarked}
-                            handleBookmark={handleBookmark}
+                            // bookmarked={bookmarked}
+                            // handleBookmark={handleBookmark}
                         />
                         {isFinish && !mock ? (
                             <SANQuizFinalizedQuiz {...stats} />
