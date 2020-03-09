@@ -24,13 +24,24 @@ interface IRMCollectionProps
     onCompleted?: (collection: ICollection) => void
 }
 
-const makeCollection = (collection: ICollection) => ({
-    ...collection,
-    image: collection.content.video.image,
-    completed:
-        collection.content.video.progress === 100 &&
-        collection.content.quiz.progress === 100
-})
+const makeCollection = (collection: ICollection) => {
+    const hasVideo = !!collection.content.video
+    const hasQuiz = !!collection.content.quiz
+    return {
+        ...collection,
+        progress: {
+            video: hasVideo ? collection.content.video.progress : 0,
+            quiz: hasQuiz ? collection.content.quiz.progress : 0
+        },
+        hasQuiz,
+        image: collection.content.video.image,
+        completed:
+            hasVideo &&
+            collection.content.video.progress === 100 &&
+            hasQuiz &&
+            collection.content.quiz.progress === 100
+    }
+}
 
 const RMCollection: React.FC<IRMCollectionProps> = (
     { parentId, value, vertical = true, onChange, onCompleted },

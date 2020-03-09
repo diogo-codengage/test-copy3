@@ -10,35 +10,55 @@ const items = [
         image:
             'https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg',
         completed: true,
-        id: '1'
+        id: '1',
+        progress: {
+            video: 100,
+            quiz: 50
+        }
     },
     {
         name: 'Nome da aula exemplo',
         image:
             'https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg',
         completed: false,
-        id: '2'
+        id: '2',
+        progress: {
+            video: 100,
+            quiz: 50
+        }
     },
     {
         name: 'Nome da aula exemplo',
         image:
             'https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg',
         completed: false,
-        id: '3'
+        id: '3',
+        progress: {
+            video: 100,
+            quiz: 50
+        }
     },
     {
         name: 'Nome da aula exemplo',
         image:
             'https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg',
         completed: false,
-        id: '4'
+        id: '4',
+        progress: {
+            video: 100,
+            quiz: 50
+        }
     },
     {
         name: 'Nome da aula exemplo',
         image:
             'https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg',
         completed: false,
-        id: '5'
+        id: '5',
+        progress: {
+            video: 100,
+            quiz: 50
+        }
     },
     {
         name: 'Nome da aula exemplo',
@@ -52,14 +72,22 @@ const items = [
         image:
             'https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg',
         completed: false,
-        id: '7'
+        id: '7',
+        progress: {
+            video: 100,
+            quiz: 50
+        }
     },
     {
         name: 'Nome da aula exemplo',
         image:
             'https://programaorienta.com.br/wp-content/uploads/2019/09/medicina-curso.jpg',
         completed: false,
-        id: '8'
+        id: '8',
+        progress: {
+            video: 100,
+            quiz: 100
+        }
     }
 ]
 
