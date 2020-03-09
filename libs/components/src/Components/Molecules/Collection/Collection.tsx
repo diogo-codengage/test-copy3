@@ -25,6 +25,8 @@ import { SANSkeleton } from '../../Atoms/Skeleton'
 
 import { responsiveHorizontal, responsiveVertical } from './responsive'
 
+const BRAND_HEADER_HEIGHT = '50px'
+
 const arrLoading = new Array(7).fill(1)
 
 const SkeletonImage = styled(SANSkeleton)`
@@ -431,7 +433,17 @@ const SANCollection = memo<ISANCollectionProps>(
         }, [index])
 
         return (
-            <SANBox position='relative' height={vertical ? '100vh' : 'auto'}>
+            <SANBox
+                position='relative'
+                height={
+                    vertical
+                        ? {
+                              classroom: '100vh',
+                              _: `calc(100vh - ${BRAND_HEADER_HEIGHT})`
+                          }
+                        : 'auto'
+                }
+            >
                 {vertical && (
                     <>
                         <SANBox
