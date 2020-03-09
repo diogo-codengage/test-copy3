@@ -41,13 +41,11 @@ const SANCourseModules = ({ history }) => {
     const renderDiscipline = item => (
         <ESListViewItem>
             <ESCardCourseModule
-                data-testid={`san-portal__tab-content__modules__module--${
-                    item.index
-                }`}
+                data-testid={`san-portal__tab-content__modules__module--${item.index}`}
                 className='san-tab-course-content__continue--card'
                 moduleName={`${t(
                     'courseDetails.tabContent.discipline.discipline.key'
-                )} ${item.index}`}
+                )} ${item.index + 1}`}
                 title={item.name}
                 badge={
                     item.progress
@@ -176,12 +174,14 @@ const SANCourseModules = ({ history }) => {
                                 dataSource={modules}
                                 renderItem={renderDiscipline}
                                 footer={
-                                    <ESPagination
-                                        pageSize={pageSize}
-                                        total={count}
-                                        current={current}
-                                        onChange={setCurrent}
-                                    />
+                                    count > 12 && (
+                                        <ESPagination
+                                            pageSize={pageSize}
+                                            total={count}
+                                            current={current}
+                                            onChange={setCurrent}
+                                        />
+                                    )
                                 }
                             />
                             <ESDivider className='mt-xxl mb-md' />
