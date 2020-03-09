@@ -35,7 +35,7 @@ export const responsiveVertical = [
     {
         breakpoint: 10328,
         settings: {
-            slidesToShow: 6,
+            slidesToShow: 5,
             verticalSwiping: true
         }
     },
