@@ -268,7 +268,7 @@ const SANCollectionItem: React.FC<ISANCollectionItemProps> = ({
             current={value === id}
             position='relative'
         >
-            <SANBox p='md'>
+            <SANBox p={14}>
                 <SANBox
                     display='flex'
                     alignItems='center'
@@ -351,7 +351,6 @@ const SANCollectionItem: React.FC<ISANCollectionItemProps> = ({
 const SANCollection = memo<ISANCollectionProps>(
     ({ items, vertical, onChange, value, loading = false }) => {
         const { width } = useWindowSize()
-        const [isDragging, setIsDragging] = useState(false)
         const [curretSlide, setCurrentSlide] = useState(0)
         const sliderRef = useRef<any>()
 
@@ -393,9 +392,7 @@ const SANCollection = memo<ISANCollectionProps>(
                 draggable: true,
                 dots: false,
                 infinite: false,
-                beforeChange: () => setIsDragging(true),
                 afterChange: current => {
-                    setIsDragging(false)
                     setCurrentSlide(current)
                 },
                 slidesToScroll: 1,
