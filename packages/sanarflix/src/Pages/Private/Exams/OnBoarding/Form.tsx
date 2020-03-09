@@ -24,7 +24,7 @@ import {
     SAVE_USER_MED_UNIVERSITY_MUTATION
 } from 'Apollo/Exams/Mutations/userMedUniversity'
 
-const OnBoardingForm = ({ form }) => {
+const OnBoardingForm = ({ form, ...props }) => {
     const client = useApolloClient()
     const { t } = useTranslation('sanarflix')
     const createSnackbar = useSnackbarContext()
@@ -72,7 +72,7 @@ const OnBoardingForm = ({ form }) => {
                     query: GET_MED_UNIVERSITIES
                 })
                 setMedUniversities(
-                    medUniversities.map(v => ({
+                    medUniversities.data.map(v => ({
                         ...v,
                         label: v.label.toLowerCase()
                     }))
@@ -117,7 +117,7 @@ const OnBoardingForm = ({ form }) => {
             await client.mutate({
                 mutation: SAVE_USER_MED_UNIVERSITY_MUTATION,
                 variables: {
-                    medUniversityId,
+                    medUniversityId: [medUniversityId],
                     ingressYear: arrPeriod[0],
                     ingressSemester: arrPeriod[1],
                     methodology: newMethodology ? newMethodology : methodology
@@ -125,6 +125,7 @@ const OnBoardingForm = ({ form }) => {
             })
 
             window.analytics.track('ExamsOnBoardingFormSubmitted')
+            props.changePage()
         } catch (e) {
             if (!!e.message) {
                 createSnackbar({

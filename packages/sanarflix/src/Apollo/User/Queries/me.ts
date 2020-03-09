@@ -51,18 +51,6 @@ export interface IMe {
     userMedUniversity: IUserMedUniversity
 }
 
-// TODO add those lines on the query below:
-
-// userMedUniversity {
-//     medUniversity {
-//         id
-//         name
-//     }
-//     ingressSemester
-//     ingressYear
-//     methodology
-// }
-
 export const GET_ME = gql`
     {
         me {
@@ -98,6 +86,15 @@ export const GET_ME = gql`
                 card_expiration_year
                 card_number
                 card_cvv
+            }
+            userMedUniversity {
+                medUniversity {
+                    id
+                    label: name
+                }
+                ingressSemester
+                ingressYear
+                methodology
             }
         }
     }

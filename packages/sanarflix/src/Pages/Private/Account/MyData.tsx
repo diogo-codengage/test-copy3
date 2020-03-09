@@ -11,6 +11,11 @@ import { GET_STATES, IState } from 'Apollo/User/Queries/states'
 import { EDIT_USER_MUTATION } from 'Apollo/User/Mutations/edit-user'
 
 import { events } from 'Config/Segment'
+import {
+    GET_MED_UNIVERSITIES,
+    IMedUniversity,
+    IMedUniversityQuery
+} from 'Apollo/Exams/Queries/medUniversities'
 
 interface IStatesQuery {
     states: {
@@ -24,6 +29,7 @@ const FLXMyData = ({ history }: RouteComponentProps) => {
     const snackbar = useSnackbarContext()
     const { me, setMe } = useAuthContext()
     const [states, setStates] = useState<IState[]>([])
+    const [universities, setUniversities] = useState<IMedUniversity[]>([])
 
     useEffect(() => {
         const fetchStates = async () => {
@@ -35,6 +41,27 @@ const FLXMyData = ({ history }: RouteComponentProps) => {
             } catch {}
         }
         fetchStates()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        const fetchMedUniversities = async () => {
+            try {
+                const {
+                    data: { medUniversities }
+                } = await client.query<IMedUniversityQuery>({
+                    query: GET_MED_UNIVERSITIES
+                })
+                setUniversities(
+                    medUniversities.data.map(v => ({
+                        ...v,
+                        label: v.label.toLowerCase()
+                    }))
+                )
+            } catch {
+            }
+        }
+        fetchMedUniversities()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -71,6 +98,7 @@ const FLXMyData = ({ history }: RouteComponentProps) => {
         <SANProfile
             onBack={() => history.goBack()}
             states={states}
+            universities={universities}
             user={!!me && me}
             onSubmit={handleSubmit}
         />

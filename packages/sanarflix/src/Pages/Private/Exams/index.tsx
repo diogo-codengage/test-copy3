@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -16,10 +16,11 @@ const FLXExams = ({ history }) => {
     const { t } = useTranslation('sanarflix')
     const { me } = useAuthContext()
     const { userMedUniversity } = me
+    const [showOnBoarding, setShowOnBoarding] = useState<boolean>(!userMedUniversity || Object.keys(userMedUniversity).length === 0)
 
-    console.log('ME >>>>> ', me)
-
-    const showOnBoarding = !userMedUniversity || Object.keys(userMedUniversity).length === 0
+    const handleChange = () => {
+        setShowOnBoarding(false)
+    }
 
     useEffect(() => {
         window.analytics.page(
@@ -38,8 +39,8 @@ const FLXExams = ({ history }) => {
                 }}
             />
             {showOnBoarding
-                ? (<OnBoarding />)
-                : (<List medUniversity={{id:'teste1', label:'Faculdade 1'}} />)
+                ? (<OnBoarding changePage={handleChange}/>)
+                : (<List medUniversity={userMedUniversity.medUniversity} />)
             }
         </SANBox>
     )

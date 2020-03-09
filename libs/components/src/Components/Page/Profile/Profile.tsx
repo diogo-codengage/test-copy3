@@ -10,6 +10,16 @@ import { SANPage } from '../../Templates/Page'
 import ProfileAvatar from './ProfileAvatar'
 import ProfileTab from './ProfileTab'
 
+interface IUserMedUniversity {
+    medUniversity: {
+        id: string
+        label: string
+    }
+    ingressSemester: string
+    ingressYear: string
+    methodology: string
+}
+
 export interface IUser {
     id?: string
     name?: string
@@ -28,11 +38,17 @@ export interface IUser {
         city_name?: string
         state_id?: string
     }
+    userMedUniversity?: IUserMedUniversity
 }
 
 export interface IState {
     id: string
     name: string
+}
+
+export interface IUniversity {
+    id: string
+    label: string
 }
 
 interface IParams {
@@ -41,6 +57,7 @@ interface IParams {
 
 export interface ISANProfileProps extends Pick<ISANHeaderProps, 'onBack'> {
     states: IState[]
+    universities?: IUniversity[]
     user?: IUser
     onSubmit?: (user: IUser, params: IParams) => void | Promise<void>
 }
@@ -53,6 +70,7 @@ const SANProfile: React.FC<ISANProfileProps> = ({
     user = {},
     onSubmit,
     states,
+    universities,
     onBack
 }) => {
     const { t } = useTranslation('components')
@@ -86,6 +104,7 @@ const SANProfile: React.FC<ISANProfileProps> = ({
                         onSubmit={onSubmit}
                         user={user}
                         states={states}
+                        universities={universities}
                     />
                 </SANCol>
             </SANRow>

@@ -105,10 +105,18 @@ export default {
             name: 'Nome',
             document: 'CPF',
             phone: 'Celular',
-            college: 'Faculdade',
-            semester: {
-                label: 'Semestre',
-                placeholder: 'Selecione o semestre'
+            university: {
+                label: 'Faculdade',
+                placeholder: 'Selecione a faculdade'
+            },
+            ingressPeriod: {
+                label: 'Período de Ingresso',
+                placeholder: 'Selecione o período de ingresso'
+            },
+            methodology: {
+                label: 'Metodologia',
+                placeholder: 'Selecione a metodologia',
+                newPlaceholder: 'Informe a metodologia'
             }
         },
         tab2: {

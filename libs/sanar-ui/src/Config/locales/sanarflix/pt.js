@@ -178,7 +178,7 @@ export default {
             }
         },
         list: {
-            title: 'Provas da ',
+            title: 'Provas de ',
             subtitle: 'Estas são as provas disponíveis da sua faculdade:',
             train: 'Treinar',
             exams: ' provas',

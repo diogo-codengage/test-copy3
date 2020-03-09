@@ -24,7 +24,7 @@ const Image = SANStyled.img`
     }
 `
 
-const OnBoardingBottom = () => {
+const OnBoardingBottom = (props) => {
     const { t } = useTranslation('sanarflix')
     return (
         <SANLayoutContainer pt={8}>
@@ -50,7 +50,7 @@ const OnBoardingBottom = () => {
                     <Image src={onBoarding}/>
                 </SANCol>
                 <SANCol xs={24} md={12}>
-                    <Form />
+                    <Form changePage={props.changePage}/>
                 </SANCol>
             </SANRow>
         </SANLayoutContainer>

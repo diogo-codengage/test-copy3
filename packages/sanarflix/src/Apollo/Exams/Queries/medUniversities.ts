@@ -6,14 +6,18 @@ export interface IMedUniversity {
 }
 
 export interface IMedUniversityQuery {
-    medUniversities: IMedUniversity[]
+    medUniversities: {
+        data: IMedUniversity[]
+    }
 }
 
 export const GET_MED_UNIVERSITIES = gql`
     {
         medUniversities {
-            id: id
-            label: name
+            data {
+                id: id
+                label: name
+            }
         }
     }
 `
