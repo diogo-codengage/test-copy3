@@ -24,7 +24,7 @@ const SANPracticeCompletedHeader = ({ history }) => {
                     subtitle={t(`${intlPracticeCompletedPath}subtitle`)}
                     extra={
                         <div className='d-flex align-items-center'>
-                            <ESButton
+                            {/* <ESButton
                                 variant='text'
                                 uppercase
                                 bold
@@ -33,7 +33,7 @@ const SANPracticeCompletedHeader = ({ history }) => {
                                 onClick={() => history.push('./historico')}
                             >
                                 {t(`${intlQuestionsPath}hitoricButton`)}
-                            </ESButton>
+                            </ESButton> */}
                             <ESButton
                                 variant='solid'
                                 color='primary'

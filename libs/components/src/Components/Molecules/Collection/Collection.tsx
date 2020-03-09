@@ -18,7 +18,7 @@ import { Tooltip } from 'antd'
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
 import { SANButton } from '../../Atoms/Button'
-import { SANBox } from '../../Atoms/Box'
+import { SANBox, ISANBoxProps } from '../../Atoms/Box'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANSkeleton } from '../../Atoms/Skeleton'
@@ -112,7 +112,7 @@ const ButtonArrowStyled = styled(SANButton)`
 `
 
 const ImageStyled = styled(SANBox)`
-    max-height: 120px;
+    height: 92px;
 `
 
 const SANCollectionItemStyled = styled(SANBox)<{ current: boolean }>`
@@ -154,6 +154,7 @@ const SliderStyled = styled(Slider)`
         ${ifProp(
             'vertical',
             css`
+                margin: auto;
                 background-color: ${theme('colors.grey.9')};
             `
         )};
@@ -209,7 +210,7 @@ const SANCollectionItem = ({ item, index, onChange, value }: any) => {
             current={value === id}
             position='relative'
         >
-            <SANBox p='md'>
+            <SANBox p={14}>
                 <SANTypography fontSize='sm' color='white.10'>
                     {t('collection.part')} {index}
                 </SANTypography>
@@ -329,9 +330,9 @@ const SANCollection = memo<ISANCollectionProps>(
         const disabledNext = useMemo(() => {
             if (!vertical) return
             if (width <= 1366) {
-                return curretSlide + 3 >= items.length
-            } else if (width <= 1920) {
                 return curretSlide + 4 >= items.length
+            } else if (width < 1920) {
+                return curretSlide + 5 >= items.length
             } else {
                 return curretSlide + 5 >= items.length
             }
@@ -344,8 +345,18 @@ const SANCollection = memo<ISANCollectionProps>(
             }
         }, [index])
 
+        const style: ISANBoxProps = useMemo(
+            () =>
+                vertical ? { display: 'flex', flexDirection: 'column' } : {},
+            [vertical]
+        )
+
         return (
-            <SANBox position='relative' height={vertical ? '100vh' : 'auto'}>
+            <SANBox
+                position='relative'
+                height={vertical ? '100vh' : 'auto'}
+                {...style}
+            >
                 {vertical && (
                     <>
                         <SANBox
