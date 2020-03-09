@@ -198,6 +198,7 @@ export interface ICollection {
     completed: boolean
     id: string
     progress: IProgress
+    hasQuiz?: boolean
 }
 
 export interface ISANCollectionProps {
@@ -290,17 +291,23 @@ const SANCollectionItem: React.FC<ISANCollectionItemProps> = ({
                         >
                             <SANEvaIconStyled {...videoIconProps} mr='xxs' />
                         </Tooltip>
-                        <Tooltip
-                            title={
-                                videoCompleted
-                                    ? t('collection.progress.quiz.completed')
-                                    : t('collection.progress.quiz.incomplete')
-                            }
-                            placement='topLeft'
-                            mouseEnterDelay={0.3}
-                        >
-                            <SANEvaIconStyled {...quizIconProps} />
-                        </Tooltip>
+                        {item.hasQuiz && (
+                            <Tooltip
+                                title={
+                                    videoCompleted
+                                        ? t(
+                                              'collection.progress.quiz.completed'
+                                          )
+                                        : t(
+                                              'collection.progress.quiz.incomplete'
+                                          )
+                                }
+                                placement='topLeft'
+                                mouseEnterDelay={0.3}
+                            >
+                                <SANEvaIconStyled {...quizIconProps} />
+                            </Tooltip>
+                        )}
                     </SANBox>
                 </SANBox>
                 <SANBox
