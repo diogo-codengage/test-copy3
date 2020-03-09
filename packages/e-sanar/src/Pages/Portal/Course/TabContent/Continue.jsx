@@ -67,21 +67,23 @@ const SANCourseContinue = ({ history }) => {
             <SANPortalPagesContainer>
                 {!error ? (
                     <ESRow gutter={24}>
-                        <ESCol xs={24} md={12}>
-                            <SessionTitle
-                                title={t(
-                                    'courseDetails.tabContent.continue.whereStopped'
-                                )}
-                            />
-                            <ESCardCourseModule
-                                data-testid='san-portal__tab-content__continue'
-                                className='san-tab-course-content__continue--card'
-                                {...leftProps}
-                                actionName={t(
-                                    'courseDetails.tabContent.cardModuleAction'
-                                )}
-                            />
-                        </ESCol>
+                        {!!next_module && (
+                            <ESCol xs={24} md={12}>
+                                <SessionTitle
+                                    title={t(
+                                        'courseDetails.tabContent.continue.whereStopped'
+                                    )}
+                                />
+                                <ESCardCourseModule
+                                    data-testid='san-portal__tab-content__continue'
+                                    className='san-tab-course-content__continue--card'
+                                    {...leftProps}
+                                    actionName={t(
+                                        'courseDetails.tabContent.cardModuleAction'
+                                    )}
+                                />
+                            </ESCol>
+                        )}
                         {!!next_module && (
                             <ESCol xs={24} md={12}>
                                 <SessionTitle
