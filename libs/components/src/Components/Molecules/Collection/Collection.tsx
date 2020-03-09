@@ -18,7 +18,7 @@ import { Tooltip } from 'antd'
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
 import { SANButton } from '../../Atoms/Button'
-import { SANBox } from '../../Atoms/Box'
+import { SANBox, ISANBoxProps } from '../../Atoms/Box'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANSkeleton } from '../../Atoms/Skeleton'
@@ -114,7 +114,7 @@ const ButtonArrowStyled = styled(SANButton)`
 `
 
 const ImageStyled = styled(SANBox)`
-    max-height: 120px;
+    height: 92px;
 `
 
 const SANEvaIconStyled = styled(SANEvaIcon)``
@@ -158,6 +158,7 @@ const SliderStyled = styled(Slider)`
         ${ifProp(
             'vertical',
             css`
+                margin: auto;
                 background-color: ${theme('colors.grey.9')};
             `
         )};
@@ -414,9 +415,9 @@ const SANCollection = memo<ISANCollectionProps>(
         const disabledNext = useMemo(() => {
             if (!vertical) return
             if (width <= 1366) {
-                return curretSlide + 3 >= items.length
-            } else if (width <= 1920) {
                 return curretSlide + 4 >= items.length
+            } else if (width < 1920) {
+                return curretSlide + 5 >= items.length
             } else {
                 return curretSlide + 5 >= items.length
             }
@@ -428,6 +429,12 @@ const SANCollection = memo<ISANCollectionProps>(
                 setCurrentSlide(index)
             }
         }, [index])
+
+        const style: ISANBoxProps = useMemo(
+            () =>
+                vertical ? { display: 'flex', flexDirection: 'column' } : {},
+            [vertical]
+        )
 
         return (
             <SANBox
