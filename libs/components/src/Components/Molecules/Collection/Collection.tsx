@@ -269,7 +269,6 @@ const SANCollectionItem: React.FC<ISANCollectionItemProps> = ({
             position='relative'
         >
             <SANBox p={14}>
-<<<<<<< HEAD
                 <SANBox
                     display='flex'
                     alignItems='center'
@@ -303,11 +302,6 @@ const SANCollectionItem: React.FC<ISANCollectionItemProps> = ({
                         </Tooltip>
                     </SANBox>
                 </SANBox>
-=======
-                <SANTypography fontSize='sm' color='white.10'>
-                    {t('collection.part')} {index}
-                </SANTypography>
->>>>>>> 6ab0e7f1... fix(components): set max 5 slides to show collection
                 <SANBox
                     position='relative'
                     onClick={handleChange}
