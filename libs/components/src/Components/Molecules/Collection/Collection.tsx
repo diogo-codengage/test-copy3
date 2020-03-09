@@ -210,7 +210,7 @@ const SANCollectionItem = ({ item, index, onChange, value }: any) => {
             current={value === id}
             position='relative'
         >
-            <SANBox p='md'>
+            <SANBox p={14}>
                 <SANTypography fontSize='sm' color='white.10'>
                     {t('collection.part')} {index}
                 </SANTypography>
@@ -334,7 +334,7 @@ const SANCollection = memo<ISANCollectionProps>(
             } else if (width < 1920) {
                 return curretSlide + 5 >= items.length
             } else {
-                return curretSlide + 6 >= items.length
+                return curretSlide + 5 >= items.length
             }
         }, [curretSlide, width, items])
 
