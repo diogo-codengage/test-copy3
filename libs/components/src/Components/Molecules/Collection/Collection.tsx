@@ -115,9 +115,11 @@ const ImageStyled = styled(SANBox)`
     max-height: 120px;
 `
 
+const SANEvaIconStyled = styled(SANEvaIcon)``
+
 const SANCollectionItemStyled = styled(SANBox)<{ current: boolean }>`
     &:hover {
-        ${SANTypography}, ${ImageStyled} {
+        ${SANEvaIconStyled}, ${SANTypography}, ${ImageStyled} {
             opacity: 0.6;
         }
     }
@@ -125,7 +127,7 @@ const SANCollectionItemStyled = styled(SANBox)<{ current: boolean }>`
     ${ifNotProp(
         'current',
         css`
-            & ${SANTypography}, & ${ImageStyled} {
+            & ${SANEvaIconStyled}, & ${SANTypography}, & ${ImageStyled} {
                 opacity: 0.4;
             }
         `
@@ -182,11 +184,17 @@ const SliderStyled = styled(Slider)`
     }
 `
 
+interface IProgress {
+    video: number
+    quiz: number
+}
+
 export interface ICollection {
     name: string
     image: string
     completed: boolean
     id: string
+    progress: IProgress
 }
 
 export interface ISANCollectionProps {
@@ -197,11 +205,60 @@ export interface ISANCollectionProps {
     loading?: boolean
 }
 
-const SANCollectionItem = ({ item, index, onChange, value }: any) => {
+export interface ISANCollectionItemProps {
+    item: ICollection
+    onChange: (item: ICollection) => void
+    value: string
+    index: number
+}
+
+const SANCollectionItem: React.FC<ISANCollectionItemProps> = ({
+    item,
+    index,
+    onChange,
+    value
+}) => {
     const { t } = useTranslation('components')
     const { name, image, id, completed } = item
 
-    const handleChange = () => onChange(item, index)
+    const handleChange = () => onChange(item)
+
+    const videoCompleted = useMemo(
+        () => !!item && item.progress.video === 100,
+        [item]
+    )
+
+    const videoIconProps = useMemo(
+        () =>
+            videoCompleted
+                ? {
+                      name: 'play-circle',
+                      color: 'warning'
+                  }
+                : {
+                      name: 'play-circle-outline',
+                      color: 'white.10'
+                  },
+        [videoCompleted]
+    )
+
+    const quizCompleted = useMemo(() => !!item && item.progress.quiz === 100, [
+        item
+    ])
+
+    const quizIconProps = useMemo(
+        () =>
+            quizCompleted
+                ? {
+                      name: 'edit-2',
+                      color: 'warning'
+                  }
+                : {
+                      name: 'edit-2-outline',
+                      color: 'white.10'
+                  },
+        [quizCompleted]
+    )
 
     return (
         <SANCollectionItemStyled
@@ -210,9 +267,39 @@ const SANCollectionItem = ({ item, index, onChange, value }: any) => {
             position='relative'
         >
             <SANBox p='md'>
-                <SANTypography fontSize='sm' color='white.10'>
-                    {t('collection.part')} {index}
-                </SANTypography>
+                <SANBox
+                    display='flex'
+                    alignItems='center'
+                    justifyContent='space-between'
+                >
+                    <SANTypography fontSize='sm' color='white.10'>
+                        {t('collection.part')} {index}
+                    </SANTypography>
+                    <SANBox display='flex' alignItems='center'>
+                        <Tooltip
+                            title={
+                                videoCompleted
+                                    ? t('collection.progress.video.completed')
+                                    : t('collection.progress.video.incomplete')
+                            }
+                            placement='topLeft'
+                            mouseEnterDelay={0.3}
+                        >
+                            <SANEvaIconStyled {...videoIconProps} mr='xxs' />
+                        </Tooltip>
+                        <Tooltip
+                            title={
+                                videoCompleted
+                                    ? t('collection.progress.quiz.completed')
+                                    : t('collection.progress.quiz.incomplete')
+                            }
+                            placement='topLeft'
+                            mouseEnterDelay={0.3}
+                        >
+                            <SANEvaIconStyled {...quizIconProps} />
+                        </Tooltip>
+                    </SANBox>
+                </SANBox>
                 <SANBox
                     position='relative'
                     onClick={handleChange}
@@ -281,7 +368,6 @@ const SANCollection = memo<ISANCollectionProps>(
         const renderItem = useCallback(
             (item, index) => (
                 <SANCollectionItem
-                    isDragging={isDragging}
                     onChange={onChange}
                     value={value}
                     item={item}
@@ -289,7 +375,7 @@ const SANCollection = memo<ISANCollectionProps>(
                     key={index}
                 />
             ),
-            [value, isDragging]
+            [value]
         )
 
         const index = useMemo(

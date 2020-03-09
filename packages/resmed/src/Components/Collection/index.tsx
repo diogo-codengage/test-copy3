@@ -29,7 +29,11 @@ const makeCollection = (collection: ICollection) => ({
     image: collection.content.video.image,
     completed:
         collection.content.video.progress === 100 &&
-        collection.content.quiz.progress === 100
+        collection.content.quiz.progress === 100,
+    progress: {
+        video: collection.content.video.progress || 0,
+        quiz: collection.content.quiz.progress || 0
+    }
 })
 
 const RMCollection: React.FC<IRMCollectionProps> = (
