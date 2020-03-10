@@ -197,8 +197,9 @@ export interface ICollection {
     image: string
     completed: boolean
     id: string
-    progress: IProgress
+    progress?: IProgress
     hasQuiz?: boolean
+    hasVideo?: boolean
 }
 
 export interface ISANCollectionProps {
@@ -228,7 +229,7 @@ const SANCollectionItem: React.FC<ISANCollectionItemProps> = ({
     const handleChange = () => onChange(item)
 
     const videoCompleted = useMemo(
-        () => !!item && item.progress.video === 100,
+        () => !!item && !!item.progress && item.progress.video === 100,
         [item]
     )
 
@@ -246,9 +247,10 @@ const SANCollectionItem: React.FC<ISANCollectionItemProps> = ({
         [videoCompleted]
     )
 
-    const quizCompleted = useMemo(() => !!item && item.progress.quiz === 100, [
-        item
-    ])
+    const quizCompleted = useMemo(
+        () => !!item && !!item.progress && item.progress.quiz === 100,
+        [item]
+    )
 
     const quizIconProps = useMemo(
         () =>
@@ -280,17 +282,26 @@ const SANCollectionItem: React.FC<ISANCollectionItemProps> = ({
                         {t('collection.part')} {index}
                     </SANTypography>
                     <SANBox display='flex' alignItems='center'>
-                        <Tooltip
-                            title={
-                                videoCompleted
-                                    ? t('collection.progress.video.completed')
-                                    : t('collection.progress.video.incomplete')
-                            }
-                            placement='topLeft'
-                            mouseEnterDelay={0.3}
-                        >
-                            <SANEvaIconStyled {...videoIconProps} mr='xxs' />
-                        </Tooltip>
+                        {item.hasVideo && (
+                            <Tooltip
+                                title={
+                                    videoCompleted
+                                        ? t(
+                                              'collection.progress.video.completed'
+                                          )
+                                        : t(
+                                              'collection.progress.video.incomplete'
+                                          )
+                                }
+                                placement='topLeft'
+                                mouseEnterDelay={0.3}
+                            >
+                                <SANEvaIconStyled
+                                    {...videoIconProps}
+                                    mr='xxs'
+                                />
+                            </Tooltip>
+                        )}
                         {item.hasQuiz && (
                             <Tooltip
                                 title={
