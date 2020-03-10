@@ -29,11 +29,6 @@ const makeCollection = (collection: ICollection) => {
     const hasQuiz = !!collection.content.quiz
     return {
         ...collection,
-        progress: {
-            video: hasVideo ? collection.content.video.progress : 0,
-            quiz: hasQuiz ? collection.content.quiz.progress : 0
-        },
-        hasQuiz,
         image: collection.content.video.image,
         completed:
             hasVideo &&
