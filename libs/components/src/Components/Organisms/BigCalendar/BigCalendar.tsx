@@ -48,6 +48,7 @@ export interface IEvent {
     start?: Date
     end?: Date
     status?: 'viewed' | 'unseen' | 'live' | 'exams'
+    type?: 'completed' | 'uncompleted' | 'complementary'
     rendering?: 'background' | 'inverse-background'
     startEditable?: boolean
     extendedProps?: object
@@ -113,7 +114,6 @@ const FullCalendarWrapper = styled.div`
             border-radius: ${theme('radii.base')};
             box-shadow: ${theme('shadows.1')};
         }
-
         & .fc-right button,
         & .fc-left button {
             background-color: ${theme('colors.grey.0')};
@@ -126,18 +126,15 @@ const FullCalendarWrapper = styled.div`
             display: flex;
             align-items: center;
             justify-content: center;
-
             &:focus,
             &:hover {
                 background-color: ${theme('colors.grey.1')};
                 color: ${theme('colors.grey.8')};
             }
-
             & .fc-icon {
                 font-size: ${theme('fontSizes.lg')};
             }
         }
-
         & .fc-toolbar {
             justify-content: center;
             margin: 0;
@@ -148,11 +145,9 @@ const FullCalendarWrapper = styled.div`
             & .fc-center {
                 padding: 0 ${theme('space.8')};
             }
-
             &.fc-header-toolbar {
                 padding: 1.4em 1.2em;
             }
-
             ${theme('mediaQueries.down.xs')} {
                 justify-content: space-between;
                 & .fc-center {
@@ -160,18 +155,15 @@ const FullCalendarWrapper = styled.div`
                 }
             }
         }
-
         & .fc-center h2 {
             font-weight: bold;
             font-size: 1.5em;
         }
-
         & .fc-day-header {
             text-transform: uppercase;
             font-size: 0.7em;
             padding: 0.7em 0;
         }
-
         & .fc-event-container .fc-day-grid-event {
             padding: 0 8px;
             border-radius: 8px;
@@ -181,7 +173,6 @@ const FullCalendarWrapper = styled.div`
                 text-overflow: ellipsis;;
             }
         }
-
         & .fc-more {
             text-transform: uppercase;
             font-size: 0.7em;
@@ -191,11 +182,9 @@ const FullCalendarWrapper = styled.div`
             margin-top: 4px;
             margin-right: 10px;
         }
-
         & .fc-highlight {
             background-color: ${theme('colors.primary')};
         }
-
         
         & .fc-day-number {
             float: left;
@@ -203,7 +192,6 @@ const FullCalendarWrapper = styled.div`
             margin-left: 8px;
             margin-bottom: 4px;
         }
-
         & .fc-today {
             & .fc-day-number {
                 background: transparent;
@@ -226,33 +214,26 @@ const FullCalendarWrapper = styled.div`
                 }
             }
         }
-
         & .fc-content-skeleton {
             bottom: 0;
         }
-
         & .fc-popover {
             /* top: calc(50% - 115px) !important; */
             left: calc(50% - 150px) !important;
-
             &:before {
                 content: '';
                 position: absolute;
                 background-color: rgba(0, 0, 0, 0.65);
             }
-
             &.fc-more-popover {
                 width: 300px;
             }
-
             & .fc-event-container {
                  padding: ${theme('space.sm')};
-
                  & .fc-day-grid-event {
                      margin-bottom: ${theme('space.xs')};
                  }
             }
-
             & .fc-header {
                  padding: ${theme('space.sm')};
                  font-size: ${theme('fontSizes.lg')};
@@ -298,11 +279,11 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
         }
 
         !!onChangeMonth &&
-            onChangeMonth({
-                start: arg.view.activeStart,
-                end: arg.view.activeEnd,
-                currentMonth
-            })
+        onChangeMonth({
+            start: arg.view.activeStart,
+            end: arg.view.activeEnd,
+            currentMonth
+        })
     }
 
     const handleEventDrop = (e: IEventDrop) => {
@@ -343,21 +324,17 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
 
     const colors = useMemo(
         () => ({
-            viewed: {
+            completed: {
                 color: theme.colors['primary-2'],
                 textColor: theme.colors['primary-5']
             },
-            unseen: {
+            uncompleted: {
                 color: theme.colors.burgundy[0],
                 textColor: theme.colors.burgundy[2]
             },
-            live: {
+            complementary: {
                 color: theme.colors.grey[0],
                 textColor: theme.colors.grey[6]
-            },
-            exams: {
-                color: theme.colors.blue[0],
-                textColor: theme.colors.blue[3]
             }
         }),
         []
@@ -367,9 +344,9 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
         () =>
             validRange
                 ? getFreeDays(
-                      new Date(validRange.start),
-                      new Date(validRange.end)
-                  )
+                new Date(validRange.start),
+                new Date(validRange.end)
+                )
                 : [],
         [validRange]
     )
@@ -387,7 +364,7 @@ const SANBigCalendar: React.FC<ISANBigCalendarProps> = (
         return [
             ...events.map(event => ({
                 ...event,
-                ...colors[event.status],
+                ...colors[event.type],
                 allDay: true,
                 classNames: (isBefore(startOfDay(event.start), previousMonth) ||
                     isAfter(endOfDay(event.start), nextMonth)) && [

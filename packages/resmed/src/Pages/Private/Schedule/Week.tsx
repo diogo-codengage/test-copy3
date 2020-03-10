@@ -20,7 +20,7 @@ import {
     IAppointmentsQuery
 } from 'Apollo/Schedule/Queries/appointments'
 
-import { formatMinutes, getStatus } from './index'
+import { formatMinutes, getStatus, getEventType } from './index'
 import { Skeleton } from './Today'
 import { IOption } from './Modal'
 import { useScheduleContext } from './Context'
@@ -106,7 +106,7 @@ const RMWeek = ({ hasModified }) => {
                     getUTCDate(event.end),
                     `DD/MM/YYYY [${t('schedule.at')}] HH[h]`
                 )}`}
-                type={getStatus(event)}
+                type={getEventType(event)}
                 mb='xs'
                 onClick={() => handleShowModal(event)}
             />
