@@ -81,7 +81,7 @@ const SANLayout: React.FC<IProps> = ({
         ...FooterProps
     }
 
-    const hasHeaderMobile = useMemo(() => width <= 1024, [width])
+    const hasHeaderMobile = useMemo(() => width < 1024, [width])
 
     return (
         <SANLayoutStyled>
