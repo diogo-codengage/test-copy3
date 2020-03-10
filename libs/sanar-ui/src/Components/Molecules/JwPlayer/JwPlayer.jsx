@@ -109,9 +109,9 @@ const ESJwPlayer = forwardRef(
                 !!onPlaybackRateChanged && onPlaybackRateChanged(event)
             })
 
-            if (instance.getWidth() > 1024) {
+            if (width >= 1024) {
                 instance.resize('100%', '100vh')
-            } else if (instance.getWidth() > 576) {
+            } else if (width > 576) {
                 instance.resize('100%', `calc(100vh - ${BRAND_HEADER_HEIGHT})`)
             }
 
