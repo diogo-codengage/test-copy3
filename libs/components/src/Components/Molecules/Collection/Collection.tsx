@@ -217,6 +217,11 @@ export interface ISANCollectionItemProps {
     index: number
 }
 
+const iconCompleted = {
+    name: 'checkmark-circle-2',
+    color: 'success'
+}
+
 const SANCollectionItem: React.FC<ISANCollectionItemProps> = ({
     item,
     index,
@@ -236,13 +241,10 @@ const SANCollectionItem: React.FC<ISANCollectionItemProps> = ({
     const videoIconProps = useMemo(
         () =>
             videoCompleted
-                ? {
-                      name: 'play-circle',
-                      color: 'warning'
-                  }
+                ? iconCompleted
                 : {
-                      name: 'play-circle-outline',
-                      color: 'white.10'
+                      name: 'video',
+                      color: 'warning'
                   },
         [videoCompleted]
     )
@@ -255,13 +257,10 @@ const SANCollectionItem: React.FC<ISANCollectionItemProps> = ({
     const quizIconProps = useMemo(
         () =>
             quizCompleted
-                ? {
+                ? iconCompleted
+                : {
                       name: 'edit-2',
                       color: 'warning'
-                  }
-                : {
-                      name: 'edit-2-outline',
-                      color: 'white.10'
                   },
         [quizCompleted]
     )
