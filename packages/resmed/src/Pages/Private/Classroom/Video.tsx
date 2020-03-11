@@ -70,12 +70,18 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
 
         const handleResume = () => {
             const timeInSeconds = parseInt(playerRef.current.position(), 10)
-            handleTrack('Video resumed', {'Time in seconds': timeInSeconds, ...dataToTrack})
+            handleTrack('Video resumed', {
+                'Time in seconds': timeInSeconds,
+                ...dataToTrack
+            })
         }
 
         const handlePause = () => {
             const timeInSeconds = parseInt(playerRef.current.position(), 10)
-            handleTrack('Video paused', {'Time in seconds': timeInSeconds, ...dataToTrack})
+            handleTrack('Video paused', {
+                'Time in seconds': timeInSeconds,
+                ...dataToTrack
+            })
         }
 
         const handleComplete = () => handleTrack('Video completed', dataToTrack)
@@ -164,7 +170,7 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
 
         const wrapper: ISANBoxProps = useMemo(
             () =>
-                width > 884
+                width > 992
                     ? {
                           flexDirection: 'row'
                       }
@@ -261,7 +267,7 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                                     />
                                 </SANBox>
                                 <SANBox
-                                    {...(width <= 884 && {
+                                    {...(width <= 992 && {
                                         px: 'lg',
                                         mx: 'sm'
                                     })}
@@ -269,7 +275,7 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                                     <RMCollection
                                         parentId={params.lessonId}
                                         value={params.collectionId}
-                                        vertical={width > 884}
+                                        vertical={width > 992}
                                         onChange={onChangeCollection}
                                         onCompleted={collection =>
                                             setClickerName(collection.name)

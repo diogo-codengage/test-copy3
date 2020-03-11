@@ -13,17 +13,33 @@ interface IVideo {
     progress: number
 }
 
+interface IQuiz {
+    id: string
+    title: string
+    progress: number
+    questions: IQuestion[]
+}
+
+interface IQuestion {
+    id: string
+}
+
 export interface ICollection {
     id: string
     name: string
     lesson: ILesson
     content: {
         video: IVideo
+        quiz: IQuiz
     }
 }
 
 export interface ICollectionsQuery {
     collections: ICollection[]
+}
+
+export interface ICollectionsVariables {
+    parentId: string
 }
 
 export const GET_COLLECTIONS = gql`
@@ -46,6 +62,7 @@ export const GET_COLLECTIONS = gql`
                 quiz {
                     id
                     title
+                    progress
                     questions {
                         id
                     }
