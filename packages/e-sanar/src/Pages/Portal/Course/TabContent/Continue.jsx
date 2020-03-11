@@ -96,7 +96,7 @@ const SANCourseContinue = ({ history }) => {
                                     className='san-tab-course-content__continue--card'
                                     moduleName={`${t(
                                         'courseDetails.tabContent.discipline.discipline.key'
-                                    )} ${next_module.index}`}
+                                    )} ${next_module.index + 1}`}
                                     title={next_module.name}
                                     badge={getBadge(next_module, 'progress')}
                                     progress={percentProgressNext}
