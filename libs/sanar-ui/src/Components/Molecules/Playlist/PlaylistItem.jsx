@@ -15,8 +15,14 @@ const icons = {
 }
 
 const ESPlaylistItem = memo(({ className, index, item, current, onClick }) => {
+    const downloadToDocument = resourceType =>
+        resourceType === 'Download' ? 'Document' : resourceType
+
     const { title, progress, durationInSeconds } = useMemo(
-        () => (item.hasType ? item[item.resource_type.toLowerCase()] : item),
+        () =>
+            item.hasType
+                ? item[downloadToDocument(item.resource_type).toLowerCase()]
+                : item,
         [item]
     )
     const classes = classNames(
@@ -36,7 +42,10 @@ const ESPlaylistItem = memo(({ className, index, item, current, onClick }) => {
             ) : (
                 <ESEvaIcon
                     size='large'
-                    name={icons[item.resource_type] || 'play-circle-outline'}
+                    name={
+                        icons[downloadToDocument(item.resource_type)] ||
+                        'play-circle-outline'
+                    }
                     className='icon'
                 />
             )
@@ -45,7 +54,7 @@ const ESPlaylistItem = memo(({ className, index, item, current, onClick }) => {
     }, [item])
 
     return (
-        <Tooltip title={title} placement="topLeft" mouseEnterDelay={0.3}>
+        <Tooltip title={title} placement='topLeft' mouseEnterDelay={0.3}>
             <div className={classes} onClick={() => onClick(item)}>
                 <div className='d-flex align-items-center w-100'>
                     <ESTypography
