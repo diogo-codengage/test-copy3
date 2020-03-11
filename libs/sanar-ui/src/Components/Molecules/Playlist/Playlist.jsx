@@ -72,8 +72,13 @@ const ESPlaylist = ({
                             className='description'
                         >
                             {current.hasType
-                                ? current[current.resource_type.toLowerCase()]
-                                      .title
+                                ? current[
+                                      `${
+                                          current.resource_type === 'Download'
+                                              ? 'Document'
+                                              : current.resource_type
+                                      }`.toLowerCase()
+                                  ].title
                                 : current.title}
                         </ESTypography>
                     </div>
