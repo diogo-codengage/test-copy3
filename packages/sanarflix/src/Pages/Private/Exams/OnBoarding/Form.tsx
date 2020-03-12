@@ -156,7 +156,10 @@ const OnBoardingForm = ({ form, ...props }) => {
 
     const ingressPeriod = () => {
         if (props.userMedUniversity && props.userMedUniversity.ingressSemester && props.userMedUniversity.ingressYear) {
-            const year = format(new Date(props.userMedUniversity.ingressYear), 'YYYY')
+            const savedYear = props.userMedUniversity.ingressYear
+            const year = savedYear.length > 4
+                ? format(new Date(savedYear), 'YYYY')
+                : savedYear
             return `${year}.${props.userMedUniversity.ingressSemester}`
         }
     }

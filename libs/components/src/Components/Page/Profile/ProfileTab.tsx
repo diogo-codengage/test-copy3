@@ -70,7 +70,10 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, universities, form }
 
     const ingressPeriod = () => {
         if (user.userMedUniversity && user.userMedUniversity.ingressSemester && user.userMedUniversity.ingressYear) {
-            const year = format(new Date(user.userMedUniversity.ingressYear), 'yyyy')
+            const savedYear = user.userMedUniversity.ingressYear
+            const year = savedYear.length > 4
+                ? format(new Date(savedYear), 'YYYY')
+                : savedYear
             return `${year}.${user.userMedUniversity.ingressSemester}`
         }
     }
