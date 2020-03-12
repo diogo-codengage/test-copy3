@@ -67,7 +67,7 @@ const ESPlaylistItem = memo(({ className, index, item, current, onClick }) => {
                         {title}
                     </ESTypography>
                 </div>
-                {durationInSeconds && (
+                {!!durationInSeconds && (
                     <ESTypography variant='overline' className='time'>
                         {esUtilConvertSecondsToTime(durationInSeconds)}
                     </ESTypography>
