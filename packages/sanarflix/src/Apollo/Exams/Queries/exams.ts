@@ -1,5 +1,4 @@
 import gql from 'graphql-tag'
-import { IMedUniversity } from './medUniversities'
 
 export interface ISimpleData {
     id: string
@@ -14,15 +13,25 @@ export interface IExam {
     questionsCount: number
     discipline: ISimpleData
     theme: ISimpleData
-    medUniversity: IMedUniversity
+    medUniversity: ISimpleData
 }
 
 export interface IExamQuery {
-    exams: IExam[]
+    quizExams: {
+        data: IExam[]
+        count: number
+    }
 }
 
 export const GET_EXAMS = gql`
-    {
+    query Exams(
+            $limit: Int
+            $skip: Int
+            $medUniversityId: ID!
+            $disciplineIds: [ID]
+            $themeIds: [ID]
+            $semesters: [YearSemester]
+        ){
         quizExams(
             limit: $limit
             skip: $skip
@@ -36,6 +45,7 @@ export const GET_EXAMS = gql`
               title
               year
               semester
+              questionsCount
               discipline {
                 id
                 name

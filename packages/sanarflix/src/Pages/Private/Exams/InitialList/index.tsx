@@ -49,13 +49,14 @@ const renderItem = (item: IExam, t) => {
     return (
         <SANListItem>
             <SANTypography strong fontSize={{md: 2}} mb={2}>
-                {item.title}: ({item.medUniversity.label} - {item.year}.{item.semester}) {item.discipline.name}
+                {item.title}: ({item.medUniversity.name} - {item.year}.{item.semester}) {item.discipline.name}
                 <SANButton
                     color='primary'
                     variant='solid'
                     uppercase
                     blockOnlyMobile
                     style={{ width: '132px', float: 'right' }}
+                    onClick={() => goToClassroom(item)}
                 >
                     <SANEvaIcon name='edit-2-outline' style={{ marginRight: '6px' }}/>{t('exams.list.train')}
                 </SANButton>
@@ -65,6 +66,12 @@ const renderItem = (item: IExam, t) => {
             </SANTypography>
         </SANListItem>
     )
+}
+
+const goToClassroom = (item: IExam) => {
+    // TODO redirect to practice area
+    console.log('treinar >>>> ', item)
+    window.analytics.track('Practice Exam Clicked', {examId: item.id})
 }
 
 const List = (props: IListProps) => {
@@ -79,16 +86,15 @@ const List = (props: IListProps) => {
 
     const fetchExamsList = async () => {
         try {
-            const {
-                data: { exams }
-            } = await client.query<IExamQuery>({
+            const response = await client.query<IExamQuery>({
                 query: GET_EXAMS,
                 variables: {
                     limit: 5,
                     medUniversityId: medUniversity.id
                 }
             })
-            setExams(exams)
+            setExamsCount(response.data.quizExams.count)
+            setExams(response.data.quizExams.data)
         } catch {
         }
         setInitLoading(false)
@@ -101,7 +107,9 @@ const List = (props: IListProps) => {
     }, [])
 
     const onLoadMore = () => {
+        window.analytics.track('LoadMoreExamsClicked', { universityId: medUniversity.id})
         if (loadMoreClicks >= 1) {
+            //TODO redirect to advanced filters
             console.log('redirect')
             return
         }
@@ -134,7 +142,7 @@ const List = (props: IListProps) => {
                         textAlign='left'
                         mb={10}
                     >
-                        {t('exams.list.title') + medUniversity.label}
+                        {t('exams.list.title') + medUniversity.name}
                     </SANTypography>
                     {examsCount ? (
                         <SANTypography
@@ -149,12 +157,23 @@ const List = (props: IListProps) => {
                             </ExamsCount>
                         </SANTypography>
                     ) : null}
-                    <SANList
-                        dataSource={exams}
-                        loading={initLoading}
-                        loadMore={loadMore()}
-                        renderItem={(item) => renderItem(item, t)}
-                    />
+                    {!initLoading && !loading && (!exams || exams.length === 0) ? (
+                        <SANTypography
+                            fontSize={{ md: 2 }}
+                            color='grey.7'
+                            textAlign='left'
+                            mb={15}
+                        >
+                            {t('exams.list.emptySubtitle')}
+                        </SANTypography>
+                    ) : (
+                        <SANList
+                            dataSource={exams}
+                            loading={initLoading}
+                            loadMore={examsCount && examsCount >= 5 ? loadMore() : undefined}
+                            renderItem={(item) => renderItem(item, t)}
+                        />
+                    )}
                 </SANLayoutContainer>
             </SANBox>
         </SANBox>

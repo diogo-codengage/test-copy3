@@ -180,6 +180,7 @@ export default {
         list: {
             title: 'Provas de ',
             subtitle: 'Estas são as provas disponíveis da sua faculdade:',
+            emptySubtitle: 'Não há provas disponíveis da sua faculdade.',
             train: 'Treinar',
             exams: ' provas',
             questions: ' questões',

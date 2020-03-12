@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 export interface IMedUniversity {
     id: string
-    label: string
+    name: string
 }
 
 export interface IMedUniversityQuery {
@@ -15,8 +15,8 @@ export const GET_MED_UNIVERSITIES = gql`
     {
         medUniversities {
             data {
-                id: id
-                label: name
+                id
+                name
             }
         }
     }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-
 import { useTranslation } from 'react-i18next'
+import { format } from 'date-fns'
 
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
@@ -70,7 +70,8 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, universities, form }
 
     const ingressPeriod = () => {
         if (user.userMedUniversity && user.userMedUniversity.ingressSemester && user.userMedUniversity.ingressYear) {
-            return `${user.userMedUniversity.ingressYear}.${user.userMedUniversity.ingressSemester}`
+            const year = format(new Date(user.userMedUniversity.ingressYear), 'yyyy')
+            return `${year}.${user.userMedUniversity.ingressSemester}`
         }
     }
 
@@ -204,7 +205,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, universities, form }
                                                         key={index}
                                                         value={item.id}
                                                     >
-                                                        {item.label}
+                                                        {item.name}
                                                     </SANSelectOption>
                                                 )}
                                             </SANSelect>
@@ -239,7 +240,9 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, universities, form }
                                         )}
                                         mb='md'
                                         initialValue={
-                                            user.userMedUniversity ? user.userMedUniversity.methodology : undefined
+                                            user.userMedUniversity && user.userMedUniversity.methodology
+                                                ? user.userMedUniversity.methodology
+                                                : undefined
                                         }
                                     >
                                         <SANSelect

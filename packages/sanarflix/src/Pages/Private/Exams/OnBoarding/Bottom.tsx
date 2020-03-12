@@ -12,6 +12,7 @@ import {
 import { theme } from 'styled-tools'
 import onBoarding from '../../../../Assets/images/exams/onBoardingBottom.png'
 import Form from './Form'
+import { IOnBoardingProps } from './index'
 
 const Image = SANStyled.img`
     width: 450px;
@@ -24,7 +25,7 @@ const Image = SANStyled.img`
     }
 `
 
-const OnBoardingBottom = (props) => {
+const OnBoardingBottom = (props: IOnBoardingProps) => {
     const { t } = useTranslation('sanarflix')
     return (
         <SANLayoutContainer pt={8}>
@@ -50,7 +51,7 @@ const OnBoardingBottom = (props) => {
                     <Image src={onBoarding}/>
                 </SANCol>
                 <SANCol xs={24} md={12}>
-                    <Form changePage={props.changePage}/>
+                    <Form changePage={props.changePage} userMedUniversity={props.userMedUniversity}/>
                 </SANCol>
             </SANRow>
         </SANLayoutContainer>

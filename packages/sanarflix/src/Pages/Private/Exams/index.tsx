@@ -16,7 +16,15 @@ const FLXExams = ({ history }) => {
     const { t } = useTranslation('sanarflix')
     const { me } = useAuthContext()
     const { userMedUniversity } = me
-    const [showOnBoarding, setShowOnBoarding] = useState<boolean>(!userMedUniversity || Object.keys(userMedUniversity).length === 0)
+    const isMeUniversityEmpty = (): boolean => {
+        if (!userMedUniversity) return true
+        let show = false
+        for (let prop in userMedUniversity) {
+            if (!userMedUniversity.hasOwnProperty(prop) || !userMedUniversity[prop]) show = true
+        }
+        return show
+    }
+    const [showOnBoarding, setShowOnBoarding] = useState<boolean>(isMeUniversityEmpty)
 
     const handleChange = () => {
         setShowOnBoarding(false)
@@ -39,7 +47,7 @@ const FLXExams = ({ history }) => {
                 }}
             />
             {showOnBoarding
-                ? (<OnBoarding changePage={handleChange}/>)
+                ? (<OnBoarding changePage={handleChange} userMedUniversity={userMedUniversity}/>)
                 : (<List medUniversity={userMedUniversity.medUniversity} />)
             }
         </SANBox>

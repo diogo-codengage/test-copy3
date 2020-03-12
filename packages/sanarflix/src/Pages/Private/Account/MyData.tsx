@@ -55,7 +55,7 @@ const FLXMyData = ({ history }: RouteComponentProps) => {
                 setUniversities(
                     medUniversities.data.map(v => ({
                         ...v,
-                        label: v.label.toLowerCase()
+                        name: v.name.toLowerCase()
                     }))
                 )
             } catch {

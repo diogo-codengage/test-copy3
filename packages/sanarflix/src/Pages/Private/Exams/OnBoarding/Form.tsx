@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useApolloClient } from '@apollo/react-hooks'
+import { format } from 'date-fns'
 
 import {
     SANForm,
@@ -74,7 +75,7 @@ const OnBoardingForm = ({ form, ...props }) => {
                 setMedUniversities(
                     medUniversities.data.map(v => ({
                         ...v,
-                        label: v.label.toLowerCase()
+                        name: v.name.toLowerCase()
                     }))
                 )
             } catch {
@@ -147,6 +148,19 @@ const OnBoardingForm = ({ form, ...props }) => {
         )
     }
 
+    const university = () => {
+        if (props.userMedUniversity && props.userMedUniversity.medUniversity) {
+            return props.userMedUniversity.medUniversity.id
+        }
+    }
+
+    const ingressPeriod = () => {
+        if (props.userMedUniversity && props.userMedUniversity.ingressSemester && props.userMedUniversity.ingressYear) {
+            const year = format(new Date(props.userMedUniversity.ingressYear), 'YYYY')
+            return `${year}.${props.userMedUniversity.ingressSemester}`
+        }
+    }
+
     return (
         <SANBox
             borderRadius={{ lg: 1 }}
@@ -158,6 +172,7 @@ const OnBoardingForm = ({ form, ...props }) => {
             <SANForm form={form} onSubmit={onSubmit}>
                 <SANFormItem
                     name='medUniversityId'
+                    initialValue={university() || undefined}
                     rules={[
                         {
                             required: true,
@@ -181,13 +196,14 @@ const OnBoardingForm = ({ form, ...props }) => {
                                 key={index}
                                 value={item.id}
                             >
-                                {item.label}
+                                {item.name}
                             </SANSelectOption>
                         ))}
                     </SANSelect>
                 </SANFormItem>
                 <SANFormItem
-                    name='ingressSemesterComplete'
+                    name='ingressSemester'
+                    initialValue={ingressPeriod() || undefined}
                     rules={[
                         {
                             required: true,
@@ -215,6 +231,11 @@ const OnBoardingForm = ({ form, ...props }) => {
                 </SANFormItem>
                 <SANFormItem
                     name='methodology'
+                    initialValue={
+                        props.userMedUniversity && props.userMedUniversity.methodology
+                            ? props.userMedUniversity.methodology
+                            : undefined
+                    }
                     rules={[
                         {
                             required: true,

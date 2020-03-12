@@ -90,7 +90,7 @@ export const GET_ME = gql`
             userMedUniversity {
                 medUniversity {
                     id
-                    label: name
+                    name
                 }
                 ingressSemester
                 ingressYear
