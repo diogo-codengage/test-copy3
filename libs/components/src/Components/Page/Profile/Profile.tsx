@@ -11,10 +11,7 @@ import ProfileAvatar from './ProfileAvatar'
 import ProfileTab from './ProfileTab'
 
 interface IUserMedUniversity {
-    medUniversity: {
-        id: string
-        label: string
-    }
+    medUniversity: IUniversity
     ingressSemester: string
     ingressYear: string
     methodology: string
@@ -48,7 +45,7 @@ export interface IState {
 
 export interface IUniversity {
     id: string
-    label: string
+    name: string
 }
 
 interface IParams {
