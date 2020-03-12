@@ -16,7 +16,7 @@ export const CHANGE_COURSE = gql`
                 name
                 slug
                 index
-                durantion
+                duration
                 cover_picture_url
                 progress {
                     done
