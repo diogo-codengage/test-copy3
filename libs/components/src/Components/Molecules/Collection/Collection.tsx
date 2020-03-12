@@ -304,7 +304,7 @@ const SANCollectionItem: React.FC<ISANCollectionItemProps> = ({
                         {item.hasQuiz && (
                             <Tooltip
                                 title={
-                                    videoCompleted
+                                    quizCompleted
                                         ? t(
                                               'collection.progress.quiz.completed'
                                           )
