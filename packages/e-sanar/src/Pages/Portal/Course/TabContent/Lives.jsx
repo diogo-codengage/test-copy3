@@ -5,7 +5,6 @@ import { format } from 'date-fns'
 
 import ESLiveSection from 'sanar-ui/dist/Components/Molecules/LiveSection'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
-import ESEmpty from 'sanar-ui/dist/Components/Atoms/Empty'
 
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 import { useAuthContext } from 'Hooks/auth'
@@ -27,12 +26,13 @@ const SANLives = () => {
         live && `https://www.youtube.com/embed/${live.link.split('=')[1]}`
 
     return (
-        <SANPortalPagesContainer className='lives'>
-            <ESSessionTitle
-                title={t('courseDetails.livesTitle')}
-                subtitle={t('courseDetails.livesSubtitle')}
-            />
-            {live ? (
+        !!live && (
+            <SANPortalPagesContainer className='lives'>
+                <ESSessionTitle
+                    title={t('courseDetails.livesTitle')}
+                    subtitle={t('courseDetails.livesSubtitle')}
+                />
+
                 <ESLiveSection
                     videoSrc={link}
                     description={live.description}
@@ -56,11 +56,9 @@ const SANLives = () => {
                     //     </ESButton>
                     // }
                 />
-            ) : (
-                <ESEmpty />
-            )}
-            <ANTDivider />
-        </SANPortalPagesContainer>
+                {lives[1] && <ANTDivider />}
+            </SANPortalPagesContainer>
+        )
     )
 }
 
