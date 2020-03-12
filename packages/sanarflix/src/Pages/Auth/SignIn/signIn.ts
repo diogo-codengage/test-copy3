@@ -4,12 +4,13 @@ import {
 } from 'amazon-cognito-identity-js'
 import { getInstance } from 'Config/AWSCognito'
 import i18n from 'sanar-ui/dist/Config/i18n'
+import { parseJWTToken } from '../../../Config/AWSCognito';
 import * as Sentry from '@sentry/browser'
 
 function userHasSubscription(token: string): boolean {
     try {
-        const userData = JSON.parse(atob(token.split('.')[1]))
-        const products = JSON.parse(userData['custom:products']) || []
+        const userData = parseJWTToken(token)
+        const products = JSON.parse(userData['custom:products'] || '[]') || []
         return products.includes('sanarflix')
     } catch (error) {
         Sentry.captureException(error)

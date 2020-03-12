@@ -17,7 +17,7 @@ const config: ICognitoUserPoolData = {
 let sessionUserAttributes: CognitoUserSession
 let cognitoUserSingleton: CognitoUser
 
-function userHasSubscription(token: string): boolean {
+export function parseJWTToken(token: string): object {
     try {
         const base64Url = token.split('.')[1]
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
@@ -30,8 +30,20 @@ function userHasSubscription(token: string): boolean {
                 .join('')
         )
 
-        const userData = JSON.parse(jsonPayload)
-        const products = JSON.parse(userData['custom:products']) || []
+        return JSON.parse(jsonPayload)
+    } catch (error) {
+        Sentry.configureScope(scope => {
+            scope.setExtra('jwt_token', token)
+        })
+        Sentry.captureException(error)
+      return {};
+    }
+}
+
+function userHasSubscription(token: string): boolean {
+    try {
+        const userData = parseJWTToken(token);
+        const products = JSON.parse(userData['custom:products'] || '[]') || []
         return products.includes('resmed')
     } catch (error) {
         Sentry.configureScope(scope => {

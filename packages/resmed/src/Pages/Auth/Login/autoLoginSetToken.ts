@@ -2,12 +2,7 @@ interface IdTokenPayload {
     aud: string
     sub: string
 }
-
-const getIdTokenPayload = (idToken: string): IdTokenPayload => {
-    const payloadBase64 = idToken.split('.')[1]
-    const payloadString = atob(payloadBase64)
-    return JSON.parse(payloadString)
-}
+import { parseJWTToken } from '../../../Config/AWSCognito';
 
 interface IAutoLoginParams {
     idToken: string
@@ -18,7 +13,7 @@ export const autoLoginSetToken = ({
     idToken,
     refreshToken
 }: IAutoLoginParams) => {
-    const idTokenPayload = getIdTokenPayload(idToken)
+    const idTokenPayload = parseJWTToken(idToken) as IdTokenPayload
 
     localStorage.setItem(
         `CognitoIdentityServiceProvider.${idTokenPayload.aud}.LastAuthUser`,
