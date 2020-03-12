@@ -18,7 +18,13 @@ interface IFLXFilterThemeProps {}
 
 const FLXFilterTheme: React.FC<IFLXFilterThemeProps> = () => {
     const { t } = useTranslation('sanarflix')
-    const { setCurrentTab, state, handleTheme } = useExamFilterContext()
+    const {
+        setCurrentTab,
+        state,
+        handleTheme,
+        themes,
+        loadingThemes
+    } = useExamFilterContext()
 
     return (
         <SANBox
@@ -45,11 +51,12 @@ const FLXFilterTheme: React.FC<IFLXFilterThemeProps> = () => {
                 </SANCol>
                 <SANCol xs={24} sm={12} md={12}>
                     <SANSelectList
-                        disabled={!state.subject.length}
+                        disabled={!state.discipline.length}
                         placeholder={t('examFilter.theme.select')}
                         onChange={handleTheme}
-                        items={[{ value: '1', label: 'Tema 1' }]}
+                        items={!!state.discipline.length ? themes : []}
                         value={state.theme}
+                        loading={loadingThemes}
                     />
                 </SANCol>
             </SANRow>
@@ -59,7 +66,7 @@ const FLXFilterTheme: React.FC<IFLXFilterThemeProps> = () => {
                 alignItems='center'
                 mt={{ md: 'xxl', _: 'xl' }}
             >
-                <PrevButton onClick={() => setCurrentTab('subject')} />
+                <PrevButton onClick={() => setCurrentTab('discipline')} />
                 <NextButton onClick={() => setCurrentTab('semester')} />
             </SANBox>
         </SANBox>

@@ -14,8 +14,8 @@ import {
 } from '@sanar/components'
 
 import { withFLXExamFilterProvider, useExamFilterContext } from './Context'
-import FLXFilterCollege from './College'
-import FLXFilterSubject from './Subject'
+import FLXFilterUniversity from './University'
+import FLXFilterDiscipline from './Discipline'
 import FLXFilterTheme from './Theme'
 import FLXFilterSemester from './Semester'
 
@@ -59,7 +59,12 @@ export const PrevButton = ({ onClick }) => {
 
 const FLXExamFilter: React.FC<IFLXExamFilterProps> = () => {
     const { t } = useTranslation('sanarflix')
-    const { currentTab, setCurrentTab, handleSubmit } = useExamFilterContext()
+    const {
+        currentTab,
+        setCurrentTab,
+        handleSubmit,
+        state
+    } = useExamFilterContext()
     return (
         <SANBox
             pb={{ md: '8', _: '0' }}
@@ -85,15 +90,15 @@ const FLXExamFilter: React.FC<IFLXExamFilterProps> = () => {
                     >
                         <SANTabPane
                             tab={<Title>{t('examFilter.college.title')}</Title>}
-                            key='college'
+                            key='university'
                         >
-                            <FLXFilterCollege />
+                            <FLXFilterUniversity />
                         </SANTabPane>
                         <SANTabPane
                             tab={<Title>{t('examFilter.subject.title')}</Title>}
-                            key='subject'
+                            key='discipline'
                         >
-                            <FLXFilterSubject />
+                            <FLXFilterDiscipline />
                         </SANTabPane>
                         <SANTabPane
                             tab={<Title>{t('examFilter.theme.title')}</Title>}
@@ -125,6 +130,7 @@ const FLXExamFilter: React.FC<IFLXExamFilterProps> = () => {
                             bold
                             blockOnlyMobile
                             onClick={handleSubmit}
+                            disabled={!state.university}
                         >
                             {t('examFilter.submit')}
                         </SANButton>

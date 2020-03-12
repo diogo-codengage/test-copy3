@@ -68,6 +68,7 @@ interface IItem {
 
 export interface ISANSelectFilterProps
     extends Omit<ISANBoxProps, 'onChange' | 'color'> {
+    label?: string
     placeholder?: string
     items: IItem[]
     value?: IItem[]
@@ -84,11 +85,11 @@ export interface ISANSelectFilterProps
     disabled?: boolean
 }
 
-const makeLabel = value =>
+const makeLabel = (value, field) =>
     value
         .map(
             lt =>
-                `${lt.label.charAt(0).toUpperCase()}${lt.label
+                `${lt[field].charAt(0).toUpperCase()}${lt[field]
                     .slice(1)
                     .toLowerCase()}`
         )
@@ -109,14 +110,17 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
     InputProps,
     EmptyProps,
     disabled,
+    label: labelProp,
     ...props
 }) => {
     const dropdownRef = useRef<any>()
     const menuRef = useRef()
     const { t } = useTranslation('components')
     const [open, setOpen] = useState(false)
-    const [search, setSearch] = useState()
+    const [search, setSearch] = useState('')
     const [labelSelecteds, setLabelSelecteds] = useState('')
+
+    const fieldLabel = useMemo(() => labelProp || 'label', [labelProp])
 
     const handleOpen = visibility => {
         setOpen(visibility)
@@ -187,7 +191,7 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
         () =>
             search
                 ? items.filter(item =>
-                      item.label.toLowerCase().match(search.toLowerCase())
+                      item[fieldLabel].toLowerCase().match(search.toLowerCase())
                   )
                 : items,
         [search, items]
@@ -199,13 +203,13 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
             onChange={onCheckboxChange(item)}
             checked={!!value.find(checkValue(item))}
         >
-            {item.label.toLowerCase()}
+            {item[fieldLabel].toLowerCase()}
         </SANStyledCheckbox>
     ))
 
     useEffect(() => {
         if (!!value && !!value.length) {
-            const label = makeLabel(value)
+            const label = makeLabel(value, fieldLabel)
             setLabelSelecteds(label)
         }
     }, [value])

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
@@ -11,6 +11,7 @@ import {
     SANSessionTitle,
     SANLayoutContainer,
     SANButton,
+    ISANButtonProps,
     SANEvaIcon,
     SANDivider,
     SANTypography,
@@ -48,7 +49,7 @@ const SelectWrapper: React.FC<ISelectWrapperProps> = ({
     </SANBox>
 )
 
-const Button: React.FC = ({ children, ...props }) => (
+const Button: React.FC<ISANButtonProps> = ({ children, ...props }) => (
     <SANButton size='small' bold variant='outlined' blockOnlyMobile {...props}>
         <SANEvaIcon name='options-2-outline' mr='xxs' />
         {children}
@@ -59,15 +60,50 @@ interface IFLXExamFilterSimpleProps {}
 
 const getIds = arr => arr.map(item => item.value)
 
+const renderItem = item => (
+    <SANSelectOption value={item.value}>{item.label}</SANSelectOption>
+)
+
+const getValue = (arr, values) =>
+    arr.filter(item => values.includes(item.value))
+
 const Fields: React.FC<{ hasLast?: boolean }> = ({ hasLast }) => {
     const { t } = useTranslation('sanarflix')
     const {
         state,
-        handleCollege,
-        handleSubject,
+        handleUniversity,
+        handleDiscipline,
         handleTheme,
-        handleSemester
+        handleSemester,
+        universities,
+        loadingUniversities,
+        disciplines,
+        themes,
+        semesters
     } = useExamFilterContext()
+
+    const getDisciplines = useCallback(getValue, [
+        disciplines,
+        state.discipline
+    ])
+
+    const getThemes = useCallback(getValue, [themes, state.theme])
+
+    const getSemesters = useCallback(getValue, [semesters, state.semester])
+
+    const onChangeDiscipline = useCallback(
+        items => handleDiscipline(getIds(items)),
+        [handleDiscipline]
+    )
+
+    const onChangeThemes = useCallback(items => handleTheme(getIds(items)), [
+        handleTheme
+    ])
+
+    const onChangeSemesters = useCallback(
+        items => handleSemester(getIds(items)),
+        [handleSemester]
+    )
 
     return (
         <>
@@ -78,29 +114,23 @@ const Fields: React.FC<{ hasLast?: boolean }> = ({ hasLast }) => {
                         placeholder={t('examFilter.college.select')}
                         size='large'
                         style={{ width: '100%' }}
-                        value={state.college}
-                        onChange={handleCollege}
+                        value={state.university || undefined}
+                        onChange={handleUniversity}
+                        loading={loadingUniversities}
                     >
-                        <SANSelectOption value='1'>1</SANSelectOption>
-                        <SANSelectOption value='2'>2</SANSelectOption>
-                        <SANSelectOption value='3'>3</SANSelectOption>
+                        {universities.map(renderItem)}
                     </SANSelect>
                 </SelectWrapper>
             </SANCol>
             <SANCol xs={24} md={12} lg={6}>
                 <SelectWrapper label={t('examFilter.subject.title')}>
                     <SelectStyled
-                        disabled={!state.college}
-                        onChange={items => handleSubject(getIds(items))}
+                        disabled={!state.university}
+                        value={getDisciplines(disciplines, state.discipline)}
+                        onChange={onChangeDiscipline}
                         placeholder={t('examFilter.subject.select')}
                         InputProps={{ size: 'large' }}
-                        items={[
-                            { value: '1', label: 'Disciplina 1' },
-                            { value: '2', label: 'Disciplina 2' },
-                            { value: '2', label: 'Disciplina 3' },
-                            { value: '2', label: 'Disciplina 4' },
-                            { value: '2', label: 'Disciplina 5' }
-                        ]}
+                        items={disciplines}
                         EmptyProps={{
                             py: 'md',
                             ImageProps: {
@@ -116,17 +146,12 @@ const Fields: React.FC<{ hasLast?: boolean }> = ({ hasLast }) => {
             <SANCol xs={24} md={12} lg={6}>
                 <SelectWrapper label={t('examFilter.theme.title')}>
                     <SelectStyled
-                        disabled={!state.subject.length}
-                        onChange={items => handleTheme(getIds(items))}
+                        disabled={!state.discipline.length}
+                        value={getThemes(themes, state.theme)}
+                        onChange={onChangeThemes}
                         placeholder={t('examFilter.theme.select')}
                         InputProps={{ size: 'large' }}
-                        items={[
-                            { value: '1', label: 'Tema 1' },
-                            { value: '2', label: 'Tema 2' },
-                            { value: '2', label: 'Tema 3' },
-                            { value: '2', label: 'Tema 4' },
-                            { value: '2', label: 'Tema 5' }
-                        ]}
+                        items={themes}
                         EmptyProps={{
                             py: 'md',
                             ImageProps: {
@@ -146,15 +171,12 @@ const Fields: React.FC<{ hasLast?: boolean }> = ({ hasLast }) => {
                 >
                     <SelectStyled
                         disabled={!state.theme.length}
-                        onChange={items => handleSemester(getIds(items))}
+                        value={getSemesters(semesters, state.semester)}
+                        onChange={onChangeSemesters}
                         placeholder={t('examFilter.semester.select')}
                         InputProps={{ size: 'large' }}
-                        items={[
-                            { value: '1', label: '2020.1' },
-                            { value: '2', label: '2020.2' },
-                            { value: '1', label: '2019.1' },
-                            { value: '2', label: '2019.2' }
-                        ]}
+                        items={semesters}
+                        label='value'
                         EmptyProps={{
                             py: 'md',
                             ImageProps: {
@@ -173,6 +195,9 @@ const Fields: React.FC<{ hasLast?: boolean }> = ({ hasLast }) => {
 
 const FLXExamFilterSimpleMobile: React.FC<IFLXExamFilterSimpleProps> = () => {
     const { t } = useTranslation('sanarflix')
+    const { handleSubmit, state } = useExamFilterContext()
+    const [hasOpen, toggleOpen] = useState(false)
+
     return (
         <SANBox py={{ md: '8', _: 'xl' }} bg='grey-solid.1'>
             <SANLayoutContainer>
@@ -180,16 +205,16 @@ const FLXExamFilterSimpleMobile: React.FC<IFLXExamFilterSimpleProps> = () => {
                     title={t('examFilter.simple.title')}
                     subtitle={t('examFilter.simple.title')}
                 />
-                <SANCollapse accordion bordered={false}>
+                <SANCollapse accordion bordered={false} onChange={toggleOpen}>
                     <SANCollapsePanel
                         style={{ border: 'none' }}
                         showArrow={false}
                         header={
                             <SANBox m='-12px'>
                                 <Button>
-                                    {true
-                                        ? t('examFilter.simple.seeFilters')
-                                        : t('examFilter.simple.closeFilters')}
+                                    {hasOpen
+                                        ? t('examFilter.simple.closeFilters')
+                                        : t('examFilter.simple.seeFilters')}
                                 </Button>
                             </SANBox>
                         }
@@ -203,9 +228,12 @@ const FLXExamFilterSimpleMobile: React.FC<IFLXExamFilterSimpleProps> = () => {
                             />
                             <SANRow gutter={20}>
                                 <Fields />
-                                <SANCol>
-                                    <Button>
-                                        {t('examFilter.simple.closeFilters')}
+                                <SANCol xs={24}>
+                                    <Button
+                                        disabled={!state.university}
+                                        onClick={handleSubmit}
+                                    >
+                                        {t('examFilter.simple.saveFilter')}
                                     </Button>
                                 </SANCol>
                             </SANRow>
@@ -220,6 +248,7 @@ const FLXExamFilterSimpleMobile: React.FC<IFLXExamFilterSimpleProps> = () => {
 const FLXExamFilterSimple: React.FC<IFLXExamFilterSimpleProps> = () => {
     const { t } = useTranslation('sanarflix')
     const { width } = useWindowSize()
+    const { state, handleSubmit } = useExamFilterContext()
 
     if (width <= 768) {
         return <FLXExamFilterSimpleMobile />
@@ -231,7 +260,14 @@ const FLXExamFilterSimple: React.FC<IFLXExamFilterSimpleProps> = () => {
                 <SANSessionTitle
                     title={t('examFilter.simple.title')}
                     subtitle={t('examFilter.simple.title')}
-                    extra={<Button>{t('examFilter.simple.saveFilter')}</Button>}
+                    extra={
+                        <Button
+                            disabled={!state.university}
+                            onClick={handleSubmit}
+                        >
+                            {t('examFilter.simple.saveFilter')}
+                        </Button>
+                    }
                 />
                 <SANDivider width='100%' bg='grey.2' mb='xl' />
                 <SANRow gutter={20}>

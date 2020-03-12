@@ -18,7 +18,7 @@ import collegeImg from 'Assets/images/exam-filter/college.png'
 import { useExamFilterContext } from './Context'
 import { NextButton } from './'
 
-interface IFLXFilterCollegeProps {}
+interface IFLXFilterUniversityProps {}
 
 const TextCol = styled(SANCol)`
     ${theme('mediaQueries.down.sm')} {
@@ -26,9 +26,21 @@ const TextCol = styled(SANCol)`
     }
 `
 
-const FLXFilterCollege: React.FC<IFLXFilterCollegeProps> = () => {
+const renderItem = item => (
+    <SANSelectOption key={item.value} value={item.value}>
+        {item.label}
+    </SANSelectOption>
+)
+
+const FLXFilterUniversity: React.FC<IFLXFilterUniversityProps> = () => {
     const { t } = useTranslation('sanarflix')
-    const { setCurrentTab, state, handleCollege } = useExamFilterContext()
+    const {
+        setCurrentTab,
+        state,
+        handleUniversity,
+        universities,
+        loadingUniversities
+    } = useExamFilterContext()
 
     return (
         <SANBox px={{ md: '8', _: 'md' }} pb={{ md: 'xxl', _: 'xl' }}>
@@ -82,12 +94,11 @@ const FLXFilterCollege: React.FC<IFLXFilterCollegeProps> = () => {
                             allowClear
                             placeholder={t('examFilter.college.select')}
                             size='large'
-                            value={state.college}
-                            onChange={handleCollege}
+                            value={state.university || undefined}
+                            onChange={handleUniversity}
+                            loading={loadingUniversities}
                         >
-                            <SANSelectOption value='1'>1</SANSelectOption>
-                            <SANSelectOption value='2'>2</SANSelectOption>
-                            <SANSelectOption value='3'>3</SANSelectOption>
+                            {universities.map(renderItem)}
                         </SANSelect>
                     </SANBox>
                 </SANCol>
@@ -97,7 +108,9 @@ const FLXFilterCollege: React.FC<IFLXFilterCollegeProps> = () => {
                         justifyContent='flex-end'
                         mt={{ sm: 0, _: 'lg' }}
                     >
-                        <NextButton onClick={() => setCurrentTab('subject')} />
+                        <NextButton
+                            onClick={() => setCurrentTab('discipline')}
+                        />
                     </SANBox>
                 </SANCol>
             </SANRow>
@@ -105,4 +118,4 @@ const FLXFilterCollege: React.FC<IFLXFilterCollegeProps> = () => {
     )
 }
 
-export default FLXFilterCollege
+export default FLXFilterUniversity

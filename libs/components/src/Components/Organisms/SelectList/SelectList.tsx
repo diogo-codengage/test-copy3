@@ -170,6 +170,12 @@ const SANSelectList: React.FC<ISANSelectListProps> = ({
         }
     }
 
+    const handleSearch = e => {
+        if (!loading) {
+            setSearch(e.target.value)
+        }
+    }
+
     const hasAllChecks = useMemo(() => value.length === items.length, [
         value,
         items
@@ -196,8 +202,9 @@ const SANSelectList: React.FC<ISANSelectListProps> = ({
                 iconLeft='search-outline'
                 size='xlarge'
                 placeholder={placeholder}
-                onChange={e => setSearch(e.target.value)}
+                onChange={handleSearch}
                 value={search}
+                disabled={disabled}
             />
             <SANScroll>
                 {loading ? (

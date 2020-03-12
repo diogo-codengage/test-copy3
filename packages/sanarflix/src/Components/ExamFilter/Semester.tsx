@@ -29,9 +29,21 @@ const Image = props => (
     />
 )
 
+const renderItem = item => (
+    <SANSelectOption key={item.value} value={item.value}>
+        {item.value}
+    </SANSelectOption>
+)
+
 const FLXFilterSemester: React.FC<IFLXFilterSemesterProps> = () => {
     const { t } = useTranslation('sanarflix')
-    const { setCurrentTab, state, handleSemester } = useExamFilterContext()
+    const {
+        setCurrentTab,
+        state,
+        handleSemester,
+        semesters,
+        loadingSemesters
+    } = useExamFilterContext()
 
     return (
         <SANBox
@@ -72,18 +84,13 @@ const FLXFilterSemester: React.FC<IFLXFilterSemesterProps> = () => {
                                 mode='multiple'
                                 size='large'
                                 onChange={handleSemester}
-                                value={state.semester}
+                                value={
+                                    !!state.theme.length ? state.semester : []
+                                }
                                 disabled={!state.theme.length}
+                                loading={loadingSemesters}
                             >
-                                <SANSelectOption value='1'>
-                                    2020.1
-                                </SANSelectOption>
-                                <SANSelectOption value='2'>
-                                    2019.2
-                                </SANSelectOption>
-                                <SANSelectOption value='3'>
-                                    2019.1
-                                </SANSelectOption>
+                                {semesters.map(renderItem)}
                             </SANSelect>
                         </SANBox>
                         <PrevButton onClick={() => setCurrentTab('theme')} />

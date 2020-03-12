@@ -14,11 +14,17 @@ import subjectImg from 'Assets/images/exam-filter/subject-theme.svg'
 import { useExamFilterContext } from './Context'
 import { NextButton, PrevButton } from './'
 
-interface IFLXFilterSubjectProps {}
+interface IFLXFilterDisciplineProps {}
 
-const FLXFilterSubject: React.FC<IFLXFilterSubjectProps> = () => {
+const FLXFilterDiscipline: React.FC<IFLXFilterDisciplineProps> = () => {
     const { t } = useTranslation('sanarflix')
-    const { setCurrentTab, state, handleSubject } = useExamFilterContext()
+    const {
+        setCurrentTab,
+        state,
+        handleDiscipline,
+        disciplines,
+        loadingDisciplines
+    } = useExamFilterContext()
 
     return (
         <SANBox
@@ -45,14 +51,12 @@ const FLXFilterSubject: React.FC<IFLXFilterSubjectProps> = () => {
                 </SANCol>
                 <SANCol xs={24} sm={12} md={12}>
                     <SANSelectList
-                        disabled={!state.college}
+                        disabled={!state.university}
                         placeholder={t('examFilter.subject.select')}
-                        onChange={handleSubject}
-                        items={[
-                            { value: '1', label: 'Disciplina 1' },
-                            { value: '2', label: 'Disciplina 2' }
-                        ]}
-                        value={state.subject}
+                        onChange={handleDiscipline}
+                        items={!!state.university ? disciplines : []}
+                        value={state.discipline}
+                        loading={loadingDisciplines}
                     />
                 </SANCol>
             </SANRow>
@@ -62,11 +66,11 @@ const FLXFilterSubject: React.FC<IFLXFilterSubjectProps> = () => {
                 alignItems='center'
                 mt={{ md: 'xxl', _: 'xl' }}
             >
-                <PrevButton onClick={() => setCurrentTab('college')} />
+                <PrevButton onClick={() => setCurrentTab('university')} />
                 <NextButton onClick={() => setCurrentTab('theme')} />
             </SANBox>
         </SANBox>
     )
 }
 
-export default FLXFilterSubject
+export default FLXFilterDiscipline
