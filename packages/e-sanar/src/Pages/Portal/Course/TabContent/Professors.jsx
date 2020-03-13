@@ -41,31 +41,34 @@ const SANCourseProfessors = () => {
     )
 
     return (
-        // <div className='professors'>
-        <SANPortalPagesContainer>
-            <SessionTitle
-                title={t('courseDetails.tabContent.professors.title')}
-                subtitle={t('courseDetails.tabContent.professors.subtitle')}
-            />
-
-            <ESRow gutter={24} type='flex' justify='center'>
-                {course.professors.map(renderProfessor)}
-            </ESRow>
-            {course.professors.length > 10 && (
-                <ESButton
-                    uppercase
-                    bold
-                    blockOnlyMobile
-                    data-testid='san-portal__professors__load-more'
-                    size='xsmall'
-                    color='primary'
-                    variant='outlined'
-                    className='mt-md professors--load-more'
-                >
-                    {t('courseDetails.tabContent.professors.buttonLoadMore')}
-                </ESButton>
-            )}
-        </SANPortalPagesContainer>
+        !!course.professors.length && (
+            // <div className='professors'>
+            <SANPortalPagesContainer>
+                <SessionTitle
+                    title={t('courseDetails.tabContent.professors.title')}
+                    subtitle={t('courseDetails.tabContent.professors.subtitle')}
+                />
+                <ESRow gutter={24} type='flex' justify='center'>
+                    {course.professors.map(renderProfessor)}
+                </ESRow>
+                {course.professors.length > 10 && (
+                    <ESButton
+                        uppercase
+                        bold
+                        blockOnlyMobile
+                        data-testid='san-portal__professors__load-more'
+                        size='xsmall'
+                        color='primary'
+                        variant='outlined'
+                        className='mt-md professors--load-more'
+                    >
+                        {t(
+                            'courseDetails.tabContent.professors.buttonLoadMore'
+                        )}
+                    </ESButton>
+                )}
+            </SANPortalPagesContainer>
+        )
         // </div>
     )
 }
