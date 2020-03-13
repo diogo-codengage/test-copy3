@@ -7,7 +7,7 @@ export const GET_MODULE = gql`
             name
             slug
             index
-            durantion
+            duration
             cover_picture_url
             progress {
                 done
@@ -17,6 +17,7 @@ export const GET_MODULE = gql`
             level_contents {
                 data {
                     index
+                    display
                     resource_type
                     video {
                         id

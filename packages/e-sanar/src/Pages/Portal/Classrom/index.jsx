@@ -17,6 +17,7 @@ const renderResourceContent = resource => {
         case 'Video':
             return <SANClassroomVideo />
         case 'Document':
+        case 'Download':
             return <SANClassroomDocument />
         case 'Quiz':
             return <SANClassroomMock />

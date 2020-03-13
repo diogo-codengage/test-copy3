@@ -13,7 +13,7 @@ export const GET_MODULES = gql`
                 name
                 slug
                 index
-                durantion
+                duration
                 cover_picture_url
                 last_resource_id
                 last_resource_type
