@@ -38,10 +38,18 @@ const SANLives = () => {
                     description={live.description}
                     title={live.title}
                     date={date}
-                    linkedin={live.professors[0].linkedin}
-                    avatar={live.professors[0].profile_picture}
-                    name={live.professors[0].name}
-                    formation={live.professors[0].resume}
+                    linkedin={
+                        !!live.professors ? live.professors[0].linkedin : ''
+                    }
+                    avatar={
+                        !!live.professors
+                            ? live.professors[0].profile_picture
+                            : ''
+                    }
+                    name={!!live.professors ? live.professors[0].name : ''}
+                    formation={
+                        !!live.professors ? live.professors[0].resume : ''
+                    }
                     //FIXME: action={
                     //     <ESButton
                     //         size='xsmall'

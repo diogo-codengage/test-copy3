@@ -50,9 +50,9 @@ const SANClassRoomDocument = () => {
                         leftChildren={
                             <ESLessonHeaderLeft
                                 title={currentResource.document.title}
-                                subtitle={`${t('global.subject')} ${
-                                    currentModule.index
-                                }, ${t(
+                                subtitle={`${t(
+                                    'global.subject'
+                                )} ${currentModule.index + 1}, ${t(
                                     'global.activity'
                                 )} ${currentResource.index + 1}`}
                                 onClick={openMenu}
