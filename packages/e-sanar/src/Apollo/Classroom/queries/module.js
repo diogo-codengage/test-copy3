@@ -7,7 +7,7 @@ export const GET_MODULE = gql`
             name
             slug
             index
-            durantion
+            duration
             cover_picture_url
             progress {
                 done
