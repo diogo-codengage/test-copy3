@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { SANError500, ISANError500Props } from '../Error500'
 
-export interface ISANErrorBoundaryProps extends ISANError500Props {
+export interface ISANErrorBoundaryProps extends Partial<ISANError500Props> {
     component?: React.ReactNode
     onError?: (error: any, errorInfo: any) => void
 }
@@ -34,7 +34,12 @@ class SANErrorBoundary extends Component<
             component ? (
                 component
             ) : (
-                <SANError500 {...props} />
+                <SANError500
+                    onClick={() =>
+                        console.log('[SANError500]: prop `onClick` not defined')
+                    }
+                    {...props}
+                />
             )
         ) : (
             children

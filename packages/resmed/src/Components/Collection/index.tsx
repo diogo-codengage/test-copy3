@@ -1,21 +1,21 @@
-import React, {
-    useEffect,
-    useState,
-    useImperativeHandle,
-    forwardRef
-} from 'react'
+import React, { useMemo, useImperativeHandle, forwardRef } from 'react'
 
-import { useApolloClient } from '@apollo/react-hooks'
+import { useTranslation } from 'react-i18next'
+import { useQuery } from '@apollo/react-hooks'
+import * as Sentry from '@sentry/browser'
 
-import { SANCollection } from '@sanar/components'
 import {
+    SANCollection,
+    useSnackbarContext,
     ISANCollectionProps,
-    ICollection
-} from '@sanar/components/dist/Components/Molecules/Collection'
+    ICollection as ICollectionComp
+} from '@sanar/components'
 
 import {
     GET_COLLECTIONS,
-    ICollectionsQuery
+    ICollectionsQuery,
+    ICollectionsVariables,
+    ICollection
 } from 'Apollo/Classroom/Queries/collections'
 
 interface IRMCollectionProps
@@ -24,55 +24,70 @@ interface IRMCollectionProps
     onCompleted?: (collection: ICollection) => void
 }
 
+const makeCollection = (collection: ICollection) => {
+    const hasVideo = !!collection.content.video
+    const hasQuiz = !!collection.content.quiz
+    return {
+        ...collection,
+        image: collection.content.video.image,
+        completed:
+            hasVideo &&
+            collection.content.video.progress === 100 &&
+            hasQuiz &&
+            collection.content.quiz.progress === 100
+    }
+}
+
 const RMCollection: React.FC<IRMCollectionProps> = (
     { parentId, value, vertical = true, onChange, onCompleted },
     ref
 ) => {
-    const client = useApolloClient()
-    const [loading, setLoading] = useState(false)
-    const [collections, setCollections] = useState<any>([])
-
-    useEffect(() => {
-        const fetchCollections = async () => {
-            setLoading(true)
-            try {
-                const {
-                    data: { collections }
-                } = await client.query<ICollectionsQuery>({
-                    query: GET_COLLECTIONS,
-                    variables: { parentId }
-                })
-                const makeCollections = collections.map(collection => ({
-                    ...collection,
-                    image: collection.content.video.image,
-                    completed: collection.content.video.progress === 100
-                }))
-                setCollections(makeCollections)
-                if (!!onCompleted) {
-                    const collection = makeCollections.find(
-                        collection => collection.id === value
-                    )
-                    !!collection && onCompleted(collection)
-                }
-            } catch {}
-            setLoading(false)
+    const { loading, data } = useQuery<
+        ICollectionsQuery,
+        ICollectionsVariables
+    >(GET_COLLECTIONS, {
+        variables: {
+            parentId
+        },
+        onCompleted: ({ collections }) => {
+            if (!!onCompleted) {
+                const collection = collections.find(findCollection)
+                !!collection && onCompleted(collection)
+            }
+        },
+        onError: error => {
+            createSnackbar({
+                message: t('classroom.collection.error'),
+                theme: 'error'
+            })
+            Sentry.captureException(error)
         }
-        fetchCollections()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [parentId])
+    })
+    const { t } = useTranslation('resmed')
+    const createSnackbar = useSnackbarContext()
 
-    const getIndex = () =>
-        collections.findIndex(collection => collection.id === value)
+    const findCollection = (collection: ICollectionComp | ICollection) =>
+        collection.id === value
+
+    const getIndex = (arr: ICollectionComp[]) =>
+        arr.findIndex(collection => collection.id === value)
+
+    const collections = useMemo<ICollectionComp[]>(() => {
+        if (!!data && !!data.collections) {
+            const changedCollections = data.collections.map(makeCollection)
+            return changedCollections
+        }
+        return []
+    }, [data])
 
     useImperativeHandle(ref, () => ({
-        getCurrent: () =>
-            collections.find(collection => collection.id === value),
+        getCurrent: () => collections.find(findCollection),
         getNext: () => {
-            const index = getIndex()
+            const index = getIndex(collections)
             return collections[index + 1]
         },
         getPrevious: () => {
-            const index = getIndex()
+            const index = getIndex(collections)
             return collections[index - 1]
         }
     }))

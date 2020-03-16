@@ -18,12 +18,14 @@ import { Tooltip } from 'antd'
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
 import { SANButton } from '../../Atoms/Button'
-import { SANBox } from '../../Atoms/Box'
+import { SANBox, ISANBoxProps } from '../../Atoms/Box'
 import { SANEvaIcon } from '../../Atoms/EvaIcon'
 import { SANTypography } from '../../Atoms/Typography'
 import { SANSkeleton } from '../../Atoms/Skeleton'
 
 import { responsiveHorizontal, responsiveVertical } from './responsive'
+
+const BRAND_HEADER_HEIGHT = '50px'
 
 const arrLoading = new Array(7).fill(1)
 
@@ -112,12 +114,14 @@ const ButtonArrowStyled = styled(SANButton)`
 `
 
 const ImageStyled = styled(SANBox)`
-    max-height: 120px;
+    height: 92px;
 `
+
+const SANEvaIconStyled = styled(SANEvaIcon)``
 
 const SANCollectionItemStyled = styled(SANBox)<{ current: boolean }>`
     &:hover {
-        ${SANTypography}, ${ImageStyled} {
+        ${SANEvaIconStyled}, ${SANTypography}, ${ImageStyled} {
             opacity: 0.6;
         }
     }
@@ -125,7 +129,7 @@ const SANCollectionItemStyled = styled(SANBox)<{ current: boolean }>`
     ${ifNotProp(
         'current',
         css`
-            & ${SANTypography}, & ${ImageStyled} {
+            & ${SANEvaIconStyled}, & ${SANTypography}, & ${ImageStyled} {
                 opacity: 0.4;
             }
         `
@@ -154,6 +158,7 @@ const SliderStyled = styled(Slider)`
         ${ifProp(
             'vertical',
             css`
+                margin: auto;
                 background-color: ${theme('colors.grey.9')};
             `
         )};
@@ -182,11 +187,19 @@ const SliderStyled = styled(Slider)`
     }
 `
 
+interface IProgress {
+    video: number
+    quiz: number
+}
+
 export interface ICollection {
     name: string
     image: string
     completed: boolean
     id: string
+    progress?: IProgress
+    hasQuiz?: boolean
+    hasVideo?: boolean
 }
 
 export interface ISANCollectionProps {
@@ -197,11 +210,61 @@ export interface ISANCollectionProps {
     loading?: boolean
 }
 
-const SANCollectionItem = ({ item, index, onChange, value }: any) => {
+export interface ISANCollectionItemProps {
+    item: ICollection
+    onChange: (item: ICollection) => void
+    value: string
+    index: number
+}
+
+const SANCollectionItem: React.FC<ISANCollectionItemProps> = ({
+    item,
+    index,
+    onChange,
+    value
+}) => {
     const { t } = useTranslation('components')
     const { name, image, id, completed } = item
 
-    const handleChange = () => onChange(item, index)
+    const handleChange = () => onChange(item)
+
+    const videoCompleted = useMemo(
+        () => !!item && !!item.progress && item.progress.video === 100,
+        [item]
+    )
+
+    const videoIconProps = useMemo(
+        () =>
+            videoCompleted
+                ? {
+                      name: 'play-circle',
+                      color: 'warning'
+                  }
+                : {
+                      name: 'play-circle-outline',
+                      color: 'white.10'
+                  },
+        [videoCompleted]
+    )
+
+    const quizCompleted = useMemo(
+        () => !!item && !!item.progress && item.progress.quiz === 100,
+        [item]
+    )
+
+    const quizIconProps = useMemo(
+        () =>
+            quizCompleted
+                ? {
+                      name: 'edit-2',
+                      color: 'warning'
+                  }
+                : {
+                      name: 'edit-2-outline',
+                      color: 'white.10'
+                  },
+        [quizCompleted]
+    )
 
     return (
         <SANCollectionItemStyled
@@ -209,10 +272,55 @@ const SANCollectionItem = ({ item, index, onChange, value }: any) => {
             current={value === id}
             position='relative'
         >
-            <SANBox p='md'>
-                <SANTypography fontSize='sm' color='white.10'>
-                    {t('collection.part')} {index}
-                </SANTypography>
+            <SANBox p={14}>
+                <SANBox
+                    display='flex'
+                    alignItems='center'
+                    justifyContent='space-between'
+                >
+                    <SANTypography fontSize='sm' color='white.10'>
+                        {t('collection.part')} {index}
+                    </SANTypography>
+                    <SANBox display='flex' alignItems='center'>
+                        {item.hasVideo && (
+                            <Tooltip
+                                title={
+                                    videoCompleted
+                                        ? t(
+                                              'collection.progress.video.completed'
+                                          )
+                                        : t(
+                                              'collection.progress.video.incomplete'
+                                          )
+                                }
+                                placement='topLeft'
+                                mouseEnterDelay={0.3}
+                            >
+                                <SANEvaIconStyled
+                                    {...videoIconProps}
+                                    mr='xxs'
+                                />
+                            </Tooltip>
+                        )}
+                        {item.hasQuiz && (
+                            <Tooltip
+                                title={
+                                    videoCompleted
+                                        ? t(
+                                              'collection.progress.quiz.completed'
+                                          )
+                                        : t(
+                                              'collection.progress.quiz.incomplete'
+                                          )
+                                }
+                                placement='topLeft'
+                                mouseEnterDelay={0.3}
+                            >
+                                <SANEvaIconStyled {...quizIconProps} />
+                            </Tooltip>
+                        )}
+                    </SANBox>
+                </SANBox>
                 <SANBox
                     position='relative'
                     onClick={handleChange}
@@ -262,7 +370,6 @@ const SANCollectionItem = ({ item, index, onChange, value }: any) => {
 const SANCollection = memo<ISANCollectionProps>(
     ({ items, vertical, onChange, value, loading = false }) => {
         const { width } = useWindowSize()
-        const [isDragging, setIsDragging] = useState(false)
         const [curretSlide, setCurrentSlide] = useState(0)
         const sliderRef = useRef<any>()
 
@@ -281,7 +388,6 @@ const SANCollection = memo<ISANCollectionProps>(
         const renderItem = useCallback(
             (item, index) => (
                 <SANCollectionItem
-                    isDragging={isDragging}
                     onChange={onChange}
                     value={value}
                     item={item}
@@ -289,7 +395,7 @@ const SANCollection = memo<ISANCollectionProps>(
                     key={index}
                 />
             ),
-            [value, isDragging]
+            [value]
         )
 
         const index = useMemo(
@@ -305,9 +411,7 @@ const SANCollection = memo<ISANCollectionProps>(
                 draggable: true,
                 dots: false,
                 infinite: false,
-                beforeChange: () => setIsDragging(true),
                 afterChange: current => {
-                    setIsDragging(false)
                     setCurrentSlide(current)
                 },
                 slidesToScroll: 1,
@@ -325,12 +429,15 @@ const SANCollection = memo<ISANCollectionProps>(
             vertical
         ])
 
+        //Equals responsiveVertical slidesToShow for each resolution
         const disabledNext = useMemo(() => {
             if (!vertical) return
             if (width <= 1366) {
-                return curretSlide + 3 === items.length
+                return curretSlide + 4 >= items.length
+            } else if (width < 1920) {
+                return curretSlide + 5 >= items.length
             } else {
-                return curretSlide + 5 === items.length
+                return curretSlide + 5 >= items.length
             }
         }, [curretSlide, width, items])
 
@@ -341,8 +448,25 @@ const SANCollection = memo<ISANCollectionProps>(
             }
         }, [index])
 
+        const style: ISANBoxProps = useMemo(
+            () =>
+                vertical ? { display: 'flex', flexDirection: 'column' } : {},
+            [vertical]
+        )
+
         return (
-            <SANBox position='relative' height={vertical ? '100vh' : 'auto'}>
+            <SANBox
+                position='relative'
+                height={
+                    vertical
+                        ? {
+                              classroom: '100vh',
+                              _: `calc(100vh - ${BRAND_HEADER_HEIGHT})`
+                          }
+                        : 'auto'
+                }
+                {...style}
+            >
                 {vertical && (
                     <>
                         <SANBox

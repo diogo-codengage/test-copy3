@@ -108,6 +108,7 @@ export default {
             practiceArea: 'Área de Prática',
             performance: 'Desempenho',
             lives: 'Lives',
+            simulated: 'Simulado',
             schedule: 'Cronograma',
             account: 'Minha conta',
             changeCourse: 'Trocar de curso'
@@ -131,7 +132,9 @@ export default {
         changeCourse: {
             title: 'Estou estudando',
             subtitle: 'Trocar de curso',
-            suggestedClass: 'Aula sugerida'
+            suggestedClass: 'Aula sugerida',
+            errorGoClass:
+                'Ocorreu um erro ao tentar acessar essa aula. Tente novamente mais tarde.'
         }
     },
     logout: {
@@ -176,7 +179,9 @@ export default {
         errorLoadLessons: 'Ocorreu um erro ao carregar suas aulas'
     },
     modalThemes: {
-        continue: 'Continuar de onde parei'
+        continue: 'Continuar de onde parei',
+        errorGoClass:
+            'Ocorreu um erro ao tentar acessar essa aula. Tente novamente mais tarde.'
     },
     main: {
         errorLoadActiveCourse: 'Ocorreu um erro ao carregar seu curso ativo'
@@ -282,6 +287,9 @@ export default {
         quiz: {
             question: 'Questão',
             questionMap: 'Mapa de questões'
+        },
+        collection: {
+            error: 'Ocorreu um erro ao carregar listagem de vídeos'
         }
     },
     schedule: {
@@ -296,7 +304,7 @@ export default {
             error: 'Ocorreu um erro ao mover aula - {{name}}',
             exceeded: 'Você excedeu o limite de aulas por dia'
         },
-        suggestion: 'Sugestão do professor',
+        suggestion: 'Habilitar Edição',
         pdfDownload: 'Baixar em .pdf',
         today: 'Hoje',
         thisWeek: {
@@ -323,15 +331,17 @@ export default {
                 comingSoon: 'Em breve'
             },
             suggestion: {
-                title: 'Sugestão do professor',
+                title: 'Habilitar Edição',
                 descriptionDisable:
-                    'Ao desabilitar essa opção, você poderá editar seu calendário movendo as aulas.',
+                    'Ao desabilitar essa opção, você perderá todas as alterações feitas no seu calendário.',
                 descriptionEnable:
-                    'Ao habilitar essa opção, você perderá todas as alterações feitas no seu calendário.',
+                    'Ao habilitar essa opção, você poderá editar seu calendário movendo as aulas.',
                 confirm: 'Confirmar',
                 back: 'Voltar'
             }
         },
+        errorGoClass:
+            'Ocorreu um erro ao tentar acessar essa aula. Tente novamente mais tarde.',
         monthAbbr: {
             0: 'Jan',
             1: 'Fev',
@@ -345,6 +355,11 @@ export default {
             9: 'Out',
             10: 'Nov',
             11: 'Dez'
+        },
+        subtitle: {
+            completed: 'Atividades Incompletas',
+            uncompleted: 'Atividade Completas',
+            complementary: 'Atividades Complementares'
         }
     },
     lives: {
@@ -363,7 +378,10 @@ export default {
         previous: {
             title: 'Assistir live anterior',
             back: 'Voltar para lives'
-        }
+        },
+        chat: 'Chat',
+        liveChat: 'Chat ao vivo',
+        sendMessageError: 'Ocorreu um erro ao enviar sua mensagem'
     },
     userProfile: {
         title: 'Cadastro complementar',
@@ -408,5 +426,10 @@ export default {
             error: 'Erro, ocorreu um erro e seus dados não foram salvos!'
         },
         loadError: 'Erro, não foi possivel carregar os dados'
+    },
+    modalInactivePacks: {
+        message:
+            'Ops, seu curso só será liberado em {{date}}. Guarda a ansiedade, tá?',
+        action: 'Retornar a tela de login'
     }
 }

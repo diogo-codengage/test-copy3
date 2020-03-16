@@ -14,9 +14,9 @@ import {
     SANCol,
     SANQuery,
     useSnackbarContext,
+    SANCardSubSpecialtySkeleton,
     SANSkeleton
 } from '@sanar/components'
-import { SANCardSubSpecialtySkeleton } from '@sanar/components/dist/Components/Molecules/CardSubSpecialty'
 
 import {
     GET_SUBSPECIALTIES,
@@ -202,9 +202,7 @@ const RMSubspecialties: React.FC<IRMSubspecialtiesProps> = ({
                             'Specialty ID':
                                 subspecialty.lastAccessed.specialtyId,
                             'Subspecialty ID':
-                                subspecialty.lastAccessed.subSpecialtyId,
-                            'Lesson ID': subspecialty.lastAccessed.lesson.id,
-                            'Clicker ID': subspecialty.lastAccessed.collectionId
+                                subspecialty.lastAccessed.subSpecialtyId
                         })
                     }}
                 />

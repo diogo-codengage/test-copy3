@@ -32,7 +32,11 @@ const SANStyledInput = styled(SANInput)<ISANStyledInputProps>`
         )}
     }
 `
-
+const SANStyledScroll = styled(SANScroll)`
+    &&& {
+        max-height: 198px;
+    }
+`
 const SANStyledCheckbox = styled(SANCheckbox)`
     && {
         width: 100%;
@@ -268,14 +272,14 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
                                 bg='grey.2'
                             />
                             <SANScroll>
-                                <SANBox py='xxs'>
+                                <SANBox py='xs'>
                                     {rows.length ? (
                                         rows
                                     ) : (
-                                        <SANEmpty {...EmptyProps} />
+                                        <SANEmpty {...EmptyProps} height={139} />
                                     )}
                                 </SANBox>
-                            </SANScroll>
+                            </SANStyledScroll>
                             <SANCloseButtonBox
                                 displayFlex
                                 alignItems='center'

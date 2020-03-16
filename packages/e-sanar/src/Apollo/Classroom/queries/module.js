@@ -20,7 +20,6 @@ export const GET_MODULE = gql`
                     resource_type
                     video {
                         id
-                        bookmarked
                         title
                         durationInSeconds
                         progress {
@@ -52,7 +51,6 @@ export const GET_MODULE = gql`
                     }
                     document {
                         id
-                        bookmarked
                         title
                         progress {
                             id
@@ -66,7 +64,6 @@ export const GET_MODULE = gql`
                     }
                     quiz {
                         id
-                        bookmarked
                         title
                         progress {
                             id

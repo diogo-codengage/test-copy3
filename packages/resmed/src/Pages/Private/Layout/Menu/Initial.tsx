@@ -9,7 +9,8 @@ import {
     SANEvaIcon,
     SANLeftOff,
     SANLeftOffLoading,
-    SANLeftOffError
+    SANLeftOffError,
+    useSnackbarContext
 } from '@sanar/components'
 
 import { useAuthContext } from 'Hooks/auth'
@@ -20,30 +21,39 @@ const formatMinutes = minutes =>
 
 const RMSuggestedClass = withRouter(({ history }) => {
     const { t } = useTranslation('resmed')
+    const createSnackbar = useSnackbarContext()
     const { suggestedClass } = useLayoutContext()
 
     const goToResource = () => {
-        if (!!suggestedClass && !!suggestedClass.data) {
-            const {
-                specialtyId,
-                subSpecialtyId,
-                lesson,
-                collectionId,
-                resource
-            } = suggestedClass.data.accessContent
+        try {
+            if (!!suggestedClass && !!suggestedClass.data) {
+                const {
+                    specialtyId,
+                    subSpecialtyId,
+                    lesson,
+                    collectionId,
+                    resource
+                } = suggestedClass.data.accessContent
 
-            const final = `${
-                lesson.id
-            }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
-                resource.id
-            }`
-            if (!!subSpecialtyId) {
-                history.push(
-                    `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${final}`
-                )
-            } else {
-                history.push(`/inicio/sala-aula/${specialtyId}/${final}`)
+                const final = `${
+                    lesson.id
+                }/${collectionId}/${resource.type.toLocaleLowerCase()}/${
+                    resource.id
+                }`
+                if (!!subSpecialtyId) {
+                    history.push(
+                        `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${final}`
+                    )
+                } else {
+                    history.push(`/inicio/sala-aula/${specialtyId}/${final}`)
+                }
             }
+        } catch (error) {
+            console.error('[RMSuggestedClass]:goToResource', error)
+            createSnackbar({
+                message: t('schedule.errorGoClass'),
+                theme: 'error'
+            })
         }
     }
 
@@ -73,8 +83,17 @@ const RMSuggestedClass = withRouter(({ history }) => {
 
 const RMMenuInitial = memo(() => {
     const { t } = useTranslation('resmed')
-    const { me } = useAuthContext()
+    const { me, activeCourse } = useAuthContext()
     const { onCloseMenu, setMenuTab } = useLayoutContext()
+
+    const canShowSimulatedLink = () => {
+        const notAllowed = (process.env.REACT_APP_SANAR_COURSES_ID!).split(', ')
+        return !notAllowed.includes(activeCourse.id)
+    }
+
+    const openSimulatedLink = () => {
+        window.open('http://sanar.link/simulado-residenciamedica')
+    }
 
     return (
         <>
@@ -120,6 +139,19 @@ const RMMenuInitial = memo(() => {
                         onClick={onCloseMenu}
                         dataTestid='rm-menu__go-to--lives'
                         title={t('mainMenu.initial.lives')}
+                    />
+                )}
+                {!!activeCourse && canShowSimulatedLink() && (
+                    <SANNavigationListItem
+                        icon={
+                            <SANEvaIcon
+                                name='checkmark-circle-outline'
+                                color='default'
+                            />
+                        }
+                        onClick={openSimulatedLink}
+                        dataTestid='rm-menu__go-to--simulated'
+                        title={t('mainMenu.initial.simulated')}
                     />
                 )}
                 {!!me && me.countCourses > 1 && (

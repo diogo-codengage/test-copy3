@@ -14,7 +14,6 @@ import { useLayoutContext } from '../Layout/Context'
 import { GET_MODULE } from 'Apollo/Classroom/queries/module'
 import { CREATE_BOOKMARK } from 'Apollo/Classroom/mutations/bookmark'
 import { CREATE_PROGRESS } from 'Apollo/Classroom/mutations/video-progress'
-import { GET_BOOKMARK } from 'Apollo/Classroom/queries/bookmark'
 
 const Context = createContext()
 
@@ -104,29 +103,31 @@ const ClassroomProvider = ({ children, match: { params }, history }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    useEffect(() => {
-        if (currentResource) {
-            const fetchData = async () => {
-                try {
-                    const {
-                        data: { bookmark }
-                    } = await client.query({
-                        query: GET_BOOKMARK,
-                        fetchPolicy: 'network-only',
-                        variables: {
-                            resourceId: getResource(currentResource).id
-                        }
-                    })
+    // Diogo Biz - 07/02/2020
+    // FD-1024 - Remover favoritos
+    // useEffect(() => {
+    //     if (currentResource) {
+    //         const fetchData = async () => {
+    //             try {
+    //                 const {
+    //                     data: { bookmark }
+    //                 } = await client.query({
+    //                     query: GET_BOOKMARK,
+    //                     fetchPolicy: 'network-only',
+    //                     variables: {
+    //                         resourceId: getResource(currentResource).id
+    //                     }
+    //                 })
 
-                    setBookmark(!!bookmark)
-                } catch (err) {
-                    console.error(err)
-                }
-            }
-            fetchData()
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentResource])
+    //                 setBookmark(!!bookmark)
+    //             } catch (err) {
+    //                 console.error(err)
+    //             }
+    //         }
+    //         fetchData()
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [currentResource])
 
     useEffect(() => {
         if (currentModule && currentModule.id === params.moduleId) return

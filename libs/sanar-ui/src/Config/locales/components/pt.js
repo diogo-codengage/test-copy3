@@ -247,7 +247,17 @@ export default {
         itemError: 'Precisa estudar'
     },
     collection: {
-        part: 'Parte'
+        part: 'Parte',
+        progress: {
+            video: {
+                completed: 'Vídeo completo',
+                incomplete: 'Vídeo incompleto'
+            },
+            quiz: {
+                completed: 'Quiz completo',
+                incomplete: 'Quiz incompleto'
+            }
+        }
     },
     bigCalendar: {
         more: 'Mais'
@@ -265,7 +275,12 @@ export default {
     },
     chat: {
         blocked: 'O chat está desativado.',
-        writeSomething: 'Escrever algo'
+        writeSomething: 'Escrever algo',
+        empty: 'Não há nenhuma mensagem'
+    },
+    pdfReader: {
+        problemRenderingPdf: 'Problemas ao visualizar esse material?',
+        clickAndDownload: 'Clique aqui e faça o download.'
     },
     selectList: {
         selectAll: 'Selecionar todos',

@@ -14,8 +14,8 @@ const SANPracticeCompletedPage = ({ history }) => {
     const {
         calcPercent,
         totalAnsweredQuestions,
-        stopwatchRef,
-        reset
+        reset,
+        time
     } = useQuestionsContext()
 
     useEffect(() => {
@@ -37,8 +37,9 @@ const SANPracticeCompletedPage = ({ history }) => {
 
     const getAverageTime = time =>
         esUtilConvertSecondsToTime(
-            (
-                esConvertFormattedTimeToSeconds(time) / totalAnsweredQuestions
+            (time && totalAnsweredQuestions
+                ? esConvertFormattedTimeToSeconds(time) / totalAnsweredQuestions
+                : 0
             ).toFixed(0)
         )
 
@@ -47,14 +48,8 @@ const SANPracticeCompletedPage = ({ history }) => {
         wrong: parseInt(calcPercent('wrong')),
         skipped: parseInt(calcPercent('skipped')),
         sawQuestions: totalAnsweredQuestions,
-        elapsedTime:
-            stopwatchRef && stopwatchRef.current
-                ? stopwatchRef.current.time()
-                : '0',
-        averageQuestionTime:
-            stopwatchRef && stopwatchRef.current
-                ? getAverageTime(stopwatchRef.current.time())
-                : '0'
+        elapsedTime: time || '0',
+        averageQuestionTime: time ? getAverageTime(time) : '0'
     }
 
     return (

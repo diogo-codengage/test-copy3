@@ -6,18 +6,23 @@ import {
     RouteComponentProps
 } from 'react-router-dom'
 import { useLazyQuery } from '@apollo/react-hooks'
+import ReactGA from 'react-ga'
 
 import { CognitoUserSession } from 'amazon-cognito-identity-js'
 import * as Sentry from '@sentry/browser'
+import { startOfDay, endOfDay, isAfter, isBefore, format } from 'date-fns'
+
+import { getUTCDate } from '@sanar/utils/dist/Date'
 
 import { GET_ME } from 'Apollo/User/Queries/me'
 import { useAuthContext } from 'Hooks/auth'
 import { logout, getCognitoUser } from 'Config/AWSCognito'
 
-import { segmentTrack } from 'Config/Segment/track'
+import { eventsTrack } from 'Config/Trackers/track'
 
 import RMModalTermsAndPrivacy from 'Components/ModalTermsAndPrivacy'
 import RMSplashLoader from 'Components/SplashLoader'
+import RMModalInactivePacks from 'Components/ModalInactivePacks'
 
 import { RMComplementaryRegisterModal } from 'Components/ComplementaryRegister'
 
@@ -26,12 +31,29 @@ interface RMPrivateRouteProps extends RouteComponentProps {
     path: string
 }
 
+const getPack = (packs: any[], status: 'active' | 'inactive') =>
+    packs.find(pack => {
+        if (!pack.startAt) return true
+
+        const startDate = startOfDay(new Date(pack.startAt))
+        const currentDate = endOfDay(new Date())
+        return status === 'active'
+            ? isBefore(startDate, currentDate)
+            : isAfter(startDate, currentDate)
+    })
+
 const RMPrivateRoute = memo<RMPrivateRouteProps>(
     ({ component: Component, history, ...rest }) => {
         const [getMe, { loading }] = useLazyQuery(GET_ME, {
             onCompleted({ me }) {
-                segmentTrack('Session started')
                 setMe(me)
+                eventsTrack('Session started', {
+                    'User ID': me.id,
+                    'Email': me.email,
+                    'Course ID': activeCourse.id,
+                    'Course name': activeCourse.name,
+                })
+                ReactGA.set({userId: me.id})
                 Sentry.configureScope(scope => {
                     scope.setUser({
                         id: me.id,
@@ -45,6 +67,7 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
             }
         })
         const { setMe, me } = useAuthContext()
+        const { activeCourse } = useAuthContext()
         const [logged, setLogged] = useState(true)
 
         const onLogout = () => {
@@ -93,6 +116,17 @@ const RMPrivateRoute = memo<RMPrivateRouteProps>(
         }, [me])
 
         if (loading) return <RMSplashLoader />
+
+        if (!!me && !!me.packs) {
+            const activePack = getPack(me.packs, 'active')
+            if (!activePack) {
+                const inactivePack = getPack(me.packs, 'inactive')
+                const date = getUTCDate(inactivePack.startAt)
+                return (
+                    <RMModalInactivePacks date={format(date, 'DD/MM/YYYY')} />
+                )
+            }
+        }
 
         if (!!me && !me.hasActiveSubscription) {
             return (

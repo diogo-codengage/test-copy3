@@ -3,6 +3,7 @@ import React, { useRef, useState, useMemo, memo, useEffect } from 'react'
 import { theme } from 'styled-tools'
 import styled from 'styled-components'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
+import * as Sentry from '@sentry/browser'
 
 import {
     SANJwPlayer,
@@ -67,13 +68,28 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
 
         const handlePlay = () => handleTrack('Video started', dataToTrack)
 
-        const handleResume = () => handleTrack('Video resumed', dataToTrack)
+        const handleResume = () => {
+            const timeInSeconds = parseInt(playerRef.current.position(), 10)
+            handleTrack('Video resumed', {
+                'Time in seconds': timeInSeconds,
+                ...dataToTrack
+            })
+        }
 
-        const handlePause = () => handleTrack('Video paused', dataToTrack)
+        const handlePause = () => {
+            const timeInSeconds = parseInt(playerRef.current.position(), 10)
+            handleTrack('Video paused', {
+                'Time in seconds': timeInSeconds,
+                ...dataToTrack
+            })
+        }
 
         const handleComplete = () => handleTrack('Video completed', dataToTrack)
 
-        const handleVideoError = () => setVideoError(true)
+        const handleVideoError = e => {
+            setVideoError(true)
+            Sentry.captureException(e)
+        }
 
         const getStartTime = time => {
             if (videoReady && playerRef && playerRef.current) {
@@ -147,13 +163,14 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                     subspecialtyId: '',
                     ...paramsProp
                 }))
+                setWillStart(true)
             }
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [paramsProp])
 
         const wrapper: ISANBoxProps = useMemo(
             () =>
-                width > 884
+                width > 992
                     ? {
                           flexDirection: 'row'
                       }
@@ -184,13 +201,17 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                 errorProps={{ dark: true }}
             >
                 {({ data: { video } }: { data: IVideoQuery }) => {
-                    willStart &&
+                    if (
+                        willStart &&
                         video &&
                         video.timeInSeconds &&
                         video.timeInSeconds > 3 &&
-                        video.progress < 100 &&
+                        video.progress < 100
+                    ) {
                         getStartTime(video.timeInSeconds)
-
+                    } else {
+                        willStart && setWillStart(false)
+                    }
                     return (
                         <SANBox bg='grey-solid.8' position='relative'>
                             <Header>
@@ -246,7 +267,7 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                                     />
                                 </SANBox>
                                 <SANBox
-                                    {...(width <= 884 && {
+                                    {...(width <= 992 && {
                                         px: 'lg',
                                         mx: 'sm'
                                     })}
@@ -254,7 +275,7 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                                     <RMCollection
                                         parentId={params.lessonId}
                                         value={params.collectionId}
-                                        vertical={width > 884}
+                                        vertical={width > 992}
                                         onChange={onChangeCollection}
                                         onCompleted={collection =>
                                             setClickerName(collection.name)

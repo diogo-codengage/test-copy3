@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
-import { theme } from 'styled-tools'
+import { theme, switchProp } from 'styled-tools'
 import { useApolloClient } from '@apollo/react-hooks'
 import { format, isEqual, getMonth } from 'date-fns'
 import { compose } from 'ramda'
@@ -51,6 +51,7 @@ import { useScheduleContext, withScheduleContext } from './Context'
 
 import RMToday from './Today'
 import RMWeek from './Week'
+import { useMainContext } from '../Context'
 
 const SuggestionStyled = styled(SANBox)`
     align-items: center;
@@ -76,6 +77,41 @@ const Suggestion = ({ onChange, checked, loading, ...props }) => {
     )
 }
 
+type IType = 'completed' | 'uncompleted' | 'complementary'
+
+const SubtitleDot = styled.span<{ type: IType }>`
+    height: 12px;
+    width: 12px;
+    background-color: ${switchProp('type', {
+        completed: '#9EF0DA',
+        uncompleted: '#FFDBE7',
+        complementary: '#11131766',
+    })};
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 30px;
+    box-shadow: 1px 3px 5px ${switchProp('type', {
+        completed: '#8eefd5',
+        uncompleted: '#f5b6cb',
+        complementary: '#11131766',
+    })};
+`
+const SubtitleLabel = styled(SANTypography)`
+    display: inline-block;
+    margin-left: 15px;
+    margin-right: 30px;
+`
+const Subtitle = ({...props}) => {
+    const { t } = useTranslation('resmed')
+    return (
+        <SANBox {...props}>
+            <SubtitleDot type={'completed'} /><SubtitleLabel>{t('schedule.subtitle.uncompleted')}</SubtitleLabel>
+            <SubtitleDot type={'uncompleted'} /><SubtitleLabel>{t('schedule.subtitle.completed')}</SubtitleLabel>
+            <SubtitleDot type={'complementary'} /><SubtitleLabel>{t('schedule.subtitle.complementary')}</SubtitleLabel>
+        </SANBox>
+    )
+}
+
 const boxProps: ISANBoxProps = {
     py: { md: '8', _: 'xl' },
     display: 'flex',
@@ -95,19 +131,39 @@ export const getStatus = event => {
     }
 }
 
+export const getEventType = event => {
+    if (!event.resourceType || event.resourceType === 'Exam' || event.resourceType === 'Live') {
+        return 'complementary'
+    }
+    return event.seen ? 'completed' : 'uncompleted'
+}
+
 export const formatMinutes = minutes =>
     new Date(minutes * 60000).toISOString().substr(11, 5)
+
+const getSubtitle = event => {
+    if (event.resourceType === 'Live' && !!event.accessLive) {
+        const startDate = new Date(event.accessLive.startDate)
+        return format(
+            startDate,
+            startDate.getMinutes() ? 'HH[h] mm[m]' : 'HH[h]'
+        )
+    } else {
+        return formatMinutes(event.timeInMinutes)
+    }
+}
 
 export const makeEvent = (event: IAppointment, hasModified = false) => ({
     extendedProps: {
         ...event,
-        subtitle: formatMinutes(event.timeInMinutes)
+        subtitle: getSubtitle(event)
     },
     id: event.id,
     title: event.title,
     start: getUTCDate(event.start),
     startEditable: hasModified ? !event.fixed : false,
-    status: getStatus(event)
+    status: getStatus(event),
+    type: getEventType(event)
 })
 
 interface ISchedule {
@@ -121,6 +177,7 @@ interface ISchedule {
 
 const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     const { t } = useTranslation('resmed')
+    const { handleTrack } = useMainContext()
     const {
         me: { id: userId },
         activeCourse: { id: courseId, name: courseName }
@@ -146,7 +203,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     })
     const [modalSuggestion, setModalSuggestion] = useState({
         visible: false,
-        checked: true
+        checked: false
     })
     const [modalMore, setModalMore] = useState<{
         visible: boolean
@@ -157,6 +214,16 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
         date: new Date(),
         options: []
     })
+
+    useEffect(() => {
+        const scheduleOpened = () => {
+            handleTrack('Cronograma Viewed', {
+                'User ID': userId
+            })
+        }
+        scheduleOpened()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId])
 
     const pdfDownload = async () => {
         setDownloading(true)
@@ -170,9 +237,16 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
         fetch(url, { method: 'GET' }).then(response => {
             setDownloading(false)
             if (response.status === 201) {
-                const link = document.createElement('a')
-                link.href = url
-                link.click()
+                // Edge fix download
+                if (navigator.msSaveOrOpenBlob) {
+                    response.blob().then(blob => {
+                        navigator.msSaveOrOpenBlob(blob, `${filename}.pdf`)
+                    })
+                } else {
+                    const link = document.createElement('a')
+                    link.href = url
+                    link.click()
+                }
             } else {
                 createSnackbar({
                     message: t('schedule.pdfDownloadFail'),
@@ -229,7 +303,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                 ...resetSchedule,
                 hasModified: !old.hasModified,
                 items: resetSchedule.items.map(event =>
-                    makeEvent(event, !modalSuggestion.checked)
+                    makeEvent(event, modalSuggestion.checked)
                 ) as IEvent[]
             }))
         } catch {
@@ -238,7 +312,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                 theme: 'error'
             })
             setModalSuggestion({
-                checked: !schedule.hasModified,
+                checked: schedule.hasModified,
                 visible: false
             })
         }
@@ -260,6 +334,10 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
     const handleEventDrop = e => {
         e.jsEvent.preventDefault()
         const { event } = e
+        handleTrack('Cronograma Adjust', {
+            'Resource type': event.extendedProps.resourceType,
+            'Resource ID': event.extendedProps.id,
+        })
         const date = new Date(new Date(event.start).toUTCString()).toISOString()
         client
             .mutate<IUpdateAppointment>({
@@ -311,12 +389,11 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                         end: format(currentRange.end, 'YYYY-MM-DD')
                     }
                 })
-
                 setSchedule({
                     ...appointments,
                     hasModified: firstLoad
                         ? appointments.hasModified
-                        : !modalSuggestion.checked,
+                        : modalSuggestion.checked,
                     items: appointments.items.map(event =>
                         makeEvent(event, appointments.hasModified)
                     ) as IEvent[]
@@ -324,7 +401,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                 setModalSuggestion(old => ({
                     ...old,
                     checked: firstLoad
-                        ? !appointments.hasModified
+                        ? appointments.hasModified
                         : modalSuggestion.checked
                 }))
                 firstLoad && setFirstLoad(false)
@@ -414,34 +491,37 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                                 validRange={validRange}
                             />
                         </SANBox>
+                        <Subtitle display={{ _: 'none', md: 'block'}}/>
 
                         <SANBox
-                            mt={{ md: '8', _: 'lg' }}
+                            mt={{ _: 'lg', md: '5' }}
                             display='flex'
                             alignItems='center'
                             justifyContent='space-between'
                         >
                             <Suggestion
-                                display={{ md: 'flex', _: 'none' }}
+                                display={{ _: 'none', md: 'flex' }}
                                 onChange={handleChangeSuggestion}
                                 checked={modalSuggestion.checked}
                                 loading={loading}
                             />
                             {!!(schedule.items && schedule.items.length) && (
-                                <SANButton
-                                    size='small'
-                                    variant='outlined'
-                                    bold
-                                    blockOnlyMobile
-                                    loading={loading || downloading}
-                                    onClick={() => pdfDownload()}
-                                >
-                                    <SANEvaIcon
-                                        name='download-outline'
-                                        mr='xs'
-                                    />
-                                    {t('schedule.pdfDownload')}
-                                </SANButton>
+                                <SANBox flex={{ _: '1', md: '0' }}>
+                                    <SANButton
+                                        size='small'
+                                        variant='outlined'
+                                        bold
+                                        block
+                                        loading={loading || downloading}
+                                        onClick={() => pdfDownload()}
+                                    >
+                                        <SANEvaIcon
+                                            name='download-outline'
+                                            mr='xs'
+                                        />
+                                        {t('schedule.pdfDownload')}
+                                    </SANButton>
+                                </SANBox>
                             )}
                         </SANBox>
                     </SANLayoutContainer>

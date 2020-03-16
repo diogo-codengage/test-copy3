@@ -83,7 +83,12 @@ const ESChangeCourse = ({
                         loading={loading}
                     >
                         <div className='es-change-course__content--title'>
-                            <ESTypography variant='subtitle1' ellipsis strong>
+                            <ESTypography
+                                variant='subtitle1'
+                                ellipsis
+                                strong
+                                className='text-white-10'
+                            >
                                 {title}
                             </ESTypography>
                             {date && (

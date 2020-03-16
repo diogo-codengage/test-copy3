@@ -5,6 +5,7 @@ import { theme } from 'styled-tools'
 import { useApolloClient } from '@apollo/react-hooks'
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
+import * as Sentry from '@sentry/browser'
 
 import {
     SANRow,
@@ -20,6 +21,7 @@ import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
 import RMCollection from 'Components/Collection'
 import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
+import { SKIP_MUTATION } from 'Apollo/Classroom/Mutations/skip'
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 import { useClassroomQuizContext } from './Context'
 import { useClassroomContext } from '../Context'
@@ -28,6 +30,7 @@ import { useMainContext } from 'Pages/Private/Context'
 const SANColFloat = styled(SANCol)`
     && {
         ${theme('mediaQueries.down.md')} {
+            width: 100%;
             position: fixed;
             bottom: 0;
             left: 0;
@@ -59,11 +62,15 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
             questionsMap,
             setQuestionsMap
         } = useClassroomQuizContext()
-        const { handleProgress, setClickerName } = useClassroomContext()
+        const {
+            handleProgress,
+            setClickerName,
+            setHasQuestions
+        } = useClassroomContext()
         const { params: paramsLayout } = useLayoutContext()
         const [visible, setVisible] = useState(false)
         const [loading, setLoading] = useState(false)
-        const [skipped, seSkipped] = useState(0)
+        const [skipped, setSkipped] = useState(0)
         const [responses, setResponses] = useState<any[]>([])
         const { handleTrack } = useMainContext()
 
@@ -85,14 +92,29 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
             }
         }
 
-        const handleJump = () => {
-            seSkipped(old => old + 1)
-            goToNext()
+        const handleJump = async () => {
+            setHasQuestions(true)
+            setLoading(true)
+            try {
+                await client.mutate({
+                    mutation: SKIP_MUTATION,
+                    variables: {
+                        questionId: questions[questionIndex].id
+                    }
+                })
+            } catch (error) {
+                Sentry.captureException(error)
+            } finally {
+                setSkipped(old => old + 1)
+                setLoading(false)
+                goToNext()
+            }
         }
 
         const handleNext = () => goToNext()
 
         const handleConfirm = async alternativeId => {
+            setHasQuestions(true)
             setLoading(true)
             const current = Number(questionIndex) + 1 - skipped
             handleProgress({
@@ -152,10 +174,14 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                     'Lesson ID': paramsLayout.lessonId,
                     'Clicker ID': paramsLayout.collectionId,
                     'Question ID': questions[questionIndex].id,
+                    'Question Type': 'Quiz',
                     Correct: correct.id === alternativeId
                 })
-            } catch (e) {}
-            setLoading(false)
+            } catch (error) {
+                Sentry.captureException(error)
+            } finally {
+                setLoading(false)
+            }
         }
 
         const toggleVisible = () => setVisible(oldVisible => !oldVisible)
@@ -235,7 +261,7 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                 </SANBox>
                 <SANBox
                     mt={{ lg: 'xl', _: '0' }}
-                    px={width > 884 ? 18 : 32}
+                    px={width > 992 ? 18 : 32}
                     bg={{ lg: 'transparent', _: 'grey.9' }}
                 >
                     <RMCollection

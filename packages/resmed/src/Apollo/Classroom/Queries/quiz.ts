@@ -36,6 +36,7 @@ interface IQuestion {
     alternatives: {
         data: IAlternative[]
     }
+    progress: number
     images: IImage
 }
 
@@ -52,6 +53,7 @@ export const GET_QUIZ = gql`
     query Quiz($id: ID!) {
         quiz(where: { id: $id }) {
             id
+            progress
             questions {
                 id
                 statement
@@ -70,7 +72,6 @@ export const GET_QUIZ = gql`
                     data {
                         id
                         sized_images: sizedImages {
-                            id
                             small {
                                 url
                             }

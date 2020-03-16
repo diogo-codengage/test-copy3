@@ -23,7 +23,8 @@ const SANQuestionHeader = ({ history }) => {
         currentIndex,
         skippedQuestions,
         totalAnsweredQuestions,
-        reset
+        reset,
+        setTime
     } = useQuestionsContext()
     const { t } = useTranslation('esanar')
 
@@ -51,6 +52,7 @@ const SANQuestionHeader = ({ history }) => {
             return
         }
 
+        setTime(stopwatchRef.current.time())
         history.push('../finalizado')
     }
 

@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react'
+import ReactGA from 'react-ga'
 import { useTranslation } from 'react-i18next'
 import { withRouter, Redirect, RouteComponentProps } from 'react-router-dom'
 
@@ -33,8 +34,11 @@ const FLXSignIn: React.FC<RouteComponentProps> = ({ history, location }) => {
         isValid: false,
         loading: true
     })
-
-    trySetTokenAutoLoginFromLocationSearch(location.search);
+    const params = new URLSearchParams(location.search)
+    useEffect(() => {
+        trySetTokenAutoLoginFromLocationSearch(params)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const marketing = {
         title: t('auth.marketing.title'),
@@ -42,10 +46,12 @@ const FLXSignIn: React.FC<RouteComponentProps> = ({ history, location }) => {
     }
 
     const action = data => {
-        window.analytics.identify({
+        const userIdentity = {
             name: data.idToken.name,
             email: data.idToken.email
-        })
+        }
+        ReactGA.set(userIdentity)
+        window.analytics.identify(userIdentity)
         history.push('/portal/inicio')
     }
 
@@ -83,8 +89,6 @@ const FLXSignIn: React.FC<RouteComponentProps> = ({ history, location }) => {
     )
 
     useEffect(() => {
-
-
         const config = getInstance()
         const cognitoUser = config.userPool.getCurrentUser()
 

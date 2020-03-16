@@ -39,6 +39,7 @@ const SANBrandHeader = ({ dark, ...props }: ISANBrandHeaderProps) => {
             alignItems='center'
             justifyContent='center'
             zIndex={1}
+            height={50}
             {...props}
         >
             <img src={dark ? darkLogo : lightLogo} alt='' />
