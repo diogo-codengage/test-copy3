@@ -490,7 +490,8 @@ export default {
             title: 'Semestre',
             description:
                 'Selecione o ano e semestre da prova que deseja estudar',
-            select: 'Seleciona o ano/semestre'
+            select: 'Selecione o ano/semestre',
+            checkbox: 'Selecionar todos'
         },
         simple: {
             title: 'Filtros selecionados',

@@ -18,7 +18,9 @@ import collegeImg from 'Assets/images/exam-filter/college.png'
 import { useExamFilterContext } from './Context'
 import { NextButton } from './'
 
-interface IFLXFilterUniversityProps {}
+interface IFLXFilterUniversityProps {
+    universityId: string
+}
 
 const TextCol = styled(SANCol)`
     ${theme('mediaQueries.down.sm')} {
@@ -32,7 +34,7 @@ const renderItem = item => (
     </SANSelectOption>
 )
 
-const FLXFilterUniversity: React.FC<IFLXFilterUniversityProps> = () => {
+const FLXFilterUniversity: React.FC<IFLXFilterUniversityProps> = (props) => {
     const { t } = useTranslation('sanarflix')
     const {
         setCurrentTab,
@@ -80,7 +82,7 @@ const FLXFilterUniversity: React.FC<IFLXFilterUniversityProps> = () => {
                 <SANCol xs={24} sm={19} md={12}>
                     <SANBox display='flex' flexDirection='column'>
                         <SANBox mb='xs'>
-                            <SANCheckbox>
+                            <SANCheckbox onChange={(e) => e.target.checked ? handleUniversity(props.universityId) : handleUniversity('')}>
                                 <SANTypography
                                     fontSize='md'
                                     as='span'
@@ -109,6 +111,7 @@ const FLXFilterUniversity: React.FC<IFLXFilterUniversityProps> = () => {
                         mt={{ sm: 0, _: 'lg' }}
                     >
                         <NextButton
+                            disabled={!state.university}
                             onClick={() => setCurrentTab('discipline')}
                         />
                     </SANBox>

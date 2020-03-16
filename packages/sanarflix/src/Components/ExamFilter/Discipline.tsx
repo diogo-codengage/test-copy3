@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import {
@@ -25,6 +25,11 @@ const FLXFilterDiscipline: React.FC<IFLXFilterDisciplineProps> = () => {
         disciplines,
         loadingDisciplines
     } = useExamFilterContext()
+
+    useEffect(() => {
+        handleDiscipline(disciplines.map(item => item.value))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [disciplines])
 
     return (
         <SANBox
@@ -67,7 +72,10 @@ const FLXFilterDiscipline: React.FC<IFLXFilterDisciplineProps> = () => {
                 mt={{ md: 'xxl', _: 'xl' }}
             >
                 <PrevButton onClick={() => setCurrentTab('university')} />
-                <NextButton onClick={() => setCurrentTab('theme')} />
+                <NextButton
+                    disabled={!state.discipline || !state.discipline.length}
+                    onClick={() => setCurrentTab('theme')}
+                />
             </SANBox>
         </SANBox>
     )

@@ -19,13 +19,15 @@ import FLXFilterDiscipline from './Discipline'
 import FLXFilterTheme from './Theme'
 import FLXFilterSemester from './Semester'
 
-interface IFLXExamFilterProps {}
+interface IFLXExamFilterProps {
+    universityId: string
+}
 
 const Title = props => (
     <SANTypography fontWeight='bold' fontSize='lg' {...props} />
 )
 
-export const NextButton = ({ onClick }) => {
+export const NextButton = ({ onClick, disabled }) => {
     const { t } = useTranslation('sanarflix')
     return (
         <SANButton
@@ -34,6 +36,7 @@ export const NextButton = ({ onClick }) => {
             size='small'
             uppercase
             bold
+            disabled={disabled}
             onClick={onClick}
         >
             {t('examFilter.next')}
@@ -57,7 +60,7 @@ export const PrevButton = ({ onClick }) => {
     )
 }
 
-const FLXExamFilter: React.FC<IFLXExamFilterProps> = () => {
+const FLXExamFilter: React.FC<IFLXExamFilterProps> = (props) => {
     const { t } = useTranslation('sanarflix')
     const {
         currentTab,
@@ -92,17 +95,19 @@ const FLXExamFilter: React.FC<IFLXExamFilterProps> = () => {
                             tab={<Title>{t('examFilter.college.title')}</Title>}
                             key='university'
                         >
-                            <FLXFilterUniversity />
+                            <FLXFilterUniversity universityId={props.universityId}/>
                         </SANTabPane>
                         <SANTabPane
                             tab={<Title>{t('examFilter.subject.title')}</Title>}
                             key='discipline'
+                            disabled={!state.university}
                         >
                             <FLXFilterDiscipline />
                         </SANTabPane>
                         <SANTabPane
                             tab={<Title>{t('examFilter.theme.title')}</Title>}
                             key='theme'
+                            disabled={!state.discipline || !state.discipline.length}
                         >
                             <FLXFilterTheme />
                         </SANTabPane>
@@ -111,6 +116,7 @@ const FLXExamFilter: React.FC<IFLXExamFilterProps> = () => {
                                 <Title>{t('examFilter.semester.title')}</Title>
                             }
                             key='semester'
+                            disabled={!state.theme || !state.theme.length}
                         >
                             <FLXFilterSemester />
                         </SANTabPane>

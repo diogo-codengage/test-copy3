@@ -279,7 +279,7 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
                                         <SANEmpty {...EmptyProps} height={139} />
                                     )}
                                 </SANBox>
-                            </SANStyledScroll>
+                            </SANScroll>
                             <SANCloseButtonBox
                                 displayFlex
                                 alignItems='center'

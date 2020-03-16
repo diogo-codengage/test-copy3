@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import {
@@ -25,6 +25,11 @@ const FLXFilterTheme: React.FC<IFLXFilterThemeProps> = () => {
         themes,
         loadingThemes
     } = useExamFilterContext()
+
+    useEffect(() => {
+        handleTheme(themes.map(item => item.value))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [themes])
 
     return (
         <SANBox
@@ -67,7 +72,10 @@ const FLXFilterTheme: React.FC<IFLXFilterThemeProps> = () => {
                 mt={{ md: 'xxl', _: 'xl' }}
             >
                 <PrevButton onClick={() => setCurrentTab('discipline')} />
-                <NextButton onClick={() => setCurrentTab('semester')} />
+                <NextButton
+                    disabled={!state.theme || !state.theme.length}
+                    onClick={() => setCurrentTab('semester')}
+                />
             </SANBox>
         </SANBox>
     )

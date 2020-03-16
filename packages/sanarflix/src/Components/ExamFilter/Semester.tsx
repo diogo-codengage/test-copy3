@@ -8,7 +8,8 @@ import {
     SANSelect,
     SANSelectOption,
     SANRow,
-    SANCol
+    SANCol,
+    SANCheckbox
 } from '@sanar/components'
 
 import semesterImg from 'Assets/images/exam-filter/semester.svg'
@@ -77,21 +78,34 @@ const FLXFilterSemester: React.FC<IFLXFilterSemesterProps> = () => {
                         </SANBox>
 
                         <SANBox width={{ md: 300, _: '100%' }} mb='xl'>
-                            <SANSelect
-                                style={{ width: '100%' }}
-                                allowClear
-                                placeholder={t('examFilter.semester.select')}
-                                mode='multiple'
-                                size='large'
-                                onChange={handleSemester}
-                                value={
-                                    !!state.theme.length ? state.semester : []
-                                }
-                                disabled={!state.theme.length}
-                                loading={loadingSemesters}
-                            >
-                                {semesters.map(renderItem)}
-                            </SANSelect>
+                            <SANBox display='flex' flexDirection='column'>
+                                <SANBox mb='xs'>
+                                    <SANCheckbox onChange={(e) => e.target.checked ? handleSemester(semesters.map(item => item.value)) : handleSemester([])}>
+                                        <SANTypography
+                                            fontSize='md'
+                                            as='span'
+                                            color='grey.6'
+                                        >
+                                            {t('examFilter.semester.checkbox')}
+                                        </SANTypography>
+                                    </SANCheckbox>
+                                </SANBox>
+                                <SANSelect
+                                    style={{ width: '100%' }}
+                                    allowClear
+                                    placeholder={t('examFilter.semester.select')}
+                                    mode='multiple'
+                                    size='large'
+                                    onChange={handleSemester}
+                                    value={
+                                        !!state.theme.length ? state.semester : []
+                                    }
+                                    disabled={!state.theme.length}
+                                    loading={loadingSemesters}
+                                >
+                                    {semesters.map(renderItem)}
+                                </SANSelect>
+                            </SANBox>
                         </SANBox>
                         <PrevButton onClick={() => setCurrentTab('theme')} />
                     </SANBox>
