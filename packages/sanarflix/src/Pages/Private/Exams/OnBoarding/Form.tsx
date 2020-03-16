@@ -72,12 +72,7 @@ const OnBoardingForm = ({ form, ...props }) => {
                 } = await client.query<IMedUniversityQuery>({
                     query: GET_MED_UNIVERSITIES
                 })
-                setMedUniversities(
-                    medUniversities.data.map(v => ({
-                        ...v,
-                        name: v.name.toLowerCase()
-                    }))
-                )
+                setMedUniversities(medUniversities.data)
             } catch {
             }
             setLoading(old => ({ ...old, medUniversities: false }))
@@ -109,11 +104,11 @@ const OnBoardingForm = ({ form, ...props }) => {
             await form.validateFields()
             const {
                 medUniversityId,
-                ingressSemesterComplete,
+                ingressSemester,
                 methodology,
                 newMethodology
             } = form.getFieldsValue()
-            const arrPeriod = ingressSemesterComplete.split('.')
+            const arrPeriod = ingressSemester.split('.')
 
             await client.mutate({
                 mutation: SAVE_USER_MED_UNIVERSITY_MUTATION,
