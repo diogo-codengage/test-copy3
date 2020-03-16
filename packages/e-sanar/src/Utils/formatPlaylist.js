@@ -11,6 +11,8 @@ export const formatPlaylist = arr => {
             ) {
                 return null
             } else {
+                const levelQuiz = ordered.find(lv => lv.resource_type === 'Quiz' && !lv.display && lv.index === level.index)
+                if (!!levelQuiz) return { ...level, quiz: levelQuiz.quiz }
                 return level
             }
         })
@@ -24,8 +26,4 @@ export const formatPlaylist = arr => {
 
             return level
         })
-        .map((level, index) => ({
-            ...level,
-            index
-        }))
 }
