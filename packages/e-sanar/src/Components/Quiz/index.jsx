@@ -23,6 +23,8 @@ import SANQuizFinalizedMock from './FinalizedMock'
 import SANQuizFinalizedQuiz from './FinalizedQuiz'
 import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
 
+import { htmlInterpreter } from 'Utils/htmlInterpreter'
+
 const SANQuiz = ({
     quiz: {
         questionItems: { data },
@@ -301,7 +303,7 @@ const SANQuiz = ({
                             <SANPortalPagesContainer className='video-quiz__questions'>
                                 <ESQuestion
                                     full={isFull}
-                                    question={questions[index]}
+                                    question={htmlInterpreter(questions[index])}
                                     onConfirm={handleConfirm(answerQuestion)}
                                     onJump={handleJump}
                                     onNext={handleNext}

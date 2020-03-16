@@ -24,21 +24,25 @@ const ESInstructor = ({ avatar, labelLive, linkedin, formation, name }) => (
                 {name}
             </ESTypography>
             <div className='d-flex align-items-center'>
-                <ESTypography
-                    className='text-grey-7'
-                    ellipsis
-                    variant='caption'
-                >
-                    {formation}
-                </ESTypography>
-                <a
-                    target='_blank'
-                    href={linkedin}
-                    rel='noopener noreferrer'
-                    className='es-live-section__instructor--linkedin'
-                >
-                    <ESEvaIcon name='linkedin' size='xsmall' />
-                </a>
+                {!!formation && (
+                    <ESTypography
+                        className='text-grey-7'
+                        ellipsis
+                        variant='caption'
+                    >
+                        {formation}
+                    </ESTypography>
+                )}
+                {!!linkedin && (
+                    <a
+                        target='_blank'
+                        href={linkedin}
+                        rel='noopener noreferrer'
+                        className='es-live-section__instructor--linkedin'
+                    >
+                        <ESEvaIcon name='linkedin' size='xsmall' />
+                    </a>
+                )}
             </div>
         </div>
     </div>
@@ -123,15 +127,17 @@ const ESLiveSection = ({
                         >
                             {description}
                         </ESTypography>
-                        <ESInstructor
-                            {...{
-                                avatar,
-                                labelLive,
-                                formation,
-                                name,
-                                linkedin
-                            }}
-                        />
+                        {!!name && (
+                            <ESInstructor
+                                {...{
+                                    avatar,
+                                    labelLive,
+                                    formation,
+                                    name,
+                                    linkedin
+                                }}
+                            />
+                        )}
                     </ESCol>
                     <ESCol className='es-live-section__action' span={24}>
                         {action}

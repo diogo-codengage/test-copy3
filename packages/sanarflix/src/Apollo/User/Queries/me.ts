@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import { IMedUniversity } from '../../Exams/Queries/medUniversities'
 
 interface IAddress {
     id: string
@@ -27,6 +28,13 @@ export interface ICreditCard {
     card_cvv: number
 }
 
+export interface IUserMedUniversity {
+    medUniversity: IMedUniversity
+    ingressSemester: string
+    ingressYear: string
+    methodology: string
+}
+
 export interface IMe {
     id: string
     name: string
@@ -40,6 +48,7 @@ export interface IMe {
     address: IAddress
     plan: IPlan
     card: ICreditCard
+    userMedUniversity: IUserMedUniversity
 }
 
 export const GET_ME = gql`
@@ -77,6 +86,15 @@ export const GET_ME = gql`
                 card_expiration_year
                 card_number
                 card_cvv
+            }
+            userMedUniversity {
+                medUniversity {
+                    id
+                    name
+                }
+                ingressSemester
+                ingressYear
+                methodology
             }
         }
     }
