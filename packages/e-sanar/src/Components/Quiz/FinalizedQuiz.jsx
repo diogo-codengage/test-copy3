@@ -24,7 +24,7 @@ const Progress = ({ percent, status, label }) => (
                     {label}:
                 </ESTypography>
                 <ESTypography variant='caption' strong>
-                    {percent}%
+                    {parseInt(percent)}%
                 </ESTypography>
             </>
         )}

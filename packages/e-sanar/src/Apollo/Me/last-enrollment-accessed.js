@@ -17,7 +17,7 @@ export const GET_LAST_ENROLLMENT_ACCESSED = gql`
                 name
                 slug
                 index
-                durantion
+                duration
                 cover_picture_url
                 progress {
                     done
