@@ -1,5 +1,6 @@
 export default {
     global: {
+        error: 'Ocorreu um erro. Tente novamente mais tarde.',
         knowMore: 'Saiba mais',
         termsOfUse: 'Termos de Uso',
         privacyPolicy: 'Política de Privacidade',

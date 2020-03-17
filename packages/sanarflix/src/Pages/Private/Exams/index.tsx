@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
+import { message } from 'antd'
 import { useTranslation } from 'react-i18next'
+import { useApolloClient } from '@apollo/react-hooks'
 
 import {
     SANBox,
@@ -11,11 +13,14 @@ import { events } from 'Config/Segment'
 import OnBoarding from './OnBoarding'
 import List from './InitialList'
 import { useAuthContext } from '../../../Hooks/auth'
+import { GET_ME, IUserMedUniversity } from 'Apollo/User/Queries/me'
 
 const FLXExams = ({ history }) => {
+    const client = useApolloClient()
     const { t } = useTranslation('sanarflix')
-    const { me } = useAuthContext()
-    const { userMedUniversity } = me
+    const { me, setMe } = useAuthContext()
+    const [userMedUniversity, setUserMedUniversity] = useState<IUserMedUniversity>(me.userMedUniversity)
+
     const isMeUniversityEmpty = (): boolean => {
         if (!userMedUniversity) return true
         let show = false
@@ -26,16 +31,33 @@ const FLXExams = ({ history }) => {
     }
     const [showOnBoarding, setShowOnBoarding] = useState<boolean>(isMeUniversityEmpty)
 
-    const handleChange = () => {
-        setShowOnBoarding(false)
-    }
-
     useEffect(() => {
         window.analytics.page(
             events['Page Viewed'].event,
             events['Page Viewed'].data
         )
     }, [])
+
+    useEffect(() => {
+        setUserMedUniversity(me.userMedUniversity)
+    }, [me])
+
+    const handleChange = async () => {
+        try {
+            const {
+                data: { me },
+                errors
+            } = await client.query({ query: GET_ME })
+            if (!!errors) {
+                message.error(t('global.error'))
+            } else {
+                setMe(me)
+                setShowOnBoarding(false)
+            }
+        } catch {
+            message.error(t('global.error'))
+        }
+    }
 
     return (
         <SANBox displayFlex flexDirection='column' flex='1'>
