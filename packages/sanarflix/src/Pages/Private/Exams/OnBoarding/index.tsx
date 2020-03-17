@@ -7,7 +7,7 @@ import OnBoardingBottom from './Bottom'
 import { IUserMedUniversity } from 'Apollo/User/Queries/me'
 
 export interface IOnBoardingProps {
-    changePage: () => void
+    changePage: (response: IUserMedUniversity) => void
     userMedUniversity: IUserMedUniversity
 }
 
