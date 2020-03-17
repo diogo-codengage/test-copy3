@@ -13,7 +13,7 @@ import {
     SANDivider
 } from '@sanar/components'
 
-import { withFLXExamFilterProvider, useExamFilterContext } from './Context'
+import { withFLXExamFilterProvider, useExamFilterContext, IState } from './Context'
 import FLXFilterUniversity from './University'
 import FLXFilterDiscipline from './Discipline'
 import FLXFilterTheme from './Theme'
@@ -21,6 +21,7 @@ import FLXFilterSemester from './Semester'
 
 interface IFLXExamFilterProps {
     universityId: string
+    searchExams: (filters: IState) => void
 }
 
 const Title = props => (
@@ -65,7 +66,6 @@ const FLXExamFilter: React.FC<IFLXExamFilterProps> = (props) => {
     const {
         currentTab,
         setCurrentTab,
-        handleSubmit,
         state
     } = useExamFilterContext()
     return (
@@ -135,7 +135,7 @@ const FLXExamFilter: React.FC<IFLXExamFilterProps> = (props) => {
                             color='primary'
                             bold
                             blockOnlyMobile
-                            onClick={handleSubmit}
+                            onClick={() => props.searchExams(state)}
                             disabled={!state.university}
                         >
                             {t('examFilter.submit')}

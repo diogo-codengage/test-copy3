@@ -29,7 +29,6 @@ import {
 interface IFLXExamFilterProviderValue {
     setCurrentTab: React.Dispatch<React.SetStateAction<ITab>>
     currentTab: ITab
-    handleSubmit: () => void
     state: IState
     dispatch: React.Dispatch<IAction>
 
@@ -55,19 +54,26 @@ export const useExamFilterContext = () => useContext(Context)
 type ITab = 'university' | 'discipline' | 'theme' | 'semester'
 
 type IAction =
-    | {
-          type: 'reset'
-      }
+    | { type: 'reset' }
     | { type: 'changeUniversity'; value: string }
     | { type: 'changeDiscipline'; value: string[] }
     | { type: 'changeTheme'; value: string[] }
     | { type: 'changeSemester'; value: string[] }
 
-interface IState {
+export interface IState {
     university: string
     discipline: string[]
     theme: string[]
     semester: string[]
+}
+
+export interface IYearSemester {
+    year: string
+    semester: string
+}
+
+export interface IFilters extends IState{
+    semesters: IYearSemester[]
 }
 
 const initialState = {
@@ -125,7 +131,7 @@ const reducer: React.Reducer<IState, IAction> = (state, action) => {
                 semester: action.value
             }
         default:
-            throw new Error()
+            return state
     }
 }
 
@@ -183,16 +189,9 @@ const FLXExamFilterProvider: React.FC = ({ children }) => {
 
     const handleSemester = value => dispatch({ type: 'changeSemester', value })
 
-    const handleSubmit = () => {
-        console.log({
-            state
-        })
-    }
-
     const value: IFLXExamFilterProviderValue = {
         setCurrentTab,
         currentTab,
-        handleSubmit,
         state,
         dispatch,
         handleUniversity,

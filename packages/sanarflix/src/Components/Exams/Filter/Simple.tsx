@@ -23,7 +23,7 @@ import {
 } from '@sanar/components'
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
-import { withFLXExamFilterProvider, useExamFilterContext } from './Context'
+import { withFLXExamFilterProvider, useExamFilterContext, IFilters } from './Context'
 
 interface ISelectWrapperProps {
     label: string
@@ -56,7 +56,9 @@ const Button: React.FC<ISANButtonProps> = ({ children, ...props }) => (
     </SANButton>
 )
 
-interface IFLXExamFilterSimpleProps {}
+interface IFLXExamFilterSimpleProps {
+    previousFilters?: IFilters
+}
 
 const getIds = arr => arr.map(item => item.value)
 
@@ -193,9 +195,9 @@ const Fields: React.FC<{ hasLast?: boolean }> = ({ hasLast }) => {
     )
 }
 
-const FLXExamFilterSimpleMobile: React.FC<IFLXExamFilterSimpleProps> = () => {
+const FLXExamFilterSimpleMobile: React.FC<IFLXExamFilterSimpleProps> = (props) => {
     const { t } = useTranslation('sanarflix')
-    const { handleSubmit, state } = useExamFilterContext()
+    const { state } = useExamFilterContext()
     const [hasOpen, toggleOpen] = useState(false)
 
     return (
@@ -203,7 +205,7 @@ const FLXExamFilterSimpleMobile: React.FC<IFLXExamFilterSimpleProps> = () => {
             <SANLayoutContainer>
                 <SANSessionTitle
                     title={t('examFilter.simple.title')}
-                    subtitle={t('examFilter.simple.title')}
+                    subtitle={t('examFilter.simple.subtitle')}
                 />
                 <SANCollapse accordion bordered={false} onChange={toggleOpen}>
                     <SANCollapsePanel
@@ -231,7 +233,7 @@ const FLXExamFilterSimpleMobile: React.FC<IFLXExamFilterSimpleProps> = () => {
                                 <SANCol xs={24}>
                                     <Button
                                         disabled={!state.university}
-                                        onClick={handleSubmit}
+                                        onClick={() => console.log('relax')}
                                     >
                                         {t('examFilter.simple.saveFilter')}
                                     </Button>
@@ -245,10 +247,11 @@ const FLXExamFilterSimpleMobile: React.FC<IFLXExamFilterSimpleProps> = () => {
     )
 }
 
-const FLXExamFilterSimple: React.FC<IFLXExamFilterSimpleProps> = () => {
+const FLXExamFilterSimple: React.FC<IFLXExamFilterSimpleProps> = (props) => {
     const { t } = useTranslation('sanarflix')
     const { width } = useWindowSize()
-    const { state, handleSubmit } = useExamFilterContext()
+    const { state } = useExamFilterContext()
+    console.log('FILTERS >>>', props.previousFilters)
 
     if (width <= 768) {
         return <FLXExamFilterSimpleMobile />
@@ -263,7 +266,7 @@ const FLXExamFilterSimple: React.FC<IFLXExamFilterSimpleProps> = () => {
                     extra={
                         <Button
                             disabled={!state.university}
-                            onClick={handleSubmit}
+                            onClick={() => console.log('calma')}
                         >
                             {t('examFilter.simple.saveFilter')}
                         </Button>

@@ -12,6 +12,8 @@ import OnBoarding from './OnBoarding'
 import List from './InitialList'
 import { useAuthContext } from '../../../Hooks/auth'
 import { IUserMedUniversity } from 'Apollo/User/Queries/me'
+import FilteredList from './FilteredList'
+import { IFilters, IYearSemester } from '../../../Components/Exams/Filter/Context'
 
 const FLXExams = ({ history }) => {
     const { t } = useTranslation('sanarflix')
@@ -27,6 +29,8 @@ const FLXExams = ({ history }) => {
         return show
     }
     const [showOnBoarding, setShowOnBoarding] = useState<boolean>(isMeUniversityEmpty)
+    const [initialScreen, setInitialScreen] = useState<boolean>(true)
+    const [filters, setFilters] = useState<IFilters>()
 
     useEffect(() => {
         window.analytics.page(
@@ -40,6 +44,19 @@ const FLXExams = ({ history }) => {
         setShowOnBoarding(false)
     }
 
+    const searchExams = (filters) => {
+        let semesters: IYearSemester[] = []
+        if (!!filters.semester.length) {
+            semesters = filters.semester.map((item) => {
+                const arrPeriod = item.split('.')
+                return {year: arrPeriod[0], semester: arrPeriod[1]}
+            })
+        }
+        filters['semesters'] = semesters
+        setFilters(filters)
+        setInitialScreen(false)
+    }
+
     return (
         <SANBox displayFlex flexDirection='column' flex='1'>
             <SANHeader
@@ -50,8 +67,16 @@ const FLXExams = ({ history }) => {
                 }}
             />
             {showOnBoarding
-                ? (<OnBoarding changePage={(response) => handleChange(response)} userMedUniversity={userMedUniversity}/>)
-                : (<List medUniversity={userMedUniversity.medUniversity} />)
+                ? (<OnBoarding
+                    changePage={(response) => handleChange(response)}
+                    userMedUniversity={userMedUniversity}
+                />)
+                : initialScreen
+                    ? (<List
+                        medUniversity={userMedUniversity.medUniversity}
+                        searchExams={(filters) => searchExams(filters)}
+                    />)
+                    : (<FilteredList filters={filters}/>)
             }
         </SANBox>
     )

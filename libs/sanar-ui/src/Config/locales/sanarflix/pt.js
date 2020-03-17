@@ -181,7 +181,7 @@ export default {
         list: {
             title: 'Provas de ',
             subtitle: 'Estas são as provas disponíveis da sua faculdade:',
-            emptySubtitle: 'Não há provas disponíveis da sua faculdade.',
+            emptySubtitle: 'Não há provas disponíveis.',
             train: 'Treinar',
             exams: ' provas',
             questions: ' questões',
@@ -500,7 +500,7 @@ export default {
                 'Aqui você pode editar os filtros escolhidos anteriormente',
             seeFilters: 'Ver filtros',
             closeFilters: 'Fechar filtros',
-            saveFilter: 'Salvar filtros'
+            saveFilter: 'Aplicar filtros'
         }
     }
 }
