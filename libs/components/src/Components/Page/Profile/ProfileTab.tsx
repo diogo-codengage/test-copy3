@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-
 import { useTranslation } from 'react-i18next'
+import { format } from 'date-fns'
 
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
 
@@ -16,7 +16,7 @@ import { SANRow, SANCol } from '../../Molecules/Grid'
 import { SANTabs, SANTabPane } from '../../Molecules/Tabs'
 import { SANForm, SANFormItem, withSANForm } from '../../Molecules/Form'
 
-import { IUser, IState } from './Profile'
+import { IUser, IState, IUniversity } from './Profile'
 
 interface IParams {
     setSubmitting: React.Dispatch<React.SetStateAction<boolean>>
@@ -24,14 +24,13 @@ interface IParams {
 
 export interface ProfileTabProps {
     states: IState[]
+    universities?: IUniversity[]
     user?: IUser
     onSubmit?: (user: IUser, params: IParams) => void
     form: any
 }
 
-const semesters = new Array(12).fill(1).map((_, i) => i + 1)
-
-const renderSemester = (item, index) => (
+const renderOption = (item, index) => (
     <SANSelectOption key={index} value={item}>
         {item}
     </SANSelectOption>
@@ -43,10 +42,47 @@ const renderState = state => (
     </SANSelectOption>
 )
 
-const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
+const ProfileTab = ({ user = {} as IUser, onSubmit, states, universities, form }) => {
     const { width } = useWindowSize()
     const { t } = useTranslation('components')
     const [submitting, setSubmitting] = useState(false)
+    const [otherMethodology, setOtherMethodology] = useState<boolean>(false)
+
+    const semesters = () => {
+        const currentYear = new Date().getFullYear()
+        let startYear = 2011
+        const semesters: string[] = []
+        while (startYear <= currentYear) {
+            semesters.push(String(startYear) + '.1', String(startYear) + '.2')
+            startYear++
+        }
+        return semesters.reverse()
+    }
+
+    const methodologies = Object.freeze([
+        'Tradicional',
+        'PBL - Problem Based Learning',
+        'TBL - Team Based Learning',
+        'Outra'
+    ])
+
+    const onChangeMethodology = (value) => setOtherMethodology(value === 'Outra')
+
+    const ingressPeriod = () => {
+        if (user.userMedUniversity && user.userMedUniversity.ingressSemester && user.userMedUniversity.ingressYear) {
+            const savedYear = user.userMedUniversity.ingressYear
+            const year = savedYear.length > 4
+                ? format(new Date(savedYear), 'YYYY')
+                : savedYear
+            return `${year}.${user.userMedUniversity.ingressSemester}`
+        }
+    }
+
+    const university = () => {
+        if (user.userMedUniversity && user.userMedUniversity.medUniversity) {
+            return user.userMedUniversity.medUniversity.id
+        }
+    }
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -55,8 +91,7 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
             if (!err) {
                 onSubmit(
                     {
-                        ...values,
-                        period: values.period ? values.period.toString() : null
+                        ...values
                     },
                     { setSubmitting }
                 )
@@ -148,52 +183,95 @@ const ProfileTab = ({ user = {} as IUser, onSubmit, states, form }) => {
                                             }}
                                         />
                                     </SANFormItem>
-                                    <SANRow gutter={24}>
-                                        {/*<SANCol xs={15}>*/}
-                                        {/*    <SANFormItem*/}
-                                        {/*        name='college'*/}
-                                        {/*        label={t(*/}
-                                        {/*            'profile.tab1.college'*/}
-                                        {/*        )}*/}
-                                        {/*        mb='md'*/}
-                                        {/*        initialValue={*/}
-                                        {/*            user.college || undefined*/}
-                                        {/*        }*/}
-                                        {/*    >*/}
-                                        {/*        <SANInput*/}
-                                        {/*            data-testid='flix_profile_tab-personal--input-university'*/}
-                                        {/*            placeholder={t(*/}
-                                        {/*                'profile.tab1.college'*/}
-                                        {/*            )}*/}
-                                        {/*            size='large'*/}
-                                        {/*        />*/}
-                                        {/*    </SANFormItem>*/}
-                                        {/*</SANCol>*/}
-                                        {/*<SANCol xs={9}>*/}
-                                        {/*    <SANFormItem*/}
-                                        {/*        name='period'*/}
-                                        {/*        label={t(*/}
-                                        {/*            'profile.tab1.semester.label'*/}
-                                        {/*        )}*/}
-                                        {/*        mb='md'*/}
-                                        {/*        initialValue={*/}
-                                        {/*            user.period || undefined*/}
-                                        {/*        }*/}
-                                        {/*    >*/}
-                                        {/*        <SANSelect*/}
-                                        {/*            data-testid='flix_profile_tab-personal--select-period'*/}
-                                        {/*            placeholder={t(*/}
-                                        {/*                'profile.tab1.semester.placeholder'*/}
-                                        {/*            )}*/}
-                                        {/*            size='large'*/}
-                                        {/*        >*/}
-                                        {/*            {semesters.map(*/}
-                                        {/*                renderSemester*/}
-                                        {/*            )}*/}
-                                        {/*        </SANSelect>*/}
-                                        {/*    </SANFormItem>*/}
-                                        {/*</SANCol>*/}
-                                    </SANRow>
+                                    {universities.length > 0 && (
+                                        <SANFormItem
+                                            name='university'
+                                            label={t(
+                                                'profile.tab1.university.label'
+                                            )}
+                                            mb='md'
+                                            initialValue={
+                                                university() || undefined
+                                            }
+                                        >
+                                            <SANSelect
+                                                showSearch
+                                                optionFilterProp="children"
+                                                data-testid='flix_profile_tab-personal--select-university'
+                                                placeholder={t(
+                                                    'profile.tab1.university.placeholder'
+                                                )}
+                                                size='large'
+                                            >
+                                                {universities.map((item, index) =>
+                                                    <SANSelectOption
+                                                        key={index}
+                                                        value={item.id}
+                                                    >
+                                                        {item.name}
+                                                    </SANSelectOption>
+                                                )}
+                                            </SANSelect>
+                                        </SANFormItem>
+                                    )}
+                                    <SANFormItem
+                                        name='ingressPeriod'
+                                        label={t(
+                                            'profile.tab1.ingressPeriod.label'
+                                        )}
+                                        mb='md'
+                                        initialValue={
+                                            ingressPeriod() || undefined
+                                        }
+                                    >
+                                        <SANSelect
+                                            data-testid='flix_profile_tab-personal--select-ingressPeriod'
+                                            placeholder={t(
+                                                'profile.tab1.ingressPeriod.placeholder'
+                                            )}
+                                            size='large'
+                                        >
+                                            {semesters().map(
+                                                renderOption
+                                            )}
+                                        </SANSelect>
+                                    </SANFormItem>
+                                    <SANFormItem
+                                        name='methodology'
+                                        label={t(
+                                            'profile.tab1.methodology.label'
+                                        )}
+                                        mb='md'
+                                        initialValue={
+                                            user.userMedUniversity && user.userMedUniversity.methodology
+                                                ? user.userMedUniversity.methodology
+                                                : undefined
+                                        }
+                                    >
+                                        <SANSelect
+                                            data-testid='flix_profile_tab-personal--select-methodology'
+                                            placeholder={t(
+                                                'profile.tab1.methodology.placeholder'
+                                            )}
+                                            size='large'
+                                            onChange={onChangeMethodology}
+                                        >
+                                            {methodologies.map(
+                                                renderOption
+                                            )}
+                                        </SANSelect>
+                                    </SANFormItem>
+                                    {otherMethodology ? (
+                                        <SANFormItem
+                                            name='newMethodology'
+                                            mb='md'
+                                        >
+                                            <SANInput
+                                                size='large'
+                                                placeholder={t('profile.tab1.methodology.newPlaceholder')}
+                                            />
+                                        </SANFormItem>
+                                    ) : null}
                                 </SANBox>
                                 <SANDivider mb='xl' bg='grey.1' />
                                 <SANFormItem m={0}>

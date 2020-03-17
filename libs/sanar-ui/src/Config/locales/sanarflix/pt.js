@@ -1,5 +1,6 @@
 export default {
     global: {
+        error: 'Ocorreu um erro. Tente novamente mais tarde.',
         knowMore: 'Saiba mais',
         termsOfUse: 'Termos de Uso',
         privacyPolicy: 'Política de Privacidade',
@@ -157,6 +158,36 @@ export default {
             }
         }
     },
+    exams: {
+        title: 'Provas',
+        subtitle: 'Acesse à provas completas e comentadas de diversas universidades do Brasil',
+        onBoarding: {
+            first: {
+                title: 'Passe na prova da sua faculdade!',
+                text: 'Aqui você tem acesso às provas da sua faculdade e de diversas universidades do país. Fique por dentro de como são cobrados todos os assuntos da graduação e saia preparado(a) para tirar nota 10!',
+                bottom: 'Encontre a prova ideal para seu estudo por faculdade, disciplina, temas, ano, semestre e metodologia.'
+            },
+            second: {
+                title: 'Encontre as provas já realizadas na sua faculdade!',
+                text: 'Para encontrar a prova que mais se encaixa nas suas necessidades, informe a sua faculdade, o semestre em que você ingressou e sua metodologia de aprendizado.'
+            },
+            form: {
+                button: 'Começar',
+                selectCollegeLabel: 'Informe a sua faculdade',
+                selectSemesterLabel: 'Informe o seu semestre de ingresso',
+                selectMethodologyLabel: 'Informe a sua metodologia',
+            }
+        },
+        list: {
+            title: 'Provas de ',
+            subtitle: 'Estas são as provas disponíveis da sua faculdade:',
+            emptySubtitle: 'Não há provas disponíveis da sua faculdade.',
+            train: 'Treinar',
+            exams: ' provas',
+            questions: ' questões',
+            loadMore: 'Carregar mais',
+        }
+    },
     courses: {
         title: 'Todos os Cursos',
         subtitle: 'Encontre aqui todos os cursos',
@@ -203,6 +234,7 @@ export default {
             begin: 'Início',
             allCourses: 'Todos os cursos',
             added: 'Adicionados',
+            exams: 'Provas',
             questionBase: 'Banco de questões',
             bookmarks: 'Favoritos',
             invites: 'Indique e ganhe',
