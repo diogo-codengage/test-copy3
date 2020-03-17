@@ -11,11 +11,13 @@ import { events } from 'Config/Segment'
 import OnBoarding from './OnBoarding'
 import List from './InitialList'
 import { useAuthContext } from '../../../Hooks/auth'
+import { IUserMedUniversity } from 'Apollo/User/Queries/me'
 
 const FLXExams = ({ history }) => {
     const { t } = useTranslation('sanarflix')
     const { me } = useAuthContext()
-    const { userMedUniversity } = me
+    const [userMedUniversity, setUserMedUniversity] = useState<IUserMedUniversity>(me.userMedUniversity)
+
     const isMeUniversityEmpty = (): boolean => {
         if (!userMedUniversity) return true
         let show = false
@@ -26,16 +28,17 @@ const FLXExams = ({ history }) => {
     }
     const [showOnBoarding, setShowOnBoarding] = useState<boolean>(isMeUniversityEmpty)
 
-    const handleChange = () => {
-        setShowOnBoarding(false)
-    }
-
     useEffect(() => {
         window.analytics.page(
             events['Page Viewed'].event,
             events['Page Viewed'].data
         )
     }, [])
+
+    const handleChange = (userMedUniversity) => {
+        setUserMedUniversity(userMedUniversity)
+        setShowOnBoarding(false)
+    }
 
     return (
         <SANBox displayFlex flexDirection='column' flex='1'>
@@ -47,7 +50,7 @@ const FLXExams = ({ history }) => {
                 }}
             />
             {showOnBoarding
-                ? (<OnBoarding changePage={handleChange} userMedUniversity={userMedUniversity}/>)
+                ? (<OnBoarding changePage={(response) => handleChange(response)} userMedUniversity={userMedUniversity}/>)
                 : (<List medUniversity={userMedUniversity.medUniversity} />)
             }
         </SANBox>

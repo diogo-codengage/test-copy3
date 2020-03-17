@@ -110,7 +110,7 @@ const OnBoardingForm = ({ form, ...props }) => {
             } = form.getFieldsValue()
             const arrPeriod = ingressSemester.split('.')
 
-            await client.mutate({
+            const response = await client.mutate({
                 mutation: SAVE_USER_MED_UNIVERSITY_MUTATION,
                 variables: {
                     medUniversityId: [medUniversityId],
@@ -119,9 +119,8 @@ const OnBoardingForm = ({ form, ...props }) => {
                     methodology: newMethodology ? newMethodology : methodology
                 }
             })
-
             window.analytics.track('ExamsOnBoardingFormSubmitted')
-            props.changePage()
+            props.changePage(response.data.saveUserMedUniversity)
         } catch (e) {
             if (!!e.message) {
                 createSnackbar({
