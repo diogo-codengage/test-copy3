@@ -5,7 +5,7 @@ import { theme } from 'styled-tools'
 import { space, SpaceProps } from 'styled-system'
 
 import { SANStyled } from '../../../Theme/createTheme'
-import { SANTypography } from '../Typography'
+import { SANTypography, ISANTypographyProps } from '../Typography'
 import { SANBox, ISANBoxProps } from '../Box'
 
 import { useThemeContext } from '@sanar/utils/dist/Hooks'
@@ -15,6 +15,8 @@ export interface ISANEmptyProps extends SpaceProps {
     image?: string
     children?: React.ReactNode
     BoxProps?: ISANBoxProps
+    TypographyProps?: ISANTypographyProps
+    ImageProps?: React.ImgHTMLAttributes<any>
     hasTitle?: boolean
     height?: string | number
 }
@@ -34,6 +36,8 @@ const SANEmpty = ({
     image,
     hasTitle = true,
     BoxProps,
+    ImageProps,
+    TypographyProps,
     children,
     height,
     ...props
@@ -49,10 +53,15 @@ const SANEmpty = ({
             alignItems='center'
             {...props}
         >
-            <ImgStyled src={image || empty} alt='' height={height} />
+            <ImgStyled src={image || empty} alt='' {...ImageProps} height={height} />
             {hasTitle && (
                 <SANBox {...BoxProps}>
-                    <SANTypography variant='subtitle2' strong>
+                    <SANTypography
+                        variant='subtitle2'
+                        strong
+                        textAlign='center'
+                        {...TypographyProps}
+                    >
                         {title || t('empty.title')}
                     </SANTypography>
                 </SANBox>

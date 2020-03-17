@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { theme } from 'styled-tools'
+import { useApolloClient } from '@apollo/react-hooks'
 
 import {
     SANBox,
@@ -17,7 +18,7 @@ import { GET_EXAMS, IExam, IExamQuery } from 'Apollo/Exams/Queries/exams'
 import { IMedUniversity } from 'Apollo/Exams/Queries/medUniversities'
 
 import question from '../../../../Assets/images/exams/question.png'
-import { useApolloClient } from '@apollo/react-hooks'
+import FLXExamFilter from '../../../../Components/ExamFilter'
 
 interface IListProps {
     medUniversity: IMedUniversity
@@ -175,6 +176,9 @@ const List = (props: IListProps) => {
                         />
                     )}
                 </SANLayoutContainer>
+            </SANBox>
+            <SANBox>
+                <FLXExamFilter universityId={medUniversity.id}/>
             </SANBox>
         </SANBox>
     )

@@ -289,5 +289,9 @@ export default {
     pdfReader: {
         problemRenderingPdf: 'Problemas ao visualizar esse material?',
         clickAndDownload: 'Clique aqui e faça o download.'
+    },
+    selectList: {
+        selectAll: 'Selecionar todos',
+        deselectAll: 'Desselecionar todos'
     }
 }

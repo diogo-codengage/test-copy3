@@ -13,7 +13,7 @@ import { SANButton } from '../../Atoms/Button'
 import { SANDivider } from '../../Atoms/Divider'
 import { SANDropdown } from '../../Atoms/Dropdown'
 import { SANScroll } from '../../Atoms/Scroll'
-import { SANEmpty } from '../../Atoms/Empty'
+import { SANEmpty, ISANEmptyProps } from '../../Atoms/Empty'
 
 interface ISANStyledInputProps {
     hasError?: boolean
@@ -53,7 +53,11 @@ const SANStyledCheckbox = styled(SANCheckbox)`
         }
     }
 `
-
+const SANStyledButton = styled(SANButton)`
+    && {
+        color: ${theme('colors.grey.3')};
+    }
+`
 const SANCloseButtonBox = styled(SANBox)`
     && {
         border-bottom-right-radius: ${theme('radii.base')};
@@ -68,6 +72,7 @@ interface IItem {
 
 export interface ISANSelectFilterProps
     extends Omit<ISANBoxProps, 'onChange' | 'color'> {
+    label?: string
     placeholder?: string
     items: IItem[]
     value?: IItem[]
@@ -80,13 +85,15 @@ export interface ISANSelectFilterProps
     onDeselectItem?: (item: IItem) => void
     hasError?: boolean
     InputProps?: ISANInputProps
+    EmptyProps?: ISANEmptyProps
+    disabled?: boolean
 }
 
-const makeLabel = value =>
+const makeLabel = (value, field) =>
     value
         .map(
             lt =>
-                `${lt.label.charAt(0).toUpperCase()}${lt.label
+                `${lt[field].charAt(0).toUpperCase()}${lt[field]
                     .slice(1)
                     .toLowerCase()}`
         )
@@ -105,14 +112,19 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
     onDeselectItem,
     hasError,
     InputProps,
+    EmptyProps,
+    disabled,
+    label: labelProp,
     ...props
 }) => {
     const dropdownRef = useRef<any>()
     const menuRef = useRef()
     const { t } = useTranslation('components')
     const [open, setOpen] = useState(false)
-    const [search, setSearch] = useState()
+    const [search, setSearch] = useState('')
     const [labelSelecteds, setLabelSelecteds] = useState('')
+
+    const fieldLabel = useMemo(() => labelProp || 'label', [labelProp])
 
     const handleOpen = visibility => {
         setOpen(visibility)
@@ -183,7 +195,7 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
         () =>
             search
                 ? items.filter(item =>
-                      item.label.toLowerCase().match(search.toLowerCase())
+                      item[fieldLabel].toLowerCase().match(search.toLowerCase())
                   )
                 : items,
         [search, items]
@@ -195,13 +207,13 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
             onChange={onCheckboxChange(item)}
             checked={!!value.find(checkValue(item))}
         >
-            {item.label.toLowerCase()}
+            {item[fieldLabel].toLowerCase()}
         </SANStyledCheckbox>
     ))
 
     useEffect(() => {
         if (!!value && !!value.length) {
-            const label = makeLabel(value)
+            const label = makeLabel(value, fieldLabel)
             setLabelSelecteds(label)
         }
     }, [value])
@@ -243,7 +255,7 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
                                 >
                                     {t('selectFilter.selectAll')}
                                 </SANButton>
-                                <SANButton
+                                <SANStyledButton
                                     onClick={handleClear}
                                     bold
                                     variant='text'
@@ -251,7 +263,7 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
                                     disabled={!value.length}
                                 >
                                     {t('selectFilter.clearSelect')}
-                                </SANButton>
+                                </SANStyledButton>
                             </SANBox>
                             <SANDivider
                                 my='0'
@@ -259,15 +271,15 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
                                 width='calc(100% - 24px)'
                                 bg='grey.2'
                             />
-                            <SANStyledScroll>
+                            <SANScroll>
                                 <SANBox py='xs'>
                                     {rows.length ? (
                                         rows
                                     ) : (
-                                        <SANEmpty height={139} />
+                                        <SANEmpty {...EmptyProps} height={139} />
                                     )}
                                 </SANBox>
-                            </SANStyledScroll>
+                            </SANScroll>
                             <SANCloseButtonBox
                                 displayFlex
                                 alignItems='center'
@@ -298,6 +310,7 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
                         placeholder={
                             placeholder ? placeholder : t('selectFilter.select')
                         }
+                        disabled={disabled}
                         iconLeft='search-outline'
                         onChange={handleSearch}
                         value={open ? search : labelSelecteds}

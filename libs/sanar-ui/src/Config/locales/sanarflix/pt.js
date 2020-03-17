@@ -239,7 +239,7 @@ export default {
             bookmarks: 'Favoritos',
             invites: 'Indique e ganhe',
             account: 'Minha conta',
-            questions: 'Banco de questões',
+            questions: 'Banco de questões'
         },
         account: {
             title: 'Minha Conta',
@@ -461,6 +461,46 @@ export default {
             key_0: '0 itens adicionados recentemente',
             keyWithCount: '{{count}} item adicionado recentemente',
             keyWithCount_plural: '{{count}} itens adicionados recentemente'
+        }
+    },
+    examFilter: {
+        next: 'Próximo',
+        back: 'Voltar',
+        title: 'Filtros avançados',
+        subtitle: 'Encontre outras provas utilizando os filtros avançados',
+        submit: 'Buscar prova',
+        college: {
+            title: 'Faculdade',
+            description:
+                'Busque pela faculdade das provas que você quer treinar.',
+            checkbox: 'Usar minha faculdade',
+            select: 'Buscar outra faculdade'
+        },
+        subject: {
+            title: 'Disciplina',
+            description: 'Escolha as disciplinas que deseja se aprofundar',
+            select: 'Buscar disciplina'
+        },
+        theme: {
+            title: 'Tema',
+            description:
+                'Selecione os temas que mais correspondem com sua busca',
+            select: 'Buscar tema'
+        },
+        semester: {
+            title: 'Semestre',
+            description:
+                'Selecione o ano e semestre da prova que deseja estudar',
+            select: 'Selecione o ano/semestre',
+            checkbox: 'Selecionar todos'
+        },
+        simple: {
+            title: 'Filtros selecionados',
+            subtitle:
+                'Aqui você pode editar os filtros escolhidos anteriormente',
+            seeFilters: 'Ver filtros',
+            closeFilters: 'Fechar filtros',
+            saveFilter: 'Salvar filtros'
         }
     }
 }
