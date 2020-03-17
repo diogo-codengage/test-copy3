@@ -45,9 +45,6 @@ const SANMyAccount = ({ handleBack, history }) => {
     )
     const [activeKey, setActiveKey] = useState('0')
 
-    const handleCloseModalTermsAndPrivacy = () =>
-        setShowModalTermsAndPrivacy(false)
-
     const handleModalTermsAndPrivacy = key => {
         setActiveKey(key)
         setShowModalTermsAndPrivacy(true)
@@ -101,7 +98,10 @@ const SANMyAccount = ({ handleBack, history }) => {
             <SANModalTermsAndPrivacy
                 visible={showModalTermsAndPrivacy}
                 defaultActiveKey={activeKey}
-                onCancel={handleCloseModalTermsAndPrivacy}
+                onCancel={() => {
+                    setShowModalTermsAndPrivacy(false)
+                    setActiveKey(0)
+                }}
             />
 
             <div className='pl-md pr-md mb-md'>
