@@ -30,6 +30,12 @@ const makeCollection = (collection: ICollection) => {
     return {
         ...collection,
         image: collection.content.video.image,
+        progress: {
+            video: hasVideo ? collection.content.video.progress : 0,
+            quiz: hasQuiz ? collection.content.quiz.progress : 0
+        },
+        hasQuiz,
+        hasVideo,
         completed:
             hasVideo &&
             collection.content.video.progress === 100 &&
