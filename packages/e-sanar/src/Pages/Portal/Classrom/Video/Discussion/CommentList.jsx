@@ -167,7 +167,7 @@ const SANCommentList = ({ resourceId }) => {
 
     const handleLoadReplies = async (parentId, hasAdd = true) => {
         try {
-            const {
+            let {
                 data: { repliesComment }
             } = await client.query({
                 query: GET_REPLIES_COMMENTS,
@@ -179,6 +179,12 @@ const SANCommentList = ({ resourceId }) => {
                     skip: 0
                 }
             })
+            if (!repliesComment) {
+                repliesComment.data = comments.data.filter(
+                    cm => !!cm.parent_id && cm.parent_id === parentId
+                )
+                repliesComment.count = repliesComment.data.length
+            }
             hasAdd &&
                 addSubComments({
                     answers: repliesComment.data,
@@ -216,7 +222,17 @@ const SANCommentList = ({ resourceId }) => {
             updateQuery: commentsFetchMore
         })
 
-    const handleCompleted = ({ comments }) => setComments(comments)
+    const handleCompleted = ({ comments }) => {
+        const mountComments = comments.data
+            .map(cmm => ({
+                ...cmm,
+                answers: comments.data.filter(
+                    cm => !!cm.parent_id && cm.parent_id === cmm.id
+                )
+            }))
+            .filter(cmm => !cmm.parent_id)
+        setComments({ data: mountComments, count: mountComments.length })
+    }
 
     return (
         <Query
