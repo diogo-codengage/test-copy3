@@ -12,6 +12,7 @@ import OnBoarding from './OnBoarding'
 import List from './InitialList'
 import { useAuthContext } from '../../../Hooks/auth'
 import { IUserMedUniversity } from 'Apollo/User/Queries/me'
+import { message } from 'antd';
 
 const FLXExams = ({ history }) => {
     const { t } = useTranslation('sanarflix')
@@ -27,6 +28,14 @@ const FLXExams = ({ history }) => {
         return show
     }
     const [showOnBoarding, setShowOnBoarding] = useState<boolean>(isMeUniversityEmpty)
+
+    useEffect(() => {
+        if(!me.enableExam) {
+            message.warning('EM BREVE! Esta funcionalidade ainda está em modo de teste. Estamos trabalhando que a sua experiência seja incrível.', 5);
+            history.push('/portal/inicio');
+        }
+       
+    }, [])
 
     useEffect(() => {
         window.analytics.page(
