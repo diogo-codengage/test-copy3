@@ -5,6 +5,7 @@
     "dependencies": {
         "@sentry/browser": "^5.10.2",
         "amazon-cognito-identity-js": "^3.0.15",
+        "jwt-decode": "^2.2.0",
         "react-lines-ellipsis": "^0.14.1",
         "react-router-last-location": "^2.0.1"
     },
