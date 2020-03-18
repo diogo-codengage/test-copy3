@@ -244,7 +244,8 @@ export default {
         },
         goToPratice: 'Ir para a área de prática',
         itemSuccess: 'Mandou bem',
-        itemError: 'Precisa estudar'
+        itemError: 'Precisa estudar',
+        emptyQuiz: 'Não há questões'
     },
     collection: {
         part: 'Parte',
