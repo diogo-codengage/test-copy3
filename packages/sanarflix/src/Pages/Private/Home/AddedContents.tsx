@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useTranslation } from 'react-i18next'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { isEmpty } from 'ramda'
 
 import {
     SANSessionTitle,
@@ -55,9 +56,10 @@ const FLXAddedContents = ({ history }: RouteComponentProps) => {
             loaderProps={{ minHeight: 186, flex: true }}
         >
             {({ data }: { data: IContents }) => {
-                if (!data.lastAddedContents.data.length) {
+                if (isEmpty(data) || !data.lastAddedContents.data.length) {
                     return null
                 }
+
                 return (
                     <>
                         <SANLayoutContainer>
