@@ -65,9 +65,9 @@ const ESCommentList = ({
                     comment={comment}
                     avatar={avatar}
                 />
-                {(comment.replies_count &&
+                {(!!comment.replies_count &&
                     (!comment.answers || !comment.answers.length)) ||
-                (comment.answers &&
+                (!!comment.answers &&
                     comment.replies_count > comment.answers.length) ? (
                     <ESButton
                         {...loadRepliesProps}
