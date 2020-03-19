@@ -73,7 +73,7 @@ export interface IYearSemester {
 }
 
 export interface IFilters extends IState{
-    semesters: IYearSemester[]
+    yearSemesters: IYearSemester[]
 }
 
 const initialState = {
@@ -224,11 +224,5 @@ const FLXExamFilterProvider: React.FC = ({ children }) => {
 
     return <Context.Provider value={value}>{children}</Context.Provider>
 }
-
-export const withFLXExamFilterProvider = Component => props => (
-    <FLXExamFilterProvider>
-        <Component {...props} />
-    </FLXExamFilterProvider>
-)
 
 export default FLXExamFilterProvider

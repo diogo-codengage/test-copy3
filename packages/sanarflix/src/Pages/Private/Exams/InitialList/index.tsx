@@ -15,11 +15,10 @@ import { IMedUniversity } from 'Apollo/Exams/Queries/medUniversities'
 
 import FLXExamFilter from '../../../../Components/Exams/Filter'
 import { renderItem, ExamsCount, EmptyExamsLabel } from '../../../../Components/Exams/List'
-import { IState } from '../../../../Components/Exams/Filter/Context'
 
 interface IListProps {
     medUniversity: IMedUniversity
-    searchExams: (filters: IState) => void
+    searchExams: () => void
 }
 
 const LoadMoreBox = SANStyled.div`
@@ -33,10 +32,9 @@ const LoadMoreBox = SANStyled.div`
     cursor: pointer;
 `
 
-const List = (props: IListProps) => {
+const List = ({ searchExams, medUniversity }: IListProps) => {
     const client = useApolloClient()
     const { t } = useTranslation('sanarflix')
-    const { medUniversity } = props
     const [loading, setLoading] = useState<boolean>(false)
     const [initLoading, setInitLoading] = useState<boolean>(true)
     const [exams, setExams] = useState<IExam[]>([])
@@ -130,7 +128,7 @@ const List = (props: IListProps) => {
             <SANBox>
                 <FLXExamFilter
                     universityId={medUniversity.id}
-                    searchExams={(filters) => props.searchExams(filters)}
+                    searchExams={searchExams}
                 />
             </SANBox>
         </SANBox>

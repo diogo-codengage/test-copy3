@@ -13,27 +13,43 @@ import {
 import { GET_EXAMS, IExam, IExamQuery } from 'Apollo/Exams/Queries/exams'
 import FLXExamFilterSimple from '../../../../Components/Exams/Filter/Simple'
 import { renderItem, ExamsCount, EmptyExamsLabel } from '../../../../Components/Exams/List'
-import { IFilters } from '../../../../Components/Exams/Filter/Context'
+import { IFilters, IYearSemester, useExamFilterContext } from '../../../../Components/Exams/Filter/Context'
 
 interface IFilteredListProps {
     filters?: IFilters
 }
 
-const FilteredList = (props: IFilteredListProps) => {
+const FilteredList = ({ filters }: IFilteredListProps) => {
     const client = useApolloClient()
     const { t } = useTranslation('sanarflix')
     const [loading, setLoading] = useState<boolean>(false)
     const [hasMore, setHasMore] = useState<boolean>(true)
     const [exams, setExams] = useState<IExam[]>([])
     const [examsCount, setExamsCount] = useState<number|null>(null)
+    const { state } = useExamFilterContext()
+
+    const createYearSemesters = (semesters) => {
+        let yearSemesters: IYearSemester[] = []
+        if (!!semesters.length) {
+            yearSemesters = semesters.map((item) => {
+                const arrPeriod = item.split('.')
+                return {year: arrPeriod[0], semester: arrPeriod[1]}
+            })
+        }
+        return yearSemesters
+    }
 
     const fetchExamsList = async () => {
+        setLoading(true)
         try {
             const response = await client.query<IExamQuery>({
                 query: GET_EXAMS,
                 variables: {
-                    limit: 5,
-                    medUniversityId: 'test'
+                    limit: 15,
+                    medUniversityId: state.university,
+                    disciplineIds: state.discipline,
+                    themesIds: state.theme,
+                    semesters: createYearSemesters(state.semester)
                 }
             })
             setExamsCount(response.data.quizExams.count)
@@ -57,7 +73,7 @@ const FilteredList = (props: IFilteredListProps) => {
     return (
         <SANBox>
             <SANBox backgroundColor='grey-solid.1'>
-                <FLXExamFilterSimple previousFilters={props.filters}/>
+                <FLXExamFilterSimple previousFilters={filters} applyFilter={fetchExamsList}/>
             </SANBox>
             <SANBox>
                 <SANLayoutContainer pt={8} pb={7}>
@@ -66,7 +82,7 @@ const FilteredList = (props: IFilteredListProps) => {
                             fontSize={{ md: 2 }}
                             color='grey.7'
                             textAlign='left'
-                            mb={15}
+                            mb={25}
                         >
                             <ExamsCount color='grey.7' direction={'left'}>
                                 <strong>{examsCount}</strong> {t('exams.list.exams')}
@@ -84,6 +100,7 @@ const FilteredList = (props: IFilteredListProps) => {
                             useWindow={false}
                         >
                             <SANList
+                                mt={5}
                                 dataSource={exams}
                                 loading={loading}
                                 renderItem={(item) => renderItem(item, t)}

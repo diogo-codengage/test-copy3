@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
@@ -22,8 +22,7 @@ import {
     SANSelectFilter
 } from '@sanar/components'
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
-
-import { withFLXExamFilterProvider, useExamFilterContext, IFilters } from './Context'
+import { useExamFilterContext, IFilters } from './Context'
 
 interface ISelectWrapperProps {
     label: string
@@ -58,6 +57,7 @@ const Button: React.FC<ISANButtonProps> = ({ children, ...props }) => (
 
 interface IFLXExamFilterSimpleProps {
     previousFilters?: IFilters
+    applyFilter: () => void
 }
 
 const getIds = arr => arr.map(item => item.value)
@@ -69,7 +69,7 @@ const renderItem = item => (
 const getValue = (arr, values) =>
     arr.filter(item => values.includes(item.value))
 
-const Fields: React.FC<{ hasLast?: boolean }> = ({ hasLast }) => {
+const Fields: React.FC<{ hasLast?: boolean, filters?: IFilters }> = ({ hasLast, filters }) => {
     const { t } = useTranslation('sanarflix')
     const {
         state,
@@ -83,6 +83,19 @@ const Fields: React.FC<{ hasLast?: boolean }> = ({ hasLast }) => {
         themes,
         semesters
     } = useExamFilterContext()
+
+    useEffect(() => {
+        if (!filters) return
+        const changeStateValues = () => {
+            console.log('state', state)
+            // handleUniversity(filters.university)
+            // handleDiscipline(filters.discipline)
+            // handleTheme(filters.theme)
+            // handleSemester(filters.semester)
+        }
+        changeStateValues()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filters])
 
     const getDisciplines = useCallback(getValue, [
         disciplines,
@@ -229,11 +242,11 @@ const FLXExamFilterSimpleMobile: React.FC<IFLXExamFilterSimpleProps> = (props) =
                                 mt='sm'
                             />
                             <SANRow gutter={20}>
-                                <Fields />
+                                <Fields filters={props.previousFilters}/>
                                 <SANCol xs={24}>
                                     <Button
                                         disabled={!state.university}
-                                        onClick={() => console.log('relax')}
+                                        onClick={props.applyFilter}
                                     >
                                         {t('examFilter.simple.saveFilter')}
                                     </Button>
@@ -251,10 +264,9 @@ const FLXExamFilterSimple: React.FC<IFLXExamFilterSimpleProps> = (props) => {
     const { t } = useTranslation('sanarflix')
     const { width } = useWindowSize()
     const { state } = useExamFilterContext()
-    console.log('FILTERS >>>', props.previousFilters)
 
     if (width <= 768) {
-        return <FLXExamFilterSimpleMobile />
+        return <FLXExamFilterSimpleMobile {...props} />
     }
 
     return (
@@ -266,7 +278,7 @@ const FLXExamFilterSimple: React.FC<IFLXExamFilterSimpleProps> = (props) => {
                     extra={
                         <Button
                             disabled={!state.university}
-                            onClick={() => console.log('calma')}
+                            onClick={props.applyFilter}
                         >
                             {t('examFilter.simple.saveFilter')}
                         </Button>
@@ -274,11 +286,11 @@ const FLXExamFilterSimple: React.FC<IFLXExamFilterSimpleProps> = (props) => {
                 />
                 <SANDivider width='100%' bg='grey.2' mb='xl' />
                 <SANRow gutter={20}>
-                    <Fields hasLast />
+                    <Fields hasLast filters={props.previousFilters}/>
                 </SANRow>
             </SANLayoutContainer>
         </SANBox>
     )
 }
 
-export default withFLXExamFilterProvider(FLXExamFilterSimple)
+export default FLXExamFilterSimple

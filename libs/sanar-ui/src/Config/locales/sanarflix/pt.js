@@ -183,7 +183,7 @@ export default {
             subtitle: 'Estas são as provas disponíveis da sua faculdade:',
             emptySubtitle: 'Não há provas disponíveis.',
             train: 'Treinar',
-            exams: ' provas',
+            exams: ' prova(s)',
             questions: ' questões',
             loadMore: 'Carregar mais',
         }
