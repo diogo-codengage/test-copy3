@@ -307,6 +307,7 @@ const ESJwPlayer = forwardRef(
                     {...props}
                     ref={playerRef}
                     onReady={handleReady}
+                    onError={handleSetupError}
                     onSetupError={handleSetupError}
                     playerId={playerId}
                 />
