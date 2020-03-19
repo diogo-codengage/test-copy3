@@ -28,9 +28,9 @@ const SANInitial = ({ setTab, history }) => {
     const { t } = useTranslation('esanar')
 
     const moduleReference = last =>
-        `${t('global.subject')} ${last.module_order}, ${t('global.activity')} ${
-            last.resource_order
-        }`
+        `${t('global.subject')} ${last.module_order + 1}, ${t(
+            'global.activity'
+        )} ${last.resource_order + 1}`
 
     const goClassroom = () =>
         history.push(

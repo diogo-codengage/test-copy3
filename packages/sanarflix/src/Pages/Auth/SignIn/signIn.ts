@@ -6,10 +6,9 @@ import { getInstance } from 'Config/AWSCognito'
 import i18n from 'sanar-ui/dist/Config/i18n'
 import * as Sentry from '@sentry/browser'
 
-function userHasSubscription(token: string): boolean {
+function userHasSubscription(decodedToken): boolean {
     try {
-        const userData = JSON.parse(atob(token.split('.')[1]))
-        const products = JSON.parse(userData['custom:products']) || []
+        const products = decodedToken['custom:products'] || []
         return products.includes('sanarflix')
     } catch (error) {
         Sentry.captureException(error)
@@ -44,7 +43,7 @@ const signInByEmail = (email, password): Promise<any> => {
             {
                 onSuccess: (result: CognitoUserSession) => {
                     if (
-                        userHasSubscription(result.getIdToken().getJwtToken())
+                        userHasSubscription(result.getIdToken().decodePayload())
                     ) {
                         resolve(result)
                     } else {
