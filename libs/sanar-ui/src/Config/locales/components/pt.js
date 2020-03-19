@@ -105,10 +105,18 @@ export default {
             name: 'Nome',
             document: 'CPF',
             phone: 'Celular',
-            college: 'Faculdade',
-            semester: {
-                label: 'Semestre',
-                placeholder: 'Selecione o semestre'
+            university: {
+                label: 'Faculdade',
+                placeholder: 'Selecione a faculdade'
+            },
+            ingressPeriod: {
+                label: 'Período de Ingresso',
+                placeholder: 'Selecione o período de ingresso'
+            },
+            methodology: {
+                label: 'Metodologia',
+                placeholder: 'Selecione a metodologia',
+                newPlaceholder: 'Informe a metodologia'
             }
         },
         tab2: {
@@ -244,7 +252,8 @@ export default {
         },
         goToPratice: 'Ir para a área de prática',
         itemSuccess: 'Mandou bem',
-        itemError: 'Precisa estudar'
+        itemError: 'Precisa estudar',
+        emptyQuiz: 'Não há questões'
     },
     collection: {
         part: 'Parte',
@@ -281,5 +290,9 @@ export default {
     pdfReader: {
         problemRenderingPdf: 'Problemas ao visualizar esse material?',
         clickAndDownload: 'Clique aqui e faça o download.'
+    },
+    selectList: {
+        selectAll: 'Selecionar todos',
+        deselectAll: 'Desselecionar todos'
     }
 }

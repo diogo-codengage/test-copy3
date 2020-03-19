@@ -3,6 +3,7 @@ export const getClassRoute = type => {
         case 'Video':
             return 'video'
         case 'Document':
+        case 'Download':
             return 'documento'
         case 'Quiz':
             return 'simulado'

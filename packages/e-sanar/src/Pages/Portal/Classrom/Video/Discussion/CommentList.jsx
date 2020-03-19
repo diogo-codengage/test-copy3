@@ -177,7 +177,7 @@ const SANCommentList = ({ resourceId }) => {
 
     const handleLoadReplies = async (parentId, hasAdd = true) => {
         try {
-            const {
+            let {
                 data: { repliesComment }
             } = await client.query({
                 query: GET_REPLIES_COMMENTS,
@@ -189,6 +189,12 @@ const SANCommentList = ({ resourceId }) => {
                     skip: 0
                 }
             })
+            if (!repliesComment) {
+                repliesComment.data = comments.data.filter(
+                    cm => !!cm.parent_id && cm.parent_id === parentId
+                )
+                repliesComment.count = repliesComment.data.length
+            }
             hasAdd &&
                 addSubComments({
                     answers: repliesComment.data,

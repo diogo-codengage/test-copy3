@@ -5,6 +5,7 @@ export const CHANGE_COURSE = gql`
         setLastEnrollmentAccessed(input: { enrollment_id: $enrollmentId }) {
             id
             contract
+            certificate
             ranking {
                 position
                 points
@@ -16,7 +17,7 @@ export const CHANGE_COURSE = gql`
                 name
                 slug
                 index
-                durantion
+                duration
                 cover_picture_url
                 progress {
                     done
@@ -49,7 +50,21 @@ export const CHANGE_COURSE = gql`
                 icon
                 status
                 knowledge_area
-                cover_picture_url
+                cover_pictures {
+                    id
+                    small {
+                        url
+                    }
+                    medium {
+                        url
+                    }
+                    large {
+                        url
+                    }
+                    original {
+                        url
+                    }
+                }
                 professors {
                     id
                     name

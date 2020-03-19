@@ -181,10 +181,12 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
         )
 
         const pathScript = useMemo(
-            () =>
-                process.env.REACT_APP_ENV === 'production'
+            () => {
+                console.log('------ ENV VALUE -------', process.env.REACT_APP_ENV)
+                return process.env.REACT_APP_ENV === 'production'
                     ? '/residenciamedica/jwplayer/jwplayer.js'
-                    : '/jwplayer/jwplayer.js',
+                    : '/jwplayer/jwplayer.js'
+            },
             []
         )
 

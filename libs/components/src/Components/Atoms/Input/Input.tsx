@@ -24,6 +24,9 @@ const Input = styled.input`
     caret-color: ${theme('colors.primary')};
 
     ${switchProp('customSize', {
+        xlarge: css`
+            height: 52px;
+        `,
         large: css`
             height: 40px;
         `,
@@ -38,6 +41,9 @@ const Input = styled.input`
     ${ifProp(
         'round',
         switchProp('customSize', {
+            xlarge: css`
+                border-radius: 26px;
+            `,
             large: css`
                 border-radius: 20px;
             `,
@@ -134,7 +140,7 @@ export interface ISANInputProps
     extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
     round?: boolean
     customRequired?: boolean
-    size?: 'large' | 'medium' | 'small'
+    size?: 'xlarge' | 'large' | 'medium' | 'small'
     iconRight?: string
     iconLeft?: string
     as?: React.ElementType | any

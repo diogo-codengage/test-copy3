@@ -53,7 +53,10 @@ const PortalProvider = ({ children, history }) => {
 
     const [state, dispatch] = useReducer(reducer, initialState)
 
-    const getResource = item => item[item.resource_type.toLowerCase()]
+    const getResource = item => {
+        if (item.resource_type === 'Download') return item['document']
+        return item[item.resource_type.toLowerCase()]
+    }
 
     const onNavigation = dir => () => {
         if (dir === 'prev' && prevResource) {

@@ -28,8 +28,21 @@ import {
 
 import { ifProp } from 'styled-tools'
 
+interface AnchorHTMLAttributes {
+    download?: any
+    href?: string
+    hrefLang?: string
+    media?: string
+    ping?: string
+    rel?: string
+    target?: string
+    type?: string
+    referrerPolicy?: string
+}
+
 export interface ISANBoxProps
     extends React.HTMLAttributes<HTMLImageElement | HTMLDivElement>,
+        AnchorHTMLAttributes,
         SpaceProps,
         FlexboxProps,
         ColorProps,

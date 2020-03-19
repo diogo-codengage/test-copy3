@@ -5,6 +5,7 @@ import { boolean, text, select } from '@storybook/addon-knobs'
 import SANInput from './Input'
 
 const sizeSOptions: any = {
+    XLarge: 'xlarge',
     Large: 'large',
     Medium: 'medium',
     Small: 'small'

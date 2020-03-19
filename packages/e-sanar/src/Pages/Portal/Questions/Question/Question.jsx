@@ -20,6 +20,8 @@ import { useQuestionsContext } from '../Context'
 import { useAuthContext } from 'Hooks/auth'
 import { useLayoutContext } from '../../Layout/Context'
 
+import { htmlInterpreter } from 'Utils/htmlInterpreter'
+
 const initialState = {
     answer: null,
     stats: null,
@@ -198,20 +200,23 @@ const SANQuestionPage = ({ history }) => {
                                         <ESEvaIcon name='options-2-outline' />
                                         {t('questionBase.question.seeFilters')}
                                     </ESButton>
-                                    <ESButton
+                                    {/* Marlos Augusto - Remove "more" button - 17/03/2020 */}
+                                    {/* <ESButton
                                         size='small'
                                         variant='text'
                                         circle
                                     >
                                         <ESEvaIcon name='more-vertical-outline' />
-                                    </ESButton>
+                                    </ESButton> */}
                                 </div>
                             </SANSubheader>
                         </SANPortalPagesContainer>
                         <SANPortalPagesContainer className='without-padding'>
                             <ESQuestion
                                 full={isFull}
-                                question={questions && questions[0]}
+                                question={
+                                    questions && htmlInterpreter(questions[0])
+                                }
                                 onConfirm={handleConfirm(answerQuestion)}
                                 onJump={handleJump}
                                 onNext={handleNext}

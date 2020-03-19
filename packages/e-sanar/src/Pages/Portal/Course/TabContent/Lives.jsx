@@ -5,7 +5,6 @@ import { format } from 'date-fns'
 
 import ESLiveSection from 'sanar-ui/dist/Components/Molecules/LiveSection'
 import ESSessionTitle from 'sanar-ui/dist/Components/Molecules/SessionTitle'
-import ESEmpty from 'sanar-ui/dist/Components/Atoms/Empty'
 
 import { SANPortalPagesContainer } from 'Pages/Portal/Layout'
 import { useAuthContext } from 'Hooks/auth'
@@ -27,21 +26,30 @@ const SANLives = () => {
         live && `https://www.youtube.com/embed/${live.link.split('=')[1]}`
 
     return (
-        <SANPortalPagesContainer className='lives'>
-            <ESSessionTitle
-                title={t('courseDetails.livesTitle')}
-                subtitle={t('courseDetails.livesSubtitle')}
-            />
-            {live ? (
+        !!live && (
+            <SANPortalPagesContainer className='lives'>
+                <ESSessionTitle
+                    title={t('courseDetails.livesTitle')}
+                    subtitle={t('courseDetails.livesSubtitle')}
+                />
+
                 <ESLiveSection
                     videoSrc={link}
                     description={live.description}
                     title={live.title}
                     date={date}
-                    linkedin={live.professors[0].linkedin}
-                    avatar={live.professors[0].profile_picture}
-                    name={live.professors[0].name}
-                    formation={live.professors[0].resume}
+                    linkedin={
+                        !!live.professors ? live.professors[0].linkedin : ''
+                    }
+                    avatar={
+                        !!live.professors
+                            ? live.professors[0].profile_picture
+                            : ''
+                    }
+                    name={!!live.professors ? live.professors[0].name : ''}
+                    formation={
+                        !!live.professors ? live.professors[0].resume : ''
+                    }
                     //FIXME: action={
                     //     <ESButton
                     //         size='xsmall'
@@ -54,11 +62,9 @@ const SANLives = () => {
                     //     </ESButton>
                     // }
                 />
-            ) : (
-                <ESEmpty />
-            )}
-            <ANTDivider />
-        </SANPortalPagesContainer>
+                {lives[1] && <ANTDivider />}
+            </SANPortalPagesContainer>
+        )
     )
 }
 

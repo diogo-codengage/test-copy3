@@ -22,15 +22,15 @@ const intlPath = 'mainMenu.initial.'
 const SANInitial = ({ setTab, history }) => {
     const { lastAccessed, error } = usePortalContext()
     const {
-        enrollment: { course, ranking }
+        enrollment: { course, ranking, next_module }
     } = useAuthContext()
     const { menuOpenOrClose } = useLayoutContext()
     const { t } = useTranslation('esanar')
 
     const moduleReference = last =>
-        `${t('global.subject')} ${last.module_order}, ${t('global.activity')} ${
-            last.resource_order
-        }`
+        `${t('global.subject')} ${last.module_order + 1}, ${t(
+            'global.activity'
+        )} ${last.resource_order + 1}`
 
     const goClassroom = () =>
         history.push(
@@ -65,7 +65,11 @@ const SANInitial = ({ setTab, history }) => {
             </div>
             <div className='pl-md pr-md'>
                 {!error ? (
-                    <ESLeftOff {...leftProps} />
+                    !!next_module ? (
+                        <ESLeftOff {...leftProps} />
+                    ) : (
+                        <></>
+                    )
                 ) : (
                     <div className='san-portal-layout__error-card'>
                         <SANErrorPiece

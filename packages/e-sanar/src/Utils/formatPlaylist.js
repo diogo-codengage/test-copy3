@@ -11,35 +11,19 @@ export const formatPlaylist = arr => {
             ) {
                 return null
             } else {
+                const levelQuiz = ordered.find(lv => lv.resource_type === 'Quiz' && !lv.display && lv.index === level.index)
+                if (!!levelQuiz) return { ...level, quiz: levelQuiz.quiz }
                 return level
             }
         })
         .filter(level => level && level)
 
     return noEmpty
-        .map((level, index) => ({
-            ...level,
-            ...(noEmpty[index + 1] &&
-                noEmpty[index + 1].index === level.index &&
-                noEmpty[index + 1]['resource_type'] === 'Quiz' && {
-                    quiz: noEmpty[index + 1].quiz
-                })
-        }))
-        .filter((level, index) => {
-            if (
-                level['resource_type'] === 'Quiz' &&
-                noEmpty[index - 1] &&
-                noEmpty[index - 1].index === level.index &&
-                noEmpty[index - 1]['resource_type'] === 'Video' &&
-                index < noEmpty.length
-            ) {
+        .filter((level) => {
+            if (level['resource_type'] === 'Quiz' && !level['display']) {
                 return null
             }
 
             return level
         })
-        .map((level, index) => ({
-            ...level,
-            index
-        }))
 }

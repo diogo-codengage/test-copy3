@@ -17,26 +17,11 @@ const config: ICognitoUserPoolData = {
 let sessionUserAttributes: CognitoUserSession
 let cognitoUserSingleton: CognitoUser
 
-function userHasSubscription(token: string): boolean {
+function userHasSubscription(decodedToken): boolean {
     try {
-        const base64Url = token.split('.')[1]
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-        const jsonPayload = decodeURIComponent(
-            atob(base64)
-                .split('')
-                .map(function(c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-                })
-                .join('')
-        )
-
-        const userData = JSON.parse(jsonPayload)
-        const products = JSON.parse(userData['custom:products']) || []
+        const products = decodedToken['custom:products'] || []
         return products.includes('resmed')
     } catch (error) {
-        Sentry.configureScope(scope => {
-            scope.setExtra('jwt_token', token)
-        })
         Sentry.captureException(error)
         return false
     }
@@ -45,7 +30,7 @@ function userHasSubscription(token: string): boolean {
 type SuccessCallback = (session: CognitoUserSession) => void
 const onSuccess = (resolve: SuccessCallback, reject: any) => {
     return (session: CognitoUserSession) => {
-        if (userHasSubscription(session.getIdToken().getJwtToken())) {
+        if (userHasSubscription(session.getIdToken().decodePayload())) {
             resolve(session)
         } else {
             cognitoUserSingleton.signOut()

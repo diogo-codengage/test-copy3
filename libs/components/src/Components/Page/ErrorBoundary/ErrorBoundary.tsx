@@ -4,7 +4,7 @@ import { SANError500, ISANError500Props } from '../Error500'
 
 export interface ISANErrorBoundaryProps extends Partial<ISANError500Props> {
     component?: React.ReactNode
-    onError?: (error?: any, errorInfo?: any) => void
+    onError?: (error: any, errorInfo: any) => void
 }
 
 class SANErrorBoundary extends Component<
