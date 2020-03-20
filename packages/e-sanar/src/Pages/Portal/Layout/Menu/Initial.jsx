@@ -22,7 +22,7 @@ const intlPath = 'mainMenu.initial.'
 const SANInitial = ({ setTab, history }) => {
     const { lastAccessed, error } = usePortalContext()
     const {
-        enrollment: { course, ranking, next_module },
+        enrollment: { course, ranking },
         me: {
             enrollments: { length: coursesCount }
         }
@@ -68,7 +68,7 @@ const SANInitial = ({ setTab, history }) => {
             </div>
             <div className='pl-md pr-md'>
                 {!error ? (
-                    !!next_module ? (
+                    !!lastAccessed ? (
                         <ESLeftOff {...leftProps} />
                     ) : (
                         <></>
