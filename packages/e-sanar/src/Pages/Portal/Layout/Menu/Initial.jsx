@@ -22,7 +22,7 @@ const intlPath = 'mainMenu.initial.'
 const SANInitial = ({ setTab, history }) => {
     const { lastAccessed, error } = usePortalContext()
     const {
-        enrollment: { course, ranking, next_module }
+        enrollment: { course, ranking }
     } = useAuthContext()
     const { menuOpenOrClose } = useLayoutContext()
     const { t } = useTranslation('esanar')
