@@ -67,7 +67,7 @@ const SANCourseContinue = ({ history }) => {
             <SANPortalPagesContainer>
                 {!error ? (
                     <ESRow gutter={24}>
-                        {!!next_module && (
+                        {!!lastAccessed && (
                             <ESCol xs={24} md={12}>
                                 <SessionTitle
                                     title={t(
