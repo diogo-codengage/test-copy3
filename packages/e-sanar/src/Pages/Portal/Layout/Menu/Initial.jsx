@@ -22,7 +22,10 @@ const intlPath = 'mainMenu.initial.'
 const SANInitial = ({ setTab, history }) => {
     const { lastAccessed, error } = usePortalContext()
     const {
-        enrollment: { course, ranking }
+        enrollment: { course, ranking },
+        me: {
+            enrollments: { length: coursesCount }
+        }
     } = useAuthContext()
     const { menuOpenOrClose } = useLayoutContext()
     const { t } = useTranslation('esanar')
@@ -109,12 +112,14 @@ const SANInitial = ({ setTab, history }) => {
                     onClick={() => menuOpenOrClose()}
                     to='/aluno/banco-questoes'
                 />
-                <ESNavigationListItem
-                    data-testid='san-menu-navigation_change-course'
-                    key={6}
-                    title={t(`${intlPath}changeCourse`)}
-                    icon={<ESEvaIcon name='swap-outline' color='default' />}
-                />
+                {coursesCount > 1 && (
+                    <ESNavigationListItem
+                        data-testid='san-menu-navigation_change-course'
+                        key={6}
+                        title={t(`${intlPath}changeCourse`)}
+                        icon={<ESEvaIcon name='swap-outline' color='default' />}
+                    />
+                )}
                 <ESNavigationListItem
                     data-testid='san-menu-navigation__my-account'
                     key={7}
