@@ -65,7 +65,7 @@ const SANInitial = ({ setTab, history }) => {
             </div>
             <div className='pl-md pr-md'>
                 {!error ? (
-                    !!next_module ? (
+                    !!lastAccessed ? (
                         <ESLeftOff {...leftProps} />
                     ) : (
                         <></>
