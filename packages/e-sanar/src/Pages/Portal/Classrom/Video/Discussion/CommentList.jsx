@@ -30,6 +30,8 @@ const SANCommentList = ({ resourceId }) => {
     const { t } = useTranslation('esanar')
     const { me } = useAuthContext()
     const [comments, setComments] = useState({ data: [], count: 0 })
+    const [allAnswersCount, setAllAnswersCount] = useState(0)
+    const [allRepliesCount, setAllRepliesCount] = useState(0)
 
     const handleRemoveComment = async ({ commentId, parentId }) => {
         try {
@@ -41,7 +43,15 @@ const SANCommentList = ({ resourceId }) => {
                 update: removeCommentCache({ commentId, parentId })
             })
 
-            parentId && removeStateComment({ commentId, parentId })
+            if (!!parentId) {
+                removeStateComment({ commentId, parentId })
+            } else {
+                const data = comments.data.filter(cmm => cmm.id !== commentId)
+                setComments(oldComments => ({
+                    ...oldComments,
+                    data
+                }))
+            }
         } catch {
             message.error(t('classroom.failRemoveComment'))
         }
@@ -70,7 +80,6 @@ const SANCommentList = ({ resourceId }) => {
     }
 
     const handleSubComment = async ({ text, parentId, user }) => {
-        await handleLoadReplies(parentId, false)
         try {
             const {
                 data: { createComment }
@@ -101,6 +110,7 @@ const SANCommentList = ({ resourceId }) => {
                 ...oldComments,
                 data
             }))
+            await handleLoadReplies(parentId, false)
         } catch {
             message.error(t('classroom.failCreateComment'))
         }
@@ -217,7 +227,7 @@ const SANCommentList = ({ resourceId }) => {
     const handleFetchMore = fetchMore => () =>
         fetchMore({
             variables: {
-                skip: comments.data.length
+                skip: comments.data.length + allAnswersCount
             },
             updateQuery: commentsFetchMore
         })
@@ -231,7 +241,18 @@ const SANCommentList = ({ resourceId }) => {
                 )
             }))
             .filter(cmm => !cmm.parent_id)
-        setComments({ data: mountComments, count: mountComments.length })
+        let countAnswers = 0
+        let countReplies = 0
+        comments.data.forEach(ac => {
+            if (!!ac.parent_id) countAnswers += 1
+            else countReplies += ac.replies_count
+        })
+        setAllAnswersCount(countAnswers)
+        setAllRepliesCount(countReplies)
+        setComments({
+            data: mountComments,
+            count: comments.count
+        })
     }
 
     return (
@@ -262,7 +283,6 @@ const SANCommentList = ({ resourceId }) => {
                             message={t('classroom.failLoadComments')}
                         />
                     )
-
                 return (
                     <ESCommentList
                         avatar={me.profile_picture}
@@ -281,7 +301,10 @@ const SANCommentList = ({ resourceId }) => {
                         loadMoreProps={{
                             onClick: handleFetchMore(fetchMore)
                         }}
-                        hasMore={comments.count > comments.data.length}
+                        hasMore={
+                            comments.count >
+                            comments.data.length + allRepliesCount
+                        }
                     />
                 )
             }}
