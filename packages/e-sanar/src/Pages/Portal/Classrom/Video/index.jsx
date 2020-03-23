@@ -235,7 +235,9 @@ const SANClassroomVideo = () => {
                 activeKey={activeKey}
                 renderTabBar={renderTabBar({
                     onClick: openMenu,
-                    nextResource: nextResource && nextResource.title,
+                    nextResource: nextResource
+                        ? nextResource.title
+                        : t('classroom.concluded'),
                     prevResource: prevResource && prevResource.title,
                     onPrev: onNavigation('prev'),
                     onNext: onNavigation('next'),

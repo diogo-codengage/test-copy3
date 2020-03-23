@@ -38,7 +38,11 @@ const SANClassroomMock = () => {
                 rightChildren={
                     <ESLessonHeaderExtra
                         previousLesson={prevResource && prevResource.title}
-                        nextLesson={nextResource && nextResource.title}
+                        nextLesson={
+                            nextResource
+                                ? nextResource.title
+                                : t('classroom.concluded')
+                        }
                         onPrev={onNavigation('prev')}
                         onNext={onNavigation('next')}
                     />
