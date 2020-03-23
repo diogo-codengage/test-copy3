@@ -251,12 +251,12 @@ export default {
         part: 'Parte',
         progress: {
             video: {
-                completed: 'Vídeo completo',
-                incomplete: 'Vídeo incompleto'
+                completed: 'Vídeo visto',
+                incomplete: 'Vídeo não-visto'
             },
             quiz: {
-                completed: 'Quiz completo',
-                incomplete: 'Quiz incompleto'
+                completed: 'Quiz feito',
+                incomplete: 'Quiz não-feito'
             }
         }
     },
