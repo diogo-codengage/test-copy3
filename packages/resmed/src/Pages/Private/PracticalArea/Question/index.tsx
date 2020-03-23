@@ -55,7 +55,8 @@ const FinishWithoutQuestions = memo<IFinishWithoutQuestionsProps>(
                     <SANButton
                         size='small'
                         mr='md'
-                        variant='text'
+                        variant='solid'
+                        color='primary'
                         uppercase
                         bold
                         onClick={onClose}
@@ -64,8 +65,7 @@ const FinishWithoutQuestions = memo<IFinishWithoutQuestionsProps>(
                     </SANButton>
                     <SANButton
                         size='small'
-                        variant='solid'
-                        color='primary'
+                        variant='text'
                         uppercase
                         bold
                         onClick={onRestart}

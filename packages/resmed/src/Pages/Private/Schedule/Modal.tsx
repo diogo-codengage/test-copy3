@@ -162,7 +162,7 @@ export const RMModalSuggestion = ({
                 <SANButton
                     size='small'
                     mr='md'
-                    variant='text'
+                    variant='solid'
                     color='primary'
                     uppercase
                     bold
@@ -172,7 +172,7 @@ export const RMModalSuggestion = ({
                 </SANButton>
                 <SANButton
                     size='small'
-                    variant='solid'
+                    variant='text'
                     color='primary'
                     uppercase
                     bold
@@ -198,8 +198,11 @@ export const RMModalSchedule = withRouter(
 
         const handleClick = () => {
             handleTrack('Cronograma Used', {
-                'Resource type': options.resourceType === 'Level' ? 'Lesson' : options.resourceType,
-                'Resource ID': options.resourceId,
+                'Resource type':
+                    options.resourceType === 'Level'
+                        ? 'Lesson'
+                        : options.resourceType,
+                'Resource ID': options.resourceId
             })
             if (!!options) {
                 if (!!options.accessContent) {

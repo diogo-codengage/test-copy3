@@ -26,7 +26,8 @@ const RMLogout = ({ onLeave, onCancel, ...props }) => {
                 <SANButton
                     size='small'
                     mr='md'
-                    variant='text'
+                    variant='solid'
+                    color='primary'
                     uppercase
                     bold
                     onClick={onLeave}
@@ -35,8 +36,7 @@ const RMLogout = ({ onLeave, onCancel, ...props }) => {
                 </SANButton>
                 <SANButton
                     size='small'
-                    variant='solid'
-                    color='primary'
+                    variant='text'
                     uppercase
                     bold
                     onClick={onCancel}
