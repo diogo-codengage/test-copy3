@@ -108,7 +108,6 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
 
         const onProgress = (percentage, content) => {
             new Promise(resolve => {
-                console.log({ videoError, content })
                 if (!videoError && !!content && content.progress < 100) {
                     const timeInSeconds =
                         playerRef && playerRef.current
