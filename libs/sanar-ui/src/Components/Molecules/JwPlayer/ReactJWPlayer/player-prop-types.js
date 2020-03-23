@@ -20,6 +20,7 @@ const propTypes = {
   onError: PropTypes.func,
   onExitFullScreen: PropTypes.func,
   onFiftyPercent: PropTypes.func,
+  onFirstFrame: PropTypes.func,
   onMute: PropTypes.func,
   onNinetyFivePercent: PropTypes.func,
   onOneHundredPercent: PropTypes.func,

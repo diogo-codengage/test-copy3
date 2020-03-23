@@ -56,6 +56,10 @@ const SANQuiz = ({
         total: 0
     })
 
+    useEffect(() => {
+        handleProgress(1)
+    }, [])
+
     const handleProgress = async percentage => {
         try {
             await client.mutate({
