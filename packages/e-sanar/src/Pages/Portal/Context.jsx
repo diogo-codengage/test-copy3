@@ -164,7 +164,8 @@ const PortalProvider = ({ children, history }) => {
         state,
         dispatch,
         lastAccessed,
-        fetchLastAccessed
+        fetchLastAccessed,
+        fetchLastEnrollmentAccessed
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

@@ -34,7 +34,7 @@ const FLXExams = ({ history }) => {
             message.warning('EM BREVE! Esta funcionalidade ainda está em modo de teste. Estamos trabalhando que a sua experiência seja incrível.', 5);
             history.push('/portal/inicio');
         }
-       
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
