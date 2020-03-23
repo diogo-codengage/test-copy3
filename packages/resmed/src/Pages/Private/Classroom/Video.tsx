@@ -108,6 +108,7 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
 
         const onProgress = (percentage, content) => {
             new Promise(resolve => {
+                console.log({ videoError, content })
                 if (!videoError && !!content && content.progress < 100) {
                     const timeInSeconds =
                         playerRef && playerRef.current
@@ -262,7 +263,7 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                                         onSeventyFivePercent={() =>
                                             debounceProgress(75, video)
                                         }
-                                        onOneHundredPercent={() => {
+                                        onNinetyFivePercent={() => {
                                             debounceProgress(100, video)
                                             handleComplete()
                                         }}
