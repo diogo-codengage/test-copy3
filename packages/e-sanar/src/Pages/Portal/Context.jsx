@@ -14,6 +14,7 @@ import { getClassRoute } from 'Utils/getClassRoute'
 import { useApolloContext } from 'Hooks/apollo'
 import { useAuthContext } from 'Hooks/auth'
 import { GET_LAST_ACCESSED } from 'Apollo/Me/last-accessed'
+import { GET_LAST_ENROLLMENT_ACCESSED } from 'Apollo/Me/last-enrollment-accessed'
 
 const Context = createContext()
 
@@ -23,7 +24,8 @@ const initialState = {
     loading: true,
     success: false,
     error: false,
-    currentModule: null
+    currentModule: null,
+    nextModule: null
 }
 
 const reducer = (state, action) => {
@@ -43,7 +45,8 @@ const PortalProvider = ({ children, history }) => {
     const client = useApolloContext()
     const { t } = useTranslation('esanar')
     const {
-        enrollment: { id: enrollmentId }
+        enrollment: { id: enrollmentId, next_module },
+        setEnrollment
     } = useAuthContext()
     const [prevResource, setPrevResource] = useState(null)
     const [currentResource, setCurrentResource] = useState(null)
@@ -58,10 +61,13 @@ const PortalProvider = ({ children, history }) => {
         return item[item.resource_type.toLowerCase()]
     }
 
-    const onNavigation = dir => () => {
+    const onNavigation = dir => async () => {
         if (dir === 'prev' && prevResource) {
             setCurrentResource(prevResource)
             goClassroom(prevResource)
+        } else if (dir === 'next' && !nextResource && !!next_module) {
+            await fetchLastEnrollmentAccessed()
+            history.push('/aluno/curso')
         } else if (nextResource) {
             setCurrentResource(nextResource)
             goClassroom(nextResource)
@@ -74,6 +80,22 @@ const PortalProvider = ({ children, history }) => {
         history.push(
             `/aluno/sala-aula/${state.currentModule.id}/${type}/${resourceId}`
         )
+    }
+
+    const fetchLastEnrollmentAccessed = async () => {
+        try {
+            const {
+                data: { lastEnrollmentAccessed }
+            } = await client.query({
+                query: GET_LAST_ENROLLMENT_ACCESSED,
+                fetchPolicy: 'network-only'
+            })
+            setEnrollment(lastEnrollmentAccessed)
+        } catch (error) {
+            console.error(error)
+            // message.error(t('global.failLoadLastAccessed'))
+            setError(error)
+        }
     }
 
     const fetchLastAccessed = async () => {

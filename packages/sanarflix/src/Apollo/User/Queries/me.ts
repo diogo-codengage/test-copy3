@@ -45,10 +45,12 @@ export interface IMe {
     phone_number: string
     college: string
     period: string
+    enableExam: boolean
     address: IAddress
     plan: IPlan
     card: ICreditCard
     userMedUniversity: IUserMedUniversity
+   
 }
 
 export const GET_ME = gql`
@@ -63,6 +65,7 @@ export const GET_ME = gql`
             phone_number: phone
             college
             period
+            enable_exam_feature: enableExam
             address {
                 id
                 postal_code

@@ -64,7 +64,11 @@ const SANClassRoomDocument = () => {
                                 previousLesson={
                                     prevResource && prevResource.title
                                 }
-                                nextLesson={nextResource && nextResource.title}
+                                nextLesson={
+                                    nextResource
+                                        ? nextResource.title
+                                        : t('classroom.concluded')
+                                }
                                 onPrev={onNavigation('prev')}
                                 onNext={onNavigation('next')}
                                 bookmarkLabel={t('classroom.bookmarkDocument')}
