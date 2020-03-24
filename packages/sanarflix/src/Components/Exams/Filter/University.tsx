@@ -29,8 +29,8 @@ const TextCol = styled(SANCol)`
 `
 
 const renderItem = item => (
-    <SANSelectOption key={item.value} value={item.value}>
-        {item.label}
+    <SANSelectOption key={item.id} value={item.id}>
+        {item.name}
     </SANSelectOption>
 )
 

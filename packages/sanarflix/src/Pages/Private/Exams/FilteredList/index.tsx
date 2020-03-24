@@ -45,7 +45,7 @@ const FilteredList = ({ filters }: IFilteredListProps) => {
             const response = await client.query<IExamQuery>({
                 query: GET_EXAMS,
                 variables: {
-                    limit: 15,
+                    // limit: 15,
                     medUniversityId: state.university,
                     disciplineIds: state.discipline,
                     themesIds: state.theme,
@@ -58,11 +58,6 @@ const FilteredList = ({ filters }: IFilteredListProps) => {
             message.error(t('global.error'))
         }
         setLoading(false)
-    }
-
-    const onLoadMore = () => {
-        setLoading(true)
-        fetchExamsList()
     }
 
     useEffect(() => {
@@ -95,7 +90,7 @@ const FilteredList = ({ filters }: IFilteredListProps) => {
                         <InfiniteScroll
                             initialLoad={false}
                             pageStart={0}
-                            loadMore={onLoadMore}
+                            loadMore={fetchExamsList}
                             hasMore={!loading && hasMore}
                             useWindow={false}
                         >

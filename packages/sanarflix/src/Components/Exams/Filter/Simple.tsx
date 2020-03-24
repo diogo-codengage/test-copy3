@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
@@ -63,13 +63,15 @@ interface IFLXExamFilterSimpleProps {
 const getIds = arr => arr.map(item => item.value)
 
 const renderItem = item => (
-    <SANSelectOption value={item.value}>{item.label}</SANSelectOption>
+    <SANSelectOption value={item.id}>{item.name}</SANSelectOption>
 )
 
-const getValue = (arr, values) =>
-    arr.filter(item => values.includes(item.value))
+const getValue = (arr, values) => {
+    const newValues = arr.filter(item => values.includes(item.value))
+    return newValues.length ? newValues : undefined
+}
 
-const Fields: React.FC<{ hasLast?: boolean, filters?: IFilters }> = ({ hasLast, filters }) => {
+const Fields: React.FC<{ hasLast?: boolean }> = ({ hasLast }) => {
     const { t } = useTranslation('sanarflix')
     const {
         state,
@@ -84,19 +86,6 @@ const Fields: React.FC<{ hasLast?: boolean, filters?: IFilters }> = ({ hasLast, 
         semesters
     } = useExamFilterContext()
 
-    useEffect(() => {
-        if (!filters) return
-        const changeStateValues = () => {
-            console.log('state', state)
-            // handleUniversity(filters.university)
-            // handleDiscipline(filters.discipline)
-            // handleTheme(filters.theme)
-            // handleSemester(filters.semester)
-        }
-        changeStateValues()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filters])
-
     const getDisciplines = useCallback(getValue, [
         disciplines,
         state.discipline
@@ -105,6 +94,11 @@ const Fields: React.FC<{ hasLast?: boolean, filters?: IFilters }> = ({ hasLast, 
     const getThemes = useCallback(getValue, [themes, state.theme])
 
     const getSemesters = useCallback(getValue, [semesters, state.semester])
+
+    const onChangeUniversity = (value) => {
+        handleUniversity(value)
+        handleDiscipline([])
+    }
 
     const onChangeDiscipline = useCallback(
         items => handleDiscipline(getIds(items)),
@@ -130,7 +124,7 @@ const Fields: React.FC<{ hasLast?: boolean, filters?: IFilters }> = ({ hasLast, 
                         size='large'
                         style={{ width: '100%' }}
                         value={state.university || undefined}
-                        onChange={handleUniversity}
+                        onChange={onChangeUniversity}
                         loading={loadingUniversities}
                     >
                         {universities.map(renderItem)}
@@ -242,7 +236,7 @@ const FLXExamFilterSimpleMobile: React.FC<IFLXExamFilterSimpleProps> = (props) =
                                 mt='sm'
                             />
                             <SANRow gutter={20}>
-                                <Fields filters={props.previousFilters}/>
+                                <Fields />
                                 <SANCol xs={24}>
                                     <Button
                                         disabled={!state.university}
@@ -274,7 +268,7 @@ const FLXExamFilterSimple: React.FC<IFLXExamFilterSimpleProps> = (props) => {
             <SANLayoutContainer>
                 <SANSessionTitle
                     title={t('examFilter.simple.title')}
-                    subtitle={t('examFilter.simple.title')}
+                    subtitle={t('examFilter.simple.subtitle')}
                     extra={
                         <Button
                             disabled={!state.university}
@@ -286,7 +280,7 @@ const FLXExamFilterSimple: React.FC<IFLXExamFilterSimpleProps> = (props) => {
                 />
                 <SANDivider width='100%' bg='grey.2' mb='xl' />
                 <SANRow gutter={20}>
-                    <Fields hasLast filters={props.previousFilters}/>
+                    <Fields hasLast />
                 </SANRow>
             </SANLayoutContainer>
         </SANBox>

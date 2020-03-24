@@ -27,7 +27,7 @@ export const renderItem = (item: IExam, t) => {
     return (
         <SANListItem>
             <SANTypography strong fontSize={{md: 2}} mb={2}>
-                {item.title}: ({item.medUniversity.name} - {item.year}.{item.semester}) {item.discipline.name}
+                {item.title}
                 <SANButton
                     color='primary'
                     variant='solid'
