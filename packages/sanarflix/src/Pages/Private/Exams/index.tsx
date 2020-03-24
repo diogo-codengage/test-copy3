@@ -30,7 +30,7 @@ const FLXExams = ({ history }) => {
     const [showOnBoarding, setShowOnBoarding] = useState<boolean>(isMeUniversityEmpty)
 
     useEffect(() => {
-        if(!me.enableExam) {
+        if(!!me && !me.enable_exam_feature) {
             message.warning('EM BREVE! Esta funcionalidade ainda está em modo de teste. Estamos trabalhando que a sua experiência seja incrível.', 5);
             history.push('/portal/inicio');
         }
