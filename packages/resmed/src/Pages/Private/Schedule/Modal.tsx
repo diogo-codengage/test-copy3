@@ -161,6 +161,16 @@ export const RMModalSuggestion = ({
             <SANModalFooter>
                 <SANButton
                     size='small'
+                    variant='text'
+                    color='primary'
+                    uppercase
+                    bold
+                    onClick={props.onCancel}
+                >
+                    {t('schedule.modal.suggestion.back')}
+                </SANButton>
+                <SANButton
+                    size='small'
                     mr='md'
                     variant='solid'
                     color='primary'
@@ -169,16 +179,6 @@ export const RMModalSuggestion = ({
                     onClick={onConfirm}
                 >
                     {t('schedule.modal.suggestion.confirm')}
-                </SANButton>
-                <SANButton
-                    size='small'
-                    variant='text'
-                    color='primary'
-                    uppercase
-                    bold
-                    onClick={props.onCancel}
-                >
-                    {t('schedule.modal.suggestion.back')}
                 </SANButton>
             </SANModalFooter>
         </SANModal>

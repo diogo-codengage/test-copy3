@@ -25,6 +25,15 @@ const RMLogout = ({ onLeave, onCancel, ...props }) => {
             <SANModalFooter>
                 <SANButton
                     size='small'
+                    variant='text'
+                    uppercase
+                    bold
+                    onClick={onCancel}
+                >
+                    {t('global.back')}
+                </SANButton>
+                <SANButton
+                    size='small'
                     mr='md'
                     variant='solid'
                     color='primary'
@@ -33,15 +42,6 @@ const RMLogout = ({ onLeave, onCancel, ...props }) => {
                     onClick={onLeave}
                 >
                     {t('global.leave')}
-                </SANButton>
-                <SANButton
-                    size='small'
-                    variant='text'
-                    uppercase
-                    bold
-                    onClick={onCancel}
-                >
-                    {t('global.back')}
                 </SANButton>
             </SANModalFooter>
         </SANModal>
