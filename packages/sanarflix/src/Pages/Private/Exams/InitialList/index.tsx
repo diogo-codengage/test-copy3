@@ -47,11 +47,14 @@ const List = ({ searchExams, medUniversity }: IListProps) => {
                 query: GET_EXAMS,
                 variables: {
                     limit: 5,
+                    skip: exams.length,
                     medUniversityId: medUniversity.id
                 }
             })
             setExamsCount(response.data.quizExams.count)
-            setExams(response.data.quizExams.data)
+            exams.length > 0
+                ? setExams(exams.concat(response.data.quizExams.data))
+                : setExams(response.data.quizExams.data)
         } catch {
         }
         setInitLoading(false)
@@ -63,11 +66,14 @@ const List = ({ searchExams, medUniversity }: IListProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    const redirect = () => {
+        searchExams()
+    }
+
     const onLoadMore = () => {
         window.analytics.track('LoadMoreExamsClicked', { universityId: medUniversity.id})
         if (loadMoreClicks >= 1) {
-            //TODO redirect to advanced filters
-            console.log('redirect')
+            redirect()
             return
         }
         setInitLoading(true)
