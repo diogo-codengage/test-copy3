@@ -133,7 +133,7 @@ const FLXMenuInitial: React.FC = () => {
                     title={t('mainMenu.initial.added')}
                 />
                 
-                { me.enableExam ? (
+                {!!me && me.enable_exam_feature ? (
                      <SANNavigationListItem
                      to='/portal/provas'
                      icon={
