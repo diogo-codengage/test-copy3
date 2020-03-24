@@ -30,6 +30,8 @@ const SANCommentList = ({ resourceId }) => {
     const { t } = useTranslation('esanar')
     const { me } = useAuthContext()
     const [comments, setComments] = useState({ data: [], count: 0 })
+    const [allAnswersCount, setAllAnswersCount] = useState(0)
+    const [allRepliesCount, setAllRepliesCount] = useState(0)
 
     const handleRemoveComment = async ({ commentId, parentId }) => {
         try {
@@ -41,7 +43,15 @@ const SANCommentList = ({ resourceId }) => {
                 update: removeCommentCache({ commentId, parentId })
             })
 
-            parentId && removeStateComment({ commentId, parentId })
+            if (!!parentId) {
+                removeStateComment({ commentId, parentId })
+            } else {
+                const data = comments.data.filter(cmm => cmm.id !== commentId)
+                setComments(oldComments => ({
+                    ...oldComments,
+                    data
+                }))
+            }
         } catch {
             message.error(t('classroom.failRemoveComment'))
         }
@@ -70,7 +80,6 @@ const SANCommentList = ({ resourceId }) => {
     }
 
     const handleSubComment = async ({ text, parentId, user }) => {
-        await handleLoadReplies(parentId, false)
         try {
             const {
                 data: { createComment }
@@ -101,6 +110,7 @@ const SANCommentList = ({ resourceId }) => {
                 ...oldComments,
                 data
             }))
+            await handleLoadReplies(parentId, false)
         } catch {
             message.error(t('classroom.failCreateComment'))
         }
@@ -167,7 +177,7 @@ const SANCommentList = ({ resourceId }) => {
 
     const handleLoadReplies = async (parentId, hasAdd = true) => {
         try {
-            const {
+            let {
                 data: { repliesComment }
             } = await client.query({
                 query: GET_REPLIES_COMMENTS,
@@ -179,6 +189,12 @@ const SANCommentList = ({ resourceId }) => {
                     skip: 0
                 }
             })
+            if (!repliesComment) {
+                repliesComment.data = comments.data.filter(
+                    cm => !!cm.parent_id && cm.parent_id === parentId
+                )
+                repliesComment.count = repliesComment.data.length
+            }
             hasAdd &&
                 addSubComments({
                     answers: repliesComment.data,
@@ -211,12 +227,33 @@ const SANCommentList = ({ resourceId }) => {
     const handleFetchMore = fetchMore => () =>
         fetchMore({
             variables: {
-                skip: comments.data.length
+                skip: comments.data.length + allAnswersCount
             },
             updateQuery: commentsFetchMore
         })
 
-    const handleCompleted = ({ comments }) => setComments(comments)
+    const handleCompleted = ({ comments }) => {
+        const mountComments = comments.data
+            .map(cmm => ({
+                ...cmm,
+                answers: comments.data.filter(
+                    cm => !!cm.parent_id && cm.parent_id === cmm.id
+                )
+            }))
+            .filter(cmm => !cmm.parent_id)
+        let countAnswers = 0
+        let countReplies = 0
+        comments.data.forEach(ac => {
+            if (!!ac.parent_id) countAnswers += 1
+            else countReplies += ac.replies_count
+        })
+        setAllAnswersCount(countAnswers)
+        setAllRepliesCount(countReplies)
+        setComments({
+            data: mountComments,
+            count: comments.count
+        })
+    }
 
     return (
         <Query
@@ -246,7 +283,6 @@ const SANCommentList = ({ resourceId }) => {
                             message={t('classroom.failLoadComments')}
                         />
                     )
-
                 return (
                     <ESCommentList
                         avatar={me.profile_picture}
@@ -265,7 +301,10 @@ const SANCommentList = ({ resourceId }) => {
                         loadMoreProps={{
                             onClick: handleFetchMore(fetchMore)
                         }}
-                        hasMore={comments.count > comments.data.length}
+                        hasMore={
+                            comments.count >
+                            comments.data.length + allRepliesCount
+                        }
                     />
                 )
             }}

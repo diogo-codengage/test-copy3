@@ -56,6 +56,11 @@ const SANQuiz = ({
         total: 0
     })
 
+    useEffect(() => {
+        handleProgress(1)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     const handleProgress = async percentage => {
         try {
             await client.mutate({

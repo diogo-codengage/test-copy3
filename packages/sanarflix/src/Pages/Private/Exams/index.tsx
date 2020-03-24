@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { message } from 'antd'
 
 import {
     SANBox,
@@ -30,6 +31,14 @@ const FLXExams = ({ history }) => {
     }
     const [showOnBoarding, setShowOnBoarding] = useState<boolean>(isMeUniversityEmpty)
     const [initialScreen, setInitialScreen] = useState<boolean>(true)
+
+    useEffect(() => {
+        if(!!me && !me.enable_exam_feature) {
+            message.warning('EM BREVE! Esta funcionalidade ainda está em modo de teste. Estamos trabalhando que a sua experiência seja incrível.', 5);
+            history.push('/portal/inicio');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
         window.analytics.page(

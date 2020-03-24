@@ -379,6 +379,7 @@ export default {
         bookmarkDocument: 'Favoritar material',
         next: 'Próxima',
         previous: 'Anterior',
+        concluded: 'Concluído',
         askQuestions: 'Fazer Questões',
         viewDiscussions: 'Ver discussões',
         failHandleBookmark: 'Ocorreu um erro ao favoritar conteúdo.',

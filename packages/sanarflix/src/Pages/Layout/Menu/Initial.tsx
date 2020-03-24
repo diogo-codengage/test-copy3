@@ -20,6 +20,7 @@ import mentalmapImage from 'Assets/images/course-items/mental-map.svg'
 import flowchartImage from 'Assets/images/course-items/flow.svg'
 import articleImage from 'Assets/images/course-items/article.svg'
 import documentImage from 'Assets/images/course-items/document.svg'
+import { useAuthContext } from '../../../Hooks/auth';
 
 const resources = {
     Document: 'documento',
@@ -100,7 +101,7 @@ const FLXLeftOff = withRouter(({ history }) => {
 const FLXMenuInitial: React.FC = () => {
     const { t } = useTranslation('sanarflix')
     const { onCloseMenu, setMenuTab } = useLayoutContext()
-
+    const { me } = useAuthContext()
     const handleAccount = () => setMenuTab(2)
 
     return (
@@ -131,15 +132,19 @@ const FLXMenuInitial: React.FC = () => {
                     dataTestid='flx-menu__go-to--added'
                     title={t('mainMenu.initial.added')}
                 />
-                <SANNavigationListItem
-                    to='/portal/provas'
-                    icon={
-                        <SANEvaIcon name='checkmark-square-outline' color='default' />
-                    }
-                    onClick={onCloseMenu}
-                    dataTestid='flx-menu__go-to--exams'
-                    title={t('mainMenu.initial.exams')}
-                />
+                
+                {!!me && me.enable_exam_feature ? (
+                     <SANNavigationListItem
+                     to='/portal/provas'
+                     icon={
+                         <SANEvaIcon name='checkmark-square-outline' color='default' />
+                     }
+                     onClick={onCloseMenu}
+                     dataTestid='flx-menu__go-to--exams'
+                     title={t('mainMenu.initial.exams')}
+                 />
+                ): null }
+               
                 <SANNavigationListItem
                     to='/portal/banco-questoes/filtro'
                     icon={<SANEvaIcon name='edit-outline' color='default' />}

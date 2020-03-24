@@ -54,23 +54,23 @@ const FinishWithoutQuestions = memo<IFinishWithoutQuestionsProps>(
                 <SANModalFooter>
                     <SANButton
                         size='small'
-                        mr='md'
                         variant='text'
-                        uppercase
-                        bold
-                        onClick={onClose}
-                    >
-                        {t('practicalArea.question.endPractice.modal.close')}
-                    </SANButton>
-                    <SANButton
-                        size='small'
-                        variant='solid'
-                        color='primary'
                         uppercase
                         bold
                         onClick={onRestart}
                     >
                         {t('practicalArea.question.endPractice.modal.restart')}
+                    </SANButton>
+                    <SANButton
+                        size='small'
+                        mr='md'
+                        variant='solid'
+                        color='primary'
+                        uppercase
+                        bold
+                        onClick={onClose}
+                    >
+                        {t('practicalArea.question.endPractice.modal.close')}
                     </SANButton>
                 </SANModalFooter>
             </SANModal>

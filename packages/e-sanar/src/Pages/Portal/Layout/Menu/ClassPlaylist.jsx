@@ -59,8 +59,14 @@ const CommonProgress = () => {
 export const SANClassPlaylistMenuHeader = withRouter(({ history }) => {
     const { menuOpenOrClose, setMenuTab } = useLayoutContext()
     const { t } = useTranslation('esanar')
+    const {
+        fetchLastAccessed,
+        fetchLastEnrollmentAccessed
+    } = usePortalContext()
 
-    const exitClassroom = () => {
+    const exitClassroom = async () => {
+        fetchLastEnrollmentAccessed()
+        fetchLastAccessed()
         history.push('/aluno')
         setMenuTab(0)
     }

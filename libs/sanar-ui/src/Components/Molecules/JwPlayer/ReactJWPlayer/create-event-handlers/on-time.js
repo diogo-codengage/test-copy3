@@ -5,6 +5,12 @@ function onTime(event) {
 
   this.props.onTime(event);
 
+  if (!hasFired.firstFrame && parseInt(position) === 0) {
+    this.props.onFirstFrame();
+    hasFired.firstFrame = true;
+    hasChanged = true;
+  }
+
   if (!hasFired.threeSeconds && position > 3) {
     this.props.onThreeSeconds();
     hasFired.threeSeconds = true;

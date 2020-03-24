@@ -22,15 +22,18 @@ const intlPath = 'mainMenu.initial.'
 const SANInitial = ({ setTab, history }) => {
     const { lastAccessed, error } = usePortalContext()
     const {
-        enrollment: { course, ranking, next_module }
+        enrollment: { course, ranking },
+        me: {
+            enrollments: { length: coursesCount }
+        }
     } = useAuthContext()
     const { menuOpenOrClose } = useLayoutContext()
     const { t } = useTranslation('esanar')
 
     const moduleReference = last =>
-        `${t('global.subject')} ${last.module_order}, ${t('global.activity')} ${
-            last.resource_order
-        }`
+        `${t('global.subject')} ${last.module_order + 1}, ${t(
+            'global.activity'
+        )} ${last.resource_order + 1}`
 
     const goClassroom = () =>
         history.push(
@@ -65,7 +68,7 @@ const SANInitial = ({ setTab, history }) => {
             </div>
             <div className='pl-md pr-md'>
                 {!error ? (
-                    !!next_module ? (
+                    !!lastAccessed ? (
                         <ESLeftOff {...leftProps} />
                     ) : (
                         <></>
@@ -109,12 +112,14 @@ const SANInitial = ({ setTab, history }) => {
                     onClick={() => menuOpenOrClose()}
                     to='/aluno/banco-questoes'
                 />
-                <ESNavigationListItem
-                    data-testid='san-menu-navigation_change-course'
-                    key={6}
-                    title={t(`${intlPath}changeCourse`)}
-                    icon={<ESEvaIcon name='swap-outline' color='default' />}
-                />
+                {coursesCount > 1 && (
+                    <ESNavigationListItem
+                        data-testid='san-menu-navigation_change-course'
+                        key={6}
+                        title={t(`${intlPath}changeCourse`)}
+                        icon={<ESEvaIcon name='swap-outline' color='default' />}
+                    />
+                )}
                 <ESNavigationListItem
                     data-testid='san-menu-navigation__my-account'
                     key={7}

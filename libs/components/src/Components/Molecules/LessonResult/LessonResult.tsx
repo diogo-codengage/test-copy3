@@ -122,18 +122,33 @@ const SANLessonResult = ({
             const props = {
                 fontSize: 'lg',
                 fontWeight: 'bold',
-                color: hasSuccessColletion(question) ? 'white.10' : 'error',
+                color: !question.quiz
+                    ? 'white.5'
+                    : hasSuccessColletion(question)
+                    ? 'white.10'
+                    : 'error',
                 onClick: () =>
-                    !hasSuccessColletion(question) && onGoQuiz(question),
+                    !hasSuccessColletion(question) &&
+                    !!question.quiz &&
+                    onGoQuiz(question),
                 style: {
-                    cursor: hasSuccessColletion(question)
-                        ? 'default'
-                        : 'pointer'
+                    cursor:
+                        hasSuccessColletion(question) || !question.quiz
+                            ? 'default'
+                            : 'pointer'
                 },
-                children: hasSuccessColletion(question)
+                children: !question.quiz
+                    ? t('lessonResult.emptyQuiz')
+                    : hasSuccessColletion(question)
                     ? t('lessonResult.itemSuccess')
                     : t('lessonResult.itemError')
             }
+
+            const title = `${question.title} ${
+                !!question.quiz
+                    ? `(${question.corrects}/${question.total})`
+                    : ''
+            }`
 
             return (
                 <SANBox
@@ -157,14 +172,16 @@ const SANLessonResult = ({
                     >
                         <SANBox display='flex' alignItems='center'>
                             <SANBox
-                                color='white.10'
+                                color={!!question.quiz ? 'white.10' : 'black'}
                                 minWidth='24px'
                                 width='24px'
                                 height='24px'
                                 minHeight='24px'
                                 borderRadius='12px'
                                 bg={
-                                    hasSuccessColletion(question)
+                                    !question.quiz
+                                        ? 'white.5'
+                                        : hasSuccessColletion(question)
                                         ? 'success'
                                         : 'error'
                                 }
@@ -186,7 +203,7 @@ const SANLessonResult = ({
                                     fontWeight='bold'
                                     color='white.5'
                                 >
-                                    {`${question.title} (${question.corrects}/${question.total})`}
+                                    {title}
                                 </SANTypography>
                             </SANBox>
                         </SANBox>

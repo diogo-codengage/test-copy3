@@ -86,7 +86,7 @@ const SANClassroomVideo = () => {
                 currentResource.video.progress.percentage) ||
             0
 
-        if (!videoError && percentage > videoPercentage) {
+        if (!videoError && percentage >= videoPercentage) {
             const timeInSeconds =
                 playerRef && playerRef.current
                     ? playerRef.current.position()
@@ -235,7 +235,9 @@ const SANClassroomVideo = () => {
                 activeKey={activeKey}
                 renderTabBar={renderTabBar({
                     onClick: openMenu,
-                    nextResource: nextResource && nextResource.title,
+                    nextResource: nextResource
+                        ? nextResource.title
+                        : t('classroom.concluded'),
                     prevResource: prevResource && prevResource.title,
                     onPrev: onNavigation('prev'),
                     onNext: onNavigation('next'),

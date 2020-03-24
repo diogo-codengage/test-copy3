@@ -1,4 +1,4 @@
-const noOp = () => {};
+const noOp = () => { };
 
 const defaultProps = {
   aspectRatio: 'inherit',
@@ -23,6 +23,7 @@ const defaultProps = {
   onPause: noOp,
   onVideoLoad: noOp,
   onOneHundredPercent: noOp,
+  onFirstFrame: noOp,
   onThreeSeconds: noOp,
   onTenSeconds: noOp,
   onThirtySeconds: noOp,

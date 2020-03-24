@@ -252,18 +252,19 @@ export default {
         },
         goToPratice: 'Ir para a área de prática',
         itemSuccess: 'Mandou bem',
-        itemError: 'Precisa estudar'
+        itemError: 'Precisa estudar',
+        emptyQuiz: 'Não há questões'
     },
     collection: {
         part: 'Parte',
         progress: {
             video: {
-                completed: 'Vídeo completo',
-                incomplete: 'Vídeo incompleto'
+                completed: 'Vídeo visto',
+                incomplete: 'Vídeo não-visto'
             },
             quiz: {
-                completed: 'Quiz completo',
-                incomplete: 'Quiz incompleto'
+                completed: 'Quiz feito',
+                incomplete: 'Quiz não-feito'
             }
         }
     },
