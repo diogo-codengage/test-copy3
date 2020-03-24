@@ -161,24 +161,24 @@ export const RMModalSuggestion = ({
             <SANModalFooter>
                 <SANButton
                     size='small'
-                    mr='md'
                     variant='text'
-                    color='primary'
-                    uppercase
-                    bold
-                    onClick={onConfirm}
-                >
-                    {t('schedule.modal.suggestion.confirm')}
-                </SANButton>
-                <SANButton
-                    size='small'
-                    variant='solid'
                     color='primary'
                     uppercase
                     bold
                     onClick={props.onCancel}
                 >
                     {t('schedule.modal.suggestion.back')}
+                </SANButton>
+                <SANButton
+                    size='small'
+                    mr='md'
+                    variant='solid'
+                    color='primary'
+                    uppercase
+                    bold
+                    onClick={onConfirm}
+                >
+                    {t('schedule.modal.suggestion.confirm')}
                 </SANButton>
             </SANModalFooter>
         </SANModal>
@@ -198,8 +198,11 @@ export const RMModalSchedule = withRouter(
 
         const handleClick = () => {
             handleTrack('Cronograma Used', {
-                'Resource type': options.resourceType === 'Level' ? 'Lesson' : options.resourceType,
-                'Resource ID': options.resourceId,
+                'Resource type':
+                    options.resourceType === 'Level'
+                        ? 'Lesson'
+                        : options.resourceType,
+                'Resource ID': options.resourceId
             })
             if (!!options) {
                 if (!!options.accessContent) {
