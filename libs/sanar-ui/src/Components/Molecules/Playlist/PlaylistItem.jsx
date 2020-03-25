@@ -11,6 +11,7 @@ import { esUtilConvertSecondsToTime } from '../../../Util/Date'
 const icons = {
     Video: 'play-circle-outline',
     Document: 'book-open-outline',
+    Download: 'download-outline',
     Quiz: 'edit-outline'
 }
 
@@ -42,10 +43,7 @@ const ESPlaylistItem = memo(({ className, index, item, current, onClick }) => {
             ) : (
                 <ESEvaIcon
                     size='large'
-                    name={
-                        icons[downloadToDocument(item.resource_type)] ||
-                        'play-circle-outline'
-                    }
+                    name={icons[item.resource_type] || 'play-circle-outline'}
                     className='icon'
                 />
             )

@@ -155,10 +155,24 @@ const SANClassPlaylist = ({ history }) => {
             level_contents: { data: playlist }
         } = currentModule
 
+        const isDownload = item => {
+            const { document } = item
+            if (!!document) {
+                return !!document.file.mime_type.match('pdf')
+                    ? 'Document'
+                    : 'Download'
+            }
+            return item.resource_type
+        }
+
         return (
             <ESPlaylist
                 loading={loading}
-                items={playlist.map(item => ({ ...item, hasType: true }))}
+                items={playlist.map(item => ({
+                    ...item,
+                    resource_type: isDownload(item),
+                    hasType: true
+                }))}
                 currentIndex={currentResource && currentResource.index}
                 goToResource={goToResource}
             />
