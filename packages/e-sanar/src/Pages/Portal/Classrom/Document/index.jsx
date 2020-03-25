@@ -11,8 +11,7 @@ import ESPdfReader from 'sanar-ui/dist/Components/Atoms/PdfReader'
 import { usePortalContext } from 'Pages/Portal/Context'
 import { useClassroomContext } from '../Context'
 import { SANErrorPiece } from 'sanar-ui/dist/Components/Molecules/Error'
-
-// import { SANPdfViewer } from '@sanar/components'
+import SANCardDownload from 'Components/CardDownload'
 
 const SANClassRoomDocument = () => {
     const { t } = useTranslation('esanar')
@@ -35,6 +34,12 @@ const SANClassRoomDocument = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentResource.document])
+
+    const file =
+        currentResource &&
+        currentResource.document &&
+        currentResource.document.file
+    const { filename, mime_type: fileExtension, url } = file
 
     return (
         <div>
@@ -75,14 +80,18 @@ const SANClassRoomDocument = () => {
                             />
                         }
                     />
-                    <ESPdfReader
-                        url={
-                            currentResource &&
-                            currentResource.document &&
-                            currentResource.document.file &&
-                            currentResource.document.file.url
-                        }
-                    />
+                    {!!fileExtension.match('pdf') ? (
+                        <ESPdfReader url={url} />
+                    ) : (
+                        <SANCardDownload
+                            title={'Arquivos de aula'}
+                            description={filename}
+                            ButtonProps={{
+                                text: 'Fazer download',
+                                action: () => window.open(url)
+                            }}
+                        />
+                    )}
                 </div>
             )}
         </div>
