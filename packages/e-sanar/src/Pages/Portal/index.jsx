@@ -11,6 +11,7 @@ import { useApolloContext } from 'Hooks/apollo'
 import SANPortalLayout from './Layout'
 import { SANPortalProvider } from './Context'
 import ESDefaultError from '../Portal/Errors/Default'
+import { message } from 'antd'
 
 const SANCoursePage = React.lazy(() => import('./Course'))
 const SANQuestionsPage = React.lazy(() => import('./Questions'))
@@ -18,11 +19,16 @@ const SANMyAccountChangePassword = React.lazy(() => import('./MyAccount'))
 const SANHelpCenter = React.lazy(() => import('./HelpCenter'))
 const SANClassroomPage = React.lazy(() => import('./Classrom'))
 
-const SANPortalRoutes = ({ match: { url } }) => {
+const SANPortalRoutes = ({ match: { url }, history }) => {
     const client = useApolloContext()
-    const { setMe, setEnrollment } = useAuthContext()
+    const { setMe, setEnrollment, logout } = useAuthContext()
 
     const handleCompletedMe = ({ me }) => setMe(me)
+
+    const handleErrorMe = err => {
+        message.error(err)
+        logout(history)
+    }
 
     const handleCompletedEnrollment = ({ lastEnrollmentAccessed }) =>
         setEnrollment(lastEnrollmentAccessed)
@@ -34,78 +40,88 @@ const SANPortalRoutes = ({ match: { url } }) => {
 
     return (
         <Query query={GET_ME} onCompleted={handleCompletedMe}>
-            {({ loading: loadingMe, error: errorMe }) => (
-                <Query
-                    query={GET_LAST_ENROLLMENT_ACCESSED}
-                    onCompleted={handleCompletedEnrollment}
-                >
-                    {({
-                        loading: loadingEnrollment,
-                        error: errorEnrollment
-                    }) => {
-                        if (loadingMe || loadingEnrollment) {
-                            return <SANSplashLoader />
-                        }
-                        if (errorMe || errorEnrollment) {
-                            return <ESDefaultError />
-                        }
+            {({ loading: loadingMe, error: errorMe }) => {
+                if (errorMe) {
+                    handleErrorMe(
+                        errorMe.message
+                            .replace('GraphQL error: ', '')
+                            .split('Error: ')
+                            .join('')
+                    )
+                }
+                return (
+                    <Query
+                        query={GET_LAST_ENROLLMENT_ACCESSED}
+                        onCompleted={handleCompletedEnrollment}
+                    >
+                        {({
+                            loading: loadingEnrollment,
+                            error: errorEnrollment
+                        }) => {
+                            if (loadingMe || loadingEnrollment) {
+                                return <SANSplashLoader />
+                            }
+                            if (errorEnrollment) {
+                                return <ESDefaultError />
+                            }
 
-                        return (
-                            <SANPortalProvider>
-                                <SANPortalLayout>
-                                    <Suspense
-                                        fallback={
-                                            <SANSplashLoader size='flexible' />
-                                        }
-                                    >
-                                        <Switch>
-                                            <Route
-                                                path={`${url}/curso`}
-                                                strict
-                                                component={SANCoursePage}
-                                            />
-                                            <Route
-                                                path={`${url}/banco-questoes`}
-                                                component={SANQuestionsPage}
-                                            />
-                                            {/*
+                            return (
+                                <SANPortalProvider>
+                                    <SANPortalLayout>
+                                        <Suspense
+                                            fallback={
+                                                <SANSplashLoader size='flexible' />
+                                            }
+                                        >
+                                            <Switch>
+                                                <Route
+                                                    path={`${url}/curso`}
+                                                    strict
+                                                    component={SANCoursePage}
+                                                />
+                                                <Route
+                                                    path={`${url}/banco-questoes`}
+                                                    component={SANQuestionsPage}
+                                                />
+                                                {/*
                                                 Diogo Biz - 05/02/2020 FD-1024
                                                 Remover favoritos
                                             */}
-                                            {/* <Route
+                                                {/* <Route
                                                 path={`${url}/favoritos`}
                                                 component={SANBookmarkRouter}
                                             /> */}
-                                            <Route
-                                                path={`${url}/minha-conta`}
-                                                component={
-                                                    SANMyAccountChangePassword
-                                                }
-                                            />
-                                            <Route
-                                                path={`${url}/central-ajuda`}
-                                                component={SANHelpCenter}
-                                            />
-                                            <Route
-                                                path={`${url}/sala-aula/:moduleId/:type?/:resourceId?`}
-                                                component={SANClassroomPage}
-                                            />
-                                            <Route
-                                                path={[`${url}/`, `${url}`]}
-                                                render={() => (
-                                                    <Redirect
-                                                        to={`${url}/curso`}
-                                                    />
-                                                )}
-                                            />
-                                        </Switch>
-                                    </Suspense>
-                                </SANPortalLayout>
-                            </SANPortalProvider>
-                        )
-                    }}
-                </Query>
-            )}
+                                                <Route
+                                                    path={`${url}/minha-conta`}
+                                                    component={
+                                                        SANMyAccountChangePassword
+                                                    }
+                                                />
+                                                <Route
+                                                    path={`${url}/central-ajuda`}
+                                                    component={SANHelpCenter}
+                                                />
+                                                <Route
+                                                    path={`${url}/sala-aula/:moduleId/:type?/:resourceId?`}
+                                                    component={SANClassroomPage}
+                                                />
+                                                <Route
+                                                    path={[`${url}/`, `${url}`]}
+                                                    render={() => (
+                                                        <Redirect
+                                                            to={`${url}/curso`}
+                                                        />
+                                                    )}
+                                                />
+                                            </Switch>
+                                        </Suspense>
+                                    </SANPortalLayout>
+                                </SANPortalProvider>
+                            )
+                        }}
+                    </Query>
+                )
+            }}
         </Query>
     )
 }
