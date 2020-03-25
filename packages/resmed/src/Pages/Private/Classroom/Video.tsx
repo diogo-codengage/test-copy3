@@ -260,7 +260,7 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                                         onSeventyFivePercent={() =>
                                             debounceProgress(75, video)
                                         }
-                                        onNinetyFivePercent={() => {
+                                        onOneHundredPercent={() => {
                                             debounceProgress(100, video)
                                             handleComplete()
                                         }}
