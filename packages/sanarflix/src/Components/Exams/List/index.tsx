@@ -10,7 +10,6 @@ import {
 } from '@sanar/components'
 import { IExam } from 'Apollo/Exams/Queries/exams'
 import question from '../../../Assets/images/exams/question.png'
-import { useTranslation } from 'react-i18next'
 
 const Image = SANStyled.img`
     width: 20px;
@@ -43,22 +42,6 @@ export const renderItem = (item: IExam, t) => {
                 <Image src={question}/> {item.questionsCount} {t('exams.list.questions')}
             </SANTypography>
         </SANListItem>
-    )
-}
-
-export const EmptyExamsLabel = () => {
-    const { t } = useTranslation('sanarflix')
-    return (
-        <>
-            <SANTypography
-                fontSize={{ md: 2 }}
-                color='grey.7'
-                textAlign='left'
-                mb={15}
-            >
-                {t('exams.list.emptySubtitle')}
-            </SANTypography>
-        </>
     )
 }
 

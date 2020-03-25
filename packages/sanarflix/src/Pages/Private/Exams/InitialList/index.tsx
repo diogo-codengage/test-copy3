@@ -8,13 +8,14 @@ import {
     SANList,
     SANLayoutContainer,
     SANStyled,
-    SANTypography
+    SANTypography,
+    SANEmpty
 } from '@sanar/components'
 import { GET_EXAMS, IExam, IExamQuery } from 'Apollo/Exams/Queries/exams'
 import { IMedUniversity } from 'Apollo/Exams/Queries/medUniversities'
 
-import FLXExamFilter from '../../../../Components/Exams/Filter'
-import { renderItem, ExamsCount, EmptyExamsLabel } from '../../../../Components/Exams/List'
+import FLXExamFilter from 'Components/Exams/Filter'
+import { renderItem, ExamsCount } from 'Components/Exams/List'
 
 interface IListProps {
     medUniversity: IMedUniversity
@@ -120,7 +121,7 @@ const List = ({ searchExams, medUniversity }: IListProps) => {
                         </SANTypography>
                     ) : null}
                     {!initLoading && !loading && (!exams || exams.length === 0) ? (
-                        <EmptyExamsLabel />
+                        <SANEmpty />
                     ) : (
                         <SANList
                             dataSource={exams}

@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useApolloClient } from '@apollo/react-hooks'
 import { useTranslation } from 'react-i18next'
-import { message } from 'antd'
 
 import {
     SANBox,
     SANList,
     SANLayoutContainer,
     SANTypography,
-    SANInfiniteScroll
+    SANInfiniteScroll,
+    SANEmpty,
+    useSnackbarContext
 } from '@sanar/components'
 import { GET_EXAMS, IExam, IExamQuery } from 'Apollo/Exams/Queries/exams'
 import FLXExamFilterSimple from 'Components/Exams/Filter/Simple'
-import { renderItem, ExamsCount, EmptyExamsLabel } from 'Components/Exams/List'
+import { renderItem, ExamsCount } from 'Components/Exams/List'
 import { IFilters, IYearSemester, useExamFilterContext } from 'Components/Exams/Filter/Context'
 
 interface IFilteredListProps {
@@ -27,6 +28,7 @@ const FilteredList = ({ filters }: IFilteredListProps) => {
     const [exams, setExams] = useState<IExam[]>([])
     const [examsCount, setExamsCount] = useState<number|null>(null)
     const { state } = useExamFilterContext()
+    const snackbar = useSnackbarContext()
 
     const createYearSemesters = (semesters) => {
         let yearSemesters: IYearSemester[] = []
@@ -65,7 +67,10 @@ const FilteredList = ({ filters }: IFilteredListProps) => {
                 ? setExams(exams.concat(response.data.quizExams.data))
                 : setExams(response.data.quizExams.data)
         } catch {
-            message.error(t('global.error'))
+            snackbar({
+                message: t('global.error'),
+                theme: 'error'
+            })
         }
         setLoading(false)
         setHasMore(!!(examsCount && exams.length < examsCount))
@@ -96,7 +101,7 @@ const FilteredList = ({ filters }: IFilteredListProps) => {
                         </SANTypography>
                     ) : null}
                     {!loading && (!exams || exams.length === 0) ? (
-                        <EmptyExamsLabel />
+                        <SANEmpty />
                     ) : (
                         <SANInfiniteScroll
                             loadMore={fetchExamsList}
