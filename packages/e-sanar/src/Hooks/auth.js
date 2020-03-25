@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react'
+import { Auth } from 'aws-amplify'
 
 export const SANAuthContext = createContext()
 
@@ -8,11 +9,18 @@ export const SANAuthProvider = ({ children }) => {
     const [me, setMe] = useState()
     const [enrollment, setEnrollment] = useState()
 
+    const logout = (history) => {
+        Auth.signOut().then(() => {
+            history.push('/')
+        })
+    }
+
     const value = {
         me,
         setMe,
         enrollment,
-        setEnrollment
+        setEnrollment,
+        logout
     }
 
     return (
