@@ -77,7 +77,7 @@ const FLXExams = ({ history }) => {
                                 medUniversity={userMedUniversity.medUniversity}
                                 searchExams={searchExams}
                             />)
-                            : <FilteredList />
+                            : <FilteredList university={userMedUniversity.medUniversity.id}/>
                         }
                     </FLXExamFilterProvider>
                 )

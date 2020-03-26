@@ -15,13 +15,13 @@ import {
 import { GET_EXAMS, IExam, IExamQuery } from 'Apollo/Exams/Queries/exams'
 import FLXExamFilterSimple from 'Components/Exams/Filter/Simple'
 import { renderItem, ExamsCount } from 'Components/Exams/List'
-import { IFilters, IYearSemester, useExamFilterContext } from 'Components/Exams/Filter/Context'
+import { IYearSemester, useExamFilterContext } from 'Components/Exams/Filter/Context'
 
 interface IFilteredListProps {
-    filters?: IFilters
+    university: string
 }
 
-const FilteredList = ({ filters }: IFilteredListProps) => {
+const FilteredList = ({ university }: IFilteredListProps) => {
     const client = useApolloClient()
     const { t } = useTranslation('sanarflix')
     const [loading, setLoading] = useState<boolean>(false)
@@ -44,13 +44,14 @@ const FilteredList = ({ filters }: IFilteredListProps) => {
 
     const fetchExamsList = async () => {
         setLoading(true)
+        const universityId = state.university.length > 0 ? state.university : university
         try {
             const response = await client.query<IExamQuery>({
                 query: GET_EXAMS,
                 variables: {
                     limit: 15,
                     skip: exams.length,
-                    medUniversityId: state.university,
+                    medUniversityId: universityId,
                     disciplineIds: state.discipline,
                     themesIds: state.theme,
                     semesters: createYearSemesters(state.semester)
@@ -59,7 +60,7 @@ const FilteredList = ({ filters }: IFilteredListProps) => {
             const data = response.data.quizExams.data
             setExamsCount(response.data.quizExams.count)
             if (exams.length > 0) {
-                exams[1].medUniversity.id === state.university
+                exams[1].medUniversity.id === universityId
                     ? setExams(exams.concat(data))
                     : setExams(data)
             } else {
@@ -83,7 +84,7 @@ const FilteredList = ({ filters }: IFilteredListProps) => {
     return (
         <SANBox>
             <SANBox backgroundColor='grey-solid.1'>
-                <FLXExamFilterSimple previousFilters={filters} applyFilter={fetchExamsList}/>
+                <FLXExamFilterSimple applyFilter={fetchExamsList}/>
             </SANBox>
             <SANBox>
                 <SANLayoutContainer pt={8} pb={7}>

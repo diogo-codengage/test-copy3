@@ -22,7 +22,7 @@ import {
     SANSelectFilter
 } from '@sanar/components'
 import { useWindowSize } from '@sanar/utils/dist/Hooks'
-import { useExamFilterContext, IFilters } from './Context'
+import { useExamFilterContext } from './Context'
 
 interface ISelectWrapperProps {
     label: string
@@ -56,7 +56,6 @@ const Button: React.FC<ISANButtonProps> = ({ children, ...props }) => (
 )
 
 interface IFLXExamFilterSimpleProps {
-    previousFilters?: IFilters
     applyFilter: () => void
 }
 
