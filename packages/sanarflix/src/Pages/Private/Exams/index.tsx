@@ -56,10 +56,16 @@ const FLXExams = ({ history }) => {
         setInitialScreen(false)
     }
 
+    const returnClicked = () => {
+        !showOnBoarding && !initialScreen
+            ? setInitialScreen(true)
+            : history.push('/portal/inicio')
+    }
+
     return (
         <SANBox displayFlex flexDirection='column' flex='1'>
             <SANHeader
-                onBack={() => history.push('/portal/inicio')}
+                onBack={() => returnClicked()}
                 SessionTitleProps={{
                     title: t('exams.title'),
                     subtitle: t('exams.subtitle')
