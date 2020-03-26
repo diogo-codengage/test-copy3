@@ -9,7 +9,8 @@ import {
     SANTypography,
     SANInfiniteScroll,
     SANEmpty,
-    useSnackbarContext
+    useSnackbarContext,
+    SANSpin
 } from '@sanar/components'
 import { GET_EXAMS, IExam, IExamQuery } from 'Apollo/Exams/Queries/exams'
 import FLXExamFilterSimple from 'Components/Exams/Filter/Simple'
@@ -41,13 +42,6 @@ const FilteredList = ({ filters }: IFilteredListProps) => {
         return yearSemesters
     }
 
-    const applyFilters = () => {
-        setLoading(true)
-        setExamsCount(null)
-        setExams([])
-        fetchExamsList()
-    }
-
     const fetchExamsList = async () => {
         setLoading(true)
         try {
@@ -62,10 +56,15 @@ const FilteredList = ({ filters }: IFilteredListProps) => {
                     semesters: createYearSemesters(state.semester)
                 }
             })
+            const data = response.data.quizExams.data
             setExamsCount(response.data.quizExams.count)
-            exams.length > 0
-                ? setExams(exams.concat(response.data.quizExams.data))
-                : setExams(response.data.quizExams.data)
+            if (exams.length > 0) {
+                exams[1].medUniversity.id === state.university
+                    ? setExams(exams.concat(data))
+                    : setExams(data)
+            } else {
+                setExams(data)
+            }
         } catch {
             snackbar({
                 message: t('global.error'),
@@ -84,11 +83,11 @@ const FilteredList = ({ filters }: IFilteredListProps) => {
     return (
         <SANBox>
             <SANBox backgroundColor='grey-solid.1'>
-                <FLXExamFilterSimple previousFilters={filters} applyFilter={applyFilters}/>
+                <FLXExamFilterSimple previousFilters={filters} applyFilter={fetchExamsList}/>
             </SANBox>
             <SANBox>
                 <SANLayoutContainer pt={8} pb={7}>
-                    {examsCount ? (
+                    {examsCount && exams.length > 0 ? (
                         <SANTypography
                             fontSize={{ md: 2 }}
                             color='grey.7'
@@ -107,12 +106,18 @@ const FilteredList = ({ filters }: IFilteredListProps) => {
                             loadMore={fetchExamsList}
                             hasMore={!loading && hasMore}
                         >
-                            <SANList
-                                mt={5}
-                                dataSource={exams}
-                                loading={loading}
-                                renderItem={(item) => renderItem(item, t)}
-                            />
+                            {exams.length > 0 &&
+                                <SANList
+                                    mt={5}
+                                    dataSource={exams}
+                                    renderItem={(item) => renderItem(item, t)}
+                                />
+                            }
+                            {loading &&
+                                <SANBox width='100%' py={5} textAlign='center'>
+                                    <SANSpin />
+                                </SANBox>
+                            }
                         </SANInfiniteScroll>
                     )}
                 </SANLayoutContainer>
