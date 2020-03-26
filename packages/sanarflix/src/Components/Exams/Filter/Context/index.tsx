@@ -3,33 +3,32 @@ import React, { useContext, createContext, useState, useReducer } from 'react'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 
 import {
-    GET_QUIZ_UNIVERSITIES,
-    IQuizUniversitiesQuery,
-    IUniversity
-} from 'Apollo/Exam/Queries/quiz-universities'
+    GET_MED_UNIVERSITIES,
+    IMedUniversityQuery,
+    IMedUniversity
+} from 'Apollo/Exams/Queries/medUniversities'
 import {
     GET_QUIZ_DISCIPLINES,
     IQuizDisciplinesQuery,
     IQuizDisciplinesVariables,
     IDiscipline
-} from 'Apollo/Exam/Queries/quiz-disciplines'
+} from 'Apollo/Exams/Queries/quiz-disciplines'
 import {
     GET_QUIZ_THEMES,
     IQuizThemesQuery,
     IQuizIThemesVariables,
     ITheme
-} from 'Apollo/Exam/Queries/quiz-themes'
+} from 'Apollo/Exams/Queries/quiz-themes'
 import {
     GET_QUIZ_SEMESTERS,
     IQuizISemestersQuery,
     IQuizISemestersVariables,
     ISemester
-} from 'Apollo/Exam/Queries/quiz-semesters'
+} from 'Apollo/Exams/Queries/quiz-semesters'
 
 interface IFLXExamFilterProviderValue {
     setCurrentTab: React.Dispatch<React.SetStateAction<ITab>>
     currentTab: ITab
-    handleSubmit: () => void
     state: IState
     dispatch: React.Dispatch<IAction>
 
@@ -38,7 +37,7 @@ interface IFLXExamFilterProviderValue {
     handleTheme: (value: string[]) => void
     handleSemester: (value: string[]) => void
 
-    universities: IUniversity[]
+    universities: IMedUniversity[]
     disciplines: IDiscipline[]
     themes: ITheme[]
     semesters: ISemester[]
@@ -55,19 +54,26 @@ export const useExamFilterContext = () => useContext(Context)
 type ITab = 'university' | 'discipline' | 'theme' | 'semester'
 
 type IAction =
-    | {
-          type: 'reset'
-      }
+    | { type: 'reset' }
     | { type: 'changeUniversity'; value: string }
     | { type: 'changeDiscipline'; value: string[] }
     | { type: 'changeTheme'; value: string[] }
     | { type: 'changeSemester'; value: string[] }
 
-interface IState {
+export interface IState {
     university: string
     discipline: string[]
     theme: string[]
     semester: string[]
+}
+
+export interface IYearSemester {
+    year: string
+    semester: string
+}
+
+export interface IFilters extends IState{
+    yearSemesters: IYearSemester[]
 }
 
 const initialState = {
@@ -102,7 +108,7 @@ const reducer: React.Reducer<IState, IAction> = (state, action) => {
             }
             return {
                 ...state,
-                discipline: action.value
+                discipline: initialState.discipline
             }
         case 'changeTheme':
             if (
@@ -125,7 +131,7 @@ const reducer: React.Reducer<IState, IAction> = (state, action) => {
                 semester: action.value
             }
         default:
-            throw new Error()
+            return state
     }
 }
 
@@ -136,8 +142,8 @@ const FLXExamFilterProvider: React.FC = ({ children }) => {
         initialState
     )
     const { data: dataUniversities, loading: loadingUniversities } = useQuery<
-        IQuizUniversitiesQuery
-    >(GET_QUIZ_UNIVERSITIES)
+        IMedUniversityQuery
+    >(GET_MED_UNIVERSITIES)
     const [
         getDisciplines,
         { data: dataDisciplines, loading: loadingDisciplines }
@@ -183,16 +189,9 @@ const FLXExamFilterProvider: React.FC = ({ children }) => {
 
     const handleSemester = value => dispatch({ type: 'changeSemester', value })
 
-    const handleSubmit = () => {
-        console.log({
-            state
-        })
-    }
-
     const value: IFLXExamFilterProviderValue = {
         setCurrentTab,
         currentTab,
-        handleSubmit,
         state,
         dispatch,
         handleUniversity,
@@ -206,8 +205,8 @@ const FLXExamFilterProvider: React.FC = ({ children }) => {
         loadingThemes,
 
         universities:
-            !!dataUniversities && dataUniversities.quizMedUniversities
-                ? dataUniversities.quizMedUniversities.data
+            !!dataUniversities && dataUniversities.medUniversities
+                ? dataUniversities.medUniversities.data
                 : [],
         disciplines:
             !!dataDisciplines && dataDisciplines.quizDisciplines
@@ -225,11 +224,5 @@ const FLXExamFilterProvider: React.FC = ({ children }) => {
 
     return <Context.Provider value={value}>{children}</Context.Provider>
 }
-
-export const withFLXExamFilterProvider = Component => props => (
-    <FLXExamFilterProvider>
-        <Component {...props} />
-    </FLXExamFilterProvider>
-)
 
 export default FLXExamFilterProvider

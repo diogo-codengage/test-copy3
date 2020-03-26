@@ -215,6 +215,8 @@ const SANSelectFilter: React.FC<ISANSelectFilterProps> = ({
         if (!!value && !!value.length) {
             const label = makeLabel(value, fieldLabel)
             setLabelSelecteds(label)
+        } else {
+            setLabelSelecteds('')
         }
     }, [value])
 

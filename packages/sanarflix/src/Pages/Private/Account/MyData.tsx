@@ -52,12 +52,7 @@ const FLXMyData = ({ history }: RouteComponentProps) => {
                 } = await client.query<IMedUniversityQuery>({
                     query: GET_MED_UNIVERSITIES
                 })
-                setUniversities(
-                    medUniversities.data.map(v => ({
-                        ...v,
-                        name: v.name.toLowerCase()
-                    }))
-                )
+                setUniversities(medUniversities.data)
             } catch {
             }
         }

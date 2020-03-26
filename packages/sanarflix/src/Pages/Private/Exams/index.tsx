@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { message } from 'antd'
 
 import {
     SANBox,
@@ -10,9 +11,10 @@ import {
 import { events } from 'Config/Segment'
 import OnBoarding from './OnBoarding'
 import List from './InitialList'
-import { useAuthContext } from '../../../Hooks/auth'
+import { useAuthContext } from 'Hooks/auth'
 import { IUserMedUniversity } from 'Apollo/User/Queries/me'
-import { message } from 'antd';
+import FilteredList from './FilteredList'
+import FLXExamFilterProvider from 'Components/Exams/Filter/Context'
 
 const FLXExams = ({ history }) => {
     const { t } = useTranslation('sanarflix')
@@ -28,6 +30,7 @@ const FLXExams = ({ history }) => {
         return show
     }
     const [showOnBoarding, setShowOnBoarding] = useState<boolean>(isMeUniversityEmpty)
+    const [initialScreen, setInitialScreen] = useState<boolean>(true)
 
     useEffect(() => {
         if(!!me && !me.enable_exam_feature) {
@@ -49,6 +52,10 @@ const FLXExams = ({ history }) => {
         setShowOnBoarding(false)
     }
 
+    const searchExams = () => {
+        setInitialScreen(false)
+    }
+
     return (
         <SANBox displayFlex flexDirection='column' flex='1'>
             <SANHeader
@@ -59,8 +66,21 @@ const FLXExams = ({ history }) => {
                 }}
             />
             {showOnBoarding
-                ? (<OnBoarding changePage={(response) => handleChange(response)} userMedUniversity={userMedUniversity}/>)
-                : (<List medUniversity={userMedUniversity.medUniversity} />)
+                ? (<OnBoarding
+                    changePage={(response) => handleChange(response)}
+                    userMedUniversity={userMedUniversity}
+                />)
+                : (
+                    <FLXExamFilterProvider>
+                        {initialScreen
+                            ? (<List
+                                medUniversity={userMedUniversity.medUniversity}
+                                searchExams={searchExams}
+                            />)
+                            : <FilteredList university={userMedUniversity.medUniversity.id}/>
+                        }
+                    </FLXExamFilterProvider>
+                )
             }
         </SANBox>
     )
