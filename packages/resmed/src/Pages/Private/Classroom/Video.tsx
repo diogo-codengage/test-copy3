@@ -106,7 +106,7 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
             )
         }
 
-        const onProgress = (percentage, content) => {
+        const onProgress = (percentage, content, hasGoNext = true) => {
             new Promise(resolve => {
                 if (!videoError && !!content && content.progress < 100) {
                     const timeInSeconds =
@@ -125,7 +125,7 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                     resolve()
                 }
             }).then(() => {
-                if (percentage === 100) {
+                if (percentage === 100 && hasGoNext) {
                     goNextConteent()
                 }
             })
@@ -259,10 +259,11 @@ const RMClassroomVideo = memo<RouteComponentProps<IParams>>(
                                         onSeventyFivePercent={() =>
                                             debounceProgress(75, video)
                                         }
-                                        onOneHundredPercent={() => {
-                                            debounceProgress(100, video)
+                                        onNinetyFivePercent={() => {
+                                            onProgress(100, video, false)
                                             handleComplete()
                                         }}
+                                        onOneHundredPercent={goNextConteent}
                                     />
                                 </SANBox>
                                 <SANBox
