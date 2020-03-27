@@ -123,19 +123,19 @@ const SANExamsQuestionMap = ({
                 <SubtitleStyledItem>
                     <SubtitleIndicatorStyled status='correct' />
                     <SANTypography strong color='#fff'>
-                        {t('exams.practice.questionMap.corrects')}
+                        {t('exams.questionMap.corrects')}
                     </SANTypography>
                 </SubtitleStyledItem>
                 <SubtitleStyledItem>
                     <SubtitleIndicatorStyled status='wrong' />
                     <SANTypography strong color='#fff'>
-                        {t('exams.practice.questionMap.wrong')}
+                        {t('exams.questionMap.wrong')}
                     </SANTypography>
                 </SubtitleStyledItem>
                 <SubtitleStyledItem>
                     <SubtitleIndicatorStyled status='skipped' />
                     <SANTypography strong color='#fff'>
-                        {t('exams.practice.questionMap.skipped')}
+                        {t('exams.questionMap.skipped')}
                     </SANTypography>
                 </SubtitleStyledItem>
             </SubtitleStyled>
