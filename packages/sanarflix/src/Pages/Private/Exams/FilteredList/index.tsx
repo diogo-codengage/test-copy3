@@ -48,24 +48,29 @@ const FilteredList = () => {
         return yearSemesters
     }
 
-    const fetchExamsList = async () => {
+    const universityId =
+        state.university.length > 0 ? state.university : university
+
+    const examsQuery = async (notSkip?: boolean) => {
         setLoading(true)
-        const universityId =
-            state.university.length > 0 ? state.university : university
+        return await client.query<IExamQuery>({
+            query: GET_EXAMS,
+            variables: {
+                limit: 15,
+                skip: notSkip ? 0 : exams.length,
+                medUniversityId: universityId,
+                disciplineIds: state.discipline,
+                themesIds: state.theme,
+                semesters: createYearSemesters(state.semester)
+            }
+        })
+    }
+
+    const fetchExamsList = async () => {
         try {
-            const response = await client.query<IExamQuery>({
-                query: GET_EXAMS,
-                variables: {
-                    limit: 15,
-                    skip: exams.length,
-                    medUniversityId: universityId,
-                    disciplineIds: state.discipline,
-                    themesIds: state.theme,
-                    semesters: createYearSemesters(state.semester)
-                }
-            })
-            const data = response.data.quizExams.data
+            const response = await examsQuery()
             setExamsCount(response.data.quizExams.count)
+            const data = response.data.quizExams.data
             if (exams.length > 0) {
                 exams[1].medUniversity.id === universityId
                     ? setExams(exams.concat(data))
@@ -73,6 +78,23 @@ const FilteredList = () => {
             } else {
                 setExams(data)
             }
+        } catch {
+            snackbar({
+                message: t('global.error'),
+                theme: 'error'
+            })
+        }
+        setLoading(false)
+        setHasMore(!!(examsCount && exams.length < examsCount))
+    }
+
+    const applyFilters = async () => {
+        setExams([])
+        setExamsCount(null)
+        try {
+            const response = await examsQuery(true)
+            setExamsCount(response.data.quizExams.count)
+            setExams(response.data.quizExams.data)
         } catch {
             snackbar({
                 message: t('global.error'),
@@ -91,7 +113,7 @@ const FilteredList = () => {
     return (
         <SANBox>
             <SANBox backgroundColor='grey-solid.1'>
-                <FLXExamFilterSimple applyFilter={fetchExamsList} />
+                <FLXExamFilterSimple applyFilter={applyFilters} />
             </SANBox>
             <SANBox>
                 <SANLayoutContainer pt={8} pb={7}>

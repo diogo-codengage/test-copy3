@@ -17,10 +17,14 @@ const Image = SANStyled.img`
 `
 
 export const renderItem = (item: IExam, t, history) => {
+    const arrTitle = item.title.split(' ')
+    arrTitle.pop()
+    const title = arrTitle.join(' ')
+
     return (
         <SANListItem>
             <SANTypography strong fontSize={{ md: 2 }} mb={2}>
-                {item.title}
+                {title}
                 <SANButton
                     color='primary'
                     variant='solid'
