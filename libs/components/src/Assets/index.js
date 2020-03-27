@@ -35,6 +35,13 @@ import regularEmoji from './images/class-feedback/regular.svg'
 import goodEmoji from './images/class-feedback/good.svg'
 import awesomeEmoji from './images/class-feedback/awesome.svg'
 
+import questionMapCorrectSmall from './images/question-map/correct-small.svg'
+import questionMapCorrectTest from './images/question-map/correct-test.svg'
+import questionMapCorrect from './images/question-map/correct.svg'
+import questionMapWrong from './images/question-map/wrong.svg'
+import questionMapWrongTest from './images/question-map/wrong-test.svg'
+import questionMapWrongTestSmall from './images/question-map/wrong-small.svg'
+
 export {
     typeIconPrimaryBook,
     typeIconPrimaryFile,
@@ -64,5 +71,11 @@ export {
     badEmoji,
     regularEmoji,
     goodEmoji,
-    awesomeEmoji
+    awesomeEmoji,
+    questionMapCorrectSmall,
+    questionMapCorrectTest,
+    questionMapCorrect,
+    questionMapWrong,
+    questionMapWrongTest,
+    questionMapWrongTestSmall
 }
