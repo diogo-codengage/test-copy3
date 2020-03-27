@@ -62,6 +62,7 @@ const FLXFilterDiscipline: React.FC<IFLXFilterDisciplineProps> = () => {
                         items={!!state.university ? disciplines : []}
                         value={state.discipline}
                         loading={loadingDisciplines}
+                        forceScroll={true}
                     />
                 </SANCol>
             </SANRow>
