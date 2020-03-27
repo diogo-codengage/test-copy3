@@ -23,10 +23,14 @@ const goToClassroom = (item: IExam) => {
 }
 
 export const renderItem = (item: IExam, t) => {
+    const arrTitle = item.title.split(' ')
+    arrTitle.pop()
+    const title = arrTitle.join(' ')
+
     return (
         <SANListItem>
             <SANTypography strong fontSize={{md: 2}} mb={2}>
-                {item.title}
+                {title}
                 <SANButton
                     color='primary'
                     variant='solid'
