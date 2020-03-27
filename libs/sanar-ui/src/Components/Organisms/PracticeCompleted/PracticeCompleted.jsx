@@ -41,6 +41,8 @@ const GraphContent = ({ label, value }) => (
 const ESPracticeCompleted = memo(
     ({
         className,
+        title,
+        counterAllLabel,
         values: {
             correct = 0,
             wrong = 0,
@@ -58,7 +60,7 @@ const ESPracticeCompleted = memo(
                 <div className='es-practice-completed--title'>
                     <ESEvaIcon name='checkmark-circle-outline' />
                     <ESTypography level={3} regular>
-                        {t('practiceCompleted.title')}
+                        {title || t('practiceCompleted.title')}
                     </ESTypography>
                 </div>
                 <div className='es-practice-completed__content'>
@@ -91,7 +93,8 @@ const ESPracticeCompleted = memo(
                                 {sawQuestions}
                             </ESTypography>
                             <ESTypography className='es-practice-completed__content__summary__questions--description'>
-                                {t('practiceCompleted.sawQuestions')}
+                                {counterAllLabel ||
+                                    t('practiceCompleted.sawQuestions')}
                             </ESTypography>
                         </ESCol>
                         <ESCol className='graphs'>
