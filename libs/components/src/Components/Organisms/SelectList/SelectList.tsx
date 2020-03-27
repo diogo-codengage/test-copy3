@@ -27,6 +27,7 @@ export interface ISANSelectListProps {
     placeholder: string
     loading?: boolean
     disabled?: boolean
+    forceScroll?: boolean
 }
 
 interface IOnChange {
@@ -136,7 +137,8 @@ const SANSelectList: React.FC<ISANSelectListProps> = ({
     onChange,
     placeholder,
     loading,
-    disabled
+    disabled,
+    forceScroll
 }) => {
     const { t } = useTranslation('components')
     const [search, setSearch] = useState('')
@@ -196,7 +198,7 @@ const SANSelectList: React.FC<ISANSelectListProps> = ({
             border='1px solid'
             borderColor='grey.2'
             height={280}
-            overflow='hidden'
+            overflow={forceScroll ? 'scroll' : 'hidden'}
         >
             <InputStyled
                 iconLeft='search-outline'

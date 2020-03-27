@@ -62,6 +62,7 @@ const FLXFilterTheme: React.FC<IFLXFilterThemeProps> = () => {
                         items={!!state.discipline.length ? themes : []}
                         value={state.theme}
                         loading={loadingThemes}
+                        forceScroll={true}
                     />
                 </SANCol>
             </SANRow>
