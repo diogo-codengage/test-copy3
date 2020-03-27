@@ -163,13 +163,15 @@ export default {
 
         subtitle:
             'Acesse à provas completas e comentadas de diversas universidades do Brasil',
+        questionMap: {
+            corrects: 'Corretas',
+            wrong: 'Erradas',
+            skipped: 'Puladas'
+        },
         practice: {
-            questionMap: {
-                corrects: 'Corretas',
-                wrong: 'Erradas',
-                skipped: 'Puladas'
-            },
-
+            endExam: 'Encerrar prova',
+            next: 'Próximo',
+            previous: 'Voltar',
             title: 'Provas',
             subtitle:
                 'Acesse à provas completas e comentadas de diversas universidades do Brasil',
