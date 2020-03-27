@@ -33,7 +33,13 @@ import {
     goodEmoji,
     awesomeEmoji,
     lessonResultError,
-    lessonResultSuccess
+    lessonResultSuccess,
+    questionMapCorrectSmall,
+    questionMapCorrectTest,
+    questionMapCorrect,
+    questionMapWrong,
+    questionMapWrongTest,
+    questionMapWrongTestSmall
 } from 'Assets'
 
 import { createColorVariants } from './colors'
@@ -75,16 +81,16 @@ export const defaultColors = {
     'pool-green': ['#acfae9', '#5cedce', '#0ea181', '#006e56'],
 
     grey: [
-        'rgba(17, 19, 23, 0.05)',
-        'rgba(17, 19, 23, 0.1)',
-        'rgba(17, 19, 23, 0.15)',
-        'rgba(17, 19, 23, 0.25)',
-        'rgba(17, 19, 23, 0.4)',
-        'rgba(17, 19, 23, 0.5)',
-        'rgba(17, 19, 23, 0.65)',
-        'rgba(17, 19, 23, 0.75)',
-        'rgba(17, 19, 23, 0.85)',
-        'rgba(17, 19, 23, 0.95)'
+        'rgba(17, 19, 23, 0.05)', // 0
+        'rgba(17, 19, 23, 0.1)', // 1
+        'rgba(17, 19, 23, 0.15)', // 2
+        'rgba(17, 19, 23, 0.25)', // 3
+        'rgba(17, 19, 23, 0.4)', // 4
+        'rgba(17, 19, 23, 0.5)', // 5
+        'rgba(17, 19, 23, 0.65)', // 6
+        'rgba(17, 19, 23, 0.75)', // 7
+        'rgba(17, 19, 23, 0.85)', // 8
+        'rgba(17, 19, 23, 0.95)' // 9
     ],
 
     'grey-solid': [
@@ -251,6 +257,14 @@ const assetsDefault = {
         regular: regularEmoji,
         good: goodEmoji,
         awesome: awesomeEmoji
+    },
+    questionMap: {
+        correctSmall: questionMapCorrectSmall,
+        correctTest: questionMapCorrectTest,
+        correct: questionMapCorrect,
+        wrong: questionMapWrong,
+        wrongTest: questionMapWrongTest,
+        wrongTestSmall: questionMapWrongTestSmall
     }
 }
 
