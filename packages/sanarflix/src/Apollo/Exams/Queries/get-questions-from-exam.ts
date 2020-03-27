@@ -24,8 +24,8 @@ export interface IExamQuestionQuery {
 }
 
 export const GET_EXAM_QUESTIONS = gql`
-    query Questions($examIds: [ID]) {
-      questions(examIds: $examIds, limit: 9999) {
+    query Questions($quizId: ID) {
+      questions(quizId: $quizId, limit: 9999) {
             count
             data {
                 id

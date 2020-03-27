@@ -136,6 +136,31 @@ const FLXExamsPracticeProvider = ({ children }) => {
         [state.answers]
     )
 
+    const configuredQuestionMapItems = useMemo(() => {
+        if (questions && state.answers.length) {
+            return questions.map(item => {
+                const answered = state.answers.find(
+                    answer => answer.questionId === item.id
+                )
+
+                if (answered)
+                    return {
+                        status: answered.correct
+                            ? 'correct'
+                            : answered.correct === false
+                            ? 'wrong'
+                            : answered.skipped
+                            ? 'skipped'
+                            : null
+                    }
+
+                return {}
+            })
+        }
+
+        return []
+    }, [questions, state.answers])
+
     const value = {
         dispatch,
         answers: state.answers,
@@ -147,7 +172,8 @@ const FLXExamsPracticeProvider = ({ children }) => {
         pauseTimer,
         questions,
         setQuestions,
-        questionIndex: state.questionIndex
+        questionIndex: state.questionIndex,
+        configuredQuestionMapItems
     }
 
     return <Context.Provider value={value}>{children}</Context.Provider>

@@ -16,16 +16,10 @@ const Image = SANStyled.img`
     margin-bottom: 4px;
 `
 
-const goToClassroom = (item: IExam) => {
-    // TODO redirect to practice area
-    console.log('treinar >>>> ', item)
-    window.analytics.track('Practice Exam Clicked', {examId: item.id})
-}
-
-export const renderItem = (item: IExam, t) => {
+export const renderItem = (item: IExam, t, history) => {
     return (
         <SANListItem>
-            <SANTypography strong fontSize={{md: 2}} mb={2}>
+            <SANTypography strong fontSize={{ md: 2 }} mb={2}>
                 {item.title}
                 <SANButton
                     color='primary'
@@ -33,19 +27,26 @@ export const renderItem = (item: IExam, t) => {
                     uppercase
                     blockOnlyMobile
                     style={{ width: '132px', float: 'right' }}
-                    onClick={() => goToClassroom(item)}
+                    onClick={() =>
+                        history.push(`/portal/provas/pratica/${item.id}`)
+                    }
                 >
-                    <SANEvaIcon name='edit-2-outline' style={{ marginRight: '6px' }}/>{t('exams.list.train')}
+                    <SANEvaIcon
+                        name='edit-2-outline'
+                        style={{ marginRight: '6px' }}
+                    />
+                    {t('exams.list.train')}
                 </SANButton>
             </SANTypography>
-            <SANTypography fontSize={{md: 1}}>
-                <Image src={question}/> {item.questionsCount} {t('exams.list.questions')}
+            <SANTypography fontSize={{ md: 1 }}>
+                <Image src={question} /> {item.questionsCount}{' '}
+                {t('exams.list.questions')}
             </SANTypography>
         </SANListItem>
     )
 }
 
-export const ExamsCount = SANStyled.span<{direction}>`
+export const ExamsCount = SANStyled.span<{ direction }>`
     float: ${prop('direction')};
     
     ${theme('mediaQueries.down.md')} {

@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 
 import { useHistory, useParams } from 'react-router'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 
 import {
     SANBox,
@@ -22,8 +22,7 @@ import {
 } from 'Apollo/Exams/Queries/get-questions-from-exam'
 
 import { useExamsPracticeContext } from './Context'
-
-interface IExamsPracticeProps extends RouteComponentProps<{ id: string }> {}
+import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
 
 interface IResponse {
     comment?: any //TODO: ADD TYPE
@@ -54,7 +53,8 @@ const FLXExamsPractice = () => {
         questions,
         setQuestions,
         questionIndex,
-        dispatch
+        dispatch,
+        configuredQuestionMapItems
     } = useExamsPracticeContext()
 
     const [response, setResponse] = useState<IResponse>(initialResponse)
@@ -63,20 +63,13 @@ const FLXExamsPractice = () => {
         false
     )
 
-    const onOpenQuestionMap = useCallback(
-        () => setIsQuestionMapOpenned(true),
-        []
-    )
-    const onCloseQuestionMap = useCallback(
-        () => setIsQuestionMapOpenned(false),
-        []
-    )
-
     const { data, loading } = useQuery<IExamQuestionQuery>(GET_EXAM_QUESTIONS, {
         variables: {
-            examIds: [params.id]
+            quizId: params.id
         }
     })
+
+    const [answer, { loading: loadingAnswer }] = useMutation(ANSWER_MUTATION)
 
     useEffect(() => {
         if (data && data.questions && data.questions.data) {
@@ -84,15 +77,6 @@ const FLXExamsPractice = () => {
             setQuestions(data && data.questions && data.questions.data)
         }
     }, [data, setQuestions, startTimer])
-
-    const getCorrectAnswer = useCallback(
-        (_, index) => {
-            if (index === 0) {
-                return questions[questionIndex].alternatives.data[0]
-            }
-        },
-        [questions, questionIndex]
-    )
 
     const configureResponse = useCallback(
         ({ goPrevious = false }) => {
@@ -115,13 +99,14 @@ const FLXExamsPractice = () => {
     )
 
     const onNextQuestion = () => {
-        const hasSkipped = answers.findIndex(item => item.skipped)
+        startTimer()
+        window.scrollTo({ top: 0, behavior: 'smooth' })
 
         if (answers.length === questions.length) {
-            if (hasSkipped > -1) {
+            if (answers.findIndex(item => item.skipped) > -1) {
                 dispatch({
                     type: 'NEXT',
-                    payload: hasSkipped - 1
+                    payload: answers.findIndex(item => item.skipped)
                 })
             } else {
                 history.push('/portal/provas/pratica/finalizada')
@@ -131,8 +116,6 @@ const FLXExamsPractice = () => {
         dispatch({
             type: 'NEXT'
         })
-
-        startTimer()
 
         configureResponse({})
     }
@@ -158,37 +141,28 @@ const FLXExamsPractice = () => {
         [questionIndex, dispatch]
     )
 
-    const configuredQuestionMapItems = useMemo(() => {
-        if (questions && answers.length) {
-            return questions.map(item => {
-                const answered = answers.find(
-                    answer => answer.questionId === item.id
-                )
-
-                if (answered)
-                    return {
-                        status: answered.correct
-                            ? 'correct'
-                            : answered.correct === false
-                            ? 'wrong'
-                            : answered.skipped
-                            ? 'skipped'
-                            : null
-                    }
-
-                return {}
-            })
-        }
-
-        return []
-    }, [questions, answers])
-
     const onConfirm = useCallback(
-        answerId => {
+        async answerId => {
             pauseTimer()
-            const correctAnswer = questions[
-                questionIndex
-            ].alternatives.data.find(getCorrectAnswer)
+
+            const {
+                data: {
+                    questionAnswer: {
+                        answer: {
+                            question: { comments, alternatives }
+                        }
+                    }
+                }
+            }: any = await answer({
+                variables: {
+                    questionId: questions[questionIndex]['id'],
+                    alternativeId: answerId
+                }
+            })
+
+            const correctAnswer = alternatives.data.find(
+                alternative => alternative.correct
+            )
 
             const wasSkipped = answers.find(item => {
                 return (
@@ -198,6 +172,10 @@ const FLXExamsPractice = () => {
             })
 
             setResponse({
+                comment:
+                    comments.data && comments.data.length
+                        ? comments.data[0]
+                        : null,
                 answer: correctAnswer!!.id,
                 questionId: questions[questionIndex].id,
                 defaultSelected: answerId
@@ -215,9 +193,10 @@ const FLXExamsPractice = () => {
                 }
             })
 
-            const hasSkipped = answers.find(item => item.skipped)
-
-            if (answers.length + 1 === questions.length && !hasSkipped)
+            if (
+                answers.length + 1 === questions.length &&
+                !answers.find(item => item.skipped)
+            )
                 history.push('/portal/provas/pratica/finalizada')
         },
         [
@@ -225,16 +204,16 @@ const FLXExamsPractice = () => {
             questionIndex,
             answers,
             dispatch,
-            getCorrectAnswer,
             history,
-            pauseTimer
+            pauseTimer,
+            answer
         ]
     )
 
     return (
         <>
             <SANHeader
-                // onBack={() => history.push('/portal/inicio')}
+                onBack={() => history.push('/portal/provas')}
                 SessionTitleProps={{
                     title: t('exams.practice.title'),
                     subtitle: t('exams.practice.subtitle')
@@ -251,7 +230,7 @@ const FLXExamsPractice = () => {
                             onClick={onPreviousQuestion}
                         >
                             <SANEvaIcon name='arrow-back-outline' mr='xs' />
-                            Voltar
+                            {t('exams.practice.previous')}
                         </SANButton>
                         <SANButton
                             disabled={loading || questionIndex === 20}
@@ -261,7 +240,7 @@ const FLXExamsPractice = () => {
                             variant='outlined'
                             onClick={onNextQuestion}
                         >
-                            Próximo
+                            {t('exams.practice.next')}
                             <SANEvaIcon name='arrow-forward-outline' ml='xs' />
                         </SANButton>
                     </SANBox>
@@ -293,7 +272,7 @@ const FLXExamsPractice = () => {
                             <SANButton
                                 size='small'
                                 variant='outlined'
-                                onClick={onOpenQuestionMap}
+                                onClick={() => setIsQuestionMapOpenned(true)}
                                 mr='xl'
                             >
                                 <SANEvaIcon name='map-outline' mr='xs' />
@@ -312,7 +291,7 @@ const FLXExamsPractice = () => {
                                 size='small'
                                 variant='outlined'
                             >
-                                ENCERRAR PROVA
+                                {t('exams.practice.endExam')}
                             </SANButton>
                         </SANBox>
                     </SANBox>
@@ -322,14 +301,14 @@ const FLXExamsPractice = () => {
                         onJump={onSkipQuestion}
                         onPrevious={onPreviousQuestion}
                         onNext={onNextQuestion}
-                        loading={loading}
+                        loading={loading || loadingAnswer}
                         {...response}
                     />
                 </SANLayoutContainer>
             </SANBox>
             <SANExamsQuestionMap
                 items={configuredQuestionMapItems}
-                onCancel={onCloseQuestionMap}
+                onCancel={() => setIsQuestionMapOpenned(false)}
                 visible={isQuestionMapOpenned}
             />
         </>
