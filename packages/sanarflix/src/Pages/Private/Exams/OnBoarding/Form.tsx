@@ -13,7 +13,7 @@ import {
     SANButton,
     useSnackbarContext,
     SANEvaIcon,
-    withSANForm,
+    withSANForm
 } from '@sanar/components'
 
 import {
@@ -21,9 +21,8 @@ import {
     IMedUniversityQuery,
     IMedUniversity
 } from 'Apollo/Exams/Queries/medUniversities'
-import {
-    SAVE_USER_MED_UNIVERSITY_MUTATION
-} from 'Apollo/Exams/Mutations/userMedUniversity'
+import { SAVE_USER_MED_UNIVERSITY_MUTATION } from 'Apollo/Exams/Mutations/userMedUniversity'
+import { GET_ME } from 'Apollo/User/Queries/me'
 
 const OnBoardingForm = ({ form, ...props }) => {
     const client = useApolloClient()
@@ -31,19 +30,23 @@ const OnBoardingForm = ({ form, ...props }) => {
     const createSnackbar = useSnackbarContext()
     const [loading, setLoading] = useState({
         medUniversities: false,
-        submit: false,
+        submit: false
     })
     const [medUniversities, setMedUniversities] = useState<IMedUniversity[]>([])
     const [semesters, setSemesters] = useState<string[]>([])
     const [otherMethodology, setOtherMethodology] = useState<boolean>(false)
     const [disable, setDisable] = useState<boolean>(true)
 
-    useEffect (() => {
+    useEffect(() => {
         const disableSubmit = () => {
             const values = form.getFieldsValue()
             Object.keys(values).length === 0
                 ? setDisable(true)
-                : setDisable(Object.keys(values).some(field => values[field] === undefined))
+                : setDisable(
+                      Object.keys(values).some(
+                          field => values[field] === undefined
+                      )
+                  )
         }
         disableSubmit()
     }, [form])
@@ -54,10 +57,13 @@ const OnBoardingForm = ({ form, ...props }) => {
             let startYear = 2011
             const semesters: string[] = []
             while (startYear <= currentYear) {
-                semesters.push(String(startYear) + '.1', String(startYear) + '.2')
+                semesters.push(
+                    String(startYear) + '.1',
+                    String(startYear) + '.2'
+                )
                 startYear++
             }
-            setSemesters(semesters.reverse());
+            setSemesters(semesters.reverse())
         }
         createSemestersList()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,8 +79,7 @@ const OnBoardingForm = ({ form, ...props }) => {
                     query: GET_MED_UNIVERSITIES
                 })
                 setMedUniversities(medUniversities.data)
-            } catch {
-            }
+            } catch {}
             setLoading(old => ({ ...old, medUniversities: false }))
         }
         fetchMedUniversities()
@@ -95,7 +100,7 @@ const OnBoardingForm = ({ form, ...props }) => {
         'Outra'
     ])
 
-    const onChangeMethodology = (value) => setOtherMethodology(value === 'Outra')
+    const onChangeMethodology = value => setOtherMethodology(value === 'Outra')
 
     const onSubmit = async e => {
         e.preventDefault()
@@ -110,8 +115,10 @@ const OnBoardingForm = ({ form, ...props }) => {
             } = form.getFieldsValue()
             const arrPeriod = ingressSemester.split('.')
 
-            const response = await client.mutate({
+            await client.mutate({
                 mutation: SAVE_USER_MED_UNIVERSITY_MUTATION,
+                refetchQueries: [{ query: GET_ME }],
+                awaitRefetchQueries: true,
                 variables: {
                     medUniversityId: [medUniversityId],
                     ingressYear: arrPeriod[0],
@@ -120,7 +127,7 @@ const OnBoardingForm = ({ form, ...props }) => {
                 }
             })
             window.analytics.track('ExamsOnBoardingFormSubmitted')
-            props.changePage(response.data.saveUserMedUniversity)
+            // props.changePage(response.data.saveUserMedUniversity)
         } catch (e) {
             if (!!e.message) {
                 createSnackbar({
@@ -136,7 +143,7 @@ const OnBoardingForm = ({ form, ...props }) => {
     const createLabel = (icon: string, label: string) => {
         return (
             <span style={{ display: 'flex' }}>
-                <SANEvaIcon name={icon} style={{ marginRight: '6px' }}/>
+                <SANEvaIcon name={icon} style={{ marginRight: '6px' }} />
                 {t(label)}
             </span>
         )
@@ -149,11 +156,16 @@ const OnBoardingForm = ({ form, ...props }) => {
     }
 
     const ingressPeriod = () => {
-        if (props.userMedUniversity && props.userMedUniversity.ingressSemester && props.userMedUniversity.ingressYear) {
+        if (
+            props.userMedUniversity &&
+            props.userMedUniversity.ingressSemester &&
+            props.userMedUniversity.ingressYear
+        ) {
             const savedYear = props.userMedUniversity.ingressYear
-            const year = savedYear.length > 4
-                ? format(new Date(savedYear), 'YYYY')
-                : savedYear
+            const year =
+                savedYear.length > 4
+                    ? format(new Date(savedYear), 'YYYY')
+                    : savedYear
             return `${year}.${props.userMedUniversity.ingressSemester}`
         }
     }
@@ -174,28 +186,26 @@ const OnBoardingForm = ({ form, ...props }) => {
                         {
                             required: true,
                             whitespace: true,
-                            message: t(
-                                'sanarui:formValidateMessages.required'
-                            )
+                            message: t('sanarui:formValidateMessages.required')
                         }
                     ]}
                 >
                     <SANSelect
                         showSearch
-                        optionFilterProp="children"
+                        optionFilterProp='children'
                         loading={loading.medUniversities}
                         size='large'
-                        placeholder={createLabel('award-outline', 'exams.onBoarding.form.selectCollegeLabel')}
+                        placeholder={createLabel(
+                            'award-outline',
+                            'exams.onBoarding.form.selectCollegeLabel'
+                        )}
                     >
                         {medUniversities &&
-                        medUniversities.map((item, index) => (
-                            <SANSelectOption
-                                key={index}
-                                value={item.id}
-                            >
-                                {item.name}
-                            </SANSelectOption>
-                        ))}
+                            medUniversities.map((item, index) => (
+                                <SANSelectOption key={index} value={item.id}>
+                                    {item.name}
+                                </SANSelectOption>
+                            ))}
                     </SANSelect>
                 </SANFormItem>
                 <SANFormItem
@@ -205,31 +215,30 @@ const OnBoardingForm = ({ form, ...props }) => {
                         {
                             required: true,
                             whitespace: true,
-                            message: t(
-                                'sanarui:formValidateMessages.required'
-                            )
+                            message: t('sanarui:formValidateMessages.required')
                         }
                     ]}
                 >
                     <SANSelect
                         size='large'
-                        placeholder={createLabel('calendar-outline', 'exams.onBoarding.form.selectSemesterLabel')}
+                        placeholder={createLabel(
+                            'calendar-outline',
+                            'exams.onBoarding.form.selectSemesterLabel'
+                        )}
                     >
                         {semesters &&
-                        semesters.map((item, index) => (
-                            <SANSelectOption
-                                key={index}
-                                value={item}
-                            >
-                                {item}
-                            </SANSelectOption>
-                        ))}
+                            semesters.map((item, index) => (
+                                <SANSelectOption key={index} value={item}>
+                                    {item}
+                                </SANSelectOption>
+                            ))}
                     </SANSelect>
                 </SANFormItem>
                 <SANFormItem
                     name='methodology'
                     initialValue={
-                        props.userMedUniversity && props.userMedUniversity.methodology
+                        props.userMedUniversity &&
+                        props.userMedUniversity.methodology
                             ? props.userMedUniversity.methodology
                             : undefined
                     }
@@ -237,26 +246,24 @@ const OnBoardingForm = ({ form, ...props }) => {
                         {
                             required: true,
                             whitespace: true,
-                            message: t(
-                                'sanarui:formValidateMessages.required'
-                            )
+                            message: t('sanarui:formValidateMessages.required')
                         }
                     ]}
                 >
                     <SANSelect
                         onChange={onChangeMethodology}
                         size='large'
-                        placeholder={createLabel('book-open-outline', 'exams.onBoarding.form.selectMethodologyLabel')}
+                        placeholder={createLabel(
+                            'book-open-outline',
+                            'exams.onBoarding.form.selectMethodologyLabel'
+                        )}
                     >
                         {methodologies &&
-                        methodologies.map((item, index) => (
-                            <SANSelectOption
-                                key={index}
-                                value={item}
-                            >
-                                {item}
-                            </SANSelectOption>
-                        ))}
+                            methodologies.map((item, index) => (
+                                <SANSelectOption key={index} value={item}>
+                                    {item}
+                                </SANSelectOption>
+                            ))}
                     </SANSelect>
                 </SANFormItem>
                 {otherMethodology ? (
@@ -275,7 +282,9 @@ const OnBoardingForm = ({ form, ...props }) => {
                     >
                         <SANInput
                             size='large'
-                            placeholder={t('exams.onBoarding.form.selectMethodologyLabel')}
+                            placeholder={t(
+                                'exams.onBoarding.form.selectMethodologyLabel'
+                            )}
                         />
                     </SANFormItem>
                 ) : null}

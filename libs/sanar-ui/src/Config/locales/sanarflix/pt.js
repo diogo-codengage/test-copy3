@@ -160,22 +160,46 @@ export default {
     },
     exams: {
         title: 'Provas',
-        subtitle: 'Acesse à provas completas e comentadas de diversas universidades do Brasil',
+
+        subtitle:
+            'Acesse à provas completas e comentadas de diversas universidades do Brasil',
+        questionMap: {
+            corrects: 'Corretas',
+            wrong: 'Erradas',
+            skipped: 'Puladas'
+        },
+        practice: {
+            endExam: 'Encerrar prova',
+            next: 'Próximo',
+            previous: 'Voltar',
+            title: 'Provas',
+            subtitle:
+                'Acesse à provas completas e comentadas de diversas universidades do Brasil',
+            questionMap: 'Mapa de questões',
+            finished: {
+                noActiveExam: 'Primeiro é necessário que você realize um prova',
+                backToExams: 'Escolher outra prova',
+                title: 'Prova finalizada'
+            }
+        },
         onBoarding: {
             first: {
                 title: 'Passe na prova da sua faculdade!',
-                text: 'Aqui você tem acesso às provas da sua faculdade e de diversas universidades do país. Fique por dentro de como são cobrados todos os assuntos da graduação e saia preparado(a) para tirar nota 10!',
-                bottom: 'Encontre a prova ideal para seu estudo por faculdade, disciplina, temas, ano, semestre e metodologia.'
+                text:
+                    'Aqui você tem acesso às provas da sua faculdade e de diversas universidades do país. Fique por dentro de como são cobrados todos os assuntos da graduação e saia preparado(a) para tirar nota 10!',
+                bottom:
+                    'Encontre a prova ideal para seu estudo por faculdade, disciplina, temas, ano, semestre e metodologia.'
             },
             second: {
                 title: 'Encontre as provas já realizadas na sua faculdade!',
-                text: 'Para encontrar a prova que mais se encaixa nas suas necessidades, informe a sua faculdade, o semestre em que você ingressou e sua metodologia de aprendizado.'
+                text:
+                    'Para encontrar a prova que mais se encaixa nas suas necessidades, informe a sua faculdade, o semestre em que você ingressou e sua metodologia de aprendizado.'
             },
             form: {
                 button: 'Começar',
                 selectCollegeLabel: 'Informe a sua faculdade',
                 selectSemesterLabel: 'Informe o seu semestre de ingresso',
-                selectMethodologyLabel: 'Informe a sua metodologia',
+                selectMethodologyLabel: 'Informe a sua metodologia'
             }
         },
         list: {
@@ -185,7 +209,7 @@ export default {
             train: 'Treinar',
             exams: ' prova(s)',
             questions: ' questões',
-            loadMore: 'Carregar mais',
+            loadMore: 'Carregar mais'
         }
     },
     courses: {

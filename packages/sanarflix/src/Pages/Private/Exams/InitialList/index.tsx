@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useApolloClient } from '@apollo/react-hooks'
+import { useHistory } from 'react-router'
 
 import {
     SANBox,
@@ -12,15 +13,10 @@ import {
     SANEmpty
 } from '@sanar/components'
 import { GET_EXAMS, IExam, IExamQuery } from 'Apollo/Exams/Queries/exams'
-import { IMedUniversity } from 'Apollo/Exams/Queries/medUniversities'
 
 import FLXExamFilter from 'Components/Exams/Filter'
 import { renderItem, ExamsCount } from 'Components/Exams/List'
-
-interface IListProps {
-    medUniversity: IMedUniversity
-    searchExams: () => void
-}
+import { useExamsContext } from '../Context'
 
 const LoadMoreBox = SANStyled.div`
     text-align: center;
@@ -33,14 +29,17 @@ const LoadMoreBox = SANStyled.div`
     cursor: pointer;
 `
 
-const List = ({ searchExams, medUniversity }: IListProps) => {
+const List = () => {
+    const history = useHistory()
     const client = useApolloClient()
     const { t } = useTranslation('sanarflix')
     const [loading, setLoading] = useState<boolean>(false)
     const [initLoading, setInitLoading] = useState<boolean>(true)
     const [exams, setExams] = useState<IExam[]>([])
-    const [examsCount, setExamsCount] = useState<number|null>(null)
+    const [examsCount, setExamsCount] = useState<number | null>(null)
     const [loadMoreClicks, setLoadMoreClicks] = useState<number>(0)
+
+    const { medUniversity } = useExamsContext()
 
     const fetchExamsList = async () => {
         try {
@@ -56,8 +55,7 @@ const List = ({ searchExams, medUniversity }: IListProps) => {
             exams.length > 0
                 ? setExams(exams.concat(response.data.quizExams.data))
                 : setExams(response.data.quizExams.data)
-        } catch {
-        }
+        } catch {}
         setInitLoading(false)
         setLoading(false)
     }
@@ -68,11 +66,13 @@ const List = ({ searchExams, medUniversity }: IListProps) => {
     }, [])
 
     const redirect = () => {
-        searchExams()
+        history.push('/portal/provas/busca')
     }
 
     const onLoadMore = () => {
-        window.analytics.track('LoadMoreExamsClicked', { universityId: medUniversity.id})
+        window.analytics.track('LoadMoreExamsClicked', {
+            universityId: medUniversity.id
+        })
         if (loadMoreClicks >= 1) {
             redirect()
             return
@@ -91,7 +91,7 @@ const List = ({ searchExams, medUniversity }: IListProps) => {
                     {t('exams.list.loadMore')}
                 </LoadMoreBox>
             </SANBox>
-        ) : null;
+        ) : null
     }
 
     return (
@@ -116,18 +116,25 @@ const List = ({ searchExams, medUniversity }: IListProps) => {
                         >
                             {t('exams.list.subtitle')}
                             <ExamsCount color='grey.7' direction={'right'}>
-                                <strong>{examsCount}</strong> {t('exams.list.exams')}
+                                <strong>{examsCount}</strong>{' '}
+                                {t('exams.list.exams')}
                             </ExamsCount>
                         </SANTypography>
                     ) : null}
-                    {!initLoading && !loading && (!exams || exams.length === 0) ? (
+                    {!initLoading &&
+                    !loading &&
+                    (!exams || exams.length === 0) ? (
                         <SANEmpty />
                     ) : (
                         <SANList
                             dataSource={exams}
                             loading={initLoading}
-                            loadMore={examsCount && examsCount >= 5 ? loadMore() : undefined}
-                            renderItem={(item) => renderItem(item, t)}
+                            loadMore={
+                                examsCount && examsCount >= 5
+                                    ? loadMore()
+                                    : undefined
+                            }
+                            renderItem={item => renderItem(item, t, history)}
                         />
                     )}
                 </SANLayoutContainer>
@@ -135,7 +142,7 @@ const List = ({ searchExams, medUniversity }: IListProps) => {
             <SANBox>
                 <FLXExamFilter
                     universityId={medUniversity.id}
-                    searchExams={searchExams}
+                    searchExams={redirect}
                 />
             </SANBox>
         </SANBox>

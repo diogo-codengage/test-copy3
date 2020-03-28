@@ -61,13 +61,9 @@ export const PrevButton = ({ onClick }) => {
     )
 }
 
-const FLXExamFilter: React.FC<IFLXExamFilterProps> = (props) => {
+const FLXExamFilter: React.FC<IFLXExamFilterProps> = props => {
     const { t } = useTranslation('sanarflix')
-    const {
-        currentTab,
-        setCurrentTab,
-        state
-    } = useExamFilterContext()
+    const { currentTab, setCurrentTab, state } = useExamFilterContext()
     return (
         <SANBox
             pb={{ md: '8', _: '0' }}
@@ -95,19 +91,23 @@ const FLXExamFilter: React.FC<IFLXExamFilterProps> = (props) => {
                             tab={<Title>{t('examFilter.college.title')}</Title>}
                             key='university'
                         >
-                            <FLXFilterUniversity universityId={props.universityId}/>
+                            <FLXFilterUniversity
+                                universityId={props.universityId}
+                            />
                         </SANTabPane>
                         <SANTabPane
                             tab={<Title>{t('examFilter.subject.title')}</Title>}
                             key='discipline'
-                            disabled={!state.university}
+                            disabled={state && !state.university}
                         >
                             <FLXFilterDiscipline />
                         </SANTabPane>
                         <SANTabPane
                             tab={<Title>{t('examFilter.theme.title')}</Title>}
                             key='theme'
-                            disabled={!state.discipline || !state.discipline.length}
+                            disabled={
+                                !state.discipline || !state.discipline.length
+                            }
                         >
                             <FLXFilterTheme />
                         </SANTabPane>
