@@ -323,12 +323,27 @@ export default {
             lesson: {
                 title: 'Aula',
                 watch: 'Assistir aula',
-                watched: 'Aula assistida'
+                watched: 'Aula assistida',
+                hideContent: 'Ocultar conteúdos',
+                showContent: 'Ver conteúdos',
+                progress: {
+                    video: {
+                        completed: 'Vídeo visto',
+                        incomplete: 'Vídeo não-visto'
+                    },
+                    quiz: {
+                        completed: 'Quiz feito',
+                        incomplete: 'Quiz não-feito'
+                    }
+                }
             },
             live: {
                 title: 'Live',
                 button: 'Assistir live',
                 comingSoon: 'Em breve'
+            },
+            exams: {
+                title: 'Exame'
             },
             suggestion: {
                 title: 'Habilitar Edição',

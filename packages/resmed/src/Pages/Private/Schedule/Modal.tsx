@@ -1,21 +1,29 @@
-import React, { useMemo, useCallback } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
-import { theme, switchProp } from 'styled-tools'
+import { theme } from 'styled-tools'
+import { useLazyQuery } from '@apollo/react-hooks'
+import { Tooltip } from 'antd'
 
 import {
     SANButton,
     SANTypography,
     SANModal,
-    SANModalFooter,
     SANBox,
     SANEvaIcon,
-    SANScroll
+    SANScroll,
+    SANSpin,
+    SANGenericError
 } from '@sanar/components'
 
 import { IAppointment } from 'Apollo/Schedule/Queries/appointments'
+import {
+    GET_COLLECTIONS,
+    ICollectionsQuery,
+    ICollectionsVariables
+} from 'Apollo/Schedule/Queries/collections'
 import { useMainContext } from '../Context'
 
 type IStatus = 'viewed' | 'unseen' | 'live' | 'exams'
@@ -39,162 +47,186 @@ const defaultOption: IOption = {
     description: ''
 }
 
-const SANTypographyStyled = styled(SANTypography)<{ status: IStatus }>`
-    && {
-        &:before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background-color: ${switchProp('status', {
-                viewed: theme('colors.primary-4'),
-                unseen: theme('colors.burgundy.1'),
-                live: theme('colors.grey.4'),
-                exams: theme('colors.blue.2')
-            })};
-            border-radius: 3px;
-            position: absolute;
-            top: 8px;
-            left: 0;
-        }
-    }
-`
-
-const Wrapper = styled(SANBox)<{ status: IStatus }>`
-    && {
-        cursor: pointer;
-        &:hover {
-            background-color: ${theme('colors.grey.0')};
-            &:first-child {
-                border-top-left-radius: ${theme('radii.base')};
-                border-top-right-radius: ${theme('radii.base')};
-            }
-            &:last-of-type {
-                border-bottom-left-radius: ${theme('radii.base')};
-                border-bottom-right-radius: ${theme('radii.base')};
-            }
-        }
-    }
-`
-
-interface IRMModalMore extends IModalProps {
-    options: IOption[]
-    date: Date
-}
-
-export const RMModalMore = ({ options = [], date, ...props }: IRMModalMore) => {
-    const { t } = useTranslation('resmed')
-
-    const renderItem = useCallback(
-        (option, index) => (
-            <Wrapper
-                key={index}
-                borderBottom={
-                    index < options.length - 1 ? '1px solid' : undefined
-                }
-                borderColor='grey.1'
-                display='flex'
-                alignItems='center'
-                justifyContent='space-between'
-                p='sm'
-                status={option.status}
-                mr='sm'
-            >
-                <SANBox pl='sm' position='relative' width='calc(100% - 20px)'>
-                    <SANTypographyStyled
-                        status={option.status}
-                        fontSize='lg'
-                        color='grey.7'
-                        ellipsis
-                    >
-                        {option.title}
-                    </SANTypographyStyled>
-                    <SANTypography fontSize='xs' color='grey.5' mt='xxs'>
-                        {option.subtitle}
-                    </SANTypography>
-                </SANBox>
-                <SANEvaIcon name='arrow-ios-forward-outline' />
-            </Wrapper>
-        ),
-        [options]
-    )
-
-    return (
-        <SANModal
-            width={360}
-            title={`${t('schedule.modal.day')} ${date.getDate()}`}
-            centered
-            {...props}
-        >
-            <SANBox height={350}>
-                <SANScroll>{options.map(renderItem)}</SANScroll>
-            </SANBox>
-        </SANModal>
-    )
-}
-
-interface IRMModalSuggestion extends IModalProps {
-    onConfirm: () => void
-    checked: boolean
-}
-
-export const RMModalSuggestion = ({
-    onConfirm,
-    checked,
-    ...props
-}: IRMModalSuggestion) => {
-    const { t } = useTranslation('resmed')
-
-    return (
-        <SANModal
-            width={436}
-            title={t('schedule.modal.suggestion.title')}
-            centered
-            {...props}
-        >
-            <SANTypography fontSize='lg' color='grey.7' mb='xl'>
-                {t(
-                    `schedule.modal.suggestion.${
-                        checked ? 'descriptionEnable' : 'descriptionDisable'
-                    }`
-                )}
-            </SANTypography>
-            <SANModalFooter>
-                <SANButton
-                    size='small'
-                    variant='text'
-                    color='primary'
-                    uppercase
-                    bold
-                    onClick={props.onCancel}
-                >
-                    {t('schedule.modal.suggestion.back')}
-                </SANButton>
-                <SANButton
-                    size='small'
-                    mr='md'
-                    variant='solid'
-                    color='primary'
-                    uppercase
-                    bold
-                    onClick={onConfirm}
-                >
-                    {t('schedule.modal.suggestion.confirm')}
-                </SANButton>
-            </SANModalFooter>
-        </SANModal>
-    )
-}
-
 interface IRMModalSchedule extends IModalProps, RouteComponentProps {
     options: IOption
 }
 
 const types = ['viewed', 'unseen', 'live', 'exams']
 
-export const RMModalSchedule = withRouter(
-    ({ options = defaultOption, history, ...props }: IRMModalSchedule) => {
+const Badge = styled.sup`
+    &&& {
+        position: absolute;
+        right: 0;
+        top: 0;
+        border-radius: 3px;
+        width: 6px;
+        height: 6px;
+        background-color: ${theme('colors.error')};
+    }
+`
+
+const Header = ({ seeDetails, hasDetails, hasFinished }) => {
+    const { t } = useTranslation('resmed')
+    return (
+        <SANBox display='flex' alginItems='center'>
+            <SANBox mr='sm'>{t('schedule.modal.lesson.title')}</SANBox>
+            <Tooltip
+                title={
+                    hasDetails
+                        ? t('schedule.modal.lesson.hideContent')
+                        : t('schedule.modal.lesson.showContent')
+                }
+            >
+                <SANBox position='relative'>
+                    <SANButton
+                        circle
+                        size='xsmall'
+                        onClick={() => seeDetails(old => !old)}
+                        hasFinished={hasFinished}
+                        variant='outlined'
+                    >
+                        <SANEvaIcon
+                            name={
+                                hasDetails ? 'eye-outline' : 'eye-off-outline'
+                            }
+                        />
+                    </SANButton>
+                    {!hasFinished && <Badge />}
+                </SANBox>
+            </Tooltip>
+        </SANBox>
+    )
+}
+const iconCompleted = {
+    name: 'checkmark-circle-2',
+    color: 'success'
+}
+
+const videoIcon = {
+    name: 'video',
+    color: 'warning'
+}
+
+const quizIcon = {
+    name: 'edit-2',
+    color: 'warning'
+}
+
+const RowCollection = styled(SANBox)`
+    cursor: pointer;
+    &:hover {
+        background-color: ${theme('colors.grey.0')};
+    }
+`
+
+const renderCollection = (collection, accessContent) => (
+    <CollectionDetail
+        key={collection.id}
+        collection={collection}
+        accessContent={accessContent}
+    />
+)
+
+const CollectionDetail = withRouter<any, any>(
+    ({ collection, accessContent, history }) => {
         const { t } = useTranslation('resmed')
+
+        const videoCompleted = useMemo(
+            () => collection.content.video.progress === 100,
+            [collection]
+        )
+
+        const quizCompleted = useMemo(
+            () =>
+                !!collection.content.quiz &&
+                collection.content.quiz.progress === 100,
+            [collection]
+        )
+
+        const videoProps = videoCompleted ? iconCompleted : videoIcon
+        const quizProps = quizCompleted ? iconCompleted : quizIcon
+
+        const goToCollection = () => {
+            if (!!accessContent) {
+                const { specialtyId, subSpecialtyId, lesson } = accessContent
+
+                const final = `${lesson.id}/${collection.id}/video/${collection.content.video.id}`
+                if (!!subSpecialtyId) {
+                    history.push(
+                        `/inicio/sala-aula/${specialtyId}/${subSpecialtyId}/${final}`
+                    )
+                } else {
+                    history.push(`/inicio/sala-aula/${specialtyId}/${final}`)
+                }
+            }
+        }
+
+        return (
+            <RowCollection
+                key={collection.id}
+                display='flex'
+                alignItems='center'
+                justifyContent='space-between'
+                py='xxs'
+                pr='lg'
+                onClick={goToCollection}
+            >
+                <SANTypography ellipsis>{collection.name}</SANTypography>
+                <SANBox display='flex' alignItems='center'>
+                    <Tooltip
+                        title={
+                            videoCompleted
+                                ? t(
+                                      'schedule.modal.lesson.progress.video.completed'
+                                  )
+                                : t(
+                                      'schedule.modal.lesson.progress.video.incomplete'
+                                  )
+                        }
+                        placement='topLeft'
+                        mouseEnterDelay={0.3}
+                    >
+                        <SANEvaIcon {...videoProps} />
+                    </Tooltip>
+                    {!!collection.content.quiz && (
+                        <Tooltip
+                            title={
+                                quizCompleted
+                                    ? t(
+                                          'schedule.modal.lesson.progress.video.completed'
+                                      )
+                                    : t(
+                                          'schedule.modal.lesson.progress.video.incomplete'
+                                      )
+                            }
+                            placement='topLeft'
+                            mouseEnterDelay={0.3}
+                        >
+                            <SANEvaIcon ml='xxs' {...quizProps} />
+                        </Tooltip>
+                    )}
+                </SANBox>
+            </RowCollection>
+        )
+    }
+)
+
+export const RMModalSchedule = withRouter(
+    ({
+        options = defaultOption,
+        history,
+        onCancel,
+        ...props
+    }: IRMModalSchedule) => {
+        const { t } = useTranslation('resmed')
+        const [
+            getCollections,
+            { data: dataCollections, loading: loadingCollections }
+        ] = useLazyQuery<ICollectionsQuery, ICollectionsVariables>(
+            GET_COLLECTIONS
+        )
         const { handleTrack } = useMainContext()
+        const [hasDetails, seeDetails] = useState(false)
 
         const handleClick = () => {
             handleTrack('Cronograma Used', {
@@ -250,17 +282,47 @@ export const RMModalSchedule = withRouter(
             }
         }
 
+        const handleCancel = () => {
+            seeDetails(false)
+            onCancel()
+        }
+
+        useEffect(() => {
+            if (!!hasDetails && !!options.accessContent) {
+                const { lesson } = options.accessContent
+                getCollections({
+                    variables: {
+                        parentId: lesson.id
+                    }
+                })
+            }
+        }, [hasDetails, options, getCollections])
+
         const title = useMemo(() => {
             switch (options.status) {
                 case 'viewed' || 'unseen':
-                    return t('schedule.modal.lesson.title')
+                    return (
+                        <Header
+                            hasDetails={hasDetails}
+                            seeDetails={seeDetails}
+                            hasFinished={options.seen}
+                        />
+                    )
                 case 'live':
                     return t('schedule.modal.live.title')
+                case 'exams':
+                    return t('schedule.modal.exams.title')
                 default:
-                    return t('schedule.modal.lesson.title')
+                    return (
+                        <Header
+                            hasDetails={hasDetails}
+                            seeDetails={seeDetails}
+                            hasFinished={options.seen}
+                        />
+                    )
             }
             // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [options])
+        }, [options, hasDetails])
 
         const button = useMemo(() => {
             const disable = false
@@ -290,26 +352,70 @@ export const RMModalSchedule = withRouter(
         if (!types.includes(options.status)) return null
 
         return (
-            <SANModal width={360} title={title} centered {...props}>
+            <SANModal
+                width={360}
+                title={title}
+                centered
+                onCancel={handleCancel}
+                {...props}
+            >
                 <SANBox>
-                    <SANTypography fontSize='lg' color='grey.7'>
-                        {options.title}
-                    </SANTypography>
-                    <SANTypography
-                        fontSize='xs'
-                        color='grey.5'
-                        mt='xxs'
-                        mb='md'
-                    >
-                        {options.subtitle}
-                    </SANTypography>
-                    <SANBox height={80}>
-                        <SANScroll>
-                            <SANTypography fontSize='md' color='grey.6' pr='sm'>
-                                {options.description}
+                    {!hasDetails ? (
+                        <>
+                            <SANTypography fontSize='lg' color='grey.7'>
+                                {options.title}
                             </SANTypography>
-                        </SANScroll>
-                    </SANBox>
+                            <SANTypography
+                                fontSize='xs'
+                                color='grey.5'
+                                mt='xxs'
+                                mb='md'
+                            >
+                                {options.subtitle}
+                            </SANTypography>
+                            <SANBox height={80}>
+                                <SANScroll>
+                                    <SANTypography
+                                        fontSize='md'
+                                        color='grey.6'
+                                        pr='sm'
+                                    >
+                                        {options.description}
+                                    </SANTypography>
+                                </SANScroll>
+                            </SANBox>
+                        </>
+                    ) : (
+                        <SANSpin spinning={loadingCollections} flex>
+                            <SANBox height={139}>
+                                <SANScroll>
+                                    {!!options.accessContent ? (
+                                        !!dataCollections &&
+                                        (
+                                            dataCollections.collections || []
+                                        ).map(collection =>
+                                            renderCollection(
+                                                collection,
+                                                options.accessContent
+                                            )
+                                        )
+                                    ) : (
+                                        <SANGenericError
+                                            ImageProps={{
+                                                height: 75,
+                                                mb: 'md'
+                                            }}
+                                            TypographyProps={{
+                                                width: '80%',
+                                                margin: '0 auto',
+                                                fontSize: ''
+                                            }}
+                                        />
+                                    )}
+                                </SANScroll>
+                            </SANBox>
+                        </SANSpin>
+                    )}
                 </SANBox>
                 {options.status !== 'exams' && (
                     <SANBox
