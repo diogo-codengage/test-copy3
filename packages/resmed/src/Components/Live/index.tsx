@@ -90,7 +90,9 @@ const RMLive = forwardRef<ISANChatRef, IRMLiveProps>(
 
         const videoPath = useMemo(
             () =>
-                !!live ? `https://www.youtube.com/embed/${live.youtubeId}` : '',
+                !!live
+                    ? `https://www.youtube.com/embed/${live.youtubeId}?playsinline=1`
+                    : '',
             [live]
         )
 
