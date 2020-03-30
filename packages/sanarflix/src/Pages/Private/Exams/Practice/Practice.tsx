@@ -23,7 +23,6 @@ import {
 
 import { useExamsPracticeContext } from './Context'
 import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
-import { useAuthContext } from '../../../../Hooks/auth'
 
 interface IResponse {
     comment?: any //TODO: ADD TYPE
@@ -43,15 +42,11 @@ const initialResponse: IResponse = {
 
 const FLXExamsPractice = () => {
     const { t } = useTranslation('sanarflix')
-    const { me } = useAuthContext()
     const history = useHistory()
     const params = useParams<{ id: string }>()
-    const { id: userId, email } = me
 
     const trackQuestion = (eventName, questionId?) => {
         const data = {
-            userId,
-            email,
             examId: params.id
         }
         if (questionId) data['questionId'] = questionId

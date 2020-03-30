@@ -23,11 +23,9 @@ import {
 } from 'Apollo/Exams/Queries/medUniversities'
 import { SAVE_USER_MED_UNIVERSITY_MUTATION } from 'Apollo/Exams/Mutations/userMedUniversity'
 import { GET_ME } from 'Apollo/User/Queries/me'
-import { useAuthContext } from 'Hooks/auth'
 
 const OnBoardingForm = ({ form, ...props }) => {
     const client = useApolloClient()
-    const { me } = useAuthContext()
     const { t } = useTranslation('sanarflix')
     const createSnackbar = useSnackbarContext()
     const [loading, setLoading] = useState({
@@ -129,8 +127,6 @@ const OnBoardingForm = ({ form, ...props }) => {
                 }
             })
             window.analytics.track('ExamsOnBoardingForm', {
-                userId: me.id,
-                email: me.email,
                 methodology: newMethodology ? newMethodology : methodology,
                 universityId: medUniversityId,
                 ingressSemester

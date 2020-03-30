@@ -21,12 +21,10 @@ import {
     useExamFilterContext
 } from 'Components/Exams/Filter/Context'
 import { useExamsContext } from '../Context'
-import { useAuthContext } from 'Hooks/auth'
 
 const FilteredList = () => {
     const client = useApolloClient()
     const history = useHistory()
-    const { me } = useAuthContext()
     const { t } = useTranslation('sanarflix')
     const [loading, setLoading] = useState<boolean>(false)
     const [hasMore, setHasMore] = useState<boolean>(true)
@@ -35,7 +33,6 @@ const FilteredList = () => {
     const { state, trackSearch } = useExamFilterContext()
     const snackbar = useSnackbarContext()
     const { medUniversity } = useExamsContext()
-    const { id: userId, email } = me
     const university = medUniversity.medUniversity
 
     const createYearSemesters = semesters => {
@@ -96,7 +93,7 @@ const FilteredList = () => {
             const response = await examsQuery(true)
             setExamsCount(response.data.quizExams.count)
             setExams(response.data.quizExams.data)
-            trackSearch('ApplyFilters', userId, email)
+            trackSearch('ApplyFilters')
         } catch {
             snackbar({
                 message: t('global.error'),
@@ -144,7 +141,7 @@ const FilteredList = () => {
                                     mt={5}
                                     dataSource={exams}
                                     renderItem={item =>
-                                        renderItem(item, t, history, userId, email)
+                                        renderItem(item, t, history)
                                     }
                                 />
                             )}
