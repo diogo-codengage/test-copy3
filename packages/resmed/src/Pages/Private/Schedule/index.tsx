@@ -40,12 +40,10 @@ import { RESET_SCHEDULE } from 'Apollo/Schedule/Mutations/reset'
 
 import { useLayoutContext } from 'Pages/Private/Layout/Context'
 
-import {
-    RMModalSchedule,
-    RMModalSuggestion,
-    RMModalMore,
-    IOption
-} from './Modal'
+import { RMModalSchedule, IOption } from './Modal'
+
+import { RMModalSuggestion } from './ModalSuggestion'
+import { RMModalMore } from './ModalMore'
 
 import { useScheduleContext, withScheduleContext } from './Context'
 
@@ -85,29 +83,35 @@ const SubtitleDot = styled.span<{ type: IType }>`
     background-color: ${switchProp('type', {
         completed: '#9EF0DA',
         uncompleted: '#FFDBE7',
-        complementary: '#11131766',
+        complementary: '#11131766'
     })};
     border-radius: 50%;
     display: inline-block;
     margin-top: 30px;
-    box-shadow: 1px 3px 5px ${switchProp('type', {
-        completed: '#8eefd5',
-        uncompleted: '#f5b6cb',
-        complementary: '#11131766',
-    })};
+    box-shadow: 1px 3px 5px
+        ${switchProp('type', {
+            completed: '#8eefd5',
+            uncompleted: '#f5b6cb',
+            complementary: '#11131766'
+        })};
 `
 const SubtitleLabel = styled(SANTypography)`
     display: inline-block;
     margin-left: 15px;
     margin-right: 30px;
 `
-const Subtitle = ({...props}) => {
+const Subtitle = ({ ...props }) => {
     const { t } = useTranslation('resmed')
     return (
         <SANBox {...props}>
-            <SubtitleDot type={'completed'} /><SubtitleLabel>{t('schedule.subtitle.uncompleted')}</SubtitleLabel>
-            <SubtitleDot type={'uncompleted'} /><SubtitleLabel>{t('schedule.subtitle.completed')}</SubtitleLabel>
-            <SubtitleDot type={'complementary'} /><SubtitleLabel>{t('schedule.subtitle.complementary')}</SubtitleLabel>
+            <SubtitleDot type={'completed'} />
+            <SubtitleLabel>{t('schedule.subtitle.uncompleted')}</SubtitleLabel>
+            <SubtitleDot type={'uncompleted'} />
+            <SubtitleLabel>{t('schedule.subtitle.completed')}</SubtitleLabel>
+            <SubtitleDot type={'complementary'} />
+            <SubtitleLabel>
+                {t('schedule.subtitle.complementary')}
+            </SubtitleLabel>
         </SANBox>
     )
 }
@@ -132,7 +136,11 @@ export const getStatus = event => {
 }
 
 export const getEventType = event => {
-    if (!event.resourceType || event.resourceType === 'Exam' || event.resourceType === 'Live') {
+    if (
+        !event.resourceType ||
+        event.resourceType === 'Exam' ||
+        event.resourceType === 'Live'
+    ) {
         return 'complementary'
     }
     return event.seen ? 'completed' : 'uncompleted'
@@ -336,7 +344,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
         const { event } = e
         handleTrack('Cronograma Adjust', {
             'Resource type': event.extendedProps.resourceType,
-            'Resource ID': event.extendedProps.id,
+            'Resource ID': event.extendedProps.id
         })
         const date = new Date(new Date(event.start).toUTCString()).toISOString()
         client
@@ -491,7 +499,7 @@ const RMSchedule: React.FC<RouteComponentProps> = ({ history }) => {
                                 validRange={validRange}
                             />
                         </SANBox>
-                        <Subtitle display={{ _: 'none', md: 'block'}}/>
+                        <Subtitle display={{ _: 'none', md: 'block' }} />
 
                         <SANBox
                             mt={{ _: 'lg', md: '5' }}
