@@ -191,10 +191,10 @@ const FLXExamFilterProvider: React.FC = ({ children }) => {
 
     const handleSemester = value => dispatch({ type: 'changeSemester', value })
 
-    const trackSearch = (event, id, email) => {
+    const trackSearch = (event, userId, email) => {
         window.analytics.track(event, {
             email,
-            userId: id,
+            userId,
             universityId: state.university,
             disciplines: state.discipline,
             themes: state.theme,
