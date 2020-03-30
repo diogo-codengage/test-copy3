@@ -51,6 +51,7 @@ const FLXSignIn: React.FC<RouteComponentProps> = ({ history, location }) => {
             email: data.idToken.email
         }
         ReactGA.set(userIdentity)
+        console.log('Entra aqui');
         window.analytics.identify(userIdentity)
         history.push('/portal/inicio')
     }
