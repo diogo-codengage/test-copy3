@@ -36,7 +36,7 @@ const FilteredList = () => {
     const snackbar = useSnackbarContext()
     const { medUniversity } = useExamsContext()
     const { id: userId, email } = me
-    const university = medUniversity.medUniversity
+    const university = medUniversity.id
 
     const createYearSemesters = semesters => {
         let yearSemesters: IYearSemester[] = []
