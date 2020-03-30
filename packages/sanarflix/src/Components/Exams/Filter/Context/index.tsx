@@ -37,6 +37,8 @@ interface IFLXExamFilterProviderValue {
     handleTheme: (value: string[]) => void
     handleSemester: (value: string[]) => void
 
+    trackSearch: (event: string, id: string, email: string) => void
+
     universities: IMedUniversity[]
     disciplines: IDiscipline[]
     themes: ITheme[]
@@ -189,6 +191,17 @@ const FLXExamFilterProvider: React.FC = ({ children }) => {
 
     const handleSemester = value => dispatch({ type: 'changeSemester', value })
 
+    const trackSearch = (event, id, email) => {
+        window.analytics.track(event, {
+            email,
+            userId: id,
+            universityId: state.university,
+            disciplines: state.discipline,
+            themes: state.theme,
+            semesters: state.semester
+        })
+    }
+
     const value: IFLXExamFilterProviderValue = {
         setCurrentTab,
         currentTab,
@@ -198,6 +211,7 @@ const FLXExamFilterProvider: React.FC = ({ children }) => {
         handleDiscipline,
         handleTheme,
         handleSemester,
+        trackSearch,
 
         loadingUniversities,
         loadingDisciplines,

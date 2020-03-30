@@ -23,6 +23,7 @@ import {
 
 import { useExamsPracticeContext } from './Context'
 import { ANSWER_MUTATION } from 'Apollo/Classroom/Mutations/answer'
+import { useAuthContext } from '../../../../Hooks/auth'
 
 interface IResponse {
     comment?: any //TODO: ADD TYPE
@@ -42,8 +43,20 @@ const initialResponse: IResponse = {
 
 const FLXExamsPractice = () => {
     const { t } = useTranslation('sanarflix')
+    const { me } = useAuthContext()
     const history = useHistory()
     const params = useParams<{ id: string }>()
+    const { id: userId, email } = me
+
+    const trackQuestion = (eventName, questionId?) => {
+        const data = {
+            userId,
+            email,
+            examId: params.id
+        }
+        if (questionId) data['questionId'] = questionId
+        window.analytics.track(eventName, data)
+    }
 
     const {
         answers,
@@ -137,7 +150,9 @@ const FLXExamsPractice = () => {
                     skipped: true
                 }
             })
+            trackQuestion('SkipQuestion', question.id)
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [questionIndex, dispatch]
     )
 
@@ -193,12 +208,17 @@ const FLXExamsPractice = () => {
                 }
             })
 
+            trackQuestion('ConfirmQuestion', questions[questionIndex].id)
+
             if (
                 answers.length + 1 === questions.length &&
                 !answers.find(item => item.skipped)
-            )
+            ) {
+                trackQuestion('ExamFinished')
                 history.push('/portal/provas/pratica/finalizada')
+            }
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [
             questions,
             questionIndex,
@@ -280,11 +300,12 @@ const FLXExamsPractice = () => {
                             </SANButton>
                             <SANStopwatch ref={stopWatchRef} />
                             <SANButton
-                                onClick={() =>
+                                onClick={() => {
+                                    trackQuestion('ExamFinished')
                                     history.push(
                                         '/portal/provas/pratica/finalizada'
                                     )
-                                }
+                                }}
                                 ml='xl'
                                 uppercase
                                 bold
