@@ -24,9 +24,6 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
 
     const onSearch = async search => {
         if (!search || search.length < 4) return
-        window.analytics.track(events['Content Searched'].event, {
-            term: search
-        })
         try {
             const {
                 data: { suggestions }
@@ -54,6 +51,10 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
 
     const seeMore = () => {
         if(value) {
+            console.log(events['Content Searched'].event, {
+                term: value
+            })
+            
             history.push(`/portal/busca?pesquisa=${value}`)
         }
     }
