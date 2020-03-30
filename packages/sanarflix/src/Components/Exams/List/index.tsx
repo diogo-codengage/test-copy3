@@ -16,10 +16,21 @@ const Image = SANStyled.img`
     margin-bottom: 4px;
 `
 
-export const renderItem = (item: IExam, t, history) => {
+export const renderItem = (item: IExam, t, history, userId, email) => {
     const arrTitle = item.title.split(' ')
     arrTitle.pop()
     const title = arrTitle.join(' ')
+
+    const goToPractice = () => {
+        window.analytics.track('PracticeExam', {
+            userId,
+            email,
+            examId: item.id,
+            examTitle: item.title,
+            originUrl: history.location.pathname
+        })
+        history.push(`/portal/provas/pratica/${item.id}`)
+    }
 
     return (
         <SANListItem>
@@ -31,9 +42,7 @@ export const renderItem = (item: IExam, t, history) => {
                     uppercase
                     blockOnlyMobile
                     style={{ width: '132px', float: 'right' }}
-                    onClick={() =>
-                        history.push(`/portal/provas/pratica/${item.id}`)
-                    }
+                    onClick={goToPractice}
                 >
                     <SANEvaIcon
                         name='edit-2-outline'

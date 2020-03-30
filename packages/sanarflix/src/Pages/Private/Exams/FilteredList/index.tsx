@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useApolloClient } from '@apollo/react-hooks'
 import { useTranslation } from 'react-i18next'
+import { useHistory } from 'react-router'
 
 import {
     SANBox,
@@ -20,21 +21,21 @@ import {
     useExamFilterContext
 } from 'Components/Exams/Filter/Context'
 import { useExamsContext } from '../Context'
-import { useHistory } from 'react-router'
+import { useAuthContext } from 'Hooks/auth'
 
 const FilteredList = () => {
     const client = useApolloClient()
     const history = useHistory()
+    const { me } = useAuthContext()
     const { t } = useTranslation('sanarflix')
     const [loading, setLoading] = useState<boolean>(false)
     const [hasMore, setHasMore] = useState<boolean>(true)
     const [exams, setExams] = useState<IExam[]>([])
     const [examsCount, setExamsCount] = useState<number | null>(null)
-    const { state } = useExamFilterContext()
+    const { state, trackSearch } = useExamFilterContext()
     const snackbar = useSnackbarContext()
-
     const { medUniversity } = useExamsContext()
-
+    const { id: userId, email } = me
     const university = medUniversity.medUniversity
 
     const createYearSemesters = semesters => {
@@ -95,6 +96,7 @@ const FilteredList = () => {
             const response = await examsQuery(true)
             setExamsCount(response.data.quizExams.count)
             setExams(response.data.quizExams.data)
+            trackSearch('ApplyFilters', userId, email)
         } catch {
             snackbar({
                 message: t('global.error'),
@@ -142,7 +144,7 @@ const FilteredList = () => {
                                     mt={5}
                                     dataSource={exams}
                                     renderItem={item =>
-                                        renderItem(item, t, history)
+                                        renderItem(item, t, history, userId, email)
                                     }
                                 />
                             )}

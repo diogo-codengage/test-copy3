@@ -13,6 +13,7 @@ import {
     SANDivider
 } from '@sanar/components'
 
+import { useAuthContext } from 'Hooks/auth'
 import { useExamFilterContext } from './Context'
 import FLXFilterUniversity from './University'
 import FLXFilterDiscipline from './Discipline'
@@ -63,7 +64,14 @@ export const PrevButton = ({ onClick }) => {
 
 const FLXExamFilter: React.FC<IFLXExamFilterProps> = props => {
     const { t } = useTranslation('sanarflix')
-    const { currentTab, setCurrentTab, state } = useExamFilterContext()
+    const { me } = useAuthContext()
+    const { currentTab, setCurrentTab, state, trackSearch } = useExamFilterContext()
+
+    const searchExams = () => {
+        trackSearch('SearchExams', me.id, me.email)
+        props.searchExams()
+    }
+
     return (
         <SANBox
             pb={{ md: '8', _: '0' }}
@@ -135,7 +143,7 @@ const FLXExamFilter: React.FC<IFLXExamFilterProps> = props => {
                             color='primary'
                             bold
                             blockOnlyMobile
-                            onClick={props.searchExams}
+                            onClick={searchExams}
                             disabled={!state.university}
                         >
                             {t('examFilter.submit')}
