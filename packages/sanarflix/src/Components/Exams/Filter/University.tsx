@@ -44,6 +44,10 @@ const FLXFilterUniversity: React.FC<IFLXFilterUniversityProps> = (props) => {
         loadingUniversities
     } = useExamFilterContext()
 
+    const showCheckbox = () => {
+        return universities.some(item => item.id === props.universityId)
+    }
+
     return (
         <SANBox px={{ md: '8', _: 'md' }} pb={{ md: 'xxl', _: 'xl' }}>
             <SANRow
@@ -81,17 +85,19 @@ const FLXFilterUniversity: React.FC<IFLXFilterUniversityProps> = (props) => {
             >
                 <SANCol xs={24} sm={19} md={12}>
                     <SANBox display='flex' flexDirection='column'>
-                        <SANBox mb='xs'>
-                            <SANCheckbox onChange={(e) => e.target.checked ? handleUniversity(props.universityId) : handleUniversity('')}>
-                                <SANTypography
-                                    fontSize='md'
-                                    as='span'
-                                    color='grey.6'
-                                >
-                                    {t('examFilter.college.checkbox')}
-                                </SANTypography>
-                            </SANCheckbox>
-                        </SANBox>
+                        {showCheckbox() && (
+                            <SANBox mb='xs'>
+                                <SANCheckbox onChange={(e) => e.target.checked ? handleUniversity(props.universityId) : handleUniversity('')}>
+                                    <SANTypography
+                                        fontSize='md'
+                                        as='span'
+                                        color='grey.6'
+                                    >
+                                        {t('examFilter.college.checkbox')}
+                                    </SANTypography>
+                                </SANCheckbox>
+                            </SANBox>
+                        )}
                         <SANSelect
                             allowClear
                             placeholder={t('examFilter.college.select')}

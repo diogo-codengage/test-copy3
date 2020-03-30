@@ -3,10 +3,9 @@ import React, { useContext, createContext, useState, useReducer } from 'react'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 
 import {
-    GET_MED_UNIVERSITIES,
-    IMedUniversityQuery,
-    IMedUniversity
-} from 'Apollo/Exams/Queries/medUniversities'
+    GET_QUIZ_UNIVERSITIES,
+    IQuizUniversitiesQuery
+} from 'Apollo/Exams/Queries/quiz-universities'
 import {
     GET_QUIZ_DISCIPLINES,
     IQuizDisciplinesQuery,
@@ -25,6 +24,7 @@ import {
     IQuizISemestersVariables,
     ISemester
 } from 'Apollo/Exams/Queries/quiz-semesters'
+import { IMedUniversity } from 'Apollo/Exams/Queries/medUniversities'
 
 interface IFLXExamFilterProviderValue {
     setCurrentTab: React.Dispatch<React.SetStateAction<ITab>>
@@ -144,8 +144,8 @@ const FLXExamFilterProvider: React.FC = ({ children }) => {
         initialState
     )
     const { data: dataUniversities, loading: loadingUniversities } = useQuery<
-        IMedUniversityQuery
-    >(GET_MED_UNIVERSITIES)
+        IQuizUniversitiesQuery
+    >(GET_QUIZ_UNIVERSITIES)
     const [
         getDisciplines,
         { data: dataDisciplines, loading: loadingDisciplines }
@@ -219,8 +219,8 @@ const FLXExamFilterProvider: React.FC = ({ children }) => {
         loadingThemes,
 
         universities:
-            !!dataUniversities && dataUniversities.medUniversities
-                ? dataUniversities.medUniversities.data
+            !!dataUniversities && dataUniversities.quizMedUniversities
+                ? dataUniversities.quizMedUniversities.data
                 : [],
         disciplines:
             !!dataDisciplines && dataDisciplines.quizDisciplines
