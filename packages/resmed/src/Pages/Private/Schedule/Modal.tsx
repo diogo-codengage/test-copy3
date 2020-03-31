@@ -68,7 +68,7 @@ const Badge = styled.sup`
 const Header = ({ seeDetails, hasDetails, hasFinished }) => {
     const { t } = useTranslation('resmed')
     return (
-        <SANBox display='flex' alginItems='center'>
+        <SANBox display='flex' alignItems='center'>
             <SANBox mr='sm'>{t('schedule.modal.lesson.title')}</SANBox>
             <Tooltip
                 title={
