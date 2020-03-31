@@ -7,8 +7,6 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { SANSearch } from '@sanar/components'
 import { useThrottle } from '@sanar/utils/dist/Hooks/useThrottle'
 
-import { events } from 'Config/Segment'
-
 import { GET_GLOBAL_SEARCH_SUGGESTIONS } from 'Apollo/Search/Queries/suggestions'
 
 interface IProps extends RouteComponentProps {
@@ -33,8 +31,12 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
             })
             const data = suggestions.data.map(item => ({
                 ...item,
-                onClick: () =>
+                onClick: () => {
+                    window.analytics.track('Search Result Clicked', {
+                        term: item.title
+                    })
                     history.push(`/portal/busca?pesquisa=${item.title}`)
+                }
             }))
             setItems(data)
         } catch {}
@@ -51,7 +53,7 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
 
     const seeMore = () => {
         if(value) {
-            window.analytics.identify(events['Content Searched'].event, {
+            window.analytics.track('Content Searched', {
                 term: value
             })
             

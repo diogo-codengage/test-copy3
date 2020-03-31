@@ -93,17 +93,26 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
         )
     }
 
-    const handlePause = () => {
+    const handlePause = (resource) => {
         window.analytics.track(
-            events['E-Learning']['Content Stopped'].event,
-            events['E-Learning']['Content Stopped'].data
+            events['E-Learning']['Content Stopped'].event, {
+                ...events['E-Learning']['Content Stopped'].data,
+                courseName: resource.course.name,
+                content: resource.title,
+                contentId: resource.id,
+                timeStopped: resource.video.progress.timeInSeconds
+            }
         )
     }
 
-    const handleComplete = () => {
+    const handleComplete = (resource) => {
         window.analytics.track(
-            events['E-Learning']['Content Completed'].event,
-            events['E-Learning']['Content Completed'].data
+            events['E-Learning']['Content Completed'].event, {
+                ...events['E-Learning']['Content Completed'].data,
+                courseName: resource.course.name,
+                content: resource.title,
+                contentId: resource.id
+            }
         )
     }
 
@@ -140,7 +149,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
         }
     }
 
-    const onComplete = () => {
+    const onComplete = (resource) => {
         handleProgress({
             percentage: 100,
             courseId,
@@ -149,7 +158,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                 type: 'Video'
             }
         })
-        handleComplete()
+        handleComplete(resource)
     }
 
     const getStartTime = time => {
@@ -226,8 +235,8 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                 onNext={navigations.next.onClick}
                                 onPrevious={navigations.previous.onClick}
                                 onPlay={handlePlay}
-                                onPause={handlePause}
-                                onOneHundredPercent={onComplete}
+                                onPause={() => handlePause(resource)}
+                                onOneHundredPercent={() => onComplete(resource)}
                                 onThreeSeconds={() => debounceProgress(1)}
                                 onTwentyFivePercent={() => debounceProgress(25)}
                                 onFiftyPercent={() => debounceProgress(50)}

@@ -256,7 +256,7 @@ const FLXCourse: React.FC<RouteComponentProps<{ courseId: string }>> = ({
                             </SANRow>
                             <SANDivider mt='md' bg='grey.2' />
                         </SANLayoutContainer>
-                        <Themes courseId={course.id} />
+                        <Themes courseId={course.id} courseName={course.description} />
                     </SANBox>
                 )
             }}
