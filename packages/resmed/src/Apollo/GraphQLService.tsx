@@ -89,7 +89,7 @@ const client = new ApolloClient({
                     if (error.message['statusCode'] === 401) {
                         logout({})
                         localStorage.clear()
-                        window.location.hash = '/#/auth/entrar'
+                        window.location.hash = '/auth/entrar'
                     }
                 })
                 return forward(operation)

@@ -1,13 +1,9 @@
 import gql from 'graphql-tag'
-
-export interface IUniversity {
-    value: string
-    label: string
-}
+import { IMedUniversity } from './medUniversities'
 
 export interface IQuizUniversitiesQuery {
     quizMedUniversities: {
-        data: IUniversity[]
+        data: IMedUniversity[]
     }
 }
 
@@ -15,8 +11,8 @@ export const GET_QUIZ_UNIVERSITIES = gql`
     {
         quizMedUniversities {
             data {
-                value: id
-                label: name
+               id
+               name
             }
         }
     }

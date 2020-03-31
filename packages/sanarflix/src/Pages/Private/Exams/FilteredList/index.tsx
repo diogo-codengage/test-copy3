@@ -33,7 +33,7 @@ const FilteredList = () => {
     const { state, trackSearch } = useExamFilterContext()
     const snackbar = useSnackbarContext()
     const { medUniversity } = useExamsContext()
-    const university = medUniversity.medUniversity
+    const university = medUniversity.id
 
     const createYearSemesters = semesters => {
         let yearSemesters: IYearSemester[] = []
