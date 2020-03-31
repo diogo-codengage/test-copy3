@@ -14,8 +14,8 @@ import {
     SANBox,
     SANEvaIcon,
     SANScroll,
-    SANSpin,
-    SANGenericError
+    SANGenericError,
+    SANSkeleton
 } from '@sanar/components'
 
 import { IAppointment } from 'Apollo/Schedule/Queries/appointments'
@@ -68,7 +68,7 @@ const Badge = styled.sup`
 const Header = ({ seeDetails, hasDetails, hasFinished }) => {
     const { t } = useTranslation('resmed')
     return (
-        <SANBox display='flex' alginItems='center'>
+        <SANBox display='flex' alignItems='center'>
             <SANBox mr='sm'>{t('schedule.modal.lesson.title')}</SANBox>
             <Tooltip
                 title={
@@ -119,6 +119,13 @@ const RowCollection = styled(SANBox)`
     }
 `
 
+const arrSkeleton = new Array(5).fill(1).map((_, i) => i + 1)
+const renderSkeleton = i => (
+    <SANBox key={i} my='-7px' px='lg'>
+        <SANSkeleton paragraph={false} />
+    </SANBox>
+)
+
 const renderCollection = (collection, accessContent) => (
     <CollectionDetail
         key={collection.id}
@@ -168,10 +175,10 @@ const CollectionDetail = withRouter<any, any>(
                 alignItems='center'
                 justifyContent='space-between'
                 py='xxs'
-                pr='lg'
+                px='lg'
                 onClick={goToCollection}
             >
-                <SANTypography ellipsis>{collection.name}</SANTypography>
+                <SANTypography>{collection.name}</SANTypography>
                 <SANBox display='flex' alignItems='center'>
                     <Tooltip
                         title={
@@ -359,10 +366,15 @@ export const RMModalSchedule = withRouter(
                 onCancel={handleCancel}
                 {...props}
             >
-                <SANBox>
+                <SANBox mx={hasDetails ? '-24px' : '0'}>
                     {!hasDetails ? (
                         <>
-                            <SANTypography fontSize='lg' color='grey.7'>
+                            <SANTypography
+                                fontSize='lg'
+                                color='grey.7'
+                                ellipsis={{ rows: 2 }}
+                                height={48}
+                            >
                                 {options.title}
                             </SANTypography>
                             <SANTypography
@@ -386,11 +398,10 @@ export const RMModalSchedule = withRouter(
                             </SANBox>
                         </>
                     ) : (
-                        <SANSpin spinning={loadingCollections} flex>
-                            <SANBox height={139}>
-                                <SANScroll>
-                                    {!!options.accessContent ? (
-                                        !!dataCollections &&
+                        <SANBox height={163}>
+                            <SANScroll>
+                                {!!options.accessContent ? (
+                                    !!dataCollections && !loadingCollections ? (
                                         (
                                             dataCollections.collections || []
                                         ).map(collection =>
@@ -400,21 +411,23 @@ export const RMModalSchedule = withRouter(
                                             )
                                         )
                                     ) : (
-                                        <SANGenericError
-                                            ImageProps={{
-                                                height: 75,
-                                                mb: 'md'
-                                            }}
-                                            TypographyProps={{
-                                                width: '80%',
-                                                margin: '0 auto',
-                                                fontSize: ''
-                                            }}
-                                        />
-                                    )}
-                                </SANScroll>
-                            </SANBox>
-                        </SANSpin>
+                                        arrSkeleton.map(renderSkeleton)
+                                    )
+                                ) : (
+                                    <SANGenericError
+                                        ImageProps={{
+                                            height: 75,
+                                            mb: 'md'
+                                        }}
+                                        TypographyProps={{
+                                            width: '80%',
+                                            margin: '0 auto',
+                                            fontSize: ''
+                                        }}
+                                    />
+                                )}
+                            </SANScroll>
+                        </SANBox>
                     )}
                 </SANBox>
                 {options.status !== 'exams' && (
