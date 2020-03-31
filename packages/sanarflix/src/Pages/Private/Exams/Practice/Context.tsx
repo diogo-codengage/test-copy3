@@ -42,15 +42,6 @@ const Context = createContext<any>({})
 
 export const useExamsPracticeContext = () => useContext(Context)
 
-// TODO: ADD TYPE
-const initialResponse: IResponse = {
-    comment: null,
-    answer: null,
-    questionId: null,
-    isHistoric: false,
-    defaultSelected: null
-}
-
 const initialState: IState = {
     answers: [],
     questionIndex: 0,
@@ -62,9 +53,11 @@ const reducer = (state = initialState, { payload, type }) => {
         case 'SKIP':
             return {
                 ...state,
-                questionIndex: state.questionIndex + 1,
-                response: initialResponse,
-                answers: [...state.answers, payload]
+                answers: !state.answers.find(
+                    item => item.questionId === payload.questionId
+                )
+                    ? [...state.answers, payload]
+                    : state.answers
             }
         case 'CONFIRM_QUESTION':
             return {
@@ -81,12 +74,18 @@ const reducer = (state = initialState, { payload, type }) => {
         case 'NEXT':
             return {
                 ...state,
-                questionIndex: payload || state.questionIndex + 1
+                questionIndex: payload >= 0 ? payload : state.questionIndex + 1
             }
         case 'PREVIOUS':
             return {
                 ...state,
                 questionIndex: state.questionIndex - 1
+            }
+        case 'NAVIGATION':
+            return {
+                ...state,
+                questionIndex:
+                    payload === 0 ? payload : state.questionIndex + payload
             }
         default:
             return state
@@ -94,13 +93,10 @@ const reducer = (state = initialState, { payload, type }) => {
 }
 
 const FLXExamsPracticeProvider = ({ children }) => {
-    // const { t } = useTranslation('sanarflix')
-
     // TODO: ADD TYPE
     const [state, dispatch] = useReducer(reducer, initialState)
 
     // TODO: ADD TYPE
-    // const [answers, setAnswers] = useState<IAnswer[]>([])
     const [questions, setQuestions] = useState<IExamQuestion[]>([])
 
     const stopWatchRef = useRef<any>()

@@ -92,18 +92,21 @@ const FLXExamsPractice = () => {
     }, [data, setQuestions, startTimer])
 
     const configureResponse = useCallback(
-        ({ goPrevious = false }) => {
-            const index = goPrevious ? -1 : 1
+        ({ controllIndex = 1 }) => {
+            const index =
+                controllIndex === 0
+                    ? controllIndex
+                    : questionIndex + controllIndex
 
-            const onNextQuestion = answers.find(item => {
-                return item.index === questionIndex + index
+            const nextQuestion = answers.find(item => {
+                return item.index === index
             })
 
-            onNextQuestion && !onNextQuestion.skipped
+            nextQuestion && !nextQuestion.skipped
                 ? setResponse({
-                      answer: onNextQuestion.answer,
-                      questionId: onNextQuestion.questionId,
-                      defaultSelected: onNextQuestion.defaultSelected,
+                      answer: nextQuestion.answer,
+                      questionId: nextQuestion.questionId,
+                      defaultSelected: nextQuestion.defaultSelected,
                       isHistoric: true
                   })
                 : setResponse(initialResponse)
@@ -115,15 +118,41 @@ const FLXExamsPractice = () => {
         startTimer()
         window.scrollTo({ top: 0, behavior: 'smooth' })
 
-        if (answers.length === questions.length) {
+        if (questions.length && answers.length === questions.length) {
+            if (answers.findIndex(item => item.skipped) > -1) {
+                dispatch({
+                    type: 'NEXT',
+                    payload: answers.findIndex(item => item.skipped)
+                })
+
+                setResponse(initialResponse)
+
+                return
+            } else {
+                history.push('/portal/provas/pratica/finalizada')
+            }
+        }
+
+        if (questionIndex === questions.length - 1) {
             if (answers.findIndex(item => item.skipped) > -1) {
                 dispatch({
                     type: 'NEXT',
                     payload: answers.findIndex(item => item.skipped)
                 })
             } else {
-                history.push('/portal/provas/pratica/finalizada')
+                dispatch({
+                    type: 'NEXT',
+                    payload: 0
+                })
+
+                configureResponse({ controllIndex: 0 })
+
+                return
             }
+
+            configureResponse({})
+
+            return
         }
 
         dispatch({
@@ -137,7 +166,7 @@ const FLXExamsPractice = () => {
         dispatch({
             type: 'PREVIOUS'
         })
-        configureResponse({ goPrevious: true })
+        configureResponse({ controllIndex: -1 })
     }
 
     const onSkipQuestion = useCallback(
@@ -151,10 +180,23 @@ const FLXExamsPractice = () => {
                 }
             })
             trackQuestion('SkipQuestion', question.id)
+
+            onNextQuestion()
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [questionIndex, dispatch]
     )
+
+    const onNavigation = ({ index }) => {
+        const isFinal = questionIndex + 1 === questions.length
+
+        dispatch({
+            type: 'NAVIGATION',
+            payload: isFinal ? 0 : index
+        })
+
+        configureResponse({ controllIndex: isFinal ? 0 : index })
+    }
 
     const onConfirm = useCallback(
         async answerId => {
@@ -247,7 +289,7 @@ const FLXExamsPractice = () => {
                             bold
                             size='small'
                             variant='outlined'
-                            onClick={onPreviousQuestion}
+                            onClick={() => onNavigation({ index: -1 })}
                         >
                             <SANEvaIcon name='arrow-back-outline' mr='xs' />
                             {t('exams.practice.previous')}
@@ -258,7 +300,7 @@ const FLXExamsPractice = () => {
                             bold
                             size='small'
                             variant='outlined'
-                            onClick={onNextQuestion}
+                            onClick={() => onNavigation({ index: 1 })}
                         >
                             {t('exams.practice.next')}
                             <SANEvaIcon name='arrow-forward-outline' ml='xs' />
