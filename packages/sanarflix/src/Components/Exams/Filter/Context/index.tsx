@@ -172,7 +172,7 @@ const FLXExamFilterProvider: React.FC = ({ children }) => {
         getThemes({
             variables: {
                 medUniversityId: state.university,
-                disciplineIds: state.discipline
+                disciplineIds: value
             }
         })
         dispatch({ type: 'changeDiscipline', value })
@@ -183,7 +183,7 @@ const FLXExamFilterProvider: React.FC = ({ children }) => {
             variables: {
                 medUniversityId: state.university,
                 disciplineIds: state.discipline,
-                themeIds: state.theme
+                themeIds: value
             }
         })
         dispatch({ type: 'changeTheme', value })
