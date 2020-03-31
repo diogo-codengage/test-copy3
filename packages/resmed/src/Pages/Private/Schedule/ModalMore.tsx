@@ -84,9 +84,9 @@ export const RMModalMore = ({ options = [], date, ...props }: IRMModalMore) => {
                 display='flex'
                 alignItems='center'
                 justifyContent='space-between'
-                p='sm'
+                py='sm'
+                px='lg'
                 status={option.status}
-                mr='sm'
             >
                 <SANBox pl='sm' position='relative' width='calc(100% - 20px)'>
                     <SANTypographyStyled
@@ -114,7 +114,7 @@ export const RMModalMore = ({ options = [], date, ...props }: IRMModalMore) => {
             centered
             {...props}
         >
-            <SANBox height={350}>
+            <SANBox height={350} mx='-24px'>
                 <SANScroll>{options.map(renderItem)}</SANScroll>
             </SANBox>
         </SANModal>
