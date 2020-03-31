@@ -51,7 +51,7 @@ const FLXSearch = ({ size = 'medium', initialValue, history }: IProps) => {
 
     const seeMore = () => {
         if(value) {
-            console.log(events['Content Searched'].event, {
+            window.analytics.identify(events['Content Searched'].event, {
                 term: value
             })
             
