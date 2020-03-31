@@ -1,4 +1,4 @@
-import React, { Suspense, useMemo } from 'react'
+import React, { Suspense, useEffect, useMemo } from 'react'
 import { withRouter, Switch, Route, Redirect } from 'react-router-dom'
 
 import FLXSplashLoader from 'Components/SplashLoader'
@@ -6,14 +6,20 @@ import { useQuery } from '@apollo/react-hooks'
 import { GET_ME } from 'Apollo/User/Queries/me'
 import FLXExamsProvider from './Context'
 import FLXExamFilterProvider from 'Components/Exams/Filter/Context'
+import { useAuthContext } from 'Hooks/auth'
+import { useSnackbarContext } from '@sanar/components'
+import { useTranslation } from 'react-i18next'
 
 const FLXExamsPractice = React.lazy(() => import('./Practice'))
 const FLXExamsOnBoarding = React.lazy(() => import('./OnBoarding'))
 const InitialList = React.lazy(() => import('./InitialList'))
 const FilteredList = React.lazy(() => import('./FilteredList'))
 
-const FLXExams = () => {
+const FLXExams = ({ history }) => {
     const { data } = useQuery(GET_ME, { fetchPolicy: 'cache-only' })
+    const { me } = useAuthContext()
+    const snackbar = useSnackbarContext()
+    const { t } = useTranslation('sanarflix')
 
     const InitialPage = useMemo(
         () =>
@@ -22,6 +28,16 @@ const FLXExams = () => {
                 : FLXExamsOnBoarding,
         [data]
     )
+
+    useEffect(() => {
+        if (!me.enable_exam_feature) {
+            snackbar({
+                message: t('exams.notEnableFeature'),
+                theme: 'warning'
+            })
+            history.push('/portal/inicio');
+        }
+    })
 
     return (
         <FLXExamsProvider medUniversity={data.me.userMedUniversity}>
