@@ -29,6 +29,11 @@ const SANSnackbar = ({ message, theme }) => {
                         icon: 'close-circle',
                         color: 'error'
                     }
+                case 'warning':
+                    return {
+                        icon: 'alert-circle-outline',
+                        color: 'warning'
+                    }
                 default:
                     return {}
             }

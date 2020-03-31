@@ -160,7 +160,7 @@ export default {
     },
     exams: {
         title: 'Provas',
-
+        notEnableFeature: 'EM BREVE! Esta funcionalidade ainda está em modo de teste. Estamos trabalhando para que a sua experiência seja incrível.',
         subtitle:
             'Acesse à provas completas e comentadas de diversas universidades do Brasil',
         questionMap: {
