@@ -16,15 +16,13 @@ const Image = SANStyled.img`
     margin-bottom: 4px;
 `
 
-export const renderItem = (item: IExam, t, history, userId, email) => {
+export const renderItem = (item: IExam, t, history) => {
     const arrTitle = item.title.split(' ')
     arrTitle.pop()
     const title = arrTitle.join(' ')
 
     const goToPractice = () => {
         window.analytics.track('PracticeExam', {
-            userId,
-            email,
             examId: item.id,
             examTitle: item.title,
             originUrl: history.location.pathname

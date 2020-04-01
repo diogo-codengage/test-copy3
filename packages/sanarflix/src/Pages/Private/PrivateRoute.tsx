@@ -48,6 +48,27 @@ const FLXPrivateRoute: React.FC<FLXPrivateRouteProps> = ({
             } else {
                 setMe(me)
 
+                if (window.analytics) {
+                    const currentUser = {
+                        name: me.name,
+                        email: me.email,
+                        user_id: me.id,
+                    };
+
+                    window.analytics.identify(currentUser);
+
+                    if (window.navigator.geolocation) {
+                        window.navigator.geolocation.getCurrentPosition(({ coords }) => {
+                            window.analytics.identify({ 
+                                ...currentUser, 
+                                position_latitude: coords.latitude,
+                                position_longitude: coords.longitude,
+                            });
+                        });
+                    }
+
+                }
+
                 if (window.Conpass) {
                     const { Conpass } = window
                     Conpass.init({

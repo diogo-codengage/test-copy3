@@ -13,7 +13,6 @@ import {
     SANEmpty
 } from '@sanar/components'
 import { GET_EXAMS, IExam, IExamQuery } from 'Apollo/Exams/Queries/exams'
-import { useAuthContext } from 'Hooks/auth'
 
 import FLXExamFilter from 'Components/Exams/Filter'
 import { renderItem, ExamsCount } from 'Components/Exams/List'
@@ -33,7 +32,6 @@ const LoadMoreBox = SANStyled.div`
 const List = () => {
     const history = useHistory()
     const client = useApolloClient()
-    const { me } = useAuthContext()
     const { t } = useTranslation('sanarflix')
     const [loading, setLoading] = useState<boolean>(false)
     const [initLoading, setInitLoading] = useState<boolean>(true)
@@ -41,7 +39,6 @@ const List = () => {
     const [examsCount, setExamsCount] = useState<number | null>(null)
     const [loadMoreClicks, setLoadMoreClicks] = useState<number>(0)
     const { medUniversity } = useExamsContext()
-    const { id: userId, email } = me
 
     const fetchExamsList = async () => {
         try {
@@ -73,8 +70,6 @@ const List = () => {
 
     const onLoadMore = () => {
         window.analytics.track('LoadMoreExamsClicked', {
-            userId,
-            email,
             universityId: medUniversity.id
         })
         if (loadMoreClicks >= 1) {
@@ -139,7 +134,7 @@ const List = () => {
                                     : undefined
                             }
                             renderItem={
-                                item => renderItem(item, t, history, userId, email)
+                                item => renderItem(item, t, history)
                             }
                         />
                     )}

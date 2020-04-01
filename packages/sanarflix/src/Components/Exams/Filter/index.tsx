@@ -13,7 +13,6 @@ import {
     SANDivider
 } from '@sanar/components'
 
-import { useAuthContext } from 'Hooks/auth'
 import { useExamFilterContext } from './Context'
 import FLXFilterUniversity from './University'
 import FLXFilterDiscipline from './Discipline'
@@ -64,11 +63,10 @@ export const PrevButton = ({ onClick }) => {
 
 const FLXExamFilter: React.FC<IFLXExamFilterProps> = props => {
     const { t } = useTranslation('sanarflix')
-    const { me } = useAuthContext()
     const { currentTab, setCurrentTab, state, trackSearch } = useExamFilterContext()
 
     const searchExams = () => {
-        trackSearch('SearchExams', me.id, me.email)
+        trackSearch('SearchExams')
         props.searchExams()
     }
 
