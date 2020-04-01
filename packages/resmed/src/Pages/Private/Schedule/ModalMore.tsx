@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
@@ -13,6 +13,8 @@ import {
 } from '@sanar/components'
 
 import { IAppointment } from 'Apollo/Schedule/Queries/appointments'
+
+import { RMModalSchedule } from './Modal'
 
 type IStatus = 'viewed' | 'unseen' | 'live' | 'exams'
 
@@ -35,10 +37,10 @@ const SANTypographyStyled = styled(SANTypography)<{ status: IStatus }>`
             width: 6px;
             height: 6px;
             background-color: ${switchProp('status', {
-                viewed: theme('colors.primary-4'),
-                unseen: theme('colors.burgundy.1'),
-                live: theme('colors.grey.4'),
-                exams: theme('colors.blue.2')
+                viewed: theme('colors.primary-2'),
+                unseen: theme('colors.burgundy.0'),
+                live: theme('colors.grey.6'),
+                exams: theme('colors.grey.6')
             })};
             border-radius: 3px;
             position: absolute;
@@ -70,23 +72,32 @@ interface IRMModalMore extends IModalProps {
     date: Date
 }
 
+interface ISelect {
+    visible: boolean
+    item: IOption | any
+}
+
 export const RMModalMore = ({ options = [], date, ...props }: IRMModalMore) => {
     const { t } = useTranslation('resmed')
+    const [selected, setSelect] = useState<ISelect>({
+        visible: false,
+        item: {}
+    })
 
     const renderItem = useCallback(
         (option, index) => (
             <Wrapper
                 key={index}
-                borderBottom={
-                    index < options.length - 1 ? '1px solid' : undefined
-                }
+                borderTop={index === 0 ? '1px solid' : undefined}
+                borderBottom={'1px solid'}
                 borderColor='grey.1'
                 display='flex'
                 alignItems='center'
                 justifyContent='space-between'
-                p='sm'
+                py='sm'
+                px='lg'
                 status={option.status}
-                mr='sm'
+                onClick={() => setSelect({ visible: true, item: option })}
             >
                 <SANBox pl='sm' position='relative' width='calc(100% - 20px)'>
                     <SANTypographyStyled
@@ -104,7 +115,7 @@ export const RMModalMore = ({ options = [], date, ...props }: IRMModalMore) => {
                 <SANEvaIcon name='arrow-ios-forward-outline' />
             </Wrapper>
         ),
-        [options]
+        []
     )
 
     return (
@@ -114,9 +125,14 @@ export const RMModalMore = ({ options = [], date, ...props }: IRMModalMore) => {
             centered
             {...props}
         >
-            <SANBox height={350}>
+            <SANBox height={350} mx='-24px'>
                 <SANScroll>{options.map(renderItem)}</SANScroll>
             </SANBox>
+            <RMModalSchedule
+                visible={selected.visible}
+                options={selected.item}
+                onCancel={() => setSelect({ visible: false, item: undefined })}
+            />
         </SANModal>
     )
 }
