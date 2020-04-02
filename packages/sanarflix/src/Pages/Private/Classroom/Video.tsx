@@ -38,7 +38,6 @@ const Header = styled.div`
     @media screen and (orientation: landscape) {
         display: none;
     }
-
     ${theme('mediaQueries.up.md')} {
         display: none;
     }
@@ -93,17 +92,30 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
         )
     }
 
-    const handlePause = () => {
+    const getTrackContent = (resource) => {
+        return {
+            courseName: resource.course.name,
+            content: resource.title,
+            contentId: resource.id,
+        }
+    }
+
+    const handlePause = (resource) => {
         window.analytics.track(
-            events['E-Learning']['Content Stopped'].event,
-            events['E-Learning']['Content Stopped'].data
+            events['E-Learning']['Content Stopped'].event, {
+                ...events['E-Learning']['Content Stopped'].data,
+                ...getTrackContent(resource),
+                timeStopped: resource.video.progress.timeInSeconds
+            }
         )
     }
 
-    const handleComplete = () => {
+    const handleComplete = (resource) => {
         window.analytics.track(
-            events['E-Learning']['Content Completed'].event,
-            events['E-Learning']['Content Completed'].data
+            events['E-Learning']['Content Completed'].event, {
+                ...events['E-Learning']['Content Completed'].data,
+                ...getTrackContent(resource),
+            }
         )
     }
 
@@ -140,7 +152,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
         }
     }
 
-    const onComplete = () => {
+    const onComplete = (resource) => {
         handleProgress({
             percentage: 100,
             courseId,
@@ -149,7 +161,7 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                 type: 'Video'
             }
         })
-        handleComplete()
+        handleComplete(resource)
     }
 
     const getStartTime = time => {
@@ -191,9 +203,9 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                 const debounceProgress = createDebounce(onProgress, 500)
 
                 willStart &&
-                    resource &&
-                    resource.video.progress &&
-                    getStartTime(resource.video.progress.timeInSeconds)
+                resource &&
+                resource.video.progress &&
+                getStartTime(resource.video.progress.timeInSeconds)
 
                 return (
                     <>
@@ -226,8 +238,8 @@ const FLXClassroomVideo = (props: RouteComponentProps<IParams>) => {
                                 onNext={navigations.next.onClick}
                                 onPrevious={navigations.previous.onClick}
                                 onPlay={handlePlay}
-                                onPause={handlePause}
-                                onOneHundredPercent={onComplete}
+                                onPause={() => handlePause(resource)}
+                                onOneHundredPercent={() => onComplete(resource)}
                                 onThreeSeconds={() => debounceProgress(1)}
                                 onTwentyFivePercent={() => debounceProgress(25)}
                                 onFiftyPercent={() => debounceProgress(50)}
