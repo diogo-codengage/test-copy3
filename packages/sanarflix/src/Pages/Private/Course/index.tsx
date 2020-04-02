@@ -162,11 +162,11 @@ const Cards = ({ counters }: { counters: ICourseCounters }) => {
 }
 
 const FLXCourse: React.FC<RouteComponentProps<{ courseId: string }>> = ({
-    history,
-    match: {
-        params: { courseId }
-    }
-}) => {
+                                                                            history,
+                                                                            match: {
+                                                                                params: { courseId }
+                                                                            }
+                                                                        }) => {
     const { t } = useTranslation('sanarflix')
     const [showDescription, setShowDescription] = useState(false)
     let pathname: string
@@ -256,7 +256,7 @@ const FLXCourse: React.FC<RouteComponentProps<{ courseId: string }>> = ({
                             </SANRow>
                             <SANDivider mt='md' bg='grey.2' />
                         </SANLayoutContainer>
-                        <Themes courseId={course.id} />
+                        <Themes courseId={course.id} courseName={course.description} />
                     </SANBox>
                 )
             }}

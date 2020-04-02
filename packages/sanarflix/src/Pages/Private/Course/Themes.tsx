@@ -52,7 +52,6 @@ const SANSessionTitleStyled = SANStyled(SANSessionTitle)`
         display: block;
         flex: inherit;
         margin: 0;
-
         ${theme('mediaQueries.down.xs')} {
             margin-top: ${theme('space.md')};
         }
@@ -69,57 +68,71 @@ const updateCacheThemes = (prev, { fetchMoreResult }) => {
     })
 }
 
-const renderTheme = (history, courseId) => (theme, index) => (
-    <SANCollapseThemePanel
-        customKey={theme.id}
-        index={index}
-        title={theme.name}
-        data-testid={`theme-${theme.name}`}
-    >
-        <SANQuery
-            query={GET_THEME_CONTENTS}
-            options={{
-                variables: { themeId: theme.id, courseId },
-                fetchPolicy: 'network-only'
-            }}
-            loaderProps={{ minHeight: 70, flex: true }}
+const renderTheme = (history, courseId, courseName) => (theme, index) => {
+    const trackContentClicked = (content) => {
+        window.analytics.track('Content Viewed', {
+            courseName,
+            contentType: content.type,
+            content: content.title,
+            contentId: content.resource_id
+        })
+    }
+
+    return (
+        <SANCollapseThemePanel
+            customKey={theme.id}
+            index={index}
+            title={theme.name}
+            data-testid={`theme-${theme.name}`}
         >
-            {({ data: { themeContents } }: { data: IThemeContents }) =>
-                !!themeContents.data && themeContents.data.length ? (
-                    themeContents.data.map(content =>
-                        renderClass({
-                            themeId: theme.id,
-                            resourceType: content.resource_type,
-                            id: content.id,
-                            title: content.title,
-                            subtitle: i18n.t(
-                                `sanarflix:global.types.${content.type}`
-                            ),
-                            icon: typesIcon[content.type],
-                            checked: content.completed,
-                            onClick: ({ themeId, resourceType }) =>
-                                history.push(
-                                    `/portal/sala-aula/${theme.course.id}/${themeId}/${resourceType}/${content.resource_id}`
-                                )
-                        })
+            <SANQuery
+                query={GET_THEME_CONTENTS}
+                options={{
+                    variables: { themeId: theme.id, courseId },
+                    fetchPolicy: 'network-only'
+                }}
+                loaderProps={{ minHeight: 70, flex: true }}
+            >
+                {({ data: { themeContents } }: { data: IThemeContents }) =>
+                    !!themeContents.data && themeContents.data.length ? (
+                        themeContents.data.map(content =>
+                            renderClass({
+                                themeId: theme.id,
+                                resourceType: content.resource_type,
+                                id: content.id,
+                                title: content.title,
+                                subtitle: i18n.t(
+                                    `sanarflix:global.types.${content.type}`
+                                ),
+                                icon: typesIcon[content.type],
+                                checked: content.completed,
+                                onClick: ({ themeId, resourceType }) => {
+                                    trackContentClicked(content)
+                                    history.push(
+                                        `/portal/sala-aula/${theme.course.id}/${themeId}/${resourceType}/${content.resource_id}`
+                                    )
+                                }
+                            })
+                        )
+                    ) : (
+                        <SANEmpty p='md' hasTitle={false} />
                     )
-                ) : (
-                    <SANEmpty p='md' hasTitle={false} />
-                )
-            }
-        </SANQuery>
-    </SANCollapseThemePanel>
-)
+                }
+            </SANQuery>
+        </SANCollapseThemePanel>
+    )
+}
 
 const Themes = ({
-    courseId,
-    history
-}: RouteComponentProps & { courseId: string }) => {
+                    courseId,
+                    courseName,
+                    history
+                }: RouteComponentProps & { courseId: string, courseName: string }) => {
     const { t } = useTranslation('sanarflix')
     const [count, setCount] = useState(0)
     const [completenessFilter, setCompletenessFilter] = useState<
         ICompletenessFiltersValues
-    >('all')
+        >('all')
 
     const onChangeCompletenessFilters = (
         e: React.ChangeEvent<HTMLSelectElement>
@@ -156,9 +169,9 @@ const Themes = ({
                 loaderProps={{ minHeight: 150, flex: true }}
             >
                 {({
-                    data: { themes },
-                    fetchMore
-                }: {
+                      data: { themes },
+                      fetchMore
+                  }: {
                     data: IThemes
                     fetchMore: (data: any) => Object
                 }) => {
@@ -180,7 +193,7 @@ const Themes = ({
                                 >
                                     <SANCollapseTheme>
                                         {themes.data.map(
-                                            renderTheme(history, courseId)
+                                            renderTheme(history, courseId, courseName)
                                         )}
                                     </SANCollapseTheme>
                                 </SANInfiniteScroll>
