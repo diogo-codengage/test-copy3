@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, memo } from 'react'
+import React, { useState, useMemo, useRef, memo, useEffect } from 'react'
 
 import styled from 'styled-components'
 import { theme } from 'styled-tools'
@@ -194,6 +194,18 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
         }
 
         const isFull = useMemo(() => width <= 992, [width])
+
+        useEffect(() => {
+            if ( questions.length === 0 ){
+                handleProgress({
+                    resourceId: paramsLayout.contentId,
+                    resourceType: 'Quiz',
+                    percentage: 100
+                })
+                history.push(`../../../avaliacao`)
+            }
+        }, [questions, handleProgress, paramsLayout.contentId, history])
+        
 
         return (
             <>
