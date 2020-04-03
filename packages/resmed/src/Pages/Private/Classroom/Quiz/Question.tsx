@@ -204,7 +204,7 @@ const RMClassroomQuizQuestion = memo<RouteComponentProps<IParams>>(
                 })
                 history.push(`../../../avaliacao`)
             }
-        }, [questions, handleProgress, paramsLayout.contentId])
+        }, [questions, handleProgress, paramsLayout.contentId, history])
         
 
         return (
